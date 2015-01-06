@@ -79,8 +79,7 @@ STATICFILES_DIRS = (
     ("img", os.path.join(BASE_DIR, "static/img")),
     ("css", os.path.join(BASE_DIR, "static/css")),
     ("js", os.path.join(BASE_DIR, "static/js")),
-    ("webcomponents", os.path.join(BASE_DIR, "static/webcomponents")),
-    ("ts", os.path.join(BASE_DIR, "static/ts")),
+    ("webcomponents", os.path.join(BASE_DIR, "static/webcomponents"))
     )
 
 STATICFILES_FINDERS = (
