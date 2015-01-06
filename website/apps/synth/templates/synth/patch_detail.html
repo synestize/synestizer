@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+{% load compress %}
+{% block main %}
+
+<section id="app">
+
+    <canvas id="canvas"></canvas>
+
+    <div id="wrapper">
+
+        <video id="video" muted autoplay></video>
+
+
+        <div class="row full">
+
+            <div class="row hide">
+                <div class="small-10 medium-11 large-10 columns">
+                    <div class="range-slider" data-slider data-options="display_selector: #sliderOutput1;">
+                        <span class="range-slider-handle" role="slider" tabindex="0"></span>
+                        <span class="range-slider-active-segment"></span>
+                    </div>
+                </div>
+                <div class="small-2 medium-1 large-2 columns">
+                    <span id="sliderOutput1"></span>
+                </div>
+            </div>
+
+            <div id="info" class="large-6 large-centered columns hide panel radius text-center">
+                <h1 class="info-text">
+                    Welcome to Synestizer.
+                </h1>
+
+                <p>
+                    Please enable your webcam in the browser and activate your loudspeakers.
+                </p>
+            </div>
+
+
+            <div id="controls" class="hide">
+
+                <div class="large-centered large-12 columns">
+
+
+                    <div id="patch">
+                        <script id="patch_template" type="text/template">
+                            <div>Patch: <%= uuid %></div>
+                        </script>
+                    </div>
+                </div>
+                <div class="large-4 small-3 medium-3 columns left">
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation">
+                            <a href="#rgb-panel">RGB</a>
+
+                            <div id="rgb-panel" class="content active">
+                                <div class="row">
+                                    <div class="small-3 medium-3 columns label">
+                                        <label id="rgbRedLabel">Red</label>
+                                    </div>
+                                    <div class="small-7 medium-7 columns">
+
+                                    </div>
+                                    <div class="small-2 medium-2 columns numberBox">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="small-3 medium-3 columns label">
+                                        <label id="rgbGreenLabel">Green</label>
+                                    </div>
+                                    <div class="small-7 medium-7 columns">
+
+                                    </div>
+                                    <div class="small-2 medium-2 columns numberBox">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="small-3 medium-3 columns label">
+                                        <label id="rgbBlueLabel">Blue</label>
+                                    </div>
+                                    <div class="small-7 medium-7 columns">
+
+                                    </div>
+                                    <div class="small-2 medium-2 columns numberBox">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a href="#dominant-panel">Dominant Color</a>
+
+                            <div id="dominant-panel" class="content">
+                                ...
+                            </div>
+                        </dd>
+                        <dd class="accordion-navigation">
+                            <a href="#eight-bit-panel">8-Bit</a>
+
+                            <div id="eight-bit-panel" class="content">
+                                ...
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="large-3 small-3 medium-3 columns right">
+                    <!-- SYNTHS -->
+                    <dl class="accordion" data-accordion>
+                        <dd class="accordion-navigation">
+
+                            <a href="#triad">Triad</a>
+
+                            <div id="triad" class="content active">
+
+                                <script id="triad_template" type="text/template">
+
+                                    <div class="row">
+
+                                        <div class="small-12 medium-12 large-12 columns">
+                                            <webaudio-knob id="triadOutputKnob" src="{% static 'img/knob.png' %}"
+                                            sprites="100" tooltip="Output" value="<%= preset.output  %>"
+                                            min="0" max="1" step="0.01"></webaudio-knob>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row" style="padding: 10px;">
+                                        <div class="small-4 medium-4 columns label red">
+                                            <label id="triadFreq1Label">Oscillator 1</label>
+                                        </div>
+                                        <div class="small-4 medium-4 columns label green">
+                                            <label id="triadFreq2Label">Oscillator 2</label>
+                                        </div>
+                                        <div class="small-4 medium-4 columns label blue">
+                                            <label id="triadFreq2Label">Oscillator 2</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="small-4 medium-4 columns">
+                                            <webaudio-knob id="triadFreq1Knob" src="{% static 'img/knob.png' %}"
+                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq1 %>"
+                                            min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>"
+                                            step="1"></webaudio-knob>
+                                            <input id="triadFreq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" style="margin-top: 10px;" />
+                                        </div>
+                                        <div class="small-4 medium-4 columns">
+                                            <webaudio-knob id="triadFreq2Knob" src="{% static 'img/knob.png' %}"
+                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq2 %>"
+                                            min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>"
+                                            step="1"></webaudio-knob>
+                                            <input type="number" value="<%= preset.oscFreq2 %>" style="margin-top: 10px;"/>
+                                        </div>
+                                        <div class="small-4 medium-4 columns">
+                                            <webaudio-knob id="triadFreq3Knob" src="{% static 'img/knob.png' %}"
+                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq3 %>"
+                                            min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>"
+                                            step="1"></webaudio-knob>
+                                            <input type="number" value="<%= preset.oscFreq3 %>" style="margin-top: 10px;"/>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="small-4 medium-4 columns">
+                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                                <li><a href="#" class="button tiny">1</a></li>
+                                                <li><a href="#" class="button tiny">2</a></li>
+                                                <li><a href="#" class="button tiny">3</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="small-4 medium-4 columns">
+                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                                <li><a href="#" class="button tiny">1</a></li>
+                                                <li><a href="#" class="button tiny">2</a></li>
+                                                <li><a href="#" class="button tiny">3</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="small-4 medium-4 columns">
+                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                                <li><a href="#" class="button tiny">1</a></li>
+                                                <li><a href="#" class="button tiny">2</a></li>
+                                                <li><a href="#" class="button tiny">3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </script>
+                            </div>
+
+                        </dd>
+
+                        <dd class="accordion-navigation">
+                            <a href="#minimal">Minimal</a>
+
+                            <div id="minimal" class="content active">
+
+                                <script id="minimal_template" type="text/template">
+
+
+                                    <div class="row">
+
+                                        <div class="small-12 medium-12 large-12 columns">
+                                            <webaudio-knob id="minimalOutputKnob" src="{% static 'img/knob.png' %}"
+                                            sprites="100" tooltip="Output" value="<%= preset.output  %>"
+                                            min="0" max="1" step="0.01"></webaudio-knob>
+                                        </div>
+
+                                    </div>
+                                </script>
+                            </div>
+
+                        </dd>
+
+                        <dd class="accordion-navigation">
+
+                            <a href="#sampler">Sampler</a>
+
+
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        {% addtoblock "js" %}
+
+        {% compress js %}
+
+
+        <!-- vendor -->
+        <script src="{% static 'pubsub.js/src/pubsub.js' %}"></script>
+        <script src="{% static 'd3/d3.min.js' %}"></script>
+
+        <!-- video analysis -->
+        <script src="{% static 'js/analyzer.js' %}"></script>
+        <script src="{% static 'js/mapping.js' %}"></script>
+        <script src="{% static 'js/videostats.js' %}"></script>
+
+        <!-- temporary -->
+        <!--<script src="{% static 'js/colors.js' %}"></script>-->
+
+        <!-- synths -->
+        <script src="{% static 'js/synths/triad.js' %}"></script>
+        <script src="{% static 'js/synths/minimal.js' %}"></script>
+
+        <!-- patches -->
+        <script src="{% static 'js/patches/triad.js' %}"></script>
+        <script src="{% static 'js/patches/minimal.js' %}"></script>
+
+        <script>
+            // patch ID
+            //localStorage.setItem('id', {{ object.id }});
+            ID = {{ object.id }};
+        </script>
+
+        <!-- main app -->
+        <script src="{% static 'js/app.js' %}"></script>
+
+        <script>
+            // setup info div
+            $("#info").removeClass("hide").addClass("show");
+
+            var analyzer, pubsub, handle, bars, scale, graph;
+            pubsub = PubSub; //give our global signal bus a nice name
+            window.addEventListener('DOMContentLoaded', function() {
+                analyzer = new this.videoanalyzers.VideoAnalyzer({
+                    vidElem: document.getElementById('video'),
+                    canvElem: document.getElementById('canvas'),
+                    statistics: [new this.videostatistics.DominantColor()],
+                    pubsub: pubsub,
+                });
+
+                graph = d3.select("#s");
+                scale = d3.scale.linear().domain([0, 1]).range([0, 100]); //could be determined from style
+                handle = pubsub.subscribe(
+                    "/videoanalyzer/dominantcolor/raw", function(data){
+                        bars = graph.selectAll("div").data(data);
+                        bars.enter().append("div");
+                        bars.style("width", function(d) { return scale(d) + "px"; });
+                        bars.exit().remove();
+                    });
+            });
+        </script>
+
+        {% endcompress %}
+
+        {% endaddtoblock %}
+
+
+    </div>
+
+</section>
+
+{% endblock %}
