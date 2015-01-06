@@ -80,7 +80,7 @@ function play() {
 }
 
 
-timerWorker = new Worker( STATIC_URL + "js/helpers/sequencer_worker.js");
+timerWorker = new Worker( STATIC_URL + "js/audio/helpers/sequencer_worker.js");
 
 
 timerWorker.onmessage = function (e) {
