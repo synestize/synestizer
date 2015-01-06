@@ -71,7 +71,6 @@
     <!-- web components -->
     <script src="{% static 'webcomponentsjs/webcomponents.js' %}"></script>
     <script src="{% static 'polymer/polymer.min.js' %}"></script>
-    <link rel="import" href="{% static 'webcomponents/controls.html' %}">
 
     <!-- include backbone.js -->
     <script src="{% static 'underscore/underscore-min.js' %}"></script>
@@ -85,6 +84,8 @@
     <script src="{% static 'js/vendor/quantize.js' %}"></script>
 
     {% endcompress %}
+
+    <link rel="import" href="{% static 'webcomponents/controls.html' %}">
 
     {% render_block "js" %}
 
