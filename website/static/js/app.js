@@ -136,10 +136,14 @@ app.MinimalView = Backbone.View.extend({
         };
 
         minimal.setPreset(p);
-        //minimal.amp(this.preset['output']);
+        minimal.setTempo(this.preset['tempo']);
 
         document.getElementById('minimalOutputKnob').addEventListener('change', function (e) {
             minimal.output(e.target.value);
+        });
+
+        document.getElementById('minimalTempoKnob').addEventListener('change', function (e) {
+            minimal.setTempo(e.target.value);
         });
 
         return this;

@@ -1,134 +1,239 @@
 /**
- * @wapl Minimal
- * @author Christoph Stähli (stahl, stahlnow@gmail.com)
+ * @wapl SP1
+ * @author Hongchan Choi (hoch, hongchan.choi@gmail.com)
  */
- (function (WX) {
+
+// TODO
+// - filter? mod?
+// -
+
+(function (WX) {
 
     'use strict';
 
-    function Minimal(preset) {
+    // internal abstraction for polyphony impl
+    function SP1Voice(sampler) {
 
+        this.parent = sampler;
+        this.params = sampler.params;
+        this.voiceKey = null;
+        this.minDur = null;
+
+        this._src = WX.Source();
+        this._srcGain = WX.Gain();
+        this._src.to(this._srcGain).to(this.parent._filter);
+        this._src.loop = false;
+        this._src.buffer = this.parent.clip.buffer;
+        // this._src.onended = function () {
+        //   // DO SOMETHING
+        // }.bind(this);
+
+    }
+
+    SP1Voice.prototype = {
+
+        noteOn: function (pitch, velocity, time) {
+            var p = this.params,
+            basePitch = p.tune.get(),
+            att = p.ampAttack.get(),
+            dec = p.ampDecay.get(),
+            sus = p.ampSustain.get(),
+            scale = p.velocityMod.get() ? WX.veltoamp(velocity) : 1.0;
+            if (p.pitchMod.get()) {
+                this._src.playbackRate.value = Math.pow(2, (pitch - basePitch) / 12);
+            }
+            this._src.start(time);
+            this._srcGain.gain.set(0.0, time, 0);
+            this._srcGain.gain.set(scale, time + att, 1);
+            this._srcGain.gain.set(sus * scale, [time + att, dec], 3);
+            // calculate minimum duration
+            // if noteOff comes after minDur, cancel AParam is not needed
+            this.minDur = time + att + dec;
+        },
+
+        noteOff: function (pitch, velocity, time) {
+            if (this.minDur) {
+                time = time < WX.now ? WX.now : time;
+                var p = this.params,
+                rel = p.ampRelease.get();
+                this.voiceKey = pitch;
+                this._src.stop(this.minDur + rel + 1.0);
+                // if noteOff happens before minDur
+                // : cancel scheduled ADS envelope and then start releasing
+                if (time < this.minDur) {
+                    this._srcGain.gain.cancel(this.minDur);
+                    this._srcGain.gain.set(0.0, [this.minDur, rel], 3);
+                }
+                else {
+                    this._srcGain.gain.set(0.0, [time, rel], 3);
+                }
+            }
+        }
+    };
+
+    /** REQUIRED: plug-in constructor **/
+    function SP1(preset) {
+
+        // REQUIRED: adding necessary modules
         WX.PlugIn.defineType(this, 'Generator');
 
-        this._osc1 = WX.OSC();
-        this._amp1 = WX.Gain();
-        this._osc1.to(this._amp1).to(this._output);
-        this._osc1.start(0);
+        this.ready = false;
+        this.clip = null;
+        this.numVoice = 0;
 
-        this._osc2 = WX.OSC();
-        this._amp2 = WX.Gain();
-        this._osc2.to(this._amp2).to(this._output);
-        this._osc2.start(0);
+        // naive voice management
+        this.voices = [];
+        for (var i = 0; i < 128; i++) {
+            this.voices[i] = [];
+        }
 
-        this._osc3 = WX.OSC();
-        this._amp3 = WX.Gain();
-        this._osc3.to(this._amp3).to(this._output);
-        this._osc3.start(0);
-
-        this._amp1.gain.value = 0.0;
-        this._amp2.gain.value = 0.0;
-        this._amp3.gain.value = 0.0;
+        // patching
+        this._filter = WX.Filter();
+        this._filter.to(this._output);
 
         // parameter definition
         WX.defineParams(this, {
-
-            oscType1: {
-                type: 'Itemized',
-                name: 'Waveform',
-                default: 'sine',
-                model: WX.WAVEFORMS
+            tune: {
+                type: 'Generic',
+                name: 'Tune',
+                default: 48,
+                min: 0,
+                max: 127,
+                unit: 'Semitone'
             },
 
-            oscFreq1: {
+            pitchMod: {
+                type: 'Boolean',
+                name: 'PitchMod',
+                default: true
+            },
+
+            velocityMod: {
+                type: 'Boolean',
+                name: 'VeloMod',
+                default: true
+            },
+
+            ampAttack: {
                 type: 'Generic',
-                name: 'Freq',
-                default: WX.mtof(60),
-                min: 20.0,
-                max: 5000.0,
+                name: 'Att',
+                default: 0.02,
+                min: 0.0,
+                max: 5.0,
+                unit: 'Seconds'
+            },
+
+            ampDecay: {
+                type: 'Generic',
+                name: 'Dec',
+                default: 0.04,
+                min: 0.0,
+                max: 5.0,
+                unit: 'Seconds'
+            },
+
+            ampSustain: {
+                type: 'Generic',
+                name: 'Sus',
+                default: 0.25,
+                min: 0.0,
+                max: 1.0,
+                unit: 'LinearGain'
+            },
+
+            ampRelease: {
+                type: 'Generic',
+                name: 'Rel',
+                default: 0.2,
+                min: 0.0,
+                max: 10.0,
+                unit: 'Seconds'
+            },
+
+            filterType: {
+                type: 'Itemized',
+                name: 'FiltType',
+                default: 'lowpass',
+                model: WX.FILTER_TYPES
+            },
+
+            filterFrequency: {
+                type: 'Generic',
+                name: 'FiltFreq',
+                default: 2500,
+                min: 20,
+                max: 20000,
                 unit: 'Hertz'
             },
 
-            oscType2: {
-                type: 'Itemized',
-                name: 'Waveform',
-                default: 'triangle',
-                model: WX.WAVEFORMS
-            },
-
-            oscFreq2: {
+            filterQ: {
                 type: 'Generic',
-                name: 'Freq',
-                default: WX.mtof(60),
-                min: 20.0,
-                max: 5000.0,
-                unit: 'Hertz'
+                name: 'FiltQ',
+                default: 0.0,
+                min: 0.0,
+                max: 40.0
             },
 
-            oscType3: {
-                type: 'Itemized',
-                name: 'Waveform',
-                default: 'square',
-                model: WX.WAVEFORMS
-            },
-
-            oscFreq3: {
+            filterGain: {
                 type: 'Generic',
-                name: 'Freq',
-                default: WX.mtof(60),
-                min: 20.0,
-                max: 5000.0,
-                unit: 'Hertz'
+                name: 'FiltGain',
+                default: 0.0,
+                min: -40.0,
+                max: 40.0,
+                unit: 'LinearGain'
             }
 
         });
 
-
+        // REQUIRED: initializing instance with preset
         WX.PlugIn.initPreset(this, preset);
     }
 
-    Minimal.prototype = {
+    /** REQUIRED: plug-in prototype **/
+    SP1.prototype = {
 
+        // REQUIRED: plug-in info
         info: {
-            name: 'Minimal',
+            name: 'SP1',
             version: '0.0.1',
             api_version: '1.0.0-alpha',
-            author: 'Christoph Stähli',
+            author: 'Hongchan Choi',
             type: 'Generator',
-            description: '3 OSC'
+            description: 'Versatile Single-Zone Sampler'
         },
 
-
+        // REQUIRED: plug-in default preset
         defaultPreset: {
-            oscType1: 'sine',
-            oscFreq1: WX.mtof(60),
-            oscType2: 'triangle',
-            oscFreq2: WX.mtof(60),
-            oscType3: 'square',
-            oscFreq3: WX.mtof(60)
+            tune: 60,
+            pitchMod: true,
+            velocityMod: true,
+            ampAttack: 0.01,
+            ampDecay: 0.44,
+            ampSustain: 0.06,
+            ampRelease: 0.06,
+            filterType: 'LP',
+            filterFrequency: 5000,
+            filterQ: 0.0,
+            filterGain: 0.0,
+            output: 1.0
         },
 
-        $oscType1: function (value, time, rampType) {
-            this._osc1.type = value;
+        // REQUIRED: if you have a parameter,
+        //           corresponding handler is required.
+        $filterType: function (value, time, rampType) {
+            this._filter.type = value;
         },
 
-        $oscFreq1: function (value, time, rampType) {
-            this._osc1.frequency.set(value, time, rampType);
+        $filterFrequency: function (value, time, rampType) {
+            this._filter.frequency.set(value, time, rampType);
         },
 
-        $oscType2: function (value, time, rampType) {
-            this._osc2.type = value;
+        $filterQ: function (value, time, rampType) {
+            this._filter.Q.set(value, time, rampType);
         },
 
-        $oscFreq2: function (value, time, rampType) {
-            this._osc2.frequency.set(value, time, rampType);
-        },
-
-        $oscType3: function(value, time, rampType) {
-            this._osc3.type = value;
-        },
-
-        $oscFreq3: function(value, time, rampType) {
-            this._osc3.frequency.set(value, time, rampType);
+        $filterGain: function (value, time, rampType) {
+            this._filter.gain.set(value, time, rampType);
         },
 
         output: function (output, time) {
@@ -136,58 +241,73 @@
             this.params.output.set(output, time, 0);
         },
 
-        noteOn1: function (pitch, velocity, time) {
+        noteOn: function (pitch, velocity, time) {
             time = (time || WX.now);
-            this._amp1.gain.set(velocity / 127, [time, 0.02], 3);
-            this.params.oscFreq1.set(WX.mtof(pitch), time + 0.02, 0);
-
+            var voice = new SP1Voice(this);
+            this.voices[pitch].push(voice);
+            this.numVoice++;
+            voice.noteOn(pitch, velocity, time);
         },
 
-        noteOn2: function (pitch, velocity, time) {
+        noteOff: function (pitch, velocity, time) {
             time = (time || WX.now);
-            this._amp2.gain.set(velocity / 127, [time, 0.02], 3);
-            this.params.oscFreq2.set(WX.mtof(pitch), time + 0.02, 0);
-
+            var playing = this.voices[pitch];
+            for (var i = 0; i < playing.length; i++) {
+                playing[i].noteOff(pitch, velocity, time);
+                this.numVoice--;
+            }
+            // TODO: is this performant enough?
+            this.voices[pitch] = [];
         },
 
-        noteOn3: function (pitch, velocity, time) {
-            time = (time || WX.now);
-            this._amp3.gain.set(velocity / 127, [time, 0.02], 3);
-            this.params.oscFreq3.set(WX.mtof(pitch), time + 0.02, 0);
-        },
-
-        glide: function (pitch, time) {
-            time = (time || WX.now);
-            this.params.oscFreq1.set(WX.mtof(pitch), time + 0.02, 0);
-
-        },
-
-        noteOff: function (time) {
-            time = (time || WX.now);
-            this._amp1.gain.set(0.0, [time, 0.1], 3);
-            this._amp2.gain.set(0.0, [time, 0.1], 3);
-            this._amp3.gain.set(0.0, [time, 0.1], 3);
-        },
-
+        // realtime input data responder (Ktrl responder)
         onData: function (action, data) {
             switch (action) {
                 case 'noteon':
                 this.noteOn(data.pitch, data.velocity);
                 break;
-                case 'glide':
-                this.glide(data.pitch);
-                break;
                 case 'noteoff':
-                this.noteOff();
+                this.noteOff(data.pitch, data.velocity);
                 break;
             }
-        }
+        },
 
+        _onprogress: function (event, clip) {
+            // TODO
+        },
+
+        _onloaded: function (clip) {
+            this.setClip(clip);
+            WX.Log.info('Clip loaded:', clip.name);
+        },
+
+        onReady: null,
+
+        isReady: function () {
+            return this.ready;
+        },
+
+        setClip: function (clip) {
+            this.clip = clip;
+            this.ready = true;
+            if (this.onReady) {
+                this.onReady();
+            }
+        },
+
+        loadClip: function (clip) {
+            WX.loadClip(
+                clip,
+                this._onloaded.bind(this),
+                this._onprogress.bind(this)
+                );
+        }
     };
 
+    // REQUIRED: extending plug-in prototype with modules
+    WX.PlugIn.extendPrototype(SP1, 'Generator');
 
-    WX.PlugIn.extendPrototype(Minimal, 'Generator');
-
-    WX.PlugIn.register(Minimal);
+    // REQUIRED: registering plug-in into WX ecosystem
+    WX.PlugIn.register(SP1);
 
 })(WX);
