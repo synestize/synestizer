@@ -130,14 +130,7 @@ input[type="number"] {
     z-index: 100;
 }
 
-.jGrowl.msgbox {
-    bottom: 45px;
-    left: 10px;
-}
 
-.jGrowl .jGrowl-notification {
-    background-color: #111;
-    opacity: 0.5;
     width: 100%;
 }
 
