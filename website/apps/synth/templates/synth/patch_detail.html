@@ -49,54 +49,23 @@
                         </script>
                     </div>
                 </div>
-                <div class="large-4 small-3 medium-3 columns left">
+                <div class="large-3 small-3 medium-3 columns left">
                     <dl class="accordion" data-accordion>
                         <dd class="accordion-navigation">
                             <a href="#rgb-panel">RGB</a>
 
                             <div id="rgb-panel" class="content active">
-                                <div class="row">
-                                    <div class="small-3 medium-3 columns label">
-                                        <label id="rgbRedLabel">Red</label>
-                                    </div>
-                                    <div class="small-7 medium-7 columns">
-
-                                    </div>
-                                    <div class="small-2 medium-2 columns numberBox">
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="small-3 medium-3 columns label">
-                                        <label id="rgbGreenLabel">Green</label>
-                                    </div>
-                                    <div class="small-7 medium-7 columns">
-
-                                    </div>
-                                    <div class="small-2 medium-2 columns numberBox">
-
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="small-3 medium-3 columns label">
-                                        <label id="rgbBlueLabel">Blue</label>
-                                    </div>
-                                    <div class="small-7 medium-7 columns">
-
-                                    </div>
-                                    <div class="small-2 medium-2 columns numberBox">
-
-                                    </div>
-                                </div>
+                                <div id="average-bars"></div>
                             </div>
                         </dd>
                         <dd class="accordion-navigation">
                             <a href="#dominant-panel">Dominant Color</a>
 
-                            <div id="dominant-panel" class="content">
-                                ...
+                            <div id="dominant-panel" class="content active">
+                                <div id="dominant-bars"></div>
                             </div>
                         </dd>
+                        <!--
                         <dd class="accordion-navigation">
                             <a href="#eight-bit-panel">8-Bit</a>
 
@@ -104,130 +73,147 @@
                                 ...
                             </div>
                         </dd>
-                    </dl>
-                </div>
-
-                <div class="large-3 small-3 medium-3 columns right">
-                    <!-- SYNTHS -->
-                    <dl class="accordion" data-accordion>
-                        <dd class="accordion-navigation">
-
-                            <a href="#triad">Triad</a>
-
-                            <div id="triad" class="content active">
-
-                                <script id="triad_template" type="text/template">
-
-                                    <div class="row">
-
-                                        <div class="small-12 medium-12 large-12 columns">
-                                            <webaudio-knob id="triadOutputKnob" src="{% static 'img/knob.png' %}"
-                                            sprites="100" tooltip="Output" value="<%= preset.output  %>"
-                                            min="0" max="1" step="0.01"></webaudio-knob>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row" style="padding: 10px;">
-                                        <div class="small-4 medium-4 columns label red">
-                                            <label id="triadFreq1Label">Oscillator 1</label>
-                                        </div>
-                                        <div class="small-4 medium-4 columns label green">
-                                            <label id="triadFreq2Label">Oscillator 2</label>
-                                        </div>
-                                        <div class="small-4 medium-4 columns label blue">
-                                            <label id="triadFreq2Label">Oscillator 2</label>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row text-center">
-                                        <div class="small-4 medium-4 columns">
-                                            <webaudio-knob id="triadFreq1Knob" src="{% static 'img/knob.png' %}"
-                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq1 %>"
-                                            min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>"
-                                            step="1"></webaudio-knob>
-                                            <input id="triadFreq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" style="margin-top: 10px;" />
-                                        </div>
-                                        <div class="small-4 medium-4 columns">
-                                            <webaudio-knob id="triadFreq2Knob" src="{% static 'img/knob.png' %}"
-                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq2 %>"
-                                            min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>"
-                                            step="1"></webaudio-knob>
-                                            <input type="number" value="<%= preset.oscFreq2 %>" style="margin-top: 10px;"/>
-                                        </div>
-                                        <div class="small-4 medium-4 columns">
-                                            <webaudio-knob id="triadFreq3Knob" src="{% static 'img/knob.png' %}"
-                                            sprites="100" tooltip="Frequency" value="<%= preset.oscFreq3 %>"
-                                            min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>"
-                                            step="1"></webaudio-knob>
-                                            <input type="number" value="<%= preset.oscFreq3 %>" style="margin-top: 10px;"/>
-                                        </div>
-
-
-                                    </div>
-
-                                    <div class="row text-center">
-                                        <div class="small-4 medium-4 columns">
-                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
-                                                <li><a href="#" class="button tiny">1</a></li>
-                                                <li><a href="#" class="button tiny">2</a></li>
-                                                <li><a href="#" class="button tiny">3</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="small-4 medium-4 columns">
-                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
-                                                <li><a href="#" class="button tiny">1</a></li>
-                                                <li><a href="#" class="button tiny">2</a></li>
-                                                <li><a href="#" class="button tiny">3</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="small-4 medium-4 columns">
-                                            <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
-                                                <li><a href="#" class="button tiny">1</a></li>
-                                                <li><a href="#" class="button tiny">2</a></li>
-                                                <li><a href="#" class="button tiny">3</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </script>
-                            </div>
-
-                        </dd>
-
-                        <dd class="accordion-navigation">
-                            <a href="#minimal">Minimal</a>
-
-                            <div id="minimal" class="content active">
-
-                                <script id="minimal_template" type="text/template">
-
-
-                                    <div class="row">
-
-                                        <div class="small-12 medium-12 large-12 columns">
-                                            <webaudio-knob id="minimalOutputKnob" src="{% static 'img/knob.png' %}"
-                                            sprites="100" tooltip="Output" value="<%= preset.output  %>"
-                                            min="0" max="1" step="0.01"></webaudio-knob>
-                                        </div>
-
-                                    </div>
-                                </script>
-                            </div>
-
-                        </dd>
-
-                        <dd class="accordion-navigation">
-
-                            <a href="#sampler">Sampler</a>
-
-
-                        </dd>
-                    </dl>
-                </div>
+                    -->
+                </dl>
             </div>
-        </div>
+
+            <div class="large-3 small-4 medium-4 columns right">
+                <!-- SYNTHS -->
+                <dl class="accordion" data-accordion>
+                    <dd class="accordion-navigation">
+
+                        <a href="#triad">Triad</a>
+
+                        <div id="triad" class="content active">
+
+                            <script id="triad_template" type="text/template">
+
+                            <div class="row">
+                                    <div class="small-4 medium-4 large-4 columns">
+                                        <div class="knob_label">
+                                            Output
+                                        </div>
+                                        <webaudio-knob id="triadOutputKnob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Output" value="<%= preset.output  %>"
+                                        min="0" max="1" step="0.01"></webaudio-knob>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding: 10px;">
+                                    <div class="small-3 medium-4 columns label red">
+                                        <label id="triadFreq1Label">Oscillator 1</label>
+                                    </div>
+                                    <div class="small-3 medium-4 columns label green">
+                                        <label id="triadFreq2Label">Oscillator 2</label>
+                                    </div>
+                                    <div class="small-3 medium-4 columns label blue">
+                                        <label id="triadFreq2Label">Oscillator 2</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="small-4 medium-4 columns">
+                                        <div class="knob_label">
+                                            Freq 1
+                                        </div>
+                                        <webaudio-knob id="triadFreq1Knob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq1 %>"
+                                        min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>"
+                                        step="1"></webaudio-knob>
+                                        <input id="triadFreq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" style="margin-top: 10px;" />
+                                    </div>
+                                    <div class="small-4 medium-4 columns">
+                                        <div class="knob_label">
+                                            Freq 2
+                                        </div>
+                                        <webaudio-knob id="triadFreq2Knob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq2 %>"
+                                        min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>"
+                                        step="1"></webaudio-knob>
+                                        <input type="number" value="<%= preset.oscFreq2 %>" style="margin-top: 10px;"/>
+                                    </div>
+                                    <div class="small-4 medium-4 columns">
+                                        <div class="knob_label">
+                                            Freq 3
+                                        </div>
+                                        <webaudio-knob id="triadFreq3Knob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq3 %>"
+                                        min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>"
+                                        step="1"></webaudio-knob>
+                                        <input type="number" value="<%= preset.oscFreq3 %>" style="margin-top: 10px;"/>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="small-4 medium-4 columns">
+                                        <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                            <li><a href="#" class="button tiny">1</a></li>
+                                            <li><a href="#" class="button tiny">2</a></li>
+                                            <li><a href="#" class="button tiny">3</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="small-4 medium-4 columns">
+                                        <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                            <li><a href="#" class="button tiny">1</a></li>
+                                            <li><a href="#" class="button tiny">2</a></li>
+                                            <li><a href="#" class="button tiny">3</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="small-4 medium-4 columns">
+                                        <ul class="button-group" style="padding-top: 10px; padding-bottom: 10px;">
+                                            <li><a href="#" class="button tiny">1</a></li>
+                                            <li><a href="#" class="button tiny">2</a></li>
+                                            <li><a href="#" class="button tiny">3</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </script>
+                        </div>
+
+                    </dd>
+
+                    <dd class="accordion-navigation">
+                        <a href="#minimal">Minimal</a>
+
+                        <div id="minimal" class="content active">
+
+                            <script id="minimal_template" type="text/template">
+
+
+                                <div class="row knob">
+                                    <div class="small-3 medium-3 large-3 columns">
+                                        <div class="knob_label">
+                                            Output
+                                        </div>
+                                        <webaudio-knob id="minimalOutputKnob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Output" value="<%= preset.output  %>"
+                                        min="0" max="1" step="0.01"></webaudio-knob>
+                                    </div>
+                                </div>
+                                <div class="row knob">
+                                    <div class="small-3 medium-3 large-3 columns">
+                                        <div class="knob_label">
+                                            Tempo
+                                        </div>
+                                        <webaudio-knob id="minimalTempoKnob" src="{% static 'img/knob.png' %}"
+                                        sprites="100" tooltip="Tempo" value="<%= preset.tempo  %>"
+                                        min="20" max="1000" step="1"></webaudio-knob>
+                                    </div>
+                                </div>
+
+                            </script>
+                        </div>
+
+                    </dd>
+
+                    <dd class="accordion-navigation">
+
+                        <a href="#sampler">Sampler</a>
+
 
         {% addtoblock "js" %}
 
@@ -260,28 +246,44 @@
         <!-- main app -->
         <script src="{% static 'js/app.js' %}"></script>
 
-        <script>
+    <script>
             // setup info div
             $("#info").removeClass("hide").addClass("show");
 
-            var analyzer, pubsub, handle, bars, scale, graph;
+            var analyzer, pubsub, handle, bars, scale, average;
+
             pubsub = PubSub; //give our global signal bus a nice name
+
             window.addEventListener('DOMContentLoaded', function() {
                 analyzer = new this.videoanalyzers.VideoAnalyzer({
                     vidElem: document.getElementById('video'),
                     canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.DominantColor()],
+                    statistics: [new this.videostatistics.AverageColor()],
                     pubsub: pubsub,
                 });
 
-                graph = d3.select("#s");
-                scale = d3.scale.linear().domain([0, 1]).range([0, 100]); //could be determined from style
+                average = d3.select("#average-bars");
+                scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
                 handle = pubsub.subscribe(
-                    "/videoanalyzer/dominantcolor/raw", function(data){
-                        bars = graph.selectAll("div").data(data);
+                    "/videoanalyzer/averagecolor/raw", function(data){
+
+                        // draw color bars
+                        bars = average.selectAll("div").data(data);
                         bars.enter().append("div");
                         bars.style("width", function(d) { return scale(d) + "px"; });
+                        bars.style("background-color", function(d, i) {
+                            if (i == 0)
+                                return d3.rgb(255,0,0);
+                            if (i == 1)
+                                return d3.rgb(0,255,0);
+                            if (i == 2)
+                                return d3.rgb(0,0,255);
+                        })
                         bars.exit().remove();
+
+                        // change background color
+                        document.getElementById("wrapper").style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
+
                     });
             });
         </script>

@@ -154,7 +154,27 @@ input[type="number"] {
 }
 
 
+/* color modes */
+#dominant-bars {
     width: 100%;
+    display:inline-block;
+}
+#dominant-bars div {
+    display: block;
+    width: 0;
+    height: 5px;
+    background-color: #eee;
 }
 
+#average-bars {
+    width: 100%;
+    display:inline-block;
+}
+#average-bars div {
+    display: block;
+    width: 0;
+    height: 10px;
+    background-color: #eee;
+    margin: 2px;
+}
 
