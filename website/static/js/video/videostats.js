@@ -265,7 +265,7 @@
             //sort in desc frequency order
             colorsCounts = colorsCounts.slice(0,nColors);
             colorsCounts.sort(function (a, b) { return b[3]-a[3]});
-            if (Math.random()<0.02) console.debug(colorsCounts);
+            //if (Math.random()<0.02) console.debug(colorsCounts);
 
             for (var i=0;i<nColors;i++) {
                 var offset = i*4;
