@@ -60,6 +60,29 @@ body {
     height: 20px;
 }
 
+div.row.knob {
+    margin-bottom: 20px;
+}
+
+.knob_label {
+    display: block;
+    color: #444;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 0.7rem;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: pointer;
+}
+
 input[type="number"] {
     width: 4rem;
     height: auto;
