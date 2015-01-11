@@ -76,6 +76,7 @@ STATIC_URL = '/static/'
 
 
 STATICFILES_DIRS = (
+    ("sound", os.path.join(BASE_DIR, "static/sound")),
     ("img", os.path.join(BASE_DIR, "static/img")),
     ("css", os.path.join(BASE_DIR, "static/css")),
     ("js", os.path.join(BASE_DIR, "static/js")),
