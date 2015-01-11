@@ -278,10 +278,40 @@
         }
     };
 
+
+    var AverageColor = function (params) {
+        var self = this;
+        params = typeof params !== 'undefined' ? params : {};
+        self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "averagecolor";
+        Statistic.call(this, params); //super constructor
+        self.doCalcs = function (pixels) {
+            var pixelCount = self.analyzer.cw * self.analyzer.ch;
+
+            var out = new Array(3);
+
+            var red = 0;
+            var green = 0;
+            var blue = 0;
+
+             for (var i = 0; i < pixelCount; i++) {
+                red += pixels[i * 4 + 0]/255;
+                green += pixels[i * 4 + 1]/255;
+                blue += pixels[i * 4 + 2]/255;
+            }
+
+            out[0] = red / pixelCount;
+            out[1] = green / pixelCount;
+            out[2] = blue / pixelCount;
+
+            return out;
+        }
+    };
+
     // expose our module to the global object
     global.videostatistics = {
         Statistic: Statistic,
         Covariance: Covariance,
         DominantColor: DominantColor,
+        AverageColor: AverageColor
     };
 })( this );
