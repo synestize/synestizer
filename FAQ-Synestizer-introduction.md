@@ -70,10 +70,10 @@ Want to join us?
 See [github](https://github.com/synestize/synestizer) for the open source code.
 
 A big thank you is in order for much previous work that has also been done by: Univ.- Prof. Peter Kiefer, Prof. Dr. Stefan Reuss, Dr. Roman Mauer, Dr. Michael Liegl, Mark Lingk.
-And the Forschungsschwerpunkt Medienkonvergenz from the Johannes Gutenberg University in Mainz (D) 
+And the [Forschungsschwerpunkt Medienkonvergenz](http://www.medienkonvergenz.uni-mainz.de/) from the Johannes Gutenberg University in Mainz (D) 
 And the Dutch “Stichting de 4 Koningen” supported the development of this Web-app.
 
-Ideas or interest in participation? Just write us an email (maybe there is another email address later  but now info@kultkat.com)
+Ideas or interest in participation? Just write us an email artresearchmusic@gmail.com
 
 
 ## Privacy
