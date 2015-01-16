@@ -73,7 +73,7 @@ A big thank you is in order for much previous work that has also been done by: U
 And the [Forschungsschwerpunkt Medienkonvergenz](http://www.medienkonvergenz.uni-mainz.de/) from the Johannes Gutenberg University in Mainz (D) 
 And the Dutch “Stichting de 4 Koningen” supported the development of this Web-app.
 
-Ideas or interest in participation? Just write us an email artresearchmusic@gmail.com
+Ideas or interest in participation? Just write us an email at artresearchmusic@gmail.com
 
 
 ## Privacy
