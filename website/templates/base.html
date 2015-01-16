@@ -19,6 +19,7 @@
 
     {% render_block "css" %}
 
+
 </head>
 
 <body>
@@ -31,7 +32,7 @@
         <div id="footer">
             <div class="footer_content">
                 &copy; {% now "Y" %} by <a href="http://www.kasparkoenig.com/">kaspar</a>,
-                <a href="https://www.livingthing.org">dan</a> &
+                <a href="https://www.livingthing.org">dan</a> &amp;
                 <a href="http://www.stahlnow.com">stahl</a>.
                 This work is licensed under a <a rel="license"
                 href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
@@ -46,8 +47,6 @@
     <script src="{% static 'foundation/js/vendor/jquery.js' %}"></script>
 
     <script src="{% static 'foundation/js/foundation.min.js' %}"></script>
-
-    <script src="{% static 'js/vendor/velocity.min.js' %}"></script>
 
     <script>var STATIC_URL = '{{ STATIC_URL|escapejs }}';</script>
 

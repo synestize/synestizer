@@ -2,13 +2,6 @@
 (function( global ) {
     'use strict';
 
-    //sneakily monkey patch the getUserMedia thing;
-    //making it a local method doesn't work without tedious "this" wrangling.
-    navigator.getUserMedia = (navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia);
-
     var VideoAnalyzer = function (params){
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
@@ -18,7 +11,7 @@
         self.timeStep = typeof params.timeStep !== 'undefined' ? params.timeStep : 50;
         self.statistics = typeof params.statistics !== 'undefined' ? params.statistics : [];
         self.prefix = typeof params.prefix !== 'undefined' ? params.prefix : '/videoanalyzer';
-
+        self.success = typeof params.success !== 'undefined' ? params.success : function(){};
         self.lastFrameTime = Date.now();
         self.lastAnalysisTime = Date.now();
         self.thisFrameTime = Date.now();
@@ -46,12 +39,7 @@
                     self.vidElem.src = url ? url.createObjectURL(stream) : stream;
                     self.vidElem.play();
                     self.startAnalysis();
-
-                    // hide info layer
-                    // TODO move it somewhere else
-                    $("#info").removeClass("show").addClass("hide");
-                    $("#controls").removeClass("hide").addClass("show");
-
+                    self.success();
                 },
                 function(error) {
                     alert(
