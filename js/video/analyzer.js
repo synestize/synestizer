@@ -4,11 +4,13 @@
 
     var VideoAnalyzer = function (params){
         var self = this;
+        var url = global.window.URL || global.window.webkitURL;
         params = typeof params !== 'undefined' ? params : {};
         self.vidElem = params.vidElem;
         self.canvElem = params.canvElem;
         self.pubsub = params.pubsub;
         self.timeStep = typeof params.timeStep !== 'undefined' ? params.timeStep : 50;
+        self.stream = params.stream;
         self.statistics = typeof params.statistics !== 'undefined' ? params.statistics : [];
         self.prefix = typeof params.prefix !== 'undefined' ? params.prefix : '/videoanalyzer';
         self.success = typeof params.success !== 'undefined' ? params.success : function(){};
@@ -24,36 +26,13 @@
         self.pixelCount = self.cw * self.ch;
         self.timerID = null;
         self.pixels = [];
-        self.stream = null;
 
         for (var i = 0; i < self.statistics.length; i++) {
             self.statistics[i].attach(self);
         }
+        self.vidElem.src = url ? url.createObjectURL(self.stream) : params.stream;
+        self.vidElem.play();
 
-        if (global.navigator.getUserMedia) {
-            global.navigator.getUserMedia(
-                {video:true, audio:false},
-                function(stream) {
-                    var url = global.window.URL || global.window.webkitURL;
-                    self.stream = stream;
-                    self.vidElem.src = url ? url.createObjectURL(stream) : stream;
-                    self.vidElem.play();
-                    self.startAnalysis();
-                    self.success();
-                },
-                function(error) {
-                    alert(
-                        'Something went wrong. (error code ' +
-                        error.code +
-                        ')');
-                    return;
-                }
-            );
-        }
-        else {
-            alert('Sorry, I cannot access your camera.');
-            return;
-        }
         self.startAnalysis = function() {
             if (self.timerID!==null){
                 global.window.clearTimeout(self.timerID);
@@ -90,6 +69,8 @@
             // you probably still want to smooth it
             self.timerID = global.window.setTimeout(self.analyzeFrame, self.timeStep);
         }
+        self.startAnalysis();
+        self.success();
     };
 
     // expose our module to the global object
