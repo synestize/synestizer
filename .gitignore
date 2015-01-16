@@ -1,4 +1,4 @@
-website/static
+#website/static
 website/project/local_settings.py
 website/static/bower_components
 bower_components/
