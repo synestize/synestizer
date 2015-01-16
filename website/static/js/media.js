@@ -44,8 +44,8 @@
             }, function(e) {
                 alert('Error getting audio or video');
                 console.log(e);
-            });
-        }
-    } 
-    global.media.getstream = getstream;
+            }
+        );
+    };
+    global.media.getStream = getStream;
 })( this );

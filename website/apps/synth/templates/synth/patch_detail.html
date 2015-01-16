@@ -231,17 +231,17 @@
 
     window.addEventListener('DOMContentLoaded', function() {
         media.getStream(
-          function (stream) {
-            analyzer = new this.videoanalyzers.VideoAnalyzer({
-                vidElem: document.getElementById('video'),
-                canvElem: document.getElementById('canvas'),
-                statistics: [new this.videostatistics.AverageColor()],
-                pubsub: pubsub,
-            });
-            $("#info").removeClass("show").addClass("hide");
-            $("#controls").removeClass("hide").addClass("show");
-            
-          }
+            function (stream) {
+                analyzer = new this.videoanalyzers.VideoAnalyzer({
+                    vidElem: document.getElementById('video'),
+                    canvElem: document.getElementById('canvas'),
+                    statistics: [new this.videostatistics.AverageColor()],
+                    pubsub: pubsub,
+                    stream: stream
+                });
+                $("#info").removeClass("show").addClass("hide");
+                $("#controls").removeClass("hide").addClass("show");
+            }
         );
 
         average = d3.select("#average-bars");
