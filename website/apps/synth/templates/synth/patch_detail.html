@@ -4,82 +4,62 @@
 {% load compress %}
 {% block main %}
 
+
 <section id="app">
 
     <canvas id="canvas"></canvas>
 
-    <div id="wrapper">
+    <video id="video" muted autoplay></video>
 
-        <video id="video" muted autoplay></video>
+    <h1 id="logo">SYNESTIZER BETA</h1>
+
+    <div class="row full">
+
+        <div id="info" class="large-12 large-centered columns hide text-center">
+            <h1 class="info-title">
+                Welcome to Synestizer.
+            </h1>
+
+            <p class="info-text">
+                Please enable your webcam in the browser and activate your loudspeakers.
+            </p>
+        </div>
 
 
-        <div class="row full">
+        <div id="controls" class="hide">
 
-            <div class="row hide">
-                <div class="small-10 medium-11 large-10 columns">
-                    <div class="range-slider" data-slider data-options="display_selector: #sliderOutput1;">
-                        <span class="range-slider-handle" role="slider" tabindex="0"></span>
-                        <span class="range-slider-active-segment"></span>
-                    </div>
-                </div>
-                <div class="small-2 medium-1 large-2 columns">
-                    <span id="sliderOutput1"></span>
+            <div class="large-centered large-12 columns">
+                <div id="patch">
+                    <script id="patch_template" type="text/template">
+                        <!--<div>Patch: <%= uuid %></div>-->
+                    </script>
                 </div>
             </div>
+            <div class="sidebar large-3 small-3 medium-3 columns left">
+                <dl class="accordion" data-accordion>
+                    <dd class="accordion-navigation">
+                        <a href="#rgb-panel">RGB</a>
 
-            <div id="info" class="large-6 large-centered columns hide panel radius text-center">
-                <h1 class="info-text">
-                    Welcome to Synestizer.
-                </h1>
+                        <div id="rgb-panel" class="content active">
+                            <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
+                            <div id="average-bars"></div>
+                        </div>
+                    </dd>
+                    <dd class="accordion-navigation">
+                        <a href="#dominant-panel">Dominant Color</a>
 
-                <p>
-                    Please enable your webcam in the browser and activate your loudspeakers.
-                </p>
-            </div>
+                        <div id="dominant-panel" class="content active">
+                            <div id="dominant-bars"></div>
+                        </div>
+                    </dd>
 
-
-            <div id="controls" class="hide">
-
-                <div class="large-centered large-12 columns">
-
-                    <div id="patch">
-                        <script id="patch_template" type="text/template">
-                            <!--<div>Patch: <%= uuid %></div>-->
-                            SYNESTIZER BETA
-                        </script>
-                    </div>
-                </div>
-                <div class="large-3 small-3 medium-3 columns left">
-                    <dl class="accordion" data-accordion>
-                        <dd class="accordion-navigation">
-                            <a href="#rgb-panel">RGB</a>
-
-                            <div id="rgb-panel" class="content active">
-                                <div id="average-bars"></div>
-                            </div>
-                        </dd>
-                        <dd class="accordion-navigation">
-                            <a href="#dominant-panel">Dominant Color</a>
-
-                            <div id="dominant-panel" class="content active">
-                                <div id="dominant-bars"></div>
-                            </div>
-                        </dd>
-                        <!--
-                        <dd class="accordion-navigation">
-                            <a href="#eight-bit-panel">8-Bit</a>
-
-                            <div id="eight-bit-panel" class="content">
-                                ...
-                            </div>
-                        </dd>
-                    -->
                 </dl>
             </div>
 
-            <div class="large-3 small-4 medium-4 columns right">
+
+            <div class="sidebar large-3 medium-3 small-5 columns right">
                 <!-- SYNTHS -->
-                <dl class="accordion" data-accordion>
+                <dl class="accordion scrollable_accordion" data-accordion>
                     <dd class="accordion-navigation">
 
                         <a href="#triad">Triad</a>
@@ -88,8 +68,8 @@
 
                             <script id="triad_template" type="text/template">
 
-                            <div class="row">
-                                    <div class="small-4 medium-4 large-4 columns">
+                                <div class="row">
+                                    <div class="small-3 medium-3 large-3 columns">
                                         <div class="knob_label">
                                             Output
                                         </div>
@@ -99,50 +79,38 @@
                                     </div>
                                 </div>
 
-                                <div class="row" style="padding: 10px;">
-                                    <div class="small-3 medium-4 columns label red">
-                                        <label id="triadFreq1Label">Oscillator 1</label>
-                                    </div>
-                                    <div class="small-3 medium-4 columns label green">
-                                        <label id="triadFreq2Label">Oscillator 2</label>
-                                    </div>
-                                    <div class="small-3 medium-4 columns label blue">
-                                        <label id="triadFreq2Label">Oscillator 2</label>
-                                    </div>
-
-                                </div>
-
                                 <div class="row text-center">
-                                    <div class="small-4 medium-4 columns">
+                                    <div class="large-4 small-4 medium-4 columns">
                                         <div class="knob_label">
                                             Freq 1
                                         </div>
                                         <webaudio-knob id="triadFreq1Knob" src="{% static 'img/knob.png' %}"
-                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq1 %>"
+                                        sprites="100" valuetip="0" value="<%= preset.oscFreq1 %>"
                                         min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>"
                                         step="1"></webaudio-knob>
-                                        <input id="triadFreq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" style="margin-top: 10px;" />
+                                        <input id="triadFreq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" />
                                     </div>
-                                    <div class="small-4 medium-4 columns">
+                                    <div class="large-4 small-4 medium-4 columns">
                                         <div class="knob_label">
                                             Freq 2
                                         </div>
                                         <webaudio-knob id="triadFreq2Knob" src="{% static 'img/knob.png' %}"
-                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq2 %>"
+                                        sprites="100" valuetip="0" value="<%= preset.oscFreq2 %>"
                                         min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>"
                                         step="1"></webaudio-knob>
-                                        <input type="number" value="<%= preset.oscFreq2 %>" style="margin-top: 10px;"/>
+                                        <input id="triadFreq2Numberbox" type="number" value="<%= preset.oscFreq2 %>" min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>" />
                                     </div>
-                                    <div class="small-4 medium-4 columns">
+                                    <div class="large-4 small-4 medium-4 columns">
                                         <div class="knob_label">
                                             Freq 3
                                         </div>
                                         <webaudio-knob id="triadFreq3Knob" src="{% static 'img/knob.png' %}"
-                                        sprites="100" tooltip="Frequency" value="<%= preset.oscFreq3 %>"
+                                        sprites="100" valuetip="0" value="<%= preset.oscFreq3 %>"
                                         min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>"
                                         step="1"></webaudio-knob>
-                                        <input type="number" value="<%= preset.oscFreq3 %>" style="margin-top: 10px;"/>
+                                        <input id="triadFreq3Numberbox" type="number" value="<%= preset.oscFreq3 %>" min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>" />
                                     </div>
+
 
 
                                 </div>
@@ -230,86 +198,83 @@
         </div>
     </div>
 
-    {% addtoblock "js" %}
+</section>
 
-    {% compress js %}
+{% addtoblock "js" %}
+
+{% compress js %}
 
 
-    <!-- vendor -->
-    <script src="{% static 'pubsub.js/src/pubsub.js' %}"></script>
-    <script src="{% static 'd3/d3.min.js' %}"></script>
+<!-- vendor -->
+<script src="{% static 'pubsub.js/src/pubsub.js' %}"></script>
+<script src="{% static 'd3/d3.min.js' %}"></script>
 
-    <!-- video analysis -->
-    <script src="{% static 'js/video/analyzer.js' %}"></script>
-    <script src="{% static 'js/video/mapping.js' %}"></script>
-    <script src="{% static 'js/video/videostats.js' %}"></script>
+<!-- video analysis -->
+<script src="{% static 'js/video/analyzer.js' %}"></script>
+<script src="{% static 'js/video/mapping.js' %}"></script>
+<script src="{% static 'js/video/videostats.js' %}"></script>
 
-    <script>
-            // setup info div
-            $("#info").removeClass("hide").addClass("show");
+<script>
+    // setup info div
+    $("#info").removeClass("hide").addClass("show");
 
-            var analyzer, pubsub, handle, bars, scale, average;
+    var analyzer, pubsub, handle, bars, scale, average;
 
-            pubsub = PubSub; //give our global signal bus a nice name
+    pubsub = PubSub; //give our global signal bus a nice name
 
-            window.addEventListener('DOMContentLoaded', function() {
-                analyzer = new this.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                });
+    window.addEventListener('DOMContentLoaded', function() {
+        analyzer = new this.videoanalyzers.VideoAnalyzer({
+            vidElem: document.getElementById('video'),
+            canvElem: document.getElementById('canvas'),
+            statistics: [new this.videostatistics.AverageColor()],
+            pubsub: pubsub,
+        });
 
-                average = d3.select("#average-bars");
-                scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
-                handle = pubsub.subscribe(
-                    "/videoanalyzer/averagecolor/raw", function(data){
+        average = d3.select("#average-bars");
+        scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
+        handle = pubsub.subscribe(
+            "/videoanalyzer/averagecolor/raw", function(data){
 
-                        // draw color bars
-                        bars = average.selectAll("div").data(data);
-                        bars.enter().append("div");
-                        bars.style("width", function(d) { return scale(d) + "px"; });
-                        bars.style("background-color", function(d, i) {
-                            if (i == 0)
-                                return d3.rgb(255,0,0);
-                            if (i == 1)
-                                return d3.rgb(0,255,0);
-                            if (i == 2)
-                                return d3.rgb(0,0,255);
-                        })
-                        bars.exit().remove();
+                // draw color bars
+                bars = average.selectAll("div").data(data);
+                bars.enter().append("div");
+                bars.style("width", function(d) { return scale(d) + "px"; });
+                bars.style("background-color", function(d, i) {
+                    if (i == 0)
+                        return d3.rgb(255,0,0);
+                    if (i == 1)
+                        return d3.rgb(0,255,0);
+                    if (i == 2)
+                        return d3.rgb(0,0,255);
+                })
+                bars.exit().remove();
 
-                        // change background color
-                        document.getElementById("wrapper").style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
+                // change background color
+                document.getElementById("logo").style.color = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
 
-                    });
             });
+    });
+
 </script>
 
 <!-- synths -->
 <script src="{% static 'js/audio/synths/triad.js' %}"></script>
-<script src="{% static 'js/audio/synths/minimal.js' %}"></script>
+<script src="{% static 'js/audio/synths/SP1.js' %}"></script>
 
 <!-- patches -->
 <script src="{% static 'js/audio/patches/triad.js' %}"></script>
 <script src="{% static 'js/audio/patches/minimal.js' %}"></script>
 
 <script>
-            // patch ID
-            //localStorage.setItem('id', {{ object.id }});
-            ID = {{ object.id }};
-        </script>
+    ID = {{ object.id }};
+</script>
 
-        <!-- main app -->
-        <script src="{% static 'js/app.js' %}"></script>
+<!-- main app -->
+<script src="{% static 'js/app.js' %}"></script>
 
-        {% endcompress %}
+{% endcompress %}
 
-        {% endaddtoblock %}
+{% endaddtoblock %}
 
-
-    </div>
-
-</section>
 
 {% endblock %}

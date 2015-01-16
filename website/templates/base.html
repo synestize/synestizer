@@ -7,10 +7,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <title>synestizer</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
     <!-- foundation -->
     <link rel="stylesheet" href="{% static 'foundation/css/foundation.css' %}">
@@ -26,19 +26,20 @@
 
 <body>
 
-    {% block main %}{% endblock %}
+    <div id="wrapper">
 
-    <!-- Footer -->
-    <div id="footer">
-        <div class="text-center">
-            <p>
+        {% block main %}{% endblock %}
+
+        <!-- Footer -->
+        <div id="footer">
+            <div class="footer_content">
                 &copy; {% now "Y" %} by <a href="https://twitter.com/kultkat">@kultkat</a> &
                 <a href="https://twitter.com/howthebodyworks">@howthebodyworks</a> &
                 <a href="https://twitter.com/stahlnow">@stahlnow</a>.
                 This work is licensed under a <a rel="license"
                 href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
                 Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-            </p>
+            </div>
         </div>
     </div>
 
@@ -66,6 +67,19 @@
                 // allow accordion panels to be closed by clicking on their headers
                 // setting to false only closes accordion panels when another is opened
                 toggleable: true
+            }
+        });
+        // sticky footer
+        $(window).bind("load", function () {
+            var footer = $("#footer");
+            var pos = footer.position();
+            var height = $(window).height();
+            height = height - pos.top;
+            height = height - footer.height();
+            if (height > 0) {
+                footer.animate({
+                    'margin-top': height + 'px'
+                });
             }
         });
     </script>
