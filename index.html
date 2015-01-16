@@ -8,14 +8,9 @@
 
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
-    <!-- foundation -->
-    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
     <!-- synestizer style -->
     <link rel="stylesheet" href="css/style.css">
     <!-- modernizr for html5 feature detection -->
-
-    <script src="bower_components/foundation/js/vendor/jquery.js"></script>
-    <script src="bower_components/foundation/js/foundation.min.js"></script>
 
     <!-- web components -->
     <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
@@ -27,35 +22,6 @@
 
     <!-- include WAAX -->
     <script src="js/vendor/waax.js"></script>    
-    <script>
-        // init foundation
-        $(document).foundation({
-            accordion: {
-                // specify the class used for accordion panels
-                content_class: 'content',
-                // specify the class used for active (or open) accordion panels
-                active_class: 'active',
-                // allow multiple accordion panels to be active at the same time
-                multi_expand: true,
-                // allow accordion panels to be closed by clicking on their headers
-                // setting to false only closes accordion panels when another is opened
-                toggleable: true
-            }
-        });
-        // sticky footer
-        $(window).bind("load", function () {
-            var footer = $("#footer");
-            var pos = footer.position();
-            var height = $(window).height();
-            height = height - pos.top;
-            height = height - footer.height();
-            if (height > 0) {
-                footer.animate({
-                    'margin-top': height + 'px'
-                });
-            }
-        });
-    </script>
 
 </head>
 
