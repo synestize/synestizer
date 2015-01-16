@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "backbone": "~1.1.2",
     "core-component-page": "Polymer/core-component-page#^0.5.0",
     "d3": "~3.5.3",
     "pubsub.js": "~0.1.0"
