@@ -57,10 +57,14 @@ This Frame is based on the manipulation of short samples that can be recorded im
 
 ## Who develops the synestizer?
 
-Soundartist Kaspar König (www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us. His interest in interpreting colours, patterns, materials and most recently also wind as an actor to map sound lead to the development of the synestizer.  
-Now Christoph Stähli (programmer of Noisetracks and more see www.stahlnow.com) and Dan Mackinlay (http://notes.livingthing.org/  the mathemagician in the team) are contributing a great deal to the code the project with a lot of engagment for the first release. Support is also coming from the Fasos department of the  UM Maastricht thanks to Prof. K. Bijsterveld. 
+Soundartist Kaspar König (www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us.
+His interest in interpreting colours, patterns, materials and most recently also wind as an actor to map sound lead to the development of the initial version of synestizer.
+Now the group is growing and there are new people interested in the project, and we have opened up the code to invite even more to joins us.
+Users and artists are welcome to experiment with, and developers welcome to modify this thing. 
 
-Now the group is growing and there are new people interested in the project Synestizer.com. In providing the source code and the idea what one could do with this tool, gathers more interested people so the project can grow into a broad instrument opening up for many users to experiment and developers to participate in. 
+Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://notes.livingthing.org/),  the mathemagician in the team, are contributing a great deal to the code the project with a lot of engagment for the first release.
+Support is also coming from the Fasos department of the UM Maastricht thanks to Prof. K. Bijsterveld. 
+
 
 Want to join us?
 See [github](https://github.com/synestize/synestizer) for the open source code.
@@ -80,4 +84,3 @@ Or [inspect the source code](https://github.com/synestize/synestizer).
 
 The sound and imagery is not captured or so. The only thing we think is useful and thus added in the features, is a way to set your preferences in the app. This is stored in the browser Cache. 
 The (voluntary) option of saving patches, settings or mappings online at [synestizer.com](http://synestizer.com) may be added in a future version.
-
