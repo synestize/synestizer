@@ -114,10 +114,7 @@ BOWER_INSTALLED_APPS = (
     'zurb/bower-foundation#5.5.0',
     'pubsub.js#0.1.0',
     'd3#3.5.2',
-    'lodash#2.4.1',
-    'jstat#1.0.10',
-    'linear-algebra#3.1.1'
-    )
+)
 
 
 # Compress
