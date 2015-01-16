@@ -52,7 +52,6 @@
                             <div id="dominant-bars"></div>
                         </div>
                     </dd>
-
                 </dl>
             </div>
 
@@ -249,11 +248,17 @@
                 })
                 bars.exit().remove();
 
-                // change background color
+                // change color of logo and ui
                 document.getElementById("logo").style.color = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
 
+                var ui = document.getElementsByClassName("content active");
+                [].forEach.call(ui, function (el) {
+                    el.style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')'
+                });
+
+
             });
-    });
+});
 
 </script>
 

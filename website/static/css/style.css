@@ -8,10 +8,6 @@ body {
     color: #fff;
 }
 
-a, a:hover, a:active {
-    color: #585D9A;
-}
-
 .row.full {
     width: 100%;
     max-width: 100%;
@@ -75,16 +71,13 @@ a, a:hover, a:active {
 
 .sidebar {
     padding: 5px;
-    opacity: 0.9;
+    opacity: 0.8;
     z-index: 1;
 }
 
 .accordion {
-    width: 320px;
-
-    background-color: #585D9A;
+    width: 320px; /* fixed width to 320px!!! */
     color: #333;
-    padding: 10px;
 }
 
 .scrollable_accordion {
@@ -205,6 +198,10 @@ input[type="number"] {
 .footer_content {
     padding: 10px;
     color: #555;
+}
+
+.footer_content a, .footer_content a:hover, .footer_content a:active {
+    color: #aaa;
 }
 
 
