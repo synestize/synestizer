@@ -19,8 +19,6 @@
 
     {% render_block "css" %}
 
-    <!-- modernizr for html5 feature detection -->
-    <script src="{% static 'js/vendor/modernizr_customized.js' %}"></script>
 
 </head>
 
@@ -49,8 +47,6 @@
     <script src="{% static 'foundation/js/vendor/jquery.js' %}"></script>
 
     <script src="{% static 'foundation/js/foundation.min.js' %}"></script>
-
-    <script src="{% static 'js/vendor/velocity.min.js' %}"></script>
 
     <script>var STATIC_URL = '{{ STATIC_URL|escapejs }}';</script>
 
@@ -95,10 +91,6 @@
 
     <!-- include WAAX -->
     <script src="{% static 'js/vendor/waax.js' %}"></script>
-
-    <script src="{% static 'js/vendor/jquery.color-2.1.2.js' %}"></script>
-    <script src="{% static 'js/vendor/chroma.min.js' %}"></script>
-    <script src="{% static 'js/vendor/quantize.js' %}"></script>
 
     {% endcompress %}
 
