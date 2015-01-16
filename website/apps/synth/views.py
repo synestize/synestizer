@@ -1,25 +1,10 @@
-from django.views.generic import DetailView, ListView
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-
-from .models import Synth, Patch
-
-
-class SynthListView(ListView):
-    model = Synth
-    pass
-
-
-class SynthDetailView(DetailView):
-    model = Synth
-    pass
+from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404
+from .models import Patch
 
 
 class PatchDetailView(DetailView):
     model = Patch
 
-
-
-def index(request):
-    return render_to_response('synth/index.html', {}, context_instance=RequestContext(request))
-
+    def get_object(self):
+        return get_object_or_404(Patch, pk=1)
