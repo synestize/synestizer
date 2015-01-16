@@ -6,7 +6,7 @@ var patches = patches || {};
 (function(patches, window) {
     'use strict';
 
-    patches.Sampler = function (preset) {
+    patches.Sampler = function (preset, stream) {
 
         var preset = preset || {};
         var sampler = WX.SP1();
@@ -25,8 +25,26 @@ var patches = patches || {};
 
         var analyserNode;
 
-        initAudio();
+        inputPoint = WX._ctx.createGain();
 
+        // Create an AudioNode from the stream.
+        realAudioInput = WX._ctx.createMediaStreamSource(stream); // using analyzer from patch_detail.html
+        audioInput = realAudioInput;
+        audioInput.connect(inputPoint);
+
+        //    audioInput = convertToMono( input );
+
+        analyserNode = WX._ctx.createAnalyser();
+        analyserNode.fftSize = 2048;
+        inputPoint.connect( analyserNode );
+
+        audioRecorder = new Recorder( inputPoint );
+
+        var zeroGain = WX._ctx.createGain();
+        zeroGain.gain.value = 0.0;
+        inputPoint.connect( zeroGain );
+        zeroGain.connect( WX._ctx.destination );
+        updateAnalysers();
         console.log("Sampler patch initialized");
 
         return {
@@ -61,55 +79,6 @@ var patches = patches || {};
                 sampler: sampler,
                 preset: preset
             }
-        };
-
-        function initAudio() {
-            if (!navigator.getUserMedia)
-                navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-            if (!navigator.cancelAnimationFrame)
-                navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-            if (!navigator.requestAnimationFrame)
-                navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
-
-            navigator.getUserMedia(
-            {
-                "audio": {
-                    "mandatory": {
-                        "googEchoCancellation": "false",
-                        "googAutoGainControl": "false",
-                        "googNoiseSuppression": "false",
-                        "googHighpassFilter": "false"
-                    },
-                    "optional": []
-                },
-            }, gotStream, function(e) {
-                alert('Error getting audio');
-                console.log(e);
-            });
-        }
-
-
-        function gotStream(stream) {
-            inputPoint = WX._ctx.createGain();
-
-            // Create an AudioNode from the stream.
-            realAudioInput = WX._ctx.createMediaStreamSource(stream); // using analyzer from patch_detail.html
-            audioInput = realAudioInput;
-            audioInput.connect(inputPoint);
-
-            //    audioInput = convertToMono( input );
-
-            analyserNode = WX._ctx.createAnalyser();
-            analyserNode.fftSize = 2048;
-            inputPoint.connect( analyserNode );
-
-            audioRecorder = new Recorder( inputPoint );
-
-            var zeroGain = WX._ctx.createGain();
-            zeroGain.gain.value = 0.0;
-            inputPoint.connect( zeroGain );
-            zeroGain.connect( WX._ctx.destination );
-            updateAnalysers();
         };
 
         function updateAnalysers(time) {

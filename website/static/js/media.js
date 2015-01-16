@@ -1,6 +1,9 @@
 (function( global ) {
     'use strict';
-    
+    var getStream;
+    global.media = {
+        stream: undefined,
+    };
     // shim the requestAnimationFrame API, with a setTimeout fallback
     window.requestAnimFrame = (function(){
         return window.requestAnimationFrame ||
@@ -12,6 +15,9 @@
             window.setTimeout(callback, 1000 / 60);
         };
     })();
+    if (!navigator.cancelAnimationFrame)
+        navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
+    
     // shim getUserMedia ;
     //making it a local method doesn't work without tedious "this" wrangling.
     global.navigator.getUserMedia = (global.navigator.getUserMedia ||
@@ -22,4 +28,24 @@
     // Make webkit browsers use the prefix-free version of AudioContext.
     global.AudioContext = global.AudioContext || global.webkitAudioContext;
 
-})( this, window );
+    getStream = function(success) {
+        //we have already called this!
+        if (typeof global.media.stream !== 'undefined') {
+            success(global.media.stream);
+        };
+        //otherwise, call it now.
+        global.navigator.getUserMedia(
+            {
+                "video": true,
+                "audio": false,
+            }, function(stream) {
+                global.media.stream = stream;
+                success(stream);
+            }, function(e) {
+                alert('Error getting audio or video');
+                console.log(e);
+            });
+        }
+    } 
+    global.media.getstream = getstream;
+})( this );
