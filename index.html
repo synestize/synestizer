@@ -9,15 +9,24 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
     <!-- foundation -->
-    <link rel="stylesheet" href="foundation/css/foundation.css">
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
     <!-- synestizer style -->
     <link rel="stylesheet" href="css/style.css">
     <!-- modernizr for html5 feature detection -->
 
-    <script src="foundation/js/vendor/jquery.js"></script>
-    <script src="foundation/js/foundation.min.js"></script>
-    <script src="js/vendor/velocity.min.js"></script>
+    <script src="bower_components/foundation/js/vendor/jquery.js"></script>
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
 
+    <!-- web components -->
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="bower_components/polymer/polymer.min.js"></script>
+
+    <!-- include backbone.js -->
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+
+    <!-- include WAAX -->
+    <script src="js/vendor/waax.js"></script>    
     <script>
         // init foundation
         $(document).foundation({
@@ -48,34 +57,12 @@
         });
     </script>
 
-
-    <!-- web components -->
-    <script src="webcomponentsjs/webcomponents.js"></script>
-    <script src="polymer/polymer.min.js"></script>
-
-    <!-- include backbone.js -->
-    <script src="underscore/underscore-min.js"></script>
-    <script src="backbone/backbone.js"></script>
-
-    <!-- include WAAX -->
-    <script src="js/vendor/waax.js"></script>
-
-    <script src="js/vendor/jquery.color-2.1.2.js"></script>
-    <script src="js/vendor/chroma.min.js"></script>
-    <script src="js/vendor/quantize.js"></script>
-
-    <link rel="import" href="webcomponents/controls.html">
-    
-    <script src="js/vendor/modernizr_customized.js"></script>
-
 </head>
 
 <body>
 
     <div id="wrapper">
-
         <section id="app">
-
             <canvas id="canvas"></canvas>
 
             <video id="video" muted autoplay></video>
@@ -272,7 +259,7 @@
         <!-- Footer -->
         <div id="footer">
             <div class="footer_content">
-                &copy; {% now "Y" %} by <a href="http://www.kasparkoenig.com/">kaspar</a>,
+                &copy; 2015 by <a href="http://www.kasparkoenig.com/">kaspar</a>,
                 <a href="https://www.livingthing.org">dan</a> &amp;
                 <a href="http://www.stahlnow.com">stahl</a>.
                 This work is licensed under a <a rel="license"
@@ -281,6 +268,7 @@
             </div>
         </div>
     </div>
+    <link rel="import" href="webcomponents/controls.html">
 
 </body>
 </html>

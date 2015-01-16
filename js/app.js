@@ -15,8 +15,8 @@ app.Patch = Backbone.Model.extend({
     },
 
     url: function () {
-        var id = this.id || '';
-        return "/api/v1/synth/patch/" + id;
+        var id = '';
+        return "/";
     }
 });
 
