@@ -4,7 +4,7 @@
 
 „It`s time to open the digital window and listen colourwise.”  K.Koenig
 
-version 23/1/2015:
+version 150123:
 
 This document is made to explain the idea and function of the synestizer project 
 at [synestizer.com](http://synestizer.com).
