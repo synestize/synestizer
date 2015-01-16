@@ -77,27 +77,56 @@
     <script src="./js/audio/synths/SP1.js"></script>
     <script src="./js/audio/synths/triad.js"></script>
     <script>
-      var analyzer, pubsub, handle, bars, scale, graph;
-      pubsub = PubSub; //give our global signal bus a nice name
-      window.addEventListener('DOMContentLoaded', function() {
-        analyzer = new this.videoanalyzers.VideoAnalyzer({
-          vidElem: document.getElementById('video'),
-          canvElem: document.getElementById('canvas'),
-          statistics: [new this.videostatistics.DominantColor()],
-          pubsub: pubsub,
-        });
-        graph = d3.select("#s");
-        scale = d3.scale.linear()
-          .domain([0, 1])
-          .range([0, 100]); //could be determined from style
-        handle = pubsub.subscribe(
-          "/videoanalyzer/dominantcolor/raw", function(data){
-              bars = graph.selectAll("div").data(data);
-              bars.enter().append("div");
-              bars.style("width", function(d) { return scale(d) + "px"; });
-              bars.exit().remove();
-        });
-      });
+        // setup info div
+        $("#info").removeClass("hide").addClass("show");
+
+        var analyzer, pubsub, handle, bars, scale, average;
+
+        pubsub = PubSub; //give our global signal bus a nice name
+
+        window.addEventListener('DOMContentLoaded', function() {
+            analyzer = new this.videoanalyzers.VideoAnalyzer({
+                vidElem: document.getElementById('video'),
+                canvElem: document.getElementById('canvas'),
+                statistics: [new this.videostatistics.AverageColor()],
+                pubsub: pubsub,
+                success: function () {// hide info layer
+                    $("#info").removeClass("show").addClass("hide");
+                    $("#controls").removeClass("hide").addClass("show");
+                }
+            });
+
+            average = d3.select("#average-bars");
+            scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
+            handle = pubsub.subscribe(
+                "/videoanalyzer/averagecolor/raw", function(data){
+
+                    // draw color bars
+                    bars = average.selectAll("div").data(data);
+                    bars.enter().append("div");
+                    bars.style("width", function(d) { return scale(d) + "px"; });
+                    bars.style("background-color", function(d, i) {
+                        if (i == 0)
+                            return d3.rgb(255,0,0);
+                        if (i == 1)
+                            return d3.rgb(0,255,0);
+                        if (i == 2)
+                            return d3.rgb(0,0,255);
+                    })
+                    bars.exit().remove();
+
+                    // change color of logo and ui
+                    document.getElementById("logo").style.color = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
+
+                    var ui = document.getElementsByClassName("content active");
+                    [].forEach.call(ui, function (el) {
+                        el.style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')'
+                    });
+
+
+                });
+    });
+
     </script>
     <!-- include WAAX -->
     <script src="js/vendor/waax.js"></script>    
