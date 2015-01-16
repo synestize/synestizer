@@ -11,9 +11,6 @@
     <!-- synestizer style -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- include WAAX -->
-    <script src="js/vendor/waax.js"></script>    
-
 </head>
 
 <body>
@@ -52,10 +49,7 @@
                                     <div id="dominant-bars"></div>
                                 </div>
 
-
-
         </section>
-        
 
         <!-- Footer -->
         <div id="footer">
@@ -69,6 +63,43 @@
             </div>
         </div>
     </div>
+    <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
+    <script src="./bower_components/d3/d3.js"></script>
+    <script src="js/vendor/waax.js"></script>    
+    
+    <!-- our stuff -->
+    <script src="./js/video/analyzer.js"></script>
+    <script src="./js/video/videostats.js"></script>
+    <script src="./js/video/mapping.js"></script>
+    <script src="./js/audio/patches/minimal.js"></script>
+    <script src="./js/audio/patches/triad.js"></script>
+    <script src="./js/audio/synths/SP1.js"></script>
+    <script src="./js/audio/synths/triad.js"></script>
+    <script>
+      var analyzer, pubsub, handle, bars, scale, graph;
+      pubsub = PubSub; //give our global signal bus a nice name
+      window.addEventListener('DOMContentLoaded', function() {
+        analyzer = new this.videoanalyzers.VideoAnalyzer({
+          vidElem: document.getElementById('v'),
+          canvElem: document.getElementById('c'),
+          statistics: [new this.videostatistics.DominantColor()],
+          pubsub: pubsub,
+        });
+        graph = d3.select("#s");
+        scale = d3.scale.linear()
+          .domain([0, 1])
+          .range([0, 100]); //could be determined from style
+        handle = pubsub.subscribe(
+          "/videoanalyzer/dominantcolor/raw", function(data){
+              bars = graph.selectAll("div").data(data);
+              bars.enter().append("div");
+              bars.style("width", function(d) { return scale(d) + "px"; });
+              bars.exit().remove();
+        });
+      });
+    </script>
+    <!-- include WAAX -->
+    <script src="js/vendor/waax.js"></script>    
 
 </body>
 </html>
