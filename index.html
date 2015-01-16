@@ -80,8 +80,8 @@
       pubsub = PubSub; //give our global signal bus a nice name
       window.addEventListener('DOMContentLoaded', function() {
         analyzer = new this.videoanalyzers.VideoAnalyzer({
-          vidElem: document.getElementById('v'),
-          canvElem: document.getElementById('c'),
+          vidElem: document.getElementById('video'),
+          canvElem: document.getElementById('canvas'),
           statistics: [new this.videostatistics.DominantColor()],
           pubsub: pubsub,
         });
