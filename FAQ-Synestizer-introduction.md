@@ -45,9 +45,8 @@ To differentiate the similar sine-wave sound, we decided to make a square-wave a
 ### Minimal 
 
 The RGB values influence the intervals of the notes played by synthesized instruments available through the implementation of [waax](https://github.com/hoch/waax).
-According to the score a 60% colour value plays two notes with no interval in between. A 70%  colour value plays a minor third and 75% a major third etc. (see picture 1). The tempo of the intervals are set with the corresponding know labeled accordingly. 
+According to the score at 50% colour value the 3 instruments (piano = red / panflute = green / vibraphon = blue) play ech 3 notes a bar with small intervals in between. Going up and down the scale, in a variety of intervals the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob labeled accordingly. 
 
-Every colour is mapped to another instrument ....
 
 ### Sample
 
