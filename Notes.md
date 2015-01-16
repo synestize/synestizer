@@ -51,6 +51,14 @@ The *immediate* things we need to do:
 * [liveweave](http://liveweave.com/) also has nice collaborative features, although less JS influence.
 
 
+## javascript tips
+
+* Jquery too big. Alternatives:
+
+  * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
+  * [zepto](http://zeptojs.com/)
+  * but anyway [you might not need jquery](http://youmightnotneedjquery.com/)
+
 ## linear algebra options
 
 Ranked in descending order of viability:
