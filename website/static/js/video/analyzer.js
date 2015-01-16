@@ -4,10 +4,10 @@
 
     //sneakily monkey patch the getUserMedia thing;
     //making it a local method doesn't work without tedious "this" wrangling.
-    global.navigator.getUserMedia = (global.navigator.getUserMedia ||
-        global.navigator.webkitGetUserMedia ||
-        global.navigator.mozGetUserMedia ||
-        global.navigator.msGetUserMedia);
+    navigator.getUserMedia = (navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia);
 
     var VideoAnalyzer = function (params){
         var self = this;
@@ -37,8 +37,8 @@
             self.statistics[i].attach(self);
         }
 
-        if (global.navigator.getUserMedia) {
-            global.navigator.getUserMedia(
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia(
                 {video:true, audio:false},
                 function(stream) {
                     var url = global.window.URL || global.window.webkitURL;

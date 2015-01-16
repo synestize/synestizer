@@ -105,36 +105,6 @@ var patches = patches || {};
         [64, 127],[76, 127],[64, 127],[-1,0],
         ];
 
-        var track4 = [
-        [74, 127],[-1,0],[55, 127],[67, 127],
-        [74, 127],[-1,0],[62, 127],[74, 127],
-        [74, 127],[-1,0],[67, 127],[74, 127],
-        [74, 127],[-1,0],[69, 127],[74, 127],
-        [74, 127],[-1,0],[70, 127],[74, 127],
-        [74, 127],[-1,0],[72, 127],[74, 127],
-        [74, 127],[-1,0],[74, 127],[74, 127],
-        [74, 127],[-1,0],[76, 127],[74, 127],
-        [74, 127],[-1,0],[77, 127],[74, 127],
-        [74, 127],[-1,0],[79, 127],[74, 127],
-        [74, 127],[-1,0],[81, 127],[74, 127],
-        [74, 127],[-1,0],[86, 127],[74, 127],
-        ];
-
-        var track5 = [
-        [64, 127],[45, 127],[57, 127],[-1,0],
-        [64, 127],[52, 127],[64, 127],[-1,0],
-        [64, 127],[57, 127],[64, 127],[-1,0],
-        [64, 127],[59, 127],[64, 127],[-1,0],
-        [64, 127],[60, 127],[64, 127],[-1,0],
-        [64, 127],[62, 127],[64, 127],[-1,0],
-        [64, 127],[64, 127],[64, 127],[-1,0],
-        [64, 127],[66, 127],[64, 127],[-1,0],
-        [64, 127],[67, 127],[64, 127],[-1,0],
-        [64, 127],[69, 127],[64, 127],[-1,0],
-        [64, 127],[71, 127],[64, 127],[-1,0],
-        [64, 127],[76, 127],[64, 127],[-1,0],
-        ];
-
 
         console.log("Minimal patch initialized");
 
@@ -206,31 +176,16 @@ var patches = patches || {};
             var note2 = track2[beatNumber/4 + offsetGreen*4][0];
             var env2 = track2[beatNumber/4 + offsetGreen*4][1];
             if (note2 != -1){
-                piano.noteOn(note2, env2, time);
-                piano.noteOff(note2, env2, time + d);
+                panflute.noteOn(note2, env2, time);
+                panflute.noteOff(note2, env2, time + d);
             }
 
             var note3 = track3[beatNumber/4 + offsetBlue*4][0];
             var env3 = track3[beatNumber/4 + offsetBlue*4][1];
             if (note3 != -1){
-                piano.noteOn(note3, env3, time);
-                piano.noteOff(note3, env3, time + d);
+                vibraphone.noteOn(note3, env3, time);
+                vibraphone.noteOff(note3, env3, time + d);
             }
-
-            var note4 = track4[beatNumber/4 + offsetGreen*4][0];
-            var env4 = track4[beatNumber/4 + offsetGreen*4][1];
-            if (note4 != -1){
-                panflute.noteOn(note4, env4, time);
-                panflute.noteOff(note4, env4, time + d);
-            }
-
-            var note5 = track5[beatNumber/4 + offsetBlue*4][0];
-            var env5 = track5[beatNumber/4 + offsetBlue*4][1];
-            if (note5 != -1){
-                vibraphone.noteOn(note5, env5, time);
-                vibraphone.noteOff(note5, env5, time + d);
-            }
-
 
         };
 

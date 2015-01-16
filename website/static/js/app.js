@@ -51,6 +51,9 @@ app.PatchView = Backbone.View.extend({
                 case "Minimal":
                 new app.MinimalView({synth: JSON.parse(synth), preset: JSON.parse(preset)['minimal']});
                 break;
+                case "Sampler":
+                new app.SamplerView({synth: JSON.parse(synth), preset: JSON.parse(preset)['sampler']});
+                break;
             }
         }
 
@@ -140,6 +143,35 @@ app.MinimalView = Backbone.View.extend({
 
         this.minimal = new patches.Minimal(this.preset);
         this.minimal.run();
+
+        return this;
+    },
+}
+);
+
+app.SamplerView = Backbone.View.extend({
+    tagName: "div",
+    template: _.template($("#sampler_template").html()),
+
+    events: {
+        "change #samplerOutputKnob": function(e) { this.sampler.setOutput(e.target.value); },
+        "click #toggleRecording": function(e) { this.sampler.toggleRecording(e.target); },
+    },
+
+    initialize: function (options) {
+        console.log("SamplerView initialized");
+        _.extend(this, _.pick(options, "synth", "preset" /* , ... */));
+        this.render();
+    },
+
+    render: function () {
+        console.log("SamplerView rendered");
+
+        this.$el.html(this.template({synth: this.synth, preset: this.preset}));
+        $("#sampler").append(this.$el);
+
+        this.sampler = new patches.Sampler(this.preset);
+        this.sampler.run();
 
         return this;
     },
