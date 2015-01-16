@@ -227,6 +227,10 @@
             canvElem: document.getElementById('canvas'),
             statistics: [new this.videostatistics.AverageColor()],
             pubsub: pubsub,
+            success: function () {// hide info layer
+                $("#info").removeClass("show").addClass("hide");
+                $("#controls").removeClass("hide").addClass("show");
+            }
         });
 
         average = d3.select("#average-bars");
