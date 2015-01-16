@@ -9,14 +9,64 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
     <!-- foundation -->
-    <link rel="stylesheet" href="{% static 'foundation/css/foundation.css' %}">
+    <link rel="stylesheet" href="foundation/css/foundation.css">
     <!-- synestizer style -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    {% render_block "css" %}
-
+    <link rel="stylesheet" href="css/style.css">
     <!-- modernizr for html5 feature detection -->
-    <script src="{% static 'js/vendor/modernizr_customized.js' %}"></script>
+
+    <script src="foundation/js/vendor/jquery.js"></script>
+    <script src="foundation/js/foundation.min.js"></script>
+    <script src="js/vendor/velocity.min.js"></script>
+
+    <script>
+        // init foundation
+        $(document).foundation({
+            accordion: {
+                // specify the class used for accordion panels
+                content_class: 'content',
+                // specify the class used for active (or open) accordion panels
+                active_class: 'active',
+                // allow multiple accordion panels to be active at the same time
+                multi_expand: true,
+                // allow accordion panels to be closed by clicking on their headers
+                // setting to false only closes accordion panels when another is opened
+                toggleable: true
+            }
+        });
+        // sticky footer
+        $(window).bind("load", function () {
+            var footer = $("#footer");
+            var pos = footer.position();
+            var height = $(window).height();
+            height = height - pos.top;
+            height = height - footer.height();
+            if (height > 0) {
+                footer.animate({
+                    'margin-top': height + 'px'
+                });
+            }
+        });
+    </script>
+
+
+    <!-- web components -->
+    <script src="webcomponentsjs/webcomponents.js"></script>
+    <script src="polymer/polymer.min.js"></script>
+
+    <!-- include backbone.js -->
+    <script src="underscore/underscore-min.js"></script>
+    <script src="backbone/backbone.js"></script>
+
+    <!-- include WAAX -->
+    <script src="js/vendor/waax.js"></script>
+
+    <script src="js/vendor/jquery.color-2.1.2.js"></script>
+    <script src="js/vendor/chroma.min.js"></script>
+    <script src="js/vendor/quantize.js"></script>
+
+    <link rel="import" href="webcomponents/controls.html">
+    
+    <script src="js/vendor/modernizr_customized.js"></script>
 
 </head>
 
@@ -91,7 +141,7 @@
                                                 <div class="knob_label">
                                                     Output
                                                 </div>
-                                                <webaudio-knob id="triadOutputKnob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="triadOutputKnob" src="img/knob.png"
                                                 sprites="100" tooltip="Output" value="<%= preset.output  %>"
                                                 min="0" max="1" step="0.01"></webaudio-knob>
                                             </div>
@@ -102,7 +152,7 @@
                                                 <div class="knob_label">
                                                     Freq 1
                                                 </div>
-                                                <webaudio-knob id="triadFreq1Knob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="triadFreq1Knob" src="img/knob.png"
                                                 sprites="100" valuetip="0" value="<%= preset.oscFreq1 %>"
                                                 min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>"
                                                 step="1"></webaudio-knob>
@@ -112,7 +162,7 @@
                                                 <div class="knob_label">
                                                     Freq 2
                                                 </div>
-                                                <webaudio-knob id="triadFreq2Knob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="triadFreq2Knob" src="img/knob.png"
                                                 sprites="100" valuetip="0" value="<%= preset.oscFreq2 %>"
                                                 min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>"
                                                 step="1"></webaudio-knob>
@@ -122,7 +172,7 @@
                                                 <div class="knob_label">
                                                     Freq 3
                                                 </div>
-                                                <webaudio-knob id="triadFreq3Knob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="triadFreq3Knob" src="img/knob.png"
                                                 sprites="100" valuetip="0" value="<%= preset.oscFreq3 %>"
                                                 min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>"
                                                 step="1"></webaudio-knob>
@@ -175,7 +225,7 @@
                                                 <div class="knob_label">
                                                     Output
                                                 </div>
-                                                <webaudio-knob id="minimalOutputKnob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="minimalOutputKnob" src="img/knob.png"
                                                 sprites="100" tooltip="Output" value="<%= preset.output  %>"
                                                 min="0" max="1" step="0.01"></webaudio-knob>
                                             </div>
@@ -185,7 +235,7 @@
                                                 <div class="knob_label">
                                                     Tempo
                                                 </div>
-                                                <webaudio-knob id="minimalTempoKnob" src="{% static 'img/knob.png' %}"
+                                                <webaudio-knob id="minimalTempoKnob" src="img/knob.png"
                                                 sprites="100" tooltip="Tempo" value="<%= preset.tempo  %>"
                                                 min="20" max="1000" step="1"></webaudio-knob>
                                             </div>
@@ -231,69 +281,6 @@
             </div>
         </div>
     </div>
-
-
-    {% compress js %}
-
-    <script src="{% static 'foundation/js/vendor/jquery.js' %}"></script>
-
-    <script src="{% static 'foundation/js/foundation.min.js' %}"></script>
-
-    <script src="{% static 'js/vendor/velocity.min.js' %}"></script>
-
-    <script>var STATIC_URL = '{{ STATIC_URL|escapejs }}';</script>
-
-    <script>
-        // init foundation
-        $(document).foundation({
-            accordion: {
-                // specify the class used for accordion panels
-                content_class: 'content',
-                // specify the class used for active (or open) accordion panels
-                active_class: 'active',
-                // allow multiple accordion panels to be active at the same time
-                multi_expand: true,
-                // allow accordion panels to be closed by clicking on their headers
-                // setting to false only closes accordion panels when another is opened
-                toggleable: true
-            }
-        });
-        // sticky footer
-        $(window).bind("load", function () {
-            var footer = $("#footer");
-            var pos = footer.position();
-            var height = $(window).height();
-            height = height - pos.top;
-            height = height - footer.height();
-            if (height > 0) {
-                footer.animate({
-                    'margin-top': height + 'px'
-                });
-            }
-        });
-    </script>
-
-
-    <!-- web components -->
-    <script src="{% static 'webcomponentsjs/webcomponents.js' %}"></script>
-    <script src="{% static 'polymer/polymer.min.js' %}"></script>
-
-    <!-- include backbone.js -->
-    <script src="{% static 'underscore/underscore-min.js' %}"></script>
-    <script src="{% static 'backbone/backbone.js' %}"></script>
-
-    <!-- include WAAX -->
-    <script src="{% static 'js/vendor/waax.js' %}"></script>
-
-    <script src="{% static 'js/vendor/jquery.color-2.1.2.js' %}"></script>
-    <script src="{% static 'js/vendor/chroma.min.js' %}"></script>
-    <script src="{% static 'js/vendor/quantize.js' %}"></script>
-
-    {% endcompress %}
-
-    <link rel="import" href="{% static 'webcomponents/controls.html' %}">
-
-    {% render_block "js" %}
 
 </body>
 </html>
