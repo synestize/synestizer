@@ -63,7 +63,7 @@ Now the group is growing and there are new people interested in the project, and
 Users and artists are welcome to experiment with, and developers welcome to modify this thing. 
 
 Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://notes.livingthing.org/),  the mathemagician in the team, are contributing a great deal to the code the project with a lot of engagment for the first release.
-Support is also coming from the Fasos department of the UM Maastricht thanks to Prof. K. Bijsterveld. 
+Support is also coming from the [Sonic Science Festival from the Fasos Department of the UM Maastricht](http://fasos-research.nl/sonicsciencefestival/event/163/?instance_id=98) thanks to Prof. K. Bijsterveld. 
 
 
 Want to join us?
