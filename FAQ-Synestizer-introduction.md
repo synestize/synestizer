@@ -81,5 +81,5 @@ Although you have to accept the general use of the camera and microphone in the 
 You can notice this by going off- and online again and see that the app doesn't change behaviour.
 Or [inspect the source code](https://github.com/synestize/synestizer).
 
-The sound and imagery is not captured or so. The only thing we think is useful and thus added in the features, is a way to set your preferences in the app. This is stored in the browser Cache. 
+The sound and imagery is not captured or so. The only thing we think is useful and thus added in the features, is a way to set your preferences in the app.(but this is also still under development)
 The (voluntary) option of saving patches, settings or mappings online at [synestizer.com](http://synestizer.com) may be added in a future version.
