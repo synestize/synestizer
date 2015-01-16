@@ -2,13 +2,6 @@
 (function( global ) {
     'use strict';
 
-    //sneakily monkey patch the getUserMedia thing;
-    //making it a local method doesn't work without tedious "this" wrangling.
-    global.navigator.getUserMedia = (global.navigator.getUserMedia ||
-        global.navigator.webkitGetUserMedia ||
-        global.navigator.mozGetUserMedia ||
-        global.navigator.msGetUserMedia);
-
     var VideoAnalyzer = function (params){
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
