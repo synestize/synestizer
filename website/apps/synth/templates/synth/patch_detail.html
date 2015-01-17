@@ -63,7 +63,7 @@
 
                         <a href="#triad">Triad</a>
 
-                        <div id="triad" class="content active">
+                        <div id="triad" class="content">
 
                             <script id="triad_template" type="text/template">
 
@@ -145,7 +145,7 @@
 
                     <dd class="accordion-navigation">
                         <a href="#minimal">Minimal</a>
-                        <div id="minimal" class="content active">
+                        <div id="minimal" class="content">
                             <script id="minimal_template" type="text/template">
                                 <div class="row knob">
                                     <div class="small-3 medium-3 large-3 columns">
@@ -185,17 +185,20 @@
                                         sprites="100" tooltip="Output" value="<%= preset.output  %>"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
-                                    <div class="row">
-                                        <div class="small-12 medium-12 large-12 columns">
-                                            <canvas id="recorderSpectrum" width="280" height="150"></canvas>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="small-3 medium-3 large-3 columns">
-                                        <button class="tiny red" id="toggleRecording">record</button>
-                                        </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="small-12 medium-12 large-12 columns">
+                                        <canvas id="recorderSpectrum" width="250" height="150"></canvas>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="small-3 medium-3 large-3 columns">
+                                        <button class="tiny red" id="toggleRecording">record</button>
+                                    </div>
+                                </div>
+
                             </script>
                         </div>
                     </dd>
