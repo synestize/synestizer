@@ -195,9 +195,6 @@ app.AppView = Backbone.View.extend({
     }
 });
 
-// And we're off.
-new app.AppView();
-
 });
 
 
