@@ -41,17 +41,18 @@ var patches = patches || {};
                     // stop recording
                     audioRecorder.stop();
                     e.classList.remove("recording");
+                    e.innerHTML = "record";
                     audioRecorder.getBuffers( gotBuffers );
                 } else {
                     // start recording
                     if (!audioRecorder)
                         return;
                     e.classList.add("recording");
+                    e.innerHTML = "stop";
                     audioRecorder.clear();
                     audioRecorder.record();
                 }
             },
-
 
             setOutput: function(output) {
                 sampler.output(output);
@@ -86,7 +87,18 @@ var patches = patches || {};
                 alert('Error getting audio');
                 console.log(e);
             });
-        }
+        };
+
+        function gotBuffers( buffers ) {
+
+            //var canvas = document.getElementById( "wavedisplay" );
+            //drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffers[0] );
+
+            // the ONLY time gotBuffers is called is right after a new recording is completed -
+            // so here's where we should set up the download.
+            //audioRecorder.exportWAV( doneEncoding );
+
+        };
 
 
         function gotStream(stream) {
