@@ -17,14 +17,14 @@
     })();
     if (!navigator.cancelAnimationFrame)
         navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-    
+
     // shim getUserMedia ;
     //making it a local method doesn't work without tedious "this" wrangling.
     global.navigator.getUserMedia = (global.navigator.getUserMedia ||
         global.navigator.webkitGetUserMedia ||
         global.navigator.mozGetUserMedia ||
         global.navigator.msGetUserMedia);
-    
+
     // Make webkit browsers use the prefix-free version of AudioContext.
     global.AudioContext = global.AudioContext || global.webkitAudioContext;
 
@@ -37,7 +37,7 @@
         global.navigator.getUserMedia(
             {
                 "video": true,
-                "audio": false,
+                "audio": true,
             }, function(stream) {
                 global.media.stream = stream;
                 success(stream);
