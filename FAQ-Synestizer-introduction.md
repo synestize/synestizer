@@ -56,7 +56,7 @@ According to the score at 50% colour value, the 3 instruments
 play each 3 notes a bar with small intervals in between. Going up and down the scale in a variety of intervals, the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob.
 
 ![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_Partitur.png)
-![some arrows](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_sketch_score2.jpg)
+![some arrows](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_sketch_score2.png)
 
 ### Sample
 
