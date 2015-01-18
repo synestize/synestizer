@@ -1,4 +1,5 @@
-![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.jpg)
+![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.svg)
+
 # FAQ
 
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.
