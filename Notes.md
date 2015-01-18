@@ -19,12 +19,11 @@ The *immediate* things we need to do:
     * speed up clustering analysis
     * move to [requestAnimationFrame](https://docs.webplatform.org/wiki/dom/Window/requestAnimationFrame) -
       see also the
-      (tutorial)[http://www.html5rocks.com/en/tutorials/speed/rendering/]
+      [tutorial](http://www.html5rocks.com/en/tutorials/speed/rendering/)
     * switch to YSV for correlation structures
     * partial correlations? http://stats.stackexchange.com/a/10873
     * Are the correlation estimates incoherent?
-      Recall the [James-Stein shrinkage problem
-      ](http://strimmerlab.org/software/corpcor/) here.
+      Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 * speed improvements
     * native arrays for linear algebra
     * OpenGL could do some of the work
@@ -40,16 +39,6 @@ The *immediate* things we need to do:
 * [jsbin](http://jsbin.com/) - 2-way gist integration, some colaboration feature, and open source
 * [jsfiddle](http://jsfiddle.net/) has amazing collaboration but weak library support
 * [liveweave](http://liveweave.com/) also has nice collaborative features, although less JS influence.
-
-
-## Online publishing
-
-* Via github
-* [codepen](http://codepen.io/pen/) - has a "collaborative" pro mode, gist integration (export only)
-* [jsbin](http://jsbin.com/) - 2-way gist integration, some colaboration feature, and open source
-* [jsfiddle](http://jsfiddle.net/) has amazing collaboration but weak library support
-* [liveweave](http://liveweave.com/) also has nice collaborative features, although less JS influence.
-
 
 ## javascript tips
 
@@ -133,7 +122,6 @@ complete workflow tools:
 * [metalsmith](http://www.metalsmith.io/)
 * [roll your own with grunt](http://www.codebelt.com/javascript/single-page-javascript-application-workflow/)
 
-
 ## Video analysis
 
 ### Ideas for analyses
@@ -212,7 +200,7 @@ complete workflow tools:
 ### Alternative Audio options
 
 * phonegap/appcelerator + libpd?
-  * https://github.com/alesaccoia/phonegap-libpd
-  * http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/
-  * http://libpd.cc/documentation/
-  * https://github.com/libpd/libpd/wiki
+  * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
+  * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
+  * [libpd](http://libpd.cc/documentation/)
+  * [libpd wiki](https://github.com/libpd/libpd/wiki)
