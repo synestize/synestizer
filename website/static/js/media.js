@@ -1,22 +1,26 @@
 (function( global ) {
     'use strict';
     var getStream;
-    global.media = {
+    //namespace:
+    var media = {
         stream: undefined,
     };
+    //attach namespace to global object
+    global.media = media;
+    
     // shim the requestAnimationFrame API, with a setTimeout fallback
-    window.requestAnimFrame = (function(){
-        return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
+    global.requestAnimFrame = (function(){
+        return global.requestAnimationFrame ||
+        global.webkitRequestAnimationFrame ||
+        global.mozRequestAnimationFrame ||
+        global.oRequestAnimationFrame ||
+        global.msRequestAnimationFrame ||
         function( callback ){
-            window.setTimeout(callback, 1000 / 60);
+            global.setTimeout(callback, 1000 / 60);
         };
     })();
-    if (!navigator.cancelAnimationFrame)
-        navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
+    if (!global.cancelAnimationFrame)
+        global.cancelAnimationFrame = global.webkitCancelAnimationFrame || global.mozCancelAnimationFrame;
 
     // shim getUserMedia ;
     //making it a local method doesn't work without tedious "this" wrangling.
@@ -28,10 +32,11 @@
     // Make webkit browsers use the prefix-free version of AudioContext.
     global.AudioContext = global.AudioContext || global.webkitAudioContext;
 
+    //Utility function to return the media stream ONLY ONCE
     getStream = function(success) {
         //we have already called this!
-        if (typeof global.media.stream !== 'undefined') {
-            success(global.media.stream);
+        if (typeof media.stream !== 'undefined') {
+            success(media.stream);
         };
         //otherwise, call it now.
         global.navigator.getUserMedia(
@@ -39,7 +44,7 @@
                 "video": true,
                 "audio": true,
             }, function(stream) {
-                global.media.stream = stream;
+                media.stream = stream;
                 success(stream);
             }, function(e) {
                 alert('Error getting audio or video');
@@ -47,5 +52,5 @@
             }
         );
     };
-    global.media.getStream = getStream;
+    media.getStream = getStream;
 })( this );
