@@ -1,8 +1,11 @@
+![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.jpg)
 # FAQ
 
-„Just open the window...”  J.Cage and focus on listening to what emerges outside.
+> „Just open the window...”  J.Cage and focus on listening to what emerges outside.
+- Cage
 
-„It`s time to open the digital window and listen colourwise.”  K.Koenig
+> „It`s time to open the digital window and listen colourwise.”
+- Koenig
 
 version 150123:
 
@@ -23,6 +26,8 @@ The synestizer tries to do the opposite as it translates Red, Green and Blue val
 Since Cameras can measure Red Green Blue (RGB) values and its luminosity in given situations they correspond to the RGB sensitivity of the cones of the eyes.
 Since audible and visible frequencies differ in wavelength only, there might be a relation of some sort.
 The fascinating part of the synestizer is to come up with sonifying techniques to suggest an intstant soundtrack matching exactly what you see in front of you right now. Imagining an induced synesthesia by technical means already on an average desk or pocket.
+
+![color sensitivity of the eye](https://raw.githubusercontent.com/synestize/synestizer/master/docs/1416_Color_Sensitivity.jpg)
 
 Can this webapp contribute to the moment? Or at least extend the “obvious” with an interesting „odor” 
 or an ambient-lighting but with audible means.
@@ -45,14 +50,17 @@ To differentiate the similar sine-wave sound, we decided to make a square-wave a
 ### Minimal 
 
 The RGB values influence the intervals of the notes played by synthesized instruments available through the implementation of [waax](https://github.com/hoch/waax).
-According to the score at 50% colour value the 3 instruments (piano = red / panflute = green / vibraphon = blue) play ech 3 notes a bar with small intervals in between. Going up and down the scale, in a variety of intervals the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob labeled accordingly. 
+According to the score at 50% colour value, the 3 instruments 
+(piano = red / pan flute = green / vibraphone = blue)
+play each 3 notes a bar with small intervals in between. Going up and down the scale in a variety of intervals, the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob.
 
+![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Partitur_16_inputs-1.png)
 
 ### Sample
 
 (Under development)
 
-This Frame is based on the manipulation of short samples that can be recorded immediately and played back with RGB values influencing speed and pitch.
+This frame is based on the manipulation of short samples that can be recorded immediately and played back with RGB values influencing speed and pitch.
 
 ## Who develops the synestizer?
 
