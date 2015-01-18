@@ -1,9 +1,11 @@
 ![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.jpg)
 # FAQ
 
-    „Just open the window...”  J.Cage and focus on listening to what emerges outside.
+> „Just open the window...”  J.Cage and focus on listening to what emerges outside.
+- Cage
 
-    „It`s time to open the digital window and listen colourwise.”  K.Koenig
+> „It`s time to open the digital window and listen colourwise.”
+- Koenig
 
 version 150123:
 
@@ -48,7 +50,9 @@ To differentiate the similar sine-wave sound, we decided to make a square-wave a
 ### Minimal 
 
 The RGB values influence the intervals of the notes played by synthesized instruments available through the implementation of [waax](https://github.com/hoch/waax).
-According to the score at 50% colour value the 3 instruments (piano = red / panflute = green / vibraphon = blue) play ech 3 notes a bar with small intervals in between. Going up and down the scale, in a variety of intervals the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob labeled accordingly. 
+According to the score at 50% colour value, the 3 instruments 
+(piano = red / pan flute = green / vibraphone = blue)
+play each 3 notes a bar with small intervals in between. Going up and down the scale in a variety of intervals, the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob.
 
 ![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Partitur_16_inputs-1.png)
 
@@ -56,7 +60,7 @@ According to the score at 50% colour value the 3 instruments (piano = red / panf
 
 (Under development)
 
-This Frame is based on the manipulation of short samples that can be recorded immediately and played back with RGB values influencing speed and pitch.
+This frame is based on the manipulation of short samples that can be recorded immediately and played back with RGB values influencing speed and pitch.
 
 ## Who develops the synestizer?
 
