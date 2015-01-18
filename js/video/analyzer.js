@@ -54,13 +54,21 @@
             self.thisFrameTime = Date.now();
             self.meanFrameDur = 0.9 * self.meanFrameDur + 0.1 * (
                 self.lastFrameDur);
-            // evaluate color
-            self.ctx.drawImage(self.vidElem, 0, 0, cw, ch);
-            pixels = self.ctx.getImageData(0, 0, cw, ch).data;
-            //Also make available to the outside world:
-            self.pixels = pixels;
-            for (var i = 0; i < self.statistics.length; i++) {
-                self.statistics[i].analyzeFrame(pixels);
+            // evaluate statistics
+            // The first few frames get lost in Firefox, raising exceptions
+            // We make sure this does not break the whole loop by
+            // using a try..catch
+            try {
+                self.ctx.drawImage(self.vidElem, 0, 0, cw, ch);
+                pixels = self.ctx.getImageData(0, 0, cw, ch).data;
+                //Also make available to the outside world:
+                self.pixels = pixels;
+                for (var i = 0; i < self.statistics.length; i++) {
+                    self.statistics[i].analyzeFrame(pixels);
+                }
+            } catch (e) {
+                console.log("error getting video frame");
+                console.debug(e);
             }
             self.meanAnalysisDur = 0.9 * self.meanAnalysisDur + 0.1 * (
                 Date.now() - self.thisFrameTime);
