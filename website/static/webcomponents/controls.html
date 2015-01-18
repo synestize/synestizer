@@ -25,9 +25,10 @@
 -->
 
 
-<polymer-element name="webaudio-knob" attributes="value units log defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
+<polymer-element name="webaudio-knob" attributes="value units label log defvalue min max step sprites diameter width height sensitivity src valuetip tooltip enable" on-mousedown="pointerdown" on-touchstart="pointerdown">
 	<template>
 		<div class="wac-body" id="wac-body" touch-action="none">
+            <div id="wac-label" touch-action="none">{{label}}</div>
 			<div id="wac-knob" touch-action="none"></div>
 			<span id="wac-value-tip">{{valuedisp}}{{units}}</span>
 			<div id="wac-tooltip-box"><span id="wac-tooltip-text">{{tooltip}}</span></div>
@@ -36,14 +37,27 @@
 			@host {
 				* {
 					display: inline-block;
-					font-family: sans-serif;
+					font-family: 'Roboto Condensed', sans-serif;
 					font-size: 11px;
 				}
 			}
 			#wac-body {
 				position:relative;
+                margin-bottom: 10px;
 			}
+            #wac-label {
+                display: block;
+                margin: 0 auto;
+                cursor: default;
+                width: 64px;
+                position: relative;
+                color: #eee;
+                font-size: 0.7rem;
+                text-align: center;
+            }
 			#wac-knob {
+                display: block;
+                margin: 0 auto;
 				cursor: pointer;
 				width: 64px;
 				height: 64px;
@@ -122,6 +136,8 @@
 					this.width = this.diameter;
 				if(this.height === null)
 					this.height = this.diameter;
+                var lbl = this.$['wac-label'];
+                lbl.style.width = this.width+'px';
 				var knb = this.$['wac-knob'];
 				knb.addEventListener('DOMMouseScroll',this.wheel.bind(this),false);
 				knb.addEventListener('mousewheel',this.wheel.bind(this),false);
