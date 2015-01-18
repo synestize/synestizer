@@ -1,4 +1,5 @@
-![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.jpg)
+![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.svg)
+
 # FAQ
 
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.
@@ -38,14 +39,14 @@ A challenge for the synestizer-project is to generate ad-hoc compositions that a
 
 ## Features
 
-The screen is divided into 4 sections. The left column is a visual readout of the camera measuring the Red, Green and Blue values in realtime. The background-colour is the representation an intensity of the average colour I=1/3*(R+G+B)  and the middle frame obviously displays what the camera captures. The right frame is the Audio section which enables the user to change the volume-mixture and the sound characteristics. 
+The screen is divided into 4 sections. The left column is a visual readout of the camera measuring the Red, Green and Blue values in realtime. The background-colour is the representation and intensity of the average colour I=1/3*(R+G+B)  and the middle frame obviously displays what the camera captures. The right frame is the Audio section which enables the user to change the volume-mixture and the sound characteristics. 
 
 ### TRIAD
 
 direct simple sonification.
 
-the RGB values are directly translated into tones. A 50% RGB value has an output of 3 sinewave tones with 880Hz by default. (
-To differentiate the similar sine-wave sound, we decided to make a square-wave and saw-wave available. On top the average pitch can be adopted by the knob located at each colour.
+the RGB values are directly translated into tones. A 50% RGB value has an output of 3 sinewave tones with 880Hz by default. 
+To differentiate the similar sine-wave sound, we decided to make a square-wave and saw-wave available. On top the lowest pitch can be adopted by the knob located at each colour.
 
 ### Minimal 
 
