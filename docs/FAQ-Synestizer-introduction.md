@@ -1,4 +1,4 @@
-![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_plain.svg)
+![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_50x50.png)
 
 # FAQ
 
@@ -28,7 +28,7 @@ Since Cameras can measure Red Green Blue (RGB) values and its luminosity in give
 Since audible and visible frequencies differ in wavelength only, there might be a relation of some sort.
 The fascinating part of the synestizer is to come up with sonifying techniques to suggest an intstant soundtrack matching exactly what you see in front of you right now. Imagining an induced synesthesia by technical means already on an average desk or pocket.
 
-![color sensitivity of the eye](https://raw.githubusercontent.com/synestize/synestizer/master/docs/1416_Color_Sensitivity.jpg)
+![color sensitivity of the eye](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Color_Sensitivity.jpg)
 
 Can this webapp contribute to the moment? Or at least extend the “obvious” with an interesting „odor” 
 or an ambient-lighting but with audible means.
@@ -55,7 +55,7 @@ According to the score at 50% colour value, the 3 instruments
 (piano = red / pan flute = green / vibraphone = blue)
 play each 3 notes a bar with small intervals in between. Going up and down the scale in a variety of intervals, the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob.
 
-![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Partitur_16_inputs-1.png)
+![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_Partitur_.png)
 
 ### Sample
 
