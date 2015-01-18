@@ -4,7 +4,7 @@
 
 „It`s time to open the digital window and listen colourwise.”  K.Koenig
 
-version 23/1/2015:
+version 150123:
 
 This document is made to explain the idea and function of the synestizer project 
 at [synestizer.com](http://synestizer.com).
@@ -45,9 +45,8 @@ To differentiate the similar sine-wave sound, we decided to make a square-wave a
 ### Minimal 
 
 The RGB values influence the intervals of the notes played by synthesized instruments available through the implementation of [waax](https://github.com/hoch/waax).
-According to the score a 60% colour value plays two notes with no interval in between. A 70%  colour value plays a minor third and 75% a major third etc. (see picture 1). The tempo of the intervals are set with the corresponding know labeled accordingly. 
+According to the score at 50% colour value the 3 instruments (piano = red / panflute = green / vibraphon = blue) play ech 3 notes a bar with small intervals in between. Going up and down the scale, in a variety of intervals the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob labeled accordingly. 
 
-Every colour is mapped to another instrument ....
 
 ### Sample
 
@@ -82,5 +81,5 @@ Although you have to accept the general use of the camera and microphone in the 
 You can notice this by going off- and online again and see that the app doesn't change behaviour.
 Or [inspect the source code](https://github.com/synestize/synestizer).
 
-The sound and imagery is not captured or so. The only thing we think is useful and thus added in the features, is a way to set your preferences in the app. This is stored in the browser Cache. 
+The sound and imagery is not captured or so. The only thing we think is useful and thus added in the features, is a way to set your preferences in the app.(but this is also still under development)
 The (voluntary) option of saving patches, settings or mappings online at [synestizer.com](http://synestizer.com) may be added in a future version.
