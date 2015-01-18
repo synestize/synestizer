@@ -9,40 +9,44 @@ var patches = patches || {};
     patches.Sampler = function (preset) {
 
         var preset = preset || {};
-        var sampler = WX.SP1();
+        var voice1 = WX.SP1();
 
-        sampler.setPreset(preset);
-        sampler.to(WX.Master);
+        voice1.setPreset(preset);
+        voice1.to(WX.Master);
+        voice1.loadClip({
+            name: 'voice 1',
+            url: STATIC_URL + 'sound/voice_as4.mp3'
+        });
 
         var audioInput = null,
         realAudioInput = null,
-        inputPoint = null,
+        input = null,
         audioRecorder = null;
         var rafID = null;
         var analyserContext = null;
         var canvasWidth, canvasHeight;
         var recIndex = 0;
 
-        var analyserNode;
+        var analyzer;
 
-        inputPoint = WX._ctx.createGain();
+        input = WX.Gain();
 
         // Create an AudioNode from the stream.
-        realAudioInput = WX._ctx.createMediaStreamSource(window.media.stream); // using analyzer from patch_detail.html
+        realAudioInput = WX._ctx.createMediaStreamSource(window.media.stream);
         audioInput = realAudioInput;
-        audioInput.connect(inputPoint);
+        audioInput.connect(input);
 
         //    audioInput = convertToMono( input );
 
-        analyserNode = WX._ctx.createAnalyser();
-        analyserNode.fftSize = 2048;
-        inputPoint.connect( analyserNode );
+        analyzer = WX.Analyzer();
+        analyzer.fftSize = 2048;
+        input.connect( analyzer );
 
-        audioRecorder = new Recorder( inputPoint );
+        audioRecorder = new Recorder( input );
 
-        var zeroGain = WX._ctx.createGain();
+        var zeroGain = WX.Gain();
         zeroGain.gain.value = 0.0;
-        inputPoint.connect( zeroGain );
+        input.connect( zeroGain );
         zeroGain.connect( WX._ctx.destination );
         updateAnalysers();
         console.log("Sampler patch initialized");
@@ -50,8 +54,23 @@ var patches = patches || {};
         return {
             run: function() {
 
+                //sampler.noteOn(60, 127);
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/raw",
+                    function(data) {
+                        if (voice1.ready) {
+                            var p = { tune: data[0].map(0,1,72,48) };
+                            voice1.setPreset(p);
+                            voice1.noteOn(60, 127, WX.now);
+                            voice1.noteOff(60, 127, WX.now+2);
+                        }
+                        //console.log(sampler.ready);
 
-
+                        //offsetRed = Math.floor(data[0].map(0,1,0,15));
+                        //offsetGreen = Math.floor(data[1].map(0,1,0,15));
+                        //offsetBlue = Math.floor(data[2].map(0,1,0,15));
+                        //console.log(offsetRed, offsetGreen, offsetBlue);
+                    })
             },
 
             toggleRecording: function(e) {
@@ -72,12 +91,28 @@ var patches = patches || {};
                 }
             },
 
-            setOutput: function(output) {
-                sampler.output(output);
+            setGain: function(output) {
+                voice1.output(output);
+            },
+
+            setAttack: function(attack) {
+                voice1.setPreset({"ampAttack": attack});
+            },
+
+            setDecay: function(decay) {
+                voice1.setPreset({"ampDecay": decay});
+            },
+
+            setSustain: function(sustain) {
+                voice1.setPreset({"ampSustain": sustain});
+            },
+
+            setRelease: function(release) {
+                voice1.setPreset({"ampRelease": release});
             },
 
             properties: {
-                sampler: sampler,
+                voice1: voice1,
                 preset: preset
             }
         };
@@ -90,6 +125,27 @@ var patches = patches || {};
             // the ONLY time gotBuffers is called is right after a new recording is completed -
             // so here's where we should set up the download.
             //audioRecorder.exportWAV( doneEncoding );
+            //voice1.sampleLength = Math.ceil(buffers[0].length /  WX.srate);
+            var frameCount = buffers[0].length;
+            var channels = 2;
+            var buf = WX._ctx.createBuffer(channels, frameCount, WX.srate);
+
+            for (var channel = 0; channel < channels; channel++) {
+                // This gives us the actual ArrayBuffer that contains the data
+                var nowBuffering = buf.getChannelData(channel);
+                for (var i = 0; i < frameCount; i++) {
+                    nowBuffering[i] = buffers[channel][i];
+                }
+            }
+
+            var clip = {
+                name: 'recorded',
+                url: 'foo',
+                buffer: buf
+            };
+
+            voice1.setClip(clip);
+
         };
 
         function updateAnalysers(time) {
@@ -105,14 +161,14 @@ var patches = patches || {};
                 var SPACING = 5;
                 var BAR_WIDTH = 3;
                 var numBars = Math.round(canvasWidth / SPACING);
-                var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+                var freqByteData = new Uint8Array(analyzer.frequencyBinCount);
 
-                analyserNode.getByteFrequencyData(freqByteData);
+                analyzer.getByteFrequencyData(freqByteData);
 
                 analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
                 analyserContext.fillStyle = '#ff00ff';
                 analyserContext.lineCap = 'round';
-                var multiplier = analyserNode.frequencyBinCount / numBars;
+                var multiplier = analyzer.frequencyBinCount / numBars;
 
                 // Draw rectangle for each frequency bin.
                 for (var i = 0; i < numBars; ++i) {

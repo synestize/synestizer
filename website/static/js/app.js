@@ -71,7 +71,7 @@ app.TriadView = Backbone.View.extend({
     template: _.template($("#triad_template").html()),
 
     events: {
-        "change #triadOutputKnob": function(e) {
+        "change #gain": function(e) {
             this.triad.setOutput(e.target.value);
         },
         "change #triadFreq1Knob": function(e) {
@@ -125,8 +125,12 @@ app.MinimalView = Backbone.View.extend({
     template: _.template($("#minimal_template").html()),
 
     events: {
-        "change #minimalOutputKnob": function(e) { this.minimal.setOutput(e.target.value); },
-        "change #minimalTempoKnob": function(e) { this.minimal.setTempo(e.target.value); }
+        "change #gain": function(e) { this.minimal.setGain(e.target.value); },
+        "change #tempo": function(e) { this.minimal.setTempo(e.target.value); },
+        "change #attack": function(e) { this.minimal.setAttack(e.target.value); },
+        "change #decay": function(e) { this.minimal.setDecay(e.target.value); },
+        "change #sustain": function(e) { this.minimal.setSustain(e.target.value); },
+        "change #release": function(e) { this.minimal.setRelease(e.target.value); }
     },
 
     initialize: function (options) {
@@ -154,8 +158,12 @@ app.SamplerView = Backbone.View.extend({
     template: _.template($("#sampler_template").html()),
 
     events: {
-        "change #samplerOutputKnob": function(e) { this.sampler.setOutput(e.target.value); },
+        "change #gain": function(e) { this.sampler.setGain(e.target.value); },
         "click #toggleRecording": function(e) { this.sampler.toggleRecording(e.target); },
+        "change #attack": function(e) { this.sampler.setAttack(e.target.value); },
+        "change #decay": function(e) { this.sampler.setDecay(e.target.value); },
+        "change #sustain": function(e) { this.sampler.setSustain(e.target.value); },
+        "change #release": function(e) { this.sampler.setRelease(e.target.value); }
     },
 
     initialize: function (options) {
