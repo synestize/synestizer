@@ -74,29 +74,56 @@ app.TriadView = Backbone.View.extend({
         "change #gain": function(e) {
             this.triad.setOutput(e.target.value);
         },
-        "change #triadFreq1Knob": function(e) {
-            this.triad.properties.triad.glide1(e.target.value);
-            document.getElementById("triadFreq1Numberbox").value = e.target.value;
+        "change #oscType1Sine": function(e) {
+            this.triad.properties.triad.$oscType1("sine");
         },
-        "change #triadFreq1Numberbox": function(e) {
-            this.triad.properties.triad.glide1(e.target.value);
-            document.getElementById("triadFreq1Knob").setValue(e.target.value, false);
+        "change #oscType1Triangle": function(e) {
+            this.triad.properties.triad.$oscType1("triangle");
         },
-        "change #triadFreq2Knob": function(e) {
-            this.triad.properties.triad.glide1(e.target.value);
-            document.getElementById("triadFreq2Numberbox").value = e.target.value;
+        "change #oscType1Square": function(e) {
+            this.triad.properties.triad.$oscType1("square");
         },
-        "change #triadFreq2Numberbox": function(e) {
+        "change #oscType2Sine": function(e) {
+            this.triad.properties.triad.$oscType2("sine");
+        },
+        "change #oscType2Triangle": function(e) {
+            this.triad.properties.triad.$oscType2("triangle");
+        },
+        "change #oscType2Square": function(e) {
+            this.triad.properties.triad.$oscType2("square");
+        },
+        "change #oscType3Sine": function(e) {
+            this.triad.properties.triad.$oscType3("sine");
+        },
+        "change #oscType3Triangle": function(e) {
+            this.triad.properties.triad.$oscType3("triangle");
+        },
+        "change #oscType3Square": function(e) {
+            this.triad.properties.triad.$oscType3("square");
+        },
+        "change #freq1Knob": function(e) {
+            this.triad.properties.triad.glide1(e.target.value);
+            document.getElementById("freq1Numberbox").value = e.target.value;
+        },
+        "change #freq1Numberbox": function(e) {
+            this.triad.properties.triad.glide1(e.target.value);
+            document.getElementById("freq1Knob").setValue(e.target.value, false);
+        },
+        "change #freq2Knob": function(e) {
             this.triad.properties.triad.glide2(e.target.value);
-            document.getElementById("triadFreq2Knob").setValue(e.target.value, false);
+            document.getElementById("freq2Numberbox").value = e.target.value;
         },
-        "change #triadFreq3Knob": function(e) {
-            this.triad.properties.triad.glide3(e.target.value);
-            document.getElementById("triadFreq3Numberbox").value = e.target.value;
+        "change #freq2Numberbox": function(e) {
+            this.triad.properties.triad.glide2(e.target.value);
+            document.getElementById("freq2Knob").setValue(e.target.value, false);
         },
-        "change #triadFreq3Numberbox": function(e) {
+        "change #freq3Knob": function(e) {
             this.triad.properties.triad.glide3(e.target.value);
-            document.getElementById("triadFreq3Knob").setValue(e.target.value, false);
+            document.getElementById("freq3Numberbox").value = e.target.value;
+        },
+        "change #freq3Numberbox": function(e) {
+            this.triad.properties.triad.glide3(e.target.value);
+            document.getElementById("freq3Knob").setValue(e.target.value, false);
         },
     },
 

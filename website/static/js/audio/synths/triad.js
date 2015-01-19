@@ -189,19 +189,19 @@
         defaultPreset: {
             oscType1: 'sine',
             oscFreq1: WX.mtof(60),
-            lfoType1: 'square',
+            lfoType1: 'sine',
             lfoRate1: 1.0,
-            lfoDepth1: 0.3,
+            lfoDepth1: 1.0,
             oscType2: 'triangle',
             oscFreq2: WX.mtof(60),
-            lfoType2: 'square',
+            lfoType2: 'sine',
             lfoRate2: 1.0,
-            lfoDepth2: 0.3,
+            lfoDepth2: 1.0,
             oscType3: 'square',
             oscFreq3: WX.mtof(60),
-            lfoType3: 'square',
+            lfoType3: 'sine',
             lfoRate3: 1.0,
-            lfoDepth3: 0.3
+            lfoDepth3: 1.0
         },
 
         // REQUIRED: handlers for each parameter

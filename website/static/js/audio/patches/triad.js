@@ -24,9 +24,9 @@ var patches = patches || {};
                     "/videoanalyzer/averagecolor/raw",
                     function(data) {
 
-                        triad.glide1( document.getElementById('triadFreq1Knob').value + ( 0.01 * Math.pow(~~(data[0]*255), 2)) );
-                        triad.glide2( document.getElementById('triadFreq2Knob').value + ( 0.01 * Math.pow(~~(data[1]*255), 2)) );
-                        triad.glide3( document.getElementById('triadFreq3Knob').value + ( 0.01 * Math.pow(~~(data[2]*255), 2)) );
+                        triad.glide1( document.getElementById('freq1Knob').value + ( 0.01 * Math.pow(~~(data[0]*255), 2)) );
+                        triad.glide2( document.getElementById('freq2Knob').value + ( 0.01 * Math.pow(~~(data[1]*255), 2)) );
+                        triad.glide3( document.getElementById('freq3Knob').value + ( 0.01 * Math.pow(~~(data[2]*255), 2)) );
 
                         triad.$lfoRate1(data[0].map(0,1,0,20), WX.now, 0);
                         triad.$lfoRate2(data[1].map(0,1,0,20), WX.now, 0);
