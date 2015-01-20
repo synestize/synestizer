@@ -27,36 +27,35 @@
 
 
         <div id="controls" class="hide">
+            <div class="sidebar large-3 small-3 medium-3 columns left">
 
-            <div class="large-centered large-12 columns">
                 <div id="patch">
                     <script id="patch_template" type="text/template">
                         <!--<div>Patch: <%= uuid %></div>-->
+                        <ul class="button-group" style="height: 45px; padding-left: 2px;">
+                            <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
+                            <!--<li><a href="#" id="switchDevices" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>-->
+                            <li><a href="#" data-reveal-id="faq" class="button tiny"><i class="fi-info"></i></a></li>
+                        </ul>
                     </script>
                 </div>
-            </div>
-            <div class="sidebar large-3 small-3 medium-3 columns left">
+
+                <div id="faq" class="reveal-modal large" data-reveal>
+                    {% include "faq.html" %}
+                </div>
+
+
                 <dl class="accordion" data-accordion>
                     <dd class="accordion-navigation">
                         <a href="#rgb-panel">RGB</a>
-
                         <div id="rgb-panel" class="content active">
-                            <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
                             <div id="average-bars"></div>
-                        </div>
-                    </dd>
-                    <dd class="accordion-navigation">
-                        <a href="#dominant-panel">Dominant Color</a>
-
-                        <div id="dominant-panel" class="content">
-                            <div id="dominant-bars"></div>
                         </div>
                     </dd>
                 </dl>
             </div>
 
-
-            <div class="sidebar large-3 medium-3 small-5 columns right">
+            <div class="sidebar large-3 medium-3 small-5 columns">
                 <!-- SYNTHS -->
                 <dl class="accordion scrollable_accordion" data-accordion>
                     <dd class="accordion-navigation">
@@ -105,21 +104,21 @@
                                 <div class="row text-center">
                                     <div class="large-4 small-4 medium-4 columns">
                                         <div class="label">Waveform</div>
-                                        <webaudio-switch id="oscType1Sine" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="1" width="22" height="22" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType1Triangle" type="radio" group="oscType1" label="Osc Type"units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType1Square" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType1Sine" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType1Triangle" type="radio" group="oscType1" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType1Square" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
                                     </div>
                                     <div class="large-4 small-4 medium-4 columns">
                                         <div class="label">Waveform</div>
-                                        <webaudio-switch id="oscType2Sine" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="1" width="22" height="22" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType2Triangle" type="radio" group="oscType2" label="Osc Type"units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType2Square" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType2Sine" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType2Triangle" type="radio" group="oscType2" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType2Square" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
                                     </div>
                                     <div class="large-4 small-4 medium-4 columns">
                                         <div class="label">Waveform</div>
-                                        <webaudio-switch id="oscType3Sine" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="1" width="22" height="22" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType3Triangle" type="radio" group="oscType3" label="Osc Type"units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                        <webaudio-switch id="oscType3Square" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="0" width="22" height="22" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType3Sine" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType3Triangle" type="radio" group="oscType3" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
+                                        <webaudio-switch id="oscType3Square" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
                                     </div>
                                 </div>
                             </script>
@@ -213,17 +212,31 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="small-4 medium-4 large-4 columns">
+                                    <div class="small-4 medium-4 large-4 columns text-center">
                                         <div class="label">
-                                            Microphone
+                                            Rec Red
                                         </div>
-                                        <canvas id="recorderSpectrum" width="100%" height="50"></canvas>
+                                        <button class="tiny button fi-record" id="toggleRecording1"></button>
+                                    </div>
+                                    <div class="small-4 medium-4 large-4 columns text-center">
+                                        <div class="label">
+                                            Rec Green
+                                        </div>
+                                        <button class="tiny button fi-record" id="toggleRecording2"></button>
+                                    </div>
+                                    <div class="small-4 medium-4 large-4 columns text-center">
+                                        <div class="label">
+                                            Rec Blue
+                                        </div>
+                                        <button class="tiny button fi-record" id="toggleRecording3"></button>
                                     </div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="small-3 medium-3 large-3 columns">
-                                        <button class="tiny red" id="toggleRecording">record</button>
+                                    <div class="small-12 medium-12 large-12 columns">
+                                        <div class="label">
+                                            Input Monitor
+                                        </div>
+                                        <canvas id="recorderSpectrum" width="280" height="50"></canvas>
                                     </div>
                                 </div>
 
@@ -280,22 +293,25 @@
     pubsub = PubSub; //give our global signal bus a nice name
 
     window.addEventListener('DOMContentLoaded', function() {
-        media.getStream(
-            function (stream) {
-                analyzer = new this.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                    stream: stream
-                });
-                $("#info").removeClass("show").addClass("hide");
-                $("#controls").removeClass("hide").addClass("show");
+        media.getStream(function (stream) {
+            analyzer = new this.videoanalyzers.VideoAnalyzer({
+                vidElem: document.getElementById('video'),
+                canvElem: document.getElementById('canvas'),
+                statistics: [new this.videostatistics.AverageColor()],
+                pubsub: pubsub,
+                stream: stream
+            });
+            $("#info").removeClass("show").addClass("hide");
+            $("#controls").removeClass("hide").addClass("show");
 
-                // start the app
-                new app.AppView();
-            }
-            );
+            // call resize for video resizing
+            resize();
+
+            // start the app
+            new app.AppView();
+        });
+
+        resize();
 
         average = d3.select("#average-bars");
         scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
@@ -328,6 +344,35 @@
 
             });
 });
+
+
+
+$(window).resize(function() {
+    resize();
+});
+
+
+function resize() {
+    console.log("resize");
+    // adapt video size to display
+    var vw = $(window).width();
+    var vh = $(window).height();
+
+    var iw = 640;
+    var ih = 480; // TODO
+
+    if (iw / ih < vw / vh) {
+        var d1 = 100 * ((ih * (vw / iw)) / vh);
+        $("#video").css("height", d1+"%");
+        $("#video").css("width", "100%");
+        $("#video").css("top", (100-d1)/2+"%");
+    } else {
+        var d2 = 100 * ((iw * (vh / ih)) / vw);
+        $("#video").css("height", "100%");
+        $("#video").css("width", d2+"%");
+        $("#video").css("left", (100-d2)/2+"%");
+    }
+};
 
 </script>
 
