@@ -79,6 +79,7 @@ STATICFILES_DIRS = (
     ("sound", os.path.join(BASE_DIR, "static/sound")),
     ("img", os.path.join(BASE_DIR, "static/img")),
     ("css", os.path.join(BASE_DIR, "static/css")),
+    ("fonts", os.path.join(BASE_DIR, "static/fonts")),
     ("js", os.path.join(BASE_DIR, "static/js")),
     ("webcomponents", os.path.join(BASE_DIR, "static/webcomponents"))
     )
