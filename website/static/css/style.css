@@ -13,6 +13,17 @@ h1, h2, h3 {
     color: #eee;
 }
 
+a, a:hover, a:active, a:focus {
+    color: #585D9A;
+}
+
+::selection {
+    background: #585D9A;
+}
+::-moz-selection {
+    background: #585D9A;
+}
+
 .row.full {
     width: 100%;
     max-width: 100%;
@@ -43,7 +54,7 @@ h1, h2, h3 {
 }
 
 .info-text {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 
@@ -54,7 +65,7 @@ h1, h2, h3 {
 #faq {
     background-color: #000;
     color: #eee;
-    opacity: 0.8 !important;
+    opacity: 0.9 !important;
     top: 10px !important;
     bottom: 10px !important;
     border: none;
