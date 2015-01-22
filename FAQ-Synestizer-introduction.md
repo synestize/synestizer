@@ -57,8 +57,6 @@ play each 3 notes per bar with small intervals in between. Going up and down the
 
 ### Sample
 
-(Under development)
-
 This frame is based on the manipulation of short samples that can be recorded immediately and played back with RGB values influencing speed and pitch.
 
 ## Who develops the synestizer?
@@ -88,5 +86,4 @@ You can verify this by going off- and online again and see that, once the app is
 Or [inspect the source code](https://github.com/synestize/synestizer).
 
 The sound and imagery is not captured.
-The only thing we think is useful and thus may addin the future, is a way to save your preferences online.
 The (voluntary) option of saving preferences, patches, settings or mappings online at [synestizer.com](http://synestizer.com) may be added in a future version.
