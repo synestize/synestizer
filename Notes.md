@@ -204,3 +204,7 @@ complete workflow tools:
   * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
   * [libpd](http://libpd.cc/documentation/)
   * [libpd wiki](https://github.com/libpd/libpd/wiki)
+
+## Meta
+
+* [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
