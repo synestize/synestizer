@@ -104,7 +104,9 @@ Ranked in descending order of viability:
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
       or exponential mapping for freq 
-
+* More natural widget construction
+* [Flux](https://facebook.github.io/flux/docs/overview.html)
+* [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 
 ## Workflow options
 
@@ -182,6 +184,18 @@ complete workflow tools:
 * http://color.psych.upenn.edu/brainard/papers/specification.pdf
 * foveation
 * JND
+
+### Sequencing
+
+* Transducers?
+
+  * http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data
+  * https://github.com/cognitect-labs/transducers-js
+  * http://phuu.net/2014/08/31/csp-and-transducers.html
+  * http://simplectic.com/projects/underarm/
+  * http://simplectic.com/projects/underscore-transducer/
+  * http://simplectic.com/blog/2014/transducers-explained-pipelines/
+  * http://simplectic.com/blog/2014/transducers-explained-1/
 
 ## Audio
 
