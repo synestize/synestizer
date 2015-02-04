@@ -43,7 +43,7 @@
         global.navigator.getUserMedia(
             {
                 "video": true,
-                "audio": false,
+                "audio": true,
             }, function(stream) {
                 media.stream = stream;
                 success(stream);
