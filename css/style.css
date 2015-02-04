@@ -204,26 +204,18 @@ input[type="number"] {
 
 
 /* color modes */
-#dominant-bars {
+.databars {
     width: 100%;
     display:inline-block;
 }
-#dominant-bars div {
+.databars div {
     display: block;
     width: 0;
     height: 5px;
     background-color: #eee;
 }
-
-#average-bars {
-    width: 100%;
-    display:inline-block;
-}
-#average-bars div {
-    display: block;
-    width: 0;
+#average-raw-bars div {
     height: 10px;
-    background-color: #eee;
     margin: 2px;
 }
 

@@ -40,7 +40,7 @@
 
                 <div id="rgb-panel" class="content active">
                     <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
-                    <div id="average-bars"></div>
+                    <div id="average-raw-bars" class="databars"></div>
                 </div>
 
                 <a href="#dominant-panel">Dominant Color</a>
@@ -79,14 +79,14 @@
     <script src="./js/audio/synths/triad.js"></script>
     <script>
         "use strict";
-        // setup info div
-        $("#info").removeClass("hide").addClass("show");
-
         var analyzer, pubsub, handle, bars, barScale, colorScale, statsbarsDom, uiDom, logoDom;
 
         pubsub = PubSub; //give our global signal bus a nice name
 
         window.addEventListener('DOMContentLoaded', function() {
+            // setup info div
+            $("#info").removeClass("hide").addClass("show");
+            
             media.getStream(
                 function (stream) {
                     analyzer = new videoanalyzers.VideoAnalyzer({
