@@ -19,12 +19,12 @@ body {
 }
 
 #video {
-
     -webkit-transform: scaleX(1);
     -moz-transform: scaleX(1);
 
     margin-top: -200px;
-    width: 100%;
+    margin-left: 300px;
+    width: 60%;
     position: fixed;
 }
 

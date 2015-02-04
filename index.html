@@ -22,33 +22,20 @@
             <video id="video" muted autoplay></video>
 
             <h1 id="logo">SYNESTIZER BETA</h1>
-
             <div class="row full">
-
-                <div id="info" class="large-12 large-centered columns hide text-center">
+                <div id="info" class="large-12 large-centered columns text-center">
                     <h1 class="info-title">
                         Welcome to Synestizer.
                     </h1>
-
                     <p class="info-text">
                         Please enable your webcam in the browser and activate your loudspeakers.
                     </p>
                 </div>
-
-
-                <a href="#rgb-panel">RGB</a>
-
                 <div id="rgb-panel" class="content active">
-                    <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
                     <div id="average-raw-bars" class="databars"></div>
+                    <div id="covariance-raw-bars" class="databars"></div>
+                    <div id="covariance-delta-bars" class="databars"></div>
                 </div>
-
-                <a href="#dominant-panel">Dominant Color</a>
-
-                <div id="dominant-panel" class="content active">
-                    <div id="dominant-bars"></div>
-                </div>
-
         </section>
 
         <!-- Footer -->
@@ -79,7 +66,12 @@
     <script src="./js/audio/synths/triad.js"></script>
     <script>
         "use strict";
-        var analyzer, pubsub, handle, bars, barScale, colorScale, statsbarsDom, uiDom, logoDom;
+        var analyzer;
+        var pubsub;
+        var averageRawHandle, averageDeltaHandle;
+        var covarianceRawHandle, covarianceDeltaHandle;
+        var barScale, colorScale;
+        var averageRawDom, covarianceRawDom, covarianceDeltaDom, uiDom, logoDom;
 
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -104,16 +96,18 @@
                 }
             );
 
-            statsbarsDom = d3.select("#average-bars");
+            averageRawDom = d3.select("#average-raw-bars");
+            covarianceRawDom = d3.select("#covariance-raw-bars");
+            covarianceDeltaDom = d3.select("#covariance-delta-bars");
             logoDom = d3.select("#logo");
             uiDom = d3.selectAll(".content.active");
             barScale = d3.scale.linear().domain([0, 1]).range([0, 300]);
             colorScale = d3.scale.linear().domain([0, 1]).rangeRound([0, 255]);
-            handle = pubsub.subscribe(
+            averageRawHandle = pubsub.subscribe(
                 "/videoanalyzer/averagecolor/raw", function(data){
-                    var paramColor;
+                    var paramColor, bars;
                     // draw param bars
-                    bars = statsbarsDom.selectAll("div").data(data);
+                    bars = averageRawDom.selectAll("div").data(data);
                     bars.enter().append("div");
                     bars.style("width", function(d) {
                         return barScale(d) + "px"; });
@@ -136,6 +130,26 @@
                     logoDom.style("color", paramColor);
                     uiDom.style("color", paramColor);
             });
+        });
+        covarianceRawHandle = pubsub.subscribe(
+            "/videoanalyzer/covariance/raw", function(data){
+                var paramColor, bars;
+                // draw param bars
+                bars = covarianceRawDom.selectAll("div").data(data);
+                bars.enter().append("div");
+                bars.style("width", function(d) {
+                    return barScale(d) + "px"; });
+                bars.exit().remove();
+        });
+        covarianceDeltaHandle = pubsub.subscribe(
+            "/videoanalyzer/covariance/delta", function(data){
+                var paramColor, bars;
+                // draw param bars
+                bars = covarianceDeltaDom.selectAll("div").data(data);
+                bars.enter().append("div");
+                bars.style("width", function(d) {
+                    return barScale(d) + "px"; });
+                bars.exit().remove();
         });
     </script>
 </body>
