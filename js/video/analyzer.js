@@ -35,15 +35,15 @@
 
         self.startAnalysis = function() {
             if (self.timerID!==null){
-                global.window.clearTimeout(self.timerID);
-            }
-            self.timerID = global.window.setTimeout(self.analyzeFrame, self.timeStep);
-        }
+                global.cancelAnimationFrame(self.timerID);
+            };
+            self.timerID = global.requestAnimationFrame(self.analyzeFrame);
+        };
         self.stopAnalysis = function() {
             if (self.timerID!==null){
-                global.window.clearTimeout(self.timerID);
+                global.cancelAnimationFrame(self.timerID);
             }
-        }
+        };
         //schedule video analysis
         self.analyzeFrame = function () {
             var lastFrameTime;

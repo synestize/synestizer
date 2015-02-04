@@ -9,7 +9,7 @@
     global.media = media;
     
     // shim the requestAnimationFrame API, with a setTimeout fallback
-    global.requestAnimFrame = (function(){
+    global.requestAnimationFrame = (function(){
         return global.requestAnimationFrame ||
         global.webkitRequestAnimationFrame ||
         global.mozRequestAnimationFrame ||
@@ -54,4 +54,4 @@
         );
     };
     media.getStream = getStream;
-})( this );
+})( window );
