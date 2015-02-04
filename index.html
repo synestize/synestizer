@@ -36,18 +36,18 @@
                 </div>
 
 
-                                <a href="#rgb-panel">RGB</a>
+                <a href="#rgb-panel">RGB</a>
 
-                                <div id="rgb-panel" class="content active">
-                                    <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
-                                    <div id="average-bars"></div>
-                                </div>
+                <div id="rgb-panel" class="content active">
+                    <button onclick="document.getElementById('wrapper').webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);">fullscreen</button>
+                    <div id="average-bars"></div>
+                </div>
 
-                                <a href="#dominant-panel">Dominant Color</a>
+                <a href="#dominant-panel">Dominant Color</a>
 
-                                <div id="dominant-panel" class="content active">
-                                    <div id="dominant-bars"></div>
-                                </div>
+                <div id="dominant-panel" class="content active">
+                    <div id="dominant-bars"></div>
+                </div>
 
         </section>
 
@@ -104,11 +104,11 @@
             scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
             handle = pubsub.subscribe(
                 "/videoanalyzer/averagecolor/raw", function(data){
-
                     // draw color bars
                     bars = average.selectAll("div").data(data);
                     bars.enter().append("div");
-                    bars.style("width", function(d) { return scale(d) + "px"; });
+                    bars.style("width", function(d) {
+                        return scale(d) + "px"; });
                     bars.style("background-color", function(d, i) {
                         if (i == 0)
                             return d3.rgb(255,0,0);
@@ -116,7 +116,7 @@
                             return d3.rgb(0,255,0);
                         if (i == 2)
                             return d3.rgb(0,0,255);
-                    })
+                    });
                     bars.exit().remove();
 
                     // change color of logo and ui
@@ -125,12 +125,9 @@
                     var ui = document.getElementsByClassName("content active");
                     [].forEach.call(ui, function (el) {
                         el.style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')'
-                    });
-
-
                 });
-    });
-
+            });
+        });
     </script>
     <!-- include WAAX -->
     <script src="js/vendor/waax.js"></script>    
