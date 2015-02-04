@@ -9,7 +9,6 @@
         self.vidElem = params.vidElem;
         self.canvElem = params.canvElem;
         self.pubsub = params.pubsub;
-        self.timeStep = typeof params.timeStep !== 'undefined' ? params.timeStep : 50;
         self.stream = params.stream;
         self.statistics = typeof params.statistics !== 'undefined' ? params.statistics : [];
         self.prefix = typeof params.prefix !== 'undefined' ? params.prefix : '/videoanalyzer';
@@ -44,12 +43,13 @@
                 global.cancelAnimationFrame(self.timerID);
             }
         };
-        //schedule video analysis
+        //do and reschedule video analysis
         self.analyzeFrame = function () {
             var lastFrameTime;
             var pixels;
             var cw=self.cw, ch=self.ch;
-            global.window.clearTimeout(self.timerID);
+            //Don't let any other timers do this:
+            global.cancelAnimationFrame(self.timerID);
             lastFrameTime = self.thisFrameTime;
             self.thisFrameTime = Date.now();
             self.meanFrameDur = 0.9 * self.meanFrameDur + 0.1 * (
@@ -75,7 +75,7 @@
             // reschedule video analysis
             // after 50ms to always get delta
             // you probably still want to smooth it
-            self.timerID = global.window.setTimeout(self.analyzeFrame, self.timeStep);
+            self.timerID = global.requestAnimationFrame(self.analyzeFrame);
         }
         self.startAnalysis();
         self.success();
