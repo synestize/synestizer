@@ -82,7 +82,7 @@
         // setup info div
         $("#info").removeClass("hide").addClass("show");
 
-        var analyzer, pubsub, handle, bars, scale, average;
+        var analyzer, pubsub, handle, bars, barScale, colorScale, statsbarsDom, uiDom, logoDom;
 
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -101,15 +101,19 @@
                 }
             );
 
-            average = d3.select("#average-bars");
-            scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
+            statsbarsDom = d3.select("#average-bars");
+            logoDom = d3.select("#logo");
+            uiDom = d3.selectAll(".content.active");
+            barScale = d3.scale.linear().domain([0, 1]).range([0, 300]);
+            colorScale = d3.scale.linear().domain([0, 1]).rangeRound([0, 255]);
             handle = pubsub.subscribe(
                 "/videoanalyzer/averagecolor/raw", function(data){
-                    // draw color bars
-                    bars = average.selectAll("div").data(data);
+                    var paramColor;
+                    // draw param bars
+                    bars = statsbarsDom.selectAll("div").data(data);
                     bars.enter().append("div");
                     bars.style("width", function(d) {
-                        return scale(d) + "px"; });
+                        return barScale(d) + "px"; });
                     bars.style("background-color", function(d, i) {
                         if (i == 0)
                             return d3.rgb(255,0,0);
@@ -119,14 +123,15 @@
                             return d3.rgb(0,0,255);
                     });
                     bars.exit().remove();
-
+                    
+                    paramColor = d3.rgb(
+                        colorScale(data[0]),
+                        colorScale(data[1]),
+                        colorScale(data[2])
+                    );
                     // change color of logo and ui
-                    document.getElementById("logo").style.color = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
-
-                    var ui = document.getElementsByClassName("content active");
-                    [].forEach.call(ui, function (el) {
-                        el.style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')'
-                });
+                    logoDom.style("color", paramColor);
+                    uiDom.style("color", paramColor);
             });
         });
     </script>
