@@ -3,9 +3,9 @@
 //This should probably be refactored to run in a webworker.
 (function( global ) {
     'use strict';
-    var Covariance, Statistic;
+    var Covariance, Statistic, DominantColor, AverageColor;
 
-    var Statistic = function (params) {
+    Statistic = function (params) {
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
         self.prefix = self.baseprefix;
@@ -35,7 +35,7 @@
             self.calcTime = endTime - startTime;
         }
     };
-    var Covariance = function (params) {
+    Covariance = function (params) {
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
         Statistic.call(this, params); //super constructor
@@ -170,7 +170,7 @@
     // but the API was chaos and buggy
     // NB this algorithm should probably terminate EARLIER
     // and take fewer averages.
-    var DominantColor = function (params) {
+    DominantColor = function (params) {
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
         self.nColors = typeof params.nColors !== 'undefined' ? params.nColors : 8;
@@ -279,7 +279,7 @@
     };
 
 
-    var AverageColor = function (params) {
+    AverageColor = function (params) {
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "averagecolor";
