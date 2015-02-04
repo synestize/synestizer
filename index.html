@@ -89,10 +89,10 @@
         window.addEventListener('DOMContentLoaded', function() {
             media.getStream(
                 function (stream) {
-                    analyzer = new this.videoanalyzers.VideoAnalyzer({
+                    analyzer = new videoanalyzers.VideoAnalyzer({
                         vidElem: document.getElementById('video'),
                         canvElem: document.getElementById('canvas'),
-                        statistics: [new this.videostatistics.AverageColor()],
+                        statistics: [new videostatistics.AverageColor()],
                         pubsub: pubsub,
                         stream: stream
                     });
