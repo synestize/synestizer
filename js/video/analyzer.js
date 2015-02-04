@@ -13,7 +13,6 @@
         self.statistics = typeof params.statistics !== 'undefined' ? params.statistics : [];
         self.prefix = typeof params.prefix !== 'undefined' ? params.prefix : '/videoanalyzer';
         self.success = typeof params.success !== 'undefined' ? params.success : function(){};
-        self.lastFrameTime = Date.now();
         self.lastAnalysisTime = Date.now();
         self.thisFrameTime = Date.now();
         self.meanAnalysisDur = 33; //initial time is a guess
@@ -45,15 +44,16 @@
         };
         //do and reschedule video analysis
         self.analyzeFrame = function () {
-            var lastFrameTime;
-            var pixels;
+            var endTime, startTime = Date.now();
+            //we need to know how often we are being called:
+            self.lastFrameDur = startTime - self.lastFrameTime;
+            //just for seeing how expensive this is:
+            self.calcTime = endTime - startTime;
+            
+            var pixels="dummy";
             var cw=self.cw, ch=self.ch;
-            //Don't let any other timers do this:
+            //Only run one timer per instance:
             global.cancelAnimationFrame(self.timerID);
-            lastFrameTime = self.thisFrameTime;
-            self.thisFrameTime = Date.now();
-            self.meanFrameDur = 0.9 * self.meanFrameDur + 0.1 * (
-                self.lastFrameDur);
             // evaluate statistics
             // The first few frames get lost in Firefox, raising exceptions
             // We make sure this does not break the whole loop by
@@ -63,13 +63,22 @@
                 pixels = self.ctx.getImageData(0, 0, cw, ch).data;
                 //Also make available to the outside world:
                 self.pixels = pixels;
-                for (var i = 0; i < self.statistics.length; i++) {
-                    self.statistics[i].analyzeFrame(pixels);
-                }
             } catch (e) {
                 console.log("error getting video frame");
                 console.debug(e);
             }
+            if (pixels.length>0) {
+                //Yay! it worked
+                for (var i = 0; i < self.statistics.length; i++) {
+                    self.statistics[i].analyzeFrame(pixels);
+                };
+            };
+            endTime = Date.now();
+            self.lastFrameTime = startTime;
+            
+            self.thisFrameTime = Date.now();
+            self.meanFrameDur = 0.9 * self.meanFrameDur + 0.1 * (
+                self.lastFrameDur);
             self.meanAnalysisDur = 0.9 * self.meanAnalysisDur + 0.1 * (
                 Date.now() - self.thisFrameTime);
             // reschedule video analysis

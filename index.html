@@ -92,7 +92,10 @@
                     analyzer = new videoanalyzers.VideoAnalyzer({
                         vidElem: document.getElementById('video'),
                         canvElem: document.getElementById('canvas'),
-                        statistics: [new videostatistics.AverageColor()],
+                        statistics: [
+                            new videostatistics.AverageColor(),
+                            new videostatistics.Covariance()
+                        ],
                         pubsub: pubsub,
                         stream: stream
                     });

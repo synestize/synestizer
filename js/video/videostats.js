@@ -10,11 +10,11 @@
         params = typeof params !== 'undefined' ? params : {};
         self.prefix = self.baseprefix;
         self.pubsub = params.pubsub;
-        self.lastFrameTime = Date.now();
-        self.lastFrameDur = 1.0;
-        self.calcTime = 1.0;
-        self.thisFrameTime = Date.now();
-
+        //to be overridden in subclasses
+        self.rawStats = [0.5, 0.5, 0.5];
+        self.lastRawStats = [0.5, 0.5, 0.5];
+        self.deltaStats = [0.0, 0.0, 0.0];
+        
         self.attach = function(analyzer) {
             self.analyzer = analyzer;
             self.prefix = analyzer.prefix + '/' + self.baseprefix;
@@ -22,18 +22,37 @@
         }
 
         self.emitStats = function(prefix, stats) {
-            self.pubsub.publish(self.prefix + "/raw", stats);
+            self.pubsub.publish(self.prefix + prefix, stats);
         }
+        self.deltaCalcs = function (){
+            //even though we use requestAnimFrame, we may not yet have new camera data.
+            var tmpDeltaStats = new Array(self.rawStats.length);
+            for (var i = 0; i < self.rawStats.length; i++) {
+                tmpDeltaStats[i] = 0.5;
+                var dif = Math.tanh((
+                    self.rawStats[i] - self.lastRawStats[i]
+                )/Math.max(self.analyzer.lastFrameDur, 1) * 1000)*0.5+0.5;
+
+                if (!isNaN(dif)) {
+                    tmpDeltaStats[i] = dif;
+                }
+            };
+            //check that we actually updated:
+            if (!tmpDeltaStats.every(function(v){return v==0.5})) {
+                self.deltaStats = tmpDeltaStats;
+            };
+
+            /*if (Math.random()<0.005) {
+                console.debug(self.prefix, self.rawStats, self.lastRawStats, self.deltaStats);
+            };*/
+        };
         self.analyzeFrame = function (pixels) {
-            var endTime, startTime = Date.now();
-            //we need to know how often we are being called:
-            self.lastFrameDur = startTime - self.lastFrameTime;
-            self.emitStats("raw", self.doCalcs(pixels));
-            endTime = Date.now();
-            self.lastFrameTime = startTime;
-            //just for seeing how expensive this is:
-            self.calcTime = endTime - startTime;
-        }
+            self.lastRawStats = self.rawStats.slice(); //copy for safety
+            self.rawCalcs(pixels);
+            self.deltaCalcs();
+            self.emitStats("/raw", self.rawStats);
+            self.emitStats("/delta", self.deltaStats);
+        };
     };
     Covariance = function (params) {
         var self = this;
@@ -41,13 +60,11 @@
         Statistic.call(this, params); //super constructor
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "covariance";
         self.mean = [0,0,0];
-        self.deltaMean = [0,0,0];
         self.variance = [1,1,1,0,0,0,0,0,0,0,0,0];
-        self.deltaVariance = [1,1,1,0,0,0,0,0,0,0,0,0];
-        self.corr = [0,0,0,0,0,0,0,0,0];
-        self.deltaCorr = [0,0,0,0,0,0,0,0,0];
-
-        self.doCalcs = function (pixels) {
+        self.normCorr = [0,0,0,0,0,0,0,0,0];
+        self.rawStats = [0,0,0,0,0,0,0,0,0,0,0,0];
+        self.deltaStats = [0,0,0,0,0,0,0,0,0,0,0,0];
+        self.rawCalcs = function (pixels) {
             //calculate variances for all params
             //IDEA: partial variances
             //IDEA: higher moments?
@@ -71,8 +88,6 @@
             var rxcorr, gxcorr, bxcorr;
             var rycorr, gycorr, bycorr;
             var rsd, gsd, bsd, xsd=1/Math.sqrt(12), ysd=1/Math.sqrt(12);
-            var lastMean,lastVariance, lastCorr;
-            var tmpDeltaVariance=[], tmpDeltaCorr=[];
 
             for (var i = 0; i < pixelCount; i++) {
                 // or sample random pixels:
@@ -129,40 +144,17 @@
             gycorr = gyvar/(gsd*ysd);
             bxcorr = bxvar/(bsd*xsd);
             bycorr = byvar/(bsd*ysd);
-
-            lastMean = self.mean;
             self.mean = [rmean, gmean, bmean];
-            for (var i = 0; i < 3; i++) {
-                self.deltaMean[i] = (
-                    self.mean[i] - lastMean[i]
-                )/self.lastFrameDur * 30000; //arbitrary normalisation const
-            }
-
-            lastVariance = self.variance;
             self.variance = [
                 rvar, gvar, bvar,
                 rgvar, gbvar, rbvar,
                 rxvar, ryvar, gxvar, gyvar, bxvar, byvar];
-            for (var i = 0; i < 12; i++) {
-                tmpDeltaVariance[i] = (
-                    self.variance[i] - lastVariance[i]
-                )/self.lastFrameDur * 300000; //arbitrary normalisation const
-            }
-            lastCorr = self.corr;
-            self.corr = [
-                rgcorr, gbcorr, rbcorr,
-                rxcorr, rycorr, gxcorr, gycorr, bxcorr, bycorr];
-            for (var i = 0; i < 9; i++) {
-                tmpDeltaCorr[i] = (
-                    self.corr[i] - lastCorr[i]
-                )/self.lastFrameDur * 30000;
-            }
-            //Hack to stop null deltas when we look at the same frame twice
-            if (!tmpDeltaCorr.every(function(i){return i==0})) {
-                self.deltaVariance = tmpDeltaVariance;
-                self.deltaCorr = tmpDeltaCorr;
-            }
-            return (self.mean.concat( self.variance, self.deltaVariance));
+            self.normCorr = [
+                rgcorr/2+0.5, gbcorr/2+0.5, rbcorr/2+0.5,
+                rxcorr/2+0.5, rycorr/2+0.5, gxcorr/2+0.5,
+                gycorr/2+0.5, bxcorr/2+0.5, bycorr/2+0.5];
+            self.rawStats = self.mean.concat( self.normCorr);
+            return self.rawStats;
         }
     };
     // agglomerative hierarchical clustering
@@ -177,7 +169,15 @@
         self.maxPoints = typeof params.maxPoints !== 'undefined' ? params.maxPoints : 256;
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "dominantcolor";
         Statistic.call(this, params); //super constructor
-        self.doCalcs = function (pixels) {
+        self.rawStats = new Array(nColors*4);
+        self.lastRawStats = new Array(nColors*4);
+        self.deltaStats = new Array(nColors*4);
+        for (var i = 0; i < maxPoints*4; i++) {
+            self.rawStats[i] = 0.5;
+            self.lastRawStats[i] = 0.5;
+            self.deltaStats[i] = 0.5;
+        };
+        self.rawCalcs = function (pixels) {
             //could possibly optimise this by not reallocating arrays all the time.
             var pixelCount = self.analyzer.cw * self.analyzer.ch;
             var nColors = self.nColors, maxPoints = self.maxPoints;
@@ -265,7 +265,6 @@
             //sort in desc frequency order
             colorsCounts = colorsCounts.slice(0,nColors);
             colorsCounts.sort(function (a, b) { return b[3]-a[3]});
-            //if (Math.random()<0.02) console.debug(colorsCounts);
 
             for (var i=0;i<nColors;i++) {
                 var offset = i*4;
@@ -274,6 +273,7 @@
                 out[offset+2] = colorsCounts[i][2];
                 out[offset+3] = colorsCounts[i][3];
             };
+            self.rawStats = out;
             return out;
         }
     };
@@ -284,7 +284,8 @@
         params = typeof params !== 'undefined' ? params : {};
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "averagecolor";
         Statistic.call(this, params); //super constructor
-        self.doCalcs = function (pixels) {
+        self.rawCalcs = function (pixels) {
+            
             var pixelCount = self.analyzer.cw * self.analyzer.ch;
 
             var out = new Array(3);
@@ -303,13 +304,13 @@
             out[1] = green / pixelCount;
             out[2] = blue / pixelCount;
 
+            self.rawStats = out;
             return out;
         }
     };
 
     // expose our module to the global object
     global.videostatistics = {
-        Statistic: Statistic,
         Covariance: Covariance,
         DominantColor: DominantColor,
         AverageColor: AverageColor
