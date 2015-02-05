@@ -20,8 +20,6 @@ The *immediate* things we need to do:
     * Are the correlation estimates incoherent?
       Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 * speed improvements
-    * native arrays for linear algebra
-    * OpenGL could do some of the work
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
         * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
@@ -102,6 +100,7 @@ Ranked in descending order of viability:
 * More natural widget construction
 * [Flux](https://facebook.github.io/flux/docs/overview.html)
 * [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
+* patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
 
 ## Workflow options
 
@@ -166,6 +165,7 @@ complete workflow tools:
   
 * css filters to shunt to GPU?
 
+  * http://www.html5rocks.com/en/tutorials/speed/html5/
   * http://docs.webplatform.org/wiki/tutorials/css_filters
   * http://caniuse.com/#feat=css-filters
   * http://jsfiddle.net/SvH6w/6/
