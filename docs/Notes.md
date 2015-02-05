@@ -9,11 +9,6 @@ The *immediate* things we need to do:
     * Move to modular architecture in the AMD style,
       e.g. using [require.js](http://requirejs.org/)
 
-* A/V mapping
-    * switch to [d3.js scale](https://github.com/mbostock/d3/wiki/Quantitative-Scales) ([API ref](https://github.com/mbostock/d3/wiki/API-Reference#d3scale-scales))
-* Audio
-    * implement synths
-    * sound good
 * Video analysis
     * normalize statistics
     * speed up clustering analysis
