@@ -104,6 +104,8 @@ Ranked in descending order of viability:
 
 ## Workflow options
 
+### building app
+
 Build tools:
 
 * [gulp](http://gulpjs.com/) ---
@@ -117,6 +119,12 @@ complete workflow tools:
 * [lineman](http://linemanjs.com/)
 * [metalsmith](http://www.metalsmith.io/)
 * [roll your own with grunt](http://www.codebelt.com/javascript/single-page-javascript-application-workflow/)
+
+### Documentation
+
+* [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
+* [mkdocs](http://www.mkdocs.org/)
+* [macdown](http://macdown.uranusjr.com/)
 
 ## Video analysis
 
