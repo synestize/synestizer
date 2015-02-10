@@ -33,6 +33,7 @@ The *immediate* things we need to do:
 * [jsfiddle](http://jsfiddle.net/) has amazing collaboration but weak library support
 * [liveweave](http://liveweave.com/) also has nice collaborative features, although less JS influence.
 
+
 ## javascript tips
 
 * Jquery too big. Alternatives:
@@ -221,6 +222,15 @@ complete workflow tools:
   * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
   * [libpd](http://libpd.cc/documentation/)
   * [libpd wiki](https://github.com/libpd/libpd/wiki)
+
+## iOS version
+
+http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
+
+More general JS app options:
+
+https://www.ludei.com/cocoonjs/
+https://github.com/andrewrk/waveform
 
 ## Meta
 
