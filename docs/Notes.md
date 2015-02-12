@@ -9,11 +9,6 @@ The *immediate* things we need to do:
     * Move to modular architecture in the AMD style,
       e.g. using [require.js](http://requirejs.org/)
 
-* A/V mapping
-    * switch to [d3.js scale](https://github.com/mbostock/d3/wiki/Quantitative-Scales) ([API ref](https://github.com/mbostock/d3/wiki/API-Reference#d3scale-scales))
-* Audio
-    * implement synths
-    * sound good
 * Video analysis
     * normalize statistics
     * speed up clustering analysis
@@ -25,8 +20,6 @@ The *immediate* things we need to do:
     * Are the correlation estimates incoherent?
       Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 * speed improvements
-    * native arrays for linear algebra
-    * OpenGL could do some of the work
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
         * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
@@ -104,9 +97,14 @@ Ranked in descending order of viability:
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
       or exponential mapping for freq 
-
+* More natural widget construction
+* [Flux](https://facebook.github.io/flux/docs/overview.html)
+* [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
+* patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
 
 ## Workflow options
+
+### building app
 
 Build tools:
 
@@ -121,6 +119,12 @@ complete workflow tools:
 * [lineman](http://linemanjs.com/)
 * [metalsmith](http://www.metalsmith.io/)
 * [roll your own with grunt](http://www.codebelt.com/javascript/single-page-javascript-application-workflow/)
+
+### Documentation
+
+* [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
+* [mkdocs](http://www.mkdocs.org/)
+* [macdown](http://macdown.uranusjr.com/)
 
 ## Video analysis
 
@@ -169,6 +173,7 @@ complete workflow tools:
   
 * css filters to shunt to GPU?
 
+  * http://www.html5rocks.com/en/tutorials/speed/html5/
   * http://docs.webplatform.org/wiki/tutorials/css_filters
   * http://caniuse.com/#feat=css-filters
   * http://jsfiddle.net/SvH6w/6/
@@ -182,6 +187,18 @@ complete workflow tools:
 * http://color.psych.upenn.edu/brainard/papers/specification.pdf
 * foveation
 * JND
+
+### Sequencing
+
+* Transducers?
+
+  * http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data
+  * https://github.com/cognitect-labs/transducers-js
+  * http://phuu.net/2014/08/31/csp-and-transducers.html
+  * http://simplectic.com/projects/underarm/
+  * http://simplectic.com/projects/underscore-transducer/
+  * http://simplectic.com/blog/2014/transducers-explained-pipelines/
+  * http://simplectic.com/blog/2014/transducers-explained-1/
 
 ## Audio
 
@@ -204,3 +221,7 @@ complete workflow tools:
   * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
   * [libpd](http://libpd.cc/documentation/)
   * [libpd wiki](https://github.com/libpd/libpd/wiki)
+
+## Meta
+
+* [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
