@@ -25,6 +25,12 @@ The *immediate* things we need to do:
         * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
         * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
 
+## Offline operation
+
+You can access your camera totally offline on [Chrome](http://stackoverflow.com/a/16929608).
+
+You can run a simple webserver even on windows using [mongoose](https://code.google.com/p/mongoose/).
+
 ## Online publishing
 
 * Via github
@@ -93,7 +99,7 @@ Ranked in descending order of viability:
 * [numeric](http://numericjs.com/wordpress/) looks polished
   but has been untouched for 2 years
 
-### User interface improvments
+### User interface improvements
 
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
@@ -127,6 +133,14 @@ complete workflow tools:
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
 
+## Remote operation
+
+* https://tokbox.com/
+* http://www.webrtc.org/
+* https://github.com/binaryjs/binaryjs
+* http://tunnel.connectingspaces.hk
+* https://shiftr.io/
+
 ## Video analysis
 
 ### Ideas for analyses
@@ -159,7 +173,7 @@ complete workflow tools:
   * https://github.com/wuhao1117/WebGL-Ocean-FFT
 
 * http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/
-* how to do WebGL-optimized image processssng http://learningwebgl.com/blog/?p=1786
+* how to do WebGL-optimized image processing http://learningwebgl.com/blog/?p=1786
 * very good plain intro http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/
 * transform explanation http://games.greggman.com/game/webgl-2d-matrices/
 * high-perf matrix op http://glmatrix.net/
@@ -183,11 +197,13 @@ complete workflow tools:
 
 * https://github.com/ahacking/chromatist
 * https://github.com/gka/chroma.js
-* colorspaces: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 * https://en.wikipedia.org/wiki/Color_difference
 * http://color.psych.upenn.edu/brainard/papers/specification.pdf
 * foveation
 * JND
+* colorspaces: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
+* http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf
+* http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/
 
 ### Sequencing
 
