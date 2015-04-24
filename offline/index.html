@@ -386,7 +386,7 @@
                 analyzer = new window.videoanalyzers.VideoAnalyzer({
                     vidElem: document.getElementById('video'),
                     canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
+                    statistics: [new window.videostatistics.AverageColor()],
                     pubsub: pubsub,
                     stream: stream
                 });
