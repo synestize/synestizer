@@ -11,6 +11,11 @@ The *immediate* things we need to do:
 
 * MIDI - supported in Chrome betas - https://webaudio.github.io/web-midi-api/
 
+  * You might need to set up your MIDI devices properly
+  
+  * http://manual.ardour.org/setting-up-your-system/setting-up-midi/midi-on-linux/
+  * http://murks.lima-city.de/serendipity/?/archives/7-ALSA-and-JACK-MIDI-explained-by-a-dummy-for-dummies.html 
+
 * Video analysis
     * normalize statistics
     * speed up clustering analysis
