@@ -9,6 +9,8 @@ The *immediate* things we need to do:
     * Move to modular architecture in the AMD style,
       e.g. using [require.js](http://requirejs.org/)
 
+* MIDI - supported in Chrome betas - https://webaudio.github.io/web-midi-api/
+
 * Video analysis
     * normalize statistics
     * speed up clustering analysis
