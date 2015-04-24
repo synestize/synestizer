@@ -367,36 +367,39 @@
 
     <script>
         "use strict";
+        
         var analyzer;
         var pubsub;
         var averageRawHandle, averageDeltaHandle;
         var covarianceRawHandle, covarianceDeltaHandle;
         var barScale, colorScale;
         var averageRawDom, covarianceRawDom, covarianceDeltaDom, uiDom, logoDom;
+        var handle, bars, scale, average, stream;
 
         pubsub = PubSub; //give our global signal bus a nice name
 
-        window.addEventListener('DOMContentLoaded', function() {
+        $( document ).ready( function() {
             // setup info div
             $("#info").removeClass("hide").addClass("show");
-            
             media.getStream(
                 function (stream) {
-                    analyzer = new videoanalyzers.VideoAnalyzer({
-                        vidElem: document.getElementById('video'),
-                        canvElem: document.getElementById('canvas'),
-                        statistics: [
-                            new videostatistics.AverageColor(),
-                            new videostatistics.Covariance()
-                        ],
-                        pubsub: pubsub,
-                        stream: stream
-                    });
-                    $("#info").removeClass("show").addClass("hide");
-                    $("#controls").removeClass("hide").addClass("show");
-                }
-            );
+                analyzer = new window.videoanalyzers.VideoAnalyzer({
+                    vidElem: document.getElementById('video'),
+                    canvElem: document.getElementById('canvas'),
+                    statistics: [new this.videostatistics.AverageColor()],
+                    pubsub: pubsub,
+                    stream: stream
+                });
+                $("#info").removeClass("show").addClass("hide");
+                $("#controls").removeClass("hide").addClass("show");
 
+                // call resize for video resizing
+                resize();
+
+                // start the app
+                new app.AppView();
+            });
+            
             averageRawDom = d3.select("#average-raw-bars");
             covarianceRawDom = d3.select("#covariance-raw-bars");
             covarianceDeltaDom = d3.select("#covariance-delta-bars");
@@ -405,7 +408,8 @@
             barScale = d3.scale.linear().domain([0, 1]).range([0, 300]);
             colorScale = d3.scale.linear().domain([0, 1]).rangeRound([0, 255]);
             averageRawHandle = pubsub.subscribe(
-                "/videoanalyzer/averagecolor/raw", function(data){
+                "/videoanalyzer/averagecolor/raw",
+                function(data){
                     var paramColor, bars;
                     // draw param bars
                     bars = averageRawDom.selectAll("div").data(data);
@@ -430,122 +434,58 @@
                     // change color of logo and ui
                     logoDom.style("color", paramColor);
                     uiDom.style("color", paramColor);
-            });
-        });
-        covarianceRawHandle = pubsub.subscribe(
-            "/videoanalyzer/covariance/raw", function(data){
-                var paramColor, bars;
-                // draw param bars
-                bars = covarianceRawDom.selectAll("div").data(data);
-                bars.enter().append("div");
-                bars.style("width", function(d) {
-                    return barScale(d) + "px"; });
-                bars.exit().remove();
-        });
-        covarianceDeltaHandle = pubsub.subscribe(
-            "/videoanalyzer/covariance/delta", function(data){
-                var paramColor, bars;
-                // draw param bars
-                bars = covarianceDeltaDom.selectAll("div").data(data);
-                bars.enter().append("div");
-                bars.style("width", function(d) {
-                    return barScale(d) + "px"; });
-                bars.exit().remove();
-        });
-    </script>
-
-    <script>
-        // setup info div
-        $("#info").removeClass("hide").addClass("show");
-
-        var analyzer, pubsub, handle, bars, scale, average, stream;
-
-        pubsub = PubSub; //give our global signal bus a nice name
-
-        window.addEventListener('DOMContentLoaded', function() {
-            media.getStream(function (stream) {
-                analyzer = new this.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                    stream: stream
-                });
-                $("#info").removeClass("show").addClass("hide");
-                $("#controls").removeClass("hide").addClass("show");
-
-                // call resize for video resizing
-                resize();
-
-                // start the app
-                new app.AppView();
-            });
-
-            resize();
-
-            average = d3.select("#average-bars");
-            scale = d3.scale.linear().domain([0, 1]).range([0, 300]);
-            handle = pubsub.subscribe(
-                "/videoanalyzer/averagecolor/raw", function(data){
-
-                    // draw color bars
-                    bars = average.selectAll("div").data(data);
+                }
+            );
+            covarianceRawHandle = pubsub.subscribe(
+                "/videoanalyzer/covariance/raw", function(data){
+                    var paramColor, bars;
+                    // draw param bars
+                    bars = covarianceRawDom.selectAll("div").data(data);
                     bars.enter().append("div");
-                    bars.style("width", function(d) { return scale(d) + "px"; });
-                    bars.style("background-color", function(d, i) {
-                        if (i == 0)
-                            return d3.rgb(255,0,0);
-                        if (i == 1)
-                            return d3.rgb(0,255,0);
-                        if (i == 2)
-                            return d3.rgb(0,0,255);
-                    })
+                    bars.style("width", function(d) {
+                        return barScale(d) + "px"; });
                     bars.exit().remove();
+                }
+            );
+            covarianceDeltaHandle = pubsub.subscribe(
+                "/videoanalyzer/covariance/delta", function(data){
+                    var paramColor, bars;
+                    // draw param bars
+                    bars = covarianceDeltaDom.selectAll("div").data(data);
+                    bars.enter().append("div");
+                    bars.style("width", function(d) {
+                        return barScale(d) + "px"; });
+                    bars.exit().remove();
+                }
+            );
 
-                    // change color of logo and ui
-                    document.getElementById("logo").style.color = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')';
+            $(window).resize(function() {
+                resize();
+            });
 
-                    var ui = document.getElementsByClassName("content active");
-                    //ui += document.getElementsByClassName("accordion-navigation");
-                    [].forEach.call(ui, function (el) {
-                        el.style.backgroundColor = 'rgb(' + [~~(data[0]*255),~~(data[1]*255),~~(data[2]*255)].join(',') + ')'
-                    });
+            function resize() {
+                console.log("resize");
+                // adapt video size to display
+                var vw = $(window).width();
+                var vh = $(window).height();
 
+                var iw = 640;
+                var ih = 480; // TODO
 
-                });
-    });
-
-
-
-    $(window).resize(function() {
-        resize();
-    });
-
-
-    function resize() {
-        console.log("resize");
-        // adapt video size to display
-        var vw = $(window).width();
-        var vh = $(window).height();
-
-        var iw = 640;
-        var ih = 480; // TODO
-
-        if (iw / ih < vw / vh) {
-            var d1 = 100 * ((ih * (vw / iw)) / vh);
-            $("#video").css("height", d1+"%");
-            $("#video").css("width", "100%");
-            $("#video").css("top", (100-d1)/2+"%");
-        } else {
-            var d2 = 100 * ((iw * (vh / ih)) / vw);
-            $("#video").css("height", "100%");
-            $("#video").css("width", d2+"%");
-            $("#video").css("left", (100-d2)/2+"%");
-        }
-    };
-
+                if (iw / ih < vw / vh) {
+                    var d1 = 100 * ((ih * (vw / iw)) / vh);
+                    $("#video").css("height", d1+"%");
+                    $("#video").css("width", "100%");
+                    $("#video").css("top", (100-d1)/2+"%");
+                } else {
+                    var d2 = 100 * ((iw * (vh / ih)) / vw);
+                    $("#video").css("height", "100%");
+                    $("#video").css("width", d2+"%");
+                    $("#video").css("left", (100-d2)/2+"%");
+                }
+            };
+        });
     </script>
-
 
 </body>
 </html>
