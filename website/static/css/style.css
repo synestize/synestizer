@@ -121,6 +121,7 @@ a, a:hover, a:active, a:focus {
     display: block;
     padding-bottom: 45px;
     position: fixed;
+    height: 100%;
     overflow-y: scroll;
 }
 
