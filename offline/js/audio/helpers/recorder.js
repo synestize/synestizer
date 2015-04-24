@@ -1,6 +1,6 @@
 /*License (MIT)
 
-Copyright Â© 2013 Matt Diamond
+Derived from recorder.js, copyright © 2013 Matt Diamond
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -19,7 +19,7 @@ DEALINGS IN THE SOFTWARE.
 
 (function(window){
 
-  var WORKER_PATH = STATIC_URL + 'js/audio/helpers/recorder_worker.js';
+  var WORKER_PATH = './js/audio/helpers/recorder_worker.js';
 
   var Recorder = function(source, cfg){
     var config = cfg || {};
