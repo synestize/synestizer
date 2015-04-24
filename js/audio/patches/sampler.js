@@ -9,119 +9,209 @@ var patches = patches || {};
     patches.Sampler = function (preset) {
 
         var preset = preset || {};
-        var sampler = WX.SP1();
 
-        sampler.setPreset(preset);
-        sampler.to(WX.Master);
-
+        // create audio input node
         var audioInput = null,
         realAudioInput = null,
-        inputPoint = null,
-        audioRecorder = null;
+        input = null;
+        //var audioRecorder = null;
         var rafID = null;
         var analyserContext = null;
         var canvasWidth, canvasHeight;
         var recIndex = 0;
 
-        var analyserNode;
+        var analyzer;
 
-        initAudio();
+        input = WX.Gain();
 
+        // Create an AudioNode from the stream.
+        realAudioInput = WX._ctx.createMediaStreamSource(window.media.stream);
+        audioInput = realAudioInput;
+        audioInput.connect(input);
+
+        //    audioInput = convertToMono( input );
+
+        analyzer = WX.Analyzer();
+        analyzer.fftSize = 2048;
+        input.connect( analyzer );
+
+        // create voices
+        var voices = new Array();
+        var recorders = new Array();
+
+        // create 3 samplers + recorders
+        for (var i = 0; i < 3; ++i) {
+            voices.push(WX.SP1());
+            voices[i].setPreset(preset);
+            voices[i].to(WX.Master);
+
+            recorders.push(new Recorder( input ));
+        }
+
+        // load default samples
+        voices[0].loadClip({
+            name: 'voice 1',
+            url: STATIC_URL + 'sound/voice_as4.mp3'
+        });
+        voices[1].loadClip({
+            name: 'voice 2',
+            url: STATIC_URL + 'sound/voice_es3.mp3'
+        });
+        voices[2].loadClip({
+            name: 'voice 3',
+            url: STATIC_URL + 'sound/voice_c4.mp3'
+        });
+
+        // monitor off
+        var zeroGain = WX.Gain();
+        zeroGain.gain.value = 0.0;
+        input.connect( zeroGain );
+        zeroGain.connect( WX._ctx.destination );
+
+        // start analyzers
+        updateAnalysers();
         console.log("Sampler patch initialized");
 
         return {
             run: function() {
-
-
-
+                pubsub.subscribe("/videoanalyzer/averagecolor/raw", function(data) {
+                    if (voices[0].ready) {
+                        var p = { tune: data[0].map(0,1,72,48) };
+                        voices[0].setPreset(p);
+                        voices[0].noteOn(60, 127, WX.now);
+                        voices[0].noteOff(60, 127, WX.now+2);
+                    }
+                    if (voices[1].ready) {
+                        var p = { tune: data[1].map(0,1,72,48) };
+                        voices[1].setPreset(p);
+                        voices[1].noteOn(60, 127, WX.now);
+                        voices[1].noteOff(60, 127, WX.now+2);
+                    }
+                    if (voices[2].ready) {
+                        var p = { tune: data[2].map(0,1,72,48) };
+                        voices[2].setPreset(p);
+                        voices[2].noteOn(60, 127, WX.now);
+                        voices[2].noteOff(60, 127, WX.now+2);
+                    }
+                })
             },
 
-            toggleRecording: function(e) {
-                if (e.classList.contains("recording")) {
+            toggleRecording: function(e, rec) {
+                if (e.classList.contains("fi-stop")) {
                     // stop recording
-                    audioRecorder.stop();
-                    e.classList.remove("recording");
-                    e.innerHTML = "record";
-                    audioRecorder.getBuffers( gotBuffers );
+                    recorders[rec].stop();
+                    e.classList.remove("fi-stop");
+                    e.classList.add("fi-record");
+                    // TODO ...
+                    if (rec == 0) {
+                        recorders[rec].getBuffers(gotBuffers0);
+                    }
+                    if (rec == 1) {
+                        recorders[rec].getBuffers(gotBuffers1);
+                    }
+                    if (rec == 2) {
+                        recorders[rec].getBuffers(gotBuffers2);
+                    }
                 } else {
                     // start recording
-                    if (!audioRecorder)
+                    if (!recorders[rec])
                         return;
-                    e.classList.add("recording");
-                    e.innerHTML = "stop";
-                    audioRecorder.clear();
-                    audioRecorder.record();
+                    e.classList.remove("fi-record");
+                    e.classList.add("fi-stop");
+                    recorders[rec].clear();
+                    recorders[rec].record();
                 }
             },
 
-            setOutput: function(output) {
-                sampler.output(output);
+            setGain: function(output) {
+                voices[0].output(output/3);
+                voices[1].output(output/3);
+                voices[2].output(output/3);
+            },
+
+            setAttack: function(attack) {
+                voices[0].setPreset({"ampAttack": attack});
+                voices[1].setPreset({"ampAttack": attack});
+                voices[2].setPreset({"ampAttack": attack});
+            },
+
+            setDecay: function(decay) {
+                voices[0].setPreset({"ampDecay": decay});
+                voices[1].setPreset({"ampDecay": decay});
+                voices[2].setPreset({"ampDecay": decay});
+            },
+
+            setSustain: function(sustain) {
+                voices[0].setPreset({"ampSustain": sustain});
+                voices[1].setPreset({"ampSustain": sustain});
+                voices[2].setPreset({"ampSustain": sustain});
+            },
+
+            setRelease: function(release) {
+                voices[0].setPreset({"ampRelease": release});
+                voices[1].setPreset({"ampRelease": release});
+                voices[2].setPreset({"ampRelease": release});
             },
 
             properties: {
-                sampler: sampler,
+                voices: voices,
                 preset: preset
             }
         };
 
-        function initAudio() {
-            if (!navigator.getUserMedia)
-                navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-            if (!navigator.cancelAnimationFrame)
-                navigator.cancelAnimationFrame = navigator.webkitCancelAnimationFrame || navigator.mozCancelAnimationFrame;
-            if (!navigator.requestAnimationFrame)
-                navigator.requestAnimationFrame = navigator.webkitRequestAnimationFrame || navigator.mozRequestAnimationFrame;
-
-            navigator.getUserMedia(
-            {
-                "audio": {
-                    "mandatory": {
-                        "googEchoCancellation": "false",
-                        "googAutoGainControl": "false",
-                        "googNoiseSuppression": "false",
-                        "googHighpassFilter": "false"
-                    },
-                    "optional": []
-                },
-            }, gotStream, function(e) {
-                alert('Error getting audio');
-                console.log(e);
-            });
+        function gotBuffers0( buffers ) {
+            var frameCount = buffers[0].length;
+            var channels = 2;
+            var buf = WX._ctx.createBuffer(channels, frameCount, WX.srate);
+            for (var channel = 0; channel < channels; channel++) {
+                // This gives us the actual ArrayBuffer that contains the data
+                var nowBuffering = buf.getChannelData(channel);
+                for (var i = 0; i < frameCount; i++) {
+                    nowBuffering[i] = buffers[channel][i];
+                }
+            }
+            var clip = {
+                name: 'recorded',
+                url: 'foo',
+                buffer: buf
+            };
+            voices[0].setClip(clip);
         };
-
-        function gotBuffers( buffers ) {
-
-            //var canvas = document.getElementById( "wavedisplay" );
-            //drawBuffer( canvas.width, canvas.height, canvas.getContext('2d'), buffers[0] );
-
-            // the ONLY time gotBuffers is called is right after a new recording is completed -
-            // so here's where we should set up the download.
-            //audioRecorder.exportWAV( doneEncoding );
-
+        function gotBuffers1( buffers ) {
+            var frameCount = buffers[0].length;
+            var channels = 2;
+            var buf = WX._ctx.createBuffer(channels, frameCount, WX.srate);
+            for (var channel = 0; channel < channels; channel++) {
+                // This gives us the actual ArrayBuffer that contains the data
+                var nowBuffering = buf.getChannelData(channel);
+                for (var i = 0; i < frameCount; i++) {
+                    nowBuffering[i] = buffers[channel][i];
+                }
+            }
+            var clip = {
+                name: 'recorded',
+                url: 'foo',
+                buffer: buf
+            };
+            voices[1].setClip(clip);
         };
-
-
-        function gotStream(stream) {
-            inputPoint = WX._ctx.createGain();
-
-            // Create an AudioNode from the stream.
-            realAudioInput = WX._ctx.createMediaStreamSource(stream); // using analyzer from patch_detail.html
-            audioInput = realAudioInput;
-            audioInput.connect(inputPoint);
-
-            //    audioInput = convertToMono( input );
-
-            analyserNode = WX._ctx.createAnalyser();
-            analyserNode.fftSize = 2048;
-            inputPoint.connect( analyserNode );
-
-            audioRecorder = new Recorder( inputPoint );
-
-            var zeroGain = WX._ctx.createGain();
-            zeroGain.gain.value = 0.0;
-            inputPoint.connect( zeroGain );
-            zeroGain.connect( WX._ctx.destination );
-            updateAnalysers();
+        function gotBuffers2( buffers ) {
+            var frameCount = buffers[0].length;
+            var channels = 2;
+            var buf = WX._ctx.createBuffer(channels, frameCount, WX.srate);
+            for (var channel = 0; channel < channels; channel++) {
+                // This gives us the actual ArrayBuffer that contains the data
+                var nowBuffering = buf.getChannelData(channel);
+                for (var i = 0; i < frameCount; i++) {
+                    nowBuffering[i] = buffers[channel][i];
+                }
+            }
+            var clip = {
+                name: 'recorded',
+                url: 'foo',
+                buffer: buf
+            };
+            voices[2].setClip(clip);
         };
 
         function updateAnalysers(time) {
@@ -137,14 +227,14 @@ var patches = patches || {};
                 var SPACING = 5;
                 var BAR_WIDTH = 3;
                 var numBars = Math.round(canvasWidth / SPACING);
-                var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+                var freqByteData = new Uint8Array(analyzer.frequencyBinCount);
 
-                analyserNode.getByteFrequencyData(freqByteData);
+                analyzer.getByteFrequencyData(freqByteData);
 
                 analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
                 analyserContext.fillStyle = '#ff00ff';
                 analyserContext.lineCap = 'round';
-                var multiplier = analyserNode.frequencyBinCount / numBars;
+                var multiplier = analyzer.frequencyBinCount / numBars;
 
                 // Draw rectangle for each frequency bin.
                 for (var i = 0; i < numBars; ++i) {
