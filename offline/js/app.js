@@ -333,7 +333,7 @@ app.AppView = Backbone.View.extend({
         });
 
         // var p = new app.Patch({id: localStorage.getItem('id')});
-        var p = new app.Patch({id: ID});
+        var p = new app.Patch({id: 1});
         p.fetch();
         new app.PatchView({model: p});
     }
