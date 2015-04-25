@@ -26,6 +26,12 @@ The *immediate* things we need to do:
     * partial correlations? http://stats.stackexchange.com/a/10873
     * Are the correlation estimates incoherent?
       Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
+      
+* better wiki. Perhaps prose?
+
+  * https://github.com/prose/prose/wiki/Prose-Configuration
+  * https://github.com/prose/prose/wiki/Getting-Started
+  
 * speed improvements
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
