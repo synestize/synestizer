@@ -19,6 +19,5 @@ psycopg2==2.5.3
 python-dateutil==2.1
 python-mimeparse==0.1.4
 six==1.7.3
-supervisor==3.1.0
 watchdog==0.8.1
 wsgiref==0.1.2
