@@ -41,7 +41,7 @@ function midiMessageReceived( ev ) {
         break;
 
         case 5:
-        minimalTempo.setValue(val*5000, true);
+        minimalTempo.setValue(val*5000+4, true); // min tempo is 4 bpm
         break;
         case 17:
         minimalAttack.setValue(val*2, true);
