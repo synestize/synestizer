@@ -48,6 +48,9 @@
                     {% include "faq.html" %}
                 </div>
 
+                <a href="#" style="background-color: #f0f; padding: 5px; color: #fff;" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span id="midiInDevice">MIDI Controller</span></a>
+
+                <ul id="midiIn" class="f-dropdown" data-dropdown-content></ul>
 
                 <dl class="accordion" data-accordion>
                     <dd class="accordion-navigation">
@@ -72,7 +75,7 @@
 
                                 <div class="row">
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                        <webaudio-knob id="triadGain" src="{% static 'img/knob.png' %}"
                                         sprites="100" label="Gain" value="<%= preset.output  %>"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
@@ -136,12 +139,12 @@
                             <script id="minimal_template" type="text/template">
                                 <div class="row">
                                     <div class="small-4 medium-4 large-4 columns">
-                                        <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                        <webaudio-knob id="minimalGain" src="{% static 'img/knob.png' %}"
                                         sprites="100" label="Gain" value="<%= preset.output  %>"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-4 medium-4 large-4 columns">
-                                        <webaudio-knob id="tempo" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="minimalTempo" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Tempo" units="bpm" value="<%= preset.tempo  %>" diameter="48"
                                         min="1" max="5000" step="1"></webaudio-knob>
                                     </div>
@@ -152,22 +155,22 @@
                                         <div class="label">Amplitude Envelope</div>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="attack" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="minimalAttack" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Attack" units="s" value="<%= preset.ampAttack %>" diameter="48"
                                         min="0" max="5" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="decay" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="minimalDecay" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Decay" units="s" value="<%= preset.ampDecay %>" diameter="48"
                                         min="0" max="2.5" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="sustain" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="minimalSustain" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Sustain" value="<%= preset.ampSustain %>" diameter="48"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="release" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="minimalRelease" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Release" units="s" value="<%= preset.ampRelease %>" diameter="48"
                                         min="0" max="10" step="0.01"></webaudio-knob>
                                     </div>
@@ -183,7 +186,7 @@
                             <script id="sampler_template" type="text/template">
                                 <div class="row knob">
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                        <webaudio-knob id="samplerGain" src="{% static 'img/knob.png' %}"
                                         sprites="100" label="Gain" value="<%= preset.output  %>"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
@@ -194,22 +197,22 @@
                                         <div class="label">Amplitude Envelope</div>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="attack" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="samplerAttack" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Attack" units="s" value="<%= preset.ampAttack %>" diameter="48"
                                         min="0" max="5" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="decay" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="samplerDecay" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Decay" units="s" value="<%= preset.ampDecay %>" diameter="48"
                                         min="0" max="2.5" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="sustain" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="samplerSustain" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Sustain" value="<%= preset.ampSustain %>" diameter="48"
                                         min="0" max="1" step="0.01"></webaudio-knob>
                                     </div>
                                     <div class="small-3 medium-3 large-3 columns">
-                                        <webaudio-knob id="release" src="{% static 'img/knob_small.png' %}"
+                                        <webaudio-knob id="samplerRelease" src="{% static 'img/knob_small.png' %}"
                                         sprites="100" label="Release" units="s" value="<%= preset.ampRelease %>" diameter="48"
                                         min="0" max="10" step="0.01"></webaudio-knob>
                                     </div>
@@ -275,6 +278,7 @@
 
 <!-- audio helper -->
 <script src="{% static 'js/audio/helpers/recorder.js' %}"></script>
+<script src="{% static 'js/audio/helpers/midi.js' %}"></script>
 
 <!-- patches -->
 <script src="{% static 'js/audio/patches/triad.js' %}"></script>
@@ -347,6 +351,10 @@
 
 
             });
+
+
+            if (navigator.requestMIDIAccess)
+                navigator.requestMIDIAccess().then( onMIDIStarted, onMIDISystemError );
 });
 
 
