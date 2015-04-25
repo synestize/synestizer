@@ -178,7 +178,7 @@ app.TriadView = Backbone.View.extend({
     template: _.template($("#triad_template").html()),
 
     events: {
-        "change #gain": function(e) {
+        "change #triadGain": function(e) {
             this.triad.setOutput(e.target.value);
         },
         "change #oscType1Sine": function(e) {
@@ -259,12 +259,12 @@ app.MinimalView = Backbone.View.extend({
     template: _.template($("#minimal_template").html()),
 
     events: {
-        "change #gain": function(e) { this.minimal.setGain(e.target.value); },
-        "change #tempo": function(e) { this.minimal.setTempo(e.target.value); },
-        "change #attack": function(e) { this.minimal.setAttack(e.target.value); },
-        "change #decay": function(e) { this.minimal.setDecay(e.target.value); },
-        "change #sustain": function(e) { this.minimal.setSustain(e.target.value); },
-        "change #release": function(e) { this.minimal.setRelease(e.target.value); }
+        "change #minimalGain": function(e) { this.minimal.setGain(e.target.value); },
+        "change #minimalTempo": function(e) { this.minimal.setTempo(e.target.value); },
+        "change #minimalAttack": function(e) { this.minimal.setAttack(e.target.value); },
+        "change #minimalDecay": function(e) { this.minimal.setDecay(e.target.value); },
+        "change #minimalSustain": function(e) { this.minimal.setSustain(e.target.value); },
+        "change #minimalRelease": function(e) { this.minimal.setRelease(e.target.value); }
     },
 
     initialize: function (options) {
@@ -292,14 +292,14 @@ app.SamplerView = Backbone.View.extend({
     template: _.template($("#sampler_template").html()),
 
     events: {
-        "change #gain": function(e) { this.sampler.setGain(e.target.value); },
+        "change #samplerGain": function(e) { this.sampler.setGain(e.target.value); },
         "click #toggleRecording1": function(e) { this.sampler.toggleRecording(e.target, 0); },
         "click #toggleRecording2": function(e) { this.sampler.toggleRecording(e.target, 1); },
         "click #toggleRecording3": function(e) { this.sampler.toggleRecording(e.target, 2); },
-        "change #attack": function(e) { this.sampler.setAttack(e.target.value); },
-        "change #decay": function(e) { this.sampler.setDecay(e.target.value); },
-        "change #sustain": function(e) { this.sampler.setSustain(e.target.value); },
-        "change #release": function(e) { this.sampler.setRelease(e.target.value); }
+        "change #samplerAttack": function(e) { this.sampler.setAttack(e.target.value); },
+        "change #samplerDecay": function(e) { this.sampler.setDecay(e.target.value); },
+        "change #samplerSustain": function(e) { this.sampler.setSustain(e.target.value); },
+        "change #samplerRelease": function(e) { this.sampler.setRelease(e.target.value); }
     },
 
     initialize: function (options) {
