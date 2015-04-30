@@ -11,7 +11,7 @@ app.Patch = Backbone.Model.extend({
     defaults: {
         color_mode: null,
         synth: null,
-        data: null
+        preset: null
     },
 
     url: function () {
