@@ -334,10 +334,11 @@ app.AppView = Backbone.View.extend({
         });
 
         // var p = new app.Patch({id: localStorage.getItem('id')});
-        p = new app.Patch({id: 1});
+        p = new app.Patch(app.defaultModel);
         app.currentModel = p;
-        //load up a default preset
-        p.set(app.defaultModel);
+        // Update with data from the internet if available.
+        app.currentView = new app.PatchView({model: p});
+        app.currentView.render();
         p.fetch({
             error: function(mode, response, options) {
                 //server offline. Should inform user that we are offline.
@@ -347,7 +348,6 @@ app.AppView = Backbone.View.extend({
             }
         });
         console.debug(p);
-        app.currentView = new app.PatchView({model: p});
     }
 });
 
