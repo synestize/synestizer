@@ -12,7 +12,7 @@ var patches = patches || {};
         piano.setPreset(_.omit(preset, 'tempo')); // set preset omiting params that the synth does not need. TODO maybe find nicer solution.
         piano.loadClip({
             name: 'piano',
-            url: STATIC_URL + 'sound/piano.mp3'
+            url: './sound/piano.mp3'
         });
 
         var panflute = WX.SP1();
@@ -20,7 +20,7 @@ var patches = patches || {};
         panflute.setPreset(_.omit(preset, 'tempo'));
         panflute.loadClip({
             name: 'panflute',
-            url: STATIC_URL + 'sound/panflute.mp3'
+            url: './sound/panflute.mp3'
         });
 
         var vibraphone = WX.SP1();
@@ -28,7 +28,7 @@ var patches = patches || {};
         vibraphone.setPreset(_.omit(preset, 'tempo'));
         vibraphone.loadClip({
             name: 'vibraphone',
-            url: STATIC_URL + 'sound/vibraphone.mp3'
+            url: './sound/vibraphone.mp3'
         });
 
         var tempo = preset["tempo"] || 160;   // tempo (in beats per minute)
@@ -45,7 +45,7 @@ var patches = patches || {};
         var nextNoteTime = 0.0;     // when the next note is due.
         var notesInQueue = [];      // the notes that have been put into the web audio, and may or may not have played yet. {note, time}
 
-        var timerWorker = new Worker( STATIC_URL + "js/audio/helpers/sequencer_worker.js");
+        var timerWorker = new Worker(  "./js/audio/helpers/sequencer_worker.js");
         timerWorker.onmessage = function (e) {
             if (e.data == "tick") {
                 //console.log("tick!");

@@ -51,15 +51,15 @@ var patches = patches || {};
         // load default samples
         voices[0].loadClip({
             name: 'voice 1',
-            url: STATIC_URL + 'sound/voice_as4.mp3'
+            url: './sound/voice_as4.mp3'
         });
         voices[1].loadClip({
             name: 'voice 2',
-            url: STATIC_URL + 'sound/voice_es3.mp3'
+            url: './sound/voice_es3.mp3'
         });
         voices[2].loadClip({
             name: 'voice 3',
-            url: STATIC_URL + 'sound/voice_c4.mp3'
+            url: './sound/voice_c4.mp3'
         });
 
         // monitor off
