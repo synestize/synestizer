@@ -327,19 +327,29 @@ app.AppView = Backbone.View.extend({
     el: "#app",
 
     initialize: function () {
+        var p;
         // TastyPie requires us to use a ?format=json param, so we'll set that as a default.
         $.ajaxPrefilter(function (options) {
             _.extend(options, {format: "json"});
         });
 
         // var p = new app.Patch({id: localStorage.getItem('id')});
-        var p = new app.Patch({id: 1});
-        p.fetch();
-        new app.PatchView({model: p});
+        p = new app.Patch({id: 1});
+        app.currentModel = p;
+        //load up a default preset
+        p.set(app.defaultModel);
+        p.fetch({
+            error: function(mode, response, options) {
+                //server offline. Should inform user that we are offline.
+                console.debug(mode);
+                console.debug(response);
+                console.debug(options);
+            }
+        });
+        console.debug(p);
+        app.currentView = new app.PatchView({model: p});
     }
 });
 
 });
-
-
 
