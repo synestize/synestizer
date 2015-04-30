@@ -1,4 +1,7 @@
-{
+var app = app || {};
+
+app.presets = {
+  default: {
   "triad":{
     "oscFreq1":440,
     "oscFreq3":440,
@@ -23,4 +26,5 @@
     "ampDecay":0.2,
     "ampRelease":0.0
   }
-}
+  }
+};
