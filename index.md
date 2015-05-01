@@ -30,7 +30,7 @@ Can this webapp contribute to the moment? Or at least extend the “obvious” w
 A challenge for the synestizer-project is to generate ad-hoc compositions that are fitting to the situation you are or better said your camera is in, and on top surprise you again and again. 
 
 
-![color sensitivity of the eye](https://synestize.github.io/synestizer/media/Color_Sensitivity.jpg =200x)
+![color sensitivity of the eye](https://synestize.github.io/synestizer/media/Color_Sensitivity.jpg)
 
 Can this webapp contribute to the moment? Or at least extend the “obvious” with an interesting „odor” 
 or an ambient-lighting but with audible means.
