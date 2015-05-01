@@ -8,11 +8,11 @@
 > „It`s time to open the digital window and listen colourwise.”
 - Koenig
 
-version 150123:
+version 150501:
 
 This document is made to explain the idea and function of the synestizer project 
 at [synestizer.com](http://synestizer.com).
-A webapp to listen to the dataflow of the camera-imagery. 
+A webapp to listen to the RGB-dataflow of the camera translated into sound. see as an example [this video](https://vimeo.com/124990314). 
 
 ## What is a Synestizer?
 
