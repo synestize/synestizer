@@ -1,3 +1,6 @@
+---
+title: Synestizer notes
+---
 
 ## TODO
 

@@ -1,5 +1,5 @@
 prose:
-  rooturl: 'docs'
+  rooturl: ''
   siteurl: 'http://synestize.github.io/synestizer/'
   # relativeLinks: 'http://synestize.github.io/synestizer/links.jsonp'
   media: 'media'

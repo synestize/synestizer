@@ -1,3 +1,7 @@
+---
+title: Synestizer FAQ
+---
+
 ![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_50x50.png)
 
 # FAQ
