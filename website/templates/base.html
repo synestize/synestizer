@@ -106,8 +106,11 @@
 
 
     <!-- web components -->
+    <!--
     <script src="{% static 'webcomponentsjs/webcomponents.min.js' %}"></script>
     <script src="{% static 'polymer/polymer.min.js' %}"></script>
+    -->
+    <script src="{% static 'js/platform.js' %}"></script>
 
     <!-- include backbone.js -->
     <script src="{% static 'underscore/underscore-min.js' %}"></script>
@@ -118,6 +121,7 @@
 
     {% endcompress %}
 
+    <link rel="import" href="{% static 'webcomponents/polymer.html' %}">
     <link rel="import" href="{% static 'webcomponents/controls.html' %}">
 
     {% render_block "js" %}

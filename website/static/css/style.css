@@ -106,12 +106,14 @@ a, a:hover, a:active, a:focus {
 
 .sidebar {
     padding: 5px;
-    opacity: 0.8;
+
+    height: 2000px;
     z-index: 1;
 }
 
 .accordion {
     width: 320px; /* hack: fixed width to 320px!!! this prevents resizing when accordions are closed*/
+    opacity: 0.8;
 }
 
 .scrollable_accordion {
