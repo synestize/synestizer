@@ -13,7 +13,14 @@
 
     <!-- synestizer style -->
     <link rel="stylesheet" href="./css/style.css">
-
+    <script type="text/javascript">
+        (function() {
+            var loc = window.location;
+            var pathname = loc.pathname;
+            var basepathname = pathname.slice(0, pathname.lastIndexOf("/")+1);
+            window.baseUrl = loc.protocol + "//" + loc.host + basepathname;
+        })();
+    </script>
 </head>
 
 <body>
