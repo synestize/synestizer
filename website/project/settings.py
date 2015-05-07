@@ -18,7 +18,7 @@ PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.synestizer.com']
+ALLOWED_HOSTS = ['*',]
 
 # Application definition
 

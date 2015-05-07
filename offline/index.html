@@ -65,6 +65,9 @@
                           </script>
                       </div>
 
+                      <a href="#" style="background-color: #f0f; padding: 5px; color: #fff;" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span id="midiInDevice">MIDI Controller</span></a>
+
+                      <ul id="midiIn" class="f-dropdown" data-dropdown-content></ul>
 
                       <dl class="accordion" data-accordion>
                           <dd class="accordion-navigation">
@@ -89,7 +92,7 @@
 
                                       <div class="row">
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                              <webaudio-knob id="triadGain" src="./img/knob.png"
                                               sprites="100" label="Gain" value="<%= preset.output  %>"
                                               min="0" max="1" step="0.01"></webaudio-knob>
                                           </div>
@@ -97,21 +100,21 @@
 
                                       <div class="row text-center">
                                           <div class="large-4 small-4 medium-4 columns text-center">
-                                              <webaudio-knob id="freq1Knob" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="freq1Knob" src="./img/knob_small.png"
                                               sprites="100" label="Freq Red" units=" Hz" value="<%= preset.oscFreq1 %>"
                                               min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" diameter="48"
                                               step="1"></webaudio-knob>
                                               <input id="freq1Numberbox" type="number" value="<%= preset.oscFreq1 %>" min="<%= synth.oscFreq1Min %>" max="<%= synth.oscFreq1Max %>" />
                                           </div>
                                           <div class="large-4 small-4 medium-4 columns">
-                                              <webaudio-knob id="freq2Knob" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="freq2Knob" src="./img/knob_small.png"
                                               sprites="100" label="Freq Green" units=" Hz" value="<%= preset.oscFreq2 %>"
                                               min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>" diameter="48"
                                               step="1"></webaudio-knob>
                                               <input id="freq2Numberbox" type="number" value="<%= preset.oscFreq2 %>" min="<%= synth.oscFreq2Min %>" max="<%= synth.oscFreq2Max %>" />
                                           </div>
                                           <div class="large-4 small-4 medium-4 columns">
-                                              <webaudio-knob id="freq3Knob" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="freq3Knob" src="./img/knob_small.png"
                                               sprites="100" label="Freq Blue" units=" Hz" value="<%= preset.oscFreq3 %>"
                                               min="<%= synth.oscFreq3Min %>" max="<%= synth.oscFreq3Max %>" diameter="48"
                                               step="1"></webaudio-knob>
@@ -125,21 +128,21 @@
                                       <div class="row text-center">
                                           <div class="large-4 small-4 medium-4 columns">
                                               <div class="label">Waveform</div>
-                                              <webaudio-switch id="oscType1Sine" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType1Triangle" type="radio" group="oscType1" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType1Square" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                              <webaudio-switch id="oscType1Sine" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="./img/switch_sinewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType1Triangle" type="radio" group="oscType1" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="./img/switch_trianglewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType1Square" type="radio" group="oscType1" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="./img/switch_squarewave.png"></webaudio-switch>
                                           </div>
                                           <div class="large-4 small-4 medium-4 columns">
                                               <div class="label">Waveform</div>
-                                              <webaudio-switch id="oscType2Sine" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType2Triangle" type="radio" group="oscType2" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType2Square" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                              <webaudio-switch id="oscType2Sine" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="./img/switch_sinewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType2Triangle" type="radio" group="oscType2" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="./img/switch_trianglewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType2Square" type="radio" group="oscType2" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="./img/switch_squarewave.png"></webaudio-switch>
                                           </div>
                                           <div class="large-4 small-4 medium-4 columns">
                                               <div class="label">Waveform</div>
-                                              <webaudio-switch id="oscType3Sine" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="{% static 'img/switch_sinewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType3Triangle" type="radio" group="oscType3" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_trianglewave.png' %}"></webaudio-switch>
-                                              <webaudio-switch id="oscType3Square" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="{% static 'img/switch_squarewave.png' %}"></webaudio-switch>
+                                              <webaudio-switch id="oscType3Sine" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="1" width="20" height="20" src="./img/switch_sinewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType3Triangle" type="radio" group="oscType3" label="Osc Type"units=" Hz" value="0" width="20" height="20" src="./img/switch_trianglewave.png"></webaudio-switch>
+                                              <webaudio-switch id="oscType3Square" type="radio" group="oscType3" label="Osc Type" units=" Hz" value="0" width="20" height="20" src="./img/switch_squarewave.png"></webaudio-switch>
                                           </div>
                                       </div>
                                   </script>
@@ -153,12 +156,12 @@
                                   <script id="minimal_template" type="text/template">
                                       <div class="row">
                                           <div class="small-4 medium-4 large-4 columns">
-                                              <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                              <webaudio-knob id="minimalGain" src="./img/knob.png"
                                               sprites="100" label="Gain" value="<%= preset.output  %>"
                                               min="0" max="1" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-4 medium-4 large-4 columns">
-                                              <webaudio-knob id="tempo" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="minimalTempo" src="./img/knob_small.png"
                                               sprites="100" label="Tempo" units="bpm" value="<%= preset.tempo  %>" diameter="48"
                                               min="1" max="5000" step="1"></webaudio-knob>
                                           </div>
@@ -169,22 +172,22 @@
                                               <div class="label">Amplitude Envelope</div>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="attack" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="minimalAttack" src="./img/knob_small.png"
                                               sprites="100" label="Attack" units="s" value="<%= preset.ampAttack %>" diameter="48"
                                               min="0" max="5" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="decay" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="minimalDecay" src="./img/knob_small.png"
                                               sprites="100" label="Decay" units="s" value="<%= preset.ampDecay %>" diameter="48"
                                               min="0" max="2.5" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="sustain" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="minimalSustain" src="./img/knob_small.png"
                                               sprites="100" label="Sustain" value="<%= preset.ampSustain %>" diameter="48"
                                               min="0" max="1" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="release" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="minimalRelease" src="./img/knob_small.png"
                                               sprites="100" label="Release" units="s" value="<%= preset.ampRelease %>" diameter="48"
                                               min="0" max="10" step="0.01"></webaudio-knob>
                                           </div>
@@ -200,7 +203,7 @@
                                   <script id="sampler_template" type="text/template">
                                       <div class="row knob">
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="gain" src="{% static 'img/knob.png' %}"
+                                              <webaudio-knob id="samplerGain" src="./img/knob.png"
                                               sprites="100" label="Gain" value="<%= preset.output  %>"
                                               min="0" max="1" step="0.01"></webaudio-knob>
                                           </div>
@@ -211,22 +214,22 @@
                                               <div class="label">Amplitude Envelope</div>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="attack" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="samplerAttack" src="./img/knob_small.png"
                                               sprites="100" label="Attack" units="s" value="<%= preset.ampAttack %>" diameter="48"
                                               min="0" max="5" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="decay" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="samplerDecay" src="./img/knob_small.png"
                                               sprites="100" label="Decay" units="s" value="<%= preset.ampDecay %>" diameter="48"
                                               min="0" max="2.5" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="sustain" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="samplerSustain" src="./img/knob_small.png"
                                               sprites="100" label="Sustain" value="<%= preset.ampSustain %>" diameter="48"
                                               min="0" max="1" step="0.01"></webaudio-knob>
                                           </div>
                                           <div class="small-3 medium-3 large-3 columns">
-                                              <webaudio-knob id="release" src="{% static 'img/knob_small.png' %}"
+                                              <webaudio-knob id="samplerRelease" src="./img/knob_small.png"
                                               sprites="100" label="Release" units="s" value="<%= preset.ampRelease %>" diameter="48"
                                               min="0" max="10" step="0.01"></webaudio-knob>
                                           </div>
@@ -338,19 +341,25 @@
     </script>
 
 
+
+    <!-- web components -->
+    <!--
+    <script src="./bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="./bower_components/polymer/polymer.html">
+    -->
+        
+    <script src="./js/vendor/platform.js"></script>
+
     <!-- include backbone.js -->
     <script src="./bower_components/underscore/underscore-min.js"></script>
     <script src="./bower_components/backbone/backbone.js"></script>
 
+    <link rel="import" href="./webcomponents/polymer.html">
+    <link rel="import" href="./webcomponents/controls.html">
     <!-- include WAAX -->
     <script src="./js/vendor/waax.js"></script>
 
-    <!-- web components -->
-    <script src="./bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <link rel="import" href="./bower_components/polymer/polymer.html">
-
-    <link rel="import" href="./webcomponents/controls.html">
-
+    <!-- vendor -->
     <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
     <script src="./bower_components/d3/d3.min.js"></script>
 
@@ -361,15 +370,17 @@
     <script src="./js/video/videostats.js"></script>
 
     <!-- synths -->
-    <script src="./js/audio/patches/minimal.js"></script>
-    <script src="./js/audio/patches/triad.js"></script>
-    <script src="./js/audio/patches/sampler.js"></script>
-    <!-- synths -->
-    <script src="./js/audio/synths/SP1.js"></script>
     <script src="./js/audio/synths/triadsynth.js"></script>
+    <script src="./js/audio/synths/SP1.js"></script>
 
     <!-- audio helper -->
     <script src="./js/audio/helpers/recorder.js"></script>
+    <script src="./js/audio/helpers/midi.js"></script>
+
+    <!-- patches -->
+    <script src="./js/audio/patches/triad.js"></script>
+    <script src="./js/audio/patches/minimal.js"></script>
+    <script src="./js/audio/patches/sampler.js"></script>
 
     <!-- preset saving/loading -->
     <script src="./js/presets.js"></script>
@@ -405,6 +416,9 @@
 
                 // call resize for video resizing
                 resize();
+
+                if (navigator.requestMIDIAccess)
+                    navigator.requestMIDIAccess().then( onMIDIStarted, onMIDISystemError );
 
                 // start the app
                 new app.AppView();
@@ -496,6 +510,7 @@
             };
         });
     </script>
+
 
 </body>
 </html>
