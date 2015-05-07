@@ -340,13 +340,14 @@ app.AppView = Backbone.View.extend({
         app.currentView = new app.PatchView({model: p});
         app.currentView.render();
         p.fetch({
-            error: function(mode, response, options) {
-                //server offline. Should inform user that we are offline.
-                console.debug(mode);
-                console.debug(response);
-                console.debug(options);
+            error: function(model, response, options) {
+                //server offline. Initialize using defaults and carry on.
+                console.debug("Server not found. We are in offline mode.");
+                console.debug(model);
+                model.trigger("change");
             }
         });
+        console.debug("Started patch");
         console.debug(p);
     }
 });
