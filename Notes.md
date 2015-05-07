@@ -230,6 +230,18 @@ complete workflow tools:
   * http://simplectic.com/blog/2014/transducers-explained-pipelines/
   * http://simplectic.com/blog/2014/transducers-explained-1/
 
+### Sequencing
+
+* Transducers?
+
+  * http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data
+  * https://github.com/cognitect-labs/transducers-js
+  * http://phuu.net/2014/08/31/csp-and-transducers.html
+  * http://simplectic.com/projects/underarm/
+  * http://simplectic.com/projects/underscore-transducer/
+  * http://simplectic.com/blog/2014/transducers-explained-pipelines/
+  * http://simplectic.com/blog/2014/transducers-explained-1/
+
 ## Audio
 
 ### Webaudio information
