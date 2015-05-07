@@ -1,4 +1,8 @@
-![Synestizer logo](https://raw.githubusercontent.com/synestize/synestizer/master/docs/synestizer_logo_50x50.png)
+---
+title: Synestizer FAQ
+---
+
+![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
 # FAQ
 
@@ -26,7 +30,7 @@ Can this webapp contribute to the moment? Or at least extend the “obvious” w
 A challenge for the synestizer-project is to generate ad-hoc compositions that are fitting to the situation you are or better said your camera is in, and on top surprise you again and again. 
 
 
-![color sensitivity of the eye](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Color_Sensitivity.jpg)
+![color sensitivity of the eye](https://synestize.github.io/synestizer/media/Color_Sensitivity.jpg)
 
 Can this webapp contribute to the moment? Or at least extend the “obvious” with an interesting „odor” 
 or an ambient-lighting but with audible means.
@@ -52,8 +56,8 @@ According to the score at 50% colour value, the 3 instruments
 (piano = red / pan flute = green / vibraphone = blue)
 play each 3 notes per bar with small intervals in between. Going up and down the scale in a variety of intervals, the color amounts are sonified. (see picture 1). The tempo of the intervals are set with the corresponding knob.
 
-![Score of the “minimal” patch](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_Partitur.png)
-![some arrows](https://raw.githubusercontent.com/synestize/synestizer/master/docs/Synestizer_sketch_score2.png)
+![Score of the “minimal” patch](https://synestize.github.io/synestizer/media/Synestizer_Partitur.png)
+![some arrows](https://synestize.github.io/synestizer/media/Synestizer_sketch_score2.png)
 
 ### Sample
 
