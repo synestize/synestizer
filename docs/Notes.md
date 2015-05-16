@@ -140,6 +140,15 @@ complete workflow tools:
 * [metalsmith](http://www.metalsmith.io/)
 * [roll your own with grunt](http://www.codebelt.com/javascript/single-page-javascript-application-workflow/)
 
+Partial workflow tools:
+
+* [webpack](https://webpack.github.io/)
+webpack is a module bundler
+This means webpack takes modules with dependencies
+and emits static assets representing those modules.
+
+* [browserify](http://browserify.org/) Here is a tutorial on how to use Browserify on the command line to bundle up a simple file called main.js along with all of its dependencies: 
+
 ### Documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
@@ -255,6 +264,7 @@ complete workflow tools:
 * [scheduling is fiddly](http://www.html5rocks.com/en/tutorials/audio/scheduling/)
 * [tips for mobile audio](http://pupunzi.open-lab.com/2013/03/13/making-html5-audio-actually-work-on-mobile/)
 * [JSAudio nodes](http://noisehack.com/custom-audio-effects-javascript-web-audio-api/)
+* [routing is not so bad](http://www.html5rocks.com/en/tutorials/casestudies/jamwithchrome-audio/)
 
 ### Alternative Audio options
 
@@ -272,7 +282,10 @@ More general JS app options:
 
 https://www.ludei.com/cocoonjs/
 https://github.com/andrewrk/waveform
+http://electron.atom.io/
+http://nwjs.io/
 
 ## Meta
 
 * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
+
