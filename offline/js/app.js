@@ -338,7 +338,7 @@ app.AppView = Backbone.View.extend({
         app.currentModel = p;
         // Update with data from the internet if available.
         app.currentView = new app.PatchView({model: p});
-        app.currentView.render();
+        //app.currentView.render();
         p.fetch({
             error: function(model, response, options) {
                 //server offline. Initialize using defaults and carry on.
