@@ -4,6 +4,8 @@ title: Synestizer FAQ
 
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
+See also [HOWTO](./HOWTO.html), [NOTES](./Notes.html), [LICENSE](./LICENSE.html).
+
 # FAQ
 
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.

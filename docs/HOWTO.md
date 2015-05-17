@@ -2,6 +2,8 @@
 title: How to synestize
 ---
 
+#How to synestize
+
 So you want to try this out yourself?
 The simplest option is to [try out the live version on our website](http://synestizer.com)
 But maybe that's not enough? Maybe you can improve it? Maybe you want to see how it works? Well - time to run your own version.
