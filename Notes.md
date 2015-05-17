@@ -38,20 +38,6 @@ The *immediate* things we need to do:
         * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
         * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
 
-## Offline operation
-
-You can access your camera totally offline on [Chrome](http://stackoverflow.com/a/16929608).
-
-You can run a simple webserver even on windows using [mongoose](https://code.google.com/p/mongoose/).
-
-## Online publishing
-
-* Via github
-* [codepen](http://codepen.io/pen/) - has a "collaborative" pro mode, gist integration (export only)
-* [jsbin](http://jsbin.com/) - 2-way gist integration, some colaboration feature, and open source
-* [jsfiddle](http://jsfiddle.net/) has amazing collaboration but weak library support
-* [liveweave](http://liveweave.com/) also has nice collaborative features, although less JS influence.
-
 
 ## javascript tips
 
