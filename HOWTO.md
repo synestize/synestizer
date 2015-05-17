@@ -42,3 +42,15 @@ You can help with code or with documentation. The procedure is the same either w
 The (online documentation)[https://synestize.github.io/synestizer/] is here.
 Source code for the documentation lives in the gh-pages branch. If you wish to use a conevenient online editor, (prose.io)[http://prose.io/] has worked well for us.
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
+
+### Advanced: documentation subtree
+
+Advanced class: For convenience we also keep documentation mirrored into the main repository using (subtrees)[http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/].
+
+The 
+
+    git subtree pull --prefix=docs upstream gh-pages
+    
+and
+
+    git subtree push --prefix=docs upstream gh-pages
