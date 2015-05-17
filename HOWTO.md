@@ -5,7 +5,7 @@ title: How to synestize
 #How to synestize
 
 So you want to try this out yourself?
-The simplest option is to (try out the live version on our website)[http://synestizer.com]
+The simplest option is to [try out the live version on our website](http://synestizer.com)
 But maybe that's not enough? Maybe you can improve it? Maybe you want to see how it works? Well - time to run your own version.
 
 ## "Offline" operation
@@ -13,7 +13,7 @@ But maybe that's not enough? Maybe you can improve it? Maybe you want to see how
 If you want to run synestizer without internet access, or make improvement so the code you'll need to download and run it for yourself.
 There are many ways of doing this.
 
-The common step is (download synestizer)[https://github.com/synestize/synestizer/archive/master.zip].
+The common step is [download synestizer](https://github.com/synestize/synestizer/archive/master.zip).
 Unzip this. Now Synestizer is installed.
 
 But you are not finished yet. For reasons of security, your web-browser is only permitted to access the camera if it is viewing a "web site", not merely a *file*. So you have to serve this file on web server.
