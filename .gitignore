@@ -1,12 +1,11 @@
-<<<<<<< HEAD
-website/static
-=======
-website/project/static
->>>>>>> 8acf77acd034bc6dfe0606fe2902432946fe532a
 website/project/local_settings.py
 website/static/bower_components
 bower_components/
 
+#ignore mongoose
+Mongoose.app
+mongoose.exe
+mongoose*x86-64*
 
 *.pyc
 
