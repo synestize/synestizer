@@ -337,23 +337,12 @@ webaudio-switch {
 }
 
 
-/* color modes */
-#dominant-bars {
+/* color analysis data */
+#analysis-panel > div {
     width: 100%;
     display:inline-block;
 }
-#dominant-bars div {
-    display: block;
-    width: 0;
-    height: 5px;
-    background-color: #eee;
-}
-
-#average-bars {
-    width: 100%;
-    display:inline-block;
-}
-#average-bars div {
+#analysis-panel > div > div {
     display: block;
     width: 0;
     height: 10px;
