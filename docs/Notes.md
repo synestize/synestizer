@@ -1,36 +1,29 @@
+# Notes
+
+Notes auditioning for a place in the documentation
 
 ## TODO
 
-The *immediate* things we need to do:
 
-*   Meta
-    
-    * smoother workflow to host live on github
-    * Move to modular architecture in the AMD style,
-      e.g. using [require.js](http://requirejs.org/)
+* Meta
 
-* MIDI - supported in Chrome betas - https://webaudio.github.io/web-midi-api/
+  * smoother workflow to host live on github
+  * Move to modular architecture in the AMD style,
+    e.g. using [require.js](http://requirejs.org/)
+    using some kind of template such as https://github.com/volojs/create-template
+  * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
-  * You might need to set up your MIDI devices properly
-  
-  * http://manual.ardour.org/setting-up-your-system/setting-up-midi/midi-on-linux/
-  * http://murks.lima-city.de/serendipity/?/archives/7-ALSA-and-JACK-MIDI-explained-by-a-dummy-for-dummies.html 
+
+* MIDI *mapping* (right now it is hard coded)
 
 * Video analysis
+
     * normalize statistics
     * speed up clustering analysis
-    * move to [requestAnimationFrame](https://docs.webplatform.org/wiki/dom/Window/requestAnimationFrame) -
-      see also the
-      [tutorial](http://www.html5rocks.com/en/tutorials/speed/rendering/)
     * switch to YSV for correlation structures
     * partial correlations? http://stats.stackexchange.com/a/10873
     * Are the correlation estimates incoherent?
       Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
-      
-* better wiki. Perhaps prose?
-
-  * https://github.com/prose/prose/wiki/Prose-Configuration
-  * https://github.com/prose/prose/wiki/Getting-Started
   
 * speed improvements
     * web workers
@@ -41,6 +34,7 @@ The *immediate* things we need to do:
 
 ## javascript tips
 
+* Switch to chainable API style
 * Jquery too big. Alternatives:
 
   * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
@@ -128,10 +122,11 @@ complete workflow tools:
 
 Partial workflow tools:
 
+* d3.js uses “smash.js”, a minimal JS build tool.
 * [webpack](https://webpack.github.io/)
-webpack is a module bundler
-This means webpack takes modules with dependencies
-and emits static assets representing those modules.
+  webpack is a module bundler
+  This means webpack takes modules with dependencies
+  and emits static assets representing those modules.
 
 * [browserify](http://browserify.org/) Here is a tutorial on how to use Browserify on the command line to bundle up a simple file called main.js along with all of its dependencies: 
 
@@ -140,6 +135,7 @@ and emits static assets representing those modules.
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
+* [prose](http://prose.io)
 
 ## Remote operation
 
@@ -270,8 +266,4 @@ https://www.ludei.com/cocoonjs/
 https://github.com/andrewrk/waveform
 http://electron.atom.io/
 http://nwjs.io/
-
-## Meta
-
-* [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
