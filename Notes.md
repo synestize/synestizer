@@ -128,9 +128,14 @@ Partial workflow tools:
   This means webpack takes modules with dependencies
   and emits static assets representing those modules.
 
-* [browserify](http://browserify.org/) Here is a tutorial on how to use Browserify on the command line to bundle up a simple file called main.js along with all of its dependencies: 
+* [browserify](http://browserify.org/) on the command line can budle up all dependencies..
 
-### Documentation
+### online editing code
+
+* [runnable](http://runnable.com/U51EjgiOZqRA3HoV/basic-reveal-js-example-for-node-javascript-and-presentations) allows you to edit the whole site in situ.
+
+
+### online editing documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
@@ -208,18 +213,6 @@ Partial workflow tools:
 * colorspaces: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
 * http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf
 * http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/
-
-### Sequencing
-
-* Transducers?
-
-  * http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data
-  * https://github.com/cognitect-labs/transducers-js
-  * http://phuu.net/2014/08/31/csp-and-transducers.html
-  * http://simplectic.com/projects/underarm/
-  * http://simplectic.com/projects/underscore-transducer/
-  * http://simplectic.com/blog/2014/transducers-explained-pipelines/
-  * http://simplectic.com/blog/2014/transducers-explained-1/
 
 ### Sequencing
 
