@@ -17,16 +17,30 @@ The common step is [download synestizer](https://github.com/synestize/synestizer
 Unzip this. Now Synestizer is installed.
 
 But you are not finished yet. For reasons of security, your web-browser is only permitted to access the camera if it is viewing a "web site", not merely a *file*. So you have to serve this file on web server.
-Don't worry, a *local* web server is sufficient i.e. a web server running on your computer, *not* visible to the rest of the internet. 
+Don't worry, a *local* web server is sufficient i.e. a web server running on your computer, *not* visible to the rest of the internet.
+
+UPDATE: It grows more complex! You need not only to have a web server, but an encrypted web server, even  for local use of the app, thanks to the [removal of advanced features ](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
 
 Here are some options:
 
 1. If you do not use the command-line, the easiest webserver to install is [Mongoose Free Edition](http://cesanta.com/mongoose.shtml), which runs on Windows, Mac OS X and Linux. Put the mongoose application in the same folder as synestizer/offline, double click to run it, and you are done.
+
+   You will find synestizer at http://localhost:8080/
+   
+   NB although mongoose supposedly supports SSL, I can't make it work. Might need 
+
 2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one](http://macosxautomation.com/workshops/sharing/03.html)
-3. If you are comfortable with the command-line, running a web server is easy;
-   You simply change to the synestizer offline directory and run your favourite testing web server. Almost every programming languages has a built-in testing  web server. Here is the basic python one, for example:
-    
-        python -m SimpleHTTPServer
+3. If you are comfortable with the command-line, running a web server is easy; TODO: explain how to make it work with SSL.
+
+
+### Tidier SSL
+
+More in-depth version: http://stackoverflow.com/a/10176685
+````
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 1001 -subj '/CN=localhost' -nodes
+````
+
+Your browser might additionally complain about the nonsense SSL certificate that you have just accepted. [Here is how to fix that](http://stackoverflow.com/a/15076602).
 
 ## "Online" operation
 
