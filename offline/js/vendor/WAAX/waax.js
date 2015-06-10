@@ -437,15 +437,16 @@ WX.isObject = function (obj) {
  * @returns {Boolean}
  */
 WX.isFunction = function (fn) {
-  return toString.call(fn) === '[object Function]';
+  return (typeof fn) === 'function';
 };
 
 /**
  * Checks if an argument is a JS array.
+ * TODO: be less of a total hack.
  * @returns {Boolean}
  */
 WX.isArray = function (arr) {
-  return toString.call(arr) === '[object Array]';
+  return ('slice' in arr);
 };
 
 /**
@@ -453,7 +454,7 @@ WX.isArray = function (arr) {
  * @returns {Boolean}
  */
 WX.isNumber = function (num) {
-  return toString.call(num) === '[object Number]';
+  return (typeof num) === 'number';
 };
 
 /**
@@ -461,7 +462,7 @@ WX.isNumber = function (num) {
  * @returns {Boolean}
  */
 WX.isBoolean = function (bool) {
-  return toString.call(bool) === '[object Boolean]';
+  return (typeof bool) ===  'boolean';
 };
 
 /**
@@ -804,7 +805,7 @@ function wxparam_checkNumeric(arg, defaultValue) {
   } else if (arg === undefined) {
     return defaultValue;
   } else {
-    WX.Log.error('Invalid parameter configuration.');
+    WX.Log.error('Invalid parameter configuration:', arg);
   }
 }
 
