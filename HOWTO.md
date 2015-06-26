@@ -27,9 +27,10 @@ Here are some options:
 
    You will find synestizer at http://localhost:8080/
    
-   NB although mongoose supposedly supports SSL, I can't make it work. Might need 
+   NB although mongoose supposedly supports SSL, I can't make it work.
+   Might need a custom compile
 
-2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one](http://macosxautomation.com/workshops/sharing/03.html)
+2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one about the basic part](http://macosxautomation.com/workshops/sharing/03.html), and [here is the manual page about encryption](https://support.apple.com/kb/PH15666?locale=en_US) and [here](https://support.apple.com/kb/PH14003?locale=en_US) and the [in-depth version](https://blog.httpwatch.com/2013/12/12/five-tips-for-using-self-signed-ssl-certificates-with-ios/)
 3. If you are comfortable with the command-line, running a web server is easy; TODO: explain how to make it work with SSL.
 
 
