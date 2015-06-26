@@ -44,17 +44,16 @@ Your browser might additionally complain about the nonsense SSL certificate that
 
 ## "Online" operation
 
-The *full* version of synestizer has an included [Django](https://www.djangoproject.com/) application to manage settings and user data. If you are going to run this, then the usual additional installation instructions for Django apply- and [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
-
-TODO: installation instructions.
-
+The full version of synestizer has an included [Django](https://www.djangoproject.com/) application to manage settings and user data. 
+It doesn't do much at the moment, but you are welcome to change that.
+To use the Django app, the usual additional installation instructions for Django apply- and as a bonus [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
 
 ## Participating
 
 You can help with code or with documentation. The procedure is the same either way - fork us on gihub and send us pull requests.
 
 The [online documentation](https://synestize.github.io/synestizer/) is here.
-Source code for the documentation lives in the gh-pages branch. If you wish to use a conevenient online editor, [prose.io](http://prose.io/) has worked well for us.
+Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
 ### Advanced: documentation subtree
