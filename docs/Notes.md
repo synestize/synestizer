@@ -13,6 +13,7 @@ Notes auditioning for a place in the documentation
     using some kind of template such as https://github.com/volojs/create-template
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
   * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
+  * Scaling. We have Christoph's protoype overriding, d3.scale and my param mapping. This is clearly silly, just one will do. I vote d3.scale since it is very very good.
 
 * MIDI *mapping* (right now it is hard coded)
 
