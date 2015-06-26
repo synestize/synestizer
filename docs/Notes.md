@@ -12,15 +12,18 @@ Notes auditioning for a place in the documentation
     e.g. using [require.js](http://requirejs.org/)
     using some kind of template such as https://github.com/volojs/create-template
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
-
+  * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
 * MIDI *mapping* (right now it is hard coded)
 
 * Video analysis
 
+    * Features based on correlation with eigenfeatures (even fourier ones?)
+    * mcmc updating
+    * parameter mapping from 0-1 everywhere
     * normalize statistics
     * speed up clustering analysis
-    * switch to YSV for correlation structures
+    * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
     * partial correlations? http://stats.stackexchange.com/a/10873
     * Are the correlation estimates incoherent?
       Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
@@ -135,12 +138,12 @@ Partial workflow tools:
 * [runnable](http://runnable.com/U51EjgiOZqRA3HoV/basic-reveal-js-example-for-node-javascript-and-presentations) allows you to edit the whole site in situ.
 
 
-### online editing documentation
+###  editing documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
-* [prose](http://prose.io)
+* [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot fo what we want.
 
 ## Remote operation
 
