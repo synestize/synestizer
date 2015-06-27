@@ -123,27 +123,25 @@ var patches = patches || {};
         return {
 
             run: function () {
-
+                var offsetScale = d3.scale.linear().domain([0, 1]).rangeRound([0, 15]);
                 this.setGain(preset["output"]);
 
-                Number.prototype.map = function (in_min, in_max, out_min, out_max) {
-                    return ( this - in_min ) * ( out_max - out_min ) / ( in_max - in_min ) + out_min;
-                }
+                
 
                 pubsub.subscribe(
                     "/videoanalyzer/averagecolor/val/0",
                     function(data) {
-                        offsetRed = Math.floor(data.map(0,1,0,15));
+                        offsetRed = offsetScale(data);
                     })
                 pubsub.subscribe(
                     "/videoanalyzer/averagecolor/val/1",
                     function(data) {
-                        offsetGreen = Math.floor(data.map(0,1,0,15));
+                        offsetGreen = offsetScale(data);
                     })
                 pubsub.subscribe(
                     "/videoanalyzer/averagecolor/val/2",
                     function(data) {
-                        offsetBlue = Math.floor(data.map(0,1,0,15));
+                        offsetBlue = offsetScale(data);
                     })
 
                 // start sequencer

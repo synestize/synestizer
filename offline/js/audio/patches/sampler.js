@@ -20,6 +20,7 @@ var patches = patches || {};
         var canvasWidth, canvasHeight;
         var recIndex = 0;
 
+        var pitchScale;
         var analyzer;
 
         input = WX.Gain();
@@ -72,13 +73,15 @@ var patches = patches || {};
         updateAnalysers();
         console.log("Sampler patch initialized");
 
+        pitchScale = d3.scale.linear().domain([0, 1]).range([72, 48]);;
+
         return {
             run: function() {
                 pubsub.subscribe(
                     "/videoanalyzer/averagecolor/val/0",
                     function(data) {
                         if (voices[0].ready) {
-                            var p = { tune: data.map(0,1,72,48) };
+                            var p = { tune: pitchScale(data)};
                             voices[0].setPreset(p);
                             voices[0].noteOn(60, 127, WX.now);
                             voices[0].noteOff(60, 127, WX.now+2);
@@ -88,7 +91,7 @@ var patches = patches || {};
                     "/videoanalyzer/averagecolor/val/1",
                     function(data) {
                         if (voices[1].ready) {
-                            var p = { tune: data.map(0,1,72,48) };
+                            var p = { tune: pitchScale(data)};
                             voices[1].setPreset(p);
                             voices[1].noteOn(60, 127, WX.now);
                             voices[1].noteOff(60, 127, WX.now+2);
@@ -98,7 +101,7 @@ var patches = patches || {};
                     "/videoanalyzer/averagecolor/val/2",
                     function(data) {
                         if (voices[2].ready) {
-                            var p = { tune: data.map(0,1,72,48) };
+                            var p = { tune: pitchScale(data)};
                             voices[2].setPreset(p);
                             voices[2].noteOn(60, 127, WX.now);
                             voices[2].noteOff(60, 127, WX.now+2);
