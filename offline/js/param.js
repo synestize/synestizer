@@ -31,11 +31,11 @@ managing synthesis parameters, their ranges and mappings, as collections of floa
 
     param.Parameter = function (params) {
         var self = this;
-        params = typeof params !== 'undefined' ? params : {};
-        self.warp = typeof params.warp !== 'undefined' ? params.warp : new param.LinWarp;
-        self.units = typeof params.units !== 'undefined' ? params.units : "";
-        self.name =  typeof params.name !== 'undefined' ? params.name : "";
-        self.defaultVal = typeof params.defaultVal !== 'undefined' ? params.defaultVal : self.warp.lo;
+        params = params !== 'undefined' ? params : {};
+        self.warp = params.warp || new param.LinWarp;
+        self.units = params.unit ||  "";
+        self.name =  params.name || "";
+        self.defaultVal = params.defaultVal || self.warp.lo;
         //update rate?
         //model/member specification?
         //setter/getter for the state here?
@@ -44,16 +44,4 @@ managing synthesis parameters, their ranges and mappings, as collections of floa
         //fluid style a la jquery?
         param.ParameterSpace.add(self);
     };
-    //singleton holds all parameters
-    param.ParameterSpace = new function() {
-        var self = this;
-        var parameters = {};
-        self.add = function(parameter) {
-            parameters[parameter.name] = parameter;
-        };
-        self.parameters = function(parameter) {
-            parameter;
-        };
-    };
-    
 })( this );

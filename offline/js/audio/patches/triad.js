@@ -21,16 +21,23 @@ var patches = patches || {};
             run: function() {
                 this.setOutput(preset["output"]); // TODO see setOutput
                 pubsub.subscribe(
-                    "/videoanalyzer/averagecolor/raw",
+                    "/videoanalyzer/averagecolor/val/0",
+                    function(data) {
+                        triad.glide1( document.getElementById('freq1Knob').value + ( 0.01 * Math.pow(~~(data*255), 2)) );
+                        triad.$lfoRate1(data.map(0,1,0,20), WX.now, 0);
+                    });
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/1",
+                    function(data) {
+                        triad.glide2( document.getElementById('freq2Knob').value + ( 0.01 * Math.pow(~~(data*255), 2)) );
+                        triad.$lfoRate2(data.map(0,1,0,20), WX.now, 0);
+                    });
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/2",
                     function(data) {
 
-                        triad.glide1( document.getElementById('freq1Knob').value + ( 0.01 * Math.pow(~~(data[0]*255), 2)) );
-                        triad.glide2( document.getElementById('freq2Knob').value + ( 0.01 * Math.pow(~~(data[1]*255), 2)) );
-                        triad.glide3( document.getElementById('freq3Knob').value + ( 0.01 * Math.pow(~~(data[2]*255), 2)) );
-
-                        triad.$lfoRate1(data[0].map(0,1,0,20), WX.now, 0);
-                        triad.$lfoRate2(data[1].map(0,1,0,20), WX.now, 0);
-                        triad.$lfoRate3(data[2].map(0,1,0,20), WX.now, 0);
+                        triad.glide3( document.getElementById('freq3Knob').value + ( 0.01 * Math.pow(~~(data*255), 2)) );
+                        triad.$lfoRate3(data.map(0,1,0,20), WX.now, 0);
                     });
             },
 

@@ -74,26 +74,36 @@ var patches = patches || {};
 
         return {
             run: function() {
-                pubsub.subscribe("/videoanalyzer/averagecolor/raw", function(data) {
-                    if (voices[0].ready) {
-                        var p = { tune: data[0].map(0,1,72,48) };
-                        voices[0].setPreset(p);
-                        voices[0].noteOn(60, 127, WX.now);
-                        voices[0].noteOff(60, 127, WX.now+2);
-                    }
-                    if (voices[1].ready) {
-                        var p = { tune: data[1].map(0,1,72,48) };
-                        voices[1].setPreset(p);
-                        voices[1].noteOn(60, 127, WX.now);
-                        voices[1].noteOff(60, 127, WX.now+2);
-                    }
-                    if (voices[2].ready) {
-                        var p = { tune: data[2].map(0,1,72,48) };
-                        voices[2].setPreset(p);
-                        voices[2].noteOn(60, 127, WX.now);
-                        voices[2].noteOff(60, 127, WX.now+2);
-                    }
-                })
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/0",
+                    function(data) {
+                        if (voices[0].ready) {
+                            var p = { tune: data.map(0,1,72,48) };
+                            voices[0].setPreset(p);
+                            voices[0].noteOn(60, 127, WX.now);
+                            voices[0].noteOff(60, 127, WX.now+2);
+                        }
+                    })
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/1",
+                    function(data) {
+                        if (voices[1].ready) {
+                            var p = { tune: data.map(0,1,72,48) };
+                            voices[1].setPreset(p);
+                            voices[1].noteOn(60, 127, WX.now);
+                            voices[1].noteOff(60, 127, WX.now+2);
+                        }
+                    })
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/2",
+                    function(data) {
+                        if (voices[2].ready) {
+                            var p = { tune: data.map(0,1,72,48) };
+                            voices[2].setPreset(p);
+                            voices[2].noteOn(60, 127, WX.now);
+                            voices[2].noteOff(60, 127, WX.now+2);
+                        }
+                    })
             },
 
             toggleRecording: function(e, rec) {

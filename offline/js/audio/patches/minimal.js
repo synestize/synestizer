@@ -131,12 +131,19 @@ var patches = patches || {};
                 }
 
                 pubsub.subscribe(
-                    "/videoanalyzer/averagecolor/raw",
+                    "/videoanalyzer/averagecolor/val/0",
                     function(data) {
-                        offsetRed = Math.floor(data[0].map(0,1,0,15));
-                        offsetGreen = Math.floor(data[1].map(0,1,0,15));
-                        offsetBlue = Math.floor(data[2].map(0,1,0,15));
-                        //console.log(offsetRed, offsetGreen, offsetBlue);
+                        offsetRed = Math.floor(data.map(0,1,0,15));
+                    })
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/1",
+                    function(data) {
+                        offsetGreen = Math.floor(data.map(0,1,0,15));
+                    })
+                pubsub.subscribe(
+                    "/videoanalyzer/averagecolor/val/2",
+                    function(data) {
+                        offsetBlue = Math.floor(data.map(0,1,0,15));
                     })
 
                 // start sequencer

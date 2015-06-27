@@ -11,9 +11,7 @@
         self.prefix = self.baseprefix;
         self.pubsub = params.pubsub;
         //to be overridden in subclasses
-        self.rawStats = [0.5, 0.5, 0.5];
-        self.lastRawStats = [0.5, 0.5, 0.5];
-        self.deltaStats = [0.0, 0.0, 0.0];
+        self.nDims = self.rawStats.size;
         
         self.attach = function(analyzer) {
             self.analyzer = analyzer;
@@ -22,7 +20,10 @@
         }
 
         self.emitStats = function(prefix, stats) {
-            self.pubsub.publish(self.prefix + prefix, stats);
+            for (var i = 0; i < self.rawStats.length; i++) {
+                self.pubsub.publish(self.prefix + prefix + "/"+i, stats[i]);
+            };
+            self.pubsub.publish(self.prefix + prefix + "/vec", stats);
         }
         self.deltaCalcs = function (){
             //even though we use requestAnimFrame, we may not yet have new camera data.
@@ -50,20 +51,21 @@
             self.lastRawStats = self.rawStats.slice(); //copy for safety
             self.rawCalcs(pixels);
             self.deltaCalcs();
-            self.emitStats("/raw", self.rawStats);
+            self.emitStats("/val", self.rawStats);
             self.emitStats("/delta", self.deltaStats);
         };
     };
     Covariance = function (params) {
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
-        Statistic.call(this, params); //super constructor
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "covariance";
         self.mean = [0,0,0];
         self.variance = [1,1,1,0,0,0,0,0,0,0,0,0];
         self.normCorr = [0,0,0,0,0,0,0,0,0];
         self.rawStats = [0,0,0,0,0,0,0,0,0,0,0,0];
         self.deltaStats = [0,0,0,0,0,0,0,0,0,0,0,0];
+        Statistic.call(this, params); //super constructor
+        
         self.rawCalcs = function (pixels) {
             //calculate variances for all params
             //IDEA: partial variances
@@ -168,10 +170,11 @@
         self.nColors = typeof params.nColors !== 'undefined' ? params.nColors : 8;
         self.maxPoints = typeof params.maxPoints !== 'undefined' ? params.maxPoints : 256;
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "dominantcolor";
-        Statistic.call(this, params); //super constructor
         self.rawStats = new Array(nColors*4);
         self.lastRawStats = new Array(nColors*4);
         self.deltaStats = new Array(nColors*4);
+        Statistic.call(this, params); //super constructor
+        
         for (var i = 0; i < maxPoints*4; i++) {
             self.rawStats[i] = 0.5;
             self.lastRawStats[i] = 0.5;
@@ -283,7 +286,12 @@
         var self = this;
         params = typeof params !== 'undefined' ? params : {};
         self.baseprefix = typeof params.prefix !== 'undefined' ? params.prefix : "averagecolor";
+        self.rawStats = [0.5, 0.5, 0.5];
+        self.lastRawStats = [0.5, 0.5, 0.5];
+        self.deltaStats = [0.0, 0.0, 0.0];
+        
         Statistic.call(this, params); //super constructor
+        
         self.rawCalcs = function (pixels) {
             
             var pixelCount = self.analyzer.cw * self.analyzer.ch;
