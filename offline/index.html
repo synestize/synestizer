@@ -140,6 +140,8 @@
 
     <!-- utils -->
     <script src="./bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+    
     <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
     <script src="./bower_components/d3/d3.min.js"></script>
 
@@ -148,21 +150,22 @@
     <script src="./js/video/analyzer.js"></script>
     <script src="./js/video/videostats.js"></script>
 
-    <!-- audio helper -->
-    <script src="./js/audio/helpers/recorder.js"></script>
-    <script src="./js/audio/helpers/midi.js"></script>
+    <!-- audio infrastructure -->
+    <script src="./js/audio/synths/bleep.js"></script>
+
+    <!-- audio models -->
+    <script src="./js/audio/instruments/basic.js" ></script>
+
 
     <script>
         "use strict";
         
         var analyzer;
         var pubsub;
-        var averageRawHandle, averageDeltaHandle;
-        var covarianceRawHandle, covarianceDeltaHandle;
-        var barScale, colorScale;
-        var averageRawDom, covarianceRawDom, covarianceDeltaDom, uiDom, logoDom;
-        var handle, bars, scale, average, stream;
-
+        var audioCtx;
+        var instrumentModel;
+        var instrumentView;
+        
         pubsub = PubSub; //give our global signal bus a nice name
 
         $( document ).ready( function() {
@@ -186,6 +189,15 @@
                 media.attachFullscreenButton(
                     document.getElementById("fullscreen"));
                 plotStatisticsSetup();
+                audioCtx = new window.AudioContext();
+
+                instrumentModel = new instruments.BasicInstState(
+                    {},
+                    {ctx: audioCtx}
+                );
+                instrumentView = new instruments.BasicInstStateView({
+                    model: instrumentModel
+                });
             });
 
             $(window).resize(function() {
@@ -193,6 +205,12 @@
             });
 
             function plotStatisticsSetup() {
+                var averageRawHandle, averageDeltaHandle;
+                var covarianceRawHandle, covarianceDeltaHandle;
+                var barScale, colorScale;
+                var averageRawDom, covarianceRawDom, covarianceDeltaDom, uiDom, logoDom;
+                var handle, bars, scale, average, stream;
+                
                 averageRawDom = d3.select("#average-raw-bars");
                 covarianceRawDom = d3.select("#covariance-raw-bars");
                 covarianceDeltaDom = d3.select("#covariance-delta-bars");
