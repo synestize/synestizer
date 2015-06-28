@@ -108,7 +108,7 @@
         }
     };
 
-    function attachMediabutton(el) {
+    function attachMediaButton(el) {
         console.log("Media initialized");
         if (typeof window.MediaStreamTrack.getSources === 'undefined'){
             console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
@@ -117,7 +117,7 @@
         }
         el.addEventListener("click", switchCam);
     };
-    media.attachMediabutton = attachMediabutton;
+    media.attachMediaButton = attachMediaButton;
     
     function attachFullscreenButton (el) {
         el.addEventListener("click", function(){
