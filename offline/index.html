@@ -381,7 +381,7 @@
         $( document ).ready( function() {
             // setup info div
             $("#info").removeClass("hide").addClass("show");
-            media.getStream(
+            media.initStream(
                 function (stream) {
                 analyzer = new window.videoanalyzers.VideoAnalyzer({
                     vidElem: document.getElementById('video'),
@@ -392,7 +392,8 @@
                 });
                 $("#info").removeClass("show").addClass("hide");
                 $("#controls").removeClass("hide").addClass("show");
-
+                media.attachMediaButton(document.getElementById("#switchDevices"));
+                media.attachFullscreenButton(document.getElementById("#fullscreen"));
                 // call resize for video resizing
                 resize();
 

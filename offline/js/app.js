@@ -24,114 +24,9 @@ app.Patch = Backbone.Model.extend({
 app.PatchView = Backbone.View.extend({
     tagName: "div",
     template: _.template($("#patch_template").html()),
-    events: {
-        "click #fullscreen": function(e) {
-            this.toggleFullscreen(e.target, !document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement );
-        },
-        "click #switchDevices": function(e) {
-            if (typeof MediaStreamTrack.getSources === 'undefined'){
-                console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
-            } else {
-                this.switchCam();
-            }
-        }
-    },
-
-    switchCam: function() {
-        app.PatchView.currentCam++;
-        if (app.PatchView.currentCam >= app.PatchView.cams.length) {
-            app.PatchView.currentCam = 0;
-        }
-
-        //media.stream.stop();
-
-        var constraints = {
-            audio: {
-                optional: [{sourceId: app.PatchView.mics[app.PatchView.currentMic]}]
-            },
-            video: {
-                optional: [{sourceId: app.PatchView.cams[app.PatchView.currentCam]}]
-            }
-        };
-
-        window.navigator.getUserMedia(
-            constraints,
-            function(stream) {
-                media.stream = stream;
-                analyzer = null;
-                analyzer = new this.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                    stream: stream
-                });
-
-                console.log("Switched to cam with id " + app.PatchView.cams[app.PatchView.currentCam]);
-            },
-            function(e) {
-                alert('Please share your cam and mic!');
-                console.log(e);
-            });
-    },
-
-    toggleFullscreen: function(el, goFullscreen) {
-        if (goFullscreen) {
-            el.classList.remove("fi-arrows-out");
-            el.classList.add("fi-arrows-in");
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-            }
-        } else {
-            el.classList.remove("fi-arrows-in");
-            el.classList.add("fi-arrows-out");
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-        }
-    },
-
-    countDevices: function(sourceInfos) {
-        for (var i = 0; i !== sourceInfos.length; ++i) {
-            var sourceInfo = sourceInfos[i];
-            if (sourceInfo.kind === 'video') {
-                app.PatchView.cams.push(sourceInfo.id);
-            } else if (sourceInfo.kind === 'audio') {
-                app.PatchView.mics.push(sourceInfo.id);
-            }
-        }
-        console.log("Found " + app.PatchView.cams.length + " cam(s).");
-        console.log("Found " + app.PatchView.mics.length + " mic(s).");
-        for (var j = 0; j < app.PatchView.cams.length; ++j) {
-            console.log("cam id " + j + ": " + app.PatchView.cams[j]);
-        }
-        for (var k = 0; k < app.PatchView.mics.length; ++k) {
-            console.log("mic id " + k + ": " + app.PatchView.mics[k]);
-        }
-
-    },
-
     initialize: function () {
         console.log("PatchView initialized");
         this.listenTo(this.model, "change", this.render);
-
-        if (typeof MediaStreamTrack.getSources === 'undefined'){
-            console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
-        } else {
-            MediaStreamTrack.getSources(this.countDevices);
-        }
     },
 
     render: function () {
@@ -167,11 +62,6 @@ app.PatchView = Backbone.View.extend({
     }
 
 });
-
-app.PatchView.currentCam = 0;
-app.PatchView.cams = new Array();
-app.PatchView.currentMic = 0;
-app.PatchView.mics = new Array();
 
 app.TriadView = Backbone.View.extend({
     tagName: "div",
