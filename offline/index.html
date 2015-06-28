@@ -52,9 +52,6 @@
                       </ul>
 
                       <div id="patch">
-                          <script id="patch_template" type="text/template">
-                              <!--<div>Patch: <%= uuid %></div>-->
-                          </script>
                       </div>
 
                       <a href="#" style="background-color: #f0f; padding: 5px; color: #fff;" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span id="midiInDevice">MIDI Controller</span></a>
@@ -148,16 +145,12 @@
             }
         });
     </script>
-        
-    <!-- include backbone.js -->
-    <script src="./bower_components/underscore/underscore-min.js"></script>
-    <script src="./bower_components/backbone/backbone.js"></script>
-
     <!-- include WAAX -->
     <script src="./js/vendor/WAAX/waax.js"></script>
     <script src="./js/vendor/WAAX/plugins.js"></script>
 
-    <!-- vendor -->
+    <!-- utils -->
+    <script src="./bower_components/underscore/underscore-min.js"></script>
     <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
     <script src="./bower_components/d3/d3.min.js"></script>
 
@@ -175,9 +168,6 @@
     <script src="./js/audio/helpers/recorder.js"></script>
     <script src="./js/audio/helpers/midi.js"></script>
 
-    <!-- preset saving/loading -->
-    <script src="./js/presets.js"></script>
-    <script src="./js/app.js"></script>
 
     <!-- patches -->
     <script src="./js/audio/patches/triad.js"></script>
