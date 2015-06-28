@@ -216,9 +216,6 @@
                 // call resize for video resizing
                 resize();
 
-                if (navigator.requestMIDIAccess)
-                    navigator.requestMIDIAccess().then( onMIDIStarted, onMIDISystemError );
-
                 // start the app
                 new app.AppView();
                 plotStatisticsSetup();
