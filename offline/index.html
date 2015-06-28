@@ -60,7 +60,7 @@
 
                       <dl class="accordion" data-accordion>
                           <dd class="accordion-navigation">
-                              <a href="#analysis-panel">RGB</a>
+                              <a href="#analysis-panel">Analysis</a>
                               <div id="analysis-panel" class="content active">
                                   <div id="average-raw-bars"></div>
                                   <div id="covariance-raw-bars"></div>
@@ -189,8 +189,10 @@
                 $("#controls").removeClass("hide").addClass("show");
                 // call resize for video resizing
                 resize();
-                media.attachMediaButton(document.getElementById("switchDevices"));
-                media.attachFullscreenButton(document.getElementById("fullscreen"));
+                media.attachMediaButton(
+                    document.getElementById("switchDevices"));
+                media.attachFullscreenButton(
+                    document.getElementById("fullscreen"));
                 plotStatisticsSetup();
             });
 
