@@ -44,15 +44,12 @@
 
 
               <div id="controls" class="hide">
-                  <div class="sidebar large-3 small-3 medium-3 columns left">
+                  <div id="leftcontrolsidebar" class="sidebar large-3 small-3 medium-3 columns left">
                       <ul class="button-group" style="height: 45px; padding-left: 2px;">
                           <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
                           <li><a href="#" id="switchDevices" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
                           <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
                       </ul>
-
-                      <div id="patch">
-                      </div>
 
                       <a href="#" style="background-color: #f0f; padding: 5px; color: #fff;" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span id="midiInDevice">MIDI Controller</span></a>
 
@@ -70,8 +67,7 @@
                       </dl>
                   </div>
 
-                  <div class="sidebar large-3 medium-3 small-5 columns">
-                      <input id="slider3" type ="range" min ="0.0" max="1.0" step ="0.1"/>
+                  <div id="rightcontrolsidebar" class="sidebar large-3 medium-3 small-5 columns">
                       <div class="label">
                           Input Monitor
                       </div>
@@ -139,8 +135,8 @@
     </script>
 
     <!-- utils -->
-    <script src="./bower_components/underscore/underscore-min.js"></script>
-    <script src="bower_components/backbone/backbone.js"></script>
+    <script src="./bower_components/underscore/underscore.js"></script>
+    <script src="./bower_components/backbone/backbone.js"></script>
     
     <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
     <script src="./bower_components/d3/d3.min.js"></script>
@@ -198,6 +194,8 @@
                 instrumentView = new instruments.BasicInstStateView({
                     model: instrumentModel
                 });
+                instrumentView.$el.appendTo("#rightcontrolsidebar");
+                instrumentView.render()
             });
 
             $(window).resize(function() {

@@ -32,17 +32,6 @@ State models reflect the current state of the model
         }
     });
     
-    function makeWidget(model, label) {
-        var sliderEl = $(
-            '<input type="range" min="0.0" max="1.0" step="0.005"></input>'
-        ).attr("value", model.get(label));
-        return $("<div></div>"
-            ).text(label
-            ).addClass("slider"
-            ).append(sliderEl
-            );
-    };
-    instruments.makeWidget = makeWidget;
     
     instruments.BasicInstStateView = Backbone.View.extend({
         client: instruments.BasicInstState,
@@ -54,18 +43,41 @@ State models reflect the current state of the model
         events: {},
 
         initialize: function (options) {
-            _.each(this.client.controls, function(label, info, controls) {
-                this.events["." + label + " change"] = function (evt) {
-                    this.set(label, evt.currentTarget.value)
-                }
+            _.each(
+                this.client.controls,
+                function(label, info, controls) {
+                    this.events["." + label + " change"] = function (evt) {
+                        this.set(label, evt.currentTarget.value)
+                    },
+                this
             })
         },
 
         render: function () {
-            _.each(model.controls, function(label, info, controls) {
-                this.$el.append(makeWidget(this.model, label));
-            });
+            this.$el.append("<h2></h2>").text(this.className);
+            _.each(
+                this.model.controls,
+                function(info, label, controls) {
+                    this.$el.append(this.makeWidget(this.model, label));
+                },
+                this);
             return this;
+        },
+        
+        makeWidget: function (model, label) {
+            var controlEl = $("<div></div>"
+                ).addClass("control");
+            controlEl.append($(
+                '<input type="range" min="0.0" max="1.0" step="0.005"></input>'
+            ).val(model.get(label)).addClass(label));
+            console.debug("sliderel", label, controlEl);
+            controlEl.prepend(
+                $("<div></div>"
+                ).addClass("label"
+                ).text(label)
+            );
+            console.debug("sliderel2", label, controlEl);
+            return controlEl;
         }
     });
 
