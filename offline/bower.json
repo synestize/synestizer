@@ -22,10 +22,8 @@
     "pubsub.js": "~0.1.0",
     "zepto": "~1.1.6",
     "underscore": "~1.8.3",
-    "polymer": "~0.8.0",
     "foundation": "zurb/bower-foundation#~5.5.1",
     "mui": "~0.0.8",
-    "webcomponentsjs": "~0.6.1",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
   }
 }
