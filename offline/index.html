@@ -45,15 +45,15 @@
 
               <div id="controls" class="hide">
                   <div class="sidebar large-3 small-3 medium-3 columns left">
+                      <ul class="button-group" style="height: 45px; padding-left: 2px;">
+                          <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
+                          <li><a href="#" id="switchDevices" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
+                          <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
+                      </ul>
 
                       <div id="patch">
                           <script id="patch_template" type="text/template">
                               <!--<div>Patch: <%= uuid %></div>-->
-                              <ul class="button-group" style="height: 45px; padding-left: 2px;">
-                                  <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
-                                  <!--<li><a href="#" id="switchDevices" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>-->
-                                  <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
-                              </ul>
                           </script>
                       </div>
 
@@ -392,8 +392,6 @@
                 });
                 $("#info").removeClass("show").addClass("hide");
                 $("#controls").removeClass("hide").addClass("show");
-                media.attachMediaButton(document.getElementById("#switchDevices"));
-                media.attachFullscreenButton(document.getElementById("#fullscreen"));
                 // call resize for video resizing
                 resize();
 
@@ -402,6 +400,8 @@
 
                 // start the app
                 new app.AppView();
+                media.attachMediaButton(document.getElementById("switchDevices"));
+                media.attachFullscreenButton(document.getElementById("fullscreen"));
                 plotStatisticsSetup();
             });
 
