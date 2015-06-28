@@ -71,7 +71,7 @@
                   </div>
 
                   <div class="sidebar large-3 medium-3 small-5 columns">
-                      <paper-slider max="1000"></paper-slider>
+                      <input id="slider3" type ="range" min ="0.0" max="1.0" step ="0.1"/>
                       <div class="label">
                           Input Monitor
                       </div>
@@ -93,14 +93,6 @@
             </div>
         </div>
     </div>
-    <!-- webcomponents - must come FIRST -->
-    <!-- 1. Load webcomponents-lite.min.js for polyfill support. -->
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js">
-    </script>
-
-    <!-- 2. Use an HTML Import to bring in some elements. -->
-    <link rel="import" href="bower_components/paper-slider/paper-slider.html">
-
     <!-- foundation js -->
     <script src="./bower_components/jquery/dist/jquery.js"></script>
     <script src="./bower_components/foundation/js/foundation.min.js"></script>
