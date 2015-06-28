@@ -350,3 +350,14 @@ webaudio-switch {
     margin: 2px;
 }
 
+/* Slider */
+paper-slider {
+  --paper-slider-bar-color: #fff;
+  --paper-slider-active-color: #0f9d58;
+  --paper-slider-knob-color: #0f9d58;
+  --paper-slider-pin-color: #0f9d58;
+  --paper-slider-font-color: #0f9d58;
+  --paper-slider-secondary-color: #0f9d58;
+  --paper-slider-disabled-active-color: #ccc;
+  --paper-slider-disabled-secondary-color: #ccc;
+}
