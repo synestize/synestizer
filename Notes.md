@@ -37,6 +37,18 @@ Notes auditioning for a place in the documentation
 
 ## javascript tips
 
+* how to instantial a WAC from javascript:
+
+      // live-inserts a knob.
+      function test() {
+          var y = document.createElement("webaudio-knob");
+          y.setAttribute("src", "img/LittlePhatty.png");
+          y.sprites=100;
+          y.ready();
+          document.body.appendChild(y);
+          return y;
+      }
+      
 * Switch to chainable API style
 * Jquery too big. Alternatives:
 
