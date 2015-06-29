@@ -2,11 +2,12 @@
 State models reflect the current state of the model
 */
 
-(function(window, _, Backbone){
+(function(window, _, Backbone, d3){
     'use strict';
     var instruments;
-    window.instruments = instruments = window.instruments || {};  
-    instruments.BasicInstState = Backbone.Model.extend({        
+    window.instruments = instruments = window.instruments || {};
+    
+    instruments.BasicInstState = Backbone.Model.extend({
         initialize: function(attrs, options) {
             console.debug('basic init', attrs, options);
             // something with this
@@ -54,7 +55,7 @@ State models reflect the current state of the model
         },
 
         render: function () {
-            this.$el.append("<h2></h2>").text(this.className);
+            this.$el.append($("<h3></h3>").text(this.className));
             _.each(
                 this.model.controls,
                 function(info, label, controls) {
@@ -82,4 +83,4 @@ State models reflect the current state of the model
     });
 
     
-})(window, _, Backbone);
+})(window, _, Backbone, d3);
