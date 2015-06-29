@@ -143,12 +143,34 @@ a, a:hover, a:active, a:focus {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-
     cursor: pointer;
 }
 
+/* new non-WAC controls */
+#rightcontrolsidebar {
+    background-color: #000;
+    opacity: 0.5;
+}
 
-
+.patchcontrols h3 {
+    font-size: 15px;
+    
+}
+.patchcontrols .control {
+    display: inline-block;
+    margin: 4px;
+    font-family: 'Roboto Condensed', sans-serif;
+    width: 160px;
+}
+.patchcontrols .control .label {
+    width: 40px;
+    display: inline-block;
+}
+.patchcontrols .control input[type="range"] {
+    width: 90px;
+    display: inline-block;
+    height: 0.8em;
+}
 
 input[type="number"],
 input[type="number"]:focus {
@@ -350,14 +372,3 @@ webaudio-switch {
     margin: 2px;
 }
 
-/* Slider */
-paper-slider {
-  --paper-slider-bar-color: #fff;
-  --paper-slider-active-color: #0f9d58;
-  --paper-slider-knob-color: #0f9d58;
-  --paper-slider-pin-color: #0f9d58;
-  --paper-slider-font-color: #0f9d58;
-  --paper-slider-secondary-color: #0f9d58;
-  --paper-slider-disabled-active-color: #ccc;
-  --paper-slider-disabled-secondary-color: #ccc;
-}
