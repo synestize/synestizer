@@ -1,7 +1,5 @@
 # Notes
 
-Notes auditioning for a place in the documentation
-
 ## TODO
 
 * Meta
@@ -136,12 +134,14 @@ Partial workflow tools:
 * [runnable](http://runnable.com/U51EjgiOZqRA3HoV/basic-reveal-js-example-for-node-javascript-and-presentations) allows you to edit the whole site in situ.
 
 
-###  editing documentation
+
+### online editing documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
 * [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot fo what we want.
+* [prose](http://prose.io)
 
 ## Remote operation
 
