@@ -49,7 +49,6 @@ The full version of synestizer has an included [Django](https://www.djangoprojec
 It doesn't do much at the moment, but you are welcome to change that.
 To use the Django app, the usual additional installation instructions for Django apply- and as a bonus [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
 
-
 TODO: installation instructions.
 
 ## Participating

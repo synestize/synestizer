@@ -4,6 +4,8 @@ title: Notes
 
 # Notes
 
+Notes auditioning for a place in the documentation
+
 ## TODO
 
 * Meta
@@ -138,8 +140,7 @@ Partial workflow tools:
 * [runnable](http://runnable.com/U51EjgiOZqRA3HoV/basic-reveal-js-example-for-node-javascript-and-presentations) allows you to edit the whole site in situ.
 
 
-
-### online editing documentation
+###  editing documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
@@ -262,10 +263,10 @@ There are too many resources online to list. [Start here](http://notes.livingthi
 
 http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 
-More general JS app options:
+## More general JS app options:
 
-https://www.ludei.com/cocoonjs/
-https://github.com/andrewrk/waveform
-http://electron.atom.io/
-http://nwjs.io/
+* https://www.ludei.com/cocoonjs/
+* https://github.com/andrewrk/waveform
+* http://electron.atom.io/
+* http://nwjs.io/
 
