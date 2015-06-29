@@ -13,7 +13,7 @@ Notes auditioning for a place in the documentation
   * smoother workflow to host live on github
   * Move to modular architecture in the AMD style,
     e.g. using [require.js](http://requirejs.org/)
-    using some kind of template such as https://github.com/volojs/create-template
+    using [some kind of template](https://github.com/volojs/create-template)
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
   * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
@@ -29,7 +29,7 @@ Notes auditioning for a place in the documentation
 
 ## javascript tips
 
-* how to instantial a WAC from javascript:
+* how to instantiate a WAC from javascript:
 
       // live-inserts a knob.
       function test() {
@@ -42,11 +42,11 @@ Notes auditioning for a place in the documentation
       }
       
 * Switch to chainable API style
-* Jquery too big. Alternatives:
+* Jquery is too big. Alternatives:
 
   * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
   * [zepto](http://zeptojs.com/)
-  * but anyway [you might not need jquery](http://youmightnotneedjquery.com/)
+  * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
 
 ## linear algebra options
 
@@ -75,13 +75,9 @@ Ranked in descending order of viability:
   JavaScript (emscripten) port of lmfit library:
 
   "a self-contained C library for Levenberg-Marquardt least-squares
-  minimization and curve fitting" (quote
-  http://apps.jcns.fz-juelich.de/doku/sc/lmfit)
+  minimization and curve fitting" 
 
-  Currently only curve fitting is implemented.
-  Some examples:
-  http://jvail.github.io/dairy.js/,
-  https://m0ose.github.io/lmfit.js/test2.html
+  Currently only linear curve fitting is implemented.
 * [linalg](https://github.com/ben-ng/linalg)
   uses native arrays because of their speed.
   
@@ -120,6 +116,7 @@ Build tools:
   [deploy to github using grunt-build-control](https://blog.5apps.com/2014/05/29/deploying-static-apps-with-grunt-build-control-on-5apps-deploy.html)
 
 complete workflow tools:
+
 * [yeoman](http://yeoman.io/) - there is, e.g. [a workflow for polymer](https://github.com/yeoman/generator-polymer)
 * [lineman](http://linemanjs.com/)
 * [metalsmith](http://www.metalsmith.io/)
@@ -132,7 +129,6 @@ Partial workflow tools:
   webpack is a module bundler
   This means webpack takes modules with dependencies
   and emits static assets representing those modules.
-
 * [browserify](http://browserify.org/) on the command line can budle up all dependencies..
 
 ### online editing code
@@ -150,11 +146,11 @@ Partial workflow tools:
 
 ## Remote operation
 
-* https://tokbox.com/
-* http://www.webrtc.org/
-* https://github.com/binaryjs/binaryjs
-* http://tunnel.connectingspaces.hk
-* https://shiftr.io/
+* [tokbox](https://tokbox.com/)
+* [webRTC](http://www.webrtc.org/)
+* [binaryjs](https://github.com/binaryjs/binaryjs)
+* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kon Z¨rich collaboration
+* [shiftr](https://shiftr.io/)
 
 ## Video analysis
 
@@ -180,6 +176,8 @@ Partial workflow tools:
 * gaussian mixture models
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
+* [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
+
 
 ### Machine vision libraries
 
@@ -192,58 +190,43 @@ Partial workflow tools:
 ### WebGL optimisation
 
 * notes about webgl support - e.g.
-* FFT options for mobile. Webgl?
+* FFT options for mobile.
 
-  * http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf
-  * https://github.com/wuhao1117/WebGL-Ocean-FFT
+  * [webgl fft paper](http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf)
+  * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
+  * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
 
-* http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/
-* how to do WebGL-optimized image processing http://learningwebgl.com/blog/?p=1786
-* very good plain intro http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/
-* transform explanation http://games.greggman.com/game/webgl-2d-matrices/
-* combining with video
+* video+webgl:
 
-  * http://threejs.org/examples/#canvas_materials_video
-  * http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/
-  * https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL
-  * https://stackoverflow.com/questions/18383470/using-video-as-texture-with-three-js
-  * https://escobar5.github.io/asciicam/
-  * motion detection http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html
+  * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
+  * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
   
-* css filters to shunt to GPU?
-
-  * http://www.html5rocks.com/en/tutorials/speed/html5/
-  * http://docs.webplatform.org/wiki/tutorials/css_filters
-  * http://caniuse.com/#feat=css-filters
-  * http://jsfiddle.net/SvH6w/6/
+* [how to do WebGL-optimized image processing](http://learningwebgl.com/blog/?p=1786)
+* [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
+* [webgl transforms](http://games.greggman.com/game/webgl-2d-matrices/)
+  
+* css filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
 
 ### Colour handling
 
-* https://github.com/ahacking/chromatist
-* https://github.com/gka/chroma.js
-* https://en.wikipedia.org/wiki/Color_difference
-* http://color.psych.upenn.edu/brainard/papers/specification.pdf
-* foveation
-* JND
-* colorspaces: https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/
-* http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf
-* http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/
+* [colorspaces](https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
+* [colormaps](http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf)
+* [excellent seris on color](http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/)
 
 ### Sequencing
 
-* streams?
+* streams
 
   * [highland.js](http://highlandjs.org/#)
 
-* Transducers?
+* Transducers (Are these just streams rebranded?)
 
   * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
   
     * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
-  * [underarm](http://simplectic.com/projects/underarm/)
-  * [transducers for underscore.js](http://simplectic.com/projects/underscore-transducer/)
+  * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
 
 ## Audio
 
@@ -263,10 +246,9 @@ There are too many resources online to list. [Start here](http://notes.livingthi
 
 http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 
-## More general JS app options:
+## Desktop JS app options:
 
-* https://www.ludei.com/cocoonjs/
-* https://github.com/andrewrk/waveform
-* http://electron.atom.io/
-* http://nwjs.io/
+* [coccoonjs](https://www.ludei.com/cocoonjs/)
+* [electron](http://electron.atom.io/)
+* [node-webkit](http://nwjs.io/)
 
