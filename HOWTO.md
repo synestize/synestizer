@@ -26,7 +26,7 @@ Here are some options:
 1. If you do not use the command-line, the easiest webserver to install is [Mongoose Free Edition](http://cesanta.com/mongoose.shtml), which runs on Windows, Mac OS X and Linux. Put the mongoose application in the same folder as synestizer/offline, double click to run it, and you are done.
 
    You will find synestizer at http://localhost:8080/
-   
+
    NB although mongoose supposedly supports SSL, I can't make it work.
    Might need a custom compile
 
@@ -45,9 +45,13 @@ Your browser might additionally complain about the nonsense SSL certificate that
 
 ## "Online" operation
 
+<<<<<<< HEAD
 The full version of synestizer has an included [Django](https://www.djangoproject.com/) application to manage settings and user data. 
 It doesn't do much at the moment, but you are welcome to change that.
 To use the Django app, the usual additional installation instructions for Django apply- and as a bonus [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
+
+
+TODO: installation instructions.
 
 ## Participating
 
@@ -55,6 +59,7 @@ You can help with code or with documentation. The procedure is the same either w
 
 The [online documentation](https://synestize.github.io/synestizer/) is here.
 Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
+
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
 ### Advanced: documentation subtree
