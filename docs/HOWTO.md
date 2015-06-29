@@ -26,10 +26,11 @@ Here are some options:
 1. If you do not use the command-line, the easiest webserver to install is [Mongoose Free Edition](http://cesanta.com/mongoose.shtml), which runs on Windows, Mac OS X and Linux. Put the mongoose application in the same folder as synestizer/offline, double click to run it, and you are done.
 
    You will find synestizer at http://localhost:8080/
-   
-   NB although mongoose supposedly supports SSL, I can't make it work. Might need 
 
-2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one](http://macosxautomation.com/workshops/sharing/03.html)
+   NB although mongoose supposedly supports SSL, I can't make it work.
+   Might need a custom compile
+
+2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one about the basic part](http://macosxautomation.com/workshops/sharing/03.html), and [here is the manual page about encryption](https://support.apple.com/kb/PH15666?locale=en_US) and [here](https://support.apple.com/kb/PH14003?locale=en_US) and the [in-depth version](https://blog.httpwatch.com/2013/12/12/five-tips-for-using-self-signed-ssl-certificates-with-ios/)
 3. If you are comfortable with the command-line, running a web server is easy; TODO: explain how to make it work with SSL.
 
 
@@ -44,17 +45,19 @@ Your browser might additionally complain about the nonsense SSL certificate that
 
 ## "Online" operation
 
-The *full* version of synestizer has an included [Django](https://www.djangoproject.com/) application to manage settings and user data. If you are going to run this, then the usual additional installation instructions for Django apply- and [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
+The full version of synestizer has an included [Django](https://www.djangoproject.com/) application to manage settings and user data. 
+It doesn't do much at the moment, but you are welcome to change that.
+To use the Django app, the usual additional installation instructions for Django apply- and as a bonus [Django has a built-in testing web server that you can use ](https://docs.djangoproject.com/en/1.8/intro/tutorial01/#the-development-server)
 
 TODO: installation instructions.
-
 
 ## Participating
 
 You can help with code or with documentation. The procedure is the same either way - fork us on gihub and send us pull requests.
 
 The [online documentation](https://synestize.github.io/synestizer/) is here.
-Source code for the documentation lives in the gh-pages branch. If you wish to use a conevenient online editor, [prose.io](http://prose.io/) has worked well for us.
+Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
+
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
 ### Advanced: documentation subtree
