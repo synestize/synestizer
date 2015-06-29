@@ -18,6 +18,9 @@ Notes auditioning for a place in the documentation
 
 * Video analysis
 
+    * [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
+    * so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
+    * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
     * Features based on correlation with eigenfeatures (even fourier ones?)
     * mcmc updating
     * parameter mapping from 0-1 everywhere
