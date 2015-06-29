@@ -1,3 +1,7 @@
+---
+title: Notes
+---
+
 # Notes
 
 Notes auditioning for a place in the documentation
@@ -25,6 +29,18 @@ Notes auditioning for a place in the documentation
 
 ## javascript tips
 
+* how to instantial a WAC from javascript:
+
+      // live-inserts a knob.
+      function test() {
+          var y = document.createElement("webaudio-knob");
+          y.setAttribute("src", "img/LittlePhatty.png");
+          y.sprites=100;
+          y.ready();
+          document.body.appendChild(y);
+          return y;
+      }
+      
 * Switch to chainable API style
 * Jquery too big. Alternatives:
 
@@ -130,6 +146,7 @@ Partial workflow tools:
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
 * [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot fo what we want.
+* [prose](http://prose.io)
 
 ## Remote operation
 
@@ -246,10 +263,10 @@ There are too many resources online to list. [Start here](http://notes.livingthi
 
 http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 
-More general JS app options:
+## More general JS app options:
 
-https://www.ludei.com/cocoonjs/
-https://github.com/andrewrk/waveform
-http://electron.atom.io/
-http://nwjs.io/
+* https://www.ludei.com/cocoonjs/
+* https://github.com/andrewrk/waveform
+* http://electron.atom.io/
+* http://nwjs.io/
 
