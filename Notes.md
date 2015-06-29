@@ -4,7 +4,6 @@ Notes auditioning for a place in the documentation
 
 ## TODO
 
-
 * Meta
 
   * smoother workflow to host live on github
@@ -16,26 +15,12 @@ Notes auditioning for a place in the documentation
 
 * MIDI *mapping* (right now it is hard coded)
 
-* Video analysis
-
-    * [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
-    * so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
-    * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
-    * Features based on correlation with eigenfeatures (even fourier ones?)
-    * mcmc updating
-    * parameter mapping from 0-1 everywhere
-    * normalize statistics
-    * speed up clustering analysis
-    * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
-    * partial correlations? http://stats.stackexchange.com/a/10873
-    * Are the correlation estimates incoherent?
-      Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
-  
 * speed improvements
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
         * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
         * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
+    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
 
 ## javascript tips
@@ -114,8 +99,6 @@ Ranked in descending order of viability:
 
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
-      or exponential mapping for freq 
-* More natural widget construction
 * [Flux](https://facebook.github.io/flux/docs/overview.html)
 * [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 * patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
@@ -172,24 +155,34 @@ Partial workflow tools:
 
 ### Ideas for analyses
 
-* Compressive-sensing-style hacks?
+* Compressive-sensing-style hacks, such as sparse random projections
+* image descriptors
+* covariance
 
-    * sparse random projections
-    * random kernels http://www.robots.ox.ac.uk/~vgg/rg/papers/randomfeatures.pdf
+  * Are the covariance estimates incoherent?
+    Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 
-* feature construction
 * pca
-* rate of flux
 * Haar cascade.
 * autocorrelation
 * kalman filters
 * particle filters
+* FFT features
 * exponentially weighted moments
+* inner-product with desired eigen-feautres
+* Features based on correlation with eigenfeatures (even fourier ones?)
+* mcmc updating
+* gaussian mixture models
+* other clustering, say, spectral?
+* switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 
-### General machine vision libraries
+### Machine vision libraries
 
-* https://github.com/blittle/opencvjs
-* http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside
+* [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
+* so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
+* [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
+* [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
+
 
 ### WebGL optimisation
 
@@ -203,7 +196,6 @@ Partial workflow tools:
 * how to do WebGL-optimized image processing http://learningwebgl.com/blog/?p=1786
 * very good plain intro http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/
 * transform explanation http://games.greggman.com/game/webgl-2d-matrices/
-* high-perf matrix op http://glmatrix.net/
 * combining with video
 
   * http://threejs.org/examples/#canvas_materials_video
@@ -234,32 +226,27 @@ Partial workflow tools:
 
 ### Sequencing
 
+* streams?
+
+  * [highland.js](http://highlandjs.org/#)
+
 * Transducers?
 
-  * http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data
-  * https://github.com/cognitect-labs/transducers-js
-  * http://phuu.net/2014/08/31/csp-and-transducers.html
-  * http://simplectic.com/projects/underarm/
-  * http://simplectic.com/projects/underscore-transducer/
-  * http://simplectic.com/blog/2014/transducers-explained-pipelines/
-  * http://simplectic.com/blog/2014/transducers-explained-1/
+  * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
+  
+    * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
+    * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
+    * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
+  * [underarm](http://simplectic.com/projects/underarm/)
+  * [transducers for underscore.js](http://simplectic.com/projects/underscore-transducer/)
 
 ## Audio
 
 ### Webaudio information
 
-* [MDN guide](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-* [W3C specification](https://webaudio.github.io/web-audio-api/)
-* the [tuna library](https://github.com/Dinahmoe/tuna) has DSP examples
-* [Dubstep](http://www.mazbox.com/synths/dubstep/)
-* [webaudioapi.com](http://webaudioapi.com/samples/)
-* [Boris Smus's tutorial](http://www.html5rocks.com/en/tutorials/webaudio/intro/) is top-notch.
-* [scheduling is fiddly](http://www.html5rocks.com/en/tutorials/audio/scheduling/)
-* [tips for mobile audio](http://pupunzi.open-lab.com/2013/03/13/making-html5-audio-actually-work-on-mobile/)
-* [JSAudio nodes](http://noisehack.com/custom-audio-effects-javascript-web-audio-api/)
-* [routing is not so bad](http://www.html5rocks.com/en/tutorials/casestudies/jamwithchrome-audio/)
+There are too many resources online to list. [Start here](http://notes.livingthing.org/javascript_audio.html)
 
-### Alternative Audio options
+### Alternatives to WebAudio
 
 * phonegap/appcelerator + libpd?
   * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
