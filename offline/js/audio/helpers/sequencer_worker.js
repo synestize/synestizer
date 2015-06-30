@@ -1,3 +1,5 @@
+importScripts('');
+
 var timerID=null;
 var interval=100;
 
