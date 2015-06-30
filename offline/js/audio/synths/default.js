@@ -2,7 +2,7 @@
 State models reflect the current state of the model
 */
 
-(function(window, _, Backbone){
+(function(window, _){
     'use strict';
     var synths;
     window.synths = synths = window.synths || {};
@@ -20,4 +20,4 @@ State models reflect the current state of the model
         oscnode.start(0);
     }
 
-})(window, _, Backbone);
+})(window, _);

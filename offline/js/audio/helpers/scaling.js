@@ -8,7 +8,7 @@
         ).range([ 8.1757989156437, 12543.853951416 ]);
     scaling.dbtoa = d3.scale.log(
         ).base(10
-        ).domain(
+        ).domain([-40,0]
         ).range([ 0.01, 1 ]);
     
 })(window, _, d3);

@@ -21,7 +21,7 @@
     "pubsub.js": "~0.1.0",
     "underscore": "~1.8.3",
     "foundation": "zurb/bower-foundation#~5.5.2",
-    "backbone": "~1.2.1",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "highland": "~2.5.1"
   }
 }
