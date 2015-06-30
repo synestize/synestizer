@@ -21,6 +21,7 @@
     "underscore": "~1.8.3",
     "foundation": "zurb/bower-foundation#~5.5.2",
     "jquery": "~2.1.4",
-    "rxjs": "~2.5.2"
+    "rxjs": "~2.5.2",
+    "rx-dom": "~6.0.0"
   }
 }
