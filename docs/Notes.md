@@ -219,6 +219,10 @@ Partial workflow tools:
 
   * [highland.js](http://highlandjs.org/#)
   * [Rx.js](http://reactivex.io/)
+
+    * debugger [percussion](https://github.com/grisendo/Percussion)
+    * another debugger [rxvision  (http://jaredforsyth.com/rxvision/)]
+
   * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md)
 
 * Transducers (an interface for stream processors)
