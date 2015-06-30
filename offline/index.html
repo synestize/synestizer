@@ -137,7 +137,7 @@
     <!-- utils -->
     <script src="./bower_components/underscore/underscore.js"></script>
     <script src="./bower_components/rxjs/dist/rx.all.js"></script>
-    <script src="./bower_components/rx-dom/dist/rx.dom.js"></script>
+    <!-- <script src="./bower_components/rx-dom/dist/rx.dom.js"></script> -->
     
     <script src="./bower_components/pubsub.js/src/pubsub.js"></script>
     <script src="./bower_components/d3/d3.min.js"></script>
@@ -151,13 +151,11 @@
     <!-- audio infrastructure -->
     <script src="./js/audio/synths/default.js"></script>
     <script src="./js/audio/helpers/scaling.js"></script>
-    <script src="./js/audio/helpers/sequencer_worker.js"></script>
 
     <!-- audio models -->
     <script src="./js/audio/instruments/helpers.js"></script>
     <script src="./js/audio/instruments/basic_data.js"></script>
     <script src="./js/audio/instruments/basic_player.js"></script>
-    <script src="./js/audio/instruments/basic_ui.js"></script>
 
     <script>
         "use strict";
@@ -175,33 +173,34 @@
             $("#info").removeClass("hide").addClass("show");
             media.initStream(
                 function (stream) {
-                analyzer = new window.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new window.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                    stream: stream
-                });
-                $("#info").removeClass("show").addClass("hide");
-                $("#controls").removeClass("hide").addClass("show");
-                // call resize for video resizing
-                resize();
-                media.attachMediaButton(
-                    document.getElementById("switchDevices"));
-                media.attachFullscreenButton(
-                    document.getElementById("fullscreen"));
-                plotStatisticsSetup();
-                audioCtx = new window.AudioContext();
+                    analyzer = new window.videoanalyzers.VideoAnalyzer({
+                        vidElem: document.getElementById('video'),
+                        canvElem: document.getElementById('canvas'),
+                        statistics: [new window.videostatistics.AverageColor()],
+                        pubsub: pubsub,
+                        stream: stream
+                    });
+                    $("#info").removeClass("show").addClass("hide");
+                    $("#controls").removeClass("hide").addClass("show");
+                    // call resize for video resizing
+                    resize();
+                    media.attachMediaButton(
+                        document.getElementById("switchDevices"));
+                    media.attachFullscreenButton(
+                        document.getElementById("fullscreen"));
+                    plotStatisticsSetup();
+                    audioCtx = new window.AudioContext();
 
-                basicInstState = new instruments.InstParamSet(
-                    instruments.BasicControlMeta
-                );
-                instrumentView = new instruments.BasicInstStateView({
-                    model: basicInstState
-                });
-                instrumentView.$el.prependTo("#rightcontrolsidebar");
-                instrumentView.render()
-            });
+                    basicInstState = instruments.InstParamSet(
+                        {name:"basicinst"},
+                        instruments.BasicControlMeta
+                    );
+                    instrumentView = instruments.InstView(
+                        basicInstState,
+                        $("#rightcontrolsidebar")
+                    );
+                }
+            );
 
             $(window).resize(function() {
                 resize();
