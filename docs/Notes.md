@@ -218,8 +218,10 @@ Partial workflow tools:
 * streams
 
   * [highland.js](http://highlandjs.org/#)
+  * [Rx.js](http://reactivex.io/)
+  * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md)
 
-* Transducers (Are these just streams rebranded?)
+* Transducers (an interface for stream processors)
 
   * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
   
