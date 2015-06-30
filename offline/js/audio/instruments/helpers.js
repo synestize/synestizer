@@ -2,7 +2,7 @@
 State models reflect the current state of the model
 */
 
-(function(window, _, d3, Rx){
+(function(window, _, d3, Rx, t){
     'use strict';
     var instruments;
     window.instruments = instruments = window.instruments || {};
@@ -83,4 +83,4 @@ State models reflect the current state of the model
         }
     };
     
-})(window, _, d3, Rx);
+})(window, _, d3, Rx, transducers);
