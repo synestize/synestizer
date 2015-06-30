@@ -15,11 +15,12 @@ State models reflect the current state of the model
         val = paramset.get(label);
         controlEl = $("<div></div>"
             ).addClass("control");
-        sliderEl = controlEl.append($(
+        sliderEl = $(
             '<input type="range" min="0.0" max="1.0" step="0.005"></input>'
-        ).val(val).addClass(label));
-        
-        console.debug("sliderel", label, controlEl, sliderEl);
+        );
+        controlEl.append(sliderEl);
+        sliderEl.val(val).addClass(label);
+
         controlEl.prepend(
             $("<div></div>"
             ).addClass("label"
@@ -33,12 +34,13 @@ State models reflect the current state of the model
                 paramset.set(label, Number(ev.target.value));
             }
         );
-        console.debug("sliderel2", label, controlEl, sliderEl);
-
-        // select only values unde ra particular key, and then only if changed.
-        incomingStream = paramset.paramSetStream.filter(
-            function (e){e[label]}
-        ).distinctUntilChanged;
+        
+        // select only values under a particular key, and then only if changed.
+        // could also throttle rate here
+        incomingStream = paramset.paramSetStream.map(
+            function (e){return e[label]}
+        ).distinctUntilChanged(
+        ).subscribe(function(x){console.debug('up', x); sliderEl.val(x)});
         
         return {
             outgoingStream: outgoingStream,
