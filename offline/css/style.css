@@ -151,25 +151,31 @@ a, a:hover, a:active, a:focus {
     background-color: #000;
     opacity: 0.5;
 }
-
+.patchcontrols  {
+    padding: 5;
+}
 .patchcontrols h3 {
     font-size: 15px;
-    
 }
 .patchcontrols .control {
     display: inline-block;
-    margin: 4px;
+    margin: 0;
     font-family: 'Roboto Condensed', sans-serif;
-    width: 160px;
+    width: 50%;
+    padding: 0;
 }
 .patchcontrols .control .label {
-    width: 40px;
+    width: 30%;
+    margin: 0;
     display: inline-block;
+    padding: 0 3px 0 0;
+    text-align: right;
 }
 .patchcontrols .control input[type="range"] {
-    width: 90px;
+    width: 65%;
     display: inline-block;
     height: 0.8em;
+    padding: 0;
 }
 
 input[type="number"],
