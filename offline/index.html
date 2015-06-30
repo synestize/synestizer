@@ -164,8 +164,8 @@
         var analyzer;
         var pubsub;
         var audioCtx;
-        var basicInstState;
-        var instrumentView;
+        var basicInstParamSet;
+        var basicInstView;
         
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -192,12 +192,12 @@
                     plotStatisticsSetup();
                     audioCtx = new window.AudioContext();
 
-                    basicInstState = instruments.InstParamSet(
+                    basicInstParamSet = instruments.InstParamSet(
                         {name:"basicinst"},
                         instruments.BasicControlMeta
                     );
-                    instrumentView = instruments.InstView(
-                        basicInstState,
+                    basicInstView = instruments.InstView(
+                        basicInstParamSet,
                         $("#rightcontrolsidebar")
                     );
                 }

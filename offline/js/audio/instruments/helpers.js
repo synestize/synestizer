@@ -6,20 +6,18 @@ State models reflect the current state of the model
     'use strict';
     var instruments;
     window.instruments = instruments = window.instruments || {};
-    function makeWidget (paramset, label) {
+    
+    function makeWidget (paramset, label, elem) {
+        /*
+        this function makes a slider which communcates with a model over streams
+        */
         var incomingStream, outgoingStream, label, controlEl, sliderEl,val;
-        label = paramset.name;
-        val = paramSet.get(label);
+        val = paramset.get(label);
         controlEl = $("<div></div>"
             ).addClass("control");
         sliderEl = controlEl.append($(
             '<input type="range" min="0.0" max="1.0" step="0.005"></input>'
         ).val(val).addClass(label));
-        outgoingStream = Rx.Observable.fromEvent(
-            sliderEl, 'change'
-        ).subscribe(
-            function(el){paramset.set(label, el.value)}
-        );
         
         console.debug("sliderel", label, controlEl, sliderEl);
         controlEl.prepend(
@@ -27,35 +25,52 @@ State models reflect the current state of the model
             ).addClass("label"
             ).text(label)
         );
-        console.debug("sliderel2", label, controlEl);
+        $(elem).append(controlEl);
+        outgoingStream = Rx.Observable.fromEvent(
+            sliderEl, 'change'
+        ).subscribe(
+            function(ev){
+                paramset.set(label, Number(ev.target.value));
+            }
+        );
+        console.debug("sliderel2", label, controlEl, sliderEl);
+
+        // select only values unde ra particular key, and then only if changed.
+        incomingStream = paramset.paramSetStream.filter(
+            function (e){e[label]}
+        ).distinctUntilChanged;
+        
         return {
+            outgoingStream: outgoingStream,
+            incomingStream: incomingStream,
             controlEl: controlEl,
             sliderEl: sliderEl,
         };
     }
     window.instruments.makeWidget = makeWidget;
+    
     instruments.InstView = function (paramset, elem) {
-        var keyStreams;
-        return {
-            render: function () {
-                var wrapper = $(elem).append("<div></div>");
-                wrapper.append($("<h3></h3>").text(name));
-                wrapper.addClass(name);
-                _.each(
-                    paramset.controlMeta,
-                    function(info, label, controls) {
-                        wrapper.append(instruments.makeWidget(
-                            this.model, label
-                        ));
-                    },
-                    this);
+        var widgets = []; //for debugging
+        var wrapper = $(elem).append("<div></div>");
+        wrapper.append($("<h3></h3>").text(paramset.name));
+        wrapper.addClass(paramset.name);
+        _.each(
+            paramset.controlMeta,
+            function(info, label, controls) {
+                widgets.push(instruments.makeWidget(
+                    paramset, label, wrapper
+                ));
             },
-            update: function () {},
-            destroy: {},
+            this
+        );
+        return{
+            widgets: widgets,
+            destroy: function() {},
         }
     };
     
-    //This guy emits state changes
+    //This guy emits state changes for a canonical state
+    //It keeps a collection of streams that you can use to monitor these
     instruments.InstParamSet = function (options, controlMeta) {
         var paramSet, paramSetStream, name;
         paramSet = _.extend(
@@ -71,11 +86,12 @@ State models reflect the current state of the model
         return {
             name: name,
             controlMeta: controlMeta,
-            paramSetStream: function() {return paramSetStream},
+            paramSetStream: paramSetStream,
+            paramSet: paramSet, //for debugging
             set: function(key, newVal) {
-                oldVal = paramSet[key];
+                var oldVal = paramSet[key];
                 if (oldVal!=newVal) {
-                    paramSet[key]=val;
+                    paramSet[key]=newVal;
                     paramSetStream.onNext(paramSet);
                 }
             },
