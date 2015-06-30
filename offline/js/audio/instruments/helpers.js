@@ -54,10 +54,10 @@ State models reflect the current state of the model
     instruments.InstView = function (paramset, elem) {
         var widgets = []; //for debugging
         var wrapper = $(elem).append("<div></div>");
-        wrapper.append($("<h3></h3>").text(paramset.name));
-        wrapper.addClass(paramset.name);
+        wrapper.append($("<h3></h3>").text(paramset.inst.name));
+        wrapper.addClass(paramset.inst.name);
         _.each(
-            paramset.controlMeta,
+            paramset.inst.controlMeta,
             function(info, label, controls) {
                 widgets.push(instruments.makeWidget(
                     paramset, label, wrapper
@@ -73,8 +73,9 @@ State models reflect the current state of the model
     
     //This guy emits state changes for a canonical state
     //It keeps a collection of streams that you can use to monitor these
-    instruments.InstParamSet = function (options, controlMeta) {
-        var paramSet, paramSetStream, name;
+    instruments.InstParamSet = function (inst) {
+        var paramSet, paramSetStream, controlMeta;
+        controlMeta = inst.controlMeta;
         paramSet = _.extend(
             _.mapObject(
                 controlMeta,
@@ -82,11 +83,10 @@ State models reflect the current state of the model
             ),
             {}
         );
-        name = options.name || "inst";
         paramSetStream = new Rx.Subject();
         paramSetStream.onNext(paramSet);
         return {
-            name: name,
+            inst: inst,
             controlMeta: controlMeta,
             paramSetStream: paramSetStream,
             paramSet: paramSet, //for debugging

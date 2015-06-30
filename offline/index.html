@@ -151,7 +151,6 @@
 
     <!-- audio models -->
     <script src="./js/audio/instruments/helpers.js"></script>
-    <script src="./js/audio/instruments/basic_data.js"></script>
     <script src="./js/audio/instruments/basic_player.js"></script>
 
     <script>
@@ -162,6 +161,7 @@
         var audioCtx;
         var basicInstParamSet;
         var basicInstView;
+        var basicInst;
         
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -187,11 +187,8 @@
                         document.getElementById("fullscreen"));
                     plotStatisticsSetup();
                     audioCtx = new window.AudioContext();
-
-                    basicInstParamSet = instruments.InstParamSet(
-                        {name:"basicinst"},
-                        instruments.BasicControlMeta
-                    );
+                    basicInst = instruments.BasicInst("basic", audioCtx);
+                    basicInstParamSet = instruments.InstParamSet(basicInst);
                     basicInstView = instruments.InstView(
                         basicInstParamSet,
                         $("#rightcontrolsidebar")
