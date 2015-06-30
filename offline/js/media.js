@@ -98,6 +98,7 @@
                 media.mics.push(sourceInfo.id);
             }
         }
+        /*
         console.log("Found " + media.cams.length + " cam(s).");
         console.log("Found " + media.mics.length + " mic(s).");
         for (var j = 0; j < media.cams.length; ++j) {
@@ -106,6 +107,7 @@
         for (var k = 0; k < media.mics.length; ++k) {
             console.log("mic id " + k + ": " + media.mics[k]);
         }
+        */
     };
 
     function attachMediaButton(el) {
