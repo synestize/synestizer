@@ -5,8 +5,7 @@
   "authors": [
     "howthebodyworks <git@email.possumpalace.org>"
   ],
-  "moduleType": [
-  ],
+  "moduleType": [],
   "license": "MIT",
   "private": true,
   "ignore": [
@@ -22,6 +21,6 @@
     "underscore": "~1.8.3",
     "foundation": "zurb/bower-foundation#~5.5.2",
     "jquery": "~2.1.4",
-    "highland": "~2.5.1"
+    "rxjs": "~2.5.2"
   }
 }
