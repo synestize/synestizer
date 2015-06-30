@@ -1,12 +1,11 @@
 {
   "name": "synestizer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/howthebodyworks/synestizer",
   "authors": [
     "howthebodyworks <git@email.possumpalace.org>"
   ],
   "moduleType": [
-    "es6"
   ],
   "license": "MIT",
   "private": true,
