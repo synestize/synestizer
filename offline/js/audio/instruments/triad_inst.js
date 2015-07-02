@@ -6,8 +6,8 @@ Players make sound
     'use strict';
     var instruments;
     window.instruments = instruments = window.instruments || {};
-    instruments.TriadInst = function (name, context) {
-        var triad;
+    instruments.TriadInst = function (name) {
+        var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
         var controlStream, mappedControlStreams;
         var controlMeta;
@@ -74,39 +74,39 @@ Players make sound
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq1', x);
-                triad.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$freq1(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq1Mod', x);
-                triad.$freq1mod(x, WX.now, 0);
+                triadSynth.$freq1mod(x, WX.now, 0);
             });
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq2', x);
-                triad.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$freq1(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq2Mod', x);
-                triad.$freq1mod(x, WX.now, 0);
+                triadSynth.$freq1mod(x, WX.now, 0);
             });
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq3', x);
-                triad.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$freq1(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq3Mod', x);
-                triad.$freq1mod(x, WX.now, 0);
+                triadSynth.$freq1mod(x, WX.now, 0);
             });
         };
+
+        triadSynth = WX.Triad();
+        triadSynth.to(WX.Master);
+
         return {
             name: name,
-            setup: function (controlStream) {
-                setControlStream(controlStream || new Rx.Subject());
-                triad = WX.Triad();
-                triad.to(WX.Master);
-            },
             controlMeta: controlMeta,
+            controlStream: controlStream,
             setControlStream: setControlStream,
-            teardown: function () {},
+            destroy: function () {},
         };
     };
 })(window, _, d3, WX);

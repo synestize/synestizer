@@ -1,4 +1,4 @@
-z/**
+/**
  * @wapl Triad
  * @author Christoph Stähli (stahl, stahlnow@gmail.com)
  */
@@ -221,7 +221,7 @@ z/**
             lfoDepth1: 1.0,
             oscType2: 'sine',
             oscFreq2: WX.mtof(60),
-            oscFreq2Mod: 0m
+            oscFreq2Mod: 0,
             lfoType2: 'sine',
             lfoRate2: 1.0,
             lfoDepth2: 1.0,
@@ -239,11 +239,12 @@ z/**
         },
 
         $oscFreq1: function(value, time, rampType) {
-            this._osc1.frequency.set(value+this.oscFreq1Mod, time, rampType);
+            console.debug(value, time, rampType, this.get('oscFreq1Mod'));
+            this._osc1.frequency.set(value+this.get('oscFreq1Mod'), time, rampType);
         },
 
         $oscFreq1Mod: function(value, time, rampType) {
-            this._osc1.frequency.set(value+this.oscFreq1, time, rampType);
+            this._osc1.frequency.set(value+this.get('oscFreq1'), time, rampType);
         },
 
         $lfoType1: function(value, time, rampType) {
@@ -263,11 +264,11 @@ z/**
         },
 
         $oscFreq2: function(value, time, rampType) {
-            this._osc1.frequency.set(value+this.oscFreq2Mod, time, rampType);
+            this._osc1.frequency.set(value+this.get('oscFreq2Mod'), time, rampType);
         },
 
         $oscFreq2Mod: function(value, time, rampType) {
-            this._osc1.frequency.set(value+this.oscFreq2, time, rampType);
+            this._osc1.frequency.set(value+this.get('oscFreq2'), time, rampType);
         },
 
         $lfoType2: function(value, time, rampType) {
@@ -283,11 +284,11 @@ z/**
         },
 
         $oscFreq3: function(value, time, rampType) {
-            this._osc3.frequency.set(value+this.oscFreq3Mod, time, rampType);
+            this._osc3.frequency.set(value+this.get('oscFreq1Mod'), time, rampType);
         },
 
         $oscFreq3Mod: function(value, time, rampType) {
-            this._osc3.frequency.set(value+this.oscFreq3, time, rampType);
+            this._osc3.frequency.set(value+this.get('oscFreq3'), time, rampType);
         },
 
         $lfoType3: function(value, time, rampType) {

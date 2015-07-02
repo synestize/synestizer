@@ -148,13 +148,11 @@
     <!-- audio infrastructure -->
     <script src="./js/vendor/WAAX/waax.js"></script>
     <script src="./js/vendor/WAAX/plugins.js"></script>
-    <script src="./js/audio/helpers/scaling.js"></script>
-    <script src="./js/audio/synths/SP1.js"></script>
+    <script src="./js/audio/lib/scaling.js"></script>
     <script src="./js/audio/synths/triadsynth.js"></script>
 
     <!-- audio models -->
-    <script src="./js/audio/instruments/helpers.js"></script>
-    <script src="./js/audio/instruments/basic_inst.js"></script>
+    <script src="./js/audio/instruments/_base.js"></script>
     <script src="./js/audio/instruments/triad_inst.js" ></script>
 
     <script>
@@ -163,9 +161,9 @@
         var analyzer;
         var pubsub;
         var audioCtx;
-        var basicInstParamSet;
-        var basicInstView;
-        var basicInst;
+        var triadInstParamSet;
+        var triadInstView;
+        var triadInst;
         
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -191,7 +189,7 @@
                         document.getElementById("fullscreen"));
                     plotStatisticsSetup();
                     
-                    triadInst = instruments.triadInst("triad");
+                    triadInst = instruments.TriadInst("triad");
                     triadInstParamSet = instruments.InstParamSet(triadInst);
                     triadInstView = instruments.InstView(
                         triadInstParamSet,

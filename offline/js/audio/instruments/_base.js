@@ -53,10 +53,10 @@ State models reflect the current state of the model
     window.instruments.mappedStreams = function(controlStream, controlMeta){
         var mappedStreams = {}
         _.map(controlMeta, function(meta, key){
-            mappedStreams[key] = paramset.paramSetStream.map(
-                function (e){return e[label]}
+            mappedStreams[key] = controlStream.map(
+                function (e){return e[key]}
             ).distinctUntilChanged(
-            ).map(controlMeta[key][scale])
+            ).map(controlMeta[key]["scale"])
         });
         return mappedStreams;
     };
