@@ -59,7 +59,16 @@ z/**
                 max: 5000.0,
                 unit: 'Hertz'
             },
-
+            
+            oscFreq1Mod: {
+                type: 'Generic',
+                name: 'FreqMod',
+                default: 0,
+                min: -2000,
+                max: 2000,
+                unit: 'Hertz'
+            },
+            
             lfoType1: {
                 type: 'Itemized',
                 name: 'Waveform',
@@ -98,6 +107,15 @@ z/**
                 default: WX.mtof(60),
                 min: 20.0,
                 max: 5000.0,
+                unit: 'Hertz'
+            },
+            
+            oscFreq2Mod: {
+                type: 'Generic',
+                name: 'FreqMod',
+                default: 0,
+                min: -2000,
+                max: 2000,
                 unit: 'Hertz'
             },
 
@@ -142,6 +160,14 @@ z/**
                 unit: 'Hertz'
             },
 
+            oscFreq3Mod: {
+                type: 'Generic',
+                name: 'FreqMod',
+                default: 0,
+                min: -2000,
+                max: 2000,
+                unit: 'Hertz'
+            },
             lfoType3: {
                 type: 'Itemized',
                 name: 'Waveform',
@@ -189,16 +215,19 @@ z/**
         defaultPreset: {
             oscType1: 'sine',
             oscFreq1: WX.mtof(60),
+            oscFreq1Mod: 0,
             lfoType1: 'sine',
             lfoRate1: 1.0,
             lfoDepth1: 1.0,
             oscType2: 'sine',
             oscFreq2: WX.mtof(60),
+            oscFreq2Mod: 0m
             lfoType2: 'sine',
             lfoRate2: 1.0,
             lfoDepth2: 1.0,
             oscType3: 'sine',
             oscFreq3: WX.mtof(60),
+            oscFreq3Mod: 0,
             lfoType3: 'sine',
             lfoRate3: 1.0,
             lfoDepth3: 1.0
@@ -210,7 +239,11 @@ z/**
         },
 
         $oscFreq1: function(value, time, rampType) {
-            this._osc1.frequency.set(value, time, rampType);
+            this._osc1.frequency.set(value+this.oscFreq1Mod, time, rampType);
+        },
+
+        $oscFreq1Mod: function(value, time, rampType) {
+            this._osc1.frequency.set(value+this.oscFreq1, time, rampType);
         },
 
         $lfoType1: function(value, time, rampType) {
@@ -230,7 +263,11 @@ z/**
         },
 
         $oscFreq2: function(value, time, rampType) {
-            this._osc2.frequency.set(value, time, rampType);
+            this._osc1.frequency.set(value+this.oscFreq2Mod, time, rampType);
+        },
+
+        $oscFreq2Mod: function(value, time, rampType) {
+            this._osc1.frequency.set(value+this.oscFreq2, time, rampType);
         },
 
         $lfoType2: function(value, time, rampType) {
@@ -245,12 +282,12 @@ z/**
             this._lfoGain2.gain.set(value, time, rampType);
         },
 
-        $oscType3: function(value, time, rampType) {
-            this._osc3.type = value;
+        $oscFreq3: function(value, time, rampType) {
+            this._osc3.frequency.set(value+this.oscFreq3Mod, time, rampType);
         },
 
-        $oscFreq3: function(value, time, rampType) {
-            this._osc3.frequency.set(value, time, rampType);
+        $oscFreq3Mod: function(value, time, rampType) {
+            this._osc3.frequency.set(value+this.oscFreq3, time, rampType);
         },
 
         $lfoType3: function(value, time, rampType) {
@@ -270,21 +307,6 @@ z/**
             time = (time || WX.now);
             this.params.output.set(output, time, 0);
         },
-
-        glide1: function(pitch, time) {
-            time = (time || WX.now);
-            this.params.oscFreq1.set(pitch, time + 0.02, 0);
-        },
-
-        glide2: function(pitch, time) {
-            time = (time || WX.now);
-            this.params.oscFreq2.set(pitch, time + 0.02, 0);
-        },
-
-        glide3: function(pitch, time) {
-            time = (time || WX.now);
-            this.params.oscFreq3.set(pitch, time + 0.02, 0);
-        }
     };
 
     // REQUIRED: extending plug-in prototype with modules

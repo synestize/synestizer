@@ -50,7 +50,16 @@ State models reflect the current state of the model
         };
     }
     window.instruments.makeWidget = makeWidget;
-    
+    window.instruments.mappedStreams = function(controlStream, controlMeta){
+        var mappedStreams = {}
+        _.map(controlMeta, function(meta, key){
+            mappedStreams[key] = paramset.paramSetStream.map(
+                function (e){return e[label]}
+            ).distinctUntilChanged(
+            ).map(controlMeta[key][scale])
+        });
+        return mappedStreams;
+    };
     instruments.InstView = function (paramset, elem) {
         var widgets = []; //for debugging
         var wrapper = $(elem).append("<div></div>");
@@ -73,6 +82,8 @@ State models reflect the current state of the model
     
     //This guy emits state changes for a canonical state
     //It keeps a collection of streams that you can use to monitor these
+    //TODO: should this use Observable.using?
+    // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/using.md
     instruments.InstParamSet = function (inst) {
         var paramSet, paramSetStream, controlMeta;
         controlMeta = inst.controlMeta;
@@ -84,6 +95,7 @@ State models reflect the current state of the model
             {}
         );
         paramSetStream = new Rx.Subject();
+        inst.setControlStream(paramSetStream);
         paramSetStream.onNext(paramSet);
         return {
             inst: inst,

@@ -190,11 +190,11 @@
                     media.attachFullscreenButton(
                         document.getElementById("fullscreen"));
                     plotStatisticsSetup();
-                    audioCtx = new window.AudioContext();
-                    basicInst = instruments.BasicInst("basic", audioCtx);
-                    basicInstParamSet = instruments.InstParamSet(basicInst);
-                    basicInstView = instruments.InstView(
-                        basicInstParamSet,
+                    
+                    triadInst = instruments.triadInst("triad");
+                    triadInstParamSet = instruments.InstParamSet(triadInst);
+                    triadInstView = instruments.InstView(
+                        triadInstParamSet,
                         $("#rightcontrolsidebar")
                     );
                 }
