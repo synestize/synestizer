@@ -102,12 +102,14 @@ Players make sound
                 triadSynth.$output(x, WX.now, 0);
             });
         };
-
+        console.debug("synth_1", triadSynth);
         triadSynth = WX.Triad();
         triadSynth.to(WX.Master);
-
+        console.debug("synth_2", triadSynth);
+        
         return {
             name: name,
+            _debug: triadSynth,
             controlMeta: controlMeta,
             controlStream: controlStream,
             setControlStream: setControlStream,
