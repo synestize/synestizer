@@ -192,7 +192,6 @@
                 max: 1.0,
                 unit: 'LinearGain'
             }
-
         });
 
         // REQUIRED: initializing instance with preset
@@ -230,7 +229,8 @@
             oscFreq3Mod: 0,
             lfoType3: 'sine',
             lfoRate3: 1.0,
-            lfoDepth3: 1.0
+            lfoDepth3: 1.0,
+            outputGain: 0.3,
         },
 
         // REQUIRED: handlers for each parameter
@@ -303,11 +303,6 @@
             this._lfoGain3.gain.set(value, time, rampType);
         },
 
-        // realtime event processors
-        output: function (output, time) {
-            time = (time || WX.now);
-            this.params.output.set(output, time, 0);
-        },
     };
 
     // REQUIRED: extending plug-in prototype with modules

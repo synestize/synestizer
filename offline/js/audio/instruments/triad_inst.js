@@ -11,6 +11,7 @@ Players make sound
         var lfoRateScale, freqScale, freqModScale;
         var controlStream, mappedControlStreams;
         var controlMeta;
+        
         lfoRateScale = d3.scale.linear().range([0, 20]);
         freqModScale = d3.scale.pow().range([0, 650]).exponent(2);
         freqScale = d3.scale.log().range([200, 2000]);
@@ -19,7 +20,7 @@ Players make sound
             gain: {
                 scale: d3.scale.log().range([0.001,1]),
                 units: "",
-                default: 0.7
+                default: 0.1
             },
             lfo1Rate: {
                 scale: lfoRateScale,
@@ -95,6 +96,10 @@ Players make sound
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq3Mod', x);
                 triadSynth.$freq1mod(x, WX.now, 0);
+            });
+            mappedControlStreams.gain.subscribe(function(x){
+                console.debug('gain', x);
+                triadSynth.$output(x, WX.now, 0);
             });
         };
 
