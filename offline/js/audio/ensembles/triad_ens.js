@@ -75,27 +75,27 @@ Players make sound
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq1', x);
-                triadSynth.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq1(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq1Mod', x);
-                triadSynth.$freq1mod(x, WX.now, 0);
+                triadSynth.$oscFreq1Mod(x, WX.now, 0);
             });
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq2', x);
-                triadSynth.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq2(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq2Mod', x);
-                triadSynth.$freq1mod(x, WX.now, 0);
+                triadSynth.$oscFreq2Mod(x, WX.now, 0);
             });
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq3', x);
-                triadSynth.$freq1(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq3(x, WX.now + 0.02, 0);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 console.debug('freq3Mod', x);
-                triadSynth.$freq1mod(x, WX.now, 0);
+                triadSynth.$oscFreq3Mod(x, WX.now, 0);
             });
             mappedControlStreams.outputGain.subscribe(function(x){
                 console.debug('outputGain', x);
