@@ -5,8 +5,8 @@ Players make sound
 (function(window, _, d3, WX){
     'use strict';
     var instruments;
-    window.instruments = instruments = window.instruments || {};
-    instruments.TriadInst = function (name) {
+    window.ensembles = ensembles = window.ensembles || {};
+    ensembles.TriadEnsemble = function (name) {
         var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
         var controlStream, mappedControlStreams;
@@ -71,7 +71,7 @@ Players make sound
             
         function setControlStream (stream) {
             controlStream = stream;
-            mappedControlStreams = window.instruments.mappedStreams(
+            mappedControlStreams = window.ensembles.mappedStreams(
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
                 console.debug('freq1', x);

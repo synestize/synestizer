@@ -152,8 +152,8 @@
     <script src="./js/audio/synths/triadsynth.js"></script>
 
     <!-- audio models -->
-    <script src="./js/audio/instruments/_base.js"></script>
-    <script src="./js/audio/instruments/triad_inst.js" ></script>
+    <script src="./js/audio/ensembles/_base.js"></script>
+    <script src="./js/audio/ensembles/triad_ens.js" ></script>
 
     <script>
         "use strict";
@@ -161,9 +161,9 @@
         var analyzer;
         var pubsub;
         var audioCtx;
-        var triadInstParamSet;
-        var triadInstView;
-        var triadInst;
+        var triadEnsembleParamSet;
+        var triadEnsembleView;
+        var triadEnsemble;
         
         pubsub = PubSub; //give our global signal bus a nice name
 
@@ -189,10 +189,10 @@
                         document.getElementById("fullscreen"));
                     plotStatisticsSetup();
                     
-                    triadInst = instruments.TriadInst("triad");
-                    triadInstParamSet = instruments.InstParamSet(triadInst);
-                    triadInstView = instruments.InstView(
-                        triadInstParamSet,
+                    triadEnsemble = ensembles.TriadEnsemble("triad");
+                    triadEnsembleParamSet = ensembles.EnsembleParamSet(triadEnsemble);
+                    triadEnsembleView = ensembles.EnsembleView(
+                        triadEnsembleParamSet,
                         $("#rightcontrolsidebar")
                     );
                 }
