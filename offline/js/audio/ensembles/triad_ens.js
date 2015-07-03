@@ -109,7 +109,7 @@ Players make sound
         
         return {
             name: name,
-            _debug: triadSynth,
+            _debug: function() {return mappedControlStreams},
             controlMeta: controlMeta,
             controlStream: controlStream,
             setControlStream: setControlStream,

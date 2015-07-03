@@ -95,8 +95,10 @@ State models reflect the current state of the model
             {}
         );
         paramValsStream = new Rx.Subject();
-        ensemble.setControlStream(paramValsStream);
+        console.debug("mr setty", paramVals, paramValsStream);
         paramValsStream.onNext(paramVals);
+        ensemble.setControlStream(paramValsStream);
+        console.debug("mr setty 2", paramVals, paramValsStream);
         return {
             ensemble: ensemble,
             controlMeta: controlMeta,
