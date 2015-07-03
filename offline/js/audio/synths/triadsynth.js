@@ -230,7 +230,7 @@
             lfoType3: 'sine',
             lfoRate3: 1.0,
             lfoDepth3: 1.0,
-            outputGain: 0.3,
+            output: 0.1
         },
 
         // REQUIRED: handlers for each parameter

@@ -17,7 +17,7 @@ Players make sound
         freqScale = d3.scale.log().range([200, 2000]);
         
         controlMeta = {
-            gain: {
+            outputGain: {
                 scale: d3.scale.log().range([0.001,1]),
                 units: "",
                 default: 0.1
@@ -97,8 +97,8 @@ Players make sound
                 console.debug('freq3Mod', x);
                 triadSynth.$freq1mod(x, WX.now, 0);
             });
-            mappedControlStreams.gain.subscribe(function(x){
-                console.debug('gain', x);
+            mappedControlStreams.outputGain.subscribe(function(x){
+                console.debug('outputGain', x);
                 triadSynth.$output(x, WX.now, 0);
             });
         };
