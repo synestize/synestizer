@@ -1,7 +1,9 @@
 //Video Statistics
-//pump pixels in at regular intervals, and send back pubsub notifications
-//This should probably be refactored to run in a webworker.
-(function( global ) {
+// Functions that return functions that return dynamic updated estimates 
+// qualities of a video stream
+// These will ultimately be run in web workers by Observers
+
+(function(window, _, Rx) {
     'use strict';
     var Covariance, Statistic, DominantColor, AverageColor;
 
@@ -25,28 +27,7 @@
             };
             self.pubsub.publish(self.prefix + prefix + "/vec", stats);
         }
-        self.deltaCalcs = function (){
-            //even though we use requestAnimFrame, we may not yet have new camera data.
-            var tmpDeltaStats = new Array(self.rawStats.length);
-            for (var i = 0; i < self.rawStats.length; i++) {
-                tmpDeltaStats[i] = 0.5;
-                var dif = Math.tanh((
-                    self.rawStats[i] - self.lastRawStats[i]
-                )/Math.max(self.analyzer.lastFrameDur, 1) * 1000)*0.5+0.5;
 
-                if (!isNaN(dif)) {
-                    tmpDeltaStats[i] = dif;
-                }
-            };
-            //check that we actually updated:
-            if (!tmpDeltaStats.every(function(v){return v==0.5})) {
-                self.deltaStats = tmpDeltaStats;
-            };
-
-            /*if (Math.random()<0.005) {
-                console.debug(self.prefix, self.rawStats, self.lastRawStats, self.deltaStats);
-            };*/
-        };
         self.analyzeFrame = function (pixels) {
             self.lastRawStats = self.rawStats.slice(); //copy for safety
             self.rawCalcs(pixels);
@@ -323,4 +304,4 @@
         DominantColor: DominantColor,
         AverageColor: AverageColor
     };
-})( this );
+})(this, _, Rx);

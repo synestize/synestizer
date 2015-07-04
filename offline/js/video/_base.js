@@ -1,17 +1,17 @@
-//Video Analyzers
-(function( global ) {
+//Video Analyzer
+// pumps pixels in to statistics functions, pumps them out later
+(function( global, _, Rx) ) {
     'use strict';
 
-    var VideoAnalyzer = function (params){
-        var self = this;
+    function VideoAnalyzer(params){
         var url = global.window.URL || global.window.webkitURL;
-        params = typeof params !== 'undefined' ? params : {};
+        var self = {
+            
+        };
         self.vidElem = params.vidElem;
         self.canvElem = params.canvElem;
-        self.pubsub = params.pubsub;
         self.stream = params.stream;
         self.statistics = typeof params.statistics !== 'undefined' ? params.statistics : [];
-        self.prefix = typeof params.prefix !== 'undefined' ? params.prefix : '/videoanalyzer';
         self.success = typeof params.success !== 'undefined' ? params.success : function(){};
         self.lastAnalysisTime = Date.now();
         self.thisFrameTime = Date.now();
@@ -88,10 +88,11 @@
         }
         self.startAnalysis();
         self.success();
+        return self
     };
 
     // expose our module to the global object
     global.videoanalyzers = {
         VideoAnalyzer: VideoAnalyzer,
     };
-})( this );
+})( this, _, Rx );
