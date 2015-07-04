@@ -57,7 +57,8 @@ State models reflect the current state of the model
             mappedStreams[key] = controlStream.pluck(key
                 ).where(function(v){
                     return (typeof v !== "undefined") && (!isNaN(v))
-                }).map(function (x) {
+                }).distinctUntilChanged(
+                ).map(function (x) {
                     return controlMeta[key].scale(x)
                 });
         });
