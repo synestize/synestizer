@@ -51,10 +51,9 @@ State models reflect the current state of the model
         };
     }
     window.ensembles.makeWidget = makeWidget;
-    window.ensembles.mappedKeyStreams = function(controlStream, controlMeta){
-        var mappedKeyStreams = {};
-        _.map(controlMeta, function(meta, key){
-            mappedKeyStreams[key] = controlStream.pluck(key
+    function mappedKeyStream(
+            controlStream, key, controlMeta){
+        return controlStream.pluck(key
             ).where(function(v){
                 return (typeof v !== "undefined") && (!isNaN(v))
             }).distinctUntilChanged(
@@ -62,19 +61,16 @@ State models reflect the current state of the model
                 var scaled = controlMeta[key].scale(x);
                 return scaled;
             });
-        });
-        return mappedKeyStreams;
     };
-    window.ensembles.keyStreams = function(controlStream, controlMeta){
-        var keyStreams = {};
-        _.map(controlMeta, function(meta, key){
-            keyStreams[key] = controlStream.pluck(key
+    window.ensembles.mappedKeyStream = mappedKeyStream;
+    function keyStream (
+            controlStream, key, controlMeta){
+        return controlStream.pluck(key
             ).where(function(v){
                 return (typeof v !== "undefined") && (!isNaN(v))
             }).distinctUntilChanged();
-        });
-        return keyStreams;
     };
+    window.ensembles.keyStream = keyStream;
     
     ensembles.EnsembleView = function (paramset, elem) {
         var widgets = []; //for debugging
@@ -124,8 +120,14 @@ State models reflect the current state of the model
                 }
             },
             get: function(key) {return paramVals[key]},
+            getStream: function(key) {
+                return keyStream(paramValsStream, key, controlMeta)
+            },
             getMapped: function(key) {
                 return controlMeta[key].scale(paramVals[key])
+            },
+            getMappedStream: function(key) {
+                return mappedKeyStream(paramValsStream, key, controlMeta)
             }
         }
         paramValsStream.onNext(paramVals);
