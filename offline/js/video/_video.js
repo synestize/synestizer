@@ -11,10 +11,13 @@
         var lastTime, thisTime;
         var statsStream;
         var statsWorkers;
+        var statsState = {};
+        
         statsStream = new Rx.BehaviorSubject(1);
         
         var self = {
-            statsStream: statsStream
+            statsStream: statsStream,
+            statsState: statsState
         };
         lastTime = Date.now();
         thisTime = Date.now();

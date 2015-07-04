@@ -143,27 +143,27 @@
 
     <!-- video analysis -->
     <script src="./js/video/_video.js"></script>
-    <script src="./js/video/statistics.js"></script>
+    <script src="./js/video/statistic.js"></script>
     <!-- <script src="./js/video/visualizer.js"></script> -->
 
     <!-- audio infrastructure -->
     <script src="./js/vendor/WAAX/waax.js"></script>
     <script src="./js/vendor/WAAX/plugins.js"></script>
     <!-- <script src="./js/audio/lib/scaling.js"></script> -->
-    <script src="./js/audio/synths/triadsynth.js"></script>
+    <script src="./js/audio/synth/triadsynth.js"></script>
 
     <!-- audio models -->
-    <script src="./js/audio/ensembles/_ensembles.js"></script>
-    <script src="./js/audio/ensembles/triad_ens.js" ></script>
+    <script src="./js/audio/ensemble/_ensemble.js"></script>
+    <script src="./js/audio/ensemble/triad_ens.js" ></script>
+
+    <!-- audio patches -->
+    <script src="./js/audio/patch/_ensemble.js"></script>
 
     <script>
         "use strict";
         
-        var triadEnsembleParamSet;
-        var triadEnsembleView;
-        var triadEnsemble;
+        var patch;
         var videoPixels;
-        var statsStreamer;
         
         $( document ).ready( function() {
             // setup info div
@@ -183,16 +183,7 @@
                         document.getElementById("video"),
                         undefined, mediaStream
                     );
-                    statsStreamer = video.StatsStreamer(videoPixels, {
-                        rgb: video.AverageColor
-                    });
-                    triadEnsemble = ensembles.TriadEnsemble("triad1");
-                    triadEnsembleParamSet = ensembles.EnsembleParamSet(
-                        triadEnsemble);
-                    triadEnsembleView = ensembles.EnsembleView(
-                        triadEnsembleParamSet,
-                        $("#rightcontrolsidebar")
-                    );
+                    patch = patch.basic(videoPixels, $("#rightcontrolsidebar"));
                 }
             });
 
