@@ -9,7 +9,7 @@ Players make sound
     ensembles.TriadEnsemble = function (name) {
         var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
-        var controlStream, mappedControlStreams;
+        var paramSet, controlStream, mappedControlStreams;
         var controlMeta;
         
         lfoRateScale = d3.scale.linear().domain([0,1]).range([0, 20]);
@@ -70,8 +70,9 @@ Players make sound
             },
         };
             
-        function setControlStream (stream) {
-            controlStream = stream;
+        function setParamSet(newParamSet) {
+            paramSet = newParamSet;
+            controlStream = paramSet.paramValsStream;
             //keep streams for each param
             mappedControlStreams = window.ensembles.mappedKeyStreams(
                 controlStream, controlMeta);
@@ -105,7 +106,7 @@ Players make sound
             _debug: function() {return mappedControlStreams},
             controlMeta: controlMeta,
             controlStream: controlStream,
-            setControlStream: setControlStream,
+            setParamSet: setParamSet,
             destroy: function () {},
         };
     };

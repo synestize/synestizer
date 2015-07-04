@@ -92,6 +92,7 @@ State models reflect the current state of the model
     ensembles.EnsembleParamSet = function (ensemble) {
         var paramVals, paramValsStream, paramValsStreamPublished;
         var controlMeta;
+        var data;
         controlMeta = ensemble.controlMeta;
         paramVals = _.extend(
             _.mapObject(
@@ -102,9 +103,7 @@ State models reflect the current state of the model
         );
         paramValsStream = new Rx.ReplaySubject(1);
         // paramValsStream.connect();
-        ensemble.setControlStream(paramValsStream);
-        paramValsStream.onNext(paramVals);
-        return {
+        data = {
             ensemble: ensemble,
             controlMeta: controlMeta,
             paramValsStream: paramValsStream,
@@ -118,6 +117,9 @@ State models reflect the current state of the model
             },
             get: function(key) {return paramVals[key]}
         }
+        paramValsStream.onNext(paramVals);
+        ensemble.setParamSet(data);
+        return data;
     };
     
 })(window, _, d3, Rx, transducers);
