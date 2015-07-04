@@ -142,18 +142,18 @@
     <script src="./js/media.js"></script>
 
     <!-- video analysis -->
-    <!-- <script src="./js/video/_base.js"></script> -->
-    <!-- <script src="./js/video/statistics.js"></script> -->
+    <script src="./js/video/_video.js"></script>
+    <script src="./js/video/statistics.js"></script>
     <!-- <script src="./js/video/visualizer.js"></script> -->
 
     <!-- audio infrastructure -->
     <script src="./js/vendor/WAAX/waax.js"></script>
     <script src="./js/vendor/WAAX/plugins.js"></script>
-    <script src="./js/audio/lib/scaling.js"></script>
+    <!-- <script src="./js/audio/lib/scaling.js"></script> -->
     <script src="./js/audio/synths/triadsynth.js"></script>
 
     <!-- audio models -->
-    <script src="./js/audio/ensembles/_base.js"></script>
+    <script src="./js/audio/ensembles/_ensembles.js"></script>
     <script src="./js/audio/ensembles/triad_ens.js" ></script>
 
     <script>
@@ -163,12 +163,13 @@
         var triadEnsembleView;
         var triadEnsemble;
         var videoPixels;
+        var statsStreamer;
         
         $( document ).ready( function() {
             // setup info div
             $("#info").removeClass("hide").addClass("show");
             media.Media({
-                success: function(stream){
+                success: function(mediaStream){
                     $("#info").removeClass("show").addClass("hide");
                     $("#controls").removeClass("hide").addClass("show");
                     // call resize for video resizing
@@ -180,11 +181,14 @@
                     videoPixels = media.VideoPixelStreamer(
                         document.getElementById("canvas"),
                         document.getElementById("video"),
-                        undefined, stream
+                        undefined, mediaStream
                     );
-                    //plotStatisticsSetup();
+                    statsStreamer = video.StatsStreamer(videoPixels, {
+                        rgb: video.AverageColor
+                    });
                     triadEnsemble = ensembles.TriadEnsemble("triad1");
-                    triadEnsembleParamSet = ensembles.EnsembleParamSet(triadEnsemble);
+                    triadEnsembleParamSet = ensembles.EnsembleParamSet(
+                        triadEnsemble);
                     triadEnsembleView = ensembles.EnsembleView(
                         triadEnsembleParamSet,
                         $("#rightcontrolsidebar")

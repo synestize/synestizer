@@ -124,6 +124,7 @@
             // using a try..catch
             try {
                 gfxCtx.drawImage(vidElem, 0, 0, cw, ch);
+                //should I only slice a square section out of the video?
                 pixels = gfxCtx.getImageData(0, 0, cw, ch).data || [];
             } catch (e) {
                 console.log("error getting video frame");
