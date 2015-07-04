@@ -28,7 +28,7 @@ State models reflect the current state of the model
         );
         $(elem).append(controlEl);
         outgoingStream = Rx.Observable.fromEvent(
-            sliderEl, 'change'
+            sliderEl, 'input'
         ).subscribe(
             function(ev){
                 paramset.set(label, Number(ev.target.value));
@@ -37,10 +37,12 @@ State models reflect the current state of the model
         
         // select only values under a particular key, and then only if changed.
         // could also throttle rate here
-        incomingStream = paramset.paramValsStream.map(
-            function (e){return e[label]}
-        ).distinctUntilChanged(
-        ).subscribe(function(x){console.debug('up', x); sliderEl.val(x)});
+        incomingStream = paramset.paramValsStream.pluck(label
+        ).sample(100).distinctUntilChanged(
+        ).subscribe(function(x){
+            //console.debug('up', label, x);
+            sliderEl.val(x)
+        });
         
         return {
             outgoingStream: outgoingStream,
