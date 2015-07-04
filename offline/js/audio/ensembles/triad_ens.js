@@ -9,7 +9,7 @@ Players make sound
     ensembles.TriadEnsemble = function (name) {
         var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
-        var paramSet, controlStream, mappedControlStreams;
+        var paramSet, controlStream;
         var controlMeta;
         
         lfoRateScale = d3.scale.linear().domain([0,1]).range([0, 20]);
@@ -19,7 +19,7 @@ Players make sound
         
         controlMeta = {
             outputGain: {
-                scale: d3.scale.log().domain([0.0001,1]).range([0,1]).invert,
+                scale: d3.scale.log().domain([0.01,1]).range([0,1]).invert,
                 units: "",
                 default: 0.5
             },
@@ -77,28 +77,28 @@ Players make sound
             mappedControlStreams = window.ensembles.mappedKeyStreams(
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
-                triadSynth.$oscFreq1(x, 0.1, 1);
+                triadSynth.$oscFreq1(x+paramSet.getMapped("freq1Mod"), 0.1, 1);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                triadSynth.$oscFreq1Mod(x, 0.1, 1);
+                triadSynth.$oscFreq1(x+paramSet.getMapped("freq1"), 0.1, 1);
             });
             mappedControlStreams.lfo1Rate.subscribe(function(x){
                 triadSynth.$lfoRate1(x, 0.1, 1);
             });
             mappedControlStreams.freq2.subscribe(function(x){
-                triadSynth.$oscFreq2(x, 0.1, 1);
+                triadSynth.$oscFreq2(x+paramSet.getMapped("freq2Mod"), 0.1, 1);
             });
             mappedControlStreams.freq2Mod.subscribe(function(x){
-                triadSynth.$oscFreq2Mod(x, 0.1, 1);
+                triadSynth.$oscFreq2(x+paramSet.getMapped("freq2"), 0.1, 1);
             });
             mappedControlStreams.lfo2Rate.subscribe(function(x){
                 triadSynth.$lfoRate2(x, 0.1, 1);
             });
             mappedControlStreams.freq3.subscribe(function(x){
-                triadSynth.$oscFreq3(x, 0.1, 1);
+                triadSynth.$oscFreq3(x+paramSet.getMapped("freq3Mod"), 0.1, 1);
             });
             mappedControlStreams.freq3Mod.subscribe(function(x){
-                triadSynth.$oscFreq3Mod(x, 0.1, 1);
+                triadSynth.$oscFreq3(x+paramSet.getMapped("freq3"), 0.1, 1);
             });
             mappedControlStreams.lfo3Rate.subscribe(function(x){
                 triadSynth.$lfoRate3(x, 0.1, 1);
