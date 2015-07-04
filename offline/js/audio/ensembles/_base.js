@@ -40,7 +40,6 @@ State models reflect the current state of the model
         incomingStream = paramset.paramValsStream.pluck(label
         ).sample(100).distinctUntilChanged(
         ).subscribe(function(x){
-            //console.debug('up', label, x);
             sliderEl.val(x)
         });
         
@@ -59,10 +58,8 @@ State models reflect the current state of the model
                 ).where(function(v){
                     return (typeof v !== "undefined") && (!isNaN(v))
                 }).map(function (x) {
-                    console.debug("mappin", key, x, controlMeta[key].scale, controlMeta[key].scale(x))
                     return controlMeta[key].scale(x)
                 });
-            console.debug("making mappedstream", key, mappedStreams[key]);
         });
         return mappedStreams;
     };
@@ -102,11 +99,9 @@ State models reflect the current state of the model
             {}
         );
         paramValsStream = new Rx.ReplaySubject(1);
-        console.debug("mr setty", paramVals, paramValsStream);
         // paramValsStream.connect();
         ensemble.setControlStream(paramValsStream);
         paramValsStream.onNext(paramVals);
-        console.debug("mr setty 2", paramVals, paramValsStream);
         return {
             ensemble: ensemble,
             controlMeta: controlMeta,

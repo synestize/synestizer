@@ -75,59 +75,29 @@ Players make sound
             mappedControlStreams = window.ensembles.mappedStreams(
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
-                    console.debug('freq1', x);
-                    triadSynth.$oscFreq1(x, WX.now + 0.02, 0);
-                },
-                function(x) {console.debug('freq1', 'err', x);},
-                function(x) {console.debug('freq1', 'over', x);}
-            );
+                triadSynth.$oscFreq1(x, WX.now + 0.02, 0);
+            });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                    console.debug('freq1Mod', x);
-                    triadSynth.$oscFreq1Mod(x, WX.now, 0);
-                },
-                function(x) {console.debug('freq1Mod', 'err', x);},
-                function(x) {console.debug('freq1Mod', 'over', x);}
-            );
+                triadSynth.$oscFreq1Mod(x, WX.now, 0);
+            });
             mappedControlStreams.freq1.subscribe(function(x){
-                    console.debug('freq2', x);
-                    triadSynth.$oscFreq2(x, WX.now + 0.02, 0);
-                },
-                function(x) {console.debug('freq2', 'err', x);},
-                function(x) {console.debug('freq2', 'over', x);}
-            );
+                triadSynth.$oscFreq2(x, WX.now + 0.02, 0);
+            });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                    console.debug('freq2Mod', x);
-                    triadSynth.$oscFreq2Mod(x, WX.now, 0);
-                },
-                function(x) {console.debug('freq2Mod', 'err', x);},
-                function(x) {console.debug('freq2Mod', 'over', x);}
-            );
+                triadSynth.$oscFreq2Mod(x, WX.now, 0);
+            });
             mappedControlStreams.freq1.subscribe(function(x){
-                    console.debug('freq3', x);
-                    triadSynth.$oscFreq3(x, WX.now + 0.02, 0);
-                },
-                function(x) {console.debug('freq3', 'err', x);},
-                function(x) {console.debug('freq3', 'over', x);}
-            );
+                triadSynth.$oscFreq3(x, WX.now + 0.02, 0);
+            });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                    console.debug('freq3Mod', x);
-                    triadSynth.$oscFreq3Mod(x, WX.now, 0);
-                },
-                function(x) {console.debug('freq3Mod', 'err', x);},
-                function(x) {console.debug('freq3Mod', 'over', x);}
-            );
+                triadSynth.$oscFreq3Mod(x, WX.now, 0);
+            });
             mappedControlStreams.outputGain.subscribe(function(x){
-                    console.debug('outputGain', x);
-                    triadSynth.$output(x, WX.now, 0);
-                },
-            function(x) {console.debug('outputGain', 'err', x);},
-            function(x) {console.debug('outputGain', 'over', x);}
-            );
+                triadSynth.$output(x, WX.now, 0);
+            });
         };
-        console.debug("synth_1", triadSynth);
         triadSynth = WX.Triad();
         triadSynth.to(WX.Master);
-        console.debug("synth_2", triadSynth);
         
         return {
             name: name,

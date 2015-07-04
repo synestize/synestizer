@@ -239,7 +239,6 @@
         },
 
         $oscFreq1: function(value, time, rampType) {
-            console.debug(value, time, rampType, this.get('oscFreq1Mod'));
             this._osc1.frequency.set(value+this.get('oscFreq1Mod'), time, rampType);
         },
 
