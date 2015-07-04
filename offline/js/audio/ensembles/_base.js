@@ -65,6 +65,17 @@ State models reflect the current state of the model
         });
         return mappedKeyStreams;
     };
+    window.ensembles.keyStreams = function(controlStream, controlMeta){
+        var keyStreams = {};
+        _.map(controlMeta, function(meta, key){
+            keyStreams[key] = controlStream.pluck(key
+            ).where(function(v){
+                return (typeof v !== "undefined") && (!isNaN(v))
+            }).distinctUntilChanged();
+        });
+        return keyStreams;
+    };
+    
     ensembles.EnsembleView = function (paramset, elem) {
         var widgets = []; //for debugging
         var wrapper = $(elem).append("<div></div>");
@@ -90,16 +101,13 @@ State models reflect the current state of the model
     //TODO: should this use Observable.using?
     // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/using.md
     ensembles.EnsembleParamSet = function (ensemble) {
-        var paramVals, paramValsStream, paramValsStreamPublished;
+        var paramVals, paramValsStream;
         var controlMeta;
         var data;
         controlMeta = ensemble.controlMeta;
-        paramVals = _.extend(
-            _.mapObject(
-                controlMeta,
-                function(val, key){return val['default']|| 0.0}
-            ),
-            {}
+        paramVals = _.mapObject(
+            controlMeta,
+            function(val, key){return val['default']|| 0.0}
         );
         paramValsStream = new Rx.ReplaySubject(1);
         // paramValsStream.connect();
@@ -115,7 +123,10 @@ State models reflect the current state of the model
                     paramValsStream.onNext(paramVals);
                 }
             },
-            get: function(key) {return paramVals[key]}
+            get: function(key) {return paramVals[key]},
+            getMapped: function(key) {
+                return controlMeta[key].scale(paramVals[key])
+            }
         }
         paramValsStream.onNext(paramVals);
         ensemble.setParamSet(data);
