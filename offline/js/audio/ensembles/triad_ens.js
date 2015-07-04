@@ -75,25 +75,25 @@ Players make sound
             mappedControlStreams = window.ensembles.mappedStreams(
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
-                triadSynth.$oscFreq1(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq1(x, 0.1, 1);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                triadSynth.$oscFreq1Mod(x, WX.now, 0);
+                triadSynth.$oscFreq1Mod(x, 0.1, 1);
             });
             mappedControlStreams.freq1.subscribe(function(x){
-                triadSynth.$oscFreq2(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq2(x, 0.1, 1);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                triadSynth.$oscFreq2Mod(x, WX.now, 0);
+                triadSynth.$oscFreq2Mod(x, 0.1, 1);
             });
             mappedControlStreams.freq1.subscribe(function(x){
-                triadSynth.$oscFreq3(x, WX.now + 0.02, 0);
+                triadSynth.$oscFreq3(x, 0.1, 1);
             });
             mappedControlStreams.freq1Mod.subscribe(function(x){
-                triadSynth.$oscFreq3Mod(x, WX.now, 0);
+                triadSynth.$oscFreq3Mod(x, 0.1, 1);
             });
             mappedControlStreams.outputGain.subscribe(function(x){
-                triadSynth.$output(x, WX.now, 0);
+                triadSynth.$output(x, 0.1, 1);
             });
         };
         triadSynth = WX.Triad();
