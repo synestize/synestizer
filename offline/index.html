@@ -135,15 +135,16 @@
     <script src="./bower_components/rxjs/dist/rx.all.js"></script>
     <!-- <script src="./bower_components/rx-dom/dist/rx.dom.js"></script> -->
     <script src="./bower_components/transducers-js/transducers.js"></script>
-    <script src="./bower_components/Percussion/dist/Percussion.js"></script>
-    <script src="./bower_components/d3/d3.min.js"></script>
+    <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
+    <script src="./bower_components/d3/d3.js"></script>
     
     <!-- audio/video infrastructure -->
     <script src="./js/media.js"></script>
 
     <!-- video analysis -->
-    <script src="./js/video/analyzer.js"></script>
-    <script src="./js/video/videostats.js"></script>
+    <!-- <script src="./js/video/_base.js"></script> -->
+    <!-- <script src="./js/video/statistics.js"></script> -->
+    <!-- <script src="./js/video/visualizer.js"></script> -->
 
     <!-- audio infrastructure -->
     <script src="./js/vendor/WAAX/waax.js"></script>
@@ -158,23 +159,16 @@
     <script>
         "use strict";
         
-        var analyzer;
         var triadEnsembleParamSet;
         var triadEnsembleView;
         var triadEnsemble;
+        var videoPixels;
         
         $( document ).ready( function() {
             // setup info div
             $("#info").removeClass("hide").addClass("show");
-            media.initStream(
-                undefined, undefined,
-                function (stream) {
-                    analyzer = new window.videoanalyzers.VideoAnalyzer({
-                        vidElem: document.getElementById('video'),
-                        canvElem: document.getElementById('canvas'),
-                        statistics: [new window.videostatistics.AverageColor()],
-                        stream: stream
-                    });
+            media.Media({
+                success: function(stream){
                     $("#info").removeClass("show").addClass("hide");
                     $("#controls").removeClass("hide").addClass("show");
                     // call resize for video resizing
@@ -183,23 +177,24 @@
                         document.getElementById("switchDevices"));
                     media.attachFullscreenButton(
                         document.getElementById("fullscreen"));
+                    videoPixels = media.VideoPixelStreamer(
+                        document.getElementById("canvas"),
+                        document.getElementById("video"),
+                        undefined, stream
+                    );
                     //plotStatisticsSetup();
-                    
                     triadEnsemble = ensembles.TriadEnsemble("triad1");
                     triadEnsembleParamSet = ensembles.EnsembleParamSet(triadEnsemble);
                     triadEnsembleView = ensembles.EnsembleView(
                         triadEnsembleParamSet,
                         $("#rightcontrolsidebar")
                     );
-                    
-                    
                 }
-            );
+            });
 
             $(window).resize(function() {
                 resize();
             });
-
 
             function resize() {
                 console.log("resize");

@@ -1,7 +1,8 @@
-//Video Statistics
-// Functions that return functions that return dynamic updated estimates 
-// qualities of a video stream
+// Video Statistics
+// Functions that return functions that return dynamically updated estimated 
+// qualities of a video stream/
 // These will ultimately be run in web workers by Observers
+// They will follow mbostock's stateful function pattern http://bost.ocks.org/mike/chart/
 
 (function(window, _, Rx) {
     'use strict';

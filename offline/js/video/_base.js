@@ -3,11 +3,12 @@
 (function( global, _, Rx) ) {
     'use strict';
 
-    function VideoAnalyzer(params){
-        var url = global.window.URL || global.window.webkitURL;
+    function StreamStats(pixelStream, stats){
+        var lastTime, thisTime;
         var self = {
             
         };
+        
         self.vidElem = params.vidElem;
         self.canvElem = params.canvElem;
         self.stream = params.stream;

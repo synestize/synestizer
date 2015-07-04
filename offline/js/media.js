@@ -1,6 +1,11 @@
 (function( window, document ) {
     'use strict';
     
+    var media; 
+    window.media = media = window.media || {};
+    media.mics = [];
+    media.cams = [];
+    
     // shim the requestAnimationFrame API, with a setTimeout fallback
     window.requestAnimationFrame = (function(){
         return window.requestAnimationFrame ||
@@ -29,118 +34,119 @@
     if (typeof window.MediaStreamTrack.getSources === 'undefined'){
         console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
-        window.MediaStreamTrack.getSources(countDevices);
+        window.MediaStreamTrack.getSources(function (sourceInfos) {
+            for (var i = 0; i !== sourceInfos.length; ++i) {
+                var sourceInfo = sourceInfos[i];
+                if (sourceInfo.kind === 'video') {
+                    media.cams.push(sourceInfo.id);
+                } else if (sourceInfo.kind === 'audio') {
+                    media.mics.push(sourceInfo.id);
+                }
+            }
+            /*
+            console.log("Found " + media.cams.length + " cam(s).");
+            console.log("Found " + media.mics.length + " mic(s).");
+            for (var j = 0; j < media.cams.length; ++j) {
+                console.log("cam id " + j + ": " + media.cams[j]);
+            }
+            for (var k = 0; k < media.mics.length; ++k) {
+                console.log("mic id " + k + ": " + media.mics[k]);
+            }
+            */
+        });
     }
 
-    function countDevices(sourceInfos) {
-        for (var i = 0; i !== sourceInfos.length; ++i) {
-            var sourceInfo = sourceInfos[i];
-            if (sourceInfo.kind === 'video') {
-                media.cams.push(sourceInfo.id);
-            } else if (sourceInfo.kind === 'audio') {
-                media.mics.push(sourceInfo.id);
-            }
-        }
-        /*
-        console.log("Found " + media.cams.length + " cam(s).");
-        console.log("Found " + media.mics.length + " mic(s).");
-        for (var j = 0; j < media.cams.length; ++j) {
-            console.log("cam id " + j + ": " + media.cams[j]);
-        }
-        for (var k = 0; k < media.mics.length; ++k) {
-            console.log("mic id " + k + ": " + media.mics[k]);
-        }
-        */
-    };
-
-    //Utility function to return the media stream ONLY ONCE
-    function getMedia(opts) {
-        var currCam="none", currMic="none", currStream="none", currOpts, success, cam, mic;
-        currOpts = {
+    //Utility singleton to return the media stream only as necessary
+    function Media(opts) {
+        var currCam="none", currMic="none", mediaStream="none", constraints;
+        constraints = {
             "video": true,
             "audio": true,
         };
-        opts = opts || currOpts;
-        success = opts.success || function() {};
-        //we have already called this!
-        if (typeof media.stream !== 'undefined') {
-            success(media.stream);
-        };
-        //if nothing has changed, callback with the stream
-        if ((currStream !== "none") &&
-                (opts.video===currOpts.video) &&
-                (opts.audio===currOpts.audio)) {
-            success(stream);
-        };
-        //otherwise, it will depend on what we want.
-        if ((currStream === "none") &&
-                (opts.video===currOpts.video) &&
-                (opts.audio===currOpts.audio)) {
-            success(stream);
-        };
-        //otherwise, call it now.
-        window.navigator.getUserMedia(
-            currOpts, function(stream) {
-                media.stream = stream;
-                success(stream);
-            }, function(e) {
-                alert('Error getting audio or video');
-                console.log(e);
+        
+        function getMedia(opts) {
+            var newCam, newMic, success, mustUpdate=false;
+            newCam = opts.cam || currCam;
+            newMic = opts.mic || currMic;
+            success = opts.success || function() {};
+            if ((newCam !== currCam) && (media.cams.length>0)) {
+                constraints.video = {
+                    optional: [{sourceId: media.cams[media.currentCam]}]
+                };
+                mustUpdate = true;
+            };
+            if ((newMic !== currMic) && (media.mics.length>0)) {
+                constraints.audio = {
+                    optional: [{sourceId: media.mics[media.currentMic]}]
+                };
+                mustUpdate = true;
+            };
+            if ((mediaStream==="none") || mustUpdate) {
+                currCam = newCam;
+                currMic = newMic;
+                window.navigator.getUserMedia(
+                    constraints, function(newMediaStream) {
+                        mediaStream = newMediaStream;
+                        success(newMediaStream);
+                    }, function(e) {
+                        alert('Error getting audio or video', constraints);
+                        console.log(e);
+                    }
+                );
+            } else {
+                success(mediaStream)
             }
-        );
+        }
+        getMedia(opts);
+        return getMedia
     };
-    media.initStream = initStream;
+    media.Media = Media;
     
-    function switchCam() {
-        media.currentCam = ((media.currentCam || 0 ) + 1) % (media.cams.length);
-        var constraints = {
-            audio: {
-                optional: [{sourceId: media.mics[media.currentMic]}]
-            },
-            video: {
-                optional: [{sourceId: media.cams[media.currentCam]}]
+    function VideoPixelStreamer(canvElem, vidElem, pixelStream, mediaStream) {
+        var url, gfxCtx, pixels, cw, ch, timer="none";
+        function getPixels() {
+            return pixels || [];
+        }
+        getPixels.attachMediaStream = function(newMediaStream) {
+            url = window.URL || window.webkitURL;
+            mediaStream = newMediaStream;
+            vidElem.src = url ? url.createObjectURL(mediaStream) : mediaStream;
+            vidElem.play();
+            if (timer!=="none") {
+                window.clearInterval(timer);
             }
-        };
-
-        window.navigator.getUserMedia(
-            constraints,
-            function(stream) {
-                media.stream = stream;
-                analyzer = null;
-                analyzer = new this.videoanalyzers.VideoAnalyzer({
-                    vidElem: document.getElementById('video'),
-                    canvElem: document.getElementById('canvas'),
-                    statistics: [new this.videostatistics.AverageColor()],
-                    pubsub: pubsub,
-                    stream: stream
-                });
-
-                console.log("Switched to cam with id " + media.cams[media.currentCam]);
-            },
-            function(e) {
-                alert('Please share your cam and mic!');
-                console.log(e);
-            });
-    };
-    
-    // The first few frames get lost in Firefox, raising exceptions
-    // We make sure this does not break the whole loop by
-    // using a try..catch
-    try {
-        self.ctx.drawImage(self.vidElem, 0, 0, cw, ch);
-        pixels = self.ctx.getImageData(0, 0, cw, ch).data;
-        //Also make available to the outside world:
-        self.pixels = pixels;
-    } catch (e) {
-        console.log("error getting video frame");
-        console.debug(e);
+            timer = window.setInterval(pumpPixels, 50);//20 Hz
+            return getPixels;
+        }
+        function pumpPixels(){
+            // The first few frames get lost in Firefox, raising exceptions
+            // We make sure this does not break the whole loop by
+            // using a try..catch
+            try {
+                gfxCtx.drawImage(vidElem, 0, 0, cw, ch);
+                pixels = gfxCtx.getImageData(0, 0, cw, ch).data || [];
+            } catch (e) {
+                console.log("error getting video frame");
+                console.debug(e);
+            }
+            if (pixels.length>0) {
+                //Yay! it worked
+                pixelStream.onNext(pixels);
+            };
+        }
+        gfxCtx = canvElem.getContext('2d');
+        cw = canvElem.width;
+        ch = canvElem.height;
+        pixelStream = pixelStream || new Rx.ReplaySubject(1);
+        if (typeof mediaStream !== "undefined") {
+            getPixels.attachMediaStream(mediaStream)
+        }
+        getPixels.cw = function () {return cw};
+        getPixels.ch = function () {return ch};
+        getPixels.stream = function () {return pixelStream};
+        return getPixels;
     }
-    if (pixels.length>0) {
-        //Yay! it worked
-        for (var i = 0; i < self.statistics.length; i++) {
-            self.statistics[i].analyzeFrame(pixels);
-        };
-    };
+    media.VideoPixelStreamer = VideoPixelStreamer;
     
     function attachMediaButton(el) {
         if (typeof window.MediaStreamTrack.getSources === 'undefined'){

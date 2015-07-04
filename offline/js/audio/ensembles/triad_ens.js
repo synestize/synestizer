@@ -102,7 +102,6 @@ Players make sound
                 triadSynth.$lfoRate3(x, 0.1, 1);
             });
             paramSet.getMappedStream("outputGain").subscribe(function(x){
-                console.debug("og", x)
                 triadSynth.$output(x, 0.1, 1);
             });
         };
