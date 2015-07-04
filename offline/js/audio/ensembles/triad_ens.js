@@ -82,17 +82,26 @@ Players make sound
             mappedControlStreams.freq1Mod.subscribe(function(x){
                 triadSynth.$oscFreq1Mod(x, 0.1, 1);
             });
-            mappedControlStreams.freq1.subscribe(function(x){
+            mappedControlStreams.lfo1Rate.subscribe(function(x){
+                triadSynth.$lfoRate1(x, 0.1, 1);
+            });
+            mappedControlStreams.freq2.subscribe(function(x){
                 triadSynth.$oscFreq2(x, 0.1, 1);
             });
-            mappedControlStreams.freq1Mod.subscribe(function(x){
+            mappedControlStreams.freq2Mod.subscribe(function(x){
                 triadSynth.$oscFreq2Mod(x, 0.1, 1);
             });
-            mappedControlStreams.freq1.subscribe(function(x){
+            mappedControlStreams.lfo2Rate.subscribe(function(x){
+                triadSynth.$lfoRate2(x, 0.1, 1);
+            });
+            mappedControlStreams.freq3.subscribe(function(x){
                 triadSynth.$oscFreq3(x, 0.1, 1);
             });
-            mappedControlStreams.freq1Mod.subscribe(function(x){
+            mappedControlStreams.freq3Mod.subscribe(function(x){
                 triadSynth.$oscFreq3Mod(x, 0.1, 1);
+            });
+            mappedControlStreams.lfo3Rate.subscribe(function(x){
+                triadSynth.$lfoRate3(x, 0.1, 1);
             });
             mappedControlStreams.outputGain.subscribe(function(x){
                 triadSynth.$output(x, 0.1, 1);
