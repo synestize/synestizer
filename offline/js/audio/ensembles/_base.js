@@ -53,12 +53,16 @@ State models reflect the current state of the model
     }
     window.ensembles.makeWidget = makeWidget;
     window.ensembles.mappedStreams = function(controlStream, controlMeta){
-        var mappedStreams = {}
+        var mappedStreams = {};
         _.map(controlMeta, function(meta, key){
-            mappedStreams[key] = controlStream.map(
-                function (e){return e[key]}
-            ).distinctUntilChanged(
-            ).map(controlMeta[key]["scale"])
+            mappedStreams[key] = controlStream.pluck(key
+                ).where(function(v){
+                    (typeof v !== "undefined") && (!isNaN(v))
+                }).map(function (x) {
+                    console.debug("mappin", key, x, controlMeta[key].scale, controlMeta[key].scale(x))
+                    controlMeta[key].scale(x)
+                });
+            console.debug("making mappedstream", key, mappedStreams[key]);
         });
         return mappedStreams;
     };
@@ -87,7 +91,8 @@ State models reflect the current state of the model
     //TODO: should this use Observable.using?
     // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/using.md
     ensembles.EnsembleParamSet = function (ensemble) {
-        var paramVals, paramValsStream, controlMeta;
+        var paramVals, paramValsStream, paramValsStreamPublished;
+        var controlMeta;
         controlMeta = ensemble.controlMeta;
         paramVals = _.extend(
             _.mapObject(
@@ -96,9 +101,11 @@ State models reflect the current state of the model
             ),
             {}
         );
-        paramValsStream = new Rx.Subject();
+        paramValsStream = new Rx.ReplaySubject(1);
         console.debug("mr setty", paramVals, paramValsStream);
         paramValsStream.onNext(paramVals);
+        //paramValsStream = paramValsStream.publish();
+        //paramValsStream.connect();
         ensemble.setControlStream(paramValsStream);
         console.debug("mr setty 2", paramVals, paramValsStream);
         return {
