@@ -51,18 +51,19 @@ State models reflect the current state of the model
         };
     }
     window.ensembles.makeWidget = makeWidget;
-    window.ensembles.mappedStreams = function(controlStream, controlMeta){
-        var mappedStreams = {};
+    window.ensembles.mappedKeyStreams = function(controlStream, controlMeta){
+        var mappedKeyStreams = {};
         _.map(controlMeta, function(meta, key){
-            mappedStreams[key] = controlStream.pluck(key
-                ).where(function(v){
-                    return (typeof v !== "undefined") && (!isNaN(v))
-                }).distinctUntilChanged(
-                ).map(function (x) {
-                    return controlMeta[key].scale(x)
-                });
+            mappedKeyStreams[key] = controlStream.pluck(key
+            ).where(function(v){
+                return (typeof v !== "undefined") && (!isNaN(v))
+            }).distinctUntilChanged(
+            ).map(function (x) {
+                var scaled = controlMeta[key].scale(x);
+                return scaled;
+            });
         });
-        return mappedStreams;
+        return mappedKeyStreams;
     };
     ensembles.EnsembleView = function (paramset, elem) {
         var widgets = []; //for debugging

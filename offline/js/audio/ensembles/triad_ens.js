@@ -72,7 +72,8 @@ Players make sound
             
         function setControlStream (stream) {
             controlStream = stream;
-            mappedControlStreams = window.ensembles.mappedStreams(
+            //keep streams for each param
+            mappedControlStreams = window.ensembles.mappedKeyStreams(
                 controlStream, controlMeta);
             mappedControlStreams.freq1.subscribe(function(x){
                 triadSynth.$oscFreq1(x, 0.1, 1);
