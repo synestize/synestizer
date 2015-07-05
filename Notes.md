@@ -12,8 +12,8 @@ Notes auditioning for a place in the documentation
 
   * smoother workflow to host live on github
   * Move to modular architecture in the AMD style,
-    e.g. using [require.js](http://requirejs.org/)
-    using [some kind of template](https://github.com/volojs/create-template)
+    e.g. using [require.js](http://requirejs.org/) --
+    [see explanation](http://eloquentjavascript.net/10_modules.html)
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
   * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
