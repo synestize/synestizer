@@ -1,5 +1,3 @@
-/offline/bower_components/
-
 #ignore mongoose
 Mongoose.app
 mongoose.exe
@@ -7,6 +5,4 @@ mongoose*x86-64*
 
 #ignore SSL private key
 key.pem
-
-.idea/
 
