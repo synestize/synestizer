@@ -114,6 +114,7 @@ Build tools:
 * [grunt](http://gruntjs.com/) ---
   here's how to
   [deploy to github using grunt-build-control](https://blog.5apps.com/2014/05/29/deploying-static-apps-with-grunt-build-control-on-5apps-deploy.html)
+* [webpack](https://github.com/webpack/webpack) seems popular with e.g. rxvision
 
 complete workflow tools:
 
@@ -218,14 +219,17 @@ Partial workflow tools:
 * streams
 
   * [highland.js](http://highlandjs.org/#)
-  * [Rx.js](http://reactivex.io/)
 
-    * debugger [percussion](https://github.com/grisendo/Percussion)
-    * another debugger [rxvision  (http://jaredforsyth.com/rxvision/)]
+  * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+  * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
+  * There are other options - kefir.js and bacon.js - but my brain is full.
+  
+* stream debuggers
 
-  * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md)
+    * [percussion](https://github.com/grisendo/Percussion)
+    * [rxvision](http://jaredforsyth.com/rxvision/) - I can't work out how this one works or how to use it, and the documentation doesn't explain basic stuff like how to install it, so I'm ignoring it for now.
 
-* Transducers (an interface for stream processors)
+* Transducers (a library of stream processors)
 
   * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
   
@@ -239,6 +243,8 @@ Partial workflow tools:
 ### Webaudio information
 
 There are too many resources online to list. [Start here](http://notes.livingthing.org/javascript_audio.html)
+
+We use one helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
 
 ### Alternatives to WebAudio
 
