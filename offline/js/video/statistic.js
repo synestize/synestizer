@@ -10,6 +10,7 @@
     window.video = video = window.video || {};
     function AverageColor(params) {
         var cw, ch, pixelCount;
+        params = params || {};
         var out = new Float32Array(3);
         var R=0, G=1, B=2;
         cw = params.cw || 86;
@@ -43,6 +44,8 @@
         
         // I call the YCBCR mapped version "BSV", the spatial coords "XY"
         var B=0, S=1, V=2, XB=4, XS=5, XV=6, YB=7, YS=8, YV=9, BB=10, BS=11, BV=12, SS=13, SV=14, VV=15;
+        params = params || {};
+        
         rawSums = new Float32Array(16);
         centralMoments = new Float32Array(16);
         cookedMoments = new Float32Array(16);
@@ -58,16 +61,17 @@
                     bsvxy[0] = ( //B
                           0.00117255*pixels[ij]
                         + 0.00230200*pixels[ij+1]
-                        + 0.00044706*pixels[ij+2]);
+                        + 0.00044706*pixels[ij+2]
+                    );
                     bsvxy[1] = 0.5 + ( //S
                         - 0.00066563*pixels[ij] 
                         - 0.00129907*pixels[ij+1]
-                        + 0.00196078*pixels[ij+2]);
+                        + 0.00196078*pixels[ij+2]
                     );
                     bsvxy[2] = 0.5 + ( //V
                           0.00196078*pixels[ij]
                         - 0.00164191*pixels[ij+1]
-                        - 0.00031887*pixels[ij+2]);
+                        - 0.00031887*pixels[ij+2]
                     );
                     bsvxy[3] = j/ch; //X
                     bsvxy[4] = i/cw; //Y
@@ -79,7 +83,7 @@
                     rawSums[XV] += bsvxy[2]*bsvxy[3];
                     rawSums[YB] += bsvxy[0]*bsvxy[4];
                     rawSums[YS] += bsvxy[1]*bsvxy[4];
-                    rawSums[YV] += bsvxy[@]*bsvxy[4];
+                    rawSums[YV] += bsvxy[2]*bsvxy[4];
                     rawSums[BB] += bsvxy[0]*bsvxy[0];
                     rawSums[BS] += bsvxy[0]*bsvxy[1];
                     rawSums[BV] += bsvxy[0]*bsvxy[2];
@@ -145,6 +149,6 @@
         return calc;
     };
     // expose our module to the global object
-    global.video.AverageColor = AverageColor;
+    global.video.Covariance = Covariance;
     
 })( this, _, Rx );
