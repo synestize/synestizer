@@ -164,19 +164,24 @@ Partial workflow tools:
   * Are the covariance estimates incoherent?
     Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 
-* pca
-* Haar cascade.
+* PCA
+* Haar cascade
 * autocorrelation
-* kalman filters
+* introduce a time dimension for correlation?
+* Kalman filters
 * particle filters
-* FFT features
+* FFT features (perhaps sparse compound features?)
 * exponentially weighted moments
-* inner-product with desired eigen-feautres
+* inner-product with desired eigen-features
 * Features based on correlation with eigenfeatures (even fourier ones?)
-* mcmc updating
-* gaussian mixture models
+* MCMC updating
+* Gaussian mixture models
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
+  Forward:
+  $${\begin{aligned}Y'&=&0&+(0.299&\cdot R'_{D})&+(0.587&\cdot G'_{D})&+(0.114&\cdot B'_{D})\\C_{B}&=&128&-(0.168736&\cdot R'_{D})&-(0.331264&\cdot G'_{D})&+(0.5&\cdot B'_{D})\\C_{R}&=&128&+(0.5&\cdot R'_{D})&-(0.418688&\cdot G'_{D})&-(0.081312&\cdot B'_{D})\end{aligned}}$$
+  Back:
+  $${\begin{aligned}R&=&Y&&&+1.402&\cdot (C_{R}-128)\\G&=&Y&-0.34414&\cdot (C_{B}-128)&-0.71414&\cdot (C_{R}-128)\\B&=&Y&+1.772&\cdot (C_{B}-128)&\end{aligned}}$$
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
 
 
@@ -197,7 +202,7 @@ Partial workflow tools:
   * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
   * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
 
-* video+webgl:
+* video+WebGL:
 
   * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
   * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
@@ -206,7 +211,7 @@ Partial workflow tools:
 * [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
 * [webgl transforms](http://games.greggman.com/game/webgl-2d-matrices/)
   
-* css filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
+* CSS filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
 
 ### Colour handling
 
