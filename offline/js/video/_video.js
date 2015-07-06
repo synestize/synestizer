@@ -25,8 +25,12 @@
             console.debug("statres", pixels, rez);
             return rez;
         });
-        outboxStream.debounce(25).subscribe(function() {
-            pixelPump.pump(function(pixels){inboxStream.onNext(pixels)});
+        outboxStream.debounce(25).subscribe(function(stats) {
+            console.debug("pumping req", stats);
+            pixelPump.pump(function(pixels){
+                console.debug("pumping", pixels);
+                inboxStream.onNext(pixels);
+            });
         });
         //update state dict with stats for debugging
         outboxStream.subscribe(function(x){
