@@ -14,20 +14,30 @@
         var inboxStream;//incoming pixels
         var statsWorkers;
         var statsState = {};
-        inboxStream = pixelPump.pixelStream.pausable();
+        outboxStream = new Rx.Subject();
         
-        //this bit should be in a WebWorker:
-        outboxStream = pixelPump.pixelStream.map(function (pixels) {
+        //Things get crazy here because we don't know how long statistics take
+        //So we roll our own backpressure using a tail call
+        function calcStats(pixels){
             var rez;
-            //poor man's semaphore:
-            inboxStream.pause()
+            //this bit should be in a WebWorker
             rez = _.mapObject(
                 stats,
                 function(stat, statName){return stat(pixels)}
             );
-            inboxStream.resume()
             return rez;
-        });
+        };
+        //This tail call should recalculate each new batch of statistics
+        //25ms after the last one finished
+        function statsAndMoreStats(pixels){
+            outboxStream.onNext(calcStats(pixels));
+            window.setTimeout(function(){
+                pixelPump.pixelStream.take(1).subscribe(statsAndMoreStats)
+            }, 25);
+        };
+        pixelPump.pixelStream.take(1).subscribe(
+            statsAndMoreStats);
+        
         //update state dict with stats for debugging
         outboxStream.subscribe(function(x){
             _.mapObject(

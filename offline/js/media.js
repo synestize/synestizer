@@ -117,6 +117,7 @@
         canvElem.style.width=PIXELDIM+"px";
         canvElem.style.height=PIXELDIM+"px";
         
+        //pixelStream = pixelStream || new Rx.ReplaySubject(1); //So that we may always sample
         pixelStream = pixelStream || new Rx.Subject();
         getPixels.pixelStream = pixelStream;
         getPixels.attachMediaStream = function(newMediaStream) {
