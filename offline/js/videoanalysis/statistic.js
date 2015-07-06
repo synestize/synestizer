@@ -1,14 +1,16 @@
-// Video Statistics
+//// Video Statistics
 // Functions that return functions that return dynamically updated estimated 
 // qualities of a video stream.
 // These will ultimately be run in web workers by Observers
 // They will follow mbostock's stateful function pattern http://bost.ocks.org/mike/chart/
+// These should not use any external libraries unless absolutely necessary, because importing in webworkers is painful.
 
-(function( global, _, Rx ) {
+(function( global ) {
     'use strict';
     var videoanalysis; 
     window.videoanalysis = videoanalysis = window.videoanalysis || {};
     function AverageColor(params) {
+        //1/8 sub-sampled average colour
         var PIXELDIM=64; //64x64 grid is all we use.
         var PIXELCOUNT=PIXELDIM*PIXELDIM;
         params = params || {};
@@ -19,7 +21,7 @@
             out[G] = 0;
             out[B] = 0;
             
-            for (var i = 0; i < PIXELCOUNT; i++) {
+            for (var i = 0; i < PIXELCOUNT; i+=8) {
                 out[R] += pixels[i * 4 + R]/255;
                 out[G] += pixels[i * 4 + G]/255;
                 out[B] += pixels[i * 4 + B]/255;
@@ -40,6 +42,7 @@
         // Gives us moment estimates by the plugin method
         // right now, 1st and 2nd central moments
         // a.k.a. mean and covariance
+        // TODO: check that all variances are correctly normalised
         var PIXELDIM=64; //64x64 grid is all we use.
         var PIXELCOUNT=PIXELDIM*PIXELDIM;
         var rawSums, centralMoments, cookedMoments, ysvij;
@@ -152,4 +155,4 @@
     // expose our module to the global object
     global.videoanalysis.PluginMoments = PluginMoments;
     
-})( this, _, Rx );
+})( this );

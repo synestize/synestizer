@@ -35,6 +35,7 @@
                 pixelPump.pixelStream.take(1).subscribe(statsAndMoreStats)
             }, 25);
         };
+        //start the tail call
         pixelPump.pixelStream.take(1).subscribe(
             statsAndMoreStats);
         
