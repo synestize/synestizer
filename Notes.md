@@ -155,15 +155,16 @@ Partial workflow tools:
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
-* [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot fo what we want.
+* [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot of what we want.
 * [prose](http://prose.io)
+* [gitbook](https://www.gitbook.com/) looks reasonably pretty and sells the output as a book on Amazon at the end
 
 ## Remote operation
 
 * [tokbox](https://tokbox.com/)
 * [webRTC](http://www.webrtc.org/)
 * [binaryjs](https://github.com/binaryjs/binaryjs)
-* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kon Z¨rich collaboration
+* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kong Zürich collaboration
 * [shiftr](https://shiftr.io/)
 
 ## Video analysis
@@ -172,7 +173,7 @@ Partial workflow tools:
 
 * Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
-* covariance
+* covariance (or higher moments?)
 
   * Are the covariance estimates incoherent?
     Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
