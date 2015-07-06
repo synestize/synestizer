@@ -8,6 +8,18 @@ Notes auditioning for a place in the documentation
 
 ## TODO
 
+* Revised patching system
+
+  * A *patch* should map between
+    * audio ensemble parameters
+    * and input data 
+      * Video analysis
+      * MIDI CC
+      * GUI widgets
+  * The mapping could be One-To-One or Many-To-Many, or whatever.
+  * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
+  * Patches could have a separate mapping GUI for constructing the mapping
+
 * Meta
 
   * smoother workflow to host live on github
@@ -19,13 +31,14 @@ Notes auditioning for a place in the documentation
 
 * MIDI *mapping* (right now it is hard coded)
 
-* speed improvements
-    * web workers
-        * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-        * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
-        * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
-    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
+* Video analysis improvements
 
+  * Only operate on a square grid of pixels (64x64)
+  * web workers
+      * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
+      * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
+      * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
+  * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
 ## javascript tips
 
