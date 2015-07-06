@@ -12,7 +12,6 @@
         var triadEnsembleView;
         var triadEnsemble;
         var statsStreamer;
-        
         var self = {
         };
         

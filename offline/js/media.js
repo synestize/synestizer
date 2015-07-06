@@ -127,7 +127,6 @@
             initObs = Rx.Observable.fromEvent(
                 vidElem, "loadedmetadata"
                 ).subscribe(function () {
-                    console.debug("video thingy might work!")
                     timer = Rx.Observable.interval(
                         interval
                     ).subscribe(pump)
@@ -156,7 +155,7 @@
                 xoffset = Math.floor((vw-vsize)/2);
                 yoffset = 0;
             };
-            console.debug("cv", vw, vh, vAspect, vsize, xoffset, yoffset);
+            // console.debug("cv", vw, vh, vAspect, vsize, xoffset, yoffset);
             // The first few frames get lost in Firefox, raising exceptions
             // We make sure this does not break the whole loop by
             // using a try..catch
@@ -173,8 +172,7 @@
                     0, 0,
                     PIXELDIM, PIXELDIM).data || [];
             } catch (e) {
-                console.log("error getting video frame");
-                console.debug(e);
+                console.log("error getting video frame", e);
             }
             if (pixels.length>0) {
                 //Yay! it worked
@@ -187,7 +185,6 @@
         if (typeof mediaStream !== "undefined") {
             getPixels.attachMediaStream(mediaStream)
         };
-        console.debug("pp", getPixels, getPixels.pixelStream, getPixels.pump, canvElem, vidElem, mediaStream);
         return getPixels;
     }
     media.VideoPixelPump = VideoPixelPump;
@@ -195,7 +192,7 @@
     function attachMediaButton(el) {
         if (typeof window.MediaStreamTrack.getSources === 'undefined'){
             el.addEventListener("click", switchCam);
-        } else {console.debug("MediaStreamTrack not supported")}
+        } else {console.log("MediaStreamTrack not supported")}
     };
     media.attachMediaButton = attachMediaButton;
     

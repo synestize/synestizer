@@ -13,7 +13,6 @@
         var outboxStream;//outgoing analyses
         var statsWorkers;
         var statsState = {};
-        console.debug("ss", pixelPump, stats);
 
         //this bit should be in a WebWorker:
         outboxStream = pixelPump.pixelStream.map(function (pixels) {
@@ -21,7 +20,6 @@
                 stats,
                 function(stat, statName){return stat(pixels)}
             );
-            console.debug("statres", pixels, rez);
             return rez;
         });
         //update state dict with stats for debugging
