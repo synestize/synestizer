@@ -27,7 +27,7 @@
             triadEnsembleParamSet,
             controlSidebar
         );
-        //statsStream.pick()
+        statsStreamer.statsStream.pluck("avg", 0).subscribe(function(x){console.debug(x)})
         return self;
     };
 
