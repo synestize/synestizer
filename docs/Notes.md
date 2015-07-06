@@ -10,6 +10,7 @@ Notes auditioning for a place in the documentation
 
 * Revised patching system
 
+  * accept synth parameters in URL fragments (esp to set master output volume!)
   * A *patch* should map between
     * audio ensemble parameters
     * and input data 
@@ -19,6 +20,7 @@ Notes auditioning for a place in the documentation
   * The mapping could be One-To-One or Many-To-Many, or whatever.
   * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
   * Patches could have a separate mapping GUI for constructing the mapping
+  * Always set up a master gain and master compressor
 
 * Meta
 
@@ -112,8 +114,6 @@ Ranked in descending order of viability:
 
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
-* [Flux](https://facebook.github.io/flux/docs/overview.html)
-* [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 * patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
 
 ## Workflow options
