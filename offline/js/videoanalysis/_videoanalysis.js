@@ -11,15 +11,21 @@
         // do it in a webworker.
         var lastTime, thisTime;
         var outboxStream;//outgoing analyses
+        var inboxStream;//incoming pixels
         var statsWorkers;
         var statsState = {};
-
+        inboxStream = pixelPump.pixelStream.pausable();
+        
         //this bit should be in a WebWorker:
         outboxStream = pixelPump.pixelStream.map(function (pixels) {
-            var rez = _.mapObject(
+            var rez;
+            //poor man's semaphore:
+            inboxStream.pause()
+            rez = _.mapObject(
                 stats,
                 function(stat, statName){return stat(pixels)}
             );
+            inboxStream.resume()
             return rez;
         });
         //update state dict with stats for debugging
