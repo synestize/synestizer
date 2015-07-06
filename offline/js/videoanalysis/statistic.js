@@ -52,10 +52,9 @@
         centralMoments = new Float32Array(16);
         cookedMoments = new Float32Array(16);
         ysvij = new Float32Array(3);
-        
         function calc(pixels) {
             for (var i = 0; i < PIXELDIM; i++) {
-                for (var j = 0; i < PIXELDIM; j++) {
+                for (var j = 0; j < PIXELDIM; j++) {
                     var ij = (PIXELDIM * i + j) * 4;
                     // first we tranform RGB to YSV 
                     // - effectively a PCA of the color vectors
