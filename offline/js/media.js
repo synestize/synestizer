@@ -111,6 +111,12 @@
         function getPixels() {
             return pixels || [];
         };
+        canvElem.width = PIXELDIM;
+        canvElem.height = PIXELDIM;
+        //optional:
+        canvElem.style.width=PIXELDIM+"px";
+        canvElem.style.height=PIXELDIM+"px";
+        
         pixelStream = pixelStream || new Rx.Subject();
         getPixels.pixelStream = pixelStream;
         getPixels.attachMediaStream = function(newMediaStream) {
@@ -130,61 +136,42 @@
             return getPixels;
         };
         function pump() {
-            var vw, vh, vAspect, cw, ch, cAspect, newCw, newCh;
-            var xoffset, yoffset;
-            cw = canvElem.width;
-            ch = canvElem.height;
-            //we do || because .width can be NaN or 0 sometimes.
-            cAspect = (cw||64)/(ch||64);
-            
+            var vw, vh, vAspect;
+            var xoffset, yoffset, vsize;
             /*
             This should return the size of the *video*,
             not the *video element*,
             although it may also return nonsense for the first few frames.
-            since we only do this on the loadedmetadata event,
-            that problem might no longer exist?
+            so we only do this on the loadedmetadata event,
             */
             vw = vidElem.videoWidth;
             vh = vidElem.videoHeight;
             //so once again we guess!
-            vAspect = (vw||64)/(vh||64);
+            vAspect = vw/vh;
+            vsize = Math.min(vw, vh);
             if (vAspect<1){ //taller than wide
-                newCh = Math.ceil(PIXELDIM*vAspect);
-                newCw = PIXELDIM;
                 xoffset = 0;
-                yoffset = Math.floor((newCh-PIXELDIM)/2);
-            } else {
-                newCh = PIXELDIM;
-                newCw = Math.ceil(PIXELDIM*vAspect);
-                xoffset = Math.floor((newCw-PIXELDIM)/2);
+                yoffset = Math.floor((vh-vsize)/2);
+            } else { //wider than tall
+                xoffset = Math.floor((vw-vsize)/2);
                 yoffset = 0;
             };
-            if((cw!==newCw)||(ch!==newCh)){
-                //TODO: make sure resize worked. CSS could override.
-                //TODO: do i even need the css? it's the drawing surface that counts
-                cw = newCw;
-                ch = newCh;
-                //set visual size (although probably invisible)
-                canvElem.style.width=cw+"px";
-                canvElem.style.height=ch+"px";
-                //set drawing size (essential)
-                canvElem.width=cw;
-                canvElem.height=ch;
-            };
-            console.debug("cv", cw, ch, cAspect, vw, vh, vAspect, newCw, newCh, xoffset, yoffset);
+            console.debug("cv", vw, vh, vAspect, vsize, xoffset, yoffset);
             // The first few frames get lost in Firefox, raising exceptions
             // We make sure this does not break the whole loop by
             // using a try..catch
             // TODO: check that this is still true
-            // TODO: if the pixels are missing, loop until successful. (retryWhen from Rx can do this)
             try {
-                console.debug("cv2", cw, ch, vw, vh);
-                
-                gfxCtx.drawImage(vidElem, 0, 0, vw, vh, 0, 0, cw, ch);
                 //slice a square section out of the video
+                //looks a bit sqished on my laptop, but whatever.
+                gfxCtx.drawImage(
+                    vidElem,
+                    xoffset, yoffset, xoffset+vsize, yoffset+vsize,
+                    0, 0, PIXELDIM, PIXELDIM
+                );
                 pixels = gfxCtx.getImageData(
-                    xoffset, yoffset,
-                    xoffset+PIXELDIM, yoffset+PIXELDIM).data || [];
+                    0, 0,
+                    PIXELDIM, PIXELDIM).data || [];
             } catch (e) {
                 console.log("error getting video frame");
                 console.debug(e);
