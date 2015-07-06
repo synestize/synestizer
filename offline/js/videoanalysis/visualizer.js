@@ -13,11 +13,10 @@
         function plot(statsdict){
             _.mapObject(statsdict, function (statData, statName) {
                 var bars;
-                
                 if (!(childElems[statName])) {
                     childElems[statName] = d3.select(elem).append("div");
                 };
-                //There must be some better way of choosing the scale? No idea.
+                //TODO: must be a better way of choosing the scale?
                 lenScale.range([0, childElems[statName][0][0].clientWidth-6]);
                 
                 bars = childElems[statName].selectAll("div").data(statData);
