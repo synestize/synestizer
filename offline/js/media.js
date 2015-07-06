@@ -117,7 +117,7 @@
             vidElem.src = url ? url.createObjectURL(mediaStream) : mediaStream;
             vidElem.play();
             return getPixels;
-        }
+        };
         function pump(callback) {
             var vw, vh, vAspect, cw, ch, cAspect, newCw, newCh;
             var xoffset, yoffset;
@@ -125,8 +125,13 @@
             ch = canvElem.height;
             //we do || because .width can be NaN or 0 sometimes.
             cAspect = (ch||64)/(cw||64);
-            vw = vidElem.width;
-            vh = vidElem.height;
+            
+            //this should return the size of the *video*,
+            // not the *video element*,
+            // although it may also return nonsense for the first few frames.
+            vw = vidElem.videoWidth;
+            vh = vidElem.videoHeight;
+            //so once again we guess!
             vAspect = (vh||64)/(vw||64);
             if (vAspect>1){
                 newCh = Math.ceil(PIXELDIM*vAspect);
