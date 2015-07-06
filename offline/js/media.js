@@ -102,38 +102,53 @@
     };
     media.Media = Media;
     
-    function VideoPixelPump(canvElem, vidElem, mediaStream) {
+    function VideoPixelPump(canvElem, vidElem, mediaStream, interval, pixelStream) {
         //get pixel arrays from a canvas element
         //TODO: generate own DOM elements if none are supplied.
-        var url, gfxCtx, pixels;
+        var url, gfxCtx, pixels, initObs, pixelStream, timer="none";
         var PIXELDIM=64; //64x64 grid is all we use.
-        
+        interval = interval || 50; //20 Hz sampling rate
         function getPixels() {
             return pixels || [];
-        }
+        };
+        pixelStream = pixelStream || new Rx.Subject();
+        getPixels.pixelStream = pixelStream;
         getPixels.attachMediaStream = function(newMediaStream) {
             url = window.URL || window.webkitURL;
+            if(timer!=="none"){timer.dispose()};
             mediaStream = newMediaStream;
             vidElem.src = url ? url.createObjectURL(mediaStream) : mediaStream;
+            initObs = Rx.Observable.fromEvent(
+                vidElem, "loadedmetadata"
+                ).subscribe(function () {
+                    console.debug("video thingy might work!")
+                    timer = Rx.Observable.interval(
+                        interval
+                    ).subscribe(pump)
+                });
             vidElem.play();
             return getPixels;
         };
-        function pump(callback) {
+        function pump() {
             var vw, vh, vAspect, cw, ch, cAspect, newCw, newCh;
             var xoffset, yoffset;
             cw = canvElem.width;
             ch = canvElem.height;
             //we do || because .width can be NaN or 0 sometimes.
-            cAspect = (ch||64)/(cw||64);
+            cAspect = (cw||64)/(ch||64);
             
-            //this should return the size of the *video*,
-            // not the *video element*,
-            // although it may also return nonsense for the first few frames.
+            /*
+            This should return the size of the *video*,
+            not the *video element*,
+            although it may also return nonsense for the first few frames.
+            since we only do this on the loadedmetadata event,
+            that problem might no longer exist?
+            */
             vw = vidElem.videoWidth;
             vh = vidElem.videoHeight;
             //so once again we guess!
-            vAspect = (vh||64)/(vw||64);
-            if (vAspect>1){
+            vAspect = (vw||64)/(vh||64);
+            if (vAspect<1){ //taller than wide
                 newCh = Math.ceil(PIXELDIM*vAspect);
                 newCw = PIXELDIM;
                 xoffset = 0;
@@ -146,10 +161,15 @@
             };
             if((cw!==newCw)||(ch!==newCh)){
                 //TODO: make sure resize worked. CSS could override.
+                //TODO: do i even need the css? it's the drawing surface that counts
                 cw = newCw;
                 ch = newCh;
+                //set visual size (although probably invisible)
                 canvElem.style.width=cw+"px";
                 canvElem.style.height=ch+"px";
+                //set drawing size (essential)
+                canvElem.width=cw;
+                canvElem.height=ch;
             };
             console.debug("cv", cw, ch, cAspect, vw, vh, vAspect, newCw, newCh, xoffset, yoffset);
             // The first few frames get lost in Firefox, raising exceptions
@@ -158,8 +178,10 @@
             // TODO: check that this is still true
             // TODO: if the pixels are missing, loop until successful. (retryWhen from Rx can do this)
             try {
-                gfxCtx.drawImage(vidElem, 0, 0, cw, ch);
-                //should I only slice a square section out of the video?
+                console.debug("cv2", cw, ch, vw, vh);
+                
+                gfxCtx.drawImage(vidElem, 0, 0, vw, vh, 0, 0, cw, ch);
+                //slice a square section out of the video
                 pixels = gfxCtx.getImageData(
                     xoffset, yoffset,
                     xoffset+PIXELDIM, yoffset+PIXELDIM).data || [];
@@ -169,16 +191,16 @@
             }
             if (pixels.length>0) {
                 //Yay! it worked
-                callback(pixels);
+                pixelStream.onNext(pixels);
             };
             return getPixels;
         };
-        getPixels.pump = pump;
+        getPixels.pump = pump; //shouldn't really be called from outside?
         gfxCtx = canvElem.getContext('2d');
         if (typeof mediaStream !== "undefined") {
             getPixels.attachMediaStream(mediaStream)
         };
-        console.debug("pp", canvElem, vidElem, mediaStream);
+        console.debug("pp", getPixels, getPixels.pixelStream, getPixels.pump, canvElem, vidElem, mediaStream);
         return getPixels;
     }
     media.VideoPixelPump = VideoPixelPump;
