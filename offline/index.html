@@ -55,12 +55,12 @@
 
                       <ul id="midiIn" class="f-dropdown" data-dropdown-content></ul>
 
-                      <!-- <dl class="accordion" data-accordion>
+                      <dl class="accordion" data-accordion>
                           <dd class="accordion-navigation">
                               <a href="#analysis-panel">Analysis</a>
                               <div id="analysis-panel" class="content active"></div>
                           </dd>
-                      </dl> -->
+                      </dl>
                   </div>
 
                   <div id="rightcontrolsidebar" class="sidebar large-3 medium-3 small-5 columns patchcontrols">
@@ -141,7 +141,7 @@
     <!-- video analysis -->
     <script src="./js/videoanalysis/_videoanalysis.js"></script>
     <script src="./js/videoanalysis/statistic.js"></script>
-    <!-- <script src="./js/videoanalysis/visualizer.js"></script> -->
+    <script src="./js/videoanalysis/visualizer.js"></script>
 
     <!-- audio infrastructure -->
     <script src="./js/vendor/WAAX/waax.js"></script>
@@ -182,7 +182,9 @@
                         mediaStream
                     );
                     patch = patch.basic_triad(
-                        videoPixels, $("#rightcontrolsidebar")
+                        videoPixels,
+                        document.getElementById("rightcontrolsidebar"),
+                        document.getElementById("analysis-panel")
                     );
                 }
             });

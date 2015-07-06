@@ -6,12 +6,13 @@
     var patch; 
     window.patch = patch = window.patch || {};
 
-    function basic_triad(videoPixels, controlSidebar) {
+    function basic_triad(videoPixels, controlSidebar, statsSidebaar) {
         //simple example patch
         var triadEnsembleParamSet;
         var triadEnsembleView;
         var triadEnsemble;
         var statsStreamer;
+        var plotStats;
         var self = {
         };
         
@@ -19,15 +20,16 @@
             avg: videoanalysis.AverageColor(),
             cov: videoanalysis.PluginMoments(),
         });
-        
+        plotStats = videoanalysis.statsPlotter(statsSidebaar);
+        statsStreamer.statsStream.subscribe(plotStats);
         triadEnsemble = ensembles.TriadEnsemble("triad1");
+        
         triadEnsembleParamSet = ensembles.EnsembleParamSet(
             triadEnsemble);
         triadEnsembleView = ensembles.EnsembleView(
             triadEnsembleParamSet,
             controlSidebar
         );
-        statsStreamer.statsStream.pluck("avg", 0).subscribe(function(x){console.debug(x)})
         return self;
     };
 
