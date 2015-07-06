@@ -48,3 +48,46 @@ var subscription = subject.subscribe(
     });
 
 subject.onNext(42);
+
+
+////////////////////////////////////////////////////////////////////////
+// For comparison, the Rx.dom implementation
+////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * Creates a Web Worker with a given URL as a Subject.
+ *
+ * @example
+ * var worker = Rx.DOM.fromWebWorker('worker.js');
+ *
+ * @param {String} url The URL of the Web Worker.
+ * @returns {Subject} A Subject wrapping the Web Worker.
+ */
+/*
+dom.fromWebWorker = function (url) {
+  if (!root.Worker) { throw new TypeError('Worker not implemented in your runtime.'); }
+  var worker = new root.Worker(url);
+
+  var observable = new AnonymousObservable(function (obs) {
+
+    function messageHandler(data) { obs.onNext(data); }
+    function errHandler(err) { obs.onError(err); }
+
+    worker.addEventListener('message', messageHandler, false);
+    worker.addEventListener('error', errHandler, false);
+
+    return function () {
+      worker.close();
+      worker.removeEventListener('message', messageHandler, false);
+      worker.removeEventListener('error', errHandler, false);
+    };
+  });
+
+  var observer = observerCreate(function (data) {
+    worker.postMessage(data);
+  });
+
+  return Subject.create(observer, observable);
+};
+*/
