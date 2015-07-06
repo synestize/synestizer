@@ -6,8 +6,8 @@
 
 (function( global, _, Rx ) {
     'use strict';
-    var video; 
-    window.video = video = window.video || {};
+    var videoanalysis; 
+    window.videoanalysis = videoanalysis = window.videoanalysis || {};
     function AverageColor(params) {
         var PIXELDIM=64; //64x64 grid is all we use.
         var PIXELCOUNT=PIXELDIM*PIXELDIM;
@@ -34,7 +34,7 @@
         return calc;
     };
     // expose our module to the global object
-    global.video.AverageColor = AverageColor;
+    global.videoanalysis.AverageColor = AverageColor;
     
     function PluginMoments(params) {
         // Gives us moment estimates by the plugin method
@@ -151,6 +151,6 @@
         return calc;
     };
     // expose our module to the global object
-    global.video.PluginMoments = PluginMoments;
+    global.videoanalysis.PluginMoments = PluginMoments;
     
 })( this, _, Rx );

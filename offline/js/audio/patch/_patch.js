@@ -16,9 +16,9 @@
         var self = {
         };
         
-        statsStreamer = video.StatsStreamer(videoPixels, {
-            avg: video.AverageColor(),
-            //cov: video.PluginMoments(),
+        statsStreamer = videoanalysis.StatsStreamer(videoPixels, {
+            avg: videoanalysis.AverageColor(),
+            //cov: videoanalysis.PluginMoments(),
         });
         
         triadEnsemble = ensembles.TriadEnsemble("triad1");

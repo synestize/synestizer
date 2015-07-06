@@ -3,8 +3,8 @@
 //TODO: reinstate delta stats
 (function( global, _, Rx ) {
     'use strict';
-    var video; 
-    window.video = video = window.video || {};
+    var videoanalysis; 
+    window.videoanalysis = videoanalysis = window.videoanalysis || {};
 
     function StatsStreamer(pixelPump, stats){
         // should probably make this stats array be serializable if I want to 
@@ -51,5 +51,5 @@
     };
 
     // expose our module to the global object
-    global.video.StatsStreamer = StatsStreamer;
+    global.videoanalysis.StatsStreamer = StatsStreamer;
 })( this, _, Rx );
