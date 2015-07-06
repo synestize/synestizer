@@ -158,7 +158,7 @@
     <script src="./js/audio/ensemble/_ensemble.js"></script>
     <script src="./js/audio/ensemble/triad_ens.js" ></script>
 
-    <!-- audio patches -->
+    <!-- audio/video patches -->
     <script src="./js/audio/patch/_patch.js"></script>
 
     <script>
@@ -180,12 +180,14 @@
                         document.getElementById("switchDevices"));
                     media.attachFullscreenButton(
                         document.getElementById("fullscreen"));
-                    videoPixels = media.VideoPixelStreamer(
+                    videoPixels = media.VideoPixelPump(
                         document.getElementById("canvas"),
                         document.getElementById("video"),
-                        undefined, mediaStream
+                        mediaStream
                     );
-                    patch = patch.basic(videoPixels, $("#rightcontrolsidebar"));
+                    patch = patch.basic_triad(
+                        videoPixels, $("#rightcontrolsidebar")
+                    );
                 }
             });
 

@@ -298,10 +298,10 @@ button:focus,
 }
 
 
-
+/* this will be resized by the media.js - so ignore! */
 #canvas {
-    width: 86px;
-    height: 64px;
+    width: 128px;
+    height: 128px;
     display: none;
 }
 

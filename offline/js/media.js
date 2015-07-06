@@ -102,8 +102,12 @@
     };
     media.Media = Media;
     
-    function VideoPixelStreamer(canvElem, vidElem, pixelStream, mediaStream) {
-        var url, gfxCtx, pixels, cw, ch, timer="none";
+    function VideoPixelPump(canvElem, vidElem, mediaStream) {
+        //get pixel arrays from a canvas element
+        //TODO: generate own DOM elements if none are supplied.
+        var url, gfxCtx, pixels;
+        var PIXELDIM=64; //64x64 grid is all we use.
+        
         function getPixels() {
             return pixels || [];
         }
@@ -112,42 +116,67 @@
             mediaStream = newMediaStream;
             vidElem.src = url ? url.createObjectURL(mediaStream) : mediaStream;
             vidElem.play();
-            if (timer!=="none") {
-                window.clearInterval(timer);
-            }
-            timer = window.setInterval(pumpPixels, 50);//20 Hz
             return getPixels;
         }
-        function pumpPixels(){
+        function pump(callback) {
+            var vw, vh, vAspect, cw, ch, cAspect, newCw, newCh;
+            var xoffset, yoffset;
+            cw = canvElem.width;
+            ch = canvElem.height;
+            //we do || because .width can be NaN or 0 sometimes.
+            cAspect = (ch||64)/(cw||64);
+            vw = vidElem.width;
+            vh = vidElem.height;
+            vAspect = (vh||64)/(vw||64);
+            if (vAspect>1){
+                newCh = Math.ceil(PIXELDIM*vAspect);
+                newCw = PIXELDIM;
+                xoffset = 0;
+                yoffset = Math.floor((newCh-PIXELDIM)/2);
+            } else {
+                newCh = PIXELDIM;
+                newCw = Math.ceil(PIXELDIM*vAspect);
+                xoffset = Math.floor((newCw-PIXELDIM)/2);
+                yoffset = 0;
+            };
+            if((cw!==newCw)||(ch!==newCh)){
+                //TODO: make sure resize worked. CSS could override.
+                cw = newCw;
+                ch = newCh;
+                canvElem.style.width=cw+"px";
+                canvElem.style.height=ch+"px";
+            };
+            console.debug("cv", cw, ch, cAspect, vw, vh, vAspect, newCw, newCh, xoffset, yoffset);
             // The first few frames get lost in Firefox, raising exceptions
             // We make sure this does not break the whole loop by
             // using a try..catch
+            // TODO: check that this is still true
+            // TODO: if the pixels are missing, loop until successful. (retryWhen from Rx can do this)
             try {
                 gfxCtx.drawImage(vidElem, 0, 0, cw, ch);
                 //should I only slice a square section out of the video?
-                pixels = gfxCtx.getImageData(0, 0, cw, ch).data || [];
+                pixels = gfxCtx.getImageData(
+                    xoffset, yoffset,
+                    xoffset+PIXELDIM, yoffset+PIXELDIM).data || [];
             } catch (e) {
                 console.log("error getting video frame");
                 console.debug(e);
             }
             if (pixels.length>0) {
                 //Yay! it worked
-                pixelStream.onNext(pixels);
+                callback(pixels);
             };
-        }
+            return getPixels;
+        };
+        getPixels.pump = pump;
         gfxCtx = canvElem.getContext('2d');
-        cw = canvElem.width;
-        ch = canvElem.height;
-        pixelStream = pixelStream || new Rx.ReplaySubject(1);
         if (typeof mediaStream !== "undefined") {
             getPixels.attachMediaStream(mediaStream)
-        }
-        getPixels.cw = function () {return cw};
-        getPixels.ch = function () {return ch};
-        getPixels.stream = function () {return pixelStream};
+        };
+        console.debug("pp", canvElem, vidElem, mediaStream);
         return getPixels;
     }
-    media.VideoPixelStreamer = VideoPixelStreamer;
+    media.VideoPixelPump = VideoPixelPump;
     
     function attachMediaButton(el) {
         if (typeof window.MediaStreamTrack.getSources === 'undefined'){
