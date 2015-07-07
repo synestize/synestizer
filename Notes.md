@@ -236,7 +236,7 @@ Partial workflow tools:
 
 * [colorspaces](https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
 * [colormaps](http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf)
-* [excellent seris on color](http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/)
+* [excellent series on color](http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/)
 
 ### Sequencing
 
