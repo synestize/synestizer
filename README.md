@@ -1,7 +1,7 @@
 synestizer
 ==========
 
-[An app that helps you listen to colors](https://github.com/synestize/synestizer/).
+[An app](https://github.com/synestize/synestizer/) that lets you hear color.
 
 Not much is happening in the master branch.
-For exciting times, see [the development branch](https://github.com/synestize/synestizer/tree/development).
+For exciting times, see [the development branch](https://github.com/synestize/synestizer/tree/development), or read the basic [documentation](https://synestize.github.io/synestizer/)
