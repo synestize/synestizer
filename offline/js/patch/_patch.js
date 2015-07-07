@@ -31,6 +31,12 @@
             triadEnsembleParamSet,
             controlSidebar
         );
+        inStream.pluck("cov", 0).subscribe(function(x){
+            triadEnsembleParamSet.set("outputGain", x)});
+        inStream.pluck("cov", 1).subscribe(function(x){
+            triadEnsembleParamSet.set("freq2", x)});
+        inStream.pluck("cov", 2).subscribe(function(x){
+            triadEnsembleParamSet.set("freq3", x)});
         self = {
             statsStreamer: statsStreamer,
             plotStats: plotStats,
