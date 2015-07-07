@@ -85,7 +85,6 @@
                     );
                     ysvij[3] = i/PIXELDIM; //I
                     ysvij[4] = j/PIXELDIM; //J
-                    if ((i==16)&&(j==16)) console.debug("t", ysvij);
                     
                     rawSums[B] += ysvij[0];
                     rawSums[S] += ysvij[1];
@@ -104,11 +103,9 @@
                     rawSums[VV] += ysvij[2]*ysvij[2];
                 }
             }
-            console.debug("raw", rawSums);
             centralMoments[B] = rawSums[B]/PIXELCOUNT;
             centralMoments[S] = rawSums[S]/PIXELCOUNT;
             centralMoments[V] = rawSums[V]/PIXELCOUNT;
-            console.debug("central", centralMoments);
             centralMoments[BB] = (rawSums[BB]/PIXELCOUNT
                 - centralMoments[B] * centralMoments[B]);
             centralMoments[SS] = (rawSums[SS]/PIXELCOUNT
@@ -150,7 +147,6 @@
                 centralMoments[BB]*centralMoments[VV]))*0.5+0.5;
             cookedMoments[SV] = centralMoments[SV]/Math.max(0.0001, Math.sqrt(
                 centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
-            console.debug("cooked", cookedMoments);
             //color versus axis uses
             cookedMoments[IB] = centralMoments[IB]/Math.max(0.0001, Math.sqrt(
                 0.08333333333*centralMoments[BB]))*0.5+0.5;

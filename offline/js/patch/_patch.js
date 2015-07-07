@@ -22,8 +22,6 @@
         });
         plotStats = videoanalysis.statsPlotter(statsSidebaar);
         inStream = statsStreamer.statsStream;
-        inStream.pluck("cov").subscribe(
-            function(cov){console.debug("returned cov", cov)});
         inStream.subscribe(plotStats);
 
         triadEnsemble = ensembles.TriadEnsemble("triad1");
