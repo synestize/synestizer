@@ -115,6 +115,11 @@ Ranked in descending order of viability:
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
 * patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
+* User interface library possibilities
+
+  * [WAAX's MUI](https://hoch.github.io/WAAX/waax/examples/mui/)
+  * [Google MDC](http://www.getmdl.io/index.html)
+  * [WebAudioComponents]()
 
 ## Workflow options
 
