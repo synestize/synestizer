@@ -21,16 +21,11 @@
             cov: videoanalysis.PluginMoments(),
         });
         plotStats = videoanalysis.statsPlotter(statsSidebaar);
-        inStream = statsStreamer.statsStream.throttleFirst(1000);
+        inStream = statsStreamer.statsStream;
         inStream.pluck("cov").subscribe(
             function(cov){console.debug("returned cov", cov)});
-        inStream.subscribe(function (d) {
-            console.debug("returned cov3", d.cov);
-            plotStats;
-            console.debug("returned cov4", d.cov);
-        });
-        inStream.pluck("cov").subscribe(
-            function(cov){console.debug("returned cov2", cov)});
+        inStream.subscribe(plotStats);
+
         triadEnsemble = ensembles.TriadEnsemble("triad1");
         triadEnsembleParamSet = ensembles.EnsembleParamSet(
             triadEnsemble);
