@@ -46,19 +46,25 @@
         var PIXELDIM=64; //64x64 grid is all we use.
         var PIXELCOUNT=PIXELDIM*PIXELDIM;
         var rawSums, centralMoments, cookedMoments, ysvij;
-        
+        var nDims=15;
         // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
-        var B=0, S=1, V=2, IB=4, IS=5, IV=6, JB=7, JS=8, JV=9, BB=10, BS=11, BV=12, SS=13, SV=14, VV=15;
+        var B=0, S=1, V=2;
+        var IB=3, IS=4, IV=5;
+        var JB=6, JS=7, JV=8;
+        var BB=9, BS=10, BV=11, SS=12, SV=13, VV=14;
         params = params || {};
         
-        rawSums = new Float32Array(16);
-        centralMoments = new Float32Array(16);
-        cookedMoments = new Float32Array(16);
-        ysvij = new Float32Array(3);
+        rawSums = new Float32Array(nDims);
+        centralMoments = new Float32Array(nDims);
+        cookedMoments = new Float32Array(nDims);
+        ysvij = new Float32Array(5);
         function calc(pixels) {
-            for (var i = 0; i < PIXELDIM; i++) {
-                for (var j = 0; j < PIXELDIM; j++) {
-                    var ij = (PIXELDIM * i + j) * 4;
+            for (var i = 0; i < nDims; i++) {
+                rawSums[i]=0.0;
+            }            
+            for (var j = 0; j < PIXELDIM; j++) {
+                for (var i = 0; i < PIXELDIM; i++) {
+                    var ij = (PIXELDIM * j + i) * 4;//pixel offset
                     // first we tranform RGB to YSV 
                     // - effectively a PCA of the color vectors
                     // otherwise we are measuring mostly brightness.
@@ -77,8 +83,8 @@
                         - 0.00164191*pixels[ij+1]
                         - 0.00031887*pixels[ij+2]
                     );
-                    ysvij[3] = j/PIXELDIM; //I
-                    ysvij[4] = i/PIXELDIM; //J
+                    ysvij[3] = i/PIXELDIM; //I
+                    ysvij[4] = j/PIXELDIM; //J
                     rawSums[B] += ysvij[0];
                     rawSums[S] += ysvij[1];
                     rawSums[V] += ysvij[2];
@@ -92,7 +98,7 @@
                     rawSums[BS] += ysvij[0]*ysvij[1];
                     rawSums[BV] += ysvij[0]*ysvij[2];
                     rawSums[SS] += ysvij[1]*ysvij[1];
-                    rawSums[SV] += ysvij[0]*ysvij[2];
+                    rawSums[SV] += ysvij[1]*ysvij[2];
                     rawSums[VV] += ysvij[2]*ysvij[2];
                 }
             }
@@ -115,7 +121,7 @@
                 - rawSums[BB]/PIXELCOUNT);
             centralMoments[BS] = (centralMoments[B] * centralMoments[S] 
                 - rawSums[BS]/PIXELCOUNT);
-            centralMoments[BS] = (centralMoments[B] * centralMoments[V] 
+            centralMoments[BV] = (centralMoments[B] * centralMoments[V] 
                 - rawSums[BV]/PIXELCOUNT);
             centralMoments[SS] = (centralMoments[S] * centralMoments[S] 
                 - rawSums[SS]/PIXELCOUNT);
@@ -129,27 +135,27 @@
             cookedMoments[BB] = centralMoments[BB]*4+0.5;
             cookedMoments[SS] = centralMoments[SS]*4+0.5;
             cookedMoments[VV] = centralMoments[VV]*4+0.5;
-            cookedMoments[BS] = centralMoments[BS]/Math.sqrt(
-                centralMoments[BB]*centralMoments[SS])*0.5+0.5;
-            cookedMoments[BV] = centralMoments[BV]/Math.sqrt(
-                centralMoments[BB]*centralMoments[VV])*0.5+0.5;
-            cookedMoments[SV] = centralMoments[SV]/Math.sqrt(
-                centralMoments[SS]*centralMoments[VV])*0.5+0.5;
-            cookedMoments[IB] = centralMoments[IB]/Math.sqrt(
-                0.25*centralMoments[BB])*0.5+0.5;
-            cookedMoments[IS] = centralMoments[IS]/Math.sqrt(
-                0.25*centralMoments[SS])*0.5+0.5;
-            cookedMoments[IV] = centralMoments[IV]/Math.sqrt(
-                0.25*centralMoments[VV])*0.5+0.5; 
-            cookedMoments[JB] = centralMoments[JB]/Math.sqrt(
-                0.25*centralMoments[BB])*0.5+0.5;
-            cookedMoments[JS] = centralMoments[JS]/Math.sqrt(
-                0.25*centralMoments[SS])*0.5+0.5;
-            cookedMoments[JV] = centralMoments[JV]/Math.sqrt(
-                0.25*centralMoments[VV])*0.5+0.5;
+            cookedMoments[BS] = centralMoments[BS]/Math.sqrt(Math.abs(
+                centralMoments[BB]*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[BV] = centralMoments[BV]/Math.sqrt(Math.abs(
+                centralMoments[BB]*centralMoments[VV]))*0.5+0.5;
+            cookedMoments[SV] = centralMoments[SV]/Math.sqrt(Math.abs(
+                centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
+            cookedMoments[IB] = centralMoments[IB]/Math.sqrt(Math.abs(
+                0.25*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[IS] = centralMoments[IS]/Math.sqrt(Math.abs(
+                0.25*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[IV] = centralMoments[IV]/Math.sqrt(Math.abs(
+                0.25*centralMoments[VV]))*0.5+0.5; 
+            cookedMoments[JB] = centralMoments[JB]/Math.sqrt(Math.abs(
+                0.25*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[JS] = centralMoments[JS]/Math.sqrt(Math.abs(
+                0.25*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[JV] = centralMoments[JV]/Math.sqrt(Math.abs(
+                0.25*centralMoments[VV]))*0.5+0.5;
             return cookedMoments;
         };
-        calc.nDims = 16;
+        calc.nDims = nDims;
         return calc;
     };
     // expose our module to the global object
