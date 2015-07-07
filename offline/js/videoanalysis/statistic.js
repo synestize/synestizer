@@ -108,56 +108,62 @@
             centralMoments[B] = rawSums[B]/PIXELCOUNT;
             centralMoments[S] = rawSums[S]/PIXELCOUNT;
             centralMoments[V] = rawSums[V]/PIXELCOUNT;
-            centralMoments[IB] = (0.5 * centralMoments[B] 
-                - rawSums[IB]/PIXELCOUNT);
-            centralMoments[IS] = (0.5 * centralMoments[S] 
-                - rawSums[IS]/PIXELCOUNT);
-            centralMoments[IV] = (0.5 * centralMoments[V] 
-                - rawSums[IV]/PIXELCOUNT);
-            centralMoments[JB] = (0.5 * centralMoments[B] 
-                - rawSums[JB]/PIXELCOUNT);
-            centralMoments[JS] = (0.5 * centralMoments[S] 
-                - rawSums[JS]/PIXELCOUNT);
-            centralMoments[JV] = (0.5 * centralMoments[V] 
-                - rawSums[JV]/PIXELCOUNT);
-            centralMoments[BB] = (centralMoments[B] * centralMoments[B] 
-                - rawSums[BB]/PIXELCOUNT);
-            centralMoments[BS] = (centralMoments[B] * centralMoments[S] 
-                - rawSums[BS]/PIXELCOUNT);
-            centralMoments[BV] = (centralMoments[B] * centralMoments[V] 
-                - rawSums[BV]/PIXELCOUNT);
-            centralMoments[SS] = (centralMoments[S] * centralMoments[S] 
-                - rawSums[SS]/PIXELCOUNT);
-            centralMoments[SV] = (centralMoments[S] * centralMoments[V] 
-                - rawSums[SV]/PIXELCOUNT);
-            centralMoments[VV] = (centralMoments[V] * centralMoments[V] 
-                - rawSums[VV]/PIXELCOUNT);
             console.debug("central", centralMoments);
+            centralMoments[BB] = (rawSums[BB]/PIXELCOUNT
+                - centralMoments[B] * centralMoments[B]);
+            centralMoments[SS] = (rawSums[SS]/PIXELCOUNT
+                - centralMoments[S] * centralMoments[S]);
+            centralMoments[VV] = (rawSums[VV]/PIXELCOUNT
+                - centralMoments[V] * centralMoments[V]);
+            centralMoments[IB] = (rawSums[IB]/PIXELCOUNT
+                - 0.5 * centralMoments[B]);
+            centralMoments[IS] = (rawSums[IS]/PIXELCOUNT
+                - 0.5 * centralMoments[S]);
+            centralMoments[IV] = (rawSums[IV]/PIXELCOUNT
+                - 0.5 * centralMoments[V]);
+            centralMoments[JB] = (rawSums[JB]/PIXELCOUNT
+                - 0.5 * centralMoments[B]);
+            centralMoments[JS] = (rawSums[JS]/PIXELCOUNT
+                - 0.5 * centralMoments[S]);
+            centralMoments[JV] = (rawSums[JV]/PIXELCOUNT
+                - 0.5 * centralMoments[V]);
+            centralMoments[BS] = (rawSums[BS]/PIXELCOUNT
+                - centralMoments[B] * centralMoments[S]);
+            centralMoments[BV] = (rawSums[BV]/PIXELCOUNT
+                - centralMoments[B] * centralMoments[V]);
+            centralMoments[SV] = (rawSums[SV]/PIXELCOUNT
+                - centralMoments[S] * centralMoments[V]);
             cookedMoments[B] = centralMoments[B];
             cookedMoments[S] = centralMoments[S];
             cookedMoments[V] = centralMoments[V];
-            cookedMoments[BB] = centralMoments[BB]*4+0.5;
-            cookedMoments[SS] = centralMoments[SS]*4+0.5;
-            cookedMoments[VV] = centralMoments[VV]*4+0.5;
-            cookedMoments[BS] = centralMoments[BS]/Math.sqrt(Math.abs(
+            //Normalizing the variances is tricky.
+            //Technically the maximal variance is 0.25, for a 50/50 B/W image
+            //but I think we can assume a uniform distribution is a good
+            // extremal point for us, implying a maximal variance of 1/12
+            cookedMoments[BB] = centralMoments[BB]*12;
+            cookedMoments[SS] = centralMoments[SS]*12;
+            cookedMoments[VV] = centralMoments[VV]*12;
+            //pure color covariances use the normal formula
+            cookedMoments[BS] = centralMoments[BS]/Math.max(0.0001, Math.sqrt(
                 centralMoments[BB]*centralMoments[SS]))*0.5+0.5;
-            cookedMoments[BV] = centralMoments[BV]/Math.sqrt(Math.abs(
+            cookedMoments[BV] = centralMoments[BV]/Math.max(0.0001, Math.sqrt(
                 centralMoments[BB]*centralMoments[VV]))*0.5+0.5;
-            cookedMoments[SV] = centralMoments[SV]/Math.sqrt(Math.abs(
+            cookedMoments[SV] = centralMoments[SV]/Math.max(0.0001, Math.sqrt(
                 centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
-            cookedMoments[IB] = centralMoments[IB]/Math.sqrt(Math.abs(
-                0.25*centralMoments[BB]))*0.5+0.5;
-            cookedMoments[IS] = centralMoments[IS]/Math.sqrt(Math.abs(
-                0.25*centralMoments[SS]))*0.5+0.5;
-            cookedMoments[IV] = centralMoments[IV]/Math.sqrt(Math.abs(
-                0.25*centralMoments[VV]))*0.5+0.5; 
-            cookedMoments[JB] = centralMoments[JB]/Math.sqrt(Math.abs(
-                0.25*centralMoments[BB]))*0.5+0.5;
-            cookedMoments[JS] = centralMoments[JS]/Math.sqrt(Math.abs(
-                0.25*centralMoments[SS]))*0.5+0.5;
-            cookedMoments[JV] = centralMoments[JV]/Math.sqrt(Math.abs(
-                0.25*centralMoments[VV]))*0.5+0.5;
             console.debug("cooked", cookedMoments);
+            //color versus axis uses
+            cookedMoments[IB] = centralMoments[IB]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[IS] = centralMoments[IS]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[IV] = centralMoments[IV]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[VV]))*0.5+0.5; 
+            cookedMoments[JB] = centralMoments[JB]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[JS] = centralMoments[JS]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[JV] = centralMoments[JV]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[VV]))*0.5+0.5;
             return cookedMoments;
         };
         calc.nDims = nDims;
