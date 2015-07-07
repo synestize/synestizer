@@ -10,7 +10,7 @@
     var videoanalysis; 
     window.videoanalysis = videoanalysis = window.videoanalysis || {};
     function AverageColor(params) {
-        //1/8 sub-sampled average colour
+        //1/8 sub-sampled average color
         var PIXELDIM=64; //64x64 grid is all we use.
         var PIXELCOUNT=PIXELDIM*PIXELDIM;
         params = params || {};
@@ -48,10 +48,10 @@
         var rawSums, centralMoments, cookedMoments, ysvij;
         var nDims=15;
         // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
-        var B=0, S=1, V=2;
-        var IB=3, IS=4, IV=5;
-        var JB=6, JS=7, JV=8;
-        var BB=9, BS=10, BV=11, SS=12, SV=13, VV=14;
+        var Y=0, S=1, V=2;
+        var IY=3, IS=4, IV=5;
+        var JY=6, JS=7, JV=8;
+        var YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
         params = params || {};
         
         rawSums = new Float32Array(nDims);
@@ -86,76 +86,76 @@
                     ysvij[3] = i/PIXELDIM; //I
                     ysvij[4] = j/PIXELDIM; //J
                     
-                    rawSums[B] += ysvij[0];
+                    rawSums[Y] += ysvij[0];
                     rawSums[S] += ysvij[1];
                     rawSums[V] += ysvij[2];
-                    rawSums[IB] += ysvij[0]*ysvij[3];
+                    rawSums[IY] += ysvij[0]*ysvij[3];
                     rawSums[IS] += ysvij[1]*ysvij[3];
                     rawSums[IV] += ysvij[2]*ysvij[3];
-                    rawSums[JB] += ysvij[0]*ysvij[4];
+                    rawSums[JY] += ysvij[0]*ysvij[4];
                     rawSums[JS] += ysvij[1]*ysvij[4];
                     rawSums[JV] += ysvij[2]*ysvij[4];
-                    rawSums[BB] += ysvij[0]*ysvij[0];
-                    rawSums[BS] += ysvij[0]*ysvij[1];
-                    rawSums[BV] += ysvij[0]*ysvij[2];
+                    rawSums[YY] += ysvij[0]*ysvij[0];
+                    rawSums[YS] += ysvij[0]*ysvij[1];
+                    rawSums[YV] += ysvij[0]*ysvij[2];
                     rawSums[SS] += ysvij[1]*ysvij[1];
                     rawSums[SV] += ysvij[1]*ysvij[2];
                     rawSums[VV] += ysvij[2]*ysvij[2];
                 }
             }
-            centralMoments[B] = rawSums[B]/PIXELCOUNT;
+            centralMoments[Y] = rawSums[Y]/PIXELCOUNT;
             centralMoments[S] = rawSums[S]/PIXELCOUNT;
             centralMoments[V] = rawSums[V]/PIXELCOUNT;
-            centralMoments[BB] = (rawSums[BB]/PIXELCOUNT
-                - centralMoments[B] * centralMoments[B]);
+            centralMoments[YY] = (rawSums[YY]/PIXELCOUNT
+                - centralMoments[Y] * centralMoments[Y]);
             centralMoments[SS] = (rawSums[SS]/PIXELCOUNT
                 - centralMoments[S] * centralMoments[S]);
             centralMoments[VV] = (rawSums[VV]/PIXELCOUNT
                 - centralMoments[V] * centralMoments[V]);
-            centralMoments[IB] = (rawSums[IB]/PIXELCOUNT
-                - 0.5 * centralMoments[B]);
+            centralMoments[IY] = (rawSums[IY]/PIXELCOUNT
+                - 0.5 * centralMoments[Y]);
             centralMoments[IS] = (rawSums[IS]/PIXELCOUNT
                 - 0.5 * centralMoments[S]);
             centralMoments[IV] = (rawSums[IV]/PIXELCOUNT
                 - 0.5 * centralMoments[V]);
-            centralMoments[JB] = (rawSums[JB]/PIXELCOUNT
-                - 0.5 * centralMoments[B]);
+            centralMoments[JY] = (rawSums[JY]/PIXELCOUNT
+                - 0.5 * centralMoments[Y]);
             centralMoments[JS] = (rawSums[JS]/PIXELCOUNT
                 - 0.5 * centralMoments[S]);
             centralMoments[JV] = (rawSums[JV]/PIXELCOUNT
                 - 0.5 * centralMoments[V]);
-            centralMoments[BS] = (rawSums[BS]/PIXELCOUNT
-                - centralMoments[B] * centralMoments[S]);
-            centralMoments[BV] = (rawSums[BV]/PIXELCOUNT
-                - centralMoments[B] * centralMoments[V]);
+            centralMoments[YS] = (rawSums[YS]/PIXELCOUNT
+                - centralMoments[Y] * centralMoments[S]);
+            centralMoments[YV] = (rawSums[YV]/PIXELCOUNT
+                - centralMoments[Y] * centralMoments[V]);
             centralMoments[SV] = (rawSums[SV]/PIXELCOUNT
                 - centralMoments[S] * centralMoments[V]);
-            cookedMoments[B] = centralMoments[B];
+            cookedMoments[Y] = centralMoments[Y];
             cookedMoments[S] = centralMoments[S];
             cookedMoments[V] = centralMoments[V];
             //Normalizing the variances is tricky.
             //Technically the maximal variance is 0.25, for a 50/50 B/W image
             //but I think we can assume a uniform distribution is a good
             // extremal point for us, implying a maximal variance of 1/12
-            cookedMoments[BB] = centralMoments[BB]*12;
+            cookedMoments[YY] = centralMoments[YY]*12;
             cookedMoments[SS] = centralMoments[SS]*12;
             cookedMoments[VV] = centralMoments[VV]*12;
             //pure color covariances use the normal formula
-            cookedMoments[BS] = centralMoments[BS]/Math.max(0.0001, Math.sqrt(
-                centralMoments[BB]*centralMoments[SS]))*0.5+0.5;
-            cookedMoments[BV] = centralMoments[BV]/Math.max(0.0001, Math.sqrt(
-                centralMoments[BB]*centralMoments[VV]))*0.5+0.5;
+            cookedMoments[YS] = centralMoments[YS]/Math.max(0.0001, Math.sqrt(
+                centralMoments[YY]*centralMoments[SS]))*0.5+0.5;
+            cookedMoments[YV] = centralMoments[YV]/Math.max(0.0001, Math.sqrt(
+                centralMoments[YY]*centralMoments[VV]))*0.5+0.5;
             cookedMoments[SV] = centralMoments[SV]/Math.max(0.0001, Math.sqrt(
                 centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
             //color versus axis uses
-            cookedMoments[IB] = centralMoments[IB]/Math.max(0.0001, Math.sqrt(
-                0.08333333333*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[IY] = centralMoments[IY]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[YY]))*0.5+0.5;
             cookedMoments[IS] = centralMoments[IS]/Math.max(0.0001, Math.sqrt(
                 0.08333333333*centralMoments[SS]))*0.5+0.5;
             cookedMoments[IV] = centralMoments[IV]/Math.max(0.0001, Math.sqrt(
                 0.08333333333*centralMoments[VV]))*0.5+0.5; 
-            cookedMoments[JB] = centralMoments[JB]/Math.max(0.0001, Math.sqrt(
-                0.08333333333*centralMoments[BB]))*0.5+0.5;
+            cookedMoments[JY] = centralMoments[JY]/Math.max(0.0001, Math.sqrt(
+                0.08333333333*centralMoments[YY]))*0.5+0.5;
             cookedMoments[JS] = centralMoments[JS]/Math.max(0.0001, Math.sqrt(
                 0.08333333333*centralMoments[SS]))*0.5+0.5;
             cookedMoments[JV] = centralMoments[JV]/Math.max(0.0001, Math.sqrt(
