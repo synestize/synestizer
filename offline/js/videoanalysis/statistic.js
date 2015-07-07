@@ -85,6 +85,8 @@
                     );
                     ysvij[3] = i/PIXELDIM; //I
                     ysvij[4] = j/PIXELDIM; //J
+                    if ((i==16)&&(j==16)) console.debug("t", ysvij);
+                    
                     rawSums[B] += ysvij[0];
                     rawSums[S] += ysvij[1];
                     rawSums[V] += ysvij[2];
@@ -102,6 +104,7 @@
                     rawSums[VV] += ysvij[2]*ysvij[2];
                 }
             }
+            console.debug("raw", rawSums);
             centralMoments[B] = rawSums[B]/PIXELCOUNT;
             centralMoments[S] = rawSums[S]/PIXELCOUNT;
             centralMoments[V] = rawSums[V]/PIXELCOUNT;
@@ -129,6 +132,7 @@
                 - rawSums[SV]/PIXELCOUNT);
             centralMoments[VV] = (centralMoments[V] * centralMoments[V] 
                 - rawSums[VV]/PIXELCOUNT);
+            console.debug("central", centralMoments);
             cookedMoments[B] = centralMoments[B];
             cookedMoments[S] = centralMoments[S];
             cookedMoments[V] = centralMoments[V];
@@ -153,6 +157,7 @@
                 0.25*centralMoments[SS]))*0.5+0.5;
             cookedMoments[JV] = centralMoments[JV]/Math.sqrt(Math.abs(
                 0.25*centralMoments[VV]))*0.5+0.5;
+            console.debug("cooked", cookedMoments);
             return cookedMoments;
         };
         calc.nDims = nDims;

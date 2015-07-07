@@ -13,16 +13,24 @@
         var triadEnsemble;
         var statsStreamer;
         var plotStats;
-        var self 
+        var self;
+        var inStream;
         
         statsStreamer = videoanalysis.StatsStreamer(videoPixels, {
             avg: videoanalysis.AverageColor(),
             cov: videoanalysis.PluginMoments(),
         });
         plotStats = videoanalysis.statsPlotter(statsSidebaar);
-        statsStreamer.statsStream.subscribe(plotStats);
-        statsStreamer.statsStream.pluck("cov").throttleFirst(1000).subscribe(
-            function(x){console.debug(x)});
+        inStream = statsStreamer.statsStream.throttleFirst(1000);
+        inStream.pluck("cov").subscribe(
+            function(cov){console.debug("returned cov", cov)});
+        inStream.subscribe(function (d) {
+            console.debug("returned cov3", d.cov);
+            plotStats;
+            console.debug("returned cov4", d.cov);
+        });
+        inStream.pluck("cov").subscribe(
+            function(cov){console.debug("returned cov2", cov)});
         triadEnsemble = ensembles.TriadEnsemble("triad1");
         triadEnsembleParamSet = ensembles.EnsembleParamSet(
             triadEnsemble);
@@ -31,10 +39,10 @@
             controlSidebar
         );
         self = {
-                    statsStreamer: statsStreamer,
-                    plotStats: plotStats,
-                    triadEnsembleParamSet:triadEnsembleParamSet
-                };
+            statsStreamer: statsStreamer,
+            plotStats: plotStats,
+            triadEnsembleParamSet:triadEnsembleParamSet
+        };
         return self;
     };
 
