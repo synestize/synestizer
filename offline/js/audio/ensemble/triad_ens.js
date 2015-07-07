@@ -12,14 +12,14 @@ Players make sound
         var paramSet, controlStream;
         var controlMeta;
         
-        lfoRateScale = d3.scale.linear().domain([0,1]).range([0, 20]);
-        freqModScale = d3.scale.pow().domain([0,1]).range([0, 650]).exponent(2);
+        lfoRateScale = d3.scale.linear().clamp(true).domain([0,1]).range([0, 20]);
+        freqModScale = d3.scale.pow().clamp(true).clamp(true).domain([0,1]).range([0, 650]).exponent(2);
         //nb we want exp scales instead of log scales, so we invert
-        freqScale = d3.scale.log().range([0,1]).domain([200, 2000]).invert;
+        freqScale = d3.scale.log().clamp(true).range([0,1]).domain([200, 2000]).invert;
         
         controlMeta = {
             outputGain: {
-                scale: d3.scale.log().domain([0.01,1]).range([0,1]).invert,
+                scale: d3.scale.log().clamp(true).domain([0.01,1]).range([0,1]).invert,
                 units: "",
                 default: 0.5
             },

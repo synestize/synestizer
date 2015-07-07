@@ -73,7 +73,7 @@ var patches = patches || {};
         updateAnalysers();
         console.log("Sampler patch initialized");
 
-        pitchScale = d3.scale.linear().domain([0, 1]).range([72, 48]);;
+        pitchScale = d3.scale.linear().clamp(true).domain([0, 1]).range([72, 48]);;
 
         return {
             run: function() {

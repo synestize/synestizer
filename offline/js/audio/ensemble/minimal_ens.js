@@ -125,7 +125,7 @@ var patches = patches || {};
         return {
 
             run: function () {
-                var offsetScale = d3.scale.linear().domain([0, 1]).rangeRound([0, 15]);
+                var offsetScale = d3.scale.linear().clamp(true).clamp(true).domain([0, 1]).rangeRound([0, 15]);
                 this.setGain(preset["output"]);
 
                 
