@@ -130,16 +130,22 @@
                 - centralMoments[Y] * centralMoments[V]);
             centralMoments[SV] = (rawSums[SV]/PIXELCOUNT
                 - centralMoments[S] * centralMoments[V]);
-            cookedMoments[Y] = centralMoments[Y];
-            cookedMoments[S] = centralMoments[S];
-            cookedMoments[V] = centralMoments[V];
+            //in fact these components do not vary so very much due to 
+            //automatic color adjustment; So we do custom overdrive
+            cookedMoments[Y] = Math.atan((centralMoments[Y]-0.5)*5
+                )/Math.PI+0.5;
+            cookedMoments[S] = Math.atan((centralMoments[S]-0.5)*10
+                )/Math.PI+0.5;
+            cookedMoments[V] = Math.atan((centralMoments[V]-0.5)*10 
+                )/Math.PI+0.5;
             //Normalizing the variances is tricky.
             //Technically the maximal variance is 0.25, for a 50/50 B/W image
             //but I think we can assume a uniform distribution is a good
             // extremal point for us, implying a maximal variance of 1/12
-            cookedMoments[YY] = centralMoments[YY]*12;
-            cookedMoments[SS] = centralMoments[SS]*12;
-            cookedMoments[VV] = centralMoments[VV]*12;
+            //Even that is conservative, so we double it to 24
+            cookedMoments[YY] = centralMoments[YY]*24;
+            cookedMoments[SS] = centralMoments[SS]*24;
+            cookedMoments[VV] = centralMoments[VV]*24;
             //pure color covariances use the normal formula
             cookedMoments[YS] = centralMoments[YS]/Math.max(0.0001, Math.sqrt(
                 centralMoments[YY]*centralMoments[SS]))*0.5+0.5;
