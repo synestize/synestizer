@@ -153,7 +153,7 @@
                 centralMoments[YY]*centralMoments[VV]))*0.5+0.5;
             cookedMoments[SV] = centralMoments[SV]/Math.max(0.0001, Math.sqrt(
                 centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
-            //color versus axis uses
+            //color versus axis uses a priori moments for the deterministic axes
             cookedMoments[IY] = centralMoments[IY]/Math.max(0.0001, Math.sqrt(
                 0.08333333333*centralMoments[YY]))*0.5+0.5;
             cookedMoments[IS] = centralMoments[IS]/Math.max(0.0001, Math.sqrt(

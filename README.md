@@ -18,3 +18,8 @@ Plans:
 * implement a general scheduler
 * implement arbitrary patching (this is what we really want to save online)
 * stitch d3 into RXjs - https://github.com/Reactive-Extensions/RxJS/blob/master/examples/d3/index.js
+* Move video analysis into a Web Worker
+* Make patching declarative
+* have some nice synths
+* general tempo-based scheduler
+* Additional statistics:
