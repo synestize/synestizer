@@ -244,8 +244,16 @@ Partial workflow tools:
 
   * [highland.js](http://highlandjs.org/#)
   * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+    Most important RX.js documentation links:
+    * [basic howto](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+    * [Operators by Categories](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md)
+    * [Creation Operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md)
+    * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
+    * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
+    * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
   * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
   * There are other options - kefir.js and bacon.js - but my brain is full.
+  
   
 * stream debuggers
 
