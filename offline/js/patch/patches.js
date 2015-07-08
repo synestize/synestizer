@@ -3,34 +3,31 @@
 // We would ideally like to be able to *save* patches
 (function( global, _, Rx ) {
     'use strict';
-    var patch; 
+    var patch;
+    var library;
     window.patch = patch = window.patch || {};
-
-    function basic_triad(videoPixels, controlSidebar) {
-        //simple example patch
-        var triadEnsembleParamSet;
-        var triadEnsembleView;
-        var triadEnsemble;
-        var statsStreamer;
-        var self = {
-        };
-        
-        statsStreamer = videoanalysis.StatsStreamer(videoPixels, {
-            avg: videoanalysis.AverageColor(),
-            //cov: videoanalysis.PluginMoments(),
-        });
-        
-        triadEnsemble = ensembles.TriadEnsemble("triad1");
-        triadEnsembleParamSet = ensembles.EnsembleParamSet(
-            triadEnsemble);
-        triadEnsembleView = ensembles.EnsembleView(
-            triadEnsembleParamSet,
-            controlSidebar
-        );
-        statsStreamer.statsStream.pluck("avg", 0).subscribe(function(x){console.debug(x)})
-        return self;
-    };
-
-    // expose our module to the global object
-    global.patch.basic_triad = basic_triad;
+    patch.library = _.extend(patch.library||{}, {
+        basic_triad: {
+            stats: {
+                avg: "AverageColor",
+                cov: "PluginMoments"
+            },
+            ensembles: {
+                triad1: "TriadEnsemble",
+            },
+            defaults: {
+                triad1: {
+                    lfo3Rate: 0.5,
+                }
+            },
+            mappings: [
+                [["cov", 0], ["triad1", "freq1"]],
+                [["cov", 1], ["triad1", "freq2"]],
+                [["cov", 2], ["triad1", "freq3"]],
+                [["cov", 3], ["triad1", "lfo1Rate"]],
+                [["cov", 4], ["triad1", "lfo2Rate"]],
+                [["cov", 5], ["triad1", "lfo3Rate"]],
+            ]
+        }
+    });
 })( this, _, Rx );
