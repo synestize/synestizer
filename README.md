@@ -17,7 +17,6 @@ Plans:
 
 * implement a general scheduler for notes
 * Move video analysis into a Web Worker
-* Make patching declarative
 * have some nice synths
 * Additional statistics
 * dynamically load the readme text into the info tab

@@ -7,10 +7,10 @@
     var library;
     window.patch = patch = window.patch || {};
     patch.library = _.extend(patch.library||{}, {
-        basic_triad: {
+        basic_triad: { //simple example patch
             stats: {
-                avg: "AverageColor",
-                cov: "PluginMoments"
+                avg: ["AverageColor", {}], //The hash is for stats settings
+                cov: ["PluginMoments", {}]
             },
             ensembles: {
                 triad1: "TriadEnsemble",

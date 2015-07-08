@@ -181,7 +181,8 @@
                         document.getElementById("video"),
                         mediaStream
                     );
-                    currPatch = patch.basic_triad(
+                    currPatch = patch.loadPatch(
+                        patch.library.basic_triad,
                         videoPixels,
                         document.getElementById("rightcontrolsidebar"),
                         document.getElementById("analysis-panel")
