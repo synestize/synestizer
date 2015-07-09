@@ -20,3 +20,4 @@ Plans:
 * have some nice synths
 * Additional statistics
 * dynamically load the readme text into the info tab
+* Allow dynamic patch switching
