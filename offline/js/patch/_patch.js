@@ -52,7 +52,10 @@
         ensembleViews = _.mapObject(
             ensembleParamSets,
             function (ensparam, ensName){
-                return global.ensembles.EnsembleView(ensparam, controlSidebar);
+                return (
+                    ensembles[ensName].viewClass
+                    ||global.ensembles.EnsembleView
+                )(ensparam, controlSidebar);
             }
         );
         // set default values

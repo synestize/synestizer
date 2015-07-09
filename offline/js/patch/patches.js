@@ -17,6 +17,7 @@
             },
             defaults: {
                 triad1: {
+                    outputGain: 0.0,
                     lfo3Rate: 0.5,
                 }
             },

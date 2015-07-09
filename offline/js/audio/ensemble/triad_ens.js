@@ -19,7 +19,7 @@ Players make sound
         
         controlMeta = {
             outputGain: {
-                scale: d3.scale.log().clamp(true).domain([0.01,1]).range([0,1]).invert,
+                scale: d3.scale.log().clamp(true).domain([0.001,1]).range([0,1]).invert,
                 units: "",
                 default: 0.5
             },
