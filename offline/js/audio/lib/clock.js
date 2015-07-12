@@ -8,10 +8,12 @@
     var audio;
     window.audio = audio = window.audio || {};
     function BeatScheduler(state, pumpcallback){
-        //two schedulers wrapped together for shcduling syntsh ahead of time
-        // TODO: now that I've done this, I've realiszed it would
-        //be easier to invoke the constructor with some custo state fuctions
+        // Two schedulers wrapped together for scheduling synths ahead of time
+        // TODO: now that I've done this, I've realized it could
+        // be easier to invoke the constructor with some custom state fuctions
         // Rx.Scheduler(now, schedule, scheduleRelative, scheduleAbsolute)
+        // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/schedulers/scheduler.md#rxschedulernow-schedule-schedulerelative-scheduleabsolute
+        // TODO: fix the time advancing function, which is too coarse at the moment.
         
         /* Comparer required for scheduling priority */
         function comparer (x, y) {
@@ -45,7 +47,9 @@
         };
        
         logicalscheduler.toDateTimeOffset = function (absolute) {
-            return new Date(absolute).getTime();
+            //Hmm. Not convinced this one is right.
+            // return new Date(absolute).getTime();
+            return 1000*absolute/state.tempo;
         };
 
         logicalscheduler.toRelative = function (timeSpan) {
@@ -85,13 +89,38 @@
                     var logicalbeat = logicalscheduler.now();
                     var instate = _.extend(state, {
                         logicalbeat: logicalbeat,
-                        logicalrealtime: (logicalbeat-state.beat)*1000+state.intendedrealtime,
+                        logicalrealtime: (
+                            (logicalbeat-state.beat)*1000 +
+                            state.intendedrealtime
+                        ),
                     }, params, {});
                     playfn(instate);
                     resched(logicalscheduler, instate);
                 }
             )
         };
+        //Now override the default virtualtime implementation
+        //to increment time gradually
+        /*
+        logicalscheduler.advanceTo = function (time) {
+          var dueToClock = this.comparer(this.clock, time);
+          if (this.comparer(this.clock, time) > 0) { throw new ArgumentOutOfRangeError(); }
+          if (dueToClock === 0) { return; }
+          if (!this.isEnabled) {
+            this.isEnabled = true;
+            do {
+              var next = this.getNext();
+              if (next !== null && this.comparer(next.dueTime, time) <= 0) {
+                this.comparer(next.dueTime, this.clock) > 0 && (this.clock = next.dueTime);
+                next.invoke();
+              } else {
+                this.isEnabled = false;
+              }
+            } while (this.isEnabled);
+            this.clock = time;
+          }
+        };
+        */
         var rtscheduler = Rx.Scheduler.default;
         logicalscheduler.rtscheduler = rtscheduler;
         var clocktask = rtscheduler.scheduleRecursiveWithRelativeAndState(
