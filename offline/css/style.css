@@ -147,7 +147,7 @@ a, a:hover, a:active, a:focus {
 }
 
 /* new non-WAC controls */
-#rightcontrolsidebar {
+.sidebar {
     background-color: #000;
     opacity: 0.5;
 }
@@ -176,6 +176,14 @@ a, a:hover, a:active, a:focus {
     display: inline-block;
     height: 0.8em;
     padding: 0;
+}
+
+#midiInDevice {
+    /* background-color: #f0f; */
+    padding: 5px;
+    color: #fff;
+    display:block;
+    width: 4em;
 }
 
 input[type="number"],
@@ -369,6 +377,8 @@ webaudio-switch {
 #analysis-panel > div {
     width: 100%;
     display:inline-block;
+    background-color: #000;
+    opacity: 0.5;
 }
 #analysis-panel > div > div {
     display: block;
@@ -376,5 +386,6 @@ webaudio-switch {
     height: 10px;
     background-color: #eee;
     margin: 2px;
+    opacity: 1;
 }
 

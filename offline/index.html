@@ -51,16 +51,14 @@
                           <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
                       </ul>
 
-                      <a href="#" style="background-color: #f0f; padding: 5px; color: #fff;" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span id="midiInDevice">MIDI Controller</span></a>
+                      <a href="#" id="midiInDevice" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span>MIDI</span></a>
 
                       <ul id="midiIn" class="f-dropdown" data-dropdown-content></ul>
 
-                      <dl class="accordion" data-accordion>
-                          <dd class="accordion-navigation">
-                              <a href="#analysis-panel">Analysis</a>
-                              <div id="analysis-panel" class="content active"></div>
-                          </dd>
-                      </dl>
+                      
+                      <div id="analysis-panel" class="content active patchcontrols">
+                          <h3>Analysis</h3>
+                      </div>
                   </div>
 
                   <div id="rightcontrolsidebar" class="sidebar large-3 medium-3 small-5 columns patchcontrols">
