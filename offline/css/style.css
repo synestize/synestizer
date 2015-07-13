@@ -178,11 +178,11 @@ a, a:hover, a:active, a:focus {
     padding: 0;
 }
 
-#midiInDevice {
+.midibutton {
     /* background-color: #f0f; */
     padding: 5px;
     color: #fff;
-    display:block;
+    display: inline-block;
     width: 4em;
 }
 

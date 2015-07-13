@@ -1,4 +1,4 @@
-(function( window, document ) {
+(function( window, document, Rx ) {
     'use strict';
     
     var media; 
@@ -30,7 +30,7 @@
 
     // Make webkit browsers use the prefix-free version of AudioContext.
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
+    
     if (typeof window.MediaStreamTrack.getSources === 'undefined'){
         console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
@@ -101,6 +101,44 @@
         return getMedia
     };
     media.Media = Media;
+    function Midi(opts) {
+        var indevices=[], outdevices=[];
+        var indevicestream = new Rx.Subject(); // or from nothing
+        var outdevicestream = new Rx.Subject();
+        var instream, outstream;
+        var indevice, outdevice;
+        var indevice="none", outdevice="none";
+        var midi="none";
+        //should this in fact return a higher order observable of midi devices?
+        function getMidi(newmidi){
+            midi = newmidi;
+            getMidi.midi = newmidi;
+            //these should really be concatenated onto the existing Subjects:
+            getMidi.indevicestream = Rx.Observable.fromGenerator(
+                newmidi.inputs.values()
+            ).publish();
+            getMidi.outdevicestream = Rx.Observable.fromGenerator(
+                newmidi.outputs.values()
+            ).publish();
+        }
+        function setInput(inputname) {}
+        getMidi.setInput = setInput;
+        
+        function setOutput(outputname) {}
+        getMidi.setOutput = setOutput;
+        
+        if (window.navigator.requestMIDIAccess) {
+            Rx.Observable.fromPromise(
+                window.navigator.requestMIDIAccess()
+            ).subscribe(getMidi);
+        }
+        
+        getMidi.indevicestream = indevicestream;
+        getMidi.outdevicestream = outdevicestream;
+        //
+        return getMidi;
+    };
+    media.Midi = Midi;
     
     function VideoPixelPump(canvElem, vidElem, mediaStream, interval, pixelStream) {
         //get pixel arrays from a canvas element
@@ -230,4 +268,5 @@
     };
     media.attachFullscreenButton = attachFullscreenButton;
     
-})( window, document );
+    
+})( window, document, Rx );
