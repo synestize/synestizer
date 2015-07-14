@@ -1,4 +1,4 @@
-(function( window, document, Rx ) {
+(function( window, document, Rx) {
     'use strict';
     
     var media; 
@@ -101,37 +101,94 @@
         return getMedia
     };
     media.Media = Media;
-    function Midi(opts) {
+    function Midi(opts, indom, outdom) {
         var indevices=[], outdevices=[];
-        var indevicestream = new Rx.Subject(); // or from nothing
-        var outdevicestream = new Rx.Subject();
         var instream, outstream;
         var indevice, outdevice;
         var indevice="none", outdevice="none";
-        var midi="none";
+        var deviceinfo="none";
+        var indevicestream, outdevicestream;
+        var indatastream, outdatastream;
+        
         //should this in fact return a higher order observable of midi devices?
-        function getMidi(newmidi){
-            midi = newmidi;
-            getMidi.midi = newmidi;
+        function getMidi(newdeviceinfo){
+            deviceinfo = newdeviceinfo;
+            getMidi.deviceinfo = newdeviceinfo;
             //these should really be concatenated onto the existing Subjects:
-            getMidi.indevicestream = Rx.Observable.fromGenerator(
-                newmidi.inputs.values()
-            ).publish();
-            getMidi.outdevicestream = Rx.Observable.fromGenerator(
-                newmidi.outputs.values()
-            ).publish();
+            indevicestream.onNext(newdeviceinfo.inputs);
+            outdevicestream.onNext(newdeviceinfo.outputs);
+        };
+        function setInput(input) {
+            delete(indevice.onmidimessage);
+            indevice = input;
+            indevice.onmidimessage = function(ev){
+                //for now this only filters midi CC values
+                var midipayload = new Array(2);
+                var midievent = {};
+                midipayload[0] = ev.data[1];
+                midipayload[1] = ev.data[2]/127;
+                console.debug(ev.data);
+                //177: CC
+                //145: Note on
+                //129: Note off
+                if (ev.data[0]===177) {
+                    outdatastream.onNext({c:midipayload});
+                    console.debug({c:midipayload});
+                    
+                }
+            }
         }
-        function setInput(inputname) {}
         getMidi.setInput = setInput;
         
-        function setOutput(outputname) {}
+        function setOutput(output) {
+            outdevice = output;
+        }
         getMidi.setOutput = setOutput;
         
-        if (window.navigator.requestMIDIAccess) {
+        getMidi.indevicestream = indevicestream = new Rx.Subject();
+        getMidi.outdevicestream = outdevicestream = new Rx.Subject();
+        getMidi.indatastream = indatastream = new Rx.Subject();
+        getMidi.outdatastream = outdatastream = new Rx.Subject();
+        
+        if (indom) {
+            indevicestream.subscribe(function (devices) {
+                //Rx.Observable.pairs(devices) doesn't work?
+                indom.innerHTML = '';
+                indom.disabled = false;
+                devices.forEach( function( dev, key) {
+                    var opt = document.createElement("option");
+                    opt.text = dev.name;
+                    opt.value = key;
+                    indom.add(opt);
+                });
+                Rx.Observable.fromEvent(indom, 'change').subscribe(
+                    function(ev) {
+                        console.debug("ev", ev, devices.get(ev.target.value));
+                        setInput(devices.get(ev.target.value))
+                    }
+                );
+            });
+        }
+        if (outdom) {
+            getMidi.indevicestream.subscribe(function(devices){
+                outdom.innerHTML = '';
+                outdom.disabled=false;
+                devices.forEach( function( dev, key) {
+                    var opt = document.createElement("option");
+                    opt.text = dev.name;
+                    outdom.add(opt);
+                });
+            })
+        }
+
+        if (typeof window.navigator.requestMIDIAccess==="function") {
+            console.debug("yay midi")
             Rx.Observable.fromPromise(
                 window.navigator.requestMIDIAccess()
             ).subscribe(getMidi);
-        }
+        } else {
+            console.debug("no midi", typeof window.navigator.requestMIDIAccess)
+        };
         
         getMidi.indevicestream = indevicestream;
         getMidi.outdevicestream = outdevicestream;
@@ -269,4 +326,4 @@
     media.attachFullscreenButton = attachFullscreenButton;
     
     
-})( window, document, Rx );
+})( window, document, Rx);

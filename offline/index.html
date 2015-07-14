@@ -41,17 +41,13 @@
                   <div id="leftcontrolsidebar" class="sidebar large-3 small-3 medium-3 columns left">
                       <ul class="button-group" style="height: 45px; padding-left: 2px;">
                           <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
-                          <li><a href="#" id="switchDevices" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
+                          <li><a href="#" id="switchCam" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
                           <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
                       </ul>
 
-                      <a href="#" class="midibutton" id="midiInDevice" data-dropdown="midiIn" data-options="is_hover:true; hover_timeout:5000"><span>MIDIIn</span></a>
-
-                      <ul id="midiIn" class="midilist f-dropdown" data-dropdown-content></ul>
-
-                      <a href="#" class="midibutton" id="midiOutDevice" data-dropdown="midiOut" data-options="is_hover:true; hover_timeout:5000"><span>MIDIOut</span></a>
-
-                      <ul id="midiOut" class="midilist f-dropdown" data-dropdown-content></ul>
+                      <h3>Midi</h3>
+                      <h4 class="small">in</h4><select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
+                      <h4 class="small">out</h4><select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"></select>
                       <div id="analysis-panel" class="content active patchcontrols">
                           <h3>Analysis</h3>
                       </div>
@@ -130,7 +126,6 @@
     
     <!-- audio/video infrastructure -->
     <script src="./js/media.js"></script>
-    <script src="./js/midi.js"></script>
 
     <!-- video analysis -->
     <script src="./js/videoanalysis/_videoanalysis.js"></script>
@@ -157,18 +152,18 @@
         
         var currPatch;
         var videoPixels;
-        
+        var midi;
         $( document ).ready( function() {
             // setup info div
             $("#info").removeClass("hide").addClass("show");
-            media.Media({
+            window.media.Media({
                 success: function(mediaStream){
                     $("#info").removeClass("show").addClass("hide");
                     $("#controls").removeClass("hide").addClass("show");
                     // call resize for video resizing
                     resize();
                     media.attachMediaButton(
-                        document.getElementById("switchDevices"));
+                        document.getElementById("switchCam"));
                     media.attachFullscreenButton(
                         document.getElementById("fullscreen"));
                     videoPixels = media.VideoPixelPump(
@@ -184,7 +179,10 @@
                     );
                 }
             });
-
+            midi = window.media.Midi({},
+                document.getElementById("midiInDevice"),
+                document.getElementById("midiOutDevice")
+            );
             $(window).resize(function() {
                 resize();
             });

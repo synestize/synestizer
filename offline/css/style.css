@@ -151,39 +151,46 @@ a, a:hover, a:active, a:focus {
     background-color: #000;
     opacity: 0.5;
 }
-.patchcontrols  {
-    padding: 5;
+.sidebar  {
+    padding: 5px;
 }
-.patchcontrols h3 {
+.sidebar h3 {
     font-size: 15px;
 }
-.patchcontrols .control {
+.sidebar h4 {
+    font-size: 12px;
+}
+.sidebar .small {
+    display: inline;
+    padding: 0.3em;
+}
+.sidebar .control {
     display: inline-block;
     margin: 0;
     font-family: 'Roboto Condensed', sans-serif;
     width: 50%;
     padding: 0;
 }
-.patchcontrols .control .label {
+.sidebar .control .label {
     width: 30%;
     margin: 0;
     display: inline-block;
     padding: 0 3px 0 0;
     text-align: right;
 }
-.patchcontrols .control input[type="range"] {
+.sidebar .control input[type="range"] {
     width: 65%;
     display: inline-block;
     height: 0.8em;
     padding: 0;
 }
 
-.midibutton {
+.midiselect {
     /* background-color: #f0f; */
     padding: 5px;
-    color: #fff;
+    color: #999;
     display: inline-block;
-    width: 4em;
+    width: 7em;
 }
 
 input[type="number"],
