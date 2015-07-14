@@ -26,7 +26,7 @@
         var state = state || {};
         state.tempo = state.tempo || 1.0;
         state.beat = state.beat || 0;
-        state.actualrealtime = state.actualrealtime ||0;
+        state.actualrealtime = state.actualrealtime ||0;//only to make sure we don't schedule in the past
         state.intendedrealtime = 0;
         state.starttime = window.performance.now();
 
