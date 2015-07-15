@@ -185,12 +185,16 @@ a, a:hover, a:active, a:focus {
     padding: 0;
 }
 
-.midiselect {
+select.midiselect {
     /* background-color: #f0f; */
-    padding: 5px;
+    padding: 1px 4px 1px 2px;
     color: #999;
     display: inline-block;
-    width: 7em;
+    width: 10em;
+    height: 1.5em;
+}
+select.midiselect .option {
+    min-height: 1ex;
 }
 
 input[type="number"],

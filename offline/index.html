@@ -171,18 +171,21 @@
                         document.getElementById("video"),
                         mediaStream
                     );
+                    midi = window.media.Midi({
+                        indom: document.getElementById("midiInDevice"),
+                        outdom: document.getElementById("midiOutDevice"),
+                        indevice: "slider",
+                        outdevice: "iac-driver"
+                    });
                     currPatch = patch.loadPatch(
                         patch.library.basic_triad,
                         videoPixels,
                         document.getElementById("rightcontrolsidebar"),
-                        document.getElementById("analysis-panel")
+                        document.getElementById("analysis-panel"),
+                        midi
                     );
                 }
             });
-            midi = window.media.Midi({},
-                document.getElementById("midiInDevice"),
-                document.getElementById("midiOutDevice")
-            );
             $(window).resize(function() {
                 resize();
             });
