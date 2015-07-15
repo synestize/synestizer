@@ -181,9 +181,11 @@
         
         function setOutput(newoutdevice) {
             console.debug("setout", newoutdevice);
-            // //get rid of previous handlers
-            // (outputhandle.dispose||function(){})();
-            if (!outputhandle) {
+            //get rid of previous handlers
+            if (outputhandle) {
+                outputhandle.dispose();
+            }
+            if (newoutdevice){
                 outputhandle = outdatastream.subscribe(function(data){
                     var cmd = data[0];
                     var channel = data[1];
@@ -192,15 +194,16 @@
                         Math.floor(data[3]*128),
                         127), 0)
                     //turns ["c",1,16,0.5]
-                    //into [177,15,64]
+                    //into [177,16,64]
+                    var midibytes = [
+                        176 + channel,
+                        idx,
+                        val
+                    ];
                     if (cmd==="c"){
-                        newoutdevice.send([
-                            176 + channel,
-                            idx,
-                            val
-                        ]);
+                        newoutdevice.send(midibytes);
                     }
-                })
+                });
             };
             if (outdom && newoutdevice &&
                     (outdevice!==newoutdevice)) {
