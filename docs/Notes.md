@@ -297,4 +297,4 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 * [coccoonjs](https://www.ludei.com/cocoonjs/)
 * [electron](http://electron.atom.io/)
 * [node-webkit](http://nwjs.io/)
-* [chrome app](https://developer.chrome.com/apps/about_appshttp://maps.apple.com/?q=-7.871582,110.353221&sspn=0.530353,0.771325&sll=-7.685342,110.421326)
+* [chrome app](https://developer.chrome.com/apps/about_apps)
