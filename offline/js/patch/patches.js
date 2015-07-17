@@ -14,12 +14,13 @@
             },
             ensembles: {
                 triad1: "TriadEnsemble",
+                triad2: "TriadEnsemble",
             },
             defaults: {
                 triad1: {
                     outputGain: 0.0,
                     lfo3Rate: 0.5,
-                }
+                },
             },
             mappings: [
                 [["cov", 0], ["triad1", "freq1"]],
@@ -28,6 +29,12 @@
                 [["cov", 3], ["triad1", "lfo1Rate"]],
                 [["cov", 4], ["triad1", "lfo2Rate"]],
                 [["cov", 5], ["triad1", "lfo3Rate"]],
+                [["cov", 6], ["triad2", "lfo1Rate"]],
+                [["cov", 7], ["triad2", "lfo2Rate"]],
+                [["cov", 8], ["triad2", "lfo3Rate"]],
+                [["cov", 9], ["triad2", "freq1"]],
+                [["cov", 10], ["triad2", "freq2"]],
+                [["cov", 11], ["triad2", "freq3"]],
             ],
             midiin: [
                 [["c", 1, 6], ["triad1", "outputGain"]]
