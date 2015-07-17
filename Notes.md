@@ -178,11 +178,6 @@ Partial workflow tools:
 
 * Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
-* covariance (or higher moments?)
-
-  * Are the covariance estimates incoherent?
-    Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
-
 * PCA
 * Haar cascade
 * autocorrelation
@@ -196,21 +191,18 @@ Partial workflow tools:
 * MCMC updating
 * Gaussian mixture models
 * other clustering, say, spectral?
-* switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
-  Forward:
-  $${\begin{aligned}Y'&=&0&+(0.299&\cdot R'_{D})&+(0.587&\cdot G'_{D})&+(0.114&\cdot B'_{D})\\C_{B}&=&128&-(0.168736&\cdot R'_{D})&-(0.331264&\cdot G'_{D})&+(0.5&\cdot B'_{D})\\C_{R}&=&128&+(0.5&\cdot R'_{D})&-(0.418688&\cdot G'_{D})&-(0.081312&\cdot B'_{D})\end{aligned}}$$
-  Back:
-  $${\begin{aligned}R&=&Y&&&+1.402&\cdot (C_{R}-128)\\G&=&Y&-0.34414&\cdot (C_{B}-128)&-0.71414&\cdot (C_{R}-128)\\B&=&Y&+1.772&\cdot (C_{B}-128)&\end{aligned}}$$
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
-
+* [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 
 ### Machine vision libraries
 
-* [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
-* so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
+* [tracking.js]http://trackingjs.com/) does cool stuff already
+* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
 * [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
-
+* [blob detection](http://blog.acipo.com/blob-detection-js/)
+* [segmentation engine](http://vision.akshaybhat.com/)
+* [graphcut](http://www.jscuts.com/graphcuts/)
 
 ### WebGL optimisation
 
