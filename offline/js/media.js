@@ -6,30 +6,11 @@
     media.mics = [];
     media.cams = [];
     
-    // shim the requestAnimationFrame API, with a setTimeout fallback
-    window.requestAnimationFrame = (function(){
-        return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.oRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-        };
-    })();
-
-    if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame;
-
     // shim getUserMedia ;
-    //making it a local method doesn't work without tedious "this" wrangling.
     window.navigator.getUserMedia = (window.navigator.getUserMedia ||
         window.navigator.webkitGetUserMedia ||
         window.navigator.mozGetUserMedia ||
         window.navigator.msGetUserMedia);
-
-    // Make webkit browsers use the prefix-free version of AudioContext.
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
     
     if (typeof window.MediaStreamTrack.getSources === 'undefined'){
         console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
