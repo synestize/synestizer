@@ -13,7 +13,7 @@
         window.navigator.msGetUserMedia);
     
     if (typeof window.MediaStreamTrack.getSources === 'undefined'){
-        console.log('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
+        console.debug('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
         window.MediaStreamTrack.getSources(function (sourceInfos) {
             for (var i = 0; i !== sourceInfos.length; ++i) {
@@ -25,13 +25,13 @@
                 }
             }
             /*
-            console.log("Found " + media.cams.length + " cam(s).");
-            console.log("Found " + media.mics.length + " mic(s).");
+            console.debug("Found " + media.cams.length + " cam(s).");
+            console.debug("Found " + media.mics.length + " mic(s).");
             for (var j = 0; j < media.cams.length; ++j) {
-                console.log("cam id " + j + ": " + media.cams[j]);
+                console.debug("cam id " + j + ": " + media.cams[j]);
             }
             for (var k = 0; k < media.mics.length; ++k) {
-                console.log("mic id " + k + ": " + media.mics[k]);
+                console.debug("mic id " + k + ": " + media.mics[k]);
             }
             */
         });
@@ -71,7 +71,7 @@
                         success(newMediaStream);
                     }, function(e) {
                         alert('Error getting audio or video', constraints);
-                        console.log(e);
+                        console.debug(e);
                     }
                 );
             } else {
@@ -82,6 +82,7 @@
         return getMedia
     };
     media.Media = Media;
+    
     function Midi(opts) {
         opts = opts || {};
         var indevices = {}, outdevices = {};
@@ -97,16 +98,18 @@
         var statsnames=[];
         var statsoffsets=[];
         
-        getMidi.indevicestream = indevicestream = new Rx.Subject();
-        getMidi.outdevicestream = outdevicestream = new Rx.Subject();
-        getMidi.indatastream = indatastream = new Rx.Subject();
-        getMidi.outdatastream = outdatastream = new Rx.Subject();
+        setMidi.indevicestream = indevicestream = new Rx.Subject();
+        setMidi.outdevicestream = outdevicestream = new Rx.Subject();
+        setMidi.indatastream = indatastream = new Rx.Subject();
+        setMidi.outdatastream = outdatastream = new Rx.Subject();
         
-        function getMidi(newdeviceinfo){
-            indevices = newdeviceinfo.inputs;
-            outdevices = newdeviceinfo.outputs;
-            indevicestream.onNext(newdeviceinfo.inputs);
-            outdevicestream.onNext(newdeviceinfo.outputs);
+        function setMidi(newdeviceinfo){
+            setMidi.indevices = indevices = newdeviceinfo.inputs;
+            setMidi.outdevices = outdevices = newdeviceinfo.outputs;
+            // automatically update when the devices change: (Doesn't work)
+            // newdeviceinfo.onstatechange = queryMidi;
+            indevicestream.onNext(indevices);
+            outdevicestream.onNext(outdevices);
         };
         
         function setInput(newindevice) {
@@ -146,7 +149,7 @@
                 indevice = newindevice;
             }
         }
-        getMidi.setInput = setInput;
+        setMidi.setInput = setInput;
         
         function setInputByName(inputname) {
             inputname = inputname.toLowerCase();
@@ -156,9 +159,11 @@
                 }
             ).subscribe(function (matched){
                 setInput(matched);
+            }, function (err) {
+                console.debug("no devices matching", inputname, err.stack);
             });
         }
-        getMidi.setInputByName = setInputByName;
+        setMidi.setInputByName = setInputByName;
         
         function setOutput(newoutdevice) {
             console.debug("setout", newoutdevice);
@@ -192,7 +197,7 @@
             }
             outdevice = newoutdevice;
         }
-        getMidi.setOutput = setOutput;
+        setMidi.setOutput = setOutput;
         
         function setOutputByName(outputname) {
             outputname = outputname.toLowerCase();
@@ -202,14 +207,17 @@
                 }
             ).subscribe(function (matched){
                 setOutput(matched);
+            }, function (err) {
+                console.debug("no devices matching", inputname, err.stack);
             });
         }
-        getMidi.setOutputByName = setOutputByName;
+        setMidi.setOutputByName = setOutputByName;
 
-        getMidi.indevicestream.subscribe(function(devices){
+        setMidi.indevicestream.subscribe(function(devices){
             if (indom) {
                 indom.innerHTML = '';
                 indom.disabled = false;
+                
                 devices.forEach( function( dev, key) {
                     var opt = document.createElement("option");
                     opt.text = dev.name;
@@ -225,8 +233,11 @@
             if (indevicename) {
                 setInputByName(indevicename)
             }
+        }, function (err) {
+            console.debug(err.stack);
         });
-        getMidi.outdevicestream.subscribe(function(devices){
+        
+        setMidi.outdevicestream.subscribe(function(devices){
             if (outdom) {
                 outdom.innerHTML = '';
                 outdom.disabled=false;
@@ -236,6 +247,7 @@
                     opt.value = key;
                     outdom.add(opt);
                 });
+
                 Rx.Observable.fromEvent(outdom, 'change').subscribe(
                     function(ev) {
                         setOutput(devices.get(ev.target.value))
@@ -245,21 +257,29 @@
             if (outdevicename) {
                 setOutputByName(outdevicename)
             }
+        }, function (err) {
+            console.debug(err.stack);
         });
 
-        if (typeof window.navigator.requestMIDIAccess==="function") {
-            console.debug("yay midi")
+        function queryMidi(event) {
+            //event maybe a midi connection event
             Rx.Observable.fromPromise(
                 window.navigator.requestMIDIAccess()
-            ).subscribe(getMidi);
+            ).subscribe(
+                setMidi,
+                function (err) {
+                    console.debug(err.stack);
+                }
+            );
+        }
+        if (typeof window.navigator.requestMIDIAccess==="function") {
+            console.debug("yay midi")
+            queryMidi();
         } else {
             console.debug("no midi", typeof window.navigator.requestMIDIAccess)
         };
         
-        getMidi.indevicestream = indevicestream;
-        getMidi.outdevicestream = outdevicestream;
-        //
-        return getMidi;
+        return setMidi;
     };
     media.Midi = Midi;
     
@@ -334,7 +354,7 @@
                     0, 0,
                     PIXELDIM, PIXELDIM).data || [];
             } catch (e) {
-                console.log("error getting video frame", e);
+                console.debug("error getting video frame", e);
             }
             if (pixels.length>0) {
                 //Yay! it worked
@@ -354,7 +374,7 @@
     function attachMediaButton(el) {
         if (typeof window.MediaStreamTrack.getSources === 'undefined'){
             el.addEventListener("click", switchCam);
-        } else {console.log("MediaStreamTrack not supported")}
+        } else {console.debug("MediaStreamTrack not supported")}
     };
     media.attachMediaButton = attachMediaButton;
     
