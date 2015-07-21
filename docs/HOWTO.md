@@ -19,7 +19,7 @@ Unzip this. Now Synestizer is installed.
 But you are not finished yet. For reasons of security, your web-browser is only permitted to access the camera if it is viewing a "web site", not merely a *file*. So you have to serve this file on web server.
 Don't worry, a *local* web server is sufficient i.e. a web server running on your computer, *not* visible to the rest of the internet.
 
-UPDATE: It grows more complex! You need not only to have a web server, but an encrypted web server, even  for local use of the app, thanks to the [removal of advanced features ](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
+UPDATE: It grows more complex! You need not only to have a web server, but an encrypted web (SSL) server, even for local use of the app, thanks to the [removal of advanced features ](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
 
 Here are some options:
 
@@ -31,7 +31,14 @@ Here are some options:
    Might need a custom compile
 
 2. If you are on Max OS X, your computer has a built-in web server. There are many instructions online about setting this up. [Here is a good one about the basic part](http://macosxautomation.com/workshops/sharing/03.html), and [here is the manual page about encryption](https://support.apple.com/kb/PH15666?locale=en_US) and [here](https://support.apple.com/kb/PH14003?locale=en_US) and the [in-depth version](https://blog.httpwatch.com/2013/12/12/five-tips-for-using-self-signed-ssl-certificates-with-ios/)
-3. If you are comfortable with the command-line, running a web server is easy; TODO: explain how to make it work with SSL.
+3. If you are comfortable with the command-line, running a web server is easy; [here are some options](https://gist.github.com/willurd/5720255)
+
+   The easiest one so far for me was node's http-server. You install this by installing npm:
+   
+   
+       http-server offline -S -p 8444
+
+   TODO: explain how to make it work with SSL.
 
 
 ### Tidier SSL
@@ -53,14 +60,17 @@ TODO: installation instructions.
 
 ## Participating
 
-You can help with code or with documentation. The procedure is the same either way - fork us on gihub and send us pull requests.
+You can help with code or with documentation. The procedure is the same either way - fork us on github and send us pull requests.
 
-The [online documentation](https://synestize.github.io/synestizer/) is here.
+The [online documentation  is here](https://synestize.github.io/synestizer/).
 Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
 
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
 ### Advanced: documentation subtree
+
+[intro to git subtrees](https://developer.atlassian.com/blog/2015/05/the-power-of-git-subtree/)
+
 
 Advanced class: For convenience we also keep documentation mirrored into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
 
@@ -71,3 +81,5 @@ The
 and
 
     git subtree push --prefix=docs upstream gh-pages
+    
+TODO: mention that we now use git subtrees to include the static assets in the parent project
