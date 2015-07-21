@@ -1,2 +1,0 @@
-excludeInFileChooser = "{bower_components/*}"
-excludeInFolderSearch = "{bower_components/*}"
