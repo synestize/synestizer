@@ -68,20 +68,21 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_URL = '/static/'
-
 
 STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'site-static'),
+
     ("sound", os.path.join(BASE_DIR, "static/sound")),
     ("img", os.path.join(BASE_DIR, "static/img")),
     ("css", os.path.join(BASE_DIR, "static/css")),
     ("fonts", os.path.join(BASE_DIR, "static/fonts")),
     ("js", os.path.join(BASE_DIR, "static/js")),
-    ("webcomponents", os.path.join(BASE_DIR, "static/webcomponents"))
-    )
+    ("webcomponents", os.path.join(BASE_DIR, "static/webcomponents")),
+
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -90,7 +91,8 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
     )
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'site-static'),]
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -106,14 +108,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 # Bower components
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'site-static')
 BOWER_INSTALLED_APPS = (
     'backbone',
     'underscore',
     'polymer',
-    'zurb/bower-foundation#5.5.0',
+    'zurb/bower-foundation#5.5.2',
     'pubsub.js#0.1.0',
-    'd3#3.5.2',
+    'd3#3.5.6',
 )
 
 

@@ -1,10 +1,5 @@
-from django.views.generic import DetailView
-from django.shortcuts import get_object_or_404
-from .models import Patch
+from django.views.generic import TemplateView
 
 
-class PatchDetailView(DetailView):
-    model = Patch
-
-    def get_object(self):
-        return get_object_or_404(Patch, pk=1)
+class PatchDetailView(TemplateView):
+    template_name = 'index.html'
