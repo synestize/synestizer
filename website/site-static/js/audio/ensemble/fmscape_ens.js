@@ -6,7 +6,7 @@ Ensembles make sound
     'use strict';
     var ensembles;
     window.ensembles = ensembles = window.ensembles || {};
-    ensembles.TriadEnsemble = function (name) {
+    ensembles.FMScapeEnsemble = function (name) {
         var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
         var paramSet, controlStream;
