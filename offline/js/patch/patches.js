@@ -21,6 +21,10 @@
                     outputGain: 0.0,
                     lfo3Rate: 0.5,
                 },
+                triad2: {
+                    outputGain: 0.0,
+                    lfo3Rate: 0.5,
+                },
             },
             mappings: [
                 [["cov", 0], ["triad1", "freq1"]],
@@ -37,9 +41,14 @@
                 [["cov", 11], ["triad2", "freq3"]],
             ],
             midiin: [
-                [["c", 1, 6], ["triad1", "outputGain"]]
+                [["c", 1, 5], ["triad1", "outputGain"]],
+                [["c", 1, 7], ["triad2", "outputGain"]]
             ],
             midiout: [
+                [["avg", 0], ["c", 3, 0]],
+                [["avg", 1], ["c", 3, 1]],
+                [["avg", 3], ["c", 3, 2]],
+                [["cov", 2], ["c", 0, 2]],
                 [["cov", 0], ["c", 0, 0]],
                 [["cov", 1], ["c", 0, 1]],
                 [["cov", 2], ["c", 0, 2]],
