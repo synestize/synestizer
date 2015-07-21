@@ -1,10 +1,10 @@
 /*
-Players make sound
+Ensembles make sound
 */
 
 (function(window, _, d3, WX){
     'use strict';
-    var instruments;
+    var ensembles;
     window.ensembles = ensembles = window.ensembles || {};
     ensembles.TriadEnsemble = function (name) {
         var triadSynth;
