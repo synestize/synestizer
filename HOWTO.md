@@ -78,8 +78,8 @@ and
 
 The 
 
-    git subtree pull --prefix=website/site_static upstream static
+    git subtree pull --prefix=website/site-static upstream static
     
 and
 
-    git subtree push --prefix=website/site_static upstream static
+    git subtree push --prefix=website/site-static upstream static
