@@ -60,9 +60,11 @@ Source code for the documentation lives in the gh-pages branch. If you wish to u
 
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
-### Advanced: documentation subtree
+### Advanced:  subtrees
 
 Advanced class: For convenience we also keep documentation mirrored into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
+
+#### Documentation
 
 The 
 
@@ -71,3 +73,13 @@ The
 and
 
     git subtree push --prefix=docs upstream gh-pages
+
+#### static app
+
+The 
+
+    git subtree pull --prefix=website/site_static upstream static
+    
+and
+
+    git subtree push --prefix=website/site_static upstream static
