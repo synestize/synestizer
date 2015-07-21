@@ -35,7 +35,6 @@ Here are some options:
 
    The easiest one so far for me was node's http-server. You install this by installing npm:
    
-   
        http-server offline -S -p 8444
 
    TODO: explain how to make it work with SSL.
@@ -90,4 +89,4 @@ The
     
 and
 
-    git subtree push --prefix=docs upstream gh-pages
+    git subtree push --prefix=website/site_static upstream static
