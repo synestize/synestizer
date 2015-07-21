@@ -208,7 +208,7 @@
             ).subscribe(function (matched){
                 setOutput(matched);
             }, function (err) {
-                console.debug("no devices matching", inputname, err.stack);
+                console.debug("no devices matching", outputname, err.stack);
             });
         }
         setMidi.setOutputByName = setOutputByName;
