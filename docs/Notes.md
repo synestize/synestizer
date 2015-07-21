@@ -8,39 +8,24 @@ Notes auditioning for a place in the documentation
 
 ## TODO
 
-* Revised patching system
-
-  * accept synth parameters in URL fragments (esp to set master output volume!)
-  * A *patch* should map between
-    * audio ensemble parameters
-    * and input data 
-      * Video analysis
-      * MIDI CC
-      * GUI widgets
-  * The mapping could be One-To-One or Many-To-Many, or whatever.
-  * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
-  * Patches could have a separate mapping GUI for constructing the mapping
-  * Always set up a master gain and master compressor
-
 * Meta
 
   * smoother workflow to host live on github
   * Move to modular architecture in the AMD style,
-    e.g. using [require.js](http://requirejs.org/) --
-    [see explanation](http://eloquentjavascript.net/10_modules.html)
+    e.g. using [require.js](http://requirejs.org/)
+    using [some kind of template](https://github.com/volojs/create-template)
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
   * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
 * MIDI *mapping* (right now it is hard coded)
 
-* Video analysis improvements
+* speed improvements
+    * web workers
+        * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
+        * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
+        * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
+    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
-  * Only operate on a square grid of pixels (64x64)
-  * web workers
-      * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-      * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
-      * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
-  * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
 ## javascript tips
 
@@ -114,12 +99,9 @@ Ranked in descending order of viability:
 
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
+* [Flux](https://facebook.github.io/flux/docs/overview.html)
+* [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 * patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
-* User interface library possibilities
-
-  * [WAAX's MUI](https://hoch.github.io/WAAX/waax/examples/mui/)
-  * [Google MDC](http://www.getmdl.io/index.html)
-  * [WebAudioComponents]()
 
 ## Workflow options
 
@@ -160,16 +142,15 @@ Partial workflow tools:
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
-* [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot of what we want.
+* [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot fo what we want.
 * [prose](http://prose.io)
-* [gitbook](https://www.gitbook.com/) looks reasonably pretty and sells the output as a book on Amazon at the end
 
 ## Remote operation
 
 * [tokbox](https://tokbox.com/)
 * [webRTC](http://www.webrtc.org/)
 * [binaryjs](https://github.com/binaryjs/binaryjs)
-* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kong Zürich collaboration
+* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kon Z¨rich collaboration
 * [shiftr](https://shiftr.io/)
 
 ## Video analysis
@@ -178,31 +159,34 @@ Partial workflow tools:
 
 * Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
-* PCA
-* Haar cascade
+* covariance
+
+  * Are the covariance estimates incoherent?
+    Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
+
+* pca
+* Haar cascade.
 * autocorrelation
-* introduce a time dimension for correlation?
-* Kalman filters
+* kalman filters
 * particle filters
-* FFT features (perhaps sparse compound features?)
+* FFT features
 * exponentially weighted moments
-* inner-product with desired eigen-features
+* inner-product with desired eigen-feautres
 * Features based on correlation with eigenfeatures (even fourier ones?)
-* MCMC updating
-* Gaussian mixture models
+* mcmc updating
+* gaussian mixture models
 * other clustering, say, spectral?
+* switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
-* [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
+
 
 ### Machine vision libraries
 
-* [tracking.js]http://trackingjs.com/) does cool stuff already
-* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
+* [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
+* so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
 * [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
-* [blob detection](http://blog.acipo.com/blob-detection-js/)
-* [segmentation engine](http://vision.akshaybhat.com/)
-* [graphcut](http://www.jscuts.com/graphcuts/)
+
 
 ### WebGL optimisation
 
@@ -213,7 +197,7 @@ Partial workflow tools:
   * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
   * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
 
-* video+WebGL:
+* video+webgl:
 
   * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
   * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
@@ -222,13 +206,13 @@ Partial workflow tools:
 * [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
 * [webgl transforms](http://games.greggman.com/game/webgl-2d-matrices/)
   
-* CSS filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
+* css filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
 
 ### Colour handling
 
 * [colorspaces](https://vis4.net/blog/posts/avoid-equidistant-hsv-colors/)
 * [colormaps](http://www.sandia.gov/~kmorel/documents/ColorMaps/ColorMapsExpanded.pdf)
-* [excellent series on color](http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/)
+* [excellent seris on color](http://earthobservatory.nasa.gov/blogs/elegantfigures/2013/08/05/subtleties-of-color-part-1-of-6/)
 
 ### Sequencing
 
@@ -237,16 +221,8 @@ Partial workflow tools:
   * [highland.js](http://highlandjs.org/#)
 
   * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
-    Most important RX.js documentation links:
-    * [basic howto](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
-    * [Operators by Categories](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md)
-    * [Creation Operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md)
-    * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
-    * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
-    * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
   * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
   * There are other options - kefir.js and bacon.js - but my brain is full.
-  
   
 * stream debuggers
 

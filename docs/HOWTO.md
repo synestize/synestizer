@@ -19,7 +19,7 @@ Unzip this. Now Synestizer is installed.
 But you are not finished yet. For reasons of security, your web-browser is only permitted to access the camera if it is viewing a "web site", not merely a *file*. So you have to serve this file on web server.
 Don't worry, a *local* web server is sufficient i.e. a web server running on your computer, *not* visible to the rest of the internet.
 
-UPDATE: It grows more complex! You need not only to have a web server, but an encrypted web (SSL) server, even for local use of the app, thanks to the [removal of advanced features ](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
+UPDATE: It grows more complex! You need not only to have a web server, but an encrypted web server, even  for local use of the app, thanks to the [removal of advanced features ](https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-powerful-features-on-insecure-origins)
 
 Here are some options:
 
@@ -59,9 +59,9 @@ TODO: installation instructions.
 
 ## Participating
 
-You can help with code or with documentation. The procedure is the same either way - fork us on github and send us pull requests.
+You can help with code or with documentation. The procedure is the same either way - fork us on gihub and send us pull requests.
 
-The [online documentation  is here](https://synestize.github.io/synestizer/).
+The [online documentation](https://synestize.github.io/synestizer/) is here.
 Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
 
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
@@ -85,8 +85,8 @@ and
 
 The 
 
-    git subtree pull --prefix=website/site_static upstream static
+    git subtree pull --prefix=website/site-static upstream static
     
 and
 
-    git subtree push --prefix=website/site_static upstream static
+    git subtree push --prefix=website/site-static upstream static
