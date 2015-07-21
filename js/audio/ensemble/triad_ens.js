@@ -2,7 +2,7 @@
 Ensembles make sound
 */
 
-(function(window, _, d3, WX){
+(function(window, _, d3){
     'use strict';
     var ensembles;
     window.ensembles = ensembles = window.ensembles || {};
@@ -117,4 +117,4 @@ Ensembles make sound
             destroy: function () {},
         };
     };
-})(window, _, d3, WX);
+})(window, _, d3);
