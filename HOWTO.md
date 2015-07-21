@@ -60,14 +60,17 @@ TODO: installation instructions.
 
 ## Participating
 
-You can help with code or with documentation. The procedure is the same either way - fork us on gihub and send us pull requests.
+You can help with code or with documentation. The procedure is the same either way - fork us on github and send us pull requests.
 
-The [online documentation](https://synestize.github.io/synestizer/) is here.
+The [online documentation  is here](https://synestize.github.io/synestizer/).
 Source code for the documentation lives in the gh-pages branch. If you wish to use a convenient online editor, [prose.io](http://prose.io/) has worked well for us.
 
 Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME/synestizer/tree/gh-pages
 
 ### Advanced: documentation subtree
+
+[intro to git subtrees](https://developer.atlassian.com/blog/2015/05/the-power-of-git-subtree/)
+
 
 Advanced class: For convenience we also keep documentation mirrored into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
 
@@ -78,3 +81,5 @@ The
 and
 
     git subtree push --prefix=docs upstream gh-pages
+    
+TODO: mention that we now use git subtrees to include the static assets in the parent project
