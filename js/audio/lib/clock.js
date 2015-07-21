@@ -6,7 +6,7 @@
 (function(global, _, Rx){
     'use strict';
     var audio;
-    window.audio = audio = window.audio || {};
+    global.audio = audio = global.audio || {};
     function BeatScheduler(state, pumpcallback){
         // Two schedulers wrapped together for scheduling synths ahead of time
         // TODO: now that I've done this, I've realized it could
@@ -28,7 +28,7 @@
         state.beat = state.beat || 0;
         state.actualrealtime = state.actualrealtime ||0;//only to make sure we don't schedule in the past
         state.intendedrealtime = 0;
-        state.starttime = window.performance.now();
+        state.starttime = global.performance.now();
 
         pumpcallback = pumpcallback || function (stuff, logicalscheduler) {
             if (state.debug) {
@@ -138,7 +138,7 @@
                 instate.beat += DIVISIONS;
                 instate.intendedrealtime += 1000*state.tempo*DIVISIONS;
                 instate.actualrealtime = (
-                    window.performance.now() - instate.starttime);
+                    global.performance.now() - instate.starttime);
                 instate.offsettime = (
                     instate.actualrealtime - instate.intendedrealtime);
                 recurse(instate, Math.max(

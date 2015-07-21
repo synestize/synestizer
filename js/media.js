@@ -1,21 +1,21 @@
-(function( window, document, Rx) {
+(function( global, document, Rx) {
     'use strict';
     
     var media; 
-    window.media = media = window.media || {};
+    global.media = media = global.media || {};
     media.mics = [];
     media.cams = [];
     
     // shim getUserMedia ;
-    window.navigator.getUserMedia = (window.navigator.getUserMedia ||
-        window.navigator.webkitGetUserMedia ||
-        window.navigator.mozGetUserMedia ||
-        window.navigator.msGetUserMedia);
+    global.navigator.getUserMedia = (global.navigator.getUserMedia ||
+        global.navigator.webkitGetUserMedia ||
+        global.navigator.mozGetUserMedia ||
+        global.navigator.msGetUserMedia);
     
-    if (typeof window.MediaStreamTrack.getSources === 'undefined'){
+    if (typeof global.MediaStreamTrack.getSources === 'undefined'){
         console.debug('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
-        window.MediaStreamTrack.getSources(function (sourceInfos) {
+        global.MediaStreamTrack.getSources(function (sourceInfos) {
             for (var i = 0; i !== sourceInfos.length; ++i) {
                 var sourceInfo = sourceInfos[i];
                 if (sourceInfo.kind === 'video') {
@@ -65,7 +65,7 @@
             if ((mediaStream==="none") || mustUpdate) {
                 currCam = newCam;
                 currMic = newMic;
-                window.navigator.getUserMedia(
+                global.navigator.getUserMedia(
                     constraints, function(newMediaStream) {
                         mediaStream = newMediaStream;
                         success(newMediaStream);
@@ -264,7 +264,7 @@
         function queryMidi(event) {
             //event maybe a midi connection event
             Rx.Observable.fromPromise(
-                window.navigator.requestMIDIAccess()
+                global.navigator.requestMIDIAccess()
             ).subscribe(
                 setMidi,
                 function (err) {
@@ -272,11 +272,11 @@
                 }
             );
         }
-        if (typeof window.navigator.requestMIDIAccess==="function") {
+        if (typeof global.navigator.requestMIDIAccess==="function") {
             console.debug("yay midi")
             queryMidi();
         } else {
-            console.debug("no midi", typeof window.navigator.requestMIDIAccess)
+            console.debug("no midi", typeof global.navigator.requestMIDIAccess)
         };
         
         return setMidi;
@@ -302,7 +302,7 @@
         pixelStream = pixelStream || new Rx.Subject();
         getPixels.pixelStream = pixelStream;
         getPixels.attachMediaStream = function(newMediaStream) {
-            url = window.URL || window.webkitURL;
+            url = global.URL || global.webkitURL;
             if(timer!=="none"){timer.dispose()};
             mediaStream = newMediaStream;
             vidElem.src = url ? url.createObjectURL(mediaStream) : mediaStream;
@@ -372,7 +372,7 @@
     media.VideoPixelPump = VideoPixelPump;
     
     function attachMediaButton(el) {
-        if (typeof window.MediaStreamTrack.getSources === 'undefined'){
+        if (typeof global.MediaStreamTrack.getSources === 'undefined'){
             el.addEventListener("click", switchCam);
         } else {console.debug("MediaStreamTrack not supported")}
     };
@@ -412,4 +412,4 @@
     media.attachFullscreenButton = attachFullscreenButton;
     
     
-})( window, document, Rx);
+})(this, document, Rx);

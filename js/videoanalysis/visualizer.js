@@ -1,7 +1,7 @@
 (function( global, d3, _) {
     'use strict';
     var videoanalysis; 
-    window.videoanalysis = videoanalysis = window.videoanalysis || {};
+    global.videoanalysis = videoanalysis = global.videoanalysis || {};
     function statsPlotter(elem) {
         var childElems = {};
         var lenScale;

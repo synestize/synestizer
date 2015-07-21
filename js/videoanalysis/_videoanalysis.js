@@ -4,7 +4,7 @@
 (function( global, _, Rx ) {
     'use strict';
     var videoanalysis; 
-    window.videoanalysis = videoanalysis = window.videoanalysis || {};
+    global.videoanalysis = videoanalysis = global.videoanalysis || {};
 
     function StatsStreamer(pixelPump, stats){
         // should probably make this stats array be serializable if I want to 
@@ -34,7 +34,7 @@
         //25ms after the last one finished
         function statsAndMoreStats(pixels){
             outboxStream.onNext(calcStats(pixels));
-            window.setTimeout(function(){
+            global.setTimeout(function(){
                 pixelPump.pixelStream.take(1).subscribe(statsAndMoreStats)
             }, 25);
         };

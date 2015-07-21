@@ -2,10 +2,10 @@
 State models reflect the current state of the model
 */
 
-(function(window, _, d3, Rx, t){
+(function(global, _, d3, Rx, t){
     'use strict';
     var ensembles;
-    window.ensembles = ensembles = window.ensembles || {};
+    global.ensembles = ensembles = global.ensembles || {};
     
     function makeWidget (paramset, label, elem) {
         /*
@@ -50,7 +50,7 @@ State models reflect the current state of the model
             sliderEl: sliderEl,
         };
     }
-    window.ensembles.makeWidget = makeWidget;
+    global.ensembles.makeWidget = makeWidget;
     function mappedKeyStream(
             controlStream, key, controlMeta){
         return controlStream.pluck(key
@@ -62,7 +62,7 @@ State models reflect the current state of the model
                 return scaled;
             });
     };
-    window.ensembles.mappedKeyStream = mappedKeyStream;
+    global.ensembles.mappedKeyStream = mappedKeyStream;
     function keyStream (
             controlStream, key, controlMeta){
         return controlStream.pluck(key
@@ -70,7 +70,7 @@ State models reflect the current state of the model
                 return (typeof v !== "undefined") && (!isNaN(v))
             }).distinctUntilChanged();
     };
-    window.ensembles.keyStream = keyStream;
+    global.ensembles.keyStream = keyStream;
     
     ensembles.EnsembleView = function (paramset, elem) {
         var widgets = []; //for debugging
@@ -135,4 +135,4 @@ State models reflect the current state of the model
         return data;
     };
     
-})(window, _, d3, Rx, transducers);
+})(this, _, d3, Rx, transducers);

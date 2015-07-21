@@ -4,7 +4,7 @@
 (function( global, _, Rx ) {
     'use strict';
     var patch; 
-    window.patch = patch = window.patch || {};
+    global.patch = patch = global.patch || {};
 
     function loadPatch(patchData, videoPixels, controlSidebar, statsSidebar, midi) {
         var ensembles;
@@ -144,4 +144,4 @@
 
     // expose our module to the global object
     global.patch.loadPatch = loadPatch;
-})( this, _, Rx );
+})(this, _, Rx );

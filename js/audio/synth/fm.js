@@ -2,10 +2,10 @@
 Synths are building blocks for Ensembles
 */
 
-(function(window, _, d3){
+(function(global, _, d3){
     'use strict';
     var synths;
-    window.synths = synths = window.synths || {};
+    global.synths = synths = global.synths || {};
     synths.FMface = function (options) {
         function triadSynth () {};
         

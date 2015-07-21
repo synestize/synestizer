@@ -8,7 +8,7 @@
 (function( global ) {
     'use strict';
     var videoanalysis; 
-    window.videoanalysis = videoanalysis = window.videoanalysis || {};
+    global.videoanalysis = videoanalysis = global.videoanalysis || {};
     function AverageColor(params) {
         //1/8 sub-sampled average color
         var PIXELDIM=64; //64x64 grid is all we use.

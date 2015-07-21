@@ -2,10 +2,10 @@
 Ensembles make sound
 */
 
-(function(window, _, d3){
+(function(global, _, d3){
     'use strict';
     var ensembles;
-    window.ensembles = ensembles = window.ensembles || {};
+    global.ensembles = ensembles = global.ensembles || {};
     ensembles.FMScapeEnsemble = function (name) {
         var triadSynth;
         var lfoRateScale, freqScale, freqModScale;
@@ -117,4 +117,4 @@ Ensembles make sound
             destroy: function () {},
         };
     };
-})(window, _, d3);
+})(this, _, d3);
