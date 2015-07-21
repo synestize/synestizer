@@ -235,6 +235,7 @@ Partial workflow tools:
 * streams
 
   * [highland.js](http://highlandjs.org/#)
+
   * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
     Most important RX.js documentation links:
     * [basic howto](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
