@@ -1,7 +1,9 @@
 (function( global, document, Rx) {
     'use strict';
     
-    var media; 
+    var media;
+    var _ac=false;
+    
     global.media = media = global.media || {};
     media.mics = [];
     media.cams = [];
@@ -36,7 +38,14 @@
             */
         });
     }
-
+    //singleton audiocontext, for shared master output etc.
+    //NB currently not shared with WAAX
+    media.AudioContext = function() {
+        if (!_ac) {
+            _ac = new AudioContext();
+        }
+        return _ac;
+    }
     //Utility singleton to return the media stream only as necessary
     function Media(opts) {
         var currCam="none", currMic="none", mediaStream="none", constraints;

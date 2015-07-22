@@ -6,7 +6,7 @@
     var patch; 
     global.patch = patch = global.patch || {};
 
-    function loadPatch(patchData, videoPixels, controlSidebar, statsSidebar, midi) {
+    function loadPatch(patchData, videoPixels, controlSidebar, statsSidebar, midi, audioContext) {
         var ensembles;
         var ensembleParamSets;
         var ensembleViews;
@@ -40,7 +40,7 @@
         ensembles = _.mapObject(
             patchData.ensembles || {},
             function (ensClass, ensName){
-                return global.ensembles[ensClass](ensName)
+                return global.ensembles[ensClass](ensName, audioContext)
             }
         );
         // set up paramsets (quasi models that talk to the DSP)

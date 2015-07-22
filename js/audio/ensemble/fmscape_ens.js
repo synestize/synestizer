@@ -6,11 +6,16 @@ Ensembles make sound
     'use strict';
     var ensembles;
     global.ensembles = ensembles = global.ensembles || {};
-    ensembles.FMScapeEnsemble = function (name) {
+    ensembles.FMScapeEnsemble = function (name, context) {
         var seq;
         var paramSet, controlStream;
         var controlMeta;
-                
+        var lineOut;
+        
+        lineOut = new WebAudiox.LineOut(context);
+        seq = audio.BeatScheduler({}, function(){});
+        
+        
         controlMeta = {
             outputGain: {
                 scale: d3.scale.log().clamp(true).domain([0.0001,0.33]).range([0,1]).invert,
@@ -22,7 +27,6 @@ Ensembles make sound
                 units: "Hz",
                 default: 0.7
             },
-
         };
             
         function setParamSet(newParamSet) {
@@ -30,10 +34,10 @@ Ensembles make sound
             controlStream = paramSet.paramValsStream;
             //keep streams for each param
             paramSet.getMappedStream("tempo").subscribe(function(x){
-                triadSynth.$oscFreq1(x+paramSet.getMapped("freq1Mod"), 0.1, 1);
+                seq.tempo(x);
             });
             paramSet.getMappedStream("outputGain").subscribe(function(x){
-                triadSynth.$output(x, 0.1, 1);
+                lineOut.volume = x;
             });
         };
         
@@ -44,6 +48,7 @@ Ensembles make sound
             controlStream: controlStream,
             setParamSet: setParamSet,
             destroy: function () {},
+            seq: seq,
         };
     };
 })(this, _, d3);

@@ -67,7 +67,8 @@
                     var logicalbeat = logicalscheduler.now();
                     var instate = _.extend(state, {
                         logicalbeat: logicalbeat,
-                        logicalrealtime: (logicalbeat-state.beat)*1000+state.intendedrealtime,
+                        logicalrealtime: (logicalbeat-state.beat
+                            )*1000 + state.intendedrealtime,
                     }, params, {});
                     playfn(instate);
                     resched(logicalscheduler, instate);
@@ -98,6 +99,11 @@
                     resched(logicalscheduler, instate);
                 }
             )
+        };
+        logicalscheduler.tempo = function(value) {
+            if (!arguments.length) return state.tempo;
+            state.tempo = value;
+            return logicalscheduler;
         };
         //Now override the default virtualtime implementation
         //to increment time gradually
