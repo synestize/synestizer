@@ -7,9 +7,13 @@ State models reflect the current state of the model
     var ensembles;
     global.ensembles = ensembles = global.ensembles || {};
     
-    function makeWidget (paramset, label, elem) {
+    function makeWidget (paramset, label, elem, controlInfo) {
         /*
-        this function makes a slider which communcates with a model over streams
+        this function makes a slider which communcates with a model over
+        streams.
+        
+        ControlInfo is not currently used, but it could be made to alter the
+        type of widget.
         */
         var incomingStream, outgoingStream, label, controlEl, sliderEl,val;
         val = paramset.get(label);
@@ -81,7 +85,7 @@ State models reflect the current state of the model
             paramset.ensemble.controlMeta,
             function(info, label, controls) {
                 widgets.push(ensembles.makeWidget(
-                    paramset, label, wrapper
+                    paramset, label, wrapper, info
                 ));
             },
             this
