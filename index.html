@@ -44,10 +44,6 @@
                           <li><a href="#" id="switchCam" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
                           <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
                       </ul>
-                      <h4>Patch</h3>
-                          <select name="patchselect" id="patchselect" disabled="true">
-                              <option>none</option>
-                          </select>
                       <h3>Midi</h3>
                       <h4 class="small">in</h4><select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
                       <h4 class="small">out</h4><select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"></select>
@@ -189,9 +185,6 @@
                         outdevice: "osculator"
                     });
                     //patch loading
-                    var patchselectdom = document.getElementById("patchselect");
-                    patchselectdom.innerHTML = '';
-                    patchselectdom.disabled = false;
                     function loadpatch(patchname) {
                         currPatch = patch.loadPatch(
                             patch.library[patchname],
@@ -201,22 +194,18 @@
                             midi
                         );
                     }
-                    Object.keys(patch.library).forEach( function( key) {
-                        var opt = document.createElement("option");
-                        opt.text = key;
-                        opt.value = key;
-                        patchselectdom.add(opt);
-                    });
-                    //For now, we let the user select the patch, maybe, once.
-                    Rx.Observable.fromEvent(
-                            patchselectdom, 'input').take(1).subscribe(
-                        function(ev) {
-                            console.debug("patchy", ev.target.value);
-                            loadpatch(ev.target.value)
-                        }
-                    );
-                    
-                    
+                    var patchhash = "";
+                    if (window.location.hash.length>0){
+                        patchhash = window.location.hash.slice(1)
+                    }
+                    if (Object.keys(patch.library).indexOf(patchhash)>-1) {
+                        loadpatch(patchhash);
+                    } else {
+                        console.log(
+                            "warning. no matching patch for ",
+                            patchhash
+                        );
+                    }
                 }
             });
             $(window).resize(function() {
