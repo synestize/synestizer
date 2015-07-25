@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static staticfiles sekizai_tags compress %}<!DOCTYPE html>
 <html>
 
 <head>
@@ -9,10 +9,10 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
     <!-- foundation style -->
-    <link rel="stylesheet" href="./bower_components/foundation/css/foundation.css">
+    <link rel="stylesheet" href="{% static 'bower_components/foundation/css/foundation.css' %}">
 
     <!-- synestizer style -->
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
@@ -71,9 +71,9 @@
         </div>
     </div>
     <!-- foundation js -->
-    <script src="./bower_components/jquery/dist/jquery.js"></script>
-    <script src="./bower_components/foundation/js/foundation.min.js"></script>
-    <script src="./bower_components/foundation/js/foundation/foundation.accordion.js"></script>
+    <script src="{% static 'bower_components/jquery/dist/jquery.js' %}"></script>
+    <script src="{% static 'bower_components/foundation/js/foundation.min.js' %}"></script>
+    <script src="{% static 'bower_components/foundation/js/foundation/foundation.accordion.js' %}"></script>
     <script>
         // Formatting scripts. Should these be run after doc init?
         // init foundation
@@ -117,44 +117,42 @@
     </script>
 
     <!-- 3rd party utils -->
-    <script src="./bower_components/underscore/underscore.js"></script>
-    <script src="./bower_components/rxjs/dist/rx.all.js"></script>
-    <script src="./bower_components/transducers-js/transducers.js"></script>
-    <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
-    <script src="./bower_components/d3/d3.js"></script>
-    
+    <script src = "{% static 'bower_components/underscore/underscore.js' %}"></script>
+    <script src = "{% static 'bower_components/rxjs/dist/rx.all.js' %}"></script>
+    <script src = "{% static 'bower_components/transducers-js/transducers.js' %}"></script>
+    <!-- <script src = "{% static './bower_components/Percussion/dist/Percussion.js"></script> -->
+    <script src = "{% static 'bower_components/d3/d3.js' %}"></script>
+
     <!-- audio/video infrastructure -->
-    <script src="./js/media.js"></script>
+    <script src = "{% static './js/media.js' %}"></script>
 
     <!-- video analysis -->
-    <script src="./js/videoanalysis/_videoanalysis.js"></script>
-    <script src="./js/videoanalysis/statistic.js"></script>
-    <script src="./js/videoanalysis/visualizer.js"></script>
+    <script src = "{% static './js/videoanalysis/_videoanalysis.js' %}"></script>
+    <script src = "{% static './js/videoanalysis/statistic.js' %}"></script>
+    <script src = "{% static './js/videoanalysis/visualizer.js' %}"></script>
 
     <!-- audio infrastructure -->
-    <script src="./js/vendor/WAAX/waax.js"></script>
-    <script src="./js/vendor/WAAX/plugins.js"></script>
-    <!-- <script src="./js/audio/lib/scaling.js"></script> -->
-    <script src="./js/audio/lib/clock.js"></script>
-    <script src="./js/audio/synth/triadsynth.js"></script>
-    <script src="./js/audio/synth/fm.js"></script>
-    <script src="./bower_components/webaudiox/lib/webaudiox.lineout.js"></script>
+    <script src="{% static './js/vendor/WAAX/waax.js' %}"></script>
+    <script src = "{% static './js/vendor/WAAX/plugins.js' %}"></script>
+    <!-- <script src = "{% static './js/audio/lib/scaling.js' %}"></script> -->
+    <script src = "{% static './js/audio/lib/clock.js' %}"></script>
+    <script src = "{% static './js/audio/synth/triadsynth.js' %}"></script>
+    <script src = "{% static './js/audio/synth/fm.js' %}"></script>
+    <script src = "{% static 'bower_components/webaudiox/lib/webaudiox.lineout.js' %}"></script>
 
     <!-- audio models -->
-    <script src="./js/audio/ensemble/_ensemble.js"></script>
-    <script src="./js/audio/ensemble/triad_ens.js" ></script>
-    <script src="./js/audio/ensemble/fmscape_ens.js" ></script>
+    <script src = "{% static './js/audio/ensemble/_ensemble.js' %}"></script>
+    <script src = "{% static './js/audio/ensemble/triad_ens.js' %}" ></script>
+    <script src = "{% static './js/audio/ensemble/fmscape_ens.js' %}" ></script>
 
     <!-- audio/video patches -->
-    <script src="./js/patch/_patch.js"></script>
-    <script src="./js/patch/patches.js"></script>
+    <script src = "{% static './js/patch/_patch.js' %}"></script>
+    <script src = "{% static './js/patch/patches.js' %}"></script>
 
     <script>
         "use strict";
-        
-        
+
         //the rest of the init. DEFINITELY should be run after init.
-        
         var currPatch;
         var videoPixels;
         var midi;
