@@ -1,7 +1,7 @@
-(function(window, _, d3){
+(function(global, _, d3){
     'use strict';
     var scaling;
-    window.scaling = scaling = window.scaling || {};
+    global.scaling = scaling = global.scaling || {};
     scaling.mtof = d3.scale.log(
         ).base(2
         ).range([0, 127]

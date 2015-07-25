@@ -3,7 +3,7 @@
 
 var patches = patches || {};
 
-(function(patches, window) {
+(function(patches, global) {
     'use strict';
 
     patches.Sampler = function (preset) {
@@ -26,7 +26,7 @@ var patches = patches || {};
         input = WX.Gain();
 
         // Create an AudioNode from the stream.
-        realAudioInput = WX._ctx.createMediaStreamSource(window.media.stream);
+        realAudioInput = WX._ctx.createMediaStreamSource(global.media.stream);
         audioInput = realAudioInput;
         audioInput.connect(input);
 
@@ -264,10 +264,10 @@ var patches = patches || {};
                 }
             }
 
-            rafID = window.requestAnimationFrame( updateAnalysers );
+            rafID = global.requestAnimationFrame( updateAnalysers );
         };
     };
 
 
-})( patches, window );
+})( patches, this );
 */

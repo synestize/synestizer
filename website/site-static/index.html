@@ -44,7 +44,6 @@
                           <li><a href="#" id="switchCam" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
                           <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
                       </ul>
-
                       <h3>Midi</h3>
                       <h4 class="small">in</h4><select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
                       <h4 class="small">out</h4><select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"></select>
@@ -76,6 +75,7 @@
     <script src="./bower_components/foundation/js/foundation.min.js"></script>
     <script src="./bower_components/foundation/js/foundation/foundation.accordion.js"></script>
     <script>
+        // Formatting scripts. Should these be run after doc init?
         // init foundation
         $(document).foundation({
             accordion: {
@@ -138,10 +138,12 @@
     <script src="./js/audio/lib/clock.js"></script>
     <script src="./js/audio/synth/triadsynth.js"></script>
     <script src="./js/audio/synth/fm.js"></script>
+    <script src="./bower_components/webaudiox/lib/webaudiox.lineout.js"></script>
 
     <!-- audio models -->
     <script src="./js/audio/ensemble/_ensemble.js"></script>
     <script src="./js/audio/ensemble/triad_ens.js" ></script>
+    <script src="./js/audio/ensemble/fmscape_ens.js" ></script>
 
     <!-- audio/video patches -->
     <script src="./js/patch/_patch.js"></script>
@@ -150,6 +152,9 @@
     <script>
         "use strict";
         
+        
+        //the rest of the init. DEFINITELY should be run after init.
+        
         var currPatch;
         var videoPixels;
         var midi;
@@ -157,12 +162,12 @@
             //debug mode:
             Rx.config.longStackSupport = true;
             
-            // setup info div
-            $("#info").removeClass("hide").addClass("show");
             window.media.Media({
                 success: function(mediaStream){
+                    //set up info div
                     $("#info").removeClass("show").addClass("hide");
                     $("#controls").removeClass("hide").addClass("show");
+                    
                     // call resize for video resizing
                     resize();
                     media.attachMediaButton(
@@ -181,13 +186,29 @@
                         // outdevice: "iac-driver"
                         outdevice: "osculator"
                     });
-                    currPatch = patch.loadPatch(
-                        patch.library.basic_triad,
-                        videoPixels,
-                        document.getElementById("rightcontrolsidebar"),
-                        document.getElementById("analysis-panel"),
-                        midi
-                    );
+                    //patch loading
+                    function loadpatch(patchname) {
+                        currPatch = patch.loadPatch(
+                            patch.library[patchname],
+                            videoPixels,
+                            document.getElementById("rightcontrolsidebar"),
+                            document.getElementById("analysis-panel"),
+                            midi,
+                            media.AudioContext()
+                        );
+                    }
+                    var patchhash = "";
+                    if (window.location.hash.length>0){
+                        patchhash = window.location.hash.slice(1)
+                    }
+                    if (Object.keys(patch.library).indexOf(patchhash)>-1) {
+                        loadpatch(patchhash);
+                    } else {
+                        console.log(
+                            "warning. no matching patch for ",
+                            patchhash
+                        );
+                    }
                 }
             });
             $(window).resize(function() {

@@ -2,14 +2,18 @@
 State models reflect the current state of the model
 */
 
-(function(window, _, d3, Rx, t){
+(function(global, _, d3, Rx, t){
     'use strict';
     var ensembles;
-    window.ensembles = ensembles = window.ensembles || {};
+    global.ensembles = ensembles = global.ensembles || {};
     
-    function makeWidget (paramset, label, elem) {
+    function makeWidget (paramset, label, elem, controlInfo) {
         /*
-        this function makes a slider which communcates with a model over streams
+        this function makes a slider which communcates with a model over
+        streams.
+        
+        ControlInfo is not currently used, but it could be made to alter the
+        type of widget.
         */
         var incomingStream, outgoingStream, label, controlEl, sliderEl,val;
         val = paramset.get(label);
@@ -50,7 +54,7 @@ State models reflect the current state of the model
             sliderEl: sliderEl,
         };
     }
-    window.ensembles.makeWidget = makeWidget;
+    global.ensembles.makeWidget = makeWidget;
     function mappedKeyStream(
             controlStream, key, controlMeta){
         return controlStream.pluck(key
@@ -62,7 +66,7 @@ State models reflect the current state of the model
                 return scaled;
             });
     };
-    window.ensembles.mappedKeyStream = mappedKeyStream;
+    global.ensembles.mappedKeyStream = mappedKeyStream;
     function keyStream (
             controlStream, key, controlMeta){
         return controlStream.pluck(key
@@ -70,7 +74,7 @@ State models reflect the current state of the model
                 return (typeof v !== "undefined") && (!isNaN(v))
             }).distinctUntilChanged();
     };
-    window.ensembles.keyStream = keyStream;
+    global.ensembles.keyStream = keyStream;
     
     ensembles.EnsembleView = function (paramset, elem) {
         var widgets = []; //for debugging
@@ -81,7 +85,7 @@ State models reflect the current state of the model
             paramset.ensemble.controlMeta,
             function(info, label, controls) {
                 widgets.push(ensembles.makeWidget(
-                    paramset, label, wrapper
+                    paramset, label, wrapper, info
                 ));
             },
             this
@@ -135,4 +139,4 @@ State models reflect the current state of the model
         return data;
     };
     
-})(window, _, d3, Rx, transducers);
+})(this, _, d3, Rx, transducers);

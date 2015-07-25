@@ -5,7 +5,7 @@
     'use strict';
     var patch;
     var library;
-    window.patch = patch = window.patch || {};
+    global.patch = patch = global.patch || {};
     patch.library = _.extend(patch.library||{}, {
         basic_triad: { //simple example patch
             stats: {

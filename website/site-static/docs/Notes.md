@@ -243,7 +243,7 @@ Partial workflow tools:
 
 There are too many resources online to list. [Start here](http://notes.livingthing.org/javascript_audio.html)
 
-We use one helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
+We use one (optional) helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
 
 ### Alternatives to WebAudio
 
