@@ -197,7 +197,10 @@
                             media.AudioContext()
                         );
                     }
-                    var patchhash = "";
+                    // Using hash address for this is note ideal;
+                    // Doesn't reload gracefully.
+                    // Also we should update URL if the patch name changes.
+                    var patchhash = "basic_triad";
                     if (window.location.hash.length>0){
                         patchhash = window.location.hash.slice(1)
                     }
