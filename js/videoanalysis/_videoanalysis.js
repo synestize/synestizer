@@ -7,16 +7,55 @@
     global.videoanalysis = videoanalysis = global.videoanalysis || {};
 
     function StatsStreamer(pixelPump, stats){
-        // should probably make this stats array be serializable if I want to 
-        // do it in a webworker.
-        var lastTime, thisTime;
         var outboxStream;//outgoing analyses
         var inboxStream;//incoming pixels
-        var statsWorkers;
-        var statsState = {};
+        var statState = {};
         outboxStream = new Rx.Subject();
         
+        var worker = new Worker('./js/videoanalysis/statworker.js');
+        console.debug("worker", typeof worker, worker);
 
+        // Create observer to handle sending messages
+        var observer = Rx.Observer.create(
+            function (data) {
+                console.debug("statsparent obs got", data);
+                worker.postMessage(data);
+            });
+
+        // Create observable to handle the messages
+        var observable = Rx.Observable.create(function (obs) {
+            worker.onmessage = function (data) {
+                obs.onNext(data);
+            };
+
+            worker.onerror = function (err) {
+                obs.onError(err);
+            };
+
+            return function () {
+                console.debug("disposing of stats worker")
+                if (typeof worker === "object"){
+                    worker.close()
+                } else {
+                    console.debug("tried to kill worker but it is missing", typeof worker, worker)
+                }
+            };
+        });
+
+        var statWorkerSubject = Rx.Subject.create(observer, observable);
+
+        var subscription = statWorkerSubject.subscribe(
+            function (x) {
+                console.log('Statsparent Next:', x);
+            },
+            function (err) {
+                console.log('Statsparent Error:',  err);
+            },
+            function () {
+                console.log('Completed');
+            });
+
+        statWorkerSubject.onNext(525);
         //Things get crazy here because we don't know how long statistics take
         //So we roll our own backpressure using a tail call
         //TODO: there is a recursive scheduler built in to the system already.
@@ -46,15 +85,14 @@
         outboxStream.subscribe(function(x){
             _.mapObject(
                 x,
-                function(statval, statName){statsState[statval]=statName}
+                function(statval, statName){statState[statval]=statName}
             );
         });
         var self = {
             statsStream: outboxStream,
-            statsState: statsState
+            statState: statState,
+            worker: worker,
         };
-        lastTime = Date.now();
-        thisTime = Date.now();
         return self;
     };
 

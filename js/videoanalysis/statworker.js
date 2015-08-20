@@ -3,52 +3,62 @@ Using a Web Worker to send and receive data via an Rx.Subject
 https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/subjects/subject.md
 */
 
-/* worker.js */
+/* statworker.js */
+importScripts('../../bower_components/rxjs/dist/rx.all.js');
+importScripts('./statistic.js');
 
-self.onmessage = function(e) {
-    self.postMessage(e.data);
-};
+var self = this;
+var statfns = [];
 
-/* client.js */
-var worker = new Worker('worker.js');
+console.debug("in statworker.js", self);
 
-// Create observer to handle sending messages
 var observer = Rx.Observer.create(
     function (data) {
-        worker.postMessage(data);
+        self.postMessage(data);
     });
 
 // Create observable to handle the messages
 var observable = Rx.Observable.create(function (obs) {
-
-    worker.onmessage = function (data) {
+    self.onmessage = function (data) {
+        console.debug("statsworker obs got", data);
         obs.onNext(data);
     };
 
-    worker.onerror = function (err) {
+    self.onerror = function (err) {
+        console.debug("statsworker obs error", err);
         obs.onError(err);
     };
 
     return function () {
-        worker.close();
+        self.close();
     };
 });
 
-var subject = Rx.Subject.create(observer, observable);
+var parentSubject = Rx.Subject.create(observer, observable);
 
-var subscription = subject.subscribe(
+var subscription = parentSubject.subscribe(
     function (x) {
-        console.log('Next: ' + x);
+        console.log('Statsworker Next:', x);
     },
     function (err) {
-        console.log('Error: ' + err);
+        console.log('Statsworker Error:', err);
     },
     function () {
         console.log('Completed');
     });
 
-subject.onNext(42);
+//parentSubject.onNext("inited");
 
+function initStats(statMetadataList) {
+    statfns = initStats.map(function(blarg){
+        console.debug(blarg);
+        return blarg;
+    })
+}
+
+function calcStats(options) {
+    
+}
 
 ////////////////////////////////////////////////////////////////////////
 // For comparison, the Rx.dom implementation
