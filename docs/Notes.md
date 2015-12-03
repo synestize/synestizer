@@ -210,7 +210,6 @@ Partial workflow tools:
   * https://github.com/karpathy/forestjs
   * http://techtalks.tv/talks/randomized-decision-forests-and-their-applications-in-computer-vision-jamie/59432/
 
-
 ### Machine vision libraries
 
 * [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
