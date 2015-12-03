@@ -193,6 +193,7 @@ Partial workflow tools:
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
+* [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 * neural networks?
 
   * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
