@@ -165,12 +165,26 @@ Partial workflow tools:
   * Are the covariance estimates incoherent?
     Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 
-* pca
+* PCA
 * Haar cascade.
+* random IIR filters
+* cascaded IIR lowpass filters at successively lower resolution
+
+  * You know what could lower the dimension further?
+    reporting only the extremest n extrema 
+    of the filtered fields, and the coordinates thereof.
+  * Also arbitrary differences between layers
+  * would the color coordinates interact at all?
+  * could even takes squared difference features to extract localised frequency
+  
+* something like a convolution layer from machine vision?
 * autocorrelation
-* kalman filters
+* Kalman filters
 * particle filters
-* FFT features
+
+  * with a loss fn to do with low-variance estimates of next timestep value in IJYUV space
+  
+* FFT features (or something else translation/phase-invariant?)
 * exponentially weighted moments
 * inner-product with desired eigen-feautres
 * Features based on correlation with eigenfeatures (even fourier ones?)
@@ -179,7 +193,12 @@ Partial workflow tools:
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
+* neural networks?
 
+  * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
+  * or use a high-performance pre-trained JS prediction models via [neocortex.js](https://github.com/scienceai/neocortex)?
+    Note this woudl also get us features for free even if we ignore the model.
+  * can we do *recursive* NN for realtime stuff this way?
 
 ### Machine vision libraries
 
@@ -224,7 +243,7 @@ Partial workflow tools:
   * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
   * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
   * There are other options - kefir.js and bacon.js - but my brain is full.
-  
+
 * stream debuggers
 
     * [percussion](https://github.com/grisendo/Percussion)
@@ -238,6 +257,8 @@ Partial workflow tools:
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
   * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
+
+* alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js)
 
 ## Audio
 
