@@ -188,8 +188,9 @@ Partial workflow tools:
 * exponentially weighted moments
 * inner-product with desired eigen-feautres
 * Features based on correlation with eigenfeatures (even fourier ones?)
-* mcmc updating
-* gaussian mixture models
+* MCMC updating
+* Gaussian mixture models
+* user interaction: They choose a few key scenes, and we try to measure distance from those scenes.
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
@@ -197,9 +198,18 @@ Partial workflow tools:
 * neural networks?
 
   * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
+  * https://github.com/karpathy/recurrentjs
   * or use a high-performance pre-trained JS prediction models via [neocortex.js](https://github.com/scienceai/neocortex)?
     Note this woudl also get us features for free even if we ignore the model.
   * can we do *recursive* NN for realtime stuff this way?
+  * Examples from keras https://github.com/fchollet/keras/tree/master/examples
+  * torch examples http://www.di.ens.fr/willow/research/weakcnn/ https://hal.inria.fr/hal-01015140
+
+* random forests
+
+  * https://github.com/karpathy/forestjs
+  * http://techtalks.tv/talks/randomized-decision-forests-and-their-applications-in-computer-vision-jamie/59432/
+
 
 ### Machine vision libraries
 
@@ -237,6 +247,7 @@ Partial workflow tools:
 
 ### Sequencing
 
+* [old school sequencing example](https://github.com/mudcube/MIDI.js/blob/master/js/midi/player.js) from a MIDI player.
 * streams
 
   * [highland.js](http://highlandjs.org/#)
@@ -259,7 +270,7 @@ Partial workflow tools:
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
   * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
 
-* alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js)
+* alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js), which attempts to guarantee strong timing.
 
 ## Audio
 
