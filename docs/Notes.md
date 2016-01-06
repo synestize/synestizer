@@ -231,6 +231,7 @@ Partial workflow tools:
 
 ### Machine vision libraries
 
+* tangible.js tracks a bunch of useful libraries such as [machine vision in js](http://tangiblejs.com/libraries/computer-vision)
 * [tracking.js]http://trackingjs.com/) does cool stuff already
 * so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
@@ -311,7 +312,7 @@ We use one helper library for now, [WAAX](https://hoch.github.io/WAAX/get-starte
 
 * phonegap/appcelerator + libpd?
   * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
-  * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
+  * [Create Digital Music's recommended guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
   * [libpd](http://libpd.cc/documentation/)
   * [libpd wiki](https://github.com/libpd/libpd/wiki)
 
@@ -324,4 +325,8 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 * [coccoonjs](https://www.ludei.com/cocoonjs/)
 * [electron](http://electron.atom.io/)
 * [node-webkit](http://nwjs.io/)
-* [chrome app](https://developer.chrome.com/apps/about_appshttp://maps.apple.com/?q=-7.871582,110.353221&sspn=0.530353,0.771325&sll=-7.685342,110.421326)
+* [chrome app](https://developer.chrome.com/apps/about_apps)
+
+## Android tablet version
+
+Cheapest is amazon kindle, which supports [native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps), [decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a [special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets)
