@@ -213,8 +213,9 @@ Partial workflow tools:
 
 ### Machine vision libraries
 
-* [tracking.js](http://trackingjs.com/examples/brief_camera.html) does cool stuff already
-* so does [jsfeat](https://inspirit.github.io/jsfeat/) inclding some by EPFL
+* tangible.js tracks a bunch of useful libraries such as [machine vision in js](http://tangiblejs.com/libraries/computer-vision)
+* [tracking.js]http://trackingjs.com/) does cool stuff already
+* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
 * [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
 
@@ -284,7 +285,7 @@ We use one (optional) helper library for now, [WAAX](https://hoch.github.io/WAAX
 
 * phonegap/appcelerator + libpd?
   * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
-  * [Create Digital Music's guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
+  * [Create Digital Music's recommended guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
   * [libpd](http://libpd.cc/documentation/)
   * [libpd wiki](https://github.com/libpd/libpd/wiki)
 
@@ -298,3 +299,7 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 * [electron](http://electron.atom.io/)
 * [node-webkit](http://nwjs.io/)
 * [chrome app](https://developer.chrome.com/apps/about_apps)
+
+## Android tablet version
+
+Cheapest is amazon kindle, which supports [native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps), [decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a [special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets)
