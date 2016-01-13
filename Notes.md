@@ -48,6 +48,19 @@ Notes auditioning for a place in the documentation
   * [zepto](http://zeptojs.com/)
   * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
 
+## Javascript dialects
+
+### Coffeescript
+
+Coffeescript makes javascript bearable, but is tricky to debug
+
+### ECMAscript6
+
+ECMAscript 6 is here and supported on [every browser we care about](https://kangax.github.io/compat-table/es6/), and can do [lots of coffeescript stuff](https://robots.thoughtbot.com/replace-coffeescript-with-es6)
+  and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
+It can also be transpiled to Ecmascript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
+
+
 ## linear algebra options
 
 Ranked in descending order of viability:
@@ -303,3 +316,14 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 ## Android tablet version
 
 Cheapest is amazon kindle, which supports [native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps), [decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a [special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets)
+
+# SSL
+
+* The easiest way to host Synestizer? github. But you need SSL.
+* https://blog.keanulee.com/2014/10/11/setting-up-ssl-on-github-pages.html
+* https://sheharyar.me/blog/free-ssl-for-github-pages-with-custom-domains/
+* [there are limits though](https://konklone.com/post/github-pages-now-sorta-supports-https-so-use-it)
+
+## Multitouch
+
+[workaround for multitouch from desktop](http://smus.com/multi-touch-browser-patch/)
