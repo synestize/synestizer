@@ -11,7 +11,7 @@ See also [HOWTO](./HOWTO.html), [NOTES](./Notes.html), [LICENSE](./LICENSE.html)
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.
 - Cage
 
-> „It`s time to open the digital window and listen colourwise.”
+> „It's time to open the digital window and listen colourwise.”
 - Koenig
 
 version 150123:
