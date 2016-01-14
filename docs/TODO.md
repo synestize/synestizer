@@ -5,7 +5,12 @@ title: TODO
 # TODO
 
 * Revised simpler UI
+
+    * MIDI mapping GUI rather than hardcoded controllers
+
 * Purge jquery.
+* Purge foundation
+* Purge WAAX
 * Revised patching system
 
     * accept synth parameters in URL fragments (esp to set master output volume!)
@@ -22,6 +27,7 @@ title: TODO
     * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
     * Patches could have a separate mapping GUI for constructing the mapping
     * Always set up a master gain and master compressor
+    * Copula-function-based covariance
 
 * Meta
 
@@ -32,8 +38,7 @@ title: TODO
     * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
     * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
-* MIDI *mapping* (right now it is hard coded)
-
+* Better documentation workflow and prettier docs website.
 * speed improvements
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)

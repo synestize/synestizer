@@ -4,7 +4,7 @@ title: Synestizer FAQ
 
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
-See also [HOWTO](./HOWTO.html), [NOTES](./Notes.html), [LICENSE](./LICENSE.html).
+See also [HOWTO contribute](./HOWTO.html), [Miscellaneous notes](./Misc_notes.html), [LICENSE](./LICENSE.html), [system requirements](./Requirements.html), [user interface notes](./UI.html), [Video analysis notes](./Video_analysis.html), [Audio synthesis notes](./Audio_synthesis.html), and our [TODO list](./TODO.html).
 
 # FAQ
 
