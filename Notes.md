@@ -11,6 +11,7 @@ Notes auditioning for a place in the documentation
 * Revised patching system
 
   * accept synth parameters in URL fragments (esp to set master output volume!)
+  * update URL fragments with synth parameters
   * A *patch* should map between
     * audio ensemble parameters
     * and input data 
@@ -73,6 +74,10 @@ Coffeescript makes javascript bearable, but is tricky to debug
 ECMAscript 6 is here and supported on [every browser we care about](https://kangax.github.io/compat-table/es6/), and can do [lots of coffeescript stuff](https://robots.thoughtbot.com/replace-coffeescript-with-es6)
   and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
 It can also be transpiled to Ecmascript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
+
+If you want to make sure your browser has this,
+or any other trendy features,
+you can download a fresh build from http://chromium.woolyss.com/ .
 
 
 ## linear algebra options
@@ -142,7 +147,6 @@ Build tools:
 * [grunt](http://gruntjs.com/) ---
   here's how to
   [deploy to github using grunt-build-control](https://blog.5apps.com/2014/05/29/deploying-static-apps-with-grunt-build-control-on-5apps-deploy.html)
-* [webpack](https://github.com/webpack/webpack) seems popular with e.g. rxvision
 
 complete workflow tools:
 
@@ -158,7 +162,8 @@ Partial workflow tools:
   webpack is a module bundler
   This means webpack takes modules with dependencies
   and emits static assets representing those modules.
-* [browserify](http://browserify.org/) on the command line can budle up all dependencies..
+  Popular with, e.g. rxvision.
+* [browserify](http://browserify.org/) browser-side require() the node.js way
 
 ### online editing code
 
@@ -179,7 +184,7 @@ Partial workflow tools:
 * [tokbox](https://tokbox.com/)
 * [webRTC](http://www.webrtc.org/)
 * [binaryjs](https://github.com/binaryjs/binaryjs)
-* [connecting spaces](http://tunnel.connectingspaces.hk) -s a Hong-Kong Zürich collaboration
+* [connecting spaces](http://tunnel.connectingspaces.hk)
 * [shiftr](https://shiftr.io/)
 
 ## Video analysis
