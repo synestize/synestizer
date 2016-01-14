@@ -6,59 +6,8 @@ title: Notes
 
 Notes auditioning for a place in the documentation
 
-## TODO
-
-* Revised patching system
-
-    * accept synth parameters in URL fragments (esp to set master output volume!)
-    * update URL fragments with synth parameters
-    * A *patch* should map between
-    * audio ensemble parameters
-    * and input data 
-    
-        * Video analysis
-        * MIDI CC
-        * GUI widgets
-    
-    * The mapping could be One-To-One or Many-To-Many, or whatever.
-    * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
-    * Patches could have a separate mapping GUI for constructing the mapping
-    * Always set up a master gain and master compressor
-
-* Meta
-
-    * smoother workflow to host live on github
-    * Move to modular architecture in the AMD style,
-    e.g. using [require.js](http://requirejs.org/)
-    using [some kind of template](https://github.com/volojs/create-template)
-    * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
-    * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
-
-* MIDI *mapping* (right now it is hard coded)
-
-* speed improvements
-    * web workers
-        * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-        * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
-        * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
-    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
-
-
 ## javascript tips
 
-* how to instantiate a WAC from javascript:
-
-        // live-inserts a knob.
-        function test() {
-            var y = document.createElement("webaudio-knob");
-            y.setAttribute("src", "img/LittlePhatty.png");
-            y.sprites=100;
-            y.ready();
-            document.body.appendChild(y);
-            return y;
-        }
-      
-* Switch to chainable API style
 * Jquery is too big. Alternatives:
 
     * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
@@ -129,6 +78,8 @@ Ranked in descending order of viability:
   but 4-vector oriented, which is too small for us
 * [numeric](http://numericjs.com/wordpress/) looks polished
   but has been untouched for 2 years
+* [jmat](https://github.com/lvandeve/jmat) is an actively developed complex matrix library, but we would probably prefer speed to complex number support.
+
 
 ### User interface improvements
 
@@ -297,6 +248,7 @@ Partial workflow tools:
         * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
         * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
         * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
+        
     * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
     * There are other options - kefir.js and bacon.js - but my brain is full.
 
@@ -335,7 +287,7 @@ We use one (optional) helper library for now, [WAAX](https://hoch.github.io/WAAX
 
 ## iOS version
 
-http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
+... (is viable)[http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/] but we won't start just yet.
 
 ## Desktop JS app options:
 
@@ -346,7 +298,12 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 
 ## Android tablet version
 
-Cheapest is amazon kindle, which supports [native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps), [decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a [special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets)
+Cheapest is amazon kindle, which supports
+[native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps),
+[decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a
+[special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets).
+Could we possibly get our app on that?
+Would the browser APIs be modern enough?
 
 ## Multitouch
 
