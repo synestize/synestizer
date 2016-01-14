@@ -1,0 +1,4 @@
+synestizer.private
+markdown /docs {
+  dev
+}

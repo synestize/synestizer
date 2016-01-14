@@ -2,3 +2,6 @@
 docs/_build/
 
 bower_components
+
+#ignore dev server crypographic assets
+.caddy/
