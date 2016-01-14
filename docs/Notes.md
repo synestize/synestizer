@@ -26,21 +26,20 @@ Notes auditioning for a place in the documentation
 
   * smoother workflow to host live on github
   * Move to modular architecture in the AMD style,
-    e.g. using [require.js](http://requirejs.org/) --
-    [see explanation](http://eloquentjavascript.net/10_modules.html)
+    e.g. using [require.js](http://requirejs.org/)
+    using [some kind of template](https://github.com/volojs/create-template)
   * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
   * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
 * MIDI *mapping* (right now it is hard coded)
 
-* Video analysis improvements
+* speed improvements
+    * web workers
+        * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
+        * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
+        * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
+    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
-  * Only operate on a square grid of pixels (64x64)
-  * web workers
-      * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-      * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
-      * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
-  * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
 
 ## javascript tips
 
@@ -62,6 +61,19 @@ Notes auditioning for a place in the documentation
   * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
   * [zepto](http://zeptojs.com/)
   * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
+
+## Javascript dialects
+
+### Coffeescript
+
+Coffeescript makes javascript bearable, but is tricky to debug
+
+### ECMAscript6
+
+ECMAscript 6 is here and supported on [every browser we care about](https://kangax.github.io/compat-table/es6/), and can do [lots of coffeescript stuff](https://robots.thoughtbot.com/replace-coffeescript-with-es6)
+  and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
+It can also be transpiled to Ecmascript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
+
 
 ## linear algebra options
 
@@ -115,12 +127,9 @@ Ranked in descending order of viability:
 * low-complexity sliders: [fd-slider](https://github.com/metaflop/fd-slider)
 * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
+* [Flux](https://facebook.github.io/flux/docs/overview.html)
+* [React](https://facebook.github.io/react/docs/interactivity-and-dynamic-uis.html)
 * patchcords vis [jsPlumbum](https://jsplumbtoolkit.com/demo/flowchart/dom.html)!
-* User interface library possibilities
-
-  * [WAAX's MUI](https://hoch.github.io/WAAX/waax/examples/mui/)
-  * [Google MDC](http://www.getmdl.io/index.html)
-  * [WebAudioComponents]()
 
 ## Workflow options
 
@@ -211,6 +220,7 @@ Partial workflow tools:
 * Gaussian mixture models
 * user interaction: They choose a few key scenes, and we try to measure distance from those scenes.
 * other clustering, say, spectral?
+* switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
 * [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 * neural networks?
@@ -306,7 +316,7 @@ Partial workflow tools:
 
 There are too many resources online to list. [Start here](http://notes.livingthing.org/javascript_audio.html)
 
-We use one helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
+We use one (optional) helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
 
 ### Alternatives to WebAudio
 
@@ -330,3 +340,7 @@ http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/
 ## Android tablet version
 
 Cheapest is amazon kindle, which supports [native html5 web apps](https://developer.amazon.com/public/solutions/platforms/webapps), [decent hardware](https://developer.amazon.com/public/solutions/devices/fire-tablets/specifications/01-device-and-feature-specifications), but uses a [special app store](https://developer.amazon.com/public/solutions/devices/fire-tablets)
+
+## Multitouch
+
+[workaround for multitouch from desktop](http://smus.com/multi-touch-browser-patch/)
