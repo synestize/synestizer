@@ -72,8 +72,8 @@ His interest in interpreting colours, patterns, materials and most recently also
 Now the group is growing and there are new people interested in the project, and we have opened up the code to invite even more to join us.
 Users and artists are welcome to experiment with, and developers, to modify, this thing. 
 
-Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://notes.livingthing.org/), the mathemagician in the team, are committedly contributing a great deal to the code of the project.
-Support has also been provided by the [Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University](http://fasos-research.nl/sonicsciencefestival/event/163/?instance_id=98),  coordinated by Prof. Karin Bijsterveld. 
+Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://danmackinlay.name/), the mathemagician in the team, are committedly contributing a great deal to the code of the project.
+Support has also been provided by the [Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University](http://fasos-research.nl/sonicsciencefestival/event/163/?instance_id=98), coordinated by Prof. Karin Bijsterveld. 
 
 Want to join us?
 See [github](https://github.com/synestize/synestizer) for the source code.
