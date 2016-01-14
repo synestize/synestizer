@@ -2,7 +2,7 @@
 title: How to synestize
 ---
 
-#How to synestize
+# How to synestize
 
 So you want to try this out yourself?
 The simplest option is to [try out the live version on our website](http://synestizer.com)

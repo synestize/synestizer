@@ -10,27 +10,29 @@ Notes auditioning for a place in the documentation
 
 * Revised patching system
 
-  * accept synth parameters in URL fragments (esp to set master output volume!)
-  * update URL fragments with synth parameters
-  * A *patch* should map between
+    * accept synth parameters in URL fragments (esp to set master output volume!)
+    * update URL fragments with synth parameters
+    * A *patch* should map between
     * audio ensemble parameters
     * and input data 
-      * Video analysis
-      * MIDI CC
-      * GUI widgets
-  * The mapping could be One-To-One or Many-To-Many, or whatever.
-  * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
-  * Patches could have a separate mapping GUI for constructing the mapping
-  * Always set up a master gain and master compressor
+    
+        * Video analysis
+        * MIDI CC
+        * GUI widgets
+    
+    * The mapping could be One-To-One or Many-To-Many, or whatever.
+    * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
+    * Patches could have a separate mapping GUI for constructing the mapping
+    * Always set up a master gain and master compressor
 
 * Meta
 
-  * smoother workflow to host live on github
-  * Move to modular architecture in the AMD style,
+    * smoother workflow to host live on github
+    * Move to modular architecture in the AMD style,
     e.g. using [require.js](http://requirejs.org/)
     using [some kind of template](https://github.com/volojs/create-template)
-  * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
-  * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
+    * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
+    * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
 
 * MIDI *mapping* (right now it is hard coded)
 
@@ -46,22 +48,22 @@ Notes auditioning for a place in the documentation
 
 * how to instantiate a WAC from javascript:
 
-      // live-inserts a knob.
-      function test() {
-          var y = document.createElement("webaudio-knob");
-          y.setAttribute("src", "img/LittlePhatty.png");
-          y.sprites=100;
-          y.ready();
-          document.body.appendChild(y);
-          return y;
-      }
+        // live-inserts a knob.
+        function test() {
+            var y = document.createElement("webaudio-knob");
+            y.setAttribute("src", "img/LittlePhatty.png");
+            y.sprites=100;
+            y.ready();
+            document.body.appendChild(y);
+            return y;
+        }
       
 * Switch to chainable API style
 * Jquery is too big. Alternatives:
 
-  * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
-  * [zepto](http://zeptojs.com/)
-  * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
+    * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
+    * [zepto](http://zeptojs.com/)
+    * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
 
 ## Javascript dialects
 
@@ -72,8 +74,8 @@ Coffeescript makes javascript bearable, but is tricky to debug
 ### ECMAscript6
 
 ECMAscript 6 is here and supported on [every browser we care about](https://kangax.github.io/compat-table/es6/), and can do [lots of coffeescript stuff](https://robots.thoughtbot.com/replace-coffeescript-with-es6)
-  and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
-It can also be transpiled to Ecmascript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
+and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
+It can also be transpiled to ECMAscript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
 
 If you want to make sure your browser has this,
 or any other trendy features,
@@ -86,42 +88,43 @@ Ranked in descending order of viability:
 
 * [linear-algebra](https://github.com/hiddentao/linear-algebra) ([blog post](http://www.hiddentao.com/archives/2014/07/23/linear-algebra-in-javascript/))
 
-  Efficient, high-performance linear algebra library for node.js and browsers.
+    > Efficient, high-performance linear algebra library for node.js and browsers.
 
-  This is a low-level algebra library which supports basic vector and matrix
+    > This is a low-level algebra library which supports basic vector and matrix
   operations, and has been designed with machine learning algorithms in mind.
 
-  Features:
+    > Features:
 
-  Simple, expressive, chainable API.
-  Array implementation with performance optimizations.
-  Enhanced floating point precision if needed.
-  Comprehensive unit tests.
-  Works in node.js and browsers.
-  Small: ~1 KB minified and gzipped.    
+    > Simple, expressive, chainable API.
+    > Array implementation with performance optimizations.
+    > Enhanced floating point precision if needed.
+    > Comprehensive unit tests.
+    > Works in node.js and browsers.
+    > Small: ~1 KB minified and gzipped.    
+
 * [sylvester](http://sylvester.jcoglan.com/) the original, but predates much modern optimisation such as native arrays and asm.js
 * [jStat](https://github.com/jstat/jstat) is a statistical library written in JavaScript that allows you to perform advanced statistical operations without the need of a dedicated statistical language (e.g. MATLAB or R).
   Includes a tidy linear algebra library, but could be better optimised.
 * [lmfit](https://github.com/jvail/lmfit.js)
 
-  JavaScript (emscripten) port of lmfit library:
+    JavaScript (emscripten) port of lmfit library:
 
-  "a self-contained C library for Levenberg-Marquardt least-squares
-  minimization and curve fitting" 
+    "a self-contained C library for Levenberg-Marquardt least-squares
+    minimization and curve fitting" 
 
-  Currently only linear curve fitting is implemented.
-* [linalg](https://github.com/ben-ng/linalg)
-  uses native arrays because of their speed.
+    Currently only linear curve fitting is implemented.
+* [linalg](https://github.com/ben-ng/linalg) uses native arrays because of their speed.
   
-  “I needed a performance focused linear algebra module for visualizing data
-  in 10+ dimensions, and implementing machine learning algorithms. I quickly
-  learned that naive solutions to linear algebra operations can produce
-  numerical errors so significant they are utterly useless for anything other
-  than casual playtime. After that, I prioritized correctness over
-  performance.”
+    > I needed a performance focused linear algebra module for visualizing data
+    > in 10+ dimensions, and implementing machine learning algorithms. I quickly
+    > learned that naive solutions to linear algebra operations can produce
+    > numerical errors so significant they are utterly useless for anything other
+    > than casual playtime. After that, I prioritized correctness over
+    > performance.”
   
-  Untouched since released and small community, which is sad
-  because the code looks solid.  
+    Untouched since released and small community, which is sad
+  because the code looks solid.
+
 * [glmatrix](http://glmatrix.net/) is WebGL (therefore VERY fast),
   but 4-vector oriented, which is too small for us
 * [numeric](http://numericjs.com/wordpress/) looks polished
@@ -195,27 +198,25 @@ Partial workflow tools:
 * image descriptors
 * covariance
 
-  * Are the covariance estimates incoherent?
-    Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
+    * Are the covariance estimates incoherent?
+        Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
 
 * PCA
 * Haar cascade.
 * random IIR filters
 * cascaded IIR lowpass filters at successively lower resolution
 
-  * You know what could lower the dimension further?
-    reporting only the extremest n extrema 
-    of the filtered fields, and the coordinates thereof.
-  * Also arbitrary differences between layers
-  * would the color coordinates interact at all?
-  * could even takes squared difference features to extract localised frequency
+    * You know what could lower the dimension further? Reporting only the extremest n extrema of the filtered fields, and the coordinates thereof.
+    * Also arbitrary differences between layers
+    * would the color coordinates interact at all?
+    * could even takes squared difference features to extract localised frequency
   
 * something like a convolution layer from machine vision?
 * autocorrelation
 * Kalman filters
 * particle filters
 
-  * with a loss fn to do with low-variance estimates of next timestep value in IJYUV space
+    * with a loss fn to do with low-variance estimates of next timestep value in IJYUV space
   
 * FFT features (or something else translation/phase-invariant?)
 * exponentially weighted moments
@@ -230,18 +231,18 @@ Partial workflow tools:
 * [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 * neural networks?
 
-  * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
-  * https://github.com/karpathy/recurrentjs
-  * or use a high-performance pre-trained JS prediction models via [neocortex.js](https://github.com/scienceai/neocortex)?
+    * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
+    * https://github.com/karpathy/recurrentjs
+    * or use a high-performance pre-trained JS prediction models via [neocortex.js](https://github.com/scienceai/neocortex)?
     Note this woudl also get us features for free even if we ignore the model.
-  * can we do *recursive* NN for realtime stuff this way?
-  * Examples from keras https://github.com/fchollet/keras/tree/master/examples
-  * torch examples http://www.di.ens.fr/willow/research/weakcnn/ https://hal.inria.fr/hal-01015140
+    * can we do *recursive* NN for realtime stuff this way?
+    * Examples from keras https://github.com/fchollet/keras/tree/master/examples
+    * torch examples http://www.di.ens.fr/willow/research/weakcnn/ https://hal.inria.fr/hal-01015140
 
 * random forests
 
-  * https://github.com/karpathy/forestjs
-  * http://techtalks.tv/talks/randomized-decision-forests-and-their-applications-in-computer-vision-jamie/59432/
+    * https://github.com/karpathy/forestjs
+    * http://techtalks.tv/talks/randomized-decision-forests-and-their-applications-in-computer-vision-jamie/59432/
 
 
 ### Machine vision libraries
@@ -260,14 +261,14 @@ Partial workflow tools:
 * notes about webgl support - e.g.
 * FFT options for mobile.
 
-  * [webgl fft paper](http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf)
-  * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
-  * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
+    * [webgl fft paper](http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf)
+    * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
+    * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
 
 * video+WebGL:
 
-  * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
-  * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
+    * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
+    * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
   
 * [how to do WebGL-optimized image processing](http://learningwebgl.com/blog/?p=1786)
 * [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
@@ -286,18 +287,18 @@ Partial workflow tools:
 * [old school sequencing example](https://github.com/mudcube/MIDI.js/blob/master/js/midi/player.js) from a MIDI player.
 * streams
 
-  * [highland.js](http://highlandjs.org/#)
+    * [highland.js](http://highlandjs.org/#)
 
-  * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
-    Most important RX.js documentation links:
-    * [basic howto](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
-    * [Operators by Categories](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md)
-    * [Creation Operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md)
-    * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
-    * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
-    * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
-  * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
-  * There are other options - kefir.js and bacon.js - but my brain is full.
+    * [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+        Most important RX.js documentation links:
+        * [basic howto](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+        * [Operators by Categories](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/categories.md)
+        * [Creation Operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md)
+        * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
+        * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
+        * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
+    * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
+    * There are other options - kefir.js and bacon.js - but my brain is full.
 
 * stream debuggers
 
@@ -306,12 +307,12 @@ Partial workflow tools:
 
 * Transducers (a library of stream processors)
 
-  * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
+    * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
   
     * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
-  * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
+    * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
 
 * alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js), which attempts to guarantee strong timing.
 
@@ -319,17 +320,18 @@ Partial workflow tools:
 
 ### Webaudio information
 
-There are too many resources online to list. [Start here](http://notes.livingthing.org/javascript_audio.html)
+There are too many resources online to list. [Start here](http://livingthing.danmackinlay.name/javascript_audio.html)
 
 We use one (optional) helper library for now, [WAAX](https://hoch.github.io/WAAX/get-started)
 
 ### Alternatives to WebAudio
 
 * phonegap/appcelerator + libpd?
-  * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
-  * [Create Digital Music's recommended guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
-  * [libpd](http://libpd.cc/documentation/)
-  * [libpd wiki](https://github.com/libpd/libpd/wiki)
+
+    * [phonegap-libpd](https://github.com/alesaccoia/phonegap-libpd)
+    * [Create Digital Music's recommended guide](http://createdigitalmusic.com/2012/03/how-to-make-a-music-app-for-ios-free-with-libpd-exclusive-book-excerpt/)
+    * [libpd](http://libpd.cc/documentation/)
+    * [libpd wiki](https://github.com/libpd/libpd/wiki)
 
 ## iOS version
 
