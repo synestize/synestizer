@@ -35,13 +35,16 @@ title: TODO
     * Move to modular architecture in the AMD style,
     e.g. using [require.js](http://requirejs.org/)
     using [some kind of template](https://github.com/volojs/create-template)
-    * [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
-    * build docs site? http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/
+    * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
-* Better documentation workflow and prettier docs website.
+* Better documentation workflow 
+
+    * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
+
+* prettier docs website
 * speed improvements
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-        * [you can pass arrays to web workers:]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
+        * [you can pass arrays to web workers]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
         * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
     * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
