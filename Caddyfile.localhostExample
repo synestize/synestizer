@@ -1,0 +1,6 @@
+localhost:8400
+markdown /docs {
+  template docs/template.html
+  css docs/style.css
+  #dev
+}

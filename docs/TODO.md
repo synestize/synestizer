@@ -8,26 +8,31 @@ title: TODO
 
     * MIDI mapping GUI rather than hardcoded controllers
 
-* Purge jquery.
+* Purge jquery
 * Purge foundation
 * Purge WAAX
-* Revised patching system
 
-    * accept synth parameters in URL fragments (esp to set master output volume!)
+    * accept synth parameters in URL fragments (esp to set master output volume)
     * update URL fragments with synth parameters
-    * A *patch* should map between
-    * audio ensemble parameters
-    * and input data 
+
+* A *patch* should map between
+
+    * input params
     
-        * Video analysis
-        * MIDI CC
+        * Video analysis  
+        * MIDI CC in
         * GUI widgets
+        * device sensors
     
-    * The mapping could be One-To-One or Many-To-Many, or whatever.
-    * Param values could be modulated around a "central" value, and have a "Sensitivity" of modulation, or it could be all-or-nothing.
+    * output params
+    
+      * audio ensemble parameters
+      * MIDI CC out
+      
     * Patches could have a separate mapping GUI for constructing the mapping
-    * Always set up a master gain and master compressor
     * Copula-function-based covariance
+      
+      * tanh and erf copulae
 
 * Meta
 
@@ -40,6 +45,7 @@ title: TODO
 * Better documentation workflow 
 
     * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
+    * faq.html should be merged into docs directory as a markdown file then included in the built site
 
 * prettier docs website
 * speed improvements

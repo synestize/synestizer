@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- This example template is not yet used. -->
+<head>
+    <meta charset="utf-8">
+    <title>{{.Doc.title}}</title>
+    <meta name="description" content="{{.Doc.sitename}} documentation: {{.Doc.title}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/normalize.css" rel="stylesheet" media="all">
+    <link href="css/styles.css" rel="stylesheet" media="all">
+    <!--[if lt IE 9]><script src="js/html5shiv-printshiv.js" media="all"></script><![endif]-->
+</head>
+<body>
+    <header role="banner">
+        <h1>
+          {{.Doc.title}}
+        </h1>
+    </header>
+    
+    <div class="wrap">
+        <main role="main">
+            <section>
+              <nav role="navigation">
+                <ul>
+                  {{range .Links}}
+                    <li><a href="{{.URL}}">{{.Title}}</a>
+                    <br>
+                    {{.Summary}}
+                  </li>
+                  {{end}}
+                  </ul>
+                </nav>
+                <article id="article_content">
+                  {{.Doc.body}}
+                </article>
+            </section>
+        </main>
+    </div>
+    
+    <footer role="contentinfo">
+        <small>Copyright &copy; <time datetime="2016">2016</time> The Synestizer team. Based on <a href="http://www.iandevlin.com/">Ian Devlin's</a> wonderful <a href="http://html5bones.com">HTML5bones</a>. </small>
+    </footer>
+    <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+</body>
+</html>
