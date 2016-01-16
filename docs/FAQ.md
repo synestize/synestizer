@@ -5,7 +5,7 @@
 > Just open the window... and focus on listening to what emerges
 > outside.John Cage
 
-> It's time to open the digital window and listen colourwise.Koenig
+> It's time to open the digital window and listen colourwise. -Koenig
 
 
 This document is made to explain the idea and function of the synestizer

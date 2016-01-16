@@ -37,6 +37,7 @@ title: TODO
 * Meta
 
     * smoother workflow to host live on github
+    * automatic letsencrypt SSL
     * Move to modular architecture in the AMD style,
     e.g. using [require.js](http://requirejs.org/)
     using [some kind of template](https://github.com/volojs/create-template)
