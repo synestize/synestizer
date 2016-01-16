@@ -1,10 +1,9 @@
 ---
-title: Synestizer FAQ
+title: Synestizer 
 ---
 
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
-See also [HOWTO contribute](./HOWTO.html), [Miscellaneous notes](./Misc_notes.html), [LICENSE](./LICENSE.html), [system requirements](./Requirements.html), [user interface notes](./UI.html), [Video analysis notes](./Video_analysis.html), [Audio synthesis notes](./Audio_synthesis.html), and our [TODO list](./TODO.html).
 
 # FAQ
 
@@ -67,7 +66,7 @@ This frame is based on the manipulation of short samples that can be recorded im
 
 ## Who develops the synestizer?
 
-Soundartist [Kaspar König](www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us.
+Soundartist [Kaspar König](http://www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us.
 His interest in interpreting colours, patterns, materials and most recently also wind as an actor to map sound lead to the development of the initial version of the synestizer.
 Now the group is growing and there are new people interested in the project, and we have opened up the code to invite even more to join us.
 Users and artists are welcome to experiment with, and developers, to modify, this thing. 
