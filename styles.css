@@ -1,0 +1,81 @@
+    body {
+      padding: 1em;
+      max-width: 40em;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 1.1em;
+    }
+    /*  link styling */
+    a:link {
+      color:#0271fb;
+      text-decoration: none;
+    }
+    a:visited { color:#bd02fb; }
+    a:hover, a:focus { color:#000; }
+    a:active { color:#fb0e02; }
+    p {
+    }
+    figure {
+      display: block;
+      max-width: 38em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    figure img {
+      width: 100%;
+    }
+    figcaption {
+      display: block;
+      font-size: 80%;
+      margin: 0.4em;
+      text-align: center;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      text-indent: -1em;
+      margin-left: 1em;
+    }
+    article h1, article h2, article h3, article h4, article h5, article h6,
+    nav h1, nav h2, nav h3, nav h4, nav h5, nav h6 {
+      margin-left: 0;
+    }
+    article, nav {
+      margin-left: 1em;
+    }
+    footer {
+      text-align: center;
+    }
+/* ---------------------------------------------------------
+   Print styles
+   ---------------------------------------------------------*/
+@media print {
+    * {
+        color:#000 !important;
+        box-shadow:none !important;
+        text-shadow:none !important;
+        background:transparent !important;
+    }
+    html { background-color:#fff; }
+    /* Hide navigation */
+    nav { display:none; }
+
+    /* Show link destinations in brackets after the link text */
+    a[href]:after { content: " (" attr(href) ") "; }
+    a[href] {
+        font-weight:bold;
+        text-decoration:underline;
+        color:#06c;
+        border:none;
+    }
+    /* Don't show link destinations for JavaScript or internal links */ 
+    a[href^="javascript:"]:after, a[href^="#"]:after { content:""; }
+    
+    /* Show abbr title value in brackets after the text */
+    abbr[title]:after { content: " (" attr(title) ")"; }
+
+    figure { 
+        margin-bottom:1em; 
+        overflow:hidden;
+    }
+
+    figure img { border:1px solid #000; }
+}
