@@ -59,7 +59,7 @@ State models reflect the current state of the model
             controlStream, key, controlMeta){
         return controlStream.pluck(key
             ).where(function(v){
-                return (typeof v !== "undefined") && (!isNaN(v))
+                return (v !== undefined) && (!isNaN(v))
             }).distinctUntilChanged(
             ).map(function (x) {
                 var scaled = controlMeta[key].scale(x);
@@ -71,7 +71,7 @@ State models reflect the current state of the model
             controlStream, key, controlMeta){
         return controlStream.pluck(key
             ).where(function(v){
-                return (typeof v !== "undefined") && (!isNaN(v))
+                return (v !== undefined) && (!isNaN(v))
             }).distinctUntilChanged();
     };
     global.ensembles.keyStream = keyStream;

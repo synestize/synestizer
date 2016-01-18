@@ -373,7 +373,7 @@
         };
         getPixels.pump = pump; //shouldn't really be called from outside?
         gfxCtx = canvElem.getContext('2d');
-        if (typeof mediaStream !== "undefined") {
+        if (mediaStream !== undefined) {
             getPixels.attachMediaStream(mediaStream)
         };
         return getPixels;
