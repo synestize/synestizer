@@ -20,7 +20,26 @@
       <h1 id="logo">SYNESTIZER BETA</h1>
     </header>
     <section id="controlpanels">
-      <section id="info" class="panel">
+      <nav class="tabs">
+        <!--  http://webdesignerhut.com/create-pure-css-tabs/ -->
+        <input type="radio" name="tabs" id="info-tab" checked >
+        <label for="info-tab">
+          <i class="fa fa-html5"></i><span>About</span>
+        </label>
+        <input type="radio" name="tabs" id="input-tab">
+        <label for="input-tab">
+          <i class="fa fa-css3"></i><span>Inputs</span>
+        </label>
+        <input type="radio" name="tabs" id="output-tab">
+        <label for="output-tab">
+          <i class="fa fa-code"></i><span>Outputs</span>
+        </label>
+        <input type="radio" name="tabs" id="iomatrix-tab">
+        <label for="iomatrix-tab">
+          <i class="fa fa-code"></i><span>IO Matrix</span>
+        </label>
+      </nav>
+      <section id="info-panel" class="panel-content">
         <header>
           <h2>
             Welcome to Synestizer.
@@ -38,7 +57,7 @@
         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
         Commons Attribution-ShareAlike 4.0 International License</a>.</p>
       </section>
-      <section id="input-panel" class="panel controls">
+      <section id="input-panel" class="panel-content controls">
         <header>
           <h2>
             Inputs
@@ -47,7 +66,7 @@
         <h3>Midi In</h3>
         <select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
       </section>
-      <section id="output-panel" class="panel controls">
+      <section id="output-panel" class="panel-content controls">
         <header>
           <h2>
             Outputs
@@ -56,14 +75,14 @@
         <h3>Midi Out</h3>
         <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option><</select>
       </section>
-      <section id="iomatrix-panel" class="panel controls">
+      <section id="iomatrix-panel" class="panel-content controls">
         <header>
           <h2>
             IO matrix
           </h2>
         </header>
       </section>
-      <section id="synthview-panel" class="panel controls">
+      <section id="synthview-panel" class="panel-content controls">
         <header>
           <h2>
             Audio
