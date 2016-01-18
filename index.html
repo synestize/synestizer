@@ -9,7 +9,6 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 
     <!-- foundation style -->
-    <link rel="stylesheet" href="./bower_components/foundation/css/foundation.css">
 
     <!-- synestizer style -->
     <link rel="stylesheet" href="./css/style.css">
@@ -68,51 +67,6 @@
             </div>
         </div>
     </div>
-    <!-- foundation js -->
-    <script src="./bower_components/jquery/dist/jquery.js"></script>
-    <script src="./bower_components/foundation/js/foundation.min.js"></script>
-    <script src="./bower_components/foundation/js/foundation/foundation.accordion.js"></script>
-    <script>
-        // Formatting scripts. Should these be run after doc init?
-        // init foundation
-        $(document).foundation({
-            accordion: {
-                // specify the class used for accordion panels
-                content_class: 'content',
-                // specify the class used for active (or open) accordion panels
-                active_class: 'active',
-                // allow multiple accordion panels to be active at the same time
-                multi_expand: true,
-                // allow accordion panels to be closed by clicking on their headers
-                // setting to false only closes accordion panels when another is opened
-                toggleable: true
-            }
-        });
-
-        // Set max-height the first time
-        $(document).ready(function() {
-            $('.reveal-modal').css('max-height', $('html').height() - 10 + 'px'); // 100 +10px to keep modal effect visible
-        });
-
-        // Reset max-height after window resize
-        $(window).resize(function() {
-            $('.reveal-modal').css('max-height', $('html').height() - 10 + 'px');
-        });
-
-        // sticky footer
-        $(window).bind("load", function () {
-            var footer = $("#footer");
-            var pos = footer.position();
-            var height = $(window).height();
-            height = height - pos.top;
-            height = height - footer.height();
-            if (height > 0) {
-                footer.animate({
-                    'margin-top': height + 'px'
-                });
-            }
-        });
-    </script>
 
     <!-- 3rd party utils -->
     <script src="./bower_components/underscore/underscore.js"></script>
@@ -120,6 +74,7 @@
     <script src="./bower_components/transducers-js/transducers.js"></script>
     <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
     <script src="./bower_components/d3/d3.js"></script>
+    <script src="./bower_components/zepto/zepto.js"></script>
     
     <!-- audio/video infrastructure -->
     <script src="./js/media.js"></script>
