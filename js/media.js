@@ -381,9 +381,7 @@
     media.VideoPixelPump = VideoPixelPump;
     
     function attachMediaButton(el) {
-        if (global.MediaStreamTrack.getSources===undefined){
-            el.addEventListener("click", switchCam);
-        } else {console.debug("MediaStreamTrack not supported")}
+      el.addEventListener("click", switchCam);
     };
     media.attachMediaButton = attachMediaButton;
     
