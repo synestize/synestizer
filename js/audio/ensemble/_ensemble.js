@@ -61,10 +61,7 @@ State models reflect the current state of the model
             ).where(function(v){
                 return (v !== undefined) && (!isNaN(v))
             }).distinctUntilChanged(
-            ).map(function (x) {
-                var scaled = controlMeta[key].scale(x);
-                return scaled;
-            });
+            ).map(x => controlMeta[key].scale(x));
     };
     global.ensembles.mappedKeyStream = mappedKeyStream;
     function keyStream (

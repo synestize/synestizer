@@ -155,11 +155,10 @@
                 function(dev){
                     return dev.name.toLowerCase().indexOf(inputname) != -1
                 }
-            ).subscribe(function (matched){
-                setInput(matched);
-            }, function (err) {
-                console.debug("no devices matching", inputname, err.stack);
-            });
+            ).subscribe(
+              matched => setInput(matched),
+              err => console.debug("no devices matching", inputname, err.stack)
+            );
         }
         setMidi.setInputByName = setInputByName;
         
