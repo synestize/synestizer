@@ -14,7 +14,7 @@
         global.navigator.mozGetUserMedia ||
         global.navigator.msGetUserMedia);
     
-    if (typeof global.MediaStreamTrack.getSources === 'undefined'){
+    if (global.MediaStreamTrack.getSources===undefined){
         console.debug('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
         global.MediaStreamTrack.getSources(function (sourceInfos) {
@@ -381,7 +381,7 @@
     media.VideoPixelPump = VideoPixelPump;
     
     function attachMediaButton(el) {
-        if (typeof global.MediaStreamTrack.getSources === 'undefined'){
+        if (global.MediaStreamTrack.getSources===undefined){
             el.addEventListener("click", switchCam);
         } else {console.debug("MediaStreamTrack not supported")}
     };

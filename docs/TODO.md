@@ -4,6 +4,7 @@ title: TODO
 
 # TODO
 
+* go to ES6
 * Revised simpler UI
 
     * MIDI mapping GUI rather than hardcoded controllers
@@ -36,19 +37,18 @@ title: TODO
 
 * Meta
 
-    * smoother workflow to host live on github
     * automatic letsencrypt SSL
     * Move to modular architecture in the AMD style,
     e.g. using [require.js](http://requirejs.org/)
     using [some kind of template](https://github.com/volojs/create-template)
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
+* smoother workflow to build/deploy app
 * Better documentation workflow 
 
     * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
-    * faq.html should be merged into docs directory as a markdown file then included in the built site
+   * prettier docs website
 
-* prettier docs website
 * speed improvements
     * web workers
         * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)

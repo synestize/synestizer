@@ -2,9 +2,7 @@
 title: User interface
 ---
 
-# User interface
-
-### User interface improvements
+# User interface links
 
 * low-complexity sliders: [fd-slider](https://github.com/metaflop/fd-slider)
 * more natural frequency mapping, such as
