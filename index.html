@@ -38,7 +38,7 @@
         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
         Commons Attribution-ShareAlike 4.0 International License</a>.</p>
       </section>
-      <section id="inputs" class="panel controls">
+      <section id="input-panel" class="panel controls">
         <header>
           <h2>
             Inputs
@@ -47,7 +47,7 @@
         <h3>Midi In</h3>
         <select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
       </section>
-      <section id="outputs" class="panel controls">
+      <section id="output-panel" class="panel controls">
         <header>
           <h2>
             Outputs
@@ -56,13 +56,19 @@
         <h3>Midi Out</h3>
         <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option><</select>
       </section>
-      <section id="audio" class="panel controls">
+      <section id="iomatrix-panel" class="panel controls">
+        <header>
+          <h2>
+            IO matrix
+          </h2>
+        </header>
+      </section>
+      <section id="synthview-panel" class="panel controls">
         <header>
           <h2>
             Audio
           </h2>
         </header>
-        <div id="audiocontrols"></div>
       </section>
     </section>
   </main>
@@ -74,8 +80,9 @@
   <script src="./bower_components/d3/d3.js"></script>
   <script src="./bower_components/zepto/zepto.js"></script>
   
-  <!-- audio/video infrastructure -->
-  <script src="./js/media.js"></script>
+  <!-- audio/video/midi infrastructure -->
+  <script src="./js/media/midi.js"></script>
+  <script src="./js/media/av.js"></script>
 
   <!-- video analysis -->
   <script src="./js/videoanalysis/_videoanalysis.js"></script>

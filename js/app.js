@@ -8,6 +8,7 @@ var currPatch;
 var videoPixels;
 var midi;
 var app;
+
 global.app = app = global.app || {};
 
 app.baseUrl = function () {
@@ -38,25 +39,26 @@ app.resize = function() {
         vidElem.style.left = (100-d2/2+"%");
     }
 };
+//patch loading
+app.loadpatch = function(patchname) {
+    currPatch = patch.loadPatch(
+        patch.library[patchname],
+        videoPixels,
+        document.getElementById("rightcontrolsidebar"),
+        document.getElementById("analysis-panel"),
+        midi,
+        media.AudioContext()
+    );
+}
 
 app.init = function () {
     var document = global.document;
     //debug mode:
     Rx.config.longStackSupport = true;
     global.media.Media({
-        success: function(mediaStream){
-            //set up info div
-            document.getElementById("info").classList.remove("show");
-            document.getElementById("info").classList.add("hide");
-            document.getElementById("controls").classList.remove("hide");
-            document.getElementById("controls").classList.add("show");
-            
+        success: function(mediaStream){            
             // call resize for video resizing
             app.resize();
-            media.attachMediaButton(
-                document.getElementById("switchCam"));
-            media.attachFullscreenButton(
-                document.getElementById("fullscreen"));
             videoPixels = media.VideoPixelPump(
                 document.getElementById("canvas"),
                 document.getElementById("video"),
@@ -69,32 +71,7 @@ app.init = function () {
                 // outdevice: "iac-driver"
                 outdevice: "osculator"
             });
-            //patch loading
-            function loadpatch(patchname) {
-                currPatch = patch.loadPatch(
-                    patch.library[patchname],
-                    videoPixels,
-                    document.getElementById("rightcontrolsidebar"),
-                    document.getElementById("analysis-panel"),
-                    midi,
-                    media.AudioContext()
-                );
-            }
-            // Using hash address for this is not ideal;
-            // Doesn't reload gracefully.
-            // Also we should update URL if the patch name changes.
-            var patchhash = "basic_triad";
-            if (global.location.hash.length>0){
-                patchhash = global.location.hash.slice(1)
-            }
-            if (Object.keys(patch.library).indexOf(patchhash)>-1) {
-                loadpatch(patchhash);
-            } else {
-                console.log(
-                    "warning. no matching patch for ",
-                    patchhash
-                );
-            }
+            //app.loadpatch(
         }
     });
     global.addEventListener("resize", app.resize);
