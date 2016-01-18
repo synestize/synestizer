@@ -18,24 +18,13 @@
         console.debug('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
         global.MediaStreamTrack.getSources(function (sourceInfos) {
-            for (var i = 0; i !== sourceInfos.length; ++i) {
-                var sourceInfo = sourceInfos[i];
+            for (let sourceInfo of sourceInfos) {
                 if (sourceInfo.kind === 'video') {
                     media.cams.push(sourceInfo.id);
                 } else if (sourceInfo.kind === 'audio') {
                     media.mics.push(sourceInfo.id);
                 }
             }
-            /*
-            console.debug("Found " + media.cams.length + " cam(s).");
-            console.debug("Found " + media.mics.length + " mic(s).");
-            for (var j = 0; j < media.cams.length; ++j) {
-                console.debug("cam id " + j + ": " + media.cams[j]);
-            }
-            for (var k = 0; k < media.mics.length; ++k) {
-                console.debug("mic id " + k + ": " + media.mics[k]);
-            }
-            */
         });
     }
     //singleton audiocontext, for shared master output etc.
