@@ -24,62 +24,11 @@ a, a:hover, a:active, a:focus {
     background: #585D9A;
 }
 
-.row.full {
-    width: 100%;
-    max-width: 100%;
-}
-
 #wrapper {
     width: 100vw;
     height: 100vh;
 }
 
-#video {
-    -webkit-transform: scaleX(1);
-    -moz-transform: scaleX(1);
-    position: fixed;
-}
-
-#info {
-    margin-top: 100px;
-}
-
-.info-title, .info-text {
-    font-family: 'Roboto Condensed', sans-serif;
-    color: #eee;
-}
-
-.info-title {
-    font-size: 6rem;
-}
-
-.info-text {
-    font-size: 2rem;
-}
-
-
-.reveal-modal{
-    overflow-y: scroll;
-}
-
-#faq {
-    background-color: #000;
-    color: #eee;
-    opacity: 0.9 !important;
-    top: 10px !important;
-    bottom: 10px !important;
-    border: none;
-    overflow: scroll;
-    padding: 40px;
-}
-
-#faq .gfx {
-    opacity: 1.0;
-    background-color: #fff;
-    margin: 10px;
-    padding: 20px;
-    width: 80%;
-}
 
 #logo {
     position: fixed;
@@ -104,25 +53,12 @@ a, a:hover, a:active, a:focus {
     cursor: default;
 }
 
-.sidebar {
-    padding: 5px;
 
-    height: 2000px;
-    z-index: 1;
-}
 
-.accordion {
-    width: 320px; /* hack: fixed width to 320px!!! this prevents resizing when accordions are closed*/
-    opacity: 0.8;
-}
-
-.scrollable_accordion {
-    right: 0;
-    display: block;
-    padding-bottom: 45px;
+#video {
+    -webkit-transform: scaleX(1);
+    -moz-transform: scaleX(1);
     position: fixed;
-    height: 100%;
-    overflow-y: scroll;
 }
 
 .slider {
@@ -147,38 +83,38 @@ a, a:hover, a:active, a:focus {
 }
 
 /* new non-WAC controls */
-.sidebar {
+.panel.controls {
     background-color: #000;
     opacity: 0.5;
 }
-.sidebar  {
+.panel.controls  {
     padding: 5px;
 }
-.sidebar h3 {
+.panel.controls h3 {
     font-size: 15px;
 }
-.sidebar h4 {
+.panel.controls h4 {
     font-size: 12px;
 }
-.sidebar .small {
+.panel.controls .small {
     display: inline;
     padding: 0.3em;
 }
-.sidebar .control {
+.panel.controls .control {
     display: inline-block;
     margin: 0;
     font-family: 'Roboto Condensed', sans-serif;
     width: 50%;
     padding: 0;
 }
-.sidebar .control .label {
+.panel.controls .control .label {
     width: 30%;
     margin: 0;
     display: inline-block;
     padding: 0 3px 0 0;
     text-align: right;
 }
-.sidebar .control input[type="range"] {
+.panel.controls .control input[type="range"] {
     width: 65%;
     display: inline-block;
     height: 0.8em;
@@ -223,85 +159,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-#recorderSpectrum {
-    background-color: #000;
-    opacity: 0.5;
-    padding: 0px;
-}
 
-/* foundation */
-button,
-.button {
-    font-size: 1.5rem;
-    background-color: #000;
-    border-style: none;
-    color: #eee;
-}
-
-button:hover,
-button:focus,
-.button:hover,
-.button:focus {
-    outline: none;
-    background-color: #111;
-    color: #fff;
-}
-
-.button.tiny {
-    padding: 0.25rem 0.75rem 0.25rem 0.75rem;
-    font-size: 1.75rem;
-}
-
-.fi-record,
-.fi-record:focus,
-.fi-stop,
-.fi-stop:focus {
-    color: #f00;
-    opacity: 0.5;
-}
-
-.sine {
-    background-image: url('../img/sine_wave_button.svg');
-    background-size: 25px;
-    width: 25px;
-    height: 25px;
-
-}
-
-.triangle {
-    background-image: url('../img/saw_wave_button.svg');
-    background-size: 25px;
-    width: 25px;
-    height: 25px;
-}
-
-.square {
-    background-image: url('../img/square_wave_button.svg');
-    background-size: 25px;
-    width: 25px;
-    height: 25px;
-}
-
-
-.accordion .accordion-navigation > a, .accordion dd > a,
-.accordion .accordion-navigation.active > a, .accordion dd.active > a
-{
-    content: &#x25BE;
-    opacity: 0.5;
-    color: #eee;
-    background-color: #333;
-    font-family: 'Roboto Condensed', sans-serif;
-}
-
-.accordion .accordion-navigation > a:hover {
-    opacity: 0.5;
-    background-color: #444;
-}
-
-.accordion .accordion-navigation > .content, .accordion dd > .content  {
-    /*padding: 0.3rem 0.9rem 0.3rem 0.9rem;*/
-    padding-top: 0.3rem;
-}
 
 /* colors */
 .red {
@@ -317,6 +175,12 @@ button:focus,
 }
 
 
+#video {
+    -webkit-transform: scaleX(1);
+    -moz-transform: scaleX(1);
+    position: fixed;
+}
+
 /* this will be resized by the media.js - so ignore! */
 #canvas {
     width: 128px;
@@ -324,18 +188,6 @@ button:focus,
     display: none;
 }
 
-
-webaudio-switch {
-    display: inline-block;
-    padding: 0;
-    margin: 0 auto;
-}
-
-
-.reveal-modal .custom {
-    position: relative;
-    left: 50%;
-}
 
 /**
  Scrollbars
@@ -357,32 +209,6 @@ webaudio-switch {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0,0,0,0.2);
 }
-
-/**
- Footer
- */
- #footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    height: 40px;
-    width: 100%;
-
-    z-index: 10;
-    opacity: 0.8;
-    background-color: #000;
-}
-
-.footer_content {
-    padding: 10px;
-    color: #555;
-}
-
-.footer_content a, .footer_content a:hover, .footer_content a:active {
-    color: #aaa;
-}
-
 
 /* color analysis data */
 #analysis-panel > div {

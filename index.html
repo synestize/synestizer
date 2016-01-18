@@ -2,121 +2,118 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-    <title>synestizer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>synestizer</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-
-    <!-- foundation style -->
-
-    <!-- synestizer style -->
-    <link rel="stylesheet" href="./css/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+  <!-- synestizer style -->
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-
-    <div id="wrapper">
-      <section id="app">
-          <canvas id="canvas"></canvas>
-          <video id="video" muted autoplay></video>
-          <h1 id="logo">SYNESTIZER BETA</h1>
-          <div class="row full">
-              <div id="info" class="large-12 large-centered columns hide text-center">
-                  <h1 class="info-title">
-                      Welcome to Synestizer.
-                  </h1>
-
-                  <p class="info-text">
-                      Please enable your webcam in the browser and activate your loudspeakers.<br />
-                      This app requires an updated version of <a href="http://www.google.com/chrome/">chrome</a>.<br />
-                      <a href="http://synestize.github.io/synestizer/">More info.</a>
-                  </p>
-              </div>
-
-              <div id="controls" class="hide">
-                  <div id="leftcontrolsidebar" class="sidebar large-3 small-3 medium-3 columns left">
-                      <ul class="button-group" style="height: 45px; padding-left: 2px;">
-                          <li><a href="#" id="fullscreen" class="button tiny fi-arrows-out"></a></li>
-                          <li><a href="#" id="switchCam" class="button tiny" title="Switch cam!"><i class="fi-video"></i></a></li>
-                          <li><a href="./faq.html" class="button tiny"><i class="fi-info"></i></a></li>
-                      </ul>
-                      <h3>Midi</h3>
-                      <h4 class="small">in</h4><select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
-                      <h4 class="small">out</h4><select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"></select>
-                      <div id="analysis-panel" class="content active patchcontrols">
-                          <h3>Analysis</h3>
-                      </div>
-                  </div>
-
-                  <div id="rightcontrolsidebar" class="sidebar large-3 medium-3 small-5 columns patchcontrols">
-                  </div>
-              </div>
-          </div>
+  <main id="app">
+    <canvas id="canvas"></canvas>
+    <video id="video" muted autoplay></video>
+    <header>
+      <h1 id="logo">SYNESTIZER BETA</h1>
+    </header>
+    <section id="controlpanels">
+      <section id="info" class="panel">
+        <header>
+          <h2>
+            Welcome to Synestizer.
+          </h2>
+        </header>
+        <p>
+          Please enable your webcam in the browser and activate your loudspeakers.<br />
+          This app requires an updated version of <a href="http://www.google.com/chrome/">chrome</a>.<br />
+          <a href="http://synestize.github.io/synestizer/">More info.</a>
+        </p>
+        <p>&copy; 2015 by <a href="http://www.kasparkoenig.com/">kaspar</a>,
+        <a href="https://danmackinlay.name">dan</a> &amp;
+        <a href="http://www.stahlnow.com">stahl</a>.
+        This work is licensed under a <a rel="license"
+        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>.</p>
       </section>
+      <section id="inputs" class="panel controls">
+        <header>
+          <h2>
+            Inputs
+          </h2>
+        </header>
+        <h3>Midi In</h3>
+        <select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
+      </section>
+      <section id="outputs" class="panel controls">
+        <header>
+          <h2>
+            Outputs
+          </h2>
+        </header>
+        <h3>Midi Out</h3>
+        <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option><</select>
+      </section>
+      <section id="audio" class="panel controls">
+        <header>
+          <h2>
+            Audio
+          </h2>
+        </header>
+        <div id="audiocontrols"></div>
+      </section>
+    </section>
+  </main>
+  <!-- 3rd party utils -->
+  <script src="./bower_components/underscore/underscore.js"></script>
+  <script src="./bower_components/rxjs/dist/rx.all.js"></script>
+  <script src="./bower_components/transducers-js/transducers.js"></script>
+  <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
+  <script src="./bower_components/d3/d3.js"></script>
+  <script src="./bower_components/zepto/zepto.js"></script>
+  
+  <!-- audio/video infrastructure -->
+  <script src="./js/media.js"></script>
 
-        <!-- Footer -->
-        <div id="footer">
-            <div class="footer_content">
-                &copy; 2015 by <a href="http://www.kasparkoenig.com/">kaspar</a>,
-                <a href="https://danmackinlay.name">dan</a> &amp;
-                <a href="http://www.stahlnow.com">stahl</a>.
-                This work is licensed under a <a rel="license"
-                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-                Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-            </div>
-        </div>
-    </div>
+  <!-- video analysis -->
+  <script src="./js/videoanalysis/_videoanalysis.js"></script>
+  <script src="./js/videoanalysis/statistic.js"></script>
+  <script src="./js/videoanalysis/visualizer.js"></script>
 
-    <!-- 3rd party utils -->
-    <script src="./bower_components/underscore/underscore.js"></script>
-    <script src="./bower_components/rxjs/dist/rx.all.js"></script>
-    <script src="./bower_components/transducers-js/transducers.js"></script>
-    <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
-    <script src="./bower_components/d3/d3.js"></script>
-    <script src="./bower_components/zepto/zepto.js"></script>
-    
-    <!-- audio/video infrastructure -->
-    <script src="./js/media.js"></script>
+  <!-- audio infrastructure -->
+  <script src="./js/vendor/WAAX/waax.js"></script>
+  <script src="./js/vendor/WAAX/plugins.js"></script>
+  <!-- <script src="./js/audio/lib/scaling.js"></script> -->
+  <script src="./js/audio/lib/clock.js"></script>
+  <script src="./js/audio/synth/triadsynth.js"></script>
+  <script src="./js/audio/synth/fm.js"></script>
 
-    <!-- video analysis -->
-    <script src="./js/videoanalysis/_videoanalysis.js"></script>
-    <script src="./js/videoanalysis/statistic.js"></script>
-    <script src="./js/videoanalysis/visualizer.js"></script>
+  <!-- audio models -->
+  <script src="./js/audio/ensemble/_ensemble.js"></script>
+  <script src="./js/audio/ensemble/triad_ens.js" ></script>
+  <script src="./js/audio/ensemble/fmscape_ens.js" ></script>
 
-    <!-- audio infrastructure -->
-    <script src="./js/vendor/WAAX/waax.js"></script>
-    <script src="./js/vendor/WAAX/plugins.js"></script>
-    <!-- <script src="./js/audio/lib/scaling.js"></script> -->
-    <script src="./js/audio/lib/clock.js"></script>
-    <script src="./js/audio/synth/triadsynth.js"></script>
-    <script src="./js/audio/synth/fm.js"></script>
+  <!-- audio/video patches -->
+  <script src="./js/patch/_patch.js"></script>
+  <script src="./js/patch/patches.js"></script>
 
-    <!-- audio models -->
-    <script src="./js/audio/ensemble/_ensemble.js"></script>
-    <script src="./js/audio/ensemble/triad_ens.js" ></script>
-    <script src="./js/audio/ensemble/fmscape_ens.js" ></script>
-
-    <!-- audio/video patches -->
-    <script src="./js/patch/_patch.js"></script>
-    <script src="./js/patch/patches.js"></script>
-
-    <script src="./js/app.js"></script>
-    <script>
-        "use strict";
-        document.addEventListener('DOMContentLoaded', window.app.init);
-    </script>
-    <!-- ACTIVATE GOOGLE SPYWARE -->
-    <!-- Must be LAST -->
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-59122990-1', 'auto');
-        ga('send', 'pageview');
-    </script>
+  <script src="./js/app.js"></script>
+  <script>
+    "use strict";
+    document.addEventListener('DOMContentLoaded', window.app.init);
+  </script>
+  <!-- ACTIVATE GOOGLE SPYWARE -->
+  <!-- Must be LAST -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-59122990-1', 'auto');
+    ga('send', 'pageview');
+  </script>
 
 </body>
 </html>
