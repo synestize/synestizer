@@ -23,6 +23,5 @@
     "rxjs": "~2.5.2",
     "transducers-js": "~0.4.174",
     "Percussion": "*",
-    "webaudiox": "*"
   }
 }
