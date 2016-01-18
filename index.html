@@ -146,105 +146,10 @@
     <script src="./js/patch/_patch.js"></script>
     <script src="./js/patch/patches.js"></script>
 
+    <script src="./js/app.js"></script>
     <script>
         "use strict";
-        
-        
-        //the rest of the init. DEFINITELY should be run after init.
-        
-        var currPatch;
-        var videoPixels;
-        var midi;
-        $( document ).ready( function() {
-            //debug mode:
-            Rx.config.longStackSupport = true;
-            
-            window.media.Media({
-                success: function(mediaStream){
-                    //set up info div
-                    $("#info").removeClass("show").addClass("hide");
-                    $("#controls").removeClass("hide").addClass("show");
-                    
-                    // call resize for video resizing
-                    resize();
-                    media.attachMediaButton(
-                        document.getElementById("switchCam"));
-                    media.attachFullscreenButton(
-                        document.getElementById("fullscreen"));
-                    videoPixels = media.VideoPixelPump(
-                        document.getElementById("canvas"),
-                        document.getElementById("video"),
-                        mediaStream
-                    );
-                    midi = window.media.Midi({
-                        indom: document.getElementById("midiInDevice"),
-                        outdom: document.getElementById("midiOutDevice"),
-                        indevice: "slider",
-                        // outdevice: "iac-driver"
-                        outdevice: "osculator"
-                    });
-                    //patch loading
-                    function loadpatch(patchname) {
-                        currPatch = patch.loadPatch(
-                            patch.library[patchname],
-                            videoPixels,
-                            document.getElementById("rightcontrolsidebar"),
-                            document.getElementById("analysis-panel"),
-                            midi,
-                            media.AudioContext()
-                        );
-                    }
-                    // Using hash address for this is note ideal;
-                    // Doesn't reload gracefully.
-                    // Also we should update URL if the patch name changes.
-                    var patchhash = "basic_triad";
-                    if (window.location.hash.length>0){
-                        patchhash = window.location.hash.slice(1)
-                    }
-                    if (Object.keys(patch.library).indexOf(patchhash)>-1) {
-                        loadpatch(patchhash);
-                    } else {
-                        console.log(
-                            "warning. no matching patch for ",
-                            patchhash
-                        );
-                    }
-                }
-            });
-            $(window).resize(function() {
-                resize();
-            });
-
-            function resize() {
-                console.log("resize");
-                // adapt video size to display
-                var vw = $(window).width();
-                var vh = $(window).height();
-
-                var iw = 640;
-                var ih = 480; // TODO
-
-                if (iw / ih < vw / vh) {
-                    var d1 = 100 * ((ih * (vw / iw)) / vh);
-                    $("#video").css("height", d1+"%");
-                    $("#video").css("width", "100%");
-                    $("#video").css("top", (100-d1)/2+"%");
-                } else {
-                    var d2 = 100 * ((iw * (vh / ih)) / vw);
-                    $("#video").css("height", "100%");
-                    $("#video").css("width", d2+"%");
-                    $("#video").css("left", (100-d2)/2+"%");
-                }
-            };
-        });
-    </script>
-    <script type="text/javascript">
-        (function() {
-            var loc = window.location;
-            var pathname = loc.pathname;
-            var basepathname = pathname.slice(0, pathname.lastIndexOf("/")+1);
-            window.baseUrl = loc.protocol + "//" + loc.host + basepathname;
-        })();
+        document.addEventListener('DOMContentLoaded', window.app.init);
     </script>
     <!-- ACTIVATE GOOGLE SPYWARE -->
     <!-- Must be LAST -->
