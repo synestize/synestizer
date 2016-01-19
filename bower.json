@@ -21,6 +21,6 @@
     "rxjs": "~2.5.2",
     "transducers-js": "~0.4.174",
     "Percussion": "*",
-    "jquery-mobile": "~1.4.5"
+    "jquery": "~2.2.0"
   }
 }

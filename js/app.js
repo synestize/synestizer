@@ -9,6 +9,9 @@ var videoPixels;
 var midi;
 var app;
 
+global.pureTabs.init('tabs-link', 'tabs-link-active');
+
+
 global.app = app = global.app || {};
 
 app.baseUrl = function () {

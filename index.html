@@ -7,7 +7,6 @@
   <title>synestizer</title>
 
   <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-  <!-- synestizer style -->
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -20,31 +19,19 @@
       <h1 id="logo">SYNESTIZER</h1>
     </section>
     <section id="controlpanels">
-      <nav class="tabs">
-        <!--  http://webdesignerhut.com/create-pure-css-tabs/ -->
-        <input type="radio" name="tabs" id="info-tab" checked >
-        <label for="info-tab">
-          <i class="fa fa-html5"></i><span>About</span>
-        </label>
-        <input type="radio" name="tabs" id="input-tab">
-        <label for="input-tab">
-          <i class="fa fa-css3"></i><span>Inputs</span>
-        </label>
-        <input type="radio" name="tabs" id="output-tab">
-        <label for="output-tab">
-          <i class="fa fa-code"></i><span>Outputs</span>
-        </label>
-        <input type="radio" name="tabs" id="iomatrix-tab">
-        <label for="iomatrix-tab">
-          <i class="fa fa-code"></i><span>IO Matrix</span>
-        </label>
+      <nav>
+        <ul class="tabs">
+          <li><a class="tabs-link tabs-link-active" href="#info-tab">About</a></li>
+          <li><a class="tabs-link" href="#input-tab">Inputs</a></li>
+          <li><a class="tabs-link" href="#output-tab">Outputs</a></li>
+          <li><a class="tabs-link" href="#iomatrix-tab">I/O matrix</a></li>
+          <li><a class="tabs-link" href="#synths-tab">Synths</a></li>
+        </ul>
       </nav>
-      <section id="info-panel" class="panel-content">
-        <header>
-          <h2>
-            Welcome to Synestizer.
-          </h2>
-        </header>
+      <section id="info-tab" class="tab-content">
+        <h2>
+          Welcome to Synestizer.
+        </h2>
         <p>
           Please enable your webcam in the browser and activate your loudspeakers.<br />
           This app requires an updated version of <a href="http://www.google.com/chrome/">chrome</a>.<br />
@@ -57,37 +44,29 @@
         href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
         Commons Attribution-ShareAlike 4.0 International License</a>.</p>
       </section>
-      <section id="input-panel" class="panel-content controls">
-        <header>
-          <h2>
-            Inputs
-          </h2>
-        </header>
+      <section id="input-tab" class="tab-content controls">
+        <h2>
+          Inputs
+        </h2>
         <h3>Midi In</h3>
         <select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
       </section>
-      <section id="output-panel" class="panel-content controls">
-        <header>
-          <h2>
-            Outputs
-          </h2>
-        </header>
+      <section id="output-tab" class="tab-content controls">
+        <h2>
+          Outputs
+        </h2>
         <h3>Midi Out</h3>
         <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option><</select>
       </section>
-      <section id="iomatrix-panel" class="panel-content controls">
-        <header>
-          <h2>
-            IO matrix
-          </h2>
-        </header>
+      <section id="iomatrix-tab" class="tab-content controls">
+        <h2>
+          IO matrix
+        </h2>
       </section>
-      <section id="synthview-panel" class="panel-content controls">
-        <header>
-          <h2>
-            Audio
-          </h2>
-        </header>
+      <section id="synths-tab" class="tab-content controls">
+        <h2>
+          Audio
+        </h2>
       </section>
     </section>
   </main>
@@ -96,33 +75,30 @@
   <script src="./bower_components/rxjs/dist/rx.all.js"></script>
   <script src="./bower_components/transducers-js/transducers.js"></script>
   <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
-  <script src="./bower_components/d3/d3.js"></script>
-  <script src="./bower_components/zepto/zepto.js"></script>
+  <!-- <script src="./bower_components/d3/d3.js"></script> -->
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./js/vendor/puretabs/puretabs.js"></script>
   
   <!-- audio/video/midi infrastructure -->
-  <script src="./js/media/midi.js"></script>
-  <script src="./js/media/av.js"></script>
+  <!-- <script src="./js/media/midi.js"></script> -->
+  <!-- <script src="./js/media/av.js"></script> -->
 
   <!-- video analysis -->
-  <script src="./js/videoanalysis/_videoanalysis.js"></script>
-  <script src="./js/videoanalysis/statistic.js"></script>
-  <script src="./js/videoanalysis/visualizer.js"></script>
+  <!-- <script src="./js/videoanalysis/_videoanalysis.js"></script> -->
+  <!-- <script src="./js/videoanalysis/statistic.js"></script> -->
+  <!-- <script src="./js/videoanalysis/visualizer.js"></script> -->
 
   <!-- <script src="./js/audio/lib/scaling.js"></script> -->
   <!-- <script src="./js/audio/lib/clock.js"></script> -->
 
   <!-- audio models -->
-  <script src="./js/audio/ensemble/_ensemble.js"></script>
+  <!-- <script src="./js/audio/ensemble/_ensemble.js"></script> -->
 
   <!-- audio/video patches -->
-  <script src="./js/patch/_patch.js"></script>
-  <script src="./js/patch/patches.js"></script>
+  <!-- <script src="./js/patch/_patch.js"></script> -->
+  <!-- <script src="./js/patch/patches.js"></script> -->
 
   <script src="./js/app.js"></script>
-  <script>
-    "use strict";
-    document.addEventListener('DOMContentLoaded', window.app.init);
-  </script>
   <!-- ACTIVATE GOOGLE SPYWARE -->
   <!-- Must be LAST -->
   <script>

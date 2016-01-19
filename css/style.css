@@ -5,7 +5,7 @@ html, body {
 body {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #000;
-    color: #111;
+    color: #aaa;
     height: 100%;
     overflow: hidden;
 }
@@ -30,9 +30,32 @@ a, a:hover, a:active, a:focus {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: red;
+  /*background opacity */
+  background-color: background-color:rgba(16,16,16,0.5);;
 }
-#controlpanels .panel-content {
+#controlpanels > nav ul.tabs {
+  display: flex;
+  padding: 0;
+  margin:0;
+}
+#controlpanels > nav ul.tabs li {
+  /*display: block;*/
+  flex: 1;
+  border: grey 1px solid;
+  padding: 1rem;
+  text-align: center;
+  list-style-type: none;
+}
+#controlpanels > nav ul.tabs li a {
+  text-decoration: none;
+  color: gray;
+  display: block;
+}
+#controlpanels > nav ul.tabs li a.tabs-link-active {
+  font-weight: bold;
+  color: white;
+}
+#controlpanels .tab-content {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0px;
@@ -43,7 +66,22 @@ a, a:hover, a:active, a:focus {
   right: 0;
   bottom: 0;
   top:0;
+  z-index: -1;
 }
+
+#video {
+    -webkit-transform: scaleX(1);
+    -moz-transform: scaleX(1);
+    position: fixed;
+}
+
+/* this will be resized by the media.js - so ignore! */
+#canvas {
+    width: 128px;
+    height: 128px;
+    display: none;
+}
+
 #logo {
     position: fixed;
     bottom: 25px;
@@ -56,7 +94,6 @@ a, a:hover, a:active, a:focus {
     /*background-color: #000;*/
     opacity: 0.5;
 
-
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -67,13 +104,6 @@ a, a:hover, a:active, a:focus {
     cursor: default;
 }
 
-
-
-#video {
-    -webkit-transform: scaleX(1);
-    -moz-transform: scaleX(1);
-    position: fixed;
-}
 
 .slider {
     width: 180px;
@@ -189,19 +219,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-#video {
-    -webkit-transform: scaleX(1);
-    -moz-transform: scaleX(1);
-    position: fixed;
-}
-
-/* this will be resized by the media.js - so ignore! */
-#canvas {
-    width: 128px;
-    height: 128px;
-    display: none;
-}
-
 
 /**
  Scrollbars
@@ -240,109 +257,8 @@ input[type=number]::-webkit-outer-spin-button {
     opacity: 1;
 }
 
-/* tabs */
-
-.tabs {
-    max-width: 90%;
-    float: none;
-    list-style: none;
-    padding: 0;
-    margin: 75px auto;
-    border-bottom: 4px solid #ccc;
-}
+/**
+ Tabs
+ */
  
-.tabs:after {
-    content: '';
-    display: table;
-    clear: both;
-}
  
-.tabs input[type=radio] {
-    display:none;
-}
- 
-.tabs label {
-    display: block;
-    float: left;
-    width: 33.3333%;
- 
-    color: #ccc;
-    font-size: 30px;
-    font-weight: normal;
-    text-decoration: none;
-    text-align: center;
-    line-height: 2;
- 
-    cursor: pointer;
-    box-shadow: inset 0 4px #ccc;
-    border-bottom: 4px solid #ccc;
- 
-    -webkit-transition: all 0.5s; /* Safari 3.1 to 6.0 */
-    transition: all 0.5s;
-}
-  
-.tabs label span {
-    display: none;
-}
- 
-.tabs label i {
-    padding: 5px;
-    margin-right: 0;
-}
- 
-.tabs label:hover {
-    color: #3498db;
-    box-shadow: inset 0 4px #3498db;
-    border-bottom: 4px solid #3498db;
-}
- 
-.panel-content {
-    display: none;
-    width: 100%;
-    float: left;
-    padding: 15px;
-    box-sizing: border-box;
-  
-    background-color:#ffffff;
-}
-
-.panel-content * {
- 
-    -webkit-animation: scale 0.7s ease-in-out;
-    -moz-animation: scale 0.7s ease-in-out;
-    animation: scale 0.7s ease-in-out;
-}
- 
-@keyframes scale {
- 
-  0% { 
-    transform: scale(0.9);
-    opacity: 0;
-    }
- 
-  50% {
-    transform: scale(1.01);
-    opacity: 0.5;
-    }
- 
-  100% { 
-    transform: scale(1);
-    opacity: 1;
-  }
- 
-}
-
-.tabs input:checked + label {
-    background: #FFF;
-    box-shadow: inset 0 4px #3498db;
-    border-bottom: 4px solid #3498db;
-    color: #3498db;
-}
- 
-#info-tab:checked ~ #info-panel,
-#input-tab:checked ~ #input-panel,
-#output-tab:checked ~ #output-panel,
-#iomatrix-tab:checked ~ #iomatrix-panel
-{
-    display: block;
-}
