@@ -2,11 +2,12 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
-
 body {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #000;
     color: #111;
+    height: 100%;
+    overflow: hidden;
 }
 
 h1, h2, h3 {
@@ -24,12 +25,25 @@ a, a:hover, a:active, a:focus {
     background: #585D9A;
 }
 
-#wrapper {
-    width: 100vw;
-    height: 100vh;
+#controlpanels {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: red;
 }
-
-
+#controlpanels .panel-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0px;
+}
+#video-display {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top:0;
+}
 #logo {
     position: fixed;
     bottom: 25px;

@@ -18,11 +18,9 @@
   ],
   "dependencies": {
     "d3": "~3.5.6",
-    "underscore": "~1.8.3",
-    "jquery": "~2.1.4",
     "rxjs": "~2.5.2",
     "transducers-js": "~0.4.174",
-    "foundation": "zurb/bower-foundation#~5.5.3",
-    "Percussion": "*"
+    "Percussion": "*",
+    "jquery-mobile": "~1.4.5"
   }
 }
