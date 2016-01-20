@@ -206,6 +206,4 @@
         });
     };
     media.attachFullscreenButton = attachFullscreenButton;
-    
-    
-})(this, document, Rx);
+})(this, document, Rx, React);

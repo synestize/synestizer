@@ -80,4 +80,4 @@ app.init = function () {
     global.addEventListener("resize", app.resize);
 };
 
-})( this );
+})(this, document, Rx, React);

@@ -44,18 +44,12 @@
         href="http://www.gnu.org/licenses/licenses.en.html">GNU General Public License version 2.0 or later</a>.</p>
       </section>
       <section id="input-tab" class="tab-content controls">
-        <h2>
-          Inputs
-        </h2>
-        <h3>Midi In</h3>
+        <h2>Midi In</h3>
         <select name="midiInDevice" id="midiInDevice" disabled="true" class="midiselect"><option>none</option></select>
       </section>
       <section id="output-tab" class="tab-content controls">
-        <h2>
-          Outputs
-        </h2>
-        <h3>Midi Out</h3>
-        <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option><</select>
+        <h2>Midi Out</h2>
+        <select name="midiOutDevice" disabled="true" id="midiOutDevice" class="midiselect"><option>none</option></select>
       </section>
       <section id="iomatrix-tab" class="tab-content controls">
         <h2>
@@ -75,9 +69,13 @@
   <script src="./bower_components/transducers-js/transducers.js"></script>
   <!-- <script src="./bower_components/Percussion/dist/Percussion.js"></script> -->
   <!-- <script src="./bower_components/d3/d3.js"></script> -->
-  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="./bower_components/jquery/dist/jquery.min.js"></script> -->
   <script src="./js/vendor/puretabs/puretabs.js"></script>
-  
+  <!-- <script src="./bower_components/flux/dist/Flux.min.js"></script> -->
+  <script src="./bower_components/react/react.js"></script>
+  <!-- Do we  need microevent or can we avoid it using Rx? -->
+  <!-- <script src="./bower_components/microevent.js/microevent.js"></script> -->
+
   <!-- audio/video/midi infrastructure -->
   <!-- <script src="./js/media/midi.js"></script> -->
   <!-- <script src="./js/media/av.js"></script> -->

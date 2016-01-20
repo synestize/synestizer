@@ -21,6 +21,7 @@
     "rxjs": "~4.0.0",
     "transducers-js": "~0.4.174",
     "Percussion": "*",
-    "jquery": "~2.2.0"
+    "jquery": "~2.2.0",
+    "react": "~0.14.6"
   }
 }

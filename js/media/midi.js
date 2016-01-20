@@ -203,4 +203,4 @@
         return setMidi;
     };
     media.Midi = Midi;
-})(this, document, Rx);
+})(this, document, Rx, React);
