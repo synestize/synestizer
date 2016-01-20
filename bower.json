@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "d3": "~3.5.6",
-    "rxjs": "~2.5.2",
+    "rxjs": "~4.0.0",
     "transducers-js": "~0.4.174",
     "Percussion": "*",
     "jquery": "~2.2.0"
