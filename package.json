@@ -1,0 +1,25 @@
+{
+  "name": "synestizer",
+  "version": "1.0.0",
+  "description": "Listen to colours",
+  "main": "js-src/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/synestize/synestizer.git"
+  },
+  "author": "Dan MacKinlay, Christoph St��hli, Kaspar K��nig",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "rx": "^4.0.7"
+  }
+}
