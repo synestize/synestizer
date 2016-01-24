@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify -v -t babelify --presets react lib/main.js -o js/main.js",
+    "watch": "watchify -v  -t babelify --presets --poll --debug lib/main.js -o js/main.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,11 @@
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
+    "install": "^0.4.1",
+    "npm": "^3.5.3",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
-    "rx": "^4.0.7"
-  },
-  "scripts": {
-    "build": "browserify -v -t babelify --presets react lib/main.js -o js/main.js",
-    "watch": "watchify -v  -t babelify --presets --poll --debug lib/main.js -o js/main.js"
+    "rx": "^4.0.7",
+    "rx-react": "^0.3.0"
   }
 }
