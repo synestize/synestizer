@@ -7,14 +7,14 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "browserify -v -t babelify --presets react lib/main.js -o js/main.js",
-    "watch": "watchify -v  -t babelify --presets --poll --debug lib/main.js -o js/main.js"
+    "build": "webpack --optimize-minimize --optimize-occurence-order",
+    "watch": "webpack --progress --colors --watch --devtool eval-cheap-module-source-map --debug --output-pathinfo"
   },
   "repository": {
     "type": "git",
     "url": "github.com/synestize/synestizer.git"
   },
-  "author": "Dan MacKinlay, Christoph St��hli, Kaspar K��nig",
+  "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
   "license": "GPL-3.0",
   "dependencies": {
     "babel-preset-react": "^6.3.13",
