@@ -25,5 +25,10 @@
     "react-dom": "^0.14.6",
     "rx": "^4.0.7",
     "rx-react": "^0.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "webpack": "^1.12.12"
   }
 }

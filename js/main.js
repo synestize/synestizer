@@ -1,1 +1,0 @@
-console.error("SyntaxError: /Users/dan/src/synestizer/lib/media/midiin.js: Unexpected token (24:32) while parsing file: /Users/dan/src/synestizer/lib/media/midiin.js");
