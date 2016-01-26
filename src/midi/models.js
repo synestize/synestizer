@@ -1,13 +1,42 @@
-//  MIDI input. This is a singleton.
-
 'use strict';
+
 var Rx = require('Rx');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var MidiIn, state, mountpoint, aggregatemidiinstream;
+var update = require('react-addons-update');
+
 var state = {
-  indevices: [],
+  midiinfo: null,
+  allindevices: [],
+  alloutdevices: [],
   activeindevices: [],
-  incontrols: []
+  activeoutdevices: [],
+  incontrols: [],
+  outcontrols: []
 };
-var MidiDeviceStream = new Rx.ReplaySubject(1);
+var stateStream = new Rx.BehaviorSubject(state);
+var updateStream = new Rx.Subject();
+
+function queryMidi() {
+  Rx.Observable.fromPromise(
+    global.navigator.requestMIDIAccess()
+  ).subscribe(
+    (midiinfo) => updateStream.onNext({midiinfo: {set$: midiinfo}}),
+    (err) => console.debug(err.stack)
+  );
+};
+
+updateStream.subscribe(function (upd) {
+  var newState = update(state, upd);
+  //could use an immutable update cycle Here
+  state = newState;
+  stateStream.onNext(state);
+});
+
+queryMidi();
+
+module.exports = {
+  state: state,
+  stateStream: stateStream,
+  updateStream: updateStream
+};

@@ -8,13 +8,7 @@ function querymidi() {
     err => console.debug(err.stack)
   );
 };
-var MidiInDeviceSelectComponent (devices ) => (<div class="widget">
-  <h2>Midi In</h2>
-    <select name="midiInDevice" id="midiInDevice" class="midiselect">
-      <option>none</option>
-    </select>
-  </div>
-);
+
 
 MidiIn = {
   state : {
