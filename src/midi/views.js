@@ -10,23 +10,25 @@ var MidiInDeviceSelectComponent = function(props) {
   //var disabled = props.newdeviceinfo.inputs ? 'false' : 'true';
   let disabled;
   let inputNodes;
+  let defaultValue;
   if ((props.state.midiinfo !== null) && (props.state.midiinfo.inputs.size>0)) {
     disabled=false;
+    defaultValue = props.state.activeindevice;
     let allindevices = props.state.allindevices;
     inputNodes = [];
     for (var [key, device] of allindevices.entries()) {
-      let selected = (key===props.state.activeindevice);
       inputNodes.push(
-        <option key={key} value={key} selected={selected}>{device.name}</option>
+        <option key={key} value={key}>{device.name}</option>
       )
     };
   } else {
     disabled=true;
+    defaultValue = "none";
     inputNodes = [<option key="none" value="none">none</option>];
   };
   return (<div className="widget">
   <h2>Midi In</h2>
-    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled}>
+    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} defaultValue={defaultValue}>
       {inputNodes}
     </select>
   </div>)
