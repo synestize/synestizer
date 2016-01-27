@@ -14,6 +14,12 @@ var MidiIntents = global.MidiIntents = require('./midi/intents');
 
 //debug mode:
 Rx.config.longStackSupport = true;
-MidiModels.stateStream.subscribe((midistate) => MidiViews.renderMidiIn(
-  midistate, document.getElementById('midi-input')
-));
+
+MidiModels.stateStream.subscribe(function (midistate) {
+  console.log("renderin");
+  console.log(midistate);
+  MidiViews.renderMidiIn(
+    midistate,
+    document.getElementById('midi-input')
+  )
+});
