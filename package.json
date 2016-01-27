@@ -19,6 +19,7 @@
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
+    "immutable": "^3.7.6",
     "install": "^0.4.1",
     "npm": "^3.5.3",
     "react": "^0.14.6",
