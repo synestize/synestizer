@@ -15,8 +15,9 @@ var MidiInDeviceSelectComponent = function(props) {
     let allindevices = props.state.allindevices;
     inputNodes = [];
     for (var [key, device] of allindevices.entries()) {
+      let selected = (key===props.state.activeindevice);
       inputNodes.push(
-        <option key={key} value={key}>{device.name}</option>
+        <option key={key} value={key} selected={selected}>{device.name}</option>
       )
     };
   } else {
@@ -32,7 +33,7 @@ var MidiInDeviceSelectComponent = function(props) {
 };
 
 function renderMidiIn(midistate, mountpoint) {
-  ReactDOM.render(
+  return ReactDOM.render(
     <MidiInDeviceSelectComponent state={midistate} />,
     mountpoint);
 };

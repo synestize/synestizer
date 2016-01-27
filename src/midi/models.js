@@ -9,8 +9,8 @@ var state = {
   midiinfo: null,
   allindevices: new Map(),
   alloutdevices: new Map(),
-  activeindevices: new Map(),
-  activeoutdevices: new Map(),
+  activeindevice: null,
+  activeoutdevice: null,
   incontrols: new Set(),
   outcontrols: new Set()
 };
