@@ -7,16 +7,15 @@ var model = require('./models');
 var intents = require('./intents');
 
 var MidiInDeviceSelectComponent = function(props) {
-  //var disabled = props.newdeviceinfo.inputs ? 'false' : 'true';
   let disabled;
   let inputNodes;
   let defaultValue;
-  if ((props.state.midiinfo !== null) && (props.state.midiinfo.inputs.size>0)) {
+  console.debug("props", props);
+  if ((props.allindevices.size>0)) {
     disabled=false;
-    defaultValue = props.state.activeindevice;
-    let allindevices = props.state.allindevices;
+    defaultValue = props.activeindevice;
     inputNodes = [];
-    for (var [key, device] of allindevices.entries()) {
+    for (var [key, device] of props.allindevices.entries()) {
       inputNodes.push(
         <option key={key} value={key}>{device.name}</option>
       )
@@ -34,9 +33,10 @@ var MidiInDeviceSelectComponent = function(props) {
   </div>)
 };
 
-function renderMidiIn(midistate, mountpoint) {
+function renderMidiIn(state, mountpoint) {
+  
   return ReactDOM.render(
-    <MidiInDeviceSelectComponent state={midistate} />,
+    <MidiInDeviceSelectComponent activeindevice={state.activeindevice} allindevices={state.allindevices} />,
     mountpoint);
 };
 

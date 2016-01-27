@@ -35,8 +35,9 @@ function queryMidi(midiinfo) {
   var allindevices = new Map();
   var alloutdevices = new Map();
   //turn the pseudo-Maps in the midiinfo dict into real maps
-  midiinfo.inputs.forEach((val,key) => allindevices.set(key,val));
-  midiinfo.outputs.forEach((val,key) => alloutdevices.set(key,val));
+  for (var [key, val] of midiinfo.inputs.entries()){
+    allindevices.set(key,val)
+  };
   updateStream.onNext({
     midiinfo: {$set: midiinfo},
     allindevices: {$set: allindevices},
