@@ -9,11 +9,10 @@ var intents = require('./intents');
 var MidiInDeviceSelectComponent = function(props) {
   let disabled;
   let inputNodes;
-  let defaultValue;
-  console.debug("props", props);
+  let selectValue;
   if ((props.allindevices.size>0)) {
     disabled=false;
-    defaultValue = props.activeindevice;
+    selectValue = props.activeindevice;
     inputNodes = [];
     for (var [key, device] of props.allindevices.entries()) {
       inputNodes.push(
@@ -22,12 +21,12 @@ var MidiInDeviceSelectComponent = function(props) {
     };
   } else {
     disabled=true;
-    defaultValue = "none";
+    selectValue = "none";
     inputNodes = [<option key="none" value="none">none</option>];
   };
   return (<div className="widget">
   <h2>Midi In</h2>
-    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} defaultValue={defaultValue}>
+    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiIn(ev.target.value)}>
       {inputNodes}
     </select>
   </div>)

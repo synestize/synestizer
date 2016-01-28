@@ -7,9 +7,9 @@ var ReactDOM = global.React = require('react-dom');
 var pureTabs = global.pureTabs = require('./vendor/puretabs/puretabs.js');
 pureTabs.init('tabs-link', 'tabs-link-active');
 
-var MidiViews = global.MidiViews = require('./midi/views');
-var MidiModels = global.MidiModels = require('./midi/models');
-var MidiIntents = global.MidiIntents = require('./midi/intents');
+var MidiViews = global.MidiViews = require('./midistreams/views');
+var MidiModels = global.MidiModels = require('./midistreams/models');
+var DataStreamModels = global.DataStreams = require('./datastreams/models');
 
 
 //debug mode:

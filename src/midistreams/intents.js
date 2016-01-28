@@ -5,9 +5,11 @@ var ReactDOM = require('react-dom');
 var MidiIn, state, mountpoint, aggregatemidiinstream;
 
 var subjects = {
-  something: new Rx.BehaviorSubject(null)
+  selectMidiIn: new Rx.Subject(null)
 };
-var intents = {
-  somethingmutate: () => subjects.something.onNext()
-}
-module.exports = intents;
+var selectMidiIn = (key) => subjects.selectMidiIn.onNext(key);
+
+module.exports = {
+  subjects: subjects,
+  selectMidiIn: selectMidiIn
+};
