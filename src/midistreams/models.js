@@ -7,6 +7,8 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../datastreams/models');
 var rawMidiSubscription;
+var allChannelNums = new Array(16);
+var allControllerNums = new Array(120);
 
 //Basic midi state
 var state = {
@@ -46,7 +48,7 @@ function handleMidiInMessage (ev) {
   //8: Note off
   if (cmd===11) {
     //console.debug("me", ev.data, midievent);
-    dataStreams.dataStreamUpdateSubject.onNext({midieventkey:{$set: val }});
+    dataStreams.inputDataStreamUpdateSubject.onNext({midieventkey:{$set: val }});
   }
 };
 

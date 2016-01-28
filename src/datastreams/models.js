@@ -5,18 +5,30 @@
 var Rx = require('Rx');
 var update = require('react-addons-update');
 
-var dataState = new Map();
-var dataStreamSubject = new Rx.BehaviorSubject(dataState);
-var dataStreamUpdateSubject = new Rx.Subject();
+var inputDataState = new Map();
+var inputDataStreamSubject = new Rx.BehaviorSubject(inputDataState);
+var inputDataStreamUpdateSubject = new Rx.Subject();
+var outputDataState = new Map();
+var outputDataStreamSubject = new Rx.BehaviorSubject(outputDataState);
+var outputDataStreamUpdateSubject = new Rx.Subject();
 
-dataStreamUpdateSubject.subscribe(
+inputDataStreamUpdateSubject.subscribe(
   function (upd) {
     dataState = update(dataState, upd);
-    dataStreamSubject.onNext(dataState);
+    inputDataStreamSubject.onNext(inputDataState);
+  }
+);
+
+outputDataStreamUpdateSubject.subscribe(
+  function (upd) {
+    dataState = update(dataState, upd);
+    outputDataStreamSubject.onNext(outputDataState);
   }
 );
 
 module.exports = {
-  dataStreamSubject: dataStreamSubject,
-  dataStreamUpdateSubject: dataStreamUpdateSubject
+  inputDataStreamSubject: inputDataStreamSubject,
+  inputDataStreamUpdateSubject: inputDataStreamUpdateSubject,
+  outputDataStreamSubject: outputDataStreamSubject,
+  outputDataStreamUpdateSubject: outputDataStreamUpdateSubject
 };

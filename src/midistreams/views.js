@@ -31,6 +31,14 @@ var MidiInDeviceSelectComponent = function(props) {
     </select>
   </div>)
 };
+var MidiInChannelNumSelectComponent = function(props) {
+  var disabled, selectValue, inputNodes;
+  return (<div className="widget">
+    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiIn(ev.target.value)}>
+      {inputNodes}
+    </select>
+  </div>)
+};
 
 function renderMidiIn(state, mountpoint) {
   
