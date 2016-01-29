@@ -12,7 +12,6 @@ var allControllerNums = new Array(120);
 
 //Basic midi state
 var state = {
-  midiinfo: null,
   allindevices: new Map(),
   alloutdevices: new Map(),
   activeindevice: null,
@@ -82,22 +81,25 @@ updateStream.subscribe(function (upd) {
   stateStream.onNext(state);
 });
 
-intents.subjects.selectMidiIn.subscribe(function(key){
+intents.subjects.selectMidiInDevice.subscribe(function(key){
   var tmp;
   updateStream.onNext({activeindevice:{$set:key}});
-  if (rawMidiSubscription !== undefined) {
-    rawMidiSubscription.dispose()
-  };
-  rawMidiSubscription = Rx.Observable.fromEvent(
-    state.midiinfo.inputs.get(key), 'midimessage'
-  ).subscribe(handleMidiInMessage);
+  if (midiinfo !==null) {
+    if (rawMidiSubscription !== undefined) {
+      rawMidiSubscription.dispose()
+    };
+    rawMidiSubscription = Rx.Observable.fromEvent(
+      midiinfo.inputs.get(key), 'midimessage'
+    ).subscribe(handleMidiInMessage);
+  }
 });
 //setup midi system
 function initMidi() {
   Rx.Observable.fromPromise(
     global.navigator.requestMIDIAccess()
   ).subscribe(
-    function(midiinfo) {
+    function(newmidiinfo) {
+      midiinfo = newmidiinfo;
       //will the automatic midi updating work? untested.
       Rx.Observable.fromEvent(midiinfo, 'statechange').subscribe(
         () => updateMidiHardware(midiinfo)
@@ -107,12 +109,13 @@ function initMidi() {
     (err) => console.debug(err.stack)
   );
 };
-function updateMidiHardware(midiinfo) {
+function updateMidiHardware(newmidiinfo) {
   var allindevices = new Map();
   var alloutdevices = new Map();
+  midiinfo = newmidiinfo;
   //turn the pseudo-Maps in the midiinfo dict into real maps
   for (var [key, val] of midiinfo.inputs.entries()){
-    allindevices.set(key,val)
+    allindevices.set(key,val.name)
   };
   updateStream.onNext({
     midiinfo: {$set: midiinfo},
