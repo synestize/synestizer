@@ -82,7 +82,8 @@ var MidiInControlSelect = function(props) {
     );
   }
   return (<div className="widget">
-    <select name="midiInControl" id="midiInControl" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInControl(parseInt(ev.target.value))}>
+    <label htmlFor="midiInControl">cc </label>
+    <select name="midiInControl-{props.controlNum}" id="midiInControl-{props.controlNum}" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInControl(parseInt(ev.target.value))}>
       {controlOptNodes}
     </select>
     <button>-</button>
