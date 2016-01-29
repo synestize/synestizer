@@ -6,14 +6,15 @@ var ReactDOM = require('react-dom');
 var model = require('./models');
 var intents = require('./intents');
 
-var MidiInSelectComponent = function(props) {
+var MidiInSelect = function(props) {
   return (<div className="widget">
     <h2>Midi In</h2>
-    <MidiInDeviceSelectComponent activedevice={props.activedevice} alldevices={props.alldevices} />
-    <MidiInChannelSelectComponent activechannel={props.activechannel} activedevice={props.activedevice} />
+    <MidiInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
+    <MidiInChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
+    <MidiInControlSetSelect activecontrols={props.activecontrols} activedevice={props.activedevice} />
   </div>)
 };
-var MidiInDeviceSelectComponent = function(props) {
+var MidiInDeviceSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
@@ -39,10 +40,10 @@ var MidiInDeviceSelectComponent = function(props) {
   </div>
   )
 };
-var MidiInChannelSelectComponent = function(props) {
+var MidiInChannelSelect = function(props) {
   var disabled, selectValue, channelOptNodes;
   disabled = (props.activedevice !== null);
-  selectValue = props.activeinchannel || 1;
+  selectValue = props.activechannel || 1;
   channelOptNodes = [];
   for (var i=1; i<=16; i++) {
     channelOptNodes.push(
@@ -56,26 +57,28 @@ var MidiInChannelSelectComponent = function(props) {
     </select>
   </div>)
 };
-var MidiInControlSetSelectComponent = function(props) {
+var MidiInControlSetSelect = function(props) {
   var disabled, selectValue, controlSelectNodes;
   controlSelectNodes = [];
   disabled = (props.activedevice !== null);
-  for (controlNum of props.activecontrols) {
+  for (let controlNum of props.activecontrols) {
     controlSelectNodes.push(
-      <MidiInControlSelectComponent />
+      <MidiInControlSelect controlNum={controlNum} key={controlNum} activedevice={props.activedevice} activecontrols={props.activecontrols}/>
     );
   };
-  return (<div className="widget">{controlSelectNodes}
+  return (<div className="widget">
+    {controlSelectNodes}
+    <button>+</button>
   </div>
   )
 };
-var MidiInControlSelectComponent = function(props) {
-  var disabled, selectValue, controlOptNodes;
+var MidiInControlSelect = function(props) {
+  var disabled, selectValue, controlOptNodes=[];
   disabled = (props.activedevice !== null);
-  selectValue = props.activeinchannel || 1;
-  for (var i=0; i<=127; i++) {
+  selectValue = props.controlNum || 1;
+  for (let i=0; i<=127; i++) {
     controlOptNodes.push(
-      <option key={i} value={i}>{i}</option>
+      <option key={i} value={i} disabled={props.activecontrols.has(i)}>{i}</option>
     );
   }
   return (<div className="widget">
@@ -87,8 +90,8 @@ var MidiInControlSelectComponent = function(props) {
 };
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(
-    <MidiInSelectComponent activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activechannel}
-      activecontrols={state.incontrols} />,
+    <MidiInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
+      activecontrols={state.activeincontrols} />,
     mountpoint);
 };
 

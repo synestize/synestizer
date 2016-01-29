@@ -19,8 +19,8 @@ var state = {
   activeoutdevice: null,
   activeinchannel: null,
   activeoutchannel: null,
-  activeincontrols: new Set(),
-  activeoutcontrols: new Set()
+  activeincontrols: new Set([1,2,3]),
+  activeoutcontrols: new Set([4,5,6])
 };
 //midi model state
 var stateStream = new Rx.BehaviorSubject(state);
