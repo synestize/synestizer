@@ -7,8 +7,9 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../datastreams/models');
 var rawMidiSubscription;
-var allChannelNums = new Array(16);
-var allControllerNums = new Array(120);
+
+//this is a per-session object and shouldn't be in app state
+var midiinfo= null;
 
 //Basic midi state
 var state = {
@@ -16,9 +17,10 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
+  activeinchannel: null,
+  activeoutchannel: null,
   incontrols: new Set(),
   outcontrols: new Set()
-
 };
 //midi model state
 var stateStream = new Rx.BehaviorSubject(state);

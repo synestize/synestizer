@@ -60,6 +60,7 @@ a, a:hover, a:active, a:focus {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0px;
+  padding: 1ex 1em;
 }
 #video-display {
   position: absolute;
@@ -156,7 +157,7 @@ a, a:hover, a:active, a:focus {
     width: 30%;
     margin: 0;
     display: inline-block;
-    padding: 0 3px 0 0;
+    padding: 0 1em 0 0;
     text-align: right;
 }
 .panel.controls .control input[type="range"] {
@@ -170,14 +171,18 @@ a, a:hover, a:active, a:focus {
     /* background-color: #f0f; */
     padding: 1px 4px 1px 2px;
     color: #999;
-    display: inline-block;
-    width: 10em;
+    /*display: inline-block;*/
+    display: inline;
+    max-width: 10em;
     height: 1.5em;
 }
 .widget select .option {
     min-height: 1ex;
 }
-
+.widget label{
+  display: inline-block;
+  padding-right: 1ex;
+}
 input[type="number"],
 input[type="number"]:focus {
     display: block;
