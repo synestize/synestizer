@@ -5,9 +5,6 @@ title: TODO
 # TODO
 
 * make all panels aspects of the same App state for easier rendering.
-
-  * this will include removing MidiAccess and other nonserializable objects
-  
 * Revised simpler UI
 
     * MIDI mapping GUI rather than hardcoded controllers
