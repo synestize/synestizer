@@ -4,5 +4,8 @@ docs/_build/
 bower_components
 node_modules
 
-#ignore dev server crypographic assets
+#ignore server cryptographic assets
 .caddy/
+
+# ignore built javascript files
+js/
