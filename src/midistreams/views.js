@@ -9,8 +9,8 @@ var intents = require('./intents');
 var MidiInSelectComponent = function(props) {
   return (<div className="widget">
     <h2>Midi In</h2>
-      <MidiInDeviceSelectComponent activedevice={props.activedevice} alldevices={props.alldevices} />
-      <MidiInChannelSelectComponent activechannel={props.activechannel} />
+    <MidiInDeviceSelectComponent activedevice={props.activedevice} alldevices={props.alldevices} />
+    <MidiInChannelSelectComponent activechannel={props.activechannel} activedevice={props.activedevice} />
   </div>)
 };
 var MidiInDeviceSelectComponent = function(props) {
@@ -56,34 +56,33 @@ var MidiInChannelSelectComponent = function(props) {
     </select>
   </div>)
 };
-var MidiInCCSetSelectComponent = function(props) {
-  var disabled, selectValue, ccOptNodes;
+var MidiInControlSetSelectComponent = function(props) {
+  var disabled, selectValue, controlSelectNodes;
+  controlSelectNodes = [];
   disabled = (props.activedevice !== null);
-  selectValue = props.activeinchannel || 1;
-  for (var i=0; i<=127; i++) {
-    ccOptNodes.push(
-      <option key={i} value={i}>{i}</option>
+  for (controlNum of props.activecontrols) {
+    controlSelectNodes.push(
+      <MidiInControlSelectComponent />
     );
-  }
-  return (<div className="widget">
-    <select name="midiInCC" id="midiInCC" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInCC(parseInt(ev.target.value))}>
-      {ccOptNodes}
-    </select>
-  </div>)
+  };
+  return (<div className="widget">{controlSelectNodes}
+  </div>
+  )
 };
-var MidiInCCSelectComponent = function(props) {
-  var disabled, selectValue, ccOptNodes;
+var MidiInControlSelectComponent = function(props) {
+  var disabled, selectValue, controlOptNodes;
   disabled = (props.activedevice !== null);
   selectValue = props.activeinchannel || 1;
   for (var i=0; i<=127; i++) {
-    ccOptNodes.push(
+    controlOptNodes.push(
       <option key={i} value={i}>{i}</option>
     );
   }
   return (<div className="widget">
-    <select name="midiInCC" id="midiInCC" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInCC(parseInt(ev.target.value))}>
-      {ccOptNodes}
+    <select name="midiInControl" id="midiInControl" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInControl(parseInt(ev.target.value))}>
+      {controlOptNodes}
     </select>
+    <button>-</button>
   </div>)
 };
 function renderMidiIn(state, mountpoint) {
