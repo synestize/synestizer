@@ -4,17 +4,13 @@ title: TODO
 
 # TODO
 
-* go to ES6
+* make all panels aspects of the same App state for easier rendering.
+
+  * this will include removing MidiAccess and other nonserializable objects
+  
 * Revised simpler UI
 
     * MIDI mapping GUI rather than hardcoded controllers
-
-* Purge jquery
-* Purge foundation
-* Purge WAAX
-
-    * accept synth parameters in URL fragments (esp to set master output volume)
-    * update URL fragments with synth parameters
 
 * A *patch* should map between
 
@@ -44,6 +40,9 @@ title: TODO
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
 * smoother workflow to build/deploy app
+
+  * to get SSL, probably best to create a caddy deploy workflow to some host
+
 * Better documentation workflow 
 
     * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)

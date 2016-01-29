@@ -14,14 +14,14 @@ var outputDataStreamUpdateSubject = new Rx.Subject();
 
 inputDataStreamUpdateSubject.subscribe(
   function (upd) {
-    dataState = update(dataState, upd);
+    inputDataState = update(inputDataState, upd);
     inputDataStreamSubject.onNext(inputDataState);
   }
 );
 
 outputDataStreamUpdateSubject.subscribe(
   function (upd) {
-    dataState = update(dataState, upd);
+    outputDataState = update(outputDataState, upd);
     outputDataStreamSubject.onNext(outputDataState);
   }
 );
