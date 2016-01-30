@@ -25,7 +25,8 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "rx": "^4.0.7",
-    "rx-react": "^0.3.0"
+    "rx-react": "^0.3.0",
+    "uglify": "^0.1.5"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
