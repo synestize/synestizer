@@ -78,7 +78,6 @@ updateStream.subscribe(function (upd) {
   var newState;
   newState = update(state, upd);
   //could use an immutable update cycle Here
-  console.log("upd", upd, state, newState);
   state = newState;
   stateStream.onNext(state);
 });
@@ -115,6 +114,42 @@ intents.subjects.swapMidiInCC.subscribe(function([i,j]){
   newccs.add(j);
   updateStream.onNext({activeinccs:{$set:newccs.add(j)}});
 });
+
+
+intents.subjects.selectMidiOutDevice.subscribe(function(key){
+  var tmp;
+  updateStream.onNext({activeoutdevice:{$set:key}});
+  if (midiinfo !==null) {
+    if (rawMidiSubscription !== undefined) {
+      rawMidiSubscription.dispose()
+    };
+    rawMidiSubscription = Rx.Observable.fromEvent(
+      midiinfo.inputs.get(key), 'midimessage'
+    ).subscribe(handleMidiOutMessage);
+  }
+});
+intents.subjects.selectMidiOutChannel.subscribe(function(i){
+  updateStream.onNext({activeinchannel:{$set:i}});
+});
+intents.subjects.addMidiOutCC.subscribe(function(i){
+  state.activeoutccs.add(i);
+  updateStream.onNext(
+    {activeoutccs:{$set: state.activeoutccs.add(i)}}
+  );
+});
+intents.subjects.removeMidiOutCC.subscribe(function(i){
+  var newccs = state.activeoutccs;
+  newccs.delete(i);
+  updateStream.onNext({activeoutccs:{$set:newccs}});
+});
+intents.subjects.swapMidiOutCC.subscribe(function([i,j]){
+  var newccs = state.activeoutccs;
+  newccs.delete(i);
+  newccs.add(j);
+  updateStream.onNext({activeoutccs:{$set:newccs.add(j)}});
+});
+
+
 //set up midi system
 function initMidi() {
   Rx.Observable.fromPromise(
@@ -138,6 +173,9 @@ function updateMidiHardware(newmidiinfo) {
   //turn the pseudo-Maps in the midiinfo dict into real maps
   for (var [key, val] of midiinfo.inputs.entries()){
     allindevices.set(key,val.name)
+  };
+  for (var [key, val] of midiinfo.outputs.entries()){
+    alloutdevices.set(key,val.name)
   };
   updateStream.onNext({
     allindevices: {$set: allindevices},

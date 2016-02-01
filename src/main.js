@@ -21,5 +21,9 @@ MidiModels.stateStream.subscribe(function (midistate) {
   MidiViews.renderMidiIn(
     midistate,
     document.getElementById('midi-input')
+  );
+  MidiViews.renderMidiOut(
+    midistate,
+    document.getElementById('midi-output')
   )
 });
