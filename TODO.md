@@ -17,11 +17,16 @@ title: TODO
         * MIDI CC in
         * GUI widgets
         * device sensors
+        * other sensors?
+        
+          * [Leap Control](https://developer.leapmotion.com/getting-started/javascript)
+          * OpenSoundControl
     
     * output params
     
       * audio ensemble parameters
       * MIDI CC out
+      * OpenSoundControl?
       
     * Patches could have a separate mapping GUI for constructing the mapping
     * Copula-function-based covariance
@@ -31,9 +36,6 @@ title: TODO
 * Meta
 
     * automatic letsencrypt SSL
-    * Move to modular architecture in the AMD style,
-    e.g. using [require.js](http://requirejs.org/)
-    using [some kind of template](https://github.com/volojs/create-template)
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
 * smoother workflow to build/deploy app
