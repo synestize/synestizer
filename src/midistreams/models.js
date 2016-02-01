@@ -19,8 +19,8 @@ var state = {
   activeoutdevice: null,
   activeinchannel: null,
   activeoutchannel: null,
-  activeincontrols: new Set([1,2,3]),
-  activeoutcontrols: new Set([4,5,6])
+  activeinccs: new Set([1,2,3]),
+  activeoutccs: new Set([4,5,6])
 };
 //midi model state
 var stateStream = new Rx.BehaviorSubject(state);
@@ -95,7 +95,27 @@ intents.subjects.selectMidiInDevice.subscribe(function(key){
     ).subscribe(handleMidiInMessage);
   }
 });
-//setup midi system
+intents.subjects.selectMidiInChannel.subscribe(function(i){
+  updateStream.onNext({activeinchannel:{$set:i}});
+});
+intents.subjects.addMidiInCC.subscribe(function(i){
+  state.activeinccs.add(i);
+  updateStream.onNext(
+    {activeinccs:{$set: state.activeinccs.add(i)}}
+  );
+});
+intents.subjects.removeMidiInCC.subscribe(function(i){
+  var newccs = state.activeinccs;
+  newccs.delete(i);
+  updateStream.onNext({activeinccs:{$set:newccs}});
+});
+intents.subjects.swapMidiInCC.subscribe(function([i,j]){
+  var newccs = state.activeinccs;
+  newccs.delete(i);
+  newccs.add(j);
+  updateStream.onNext({activeinccs:{$set:newccs.add(j)}});
+});
+//set up midi system
 function initMidi() {
   Rx.Observable.fromPromise(
     global.navigator.requestMIDIAccess()
@@ -120,7 +140,6 @@ function updateMidiHardware(newmidiinfo) {
     allindevices.set(key,val.name)
   };
   updateStream.onNext({
-    midiinfo: {$set: midiinfo},
     allindevices: {$set: allindevices},
     alloutdevices: {$set: alloutdevices}
   });

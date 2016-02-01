@@ -11,7 +11,7 @@ var MidiInSelect = function(props) {
     <h2>Midi In</h2>
     <MidiInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiInChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
-    <MidiInControlSetSelect activecontrols={props.activecontrols} activedevice={props.activedevice} />
+    <MidiInCCSetSelect activeinccs={props.activeinccs} activedevice={props.activedevice} />
   </div>)
 };
 var MidiInDeviceSelect = function(props) {
@@ -57,42 +57,63 @@ var MidiInChannelSelect = function(props) {
     </select>
   </div>)
 };
-var MidiInControlSetSelect = function(props) {
-  var disabled, selectValue, controlSelectNodes;
-  controlSelectNodes = [];
+var MidiInCCSetSelect = function(props) {
+  var disabled, selectValue, ccSelectNodes, sorted;
+  ccSelectNodes = [];
   disabled = (props.activedevice !== null);
-  for (let controlNum of props.activecontrols) {
-    controlSelectNodes.push(
-      <MidiInControlSelect controlNum={controlNum} key={controlNum} activedevice={props.activedevice} activecontrols={props.activecontrols}/>
+  // sort by numerical value of cc
+  sorted = Array.from(props.activeinccs).sort((a,b)=>a-b);
+  sorted.forEach(function(ccNum) {
+    ccSelectNodes.push(
+      <MidiInCCSelect ccNum={ccNum} key={ccNum} activedevice={props.activedevice} activeinccs={props.activeinccs} />
     );
-  };
+  });
+  ccSelectNodes.push(
+    <MidiInCCSelect key="add" activedevice={props.activedevice} activeinccs={props.activeinccs} />
+  );
   return (<div className="widget">
-    {controlSelectNodes}
-    <button>+</button>
+    {ccSelectNodes}
   </div>
   )
 };
-var MidiInControlSelect = function(props) {
-  var disabled, selectValue, controlOptNodes=[];
+var MidiInCCSelect = function(props) {
+  var disabled, selectValue, ccOptNodes=[], htmlName;
   disabled = (props.activedevice !== null);
-  selectValue = props.controlNum || 1;
+  selectValue = props.ccNum;
   for (let i=0; i<=127; i++) {
-    controlOptNodes.push(
-      <option key={i} value={i} disabled={props.activecontrols.has(i)}>{i}</option>
+    ccOptNodes.push(
+      <option key={i} value={i} disabled={props.activeinccs.has(i)} >{i}</option>
     );
-  }
-  return (<div className="widget">
-    <label htmlFor="midiInControl">cc </label>
-    <select name="midiInControl-{props.controlNum}" id="midiInControl-{props.controlNum}" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInControl(parseInt(ev.target.value))}>
-      {controlOptNodes}
-    </select>
-    <button>-</button>
-  </div>)
+  };
+  //find a free cc num
+  if (selectValue == undefined) {
+    for (let i=0; props.activeinccs.has(i); i++) {
+      selectValue = i;
+    };
+    htmlName = "midiInCC-new";
+    return (<div className="inactive">
+    <label htmlFor={htmlName}>create cc </label>
+      <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.addMidiInCC(parseInt(ev.target.value))}>
+        {ccOptNodes}
+      </select>
+    </div>);
+  } else {
+    htmlName = "midiInCC-" + props.ccNum;
+    return (<div className="active">
+    <label htmlFor={htmlName}>cc </label>
+      <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.swapMidiInCC(selectValue, parseInt(ev.target.value))}>
+        {ccOptNodes}
+      </select>
+      <button onClick={()=>intents.removeMidiInCC(selectValue)}>
+        -
+      </button>
+    </div>);
+  };
 };
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(
     <MidiInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
-      activecontrols={state.activeincontrols} />,
+      activeinccs={state.activeinccs} />,
     mountpoint);
 };
 
