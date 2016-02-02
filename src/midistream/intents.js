@@ -1,8 +1,5 @@
 'use strict';
 var Rx = require('Rx');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var MidiIn, MidiIn, state, aggregatemidiinstream;
 
 var subjects = {
   selectMidiInDevice: new Rx.Subject(),
