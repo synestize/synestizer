@@ -31,6 +31,8 @@
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "source-map-loader": "^0.1.5",
     "webpack": "^1.12.12"
   }
 }

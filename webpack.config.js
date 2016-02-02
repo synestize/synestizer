@@ -7,11 +7,19 @@ module.exports = {
   ],
 
   output: {
+    publicPath: 'https://flibberty.local/synestizer/',
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },
-
+  devtool: 'eval',
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'source-map-loader'
+      }
+    ],
     loaders: [{
       test: function (filename) {
         if (filename.indexOf('node_modules') !== -1) {
