@@ -5,10 +5,15 @@ title: TODO
 # TODO
 
 * make all panels aspects of the same App state for easier rendering.
-* Revised simpler UI
+* Go to single app object to update all state.
+* workflow
 
-    * MIDI mapping GUI rather than hardcoded controllers
-
+  * http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
+  * http://humaan.com/getting-started-with-webpack-and-react-es6-style/
+  * http://survivejs.com/webpack_react/introduction/
+  * https://christianalfoni.github.io/react-webpack-cookbook/
+  * https://github.com/petehunt/webpack-howto
+  
 * A *patch* should map between
 
     * input params
