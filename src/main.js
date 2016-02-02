@@ -2,7 +2,6 @@
 "use strict";
 
 var Rx = global.Rx = require('Rx');
-var React = global.React = require('react');
 var pureTabs = global.pureTabs = require('./vendor/puretabs/puretabs.js');
 pureTabs.init('tabs-link', 'tabs-link-active');
 
