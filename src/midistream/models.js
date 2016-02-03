@@ -161,14 +161,14 @@ function init() {
       midiinfo = newmidiinfo;
       //will the automatic midi updating work? untested.
       Rx.Observable.fromEvent(midiinfo, 'statechange').subscribe(
-        () => updateMidiHardware(midiinfo)
+        () => updateMidiIO(midiinfo)
       );
-      updateMidiHardware(midiinfo);
+      updateMidiIO(midiinfo);
     },
     (err) => console.debug(err.stack)
   );
 };
-function updateMidiHardware(newmidiinfo) {
+function updateMidiIO(newmidiinfo) {
   var allindevices = new Map();
   var alloutdevices = new Map();
   midiinfo = newmidiinfo;

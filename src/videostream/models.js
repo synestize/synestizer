@@ -6,6 +6,9 @@ var intents = require('./intents');
 var dataStreams = require('../streampatch/models');
 
 var videoDom;
+var videoDomCanvas;
+var videoDomVideo;
+
 //Basic video state
 var state = {
   activeindevice: null,
@@ -15,7 +18,8 @@ var state = {
 var stateStream = new Rx.BehaviorSubject(state);
 //video model updates
 var updateStream = new Rx.Subject();
-var videodevices= new Map();
+var videodevices = new Map();
+var videoworker = null;
 
 //update state object through updateStream
 updateStream.subscribe(function (upd) {
@@ -27,23 +31,25 @@ updateStream.subscribe(function (upd) {
 });
 
 intents.subjects.selectVideoInDevice.subscribe(function(key){
-  var tmp;
+  /******************/
+  /******************/
+  /******************/
   updateStream.onNext({activeindevice:{$set:key}});
-  /******************/
-  /******************/
-  /******************/
 });
 //set up video system
+//We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptuallyf outside the UI, but we need to use DOM methods to access it.
 function init(newVideoDom) {
   videoDom = newVideoDom;
+  videoDomCanvas = videoDom.getElementById('#video-canvas');
+  videoDomVideo = videoDom.getElementById('#video-video');
   Rx.Observable.fromPromise(
     navigator.mediaDevices.enumerateDevices()
   ).subscribe(
-    updateVideoHardware,
+    updateVideoIO,
     (err) => console.debug(err.stack)
   );
 };
-function updateVideoHardware(mediadevices) {
+function updateVideoIO(mediadevices) {
   var allindevices = new Map();
   videodevices = new Map();
   Rx.Observable.from(mediadevices).filter(
