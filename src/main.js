@@ -5,23 +5,18 @@ var Rx = global.Rx = require('Rx');
 var pureTabs = global.pureTabs = require('./vendor/puretabs/puretabs.js');
 pureTabs.init('tabs-link', 'tabs-link-active');
 
-var MidiViews = global.MidiViews = require('./midistream/views');
-var MidiModels = global.MidiModels = require('./midistream/models');
-var StreamPatchModels = global.StreamPatchModels = require('./streampatch/models');
+var AppView = global.AppViews = require('./app/views');
+var AppModels = global.AppModels = require('./app/models');
 
 
 //debug mode:
 Rx.config.longStackSupport = true;
 
-MidiModels.stateStream.subscribe(function (midistate) {
+AppModels.stateStream.subscribe(function (appstate) {
   console.log("renderin");
-  console.log(midistate);
-  MidiViews.renderMidiIn(
-    midistate,
-    document.getElementById('midi-input')
+  console.log(appstate);
+  AppViews.renderApp(
+    appstate,
+    document.getElementById('app')
   );
-  MidiViews.renderMidiOut(
-    midistate,
-    document.getElementById('midi-output')
-  )
 });

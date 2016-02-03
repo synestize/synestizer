@@ -110,11 +110,16 @@ var MidiInCCSelect = function(props) {
     </div>);
   };
 };
+function MidiIn(state) {
+  return (
+    <MidiInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
+      activeccs={state.activeinccs} />
+  );
+};
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(
-    <MidiInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
-      activeccs={state.activeinccs} />,
-    mountpoint);
+    <MidiIn state={state}/>,
+  mountpoint);
 };
 
 
@@ -224,13 +229,17 @@ var MidiOutCCSelect = function(props) {
     </div>);
   };
 };
+function MidiOut(state) {
+  return(
+    <MidiOutSelect activedevice={state.activeoutdevice} alldevices={state.alloutdevices} activechannel={state.activeoutchannel}
+      activeccs={state.activeoutccs} />
+  );
+};
 function renderMidiOut(state, mountpoint) {
   return ReactDOM.render(
-    <MidiOutSelect activedevice={state.activeoutdevice} alldevices={state.alloutdevices} activechannel={state.activeoutchannel}
-      activeccs={state.activeoutccs} />,
+    <MidiOut state={state} />,
     mountpoint);
 };
-
 module.exports = {
   renderMidiIn: renderMidiIn,
   renderMidiOut: renderMidiOut,
