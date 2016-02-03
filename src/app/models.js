@@ -1,4 +1,9 @@
 'use strict';
+
+/*
+ * This holds all state, for saving and loading
+ */
+
 var Rx = require('Rx');
 var MidiModels = global.MidiModels = require('../midistream/models');
 var VideoModels = global.VideoModels = require('../videostream/models');
@@ -11,14 +16,12 @@ var state = {
   patchstate: null,
 };
 
-//midi model state
+//app model state
 var stateStream = new Rx.BehaviorSubject(state);
-//midi model updates
+//app model updates
 var updateStream = new Rx.Subject();
 
 MidiModels.stateStream.subscribe(function (midistate) {
-  console.log("renderinmidi");
-  console.log(midistate);
   state = update(state, {midistate: {$set: midistate}});
   stateStream.onNext(state);
 });
