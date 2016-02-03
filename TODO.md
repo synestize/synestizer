@@ -4,35 +4,38 @@ title: TODO
 
 # TODO
 
-* make all panels aspects of the same App state for easier rendering.
 * Go to single app object to update all state.
+  * make all panels aspects of the same App state for easier rendering.
+* go to ES6 module definitions
 * workflow
-
   * http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
   * http://humaan.com/getting-started-with-webpack-and-react-es6-style/
   * http://survivejs.com/webpack_react/introduction/
   * https://christianalfoni.github.io/react-webpack-cookbook/
   * https://github.com/petehunt/webpack-howto
-  
+  * to get SSL, probably best to create a caddy deploy workflow to some host
+  * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
+
 * A *patch* should map between
 
     * input params
     
         * Video analysis  
-        * MIDI CC in
+        * MIDI CC in [DONE]
         * GUI widgets
         * device sensors
         * other sensors?
-        
           * [Leap Control](https://developer.leapmotion.com/getting-started/javascript)
-          * OpenSoundControl
+        * General websockets?
+        * OpenSoundControl?
     
     * output params
     
       * audio ensemble parameters
       * MIDI CC out
       * OpenSoundControl?
-      
+      * General websockets?
+
     * Patches could have a separate mapping GUI for constructing the mapping
     * Copula-function-based covariance
       
@@ -43,14 +46,7 @@ title: TODO
     * automatic letsencrypt SSL
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
-* smoother workflow to build/deploy app
-
-  * to get SSL, probably best to create a caddy deploy workflow to some host
-
-* Better documentation workflow 
-
-    * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
-   * prettier docs website
+* prettier docs website
 
 * speed improvements
     * web workers
