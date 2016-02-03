@@ -26,6 +26,7 @@
     "react-dom": "^0.14.6",
     "rx": "^4.0.7",
     "rx-react": "^0.3.0",
+    "transducers-js": "^0.4.174",
     "uglify": "^0.1.5"
   },
   "devDependencies": {
