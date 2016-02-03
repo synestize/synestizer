@@ -5,14 +5,17 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../streampatch/models');
 
+var videoDom;
 //Basic video state
 var state = {
   activeindevice: null,
+  allindevices: null,
 };
 //video model state
 var stateStream = new Rx.BehaviorSubject(state);
 //video model updates
 var updateStream = new Rx.Subject();
+var videodevices= new Map();
 
 //update state object through updateStream
 updateStream.subscribe(function (upd) {
@@ -26,51 +29,36 @@ updateStream.subscribe(function (upd) {
 intents.subjects.selectVideoInDevice.subscribe(function(key){
   var tmp;
   updateStream.onNext({activeindevice:{$set:key}});
-  if (videoinfo !==null) {
-    if (rawVideoInSubscription !== undefined) {
-      rawVideoInSubscription.dispose()
-    };
-    rawVideoInSubscription = Rx.Observable.fromEvent(
-      videoinfo.inputs.get(key), 'videomessage'
-    ).subscribe(handleVideoInMessage);
-  }
+  /******************/
+  /******************/
+  /******************/
 });
 //set up video system
-function initVideo() {
+function init(newVideoDom) {
+  videoDom = newVideoDom;
   Rx.Observable.fromPromise(
-    global.navigator.requestMIDIAccess()
+    navigator.mediaDevices.enumerateDevices()
   ).subscribe(
-    function(newvideoinfo) {
-      videoinfo = newvideoinfo;
-      //will the automatic video updating work? untested.
-      Rx.Observable.fromEvent(videoinfo, 'statechange').subscribe(
-        () => updateVideoHardware(videoinfo)
-      );
-      updateVideoHardware(videoinfo);
-    },
+    updateVideoHardware,
     (err) => console.debug(err.stack)
   );
 };
-function updateVideoHardware(newvideoinfo) {
+function updateVideoHardware(mediadevices) {
   var allindevices = new Map();
-  var alloutdevices = new Map();
-  videoinfo = newvideoinfo;
-  //turn the pseudo-Maps in the videoinfo dict into real maps
-  for (var [key, val] of videoinfo.inputs.entries()){
-    allindevices.set(key,val.name)
-  };
-  for (var [key, val] of videoinfo.outputs.entries()){
-    alloutdevices.set(key,val.name)
-  };
+  videodevices = new Map();
+  Rx.Observable.from(mediadevices).filter(
+    (dev) => (dev.kind==="videoinput")
+  ).subscribe(function (dev){
+    videodevices.set(dev.deviceid,dev);
+    videodevices.set(dev.deviceid,dev.label);
+  });
   updateStream.onNext({
     allindevices: {$set: allindevices},
-    alloutdevices: {$set: alloutdevices}
   });
 };
 
-initVideo();
-
 module.exports = {
+  init: init,
   stateStream: stateStream,
   updateStream: updateStream
 };

@@ -153,7 +153,7 @@ intents.subjects.swapMidiOutCC.subscribe(function([i,j]){
 
 
 //set up midi system
-function initMidi() {
+function init() {
   Rx.Observable.fromPromise(
     global.navigator.requestMIDIAccess()
   ).subscribe(
@@ -185,9 +185,8 @@ function updateMidiHardware(newmidiinfo) {
   });
 };
 
-initMidi();
-
 module.exports = {
+  init: init,
   stateStream: stateStream,
   updateStream: updateStream
 };

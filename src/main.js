@@ -12,5 +12,10 @@ var VideoApp = global.VideoApp = require('./videostream/app');
 Rx.config.longStackSupport = true;
 
 MidiApp(
-  document.getElementById('midi-input'), document.getElementById('midi-output')
+  document.getElementById('midi-input'),
+  document.getElementById('midi-output')
+);
+MidiApp(
+  document.getElementById('video-input'),
+  document.getElementById('video-display')
 );

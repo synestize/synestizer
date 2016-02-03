@@ -4,9 +4,10 @@
 var VideoViews = global.VideoViews = require('./views');
 var VideoModels = global.VideoModels = require('./models');
 
-function run(videoinputmountpoint, videooutputmountpoint) {
+function run(videoinputmountpoint, videodisplaymountpoint) {
+  VideoModels.init(videodisplaymountpoint);
   VideoModels.stateStream.subscribe(function (videostate) {
-    console.log("renderin");
+    console.log("renderinvideo");
     console.log(videostate);
     VideoViews.renderVideoIn(
       videostate,

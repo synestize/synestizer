@@ -5,8 +5,9 @@ var MidiViews = global.MidiViews = require('./views');
 var MidiModels = global.MidiModels = require('./models');
 
 function run(midiinputmountpoint, midioutputmountpoint) {
+  MidiModels.init();
   MidiModels.stateStream.subscribe(function (midistate) {
-    console.log("renderin");
+    console.log("renderinmidi");
     console.log(midistate);
     MidiViews.renderMidiIn(
       midistate,
