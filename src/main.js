@@ -15,7 +15,9 @@ MidiApp(
   document.getElementById('midi-input'),
   document.getElementById('midi-output')
 );
-MidiApp(
+/*
+VideoApp(
   document.getElementById('video-input'),
   document.getElementById('video-display')
 );
+*/

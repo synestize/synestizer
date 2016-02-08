@@ -37,7 +37,8 @@ intents.subjects.selectVideoInDevice.subscribe(function(key){
   updateStream.onNext({activeindevice:{$set:key}});
 });
 //set up video system
-//We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptuallyf outside the UI, but we need to use DOM methods to access it.
+//We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptually outside the UI, but we need to use DOM methods to access it; the state of the video is the state of the DOM, but no concern of the React renderer.
+
 function init(newVideoDom) {
   videoDom = newVideoDom;
   videoDomCanvas = videoDom.getElementById('#video-canvas');
