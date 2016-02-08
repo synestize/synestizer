@@ -7,7 +7,7 @@ var model = require('./models');
 var intents = require('./intents');
 
 var MidiInSelect = function(props) {
-  return (<div className="widget">
+  return (<div className="streamcontrolset">
     <h2>Midi In</h2>
     <MidiInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiInChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
@@ -32,7 +32,7 @@ var MidiInDeviceSelect = function(props) {
     selectValue = "none";
     deviceOptNodes = [<option key="none" value="none">none</option>];
   };
-  return (<div>
+  return (<div className="streamchooserwidget">
     <label htmlFor="midiInDevice">Device </label>
     <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInDevice(ev.target.value)}>
       {deviceOptNodes}
@@ -50,7 +50,7 @@ var MidiInChannelSelect = function(props) {
       <option key={i} value={i}>{i}</option>
     );
   };
-  return (<div>
+  return (<div className="streamchooserwidget">
     <label htmlFor="midiInChan">Channel</label>
     <select name="midiInChan" id="midiInChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
@@ -71,7 +71,7 @@ var MidiInCCSetSelect = function(props) {
   ccSelectNodes.push(
     <MidiInCCSelect key="add" activedevice={props.activedevice} activeccs={props.activeccs} />
   );
-  return (<div className="widget">
+  return (<div className="multiwidget">
     {ccSelectNodes}
   </div>
   )
@@ -91,20 +91,20 @@ var MidiInCCSelect = function(props) {
       selectValue = i;
     };
     htmlName = "midiInCC-new";
-    return (<div className="inactive">
-    <label htmlFor={htmlName}>create cc </label>
+    return (<div className="potential streamchooserwidget">
+    <label htmlFor={htmlName}>cc </label>
       <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.addMidiInCC(parseInt(ev.target.value))}>
         {ccOptNodes}
       </select>
     </div>);
   } else {
     htmlName = "midiInCC-" + props.ccNum;
-    return (<div className="active">
+    return (<div className="actual streamchooserwidget">
     <label htmlFor={htmlName}>cc </label>
       <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.swapMidiInCC(selectValue, parseInt(ev.target.value))}>
         {ccOptNodes}
       </select>
-      <button onClick={()=>intents.removeMidiInCC(selectValue)}>
+      <button className="smallaction" onClick={()=>intents.removeMidiInCC(selectValue)}>
         -
       </button>
     </div>);
@@ -119,7 +119,7 @@ function renderMidiIn(state, mountpoint) {
 
 
 var MidiOutSelect = function(props) {
-  return (<div className="widget">
+  return (<div className="streamcontrolset">
     <h2>Midi Out</h2>
     <MidiOutDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiOutChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
@@ -144,7 +144,7 @@ var MidiOutDeviceSelect = function(props) {
     selectValue = "none";
     deviceOptNodes = [<option key="none" value="none">none</option>];
   };
-  return (<div>
+  return (<div className="streamchooserwidget">
     <label htmlFor="midiOutDevice">Device </label>
     <select name="midiOutDevice" id="midiOutDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiOutDevice(ev.target.value)}>
       {deviceOptNodes}
@@ -162,7 +162,7 @@ var MidiOutChannelSelect = function(props) {
       <option key={i} value={i}>{i}</option>
     );
   };
-  return (<div>
+  return (<div className="streamchooserwidget">
     <label htmlFor="midiOutChan">Channel</label>
     <select name="midiOutChan" id="midiOutChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiOutChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
@@ -183,7 +183,7 @@ var MidiOutCCSetSelect = function(props) {
   ccSelectNodes.push(
     <MidiOutCCSelect key="add" activedevice={props.activedevice} activeccs={props.activeccs} />
   );
-  return (<div className="widget">
+  return (<div className="multiwidget">
     {ccSelectNodes}
   </div>
   )
@@ -203,20 +203,20 @@ var MidiOutCCSelect = function(props) {
       selectValue = i;
     };
     htmlName = "midiOutCC-new";
-    return (<div className="inactive">
-    <label htmlFor={htmlName}>create cc </label>
+    return (<div className="potential streamchooserwidget">
+    <label htmlFor={htmlName}>cc</label>
       <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.addMidiOutCC(parseInt(ev.target.value))}>
         {ccOptNodes}
       </select>
     </div>);
   } else {
     htmlName = "midiOutCC-" + props.ccNum;
-    return (<div className="active">
+    return (<div className="actual streamchooserwidget">
     <label htmlFor={htmlName}>cc </label>
       <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.swapMidiOutCC(selectValue, parseInt(ev.target.value))}>
         {ccOptNodes}
       </select>
-      <button onClick={()=>intents.removeMidiOutCC(selectValue)}>
+      <button className="smallaction" onClick={()=>intents.removeMidiOutCC(selectValue)}>
         -
       </button>
     </div>);

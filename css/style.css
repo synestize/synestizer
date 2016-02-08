@@ -167,7 +167,7 @@ a, a:hover, a:active, a:focus {
     padding: 0;
 }
 
-.widget select {
+.streamcontrolset select {
     /* background-color: #f0f; */
     padding: 1px 4px 1px 2px;
     color: #999;
@@ -176,12 +176,28 @@ a, a:hover, a:active, a:focus {
     max-width: 10em;
     height: 1.5em;
 }
-.widget select .option {
+.streamcontrolset select .option {
     min-height: 1ex;
 }
-.widget label{
+.streamcontrolset label {
   display: inline-block;
-  padding-right: 1ex;
+  padding-right: 0.4ex;
+}
+.streamcontrolset button.smallaction {
+  display: inline-block;
+  width: 2.5ex;
+  height: 2.5ex;
+  padding: 0;
+}
+.streamcontrolset .streamchooserwidget {
+  display: inline-block;
+  padding: 1ex;
+}
+.streamcontrolset .potential.streamchooserwidget {
+  font-style: italic;
+}
+.streamcontrolset .potential.streamchooserwidget select option {
+  font-style: italic;
 }
 input[type="number"],
 input[type="number"]:focus {
