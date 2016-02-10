@@ -7,7 +7,7 @@ var model = require('./models');
 var intents = require('./intents');
 
 var VideoInSelect = function(props) {
-  return (<div className="widget">
+  return (<div className="streamcontrolset">
     <h2>Video In</h2>
     <VideoInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
   </div>)
@@ -30,20 +30,22 @@ var VideoInDeviceSelect = function(props) {
     selectValue = "none";
     deviceOptNodes = [<option key="none" value="none">none</option>];
   };
-  return (<div>
-    <label htmlFor="midiInDevice">Device </label>
-    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectVideoInDevice(ev.target.value)}>
+  return (<div className="streamchooserwidget">
+    <label htmlFor="videoInDevice">Device </label>
+    <select name="videoInDevice" id="videoInDevice" className="videoselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectVideoInDevice(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
   )
 };
+
 function renderVideoIn(state, mountpoint) {
   return ReactDOM.render(
     <VideoInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
-      activeccs={state.activeinccs} />,
-    mountpoint);
+      activestats={state.activeinstats} />,
+  mountpoint);
 };
+
 
 module.exports = {
   renderVideoIn: renderVideoIn

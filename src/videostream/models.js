@@ -11,8 +11,8 @@ var videoDomVideo;
 
 //Basic video state
 var state = {
+  allindevices: new Map(),
   activeindevice: null,
-  allindevices: null,
 };
 //video model state
 var stateStream = new Rx.BehaviorSubject(state);
@@ -37,12 +37,12 @@ intents.subjects.selectVideoInDevice.subscribe(function(key){
   updateStream.onNext({activeindevice:{$set:key}});
 });
 //set up video system
-//We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptually outside the UI, but we need to use DOM methods to access it; the state of the video is the state of the DOM, but no concern of the React renderer.
+//We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptually outside the UI, but we need to use DOM methods to access it; the video frames are no concern of the React renderer.
 
 function init(newVideoDom) {
   videoDom = newVideoDom;
-  videoDomCanvas = videoDom.getElementById('#video-canvas');
-  videoDomVideo = videoDom.getElementById('#video-video');
+  videoDomCanvas = videoDom.querySelector('canvas');
+  videoDomVideo = videoDom.querySelector('video');
   Rx.Observable.fromPromise(
     navigator.mediaDevices.enumerateDevices()
   ).subscribe(
@@ -54,10 +54,10 @@ function updateVideoIO(mediadevices) {
   var allindevices = new Map();
   videodevices = new Map();
   Rx.Observable.from(mediadevices).filter(
-    (dev) => (dev.kind==="videoinput")
+    (dev) => ( dev.kind==="videoinput" )
   ).subscribe(function (dev){
-    videodevices.set(dev.deviceid,dev);
-    videodevices.set(dev.deviceid,dev.label);
+    videodevices.set(dev.deviceId,dev);
+    allindevices.set(dev.deviceId,dev.label);
   });
   updateStream.onNext({
     allindevices: {$set: allindevices},
