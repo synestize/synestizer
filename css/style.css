@@ -71,17 +71,21 @@ a, a:hover, a:active, a:focus {
   z-index: -1;
 }
 
-#video {
-    -webkit-transform: scaleX(1);
-    -moz-transform: scaleX(1);
-    position: fixed;
+#video-video {
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  position: fixed;
+  display: block;
+  margin: 0 0 0 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
-/* this will be resized by the media.js - so ignore! */
-#canvas {
-    width: 128px;
-    height: 128px;
-    display: none;
+#video-canvas {
+  width: 64px;
+  height: 64px;
+  display: none;
+  position: absolute;
 }
 
 #logo {

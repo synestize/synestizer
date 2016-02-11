@@ -28,3 +28,6 @@ If you want to get a genuinely private version you will have to do a little more
 * *For Windows users with IIS* it's [medium complicated](http://weblogs.asp.net/scottgu/tip-trick-enabling-ssl-on-iis7-using-self-signed-certificates)
 * *For Linux users* the Mac users' instructions will work if you happen to be using Apache httpd, but if you are using one of the many other web servers, you will have to look it up. [you can cheat, though](https://github.com/Daplie/localhost.daplie.com-certificates)
 
+NOTE FOR USERS OF CHROME BETA VERSIONS:
+
+Chrome version 50 seems to have no getUserMedia API by default. What that means is that to access video you have to manually turning it on by clicking [enable experimental web platform features](chrome://flags/#enable-experimental-web-platform-features).
