@@ -7,7 +7,7 @@ module.exports = {
   ],
 
   output: {
-    publicPath: 'https://flibberty.local/synestizer/',
+    publicPath: 'https://flibberty.local/synestizer/js/',
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },

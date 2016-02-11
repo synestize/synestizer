@@ -18,14 +18,39 @@ var updateStream = new Rx.Subject();
 var videoindevices = new Map(); //id -> device
 var videoindevice; //device
 
-var videoworker = null;
+var Videoworker_ = require('worker!./videoworker');
+var videoworker =  Videoworker_();
+console.debug("vw",videoworker);
+window.videoworker = videoworker;
+window.Videoworker_ = Videoworker_;
+
 var videoDom;
-var videoDomCanvas;
-var videoDomVideo;
+var canvasElem;
+var videoElem;
 var gfxCtx;
 
 //our stream of pixel arrays
-var pixelStream = new Rx.Subject();
+var statsInbox = Rx.Observer.create(
+  function (data) {
+    console.debug("really shunting data now", data);
+    videoworker.postMessage(data);
+  }
+);
+var statsOutbox = Rx.Observable.create(function (obs) {
+    videoworker.onmessage = function (data) {
+        obs.onNext(data);
+    };
+    videoworker.onerror = function (err) {
+        obs.onError(err);
+    };
+    return function () {
+        videoworker.close();
+    };
+});
+var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
+
+console.debug("vw2",videoworker);
+
 //the browser's opaque media streams which we will need to process into pixel arrays
 var mediaStream;
 
@@ -48,20 +73,20 @@ intents.subjects.selectVideoInDevice.subscribe(function(key){
 
 function doVideoPlumbing(key) {
   videoindevice = videoindevices.get(key);
-  videoDomCanvas.width = PIXELDIM;
-  videoDomCanvas.height = PIXELDIM;
+  canvasElem.width = PIXELDIM;
+  canvasElem.height = PIXELDIM;
   
   Rx.Observable.fromPromise(
     navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
   ).subscribe(function(mediaStream) {
     //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
     Rx.Observable.fromEvent(
-      videoDomVideo, "loadedmetadata").subscribe(pumpPixels);
-    videoDomVideo.src = window.URL.createObjectURL(mediaStream);
-    videoDomVideo.play();
+      videoElem, "loadedmetadata").subscribe(pumpPixels);
+    videoElem.src = window.URL.createObjectURL(mediaStream);
+    videoElem.play();
   });
   
-  gfxCtx = videoDomCanvas.getContext('2d');
+  gfxCtx = canvasElem.getContext('2d');
 }
 
 function grabPixels() {
@@ -73,8 +98,8 @@ function grabPixels() {
   although it may also return nonsense for the first few frames.
   so we only do this on the loadedmetadata event,
   */
-  vw = vidElem.videoWidth;
-  vh = vidElem.videoHeight;
+  vw = videoElem.videoWidth;
+  vh = videoElem.videoHeight;
   //so once again we guess!
   vAspect = vw/vh;
   vsize = Math.min(vw, vh);
@@ -94,7 +119,7 @@ function grabPixels() {
     //slice a square section out of the video
     //looks a bit sqished on my laptop, but whatever.
     gfxCtx.drawImage(
-        vidElem,
+        videoElem,
         xoffset, yoffset, xoffset+vsize, yoffset+vsize,
         0, 0, PIXELDIM, PIXELDIM
     );
@@ -106,14 +131,22 @@ function grabPixels() {
   }
 }
 function pumpPixels() {
-  pixelStream.onNext(grabPixels())
+  let p = grabPixels();
+  console.debug("pumpPixels", p);
+  statsInbox.onNext(p)
 }
+
+function updateStats () {
+  
+}
+
+
 function init(newVideoDom) {
   //set up video system
   //We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptually outside the UI, but we need to use DOM methods to access it; the video frames are no concern of the React renderer.
   videoDom = newVideoDom;
-  videoDomCanvas = videoDom.querySelector('canvas');
-  videoDomVideo = videoDom.querySelector('video');
+  canvasElem = videoDom.querySelector('canvas');
+  videoElem = videoDom.querySelector('video');
   Rx.Observable.fromPromise(
     navigator.mediaDevices.enumerateDevices()
   ).subscribe(
@@ -136,7 +169,6 @@ function updateVideoIO(mediadevices) {
   updateStream.onNext({
     allindevices: {$set: allindevices},
   });
-  window.videoindevices = videoindevices;
   //If there is only one device, select it.
   if (allindevices.size===1) {
     for (let key of allindevices.keys()) {intents.selectVideoInDevice(key)}
