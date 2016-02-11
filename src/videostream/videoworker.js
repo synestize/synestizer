@@ -1,7 +1,14 @@
 'use strict';
-console.debug("startworker", e);
 
-onmessage = function(e) {
+var Rx = require('Rx');
+
+var inbox = Rx.Observable.fromEvent(self, "message");
+var outbox = new Rx.Subject();
+var calcState = new Map();
+var statistics = new Map();
+
+inbox.subscribe(function(e) {
   console.debug("worker", e);
-  self.postMessage(e.data);
-};
+  
+});
+outbox.subscribe((msg)=>self.postMessage(msg));
