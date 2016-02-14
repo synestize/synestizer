@@ -2,12 +2,14 @@
 
 function AverageColor(params) {
     //1/8 sub-sampled average color
-    var PIXELDIM=64; //64x64 grid is all we use.
+    params = params || {};
+
+    var PIXELDIM=params.PIXELDIM || 64; //64x64 grid is all we use.
     var PIXELCOUNT=PIXELDIM*PIXELDIM;
     params = params || {};
     var out = new Float32Array(3);
     var R=0, G=1, B=2;
-    function calc(pixels, state) {
+    function calc(pixels) {
         out[R] = 0;
         out[G] = 0;
         out[B] = 0;
@@ -24,6 +26,7 @@ function AverageColor(params) {
         return out;
     }
     calc.nDims = 3;
+    calc.nState = 3;
     return calc;
 };
 function PluginMoments(params) {
@@ -32,23 +35,25 @@ function PluginMoments(params) {
     // a.k.a. mean and covariance
     // TODO: check that all variances are correctly normalised
     // Occasionally they seem to be outside of [0,1]
-    var PIXELDIM=64; //64x64 grid is all we use.
+    params = params || {};
+
+    var PIXELDIM=params.PIXELDIM || 64; //64x64 grid is all we use.
     var PIXELCOUNT=PIXELDIM*PIXELDIM;
     var rawSums, centralMoments, cookedMoments, ysvij;
     var nDims=15;
+    var nState=15;
     // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
     // This is very confusing.
     var Y=0, S=1, V=2;
     var IY=3, IS=4, IV=5;
     var JY=6, JS=7, JV=8;
     var YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
-    params = params || {};
     
     rawSums = new Float32Array(nDims);
     centralMoments = new Float32Array(nDims);
     cookedMoments = new Float32Array(nDims);
     ysvij = new Float32Array(5);
-    function calc(pixels, state) {
+    function calc(pixels) {
         for (var i = 0; i < nDims; i++) {
             rawSums[i]=0.0;
         }            
@@ -159,6 +164,7 @@ function PluginMoments(params) {
         return cookedMoments;
     };
     calc.nDims = nDims;
+    calc.nState = nState;
     return calc;
 };
 module.exports = new Map([

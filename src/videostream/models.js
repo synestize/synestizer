@@ -45,11 +45,11 @@ var statsInbox = Rx.Observer.create(
   }
 );
 var statsOutbox = Rx.Observable.create(function (obs) {
-    videoworker.onmessage = function (data) {
-        obs.onNext(data);
+    videoworker.onmessage = function (e) {
+        obs.onNext(e.data);
     };
     videoworker.onerror = function (err) {
-        obs.onError(err);
+        obs.onError(e.err);
     };
     return function () {
         videoworker.close();
@@ -57,7 +57,17 @@ var statsOutbox = Rx.Observable.create(function (obs) {
 });
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
-
+statsSubject.subscribe(function(x){
+  console.debug("got stuff back",x);
+  //report data streams
+  //
+  //Now repeat
+  Rx.Scheduler.default.scheduleFuture(
+    null,
+    20,
+    pumpPixels
+  );
+});
 //the browser's opaque media streams which we will need to process into pixel arrays
 var mediaStream;
 
@@ -66,8 +76,7 @@ const PIXELDIM=64
 statsInbox.onNext({
   topic: "settings",
   payload: {
-    PIXELDIM: PIXELDIM,
-    statistics: new Map([["PluginMoments", {}]])
+    statistics: new Map([["PluginMoments", {PIXELDIM: PIXELDIM}]])
   }
 });
 
