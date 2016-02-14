@@ -57,58 +57,23 @@ var MidiInChannelSelect = function(props) {
     </select>
   </div>)
 };
+
 var MidiInCCSetSelect = function(props) {
-  var disabled, selectValue, ccSelectNodes, sorted;
-  ccSelectNodes = [];
-  disabled = (props.activedevice !== null);
-  // sort by numerical value of cc
-  sorted = Array.from(props.activeccs).sort((a,b)=>a-b);
-  sorted.forEach(function(ccNum) {
-    ccSelectNodes.push(
-      <MidiInCCSelect ccNum={ccNum} key={ccNum} activedevice={props.activedevice} activeccs={props.activeccs} />
-    );
-  });
-  ccSelectNodes.push(
-    <MidiInCCSelect key="add" activedevice={props.activedevice} activeccs={props.activeccs} />
-  );
-  return (<div className="multiwidget">
-    {ccSelectNodes}
-  </div>
-  )
-};
-var MidiInCCSelect = function(props) {
   var disabled, selectValue, ccOptNodes=[], htmlName;
   disabled = (props.activedevice !== null);
-  selectValue = props.ccNum;
   for (let i=0; i<=127; i++) {
     ccOptNodes.push(
-      <option key={i} value={i} disabled={props.activeccs.has(i)} >{i}</option>
+      <option key={i} value={i}>{i}</option>
     );
   };
-  //find a free cc num
-  if (selectValue == undefined) {
-    for (let i=0; props.activeccs.has(i); i++) {
-      selectValue = i;
-    };
-    htmlName = "midiInCC-new";
-    return (<div className="potential streamchooserwidget">
-    <label htmlFor={htmlName}>cc </label>
-      <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.addMidiInCC(parseInt(ev.target.value))}>
-        {ccOptNodes}
-      </select>
-    </div>);
-  } else {
-    htmlName = "midiInCC-" + props.ccNum;
-    return (<div className="actual streamchooserwidget">
-    <label htmlFor={htmlName}>cc </label>
-      <select name={htmlName} id={htmlName} className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.swapMidiInCC(selectValue, parseInt(ev.target.value))}>
-        {ccOptNodes}
-      </select>
-      <button className="smallaction" onClick={()=>intents.removeMidiInCC(selectValue)}>
-        -
-      </button>
-    </div>);
-  };
+  console.debug("vvv",Array.from(props.activeccs.values()));
+  htmlName = "midiInCCSet";
+  return (<div className="actual streamchooserwidget">
+  <label htmlFor={htmlName}>ccs </label>
+    <select name={htmlName} multiple={true} id={htmlName} value={Array.from(props.activeccs.values())} className="midiselect" disable={disabled} onChange={(ev) => intents.setMidiInCC(selectValue, ev.target.value)}>
+      {ccOptNodes}
+    </select>
+  </div>);
 };
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(

@@ -7,6 +7,7 @@ var subjects = {
   addMidiInCC: new Rx.Subject(),
   removeMidiInCC: new Rx.Subject(),
   swapMidiInCC: new Rx.Subject(),
+  setMidiInCC: new Rx.Subject(),
   selectMidiOutDevice: new Rx.Subject(),
   selectMidiOutChannel: new Rx.Subject(),
   addMidiOutCC: new Rx.Subject(),
@@ -18,6 +19,7 @@ var selectMidiInChannel = (i) => subjects.selectMidiInChannel.onNext(i);
 var addMidiInCC = (i) => subjects.addMidiInCC.onNext(i);
 var removeMidiInCC = (i) => subjects.removeMidiInCC.onNext(i);
 var swapMidiInCC = (i, j) => subjects.swapMidiInCC.onNext([i,j]);
+var setMidiInCC = (a) => subjects.setMidiInCC.onNext(a);
 var selectMidiOutDevice = (key) => subjects.selectMidiOutDevice.onNext(key);
 var selectMidiOutChannel = (i) => subjects.selectMidiOutChannel.onNext(i);
 var addMidiOutCC = (i) => subjects.addMidiOutCC.onNext(i);
@@ -31,6 +33,7 @@ module.exports = {
   addMidiInCC: addMidiInCC,
   removeMidiInCC: removeMidiInCC,
   swapMidiInCC: swapMidiInCC,
+  setMidiInCC: setMidiInCC,
   selectMidiOutDevice: selectMidiOutDevice,
   selectMidiOutChannel: selectMidiOutChannel,
   addMidiOutCC: addMidiOutCC,
