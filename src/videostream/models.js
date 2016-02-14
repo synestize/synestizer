@@ -20,7 +20,7 @@ var videoindevice; //device
 
 var Videoworker_ = require('worker!./videoworker');
 var videoworker =  Videoworker_();
-console.debug("vw",videoworker);
+//console.debug("vw",videoworker);
 window.videoworker = videoworker;
 window.Videoworker_ = Videoworker_;
 
@@ -58,7 +58,7 @@ var statsOutbox = Rx.Observable.create(function (obs) {
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
 statsSubject.subscribe(function(x){
-  console.debug("got stuff back",x);
+  //console.debug("got stuff back",x);
   //report data streams
   //
   //Now repeat
@@ -155,7 +155,7 @@ function grabPixels() {
 }
 function pumpPixels() {
   let p = grabPixels();
-  console.debug("pumpPixels", p);
+  //console.debug("pumpPixels", p);
   statsInbox.onNext({topic:"pixels", payload: p})
 }
 

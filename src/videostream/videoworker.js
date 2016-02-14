@@ -11,7 +11,7 @@ var results = new Map();
 outbox.subscribe((msg)=>self.postMessage(msg));
 
 inbox.where((x)=>(x.topic==="settings")).subscribe(function(data) {
-  console.debug("settings", data.topic, data.payload);
+  //console.debug("settings", data.topic, data.payload);
   // calcState = new Map();
   statistics = new Map();
   for (var [statisticKey, params] of data.payload.statistics.entries()) {
@@ -21,7 +21,7 @@ inbox.where((x)=>(x.topic==="settings")).subscribe(function(data) {
   }
 });
 inbox.where((x)=>(x.topic==="pixels")).subscribe(function(data) {
-  console.debug("workerpixels", data.topic, data.payload);
+  //console.debug("workerpixels", data.topic, data.payload);
   for (var [statisticKey, statFn] of statistics.entries()) {
     results.set(statisticKey, statFn(data.payload));
   };
