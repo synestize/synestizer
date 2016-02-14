@@ -7,7 +7,7 @@ function AverageColor(params) {
     params = params || {};
     var out = new Float32Array(3);
     var R=0, G=1, B=2;
-    function calc(pixels) {
+    function calc(pixels, state) {
         out[R] = 0;
         out[G] = 0;
         out[B] = 0;
@@ -48,7 +48,7 @@ function PluginMoments(params) {
     centralMoments = new Float32Array(nDims);
     cookedMoments = new Float32Array(nDims);
     ysvij = new Float32Array(5);
-    function calc(pixels) {
+    function calc(pixels, state) {
         for (var i = 0; i < nDims; i++) {
             rawSums[i]=0.0;
         }            
@@ -161,7 +161,7 @@ function PluginMoments(params) {
     calc.nDims = nDims;
     return calc;
 };
-module.exports = {
-  PluginMoments: PluginMoments,
-  AverageColor: AverageColor,
-}
+module.exports = new Map([
+  ["PluginMoments", PluginMoments],
+  ["AverageColor", AverageColor]
+]);

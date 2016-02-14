@@ -32,8 +32,16 @@ var gfxCtx;
 //our stream of pixel arrays
 var statsInbox = Rx.Observer.create(
   function (data) {
-    console.debug("really shunting data now", data);
-    videoworker.postMessage(data);
+    /*
+     * Dasta looks like {topic:"pixels", payload: [1,2,3,...]}
+     */
+    //this should do transfer of arrays to save time
+    let payload = data.payload;
+    if (payload.buffer !== undefined) {
+      videoworker.postMessage(data, [payload.buffer]);
+    } else {
+      videoworker.postMessage(data);
+    }
   }
 );
 var statsOutbox = Rx.Observable.create(function (obs) {
@@ -49,13 +57,19 @@ var statsOutbox = Rx.Observable.create(function (obs) {
 });
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
-console.debug("vw2",videoworker);
 
 //the browser's opaque media streams which we will need to process into pixel arrays
 var mediaStream;
 
 const PIXELDIM=64
 
+statsInbox.onNext({
+  topic: "settings",
+  payload: {
+    PIXELDIM: PIXELDIM,
+    statistics: new Map([["PluginMoments", {}]])
+  }
+});
 
 //update state object through updateStream
 updateStream.subscribe(function (upd) {
@@ -133,7 +147,7 @@ function grabPixels() {
 function pumpPixels() {
   let p = grabPixels();
   console.debug("pumpPixels", p);
-  statsInbox.onNext(p)
+  statsInbox.onNext({topic:"pixels", payload: p})
 }
 
 function updateStats () {
