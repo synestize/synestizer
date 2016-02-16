@@ -57,10 +57,10 @@ var statsOutbox = Rx.Observable.create(function (obs) {
 });
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
-statsSubject.subscribe(function(x){
+statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
   //console.debug("got stuff back",x);
   //report data streams
-  //
+  statsStreamPublish(x.payload);
   //Now repeat
   Rx.Scheduler.default.scheduleFuture(
     null,
@@ -68,6 +68,14 @@ statsSubject.subscribe(function(x){
     pumpPixels
   );
 });
+function statsStreamPublish(x) {
+  for (var [key, data] of x) {
+    for (var [index, value] of data.entries()) {
+    //console.log("video-" + key + "-" + index +  ", " + value);
+  }
+}
+  //console.debug(x);
+}
 //the browser's opaque media streams which we will need to process into pixel arrays
 var mediaStream;
 

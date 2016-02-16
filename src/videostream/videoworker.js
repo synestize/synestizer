@@ -25,6 +25,9 @@ inbox.where((x)=>(x.topic==="pixels")).subscribe(function(data) {
   for (var [statisticKey, statFn] of statistics.entries()) {
     results.set(statisticKey, statFn(data.payload));
   };
-  outbox.onNext(results);
+  outbox.onNext({
+    topic: "results",
+    payload: results
+  });
 });
 
