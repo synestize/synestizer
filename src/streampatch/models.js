@@ -5,35 +5,94 @@
 
 var Rx = require('Rx');
 var update = require('react-addons-update');
+var intents = require('./intents');
 
-var inputDataState = new Map();
-var inputDataStreamStateSubject = new Rx.BehaviorSubject(inputDataState);
-var inputDataStreamChangeSubject = new Rx.Subject();
-var outputDataState = new Map();
-var outputDataStreamStateSubject = new Rx.BehaviorSubject(outputDataState);
-var outputDataStreamChangeSubject = new Rx.Subject();
+// State as far as UI is concerned
+var sourceState = new Map();
+window.sourceState = sourceState;
+var sinkState = new Map();
+window.sinkState = sinkState;
 
-inputDataStreamChangeSubject.subscribe(
-  function ([key, val]) {
-    let upd = {};
-    upd[key] = {$set: val};
-    inputDataState = update(inputDataState, upd);
-    inputDataStreamStateSubject.onNext(inputDataState);
+//should throttle these ones
+var sourceStateSubject = new Rx.BehaviorSubject(sourceState);
+var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
+
+// internal state is more high speed
+var sourceFirehoses = new Map();
+var sinkFirehoses = new Map();
+var sourceSinkMapping = new Map();
+
+function registerSource(key, observable){
+  sourceFirehoses.set(key, observable);
+  observable.subscribe(
+    function ([key, val]) {
+      let upd = {};
+      upd[key] = {$set: val};
+      sourceState = update(sourceState, upd);
+      window.sourceState = sourceState;
+      sourceStateSubject.onNext(sourceState);
+    }
+  );
+}
+function registerSink(key, observer){
+  let subject = new Rx.Subject();
+  sinkFirehoses.set(key, subject);
+  subject.subscribe(
+    function ([key, val]) {
+      let upd = {};
+      upd[key] = {$set: val};
+      sinkState = update(sinkState, upd);
+      sinkStateSubject.onNext(sinkState);
+    }
+  );
+  subject.subscribe(observer);
+}
+function setSourceAddressesFor(key, addressList){
+  console.debug("ss", key, addressList);
+  for (let address of sourceState.keys()) {
+    if (address[0]==key && !addressList.has(address)) {
+      console.debug("ssd", key, address);
+      sourceState.delete(address)
+    }
   }
-);
-
-outputDataStreamChangeSubject.subscribe(
-  function ([key, val]) {
-    let upd = {};
-    upd[key] = {$set: val};
-    outputDataState = update(outputDataState, upd);
-    outputDataStreamStateSubject.onNext(outputDataState);
+  let extantAddresses = new Set(sourceState.keys());
+  for (let address of addressList) {
+    if (!extantAddresses.has(address)) {
+      console.debug("ssa", key, address);
+      sourceState.set(address, 0.0);
+      console.debug("ssb", sourceState.get(address));
+    }
   }
-);
+  sourceStateSubject.onNext(sourceState);
+  console.debug("ssc", sourceState, window.sourceState);
+}
+function setSinkAddressesFor(key, addressList){
+  for (let address of sinkState.keys()) {
+    if (address[0]==key) {sinkState.delete(address)}
+  }
+  for (let address of addressList) {
+    sinkState.set(address, null)
+  }
+}
+function addSourceAddress(address){}
+function removeSourceAddress(address){}
+function addSinkAddress(address){}
+function removeSinkAddress(address){}
+function setMapping(sourceKey, sinkKey, scale){}
+
 
 module.exports = {
-  inputDataStreamStateSubject: inputDataStreamStateSubject,
-  inputDataStreamChangeSubject: inputDataStreamChangeSubject,
-  outputDataStreamStateSubject: outputDataStreamStateSubject,
-  outputDataStreamChangeSubject: outputDataStreamChangeSubject
+  sourceStateSubject: sourceStateSubject,
+  sourceFirehoses: sourceFirehoses,
+  sinkStateSubject: sinkStateSubject,
+  sinkFirehoses: sinkFirehoses,
+  registerSource: registerSource,
+  registerSink: registerSink,
+  setSourceAddressesFor: setSourceAddressesFor,
+  setSinkAddressesFor: setSinkAddressesFor,
+  addSourceAddress: addSourceAddress,
+  removeSourceAddress: removeSourceAddress,
+  addSinkAddress: addSinkAddress,
+  removeSinkAddress: removeSourceAddress,
+  setMapping: setMapping
 };

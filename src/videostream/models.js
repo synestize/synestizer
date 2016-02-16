@@ -4,8 +4,9 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../streampatch/models');
+var Statistic = require('./statistic');
 
-//Basic video state
+//Basic video UI state
 var state = {
   allindevices: new Map(), //id-> device name map
   activeindevice: null, //id
@@ -15,9 +16,14 @@ var stateStream = new Rx.BehaviorSubject(state);
 //video model updates
 var updateStream = new Rx.Subject();
 
+//streams
+var videoSourceFirehose = new Rx.Subject()
+
+//hardware business
 var videoindevices = new Map(); //id -> device
 var videoindevice; //device
 
+//worker thread business
 var Videoworker_ = require('worker!./videoworker');
 var videoworker =  Videoworker_();
 //console.debug("vw",videoworker);
@@ -60,7 +66,7 @@ var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
   //console.debug("got stuff back",x);
   //report data streams
-  statsStreamPublish(x.payload);
+  statsStreamSpray(x.payload);
   //Now repeat
   Rx.Scheduler.default.scheduleFuture(
     null,
@@ -68,15 +74,17 @@ statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
     pumpPixels
   );
 });
-function statsStreamPublish(x) {
+function statsStreamSpray(x) {
   for (var [key, data] of x) {
     for (var [index, value] of data.entries()) {
-    //console.log("video-" + key + "-" + index +  ", " + value);
+      videoSourceFirehose.onNext(
+        [["video", key, index], value]
+      )
+      //console.log("video-" + key + "-" + index +  ", " + value);
+    }
   }
 }
-  //console.debug(x);
-}
-//the browser's opaque media streams which we will need to process into pixel arrays
+//the browser's opaque media stream which we will need to process into pixel array streams
 var mediaStream;
 
 const PIXELDIM=64
@@ -87,7 +95,15 @@ statsInbox.onNext({
     statistics: new Map([["PluginMoments", {PIXELDIM: PIXELDIM}]])
   }
 });
-
+function publishSources() {
+  let addresses = new Set();
+  for (let idx=0; idx<Statistic.get("PluginMoments").nDim; idx++) {
+    addresses.add(
+      ["video", "PluginMoments", idx]
+    );
+  };
+  dataStreams.setSourceAddressesFor("video", addresses);
+};
 //update state object through updateStream
 updateStream.subscribe(function (upd) {
   var newState;
@@ -167,11 +183,6 @@ function pumpPixels() {
   statsInbox.onNext({topic:"pixels", payload: p})
 }
 
-function updateStats () {
-  
-}
-
-
 function init(newVideoDom) {
   //set up video system
   //We do touch the DOM here, despite this being the "models" section, because the video *stream* is conceptually outside the UI, but we need to use DOM methods to access it; the video frames are no concern of the React renderer.
@@ -205,6 +216,8 @@ function updateVideoIO(mediadevices) {
     for (let key of allindevices.keys()) {intents.selectVideoInDevice(key)}
   }
 };
+dataStreams.registerSource("video", videoSourceFirehose);
+publishSources();
 
 module.exports = {
   init: init,
