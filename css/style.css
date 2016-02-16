@@ -180,6 +180,9 @@ a, a:hover, a:active, a:focus {
     max-width: 10em;
     height: 1.5em;
 }
+.streamcontrolset select[multiple] {
+  height: auto;
+}
 .streamcontrolset select .option {
     min-height: 1ex;
 }

@@ -115,9 +115,12 @@ intents.subjects.swapMidiInCC.subscribe(function([i,j]){
   var newccs = state.activeinccs;
   newccs.delete(i);
   newccs.add(j);
-  updateStream.onNext({activeinccs:{$set:newccs.add(j)}});
+  updateStream.onNext({activeinccs:{$set:newccs}});
 });
-
+intents.subjects.setMidiInCC.subscribe(function(a){
+  var newccs = new Set(a);
+  updateStream.onNext({activeinccs:{$set:newccs}});
+});
 intents.subjects.selectMidiOutDevice.subscribe(function(key){
   var tmp;
   updateStream.onNext({activeoutdevice:{$set:key}});
@@ -148,7 +151,11 @@ intents.subjects.swapMidiOutCC.subscribe(function([i,j]){
   var newccs = state.activeoutccs;
   newccs.delete(i);
   newccs.add(j);
-  updateStream.onNext({activeoutccs:{$set:newccs.add(j)}});
+  updateStream.onNext({activeoutccs:{$set:newccs}});
+});
+intents.subjects.setMidiOutCC.subscribe(function(a){
+  var newccs = new Set(a);
+  updateStream.onNext({activeoutccs:{$set:newccs}});
 });
 
 
