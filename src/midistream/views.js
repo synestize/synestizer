@@ -18,19 +18,18 @@ var MidiInDeviceSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
+  deviceOptNodes = [<option key="none" value="none">none</option>];
   if ((props.alldevices.size>0)) {
     disabled=false;
-    selectValue = props.activedevice;
-    deviceOptNodes = [];
+    selectValue = props.activedevice || "none";
     for (var [key, devicename] of props.alldevices.entries()) {
       deviceOptNodes.push(
         <option key={key} value={key}>{devicename}</option>
       )
     };
   } else {
-    disabled = true;
     selectValue = "none";
-    deviceOptNodes = [<option key="none" value="none">none</option>];
+    disabled = true;
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiInDevice">Device </label>
@@ -99,10 +98,11 @@ var MidiOutDeviceSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
+  deviceOptNodes = [<option key="none" value="none">none</option>];
+
   if ((props.alldevices.size>0)) {
     disabled=false;
     selectValue = props.activedevice;
-    deviceOptNodes = [];
     for (var [key, devicename] of props.alldevices.entries()) {
       deviceOptNodes.push(
         <option key={key} value={key}>{devicename}</option>
@@ -111,7 +111,6 @@ var MidiOutDeviceSelect = function(props) {
   } else {
     disabled = true;
     selectValue = "none";
-    deviceOptNodes = [<option key="none" value="none">none</option>];
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiOutDevice">Device </label>
