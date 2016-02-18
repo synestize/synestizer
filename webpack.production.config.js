@@ -12,11 +12,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
+    /*new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       screw_ie8 : true,
       mangle: false
-    })
+    })*/
   ],
   module: {
     preLoaders: [

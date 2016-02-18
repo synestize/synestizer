@@ -4,9 +4,11 @@ title: TODO
 
 # TODO
 
+* UI improvements
+  * default to active MIDI
+  * MIDI out solo button
 * Go to single app object to update all state.
   * make all panels aspects of the same App state for easier rendering.
-* go to ES6 module definitions
 * workflow
   * http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
   * http://humaan.com/getting-started-with-webpack-and-react-es6-style/
@@ -14,6 +16,7 @@ title: TODO
   * https://christianalfoni.github.io/react-webpack-cookbook/
   * https://github.com/petehunt/webpack-howto
   * to get SSL, probably best to create a caddy deploy workflow to some host
+  * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't seem to support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
   * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
 
 * A *patch* should map between
@@ -49,8 +52,5 @@ title: TODO
 * prettier docs website
 
 * speed improvements
-    * web workers
-        * [web worker background](http://www.html5rocks.com/en/tutorials/workers/basics/)
-        * [you can pass arrays to web workers]( http://updates.html5rocks.com/2011/12/Transferable-Objects-Lightning-Fast)
-        * [you can pass canvas to web workers](          http://www.w3.org/html/wg/drafts/html/master/scripting-1.html#transferCanvasProxy)
-    * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
+
+  * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
