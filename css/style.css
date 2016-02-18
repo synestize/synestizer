@@ -31,7 +31,7 @@ a, a:hover, a:active, a:focus {
   display: flex;
   flex-direction: column;
   /*background opacity */
-  background-color: background-color:rgba(16,16,16,0.5);;
+  background-color:rgba(16,16,16,0.5);;
 }
 #controlpanels > nav ul.tabs {
   display: flex;
