@@ -11,7 +11,13 @@ module.exports = {
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },
-  devtool: 'eval',
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      screw_ie8 : true,
+      mangle: false
+    })
+  ],
   module: {
     preLoaders: [
       {

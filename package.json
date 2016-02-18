@@ -7,8 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "webpack --optimize-minimize --optimize-occurence-order",
-    "watch": "webpack --progress --colors --watch --devtool eval-cheap-module-source-map --debug --output-pathinfo"
+    "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
+    "dev": "webpack-dev-server  --progress --colors",
+    "deploy": "NODE_ENV=production webpack -p  --optimize-minimize --optimize-occurence-order --config webpack.production.config.js"
   },
   "repository": {
     "type": "git",
@@ -16,9 +17,13 @@
   },
   "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
   "license": "GPL-3.0",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "immutable": "^3.7.6",
     "install": "^0.4.1",
     "npm": "^3.5.3",
@@ -26,14 +31,9 @@
     "react-dom": "^0.14.6",
     "rx": "^4.0.7",
     "rx-react": "^0.3.0",
-    "transducers-js": "^0.4.174",
-    "uglify": "^0.1.5"
-  },
-  "devDependencies": {
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
-    "extract-text-webpack-plugin": "^1.0.1",
     "source-map-loader": "^0.1.5",
+    "transducers-js": "^0.4.174",
+    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "webpack": "^1.12.12",
     "worker-loader": "^0.7.0"
   }
