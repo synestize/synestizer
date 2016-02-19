@@ -23,8 +23,8 @@ title: TODO
 
     * input params
     
-        * Video analysis  
-        * MIDI CC in [DONE]
+        * Video analysis
+        * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)
         * GUI widgets
         * device sensors
         * other sensors?
