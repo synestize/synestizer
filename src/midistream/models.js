@@ -163,15 +163,7 @@ intents.subjects.setMidiInCC.subscribe(function(a){
   publishSources();
 });
 intents.subjects.selectMidiOutDevice.subscribe(function(key){
-  updateStream.onNext({activeoutdevice:{$set:key}});
-  if (midiinfo !==null) {
-    if (rawMidiOutSubscription !== undefined) {
-      rawMidiInSubscription.dispose()
-    };
-    rawMidiInSubscription = Rx.Observable.fromEvent(
-      midiinfo.outputs.get(key), 'midimessage'
-    ).subscribe(handleMidiOutMessage);
-  }
+  updateSubject.onNext({activeoutdevice:{$set:key}});
   publishSinks();
 });
 intents.subjects.selectMidiOutChannel.subscribe(function(i){
