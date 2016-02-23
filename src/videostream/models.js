@@ -12,9 +12,9 @@ var state = {
   activeindevice: null, //id
 };
 //video model state
-var stateStream = new Rx.BehaviorSubject(state);
+var stateSubject = new Rx.BehaviorSubject(state);
 //video model updates
-var updateStream = new Rx.Subject();
+var updateSubject = new Rx.Subject();
 
 //streams
 var videoSourceFirehose = new Rx.Subject()
@@ -104,18 +104,18 @@ function publishSources() {
   };
   dataStreams.setSourceAddressesFor("video", addresses);
 };
-//update state object through updateStream
-updateStream.subscribe(function (upd) {
+//update state object through updateSubject
+updateSubject.subscribe(function (upd) {
   var newState;
   newState = update(state, upd);
   //could use an immutable update cycle Here
   state = newState;
-  stateStream.onNext(state);
+  stateSubject.onNext(state);
 });
 
 intents.subjects.selectVideoInDevice.subscribe(function(key){
   doVideoPlumbing(key);
-  updateStream.onNext({activeindevice:{$set:key}});
+  updateSubject.onNext({activeindevice:{$set:key}});
 });
 
 function doVideoPlumbing(key) {
@@ -208,7 +208,7 @@ function updateVideoIO(mediadevices) {
     videoindevices.set(dev.deviceId,dev);
     allindevices.set(dev.deviceId,dev.label);
   });
-  updateStream.onNext({
+  updateSubject.onNext({
     allindevices: {$set: allindevices},
   });
   //If there is only one device, select it.
@@ -221,6 +221,6 @@ publishSources();
 
 module.exports = {
   init: init,
-  stateStream: stateStream,
-  updateStream: updateStream,
+  stateSubject: stateSubject,
+  updateSubject: updateSubject,
 };

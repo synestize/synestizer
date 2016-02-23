@@ -17,13 +17,13 @@ var state = {
 };
 
 //app model state
-var stateStream = new Rx.BehaviorSubject(state);
+var stateSubject = new Rx.BehaviorSubject(state);
 //app model updates
-var updateStream = new Rx.Subject();
+var updateSubject = new Rx.Subject();
 
-MidiModels.stateStream.subscribe(function (midistate) {
+MidiModels.stateSubject.subscribe(function (midistate) {
   state = update(state, {midistate: {$set: midistate}});
-  stateStream.onNext(state);
+  stateSubject.onNext(state);
 });
 
 

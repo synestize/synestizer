@@ -21,9 +21,9 @@ var state = {
   activeoutccs: new Set([4,5,6])
 };
 //midi model state
-var stateStream = new Rx.BehaviorSubject(state);
+var stateSubject = new Rx.BehaviorSubject(state);
 //midi model updates
-var updateStream = new Rx.Subject();
+var updateSubject = new Rx.Subject();
 
 var midiSourceFirehose = new Rx.Subject()
 var midiSinkFirehose = new Rx.Subject()
@@ -96,7 +96,7 @@ function handleMidiInMessage (ev) {
 midiSinkFirehose.subscribe(function([address, val]) {
   //we don't check for device at the moment; the wrong one should never arise
   //we should only receive "midi" keyed messages
-  //we should only get the right channel and CC, but we could check that here.
+  //we should only get the correct channel and CCs, but we could check that here.
   let [type, cmd, channel, cc] = address;
   let scaled = Math.max(Math.min(
     Math.floor(val*128),
@@ -111,18 +111,18 @@ midiSinkFirehose.subscribe(function([address, val]) {
   midiinfo.outputs.get(state.activeoutdevice).send(midibytes);
 });
 
-//update UI state object through updateStream
-updateStream.subscribe(function (upd) {
+//update UI state object through updateSubject
+updateSubject.subscribe(function (upd) {
   var newState;
   newState = update(state, upd);
   //could use an immutable update cycle Here
   state = newState;
-  stateStream.onNext(state);
+  stateSubject.onNext(state);
 });
 
 intents.subjects.selectMidiInDevice.subscribe(function(key){
   console.debug("midiin", key);
-  updateStream.onNext({activeindevice:{$set:key}});
+  updateSubject.onNext({activeindevice:{$set:key}});
   if (midiinfo !==null) {
     if (rawMidiInSubscription !== undefined) {
       rawMidiInSubscription.dispose()
@@ -134,12 +134,12 @@ intents.subjects.selectMidiInDevice.subscribe(function(key){
   publishSources();
 });
 intents.subjects.selectMidiInChannel.subscribe(function(i){
-  updateStream.onNext({activeinchannel:{$set:i}});
+  updateSubject.onNext({activeinchannel:{$set:i}});
   publishSources();
 });
 intents.subjects.addMidiInCC.subscribe(function(i){
   state.activeinccs.add(i);
-  updateStream.onNext(
+  updateSubject.onNext(
     {activeinccs:{$set: state.activeinccs.add(i)}}
   );
   publishSources();
@@ -147,19 +147,19 @@ intents.subjects.addMidiInCC.subscribe(function(i){
 intents.subjects.removeMidiInCC.subscribe(function(i){
   var newccs = state.activeinccs;
   newccs.delete(i);
-  updateStream.onNext({activeinccs:{$set:newccs}});
+  updateSubject.onNext({activeinccs:{$set:newccs}});
   publishSources();
 });
 intents.subjects.swapMidiInCC.subscribe(function([i,j]){
   var newccs = state.activeinccs;
   newccs.delete(i);
   newccs.add(j);
-  updateStream.onNext({activeinccs:{$set:newccs}});
+  updateSubject.onNext({activeinccs:{$set:newccs}});
   publishSources();
 });
 intents.subjects.setMidiInCC.subscribe(function(a){
   var newccs = new Set(a);
-  updateStream.onNext({activeinccs:{$set:newccs}});
+  updateSubject.onNext({activeinccs:{$set:newccs}});
   publishSources();
 });
 intents.subjects.selectMidiOutDevice.subscribe(function(key){
@@ -175,12 +175,12 @@ intents.subjects.selectMidiOutDevice.subscribe(function(key){
   publishSinks();
 });
 intents.subjects.selectMidiOutChannel.subscribe(function(i){
-  updateStream.onNext({activeinchannel:{$set:i}});
+  updateSubject.onNext({activeinchannel:{$set:i}});
   publishSinks();
 });
 intents.subjects.addMidiOutCC.subscribe(function(i){
   state.activeoutccs.add(i);
-  updateStream.onNext(
+  updateSubject.onNext(
     {activeoutccs:{$set: state.activeoutccs.add(i)}}
   );
   publishSinks();
@@ -188,19 +188,19 @@ intents.subjects.addMidiOutCC.subscribe(function(i){
 intents.subjects.removeMidiOutCC.subscribe(function(i){
   var newccs = state.activeoutccs;
   newccs.delete(i);
-  updateStream.onNext({activeoutccs:{$set:newccs}});
+  updateSubject.onNext({activeoutccs:{$set:newccs}});
   publishSinks();
 });
 intents.subjects.swapMidiOutCC.subscribe(function([i,j]){
   var newccs = state.activeoutccs;
   newccs.delete(i);
   newccs.add(j);
-  updateStream.onNext({activeoutccs:{$set:newccs}});
+  updateSubject.onNext({activeoutccs:{$set:newccs}});
   publishSinks();
 });
 intents.subjects.setMidiOutCC.subscribe(function(a){
   var newccs = new Set(a);
-  updateStream.onNext({activeoutccs:{$set:newccs}});
+  updateSubject.onNext({activeoutccs:{$set:newccs}});
   publishSinks();
 });
 
@@ -232,7 +232,7 @@ function updateMidiIO(newmidiinfo) {
   for (var [key, val] of midiinfo.outputs.entries()){
     alloutdevices.set(key,val.name)
   };
-  updateStream.onNext({
+  updateSubject.onNext({
     allindevices: {$set: allindevices},
     alloutdevices: {$set: alloutdevices}
   });
@@ -244,6 +244,6 @@ publishSources();
 
 module.exports = {
   init: init,
-  stateStream: stateStream,
-  updateStream: updateStream
+  stateSubject: stateSubject,
+  updateSubject: updateSubject
 };

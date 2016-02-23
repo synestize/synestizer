@@ -6,7 +6,7 @@ var VideoModels = global.VideoModels = require('./models');
 
 function run(videoinputguimountpoint, videodisplaymountpoint) {
   VideoModels.init(videodisplaymountpoint);
-  VideoModels.stateStream.subscribe(function (videostate) {
+  VideoModels.stateSubject.subscribe(function (videostate) {
     console.log("renderinvideo");
     console.log(videostate);
     VideoViews.renderVideoIn(

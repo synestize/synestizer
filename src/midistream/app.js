@@ -1,19 +1,19 @@
 //Main entry point for midi app
 "use strict";
 
-var MidiViews = global.MidiViews = require('./views');
-var MidiModels = global.MidiModels = require('./models');
+var views = global.midiviews = require('./views');
+var models = global.midimodels = require('./models');
 
 function run(midiinputmountpoint, midioutputmountpoint) {
-  MidiModels.init();
-  MidiModels.stateStream.subscribe(function (midistate) {
+  models.init();
+  models.stateSubject.subscribe(function (midistate) {
     console.log("renderinmidi");
     console.log(midistate);
-    MidiViews.renderMidiIn(
+    views.renderMidiIn(
       midistate,
       midiinputmountpoint
     );
-    MidiViews.renderMidiOut(
+    views.renderMidiOut(
       midistate,
       midioutputmountpoint
     );
