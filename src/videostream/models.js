@@ -78,9 +78,7 @@ statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
 function statsStreamSpray(x) {
   for (var [key, data] of x) {
     for (var [index, value] of data.entries()) {
-      videoSourceFirehose.onNext(
-        [["video", key, index], value]
-      )
+      videoSourceFirehose.onNext(["video-" + key + "-" + index, value])
       //console.log("video-" + key + "-" + index +  ", " + value);
     }
   }
@@ -99,12 +97,10 @@ statsInbox.onNext({
 function publishSources() {
   let addresses = new Set();
   //This is weird, initialising the statistic to get its dimension when the params are never used.
-  //TODO: rethink
+  //TODO: refactor
   let nDims = Statistic.get("PluginMoments")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
-    addresses.add(
-      ["video", "PluginMoments", idx]
-    );
+    addresses.add("video-PluginMoments-" + idx);
   };
   dataStreams.setSourceAddressesFor("video", addresses);
 };
@@ -183,7 +179,6 @@ function grabPixels() {
 }
 function pumpPixels() {
   let p = grabPixels();
-  //console.debug("pumpPixels", p);
   statsInbox.onNext({topic:"pixels", payload: p})
 }
 

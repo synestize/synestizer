@@ -34,9 +34,7 @@ function publishSources() {
   //we have a valid MIDI in setup; announce the addresses
   for (let cc of state.activeinccs) {
     console.debug("midi3", cc);
-    addresses.add(
-      ["midi", "cc", cc]
-    );
+    addresses.add("midi-cc-"+ cc);
   } 
   console.debug("midi5", addresses);
   dataStreams.setSourceAddressesFor("midi", addresses);
@@ -45,9 +43,7 @@ function publishSinks() {
   let addresses = new Set();
   //we have a valid MIDI in setup; announce the addresses
   for (let cc of state.activeoutccs) {
-    addresses.add(
-      ["midi", "cc", cc]
-    );
+    addresses.add("midi-cc-"+ cc);
   }
   dataStreams.setSinkAddressesFor("midi", addresses);
 }
@@ -63,8 +59,8 @@ function handleMidiInMessage (ev) {
   var cc = ev.data[1];
   var val = (ev.data[2]-63.5)/63.5;
   //midievent[0] = cmd;
-  var midiaddress = ["midi", "cc", cc];
-  
+  var midiaddress = ("midi-cc-"+ cc);
+
   //midi commands
   //11: CC
   //9: Note on
@@ -82,14 +78,14 @@ midiSinkFirehose.subscribe(function([address, val]) {
   //we don't check for device at the moment; the wrong one should never arise
   //we should only receive "midi" keyed messages
   //we should only get the correct channel and CCs, but we could check that here.
-  let [type, cmd, channel, cc] = address;
+  let [type, cmd, cc] = address.split("-");
   let scaled = Math.max(Math.min(
     Math.floor(val*128),
     127), 0)
-  //turns [["midi",-234121,1,16,0.5]
+  //turns [["midi",16,0.5]
   //into [177,16,64]
   let midibytes = [
-    176 + channel,
+    176 + state.activeoutchannel,
     cc,
     scaled
   ];
