@@ -52,13 +52,14 @@ var statsInbox = Rx.Observer.create(
 );
 var statsOutbox = Rx.Observable.create(function (obs) {
     videoworker.onmessage = function (e) {
-        obs.onNext(e.data);
+      obs.onNext(e.data);
     };
     videoworker.onerror = function (err) {
-        obs.onError(e.err);
+      console.error(err);
+      obs.onError(err);
     };
     return function () {
-        videoworker.close();
+      videoworker.terminate();
     };
 });
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
