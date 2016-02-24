@@ -1,6 +1,6 @@
 'use strict';
 
-function AverageColor(params) {
+function AvgColor(params) {
     //1/8 sub-sampled average color
     params = params || {};
 
@@ -30,7 +30,7 @@ function AverageColor(params) {
     calc.nState = 3;
     return calc;
 };
-function PluginMoments(params) {
+function Moment(params) {
     // Gives us moment estimates by the plugin method
     // right now, 1st and 2nd central moments
     // a.k.a. mean and covariance
@@ -169,6 +169,6 @@ function PluginMoments(params) {
     return calc;
 };
 module.exports = new Map([
-  ["PluginMoments", PluginMoments],
-  ["AverageColor", AverageColor]
+  ["Moment", Moment],
+  ["AvgColor", AvgColor]
 ]);

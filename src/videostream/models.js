@@ -91,16 +91,16 @@ const PIXELDIM=64
 statsInbox.onNext({
   topic: "settings",
   payload: {
-    statistics: new Map([["PluginMoments", {PIXELDIM: PIXELDIM}]])
+    statistics: new Map([["Moment", {PIXELDIM: PIXELDIM}]])
   }
 });
 function publishSources() {
   let addresses = new Set();
   //This is weird, initialising the statistic to get its dimension when the params are never used.
   //TODO: refactor
-  let nDims = Statistic.get("PluginMoments")({}).nDims;
+  let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
-    addresses.add("video-PluginMoments-" + idx);
+    addresses.add("video-Moment-" + idx);
   };
   dataStreams.setSourceAddressesFor("video", addresses);
 };
