@@ -2,14 +2,16 @@
 "use strict";
 
 var Rx = global.Rx = require('Rx');
+//debug mode:
+Rx.config.longStackSupport = true;
+
 var pureTabs = global.pureTabs = require('./vendor/puretabs/puretabs.js');
 pureTabs.init('tabs-link', 'tabs-link-active');
 
 var MidiApp = global.MidiApp = require('./midistream/app');
 var VideoApp = global.VideoApp = require('./videostream/app');
+var StreamPatchApp = global.StreamPatchApp = require('./streampatch/app');
 
-//debug mode:
-Rx.config.longStackSupport = true;
 
 MidiApp(
   document.getElementById('midi-input'),
@@ -20,3 +22,7 @@ VideoApp(
   document.getElementById('video-input'),
   document.getElementById('video-display')
 );
+
+StreamPatchApp(
+  document.getElementById('iomatrix-tab')
+)
