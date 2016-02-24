@@ -30,39 +30,24 @@ var midiSinkFirehose = new Rx.Subject()
 
 function publishSources() {
   let addresses = new Set();
-  console.debug("midi0", addresses, state.activeindevice, state.activeinchannel, state.activeinccs);
-  if (
-    (state.activeindevice !== null) &&
-    (state.activeinchannel !== null) &&
-    (state.activeinccs.size>0)
-  ) {
-    console.debug("midi2", state.activeindevice, state.activeinchannel, state.activeinccs);
-    //we have a valid MIDI in setup; announce the addresses
-    for (let cc of state.activeinccs) {
-      console.debug("midi3", cc);
-      addresses.add(
-        ["midi", "cc", state.activeindevice, state.activeinchannel, cc]
-      );
-    } 
-  } else {
-    console.debug("midi4", state.activeindevice, state.activeinchannel, state.activeinccs);
-  }
+  console.debug("midi0", addresses, state.activeinccs);
+  //we have a valid MIDI in setup; announce the addresses
+  for (let cc of state.activeinccs) {
+    console.debug("midi3", cc);
+    addresses.add(
+      ["midi", "cc", cc]
+    );
+  } 
   console.debug("midi5", addresses);
   dataStreams.setSourceAddressesFor("midi", addresses);
 }
 function publishSinks() {
   let addresses = new Set();
-  if (
-    (state.activeoutdevice !== null) &&
-    (state.activeoutchannel !== null) &&
-    (state.activeoutccs.size>0)
-  ) {
-    //we have a valid MIDI in setup; announce the addresses
-    for (let cc of state.activeoutccs) {
-      addresses.add(
-        ["midi", "cc", state.activeoutdevice, state.activeoutchannel, cc]
-      );
-    }
+  //we have a valid MIDI in setup; announce the addresses
+  for (let cc of state.activeoutccs) {
+    addresses.add(
+      ["midi", "cc", cc]
+    );
   }
   dataStreams.setSinkAddressesFor("midi", addresses);
 }
@@ -78,7 +63,7 @@ function handleMidiInMessage (ev) {
   var cc = ev.data[1];
   var val = (ev.data[2]-63.5)/63.5;
   //midievent[0] = cmd;
-  var midiaddress = ["midi", "cc", state.activeindevice, channel, cc];
+  var midiaddress = ["midi", "cc", cc];
   
   //midi commands
   //11: CC
