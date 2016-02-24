@@ -25,6 +25,7 @@ function AverageColor(params) {
         out[B] = out[B] / PIXELCOUNT;
         return out;
     }
+    
     calc.nDims = 3;
     calc.nState = 3;
     return calc;

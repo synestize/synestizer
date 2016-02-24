@@ -204,10 +204,10 @@ function updateMidiIO(newmidiinfo) {
   midiinfo = newmidiinfo;
   //turn the pseudo-Maps in the midiinfo dict into real maps
   for (var [key, val] of midiinfo.inputs.entries()){
-    allindevices.set(key,val.name)
+    allindevices.set(key, val.name)
   };
   for (var [key, val] of midiinfo.outputs.entries()){
-    alloutdevices.set(key,val.name)
+    alloutdevices.set(key, val.name)
   };
   updateSubject.onNext({
     allindevices: {$set: allindevices},

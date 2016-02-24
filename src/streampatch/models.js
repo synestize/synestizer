@@ -51,9 +51,7 @@ function registerSource(key, observable){
   updateSubject.onNext({sourceFirehoses: {$set: sourceFirehoses}})
   observable.subscribe(
     function ([key, val]) {
-      let upd = {};
-      upd[key] = {$set: val};
-      sourceState = update(sourceState, upd);
+      sourceState.set(key, val);
       window.sourceState = sourceState;
       sourceStateSubject.onNext(sourceState);
     }
@@ -66,39 +64,39 @@ function registerSink(key, observer){
 
   subject.subscribe(
     function ([key, val]) {
-      let upd = {};
-      upd[key] = {$set: val};
-      sinkState = update(sinkState, upd);
+      sinkState.set(key, val);
       sinkStateSubject.onNext(sinkState);
     }
   );
   subject.subscribe(observer);
 }
 function setSourceAddressesFor(key, addressList){
-  console.debug("ss", key, addressList);
   for (let address of sourceState.keys()) {
     if (address[0]==key && !addressList.has(address)) {
-      console.debug("ssd", key, address);
+      console.debug("deleting", address[0], "for", key, "giving", sourceState);
       sourceState.delete(address)
     }
   }
   let extantAddresses = new Set(sourceState.keys());
   for (let address of addressList) {
+
     if (!extantAddresses.has(address)) {
-      console.debug("ssa", key, address);
       sourceState.set(address, 0.0);
-      console.debug("ssb", sourceState.get(address));
+      console.debug("adding", address, "for", key, "giving", sourceState);
     }
   }
   sourceStateSubject.onNext(sourceState);
-  console.debug("ssc", sourceState, window.sourceState);
 }
 function setSinkAddressesFor(key, addressList){
   for (let address of sinkState.keys()) {
-    if (address[0]==key) {sinkState.delete(address)}
+    if (address[0]==key && !addressList.has(address)) {
+      sinkState.delete(address)
+    }
   }
-  for (let address of addressList) {
-    sinkState.set(address, null)
+  let extantAddresses = new Set(sinkState.keys());
+
+  if (!extantAddresses.has(address)) {
+    sinkState.set(address, 0.0);
   }
 }
 function addSourceAddress(address){}

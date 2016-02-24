@@ -98,7 +98,10 @@ statsInbox.onNext({
 });
 function publishSources() {
   let addresses = new Set();
-  for (let idx=0; idx<Statistic.get("PluginMoments").nDim; idx++) {
+  //This is weird, initialising the statistic to get its dimension when the params are never used.
+  //TODO: rethink
+  let nDims = Statistic.get("PluginMoments")({}).nDims;
+  for (let idx=0; idx<nDims; idx++) {
     addresses.add(
       ["video", "PluginMoments", idx]
     );
