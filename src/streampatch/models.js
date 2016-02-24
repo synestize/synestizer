@@ -20,25 +20,21 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 // UI state; control vals are throttled
 // We treat these differently than raw data flows
 // we really don't want to have datasreams re-render the DOM after every update
-var state = new Map([
-  ["sourceState", sourceState],
-  ["sinkState", sinkState],
-  ["sourceFirehoses", sourceFirehoses],
-  ["sinkFirehoses", sinkFirehoses],
-  ["sourceSinkMapping", sourceSinkMapping]
-]);
+var state =  {
+  sourceState: sourceState,
+  sinkState: sinkState,
+  sourceFirehoses: sourceFirehoses,
+  sinkFirehoses: sinkFirehoses,
+  sourceSinkMapping: sourceSinkMapping
+};
 console.debug("state", state);
 var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 //update UI state object through updateSubject
 updateSubject.subscribe(function (upd) {
   var newState;
-  console.debug("upd", upd);
   newState = update(state, upd);
-  console.debug("upUPd", state, newState);
-
   state = newState;
-  
   stateSubject.onNext(state);
 });
 
@@ -55,7 +51,6 @@ function registerSource(key, observable){
   updateSubject.onNext({sourceFirehoses: {$set: sourceFirehoses}})
   observable.subscribe(
     function ([key, val]) {
-      console.debug("upppp", key, val);
       let upd = {};
       upd[key] = {$set: val};
       sourceState = update(sourceState, upd);
