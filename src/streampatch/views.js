@@ -7,7 +7,6 @@ var model = require('./models');
 var intents = require('./intents');
 
 var StreamPatchPanel = function(props) {
-  console.debug("spp", props.sourceState, props);
 
   return (<div className="streamcontrolset">
     <StreamPatchGrid sourceState={props.sourceState} sinkState={props.sinkState} sourceFirehoses={props.sourceFirehoses} sinkFirehoses={props.sinkFirehoses} sourceSinkMapping={props.sourceSinkMapping} />
@@ -18,13 +17,9 @@ var StreamPatchGrid = function(props) {
   let header = [];
   let sourceNames = Array.from(props.sourceState.keys()).sort();
   let sinkNames = Array.from(props.sinkState.keys()).sort();
-  console.debug("sn00", props);
-  console.debug("sn0", props.sourceState, Array.from(props.sourceState.keys()));
-  console.debug("sn1", props.sinkState, Array.from(props.sinkState.keys()));
 
-  for (var sinkName of sinkNames) {
-    console.debug("snb", sinkName);
-    header.push(<th scope="column">{sinkName}</th>)
+  for (var sourceName of sourceNames) {
+    header.push(<th scope="column" key={sourceName}>{sourceName}</th>)
   }
   return (<table>
     <thead><tr>
