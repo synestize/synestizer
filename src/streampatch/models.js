@@ -27,7 +27,6 @@ var state =  {
   sinkFirehoses: sinkFirehoses,
   sourceSinkMapping: sourceSinkMapping
 };
-console.debug("state", state);
 var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 //update UI state object through updateSubject
@@ -73,7 +72,6 @@ function registerSink(key, observer){
 function setSourceAddressesFor(key, addressList){
   for (let address of sourceState.keys()) {
     if (address[0]==key && !addressList.has(address)) {
-      console.debug("deleting", address[0], "for", key, "giving", sourceState);
       sourceState.delete(address)
     }
   }
@@ -82,7 +80,6 @@ function setSourceAddressesFor(key, addressList){
 
     if (!extantAddresses.has(address)) {
       sourceState.set(address, 0.0);
-      console.debug("adding", address, "for", key, "giving", sourceState);
     }
   }
   sourceStateSubject.onNext(sourceState);
