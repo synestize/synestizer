@@ -14,6 +14,12 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
+  activeensembles: ["triad"],
+  activecontrols: new Set([
+    "synth-triad-something", 
+    "synth-triad-somethingelse",
+    "synth-triad-kittens",
+    "synth-triad-mungbeans"])
 };
 //synth model state
 var stateSubject = new Rx.BehaviorSubject(state);
@@ -24,14 +30,8 @@ var synthSinkFirehose = new Rx.Subject()
 
 
 function publishSinks() {
-  let addresses = new Set();
-  //we have a valid MIDI in setup; announce the addresses
-  for (let cc of state.activeoutccs) {
-    addresses.add("synth-cc-"+ cc);
-  }
-  dataStreams.setSinkAddressesFor("synth", addresses);
+  dataStreams.setSinkAddressesFor("synth", state.activecontrols);
 }
-//Interface to MIDI output
 synthSinkFirehose.subscribe(function([address, val]) {
 
 });
@@ -71,6 +71,7 @@ function updateSynthIO(newsynthinfo) {
 };
 
 dataStreams.registerSink("synth", synthSinkFirehose);
+publishSinks();
 
 module.exports = {
   stateSubject: stateSubject,

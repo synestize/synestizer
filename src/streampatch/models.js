@@ -69,33 +69,41 @@ function registerSink(key, observer){
   );
   subject.subscribe(observer);
 }
-function setSourceAddressesFor(key, addressList){
+function setSourceAddressesFor(key, addressSet){
+  // console.debug("ssaf", key, addressSet);
   for (let address of sourceState.keys()) {
-    if (address[0]==key && !addressList.has(address)) {
+    let thisKey = address.split("-")[0];
+    if ((thisKey === key) && (!addressSet.has(address))) {
+      // console.debug("ssafd", key, thisKey, address);
       sourceState.delete(address)
     }
-  }
+  };
   let extantAddresses = new Set(sourceState.keys());
-  for (let address of addressList) {
-
+  for (let address of addressSet) {
     if (!extantAddresses.has(address)) {
+      // console.debug("ssafa", key, address);
       sourceState.set(address, 0.0);
     }
   }
   sourceStateSubject.onNext(sourceState);
 }
-function setSinkAddressesFor(key, addressList){
+function setSinkAddressesFor(key, addressSet){
+  // console.debug("Ssaf", key, addressSet);
   for (let address of sinkState.keys()) {
-    if (address[0]==key && !addressList.has(address)) {
+    let thisKey = address.split("-")[0];
+    if ((thisKey===key) && (!addressSet.has(address))) {
+      // console.debug("Ssafd", key, thisKey, address);
       sinkState.delete(address)
     }
   }
   let extantAddresses = new Set(sinkState.keys());
-  for (let address of addressList) {
+  for (let address of addressSet) {
     if (!extantAddresses.has(address)) {
+      // console.debug("Ssafd", key, address);
       sinkState.set(address, 0.0);
     }
   }
+  sinkStateSubject.onNext(sinkState);
 }
 function addSourceAddress(address){}
 function removeSourceAddress(address){}

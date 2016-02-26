@@ -30,18 +30,13 @@ var midiSinkFirehose = new Rx.Subject()
 
 function publishSources() {
   let addresses = new Set();
-  console.debug("midi0", addresses, state.activeinccs);
-  //we have a valid MIDI in setup; announce the addresses
   for (let cc of state.activeinccs) {
-    console.debug("midi3", cc);
     addresses.add("midi-cc-"+ cc);
   } 
-  console.debug("midi5", addresses);
   dataStreams.setSourceAddressesFor("midi", addresses);
 }
 function publishSinks() {
   let addresses = new Set();
-  //we have a valid MIDI in setup; announce the addresses
   for (let cc of state.activeoutccs) {
     addresses.add("midi-cc-"+ cc);
   }
@@ -214,6 +209,7 @@ function updateMidiIO(newmidiinfo) {
 dataStreams.registerSource("midi", midiSourceFirehose);
 dataStreams.registerSink("midi", midiSinkFirehose);
 publishSources();
+publishSinks();
 
 module.exports = {
   init: init,
