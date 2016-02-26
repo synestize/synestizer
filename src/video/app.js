@@ -1,17 +1,17 @@
 //Main entry point for video app
 "use strict";
 
-var VideoViews = global.VideoViews = require('./views');
-var VideoModels = global.VideoModels = require('./models');
+var views = global.VideoViews = require('./views');
+var models = global.VideoModels = require('./models');
 
-function run(videoinputguimountpoint, videodisplaymountpoint) {
-  VideoModels.init(videodisplaymountpoint);
-  VideoModels.stateSubject.subscribe(function (videostate) {
+function run(inputguimountpoint, displaymountpoint) {
+  models.init(displaymountpoint);
+  models.stateSubject.subscribe(function (state) {
     console.log("renderinvideo");
-    console.log(videostate);
-    VideoViews.renderVideoIn(
-      videostate,
-      videoinputguimountpoint
+    console.log(state);
+    views.renderVideoIn(
+      state,
+      inputguimountpoint
     );
   });
 };
