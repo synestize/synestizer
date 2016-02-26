@@ -91,9 +91,10 @@ function setSinkAddressesFor(key, addressList){
     }
   }
   let extantAddresses = new Set(sinkState.keys());
-
-  if (!extantAddresses.has(address)) {
-    sinkState.set(address, 0.0);
+  for (let address of addressList) {
+    if (!extantAddresses.has(address)) {
+      sinkState.set(address, 0.0);
+    }
   }
 }
 function addSourceAddress(address){}
