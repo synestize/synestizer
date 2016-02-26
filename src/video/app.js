@@ -9,7 +9,7 @@ function run(inputguimountpoint, displaymountpoint) {
   models.stateSubject.subscribe(function (state) {
     console.log("renderinvideo");
     console.log(state);
-    views.renderVideoIn(
+    views.render(
       state,
       inputguimountpoint
     );

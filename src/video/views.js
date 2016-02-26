@@ -39,7 +39,7 @@ var VideoInDeviceSelect = function(props) {
   )
 };
 
-function renderVideoIn(state, mountpoint) {
+function render(state, mountpoint) {
   return ReactDOM.render(
     <VideoInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
       activestats={state.activeinstats} />,
@@ -48,5 +48,5 @@ function renderVideoIn(state, mountpoint) {
 
 
 module.exports = {
-  renderVideoIn: renderVideoIn
+  render: render
 };
