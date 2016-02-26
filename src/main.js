@@ -8,8 +8,8 @@ Rx.config.longStackSupport = true;
 var pureTabs = global.pureTabs = require('./vendor/puretabs/puretabs.js');
 pureTabs.init('tabs-link', 'tabs-link-active');
 
-var MidiApp = global.MidiApp = require('./midistream/app');
-var VideoApp = global.VideoApp = require('./videostream/app');
+var MidiApp = global.MidiApp = require('./midi/app');
+var VideoApp = global.VideoApp = require('./video/app');
 var StreamPatchApp = global.StreamPatchApp = require('./streampatch/app');
 
 
