@@ -28,6 +28,7 @@ title: TODO
         * Video analysis
         * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)
         * GUI widgets
+        * Audio analysis
         * device sensors
         * other sensors?
           * [Leap Control](https://developer.leapmotion.com/getting-started/javascript)
