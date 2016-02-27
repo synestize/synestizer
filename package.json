@@ -11,7 +11,7 @@
     "prewatch": "npm run clean",    
     "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
     "dev": "webpack-dev-server  --progress --colors",
-    "build": "NODE_ENV=production webpack -p  --optimize-minimize --optimize-occurence-order --config webpack.production.config.js",
+    "build": "NODE_ENV=production webpack -p --optimize-occurence-order --config webpack.production.config.js",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:indigo_listentocolors_net"
@@ -38,7 +38,6 @@
     "rx-react": "^0.3.0",
     "source-map-loader": "^0.1.5",
     "transducers-js": "^0.4.174",
-    "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "webpack": "^1.12.12",
     "worker-loader": "^0.7.0"
   }
