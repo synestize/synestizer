@@ -33,7 +33,8 @@ var StreamPatchGrid = function(props) {
   for (var sourceName of sourceNames) {
     let cells = [<th scope="row" key="header">{sourceName}</th>];
     for (var sinkName of sinkNames) {
-      cells.push(<td key={sinkName}>{sinkName}/{sourceName}</td>)
+      cells.push(<td key={sinkName}><StreamPatchMappingControl
+        name={props.sourceName+"-"+props.sinkName} /></td>)
     };
     bodyRows.push(<tr key={sourceName}>{cells}</tr>)
   };
@@ -48,7 +49,7 @@ var StreamPatchGrid = function(props) {
   </table>)
 };
 var StreamPatchMappingControl = function(props) {
-  return (<form><input type="range"></input><input type="checkbox"></input></form>)
+  return (<form>{props.name}<input type="range"></input><input type="checkbox"></input></form>)
 };
 function render(state, mountpoint) {
   return ReactDOM.render(
