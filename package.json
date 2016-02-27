@@ -8,10 +8,10 @@
   },
   "scripts": {
     "clean": "rm -r js/*",
-    "prewatch": "npm run clean",    
+    "prewatch": "npm run clean",
     "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
     "dev": "webpack-dev-server  --progress --colors",
-    "build": "NODE_ENV=production webpack -p --optimize-occurence-order --config webpack.production.config.js",
+    "build": "NODE_ENV=production webpack -p ",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:indigo_listentocolors_net"
@@ -26,6 +26,7 @@
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
+    "babel-plugin-uglify": "^1.0.2",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "extract-text-webpack-plugin": "^1.0.1",
