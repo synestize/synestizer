@@ -55,7 +55,7 @@ var statsOutbox = Rx.Observable.create(function (obs) {
       obs.onNext(e.data);
     };
     videoworker.onerror = function (err) {
-      console.error(err);
+      console.warn(err);
       obs.onError(err);
     };
     return function () {
