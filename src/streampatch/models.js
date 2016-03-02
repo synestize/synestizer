@@ -9,6 +9,8 @@ var intents = require('./intents');
 // internal state is high speed
 var sourceFirehoses = new Map();
 var sinkFirehoses = new Map();
+var sourceSinkMappingMag = new Map();
+var sourceSinkMappingSign = new Map();
 var sourceSinkMapping = new Map();
 
 //values of individual controls
@@ -25,8 +27,10 @@ var state =  {
   sinkState: sinkState,
   sourceFirehoses: sourceFirehoses,
   sinkFirehoses: sinkFirehoses,
-  sourceSinkMapping: sourceSinkMapping
+  sourceSinkMappingMag: sourceSinkMappingMag,
+  sourceSinkMappingSign: sourceSinkMappingSign,
 };
+
 var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 //update UI state object through updateSubject
@@ -109,21 +113,45 @@ function addSourceAddress(address){}
 function removeSourceAddress(address){}
 function addSinkAddress(address){}
 function removeSinkAddress(address){}
-function setMapping(sourceAddress, sinkAddress, value) {
+function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
-  console.debug("sssm", sourceAddress, sinkAddress, value);
-  let key = sourceAddress + "--" + sinkAddress;
+  console.debug("sssms", sourceAddress, sinkAddress, value);
+  let key = sourceAddress + "/" + sinkAddress;
+  let sourceSinkMappingSign = state.sourceSinkMappingSign;
+  if (value>=0.0) {
+    sourceSinkMappingSign.delete(key);
+  } else {
+    sourceSinkMappingSign.set(key, -1);
+  };
+  updateSubject.onNext({sourceSinkMappingSign: { $set: sourceSinkMappingSign}});
+  updateMapping();
+};
+
+function setMappingMag(sourceAddress, sinkAddress, value) {
+  //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
+  console.debug("sssmm", sourceAddress, sinkAddress, value);
+  let key = sourceAddress + "/" + sinkAddress;
   let sourceSinkMapping = state.sourceSinkMapping;
   if (value===0.0) {
-    sourceSinkMapping.delete(key);
+    sourceSinkMappingMag.delete(key);
   } else {
-    sourceSinkMapping.set(key, value);
+    sourceSinkMappingMag.set(key, value);
   };
-  updateSubject.onNext({sourceSinkMapping: { $set: sourceSinkMapping}})
-}
+  updateSubject.onNext({sourceSinkMappingMag: { $set: sourceSinkMappingMag}});
+  updateMapping();
+};
 
-intents.subjects.setMapping.subscribe(
-  ([sourceAddress, sinkAddress, value]) => setMapping(sourceAddress, sinkAddress, value)
+function updateMapping() {
+  sourceSinkMapping = new Map();
+  //cartesian product time? No, merge time.
+};
+
+
+intents.subjects.setMappingSign.subscribe(
+  ([sourceAddress, sinkAddress, value]) => setMappingSign(sourceAddress, sinkAddress, value)
+);
+intents.subjects.setMappingMag.subscribe(
+  ([sourceAddress, sinkAddress, value]) => setMappingMag(sourceAddress, sinkAddress, value)
 );
 
 module.exports = {
@@ -139,7 +167,8 @@ module.exports = {
   removeSourceAddress: removeSourceAddress,
   addSinkAddress: addSinkAddress,
   removeSinkAddress: removeSourceAddress,
-  setMapping: setMapping,
+  setMappingSign: setMappingSign,
+  setMappingMag: setMappingMag,
   stateSubject: stateSubject,
   updateSubject: updateSubject
 };

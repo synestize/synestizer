@@ -14,7 +14,9 @@ var StreamPatchPanel = function(props) {
       sinkState={props.sinkState}
       sourceFirehoses={props.sourceFirehoses}
       sinkFirehoses={props.sinkFirehoses} 
-      sourceSinkMapping={props.sourceSinkMapping} />
+      sourceSinkMappingMag={props.sourceSinkMappingMag}
+      sourceSinkMappingSign={props.sourceSinkMappingSign}
+    />
   </div>)
 };
 var StreamPatchGrid = function(props) {
@@ -34,7 +36,7 @@ var StreamPatchGrid = function(props) {
     let cells = [<th scope="row" key="header">{sourceName}</th>];
     for (var sinkName of sinkNames) {
       cells.push(<td key={sinkName}><StreamPatchMappingControl
-        sourceName={sourceName} sinkName={sinkName} value={props.sourceSinkMapping.get(sourceName+"--"+sinkName) || 0.0} /></td>)
+        sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} /></td>)
     };
     bodyRows.push(<tr key={sourceName}>{cells}</tr>)
   };
@@ -49,15 +51,12 @@ var StreamPatchGrid = function(props) {
   </table>)
 };
 var StreamPatchMappingControl = function(props) {
-  let sign = (props.value>=0.0 ? 1 : -1);
-  let mag = Math.abs(props.value);
-  return (<form>
-    <input type="checkbox" checked={sign===1} onChange={(ev) => {
-        console.debug("ev", ev.target.checked, ev.target.value, sign, mag);
-        intents.setMapping(props.sourceName, props.sinkName, mag * (ev.target.checked ? 1 : -1))
-    }} />
-  <input type="range" value={mag} onChange={(ev) => intents.setMapping(props.sourceName, props.sinkName, ev.target.value * sign)} min="0" max="2" step="any" />
-  </form>)
+  return (<div className={"mapping " + ((props.sign>0) ? "plus" : "minus")}>
+    <span onClick={(ev) => {
+        intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
+    }}>{(props.sign>0) ? "+" : "-"}</span>
+  <input type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" />
+  </div>)
 };
 function render(state, mountpoint) {
   return ReactDOM.render(
@@ -66,7 +65,9 @@ function render(state, mountpoint) {
       sinkState={state.sinkState}
       sourceFirehoses={state.sourceFirehoses}
       sinkFirehoses={state.sinkFirehoses} 
-      sourceSinkMapping={state.sourceSinkMapping} />,
+      sourceSinkMappingMag={state.sourceSinkMappingMag} 
+      sourceSinkMappingSign={state.sourceSinkMappingSign} 
+    />,
   mountpoint);
 };
 
