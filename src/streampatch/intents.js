@@ -6,14 +6,16 @@ var subjects = {
   removeSourceFor: new Rx.Subject(),
   addSinkFor: new Rx.Subject(),
   removeSinkFor: new Rx.Subject(),
+  setMapping: new Rx.Subject(),
 };
 
 var addSourceFor = (sourceKey, i) => subjects.addSourceFor.onNext([sourceKey, i]);
 var removeSourceFor = (sourceKey, i) => subjects.removeSourceFor.onNext([sourceKey, i]);
 var setSourceAddressesFor = (sourceKey, streams) => subjects.setSourceAddressesFor([sourceKey, streams])
-var addSinkFor = (sourceKey, i) => subjects.addSinkFor.onNext([sourceKey, i]);
-var removeSinkFor = (sourceKey, i) => subjects.removeSinkFor.onNext([sourceKey, i]);
-var setSinkAddressesFor = (sourceKey, streams) => subjects.setSinkAddressesFor([sourceKey, streams])
+var addSinkFor = (sinkKey, i) => subjects.addSinkFor.onNext([sinkKey, i]);
+var removeSinkFor = (sinkKey, i) => subjects.removeSinkFor.onNext([sinkKey, i]);
+var setSinkAddressesFor = (sinkKey, streams) => subjects.setSinkAddressesFor.onNext([sinkKey, streams])
+var setMapping = (sourceAddress, sinkAddress, value) => subjects.setMapping.onNext([sourceAddress, sinkAddress, value])
 
 module.exports = {
   subjects: subjects,
@@ -23,4 +25,5 @@ module.exports = {
   addSinkFor: addSinkFor,
   removeSinkFor: removeSinkFor,
   setSinkAddressesFor: setSinkAddressesFor,
+  setMapping: setMapping,
 };

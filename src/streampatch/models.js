@@ -109,8 +109,22 @@ function addSourceAddress(address){}
 function removeSourceAddress(address){}
 function addSinkAddress(address){}
 function removeSinkAddress(address){}
-function setMapping(sourceKey, sinkKey, scale){}
+function setMapping(sourceAddress, sinkAddress, value) {
+  //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
+  console.debug("sssm", sourceAddress, sinkAddress, value);
+  let key = sourceAddress + "--" + sinkAddress;
+  let sourceSinkMapping = state.sourceSinkMapping;
+  if (value===0.0) {
+    sourceSinkMapping.delete(key);
+  } else {
+    sourceSinkMapping.set(key, value);
+  };
+  updateSubject.onNext({sourceSinkMapping: { $set: sourceSinkMapping}})
+}
 
+intents.subjects.setMapping.subscribe(
+  ([sourceAddress, sinkAddress, value]) => setMapping(sourceAddress, sinkAddress, value)
+);
 
 module.exports = {
   sourceStateSubject: sourceStateSubject,
