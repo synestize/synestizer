@@ -35,13 +35,13 @@ var StreamPatchGrid = function(props) {
   for (var sourceName of sourceNames) {
     let cells = [<th scope="row" key="header">{sourceName}</th>];
     for (var sinkName of sinkNames) {
-      cells.push(<td key={sinkName}><StreamPatchMappingControl
-        sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} /></td>)
+      cells.push(<StreamPatchMappingControl key={sinkName}
+        sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} />)
     };
     bodyRows.push(<tr key={sourceName}>{cells}</tr>)
   };
 
-  return (<table>
+  return (<table className="mappingmatrix">
     <thead><tr>
       {header}
     </tr></thead>
@@ -51,12 +51,12 @@ var StreamPatchGrid = function(props) {
   </table>)
 };
 var StreamPatchMappingControl = function(props) {
-  return (<div className={"mapping " + ((props.sign>0) ? "plus" : "minus")}>
-    <span onClick={(ev) => {
+  return (<td className={"mapping " + ((props.sign>0) ? "plus" : "minus") + " " + ((props.mag>0) ? "active" : "inactive")}>
+    <span className="sign" onClick={(ev) => {
         intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
     }}>{(props.sign>0) ? "+" : "-"}</span>
-  <input type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" />
-  </div>)
+  <input className="mag" type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" />
+  </td>)
 };
 function render(state, mountpoint) {
   return ReactDOM.render(

@@ -186,16 +186,6 @@ a, a:hover, a:active, a:focus {
 .streamcontrolset select .option {
     min-height: 1ex;
 }
-.streamcontrolset label {
-  display: inline-block;
-  padding-right: 0.4ex;
-}
-.streamcontrolset button.smallaction {
-  display: inline-block;
-  width: 2.5ex;
-  height: 2.5ex;
-  padding: 0;
-}
 .streamcontrolset .streamchooserwidget {
   display: inline-block;
   padding: 1ex;
@@ -205,6 +195,45 @@ a, a:hover, a:active, a:focus {
 }
 .streamcontrolset .potential.streamchooserwidget select option {
   font-style: italic;
+}
+.mappingmatrix {
+  font-size: 0.8rem;
+}
+.mappingmatrix tr th {
+  font-weight: normal;
+}
+.mappingmatrix .mapping {
+  width: 5em;
+  /*margin: 0.25em;*/
+  padding: 0.25rem;
+  background-color: rgba(238,0,0,0.3);
+}
+.mappingmatrix .mapping {
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0.7;
+}
+.mappingmatrix .mapping.inactive {
+  opacity: 0.3;
+}
+.mappingmatrix .mapping.plus {
+  background-color: rgba(0,0,0,0.5);
+}
+.mappingmatrix .mapping.minus {
+  background-color: rgba(130,0,0,0.5);
+}
+.mappingmatrix .mapping .sign {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+}
+.mappingmatrix .mapping .mag {
+  display: inline-block;
+  width: 4em;
+  height: 1em;
+  margin: 0;
 }
 input[type="number"],
 input[type="number"]:focus {
