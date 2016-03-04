@@ -144,6 +144,9 @@ function setMappingMag(sourceAddress, sinkAddress, value) {
 function updateMapping() {
   sourceSinkMapping = new Map();
   //cartesian product time? No, merge time.
+  for (let [key, mag] of sourceSinkMappingMag.entries()) {
+    sourceSinkMapping.set(key, mag * (sourceSinkMappingSign.get(key) || 1.0));
+  };
 };
 
 
