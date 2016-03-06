@@ -30,10 +30,11 @@ var StreamPatchGrid = function(props) {
   // console.debug("out", props.sinkState, sinkNames);
   
   for (var sinkName of sinkNames) {
-    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" />);
+    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0}/>);
+    //console.debug("sink", sinkName, props.sinkState.get(sinkName));
   };
   for (var sourceName of sourceNames) {
-    let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" />];
+    let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" val={props.sourceState.get(sourceName) || 0.0}/>];
     for (var sinkName of sinkNames) {
       cells.push(<StreamPatchMappingControl key={sinkName}
         sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} />)
@@ -58,7 +59,13 @@ var StreamPatchMappingControl = function(props) {
   </td>)
 };
 var StreamPatchMappingHeaderCell = function(props) {
-  return (<th scope={props.scope || "column"}>{props.name}</th>);
+  let divStyle = {
+    width: transform.bipolPerc(props.val || 0.0)+"%"
+  };
+  return (<th scope={props.scope || "column"}>
+    <div className="stateBar" style={divStyle}></div>
+    {props.name}
+  </th>);
 };
 
 function render(state, mountpoint) {

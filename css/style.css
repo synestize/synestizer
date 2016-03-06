@@ -201,6 +201,15 @@ a, a:hover, a:active, a:focus {
 }
 .mappingmatrix tr th {
   font-weight: normal;
+  position: relative
+}
+.mappingmatrix th .stateBar {
+  height: 100%;
+  width: 1em;
+  background-color: green;
+  opacity: 1;
+  position: absolute;
+  z-index: -1;
 }
 .mappingmatrix .mapping {
   width: 4.5rem;

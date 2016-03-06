@@ -45,7 +45,7 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-sourceStateSubject.throttle(500).subscribe(function(sourceState) {
+sourceStateSubject.throttle(20).subscribe(function(sourceState) {
   sinkState = calcSinkValues(sourceState);
   updateSubject.onNext({
     sourceState: {$set: sourceState},
@@ -112,7 +112,7 @@ function addSinkAddress(address){}
 function removeSinkAddress(address){}
 function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
-  console.debug("sssms", sourceAddress, sinkAddress, value);
+  // console.debug("sssms", sourceAddress, sinkAddress, value);
   let key = sourceAddress + "/" + sinkAddress;
   let sourceSinkMappingSign = state.sourceSinkMappingSign;
   if (value>=0.0) {
@@ -126,7 +126,7 @@ function setMappingSign(sourceAddress, sinkAddress, value) {
 
 function setMappingMag(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
-  console.debug("sssmm", sourceAddress, sinkAddress, value);
+  // console.debug("sssmm", sourceAddress, sinkAddress, value);
   let key = sourceAddress + "/" + sinkAddress;
   let sourceSinkMapping = state.sourceSinkMapping;
   if (value===0.0) {
@@ -152,8 +152,8 @@ function calcSinkValues(sourceState) {
     newSinkStateT.set(sinkAddress, 0.0);
   }
   
-  console.debug("ss", sourceState);
-  console.debug("ss1", sourceSinkMapping);
+  // console.debug("ss", sourceState);
+  // console.debug("ss1", sourceSinkMapping);
   
   for (let [key, scale] of sourceSinkMapping.entries()) {
     let [sourceAddress, sinkAddress] = key.split("/");
@@ -162,17 +162,17 @@ function calcSinkValues(sourceState) {
     newSinkStateT.set(sinkAddress,
       sinkValT + scale * Math.tanh(sourceVal)
     );
-    console.debug("ssq", sourceAddress, sinkAddress, sourceVal, sinkValT, newSinkStateT.get(sinkAddress));
+    // console.debug("ssq", sourceAddress, sinkAddress, sourceVal, sinkValT, newSinkStateT.get(sinkAddress));
   };
   for (let [sinkAddress, sinkValT] of newSinkStateT.entries()) {
     let sinkKey = sinkAddress.split("-")[0]
     let sinkVal = Math.atanh(sinkValT);
     let lastSinkVal = sinkState.get(sinkAddress);
-    console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
+    // console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
     newSinkState.set(sinkAddress, sinkVal);
     //This coudl be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
-      console.debug("ssru", sinkAddress, sinkVal);
+      // console.debug("ssru", sinkAddress, sinkVal);
       sinkFirehoses.get(sinkKey).onNext([sinkAddress, sinkVal]);
     }
   };
