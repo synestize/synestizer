@@ -4,6 +4,8 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../streampatch/models');
+var transform = require('../lib/transform.js');
+
 var rawMidiInSubscription;
 
 //this is a per-session object and shouldn't be in app state
@@ -55,7 +57,7 @@ function handleMidiInMessage (ev) {
   var cmd = ev.data[0] >> 4;
   var channel = ev.data[0] & 0x0f;
   var cc = ev.data[1];
-  var val = (ev.data[2]-63.5)/63.5;
+  var val = transform.midiBipol(ev.data[2]);
   //midievent[0] = cmd;
   var midiaddress = ("midi-cc-"+ cc);
 
@@ -76,9 +78,7 @@ function handleMidiSinkMessage([address, val]) {
   
   //we should only receive "midi" keyed messages
   let [type, cmd, cc] = address.split("-");
-  let scaled = Math.max(Math.min(
-    Math.floor(val*128),
-    127), 0)
+  let scaled = transform.bipolMidi(val);
   //turns [["midi",16,0.5]
   //into [177,16,64]
   let midibytes = [

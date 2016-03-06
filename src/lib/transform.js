@@ -29,7 +29,18 @@ var clipBipol = function(val) {
       -1
     ), 1
   );
-}
+};
+//[0,127]->[-1,1]
+var midiBipol = function (val) {
+  return val/127
+};
+//[-1,1]->[-1,1]
+//slightly different to ensure 127 is attainable
+var bipolMidi = function (val) {
+  return Math.max(Math.min(
+    Math.round(val*127),
+  127), 0)
+};
 
 module.exports = {
   linBipol: linBipol,
