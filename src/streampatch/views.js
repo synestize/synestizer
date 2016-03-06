@@ -5,9 +5,9 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var model = require('./models');
 var intents = require('./intents');
+var transform = require('../lib/transform.js');
 
 var StreamPatchPanel = function(props) {
-
   return (<div className="streamcontrolset">
     <StreamPatchGrid
       sourceState={props.sourceState}
@@ -30,10 +30,10 @@ var StreamPatchGrid = function(props) {
   // console.debug("out", props.sinkState, sinkNames);
   
   for (var sinkName of sinkNames) {
-    header.push(<th scope="column" key={sinkName}>{sinkName}</th>);
+    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" />);
   };
   for (var sourceName of sourceNames) {
-    let cells = [<th scope="row" key="header">{sourceName}</th>];
+    let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" />];
     for (var sinkName of sinkNames) {
       cells.push(<StreamPatchMappingControl key={sinkName}
         sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} />)
@@ -57,6 +57,10 @@ var StreamPatchMappingControl = function(props) {
   }} />
   </td>)
 };
+var StreamPatchMappingHeaderCell = function(props) {
+  return (<th scope={props.scope || "column"}>{props.name}</th>);
+};
+
 function render(state, mountpoint) {
   return ReactDOM.render(
     <StreamPatchPanel
