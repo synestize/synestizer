@@ -13,7 +13,7 @@ var StreamPatchPanel = function(props) {
       sourceState={props.sourceState}
       sinkState={props.sinkState}
       sourceFirehoses={props.sourceFirehoses}
-      sinkFirehoses={props.sinkFirehoses} 
+      sinkScalars={props.sinkScalars} 
       sourceSinkMappingMag={props.sourceSinkMappingMag}
       sourceSinkMappingSign={props.sourceSinkMappingSign}
     />
@@ -64,7 +64,7 @@ function render(state, mountpoint) {
       sourceState={state.sourceState}
       sinkState={state.sinkState}
       sourceFirehoses={state.sourceFirehoses}
-      sinkFirehoses={state.sinkFirehoses} 
+      sinkScalars={state.sinkScalars} 
       sourceSinkMappingMag={state.sourceSinkMappingMag} 
       sourceSinkMappingSign={state.sourceSinkMappingSign} 
     />,

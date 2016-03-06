@@ -25,21 +25,24 @@ var stateSubject = new Rx.BehaviorSubject(state);
 //midi model updates
 var updateSubject = new Rx.Subject();
 
-var midiSourceFirehose = new Rx.Subject()
-var midiSinkFirehose = new Rx.Subject()
+var midiSourceFirehose = new Rx.Subject();
 
 function publishSources() {
   let addresses = new Set();
-  for (let cc of state.activeinccs) {
-    addresses.add("midi-cc-"+ cc);
-  } 
+  if (midiinfo !==null) {
+    for (let cc of state.activeinccs) {
+      addresses.add("midi-cc-"+ cc);
+    };
+  };
   dataStreams.setSourceAddressesFor("midi", addresses);
 }
 function publishSinks() {
   let addresses = new Set();
-  for (let cc of state.activeoutccs) {
-    addresses.add("midi-cc-"+ cc);
-  }
+  if (midiinfo !==null) {
+    for (let cc of state.activeoutccs) {
+      addresses.add("midi-cc-"+ cc);
+    };
+  };
   dataStreams.setSinkAddressesFor("midi", addresses);
 }
 
@@ -64,15 +67,14 @@ function handleMidiInMessage (ev) {
     (state.activeinchannel == channel) &&
     state.activeinccs.has(cc)) {
     //console.debug("me", ev.data, midievent);
-    
     midiSourceFirehose.onNext([midiaddress, val]);
-  }
+  };
 };
 //Interface to MIDI output
-midiSinkFirehose.subscribe(function([address, val]) {
-  //we don't check for device at the moment; the wrong one should never arise
+function handleMidiSinkMessage([address, val]) {
+  console.debug(address, val);
+  
   //we should only receive "midi" keyed messages
-  //we should only get the correct channel and CCs, but we could check that here.
   let [type, cmd, cc] = address.split("-");
   let scaled = Math.max(Math.min(
     Math.floor(val*128),
@@ -85,7 +87,7 @@ midiSinkFirehose.subscribe(function([address, val]) {
     scaled
   ];
   midiinfo.outputs.get(state.activeoutdevice).send(midibytes);
-});
+};
 
 //update UI state object through updateSubject
 updateSubject.subscribe(function (upd) {
@@ -207,7 +209,8 @@ function updateMidiIO(newmidiinfo) {
 };
 
 dataStreams.registerSource("midi", midiSourceFirehose);
-dataStreams.registerSink("midi", midiSinkFirehose);
+dataStreams.registerSink("midi", handleMidiSinkMessage);
+
 publishSources();
 publishSinks();
 

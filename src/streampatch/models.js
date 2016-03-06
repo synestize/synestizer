@@ -6,7 +6,11 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 
-// internal state is high speed
+/*
+internal state handles high-speed source updates and slower sink updates
+
+the firehose protocol is a 2-array, [address, value]
+*/
 var sourceFirehoses = new Map();
 var sinkFirehoses = new Map();
 var sourceSinkMappingMag = new Map();
@@ -25,8 +29,8 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 var state =  {
   sourceState: sourceState,
   sinkState: sinkState,
-  sourceFirehoses: sourceFirehoses,
-  sinkFirehoses: sinkFirehoses,
+  sourceFirehoses: sourceFirehoses, //streams of source values
+  sinkFirehoses: sinkFirehoses, //streams of sink values
   sourceSinkMappingMag: sourceSinkMappingMag,
   sourceSinkMappingSign: sourceSinkMappingSign,
 };
@@ -41,13 +45,13 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-sourceStateSubject.throttle(200).subscribe(
-  (state) => updateSubject.onNext({sourceState: {$set: state}})
-);
-sinkStateSubject.throttle(200).subscribe(
-  (state) => updateSubject.onNext({sinkState: {$set: state}})
-);
-
+sourceStateSubject.throttle(500).subscribe(function(sourceState) {
+  sinkState = calcSinkValues(sourceState);
+  updateSubject.onNext({
+    sourceState: {$set: sourceState},
+    sinkState: {$set: sinkState}
+  });
+});
 
 function registerSource(key, observable){
   sourceFirehoses.set(key, observable);
@@ -60,17 +64,10 @@ function registerSource(key, observable){
     }
   );
 }
-function registerSink(key, observer){
+function registerSink(key, observer) {
   let subject = new Rx.Subject();
   sinkFirehoses.set(key, subject);
   updateSubject.onNext({sinkFirehoses: {$set: sinkFirehoses}})
-
-  subject.subscribe(
-    function ([key, val]) {
-      sinkState.set(key, val);
-      sinkStateSubject.onNext(sinkState);
-    }
-  );
   subject.subscribe(observer);
 }
 function setSourceAddressesFor(key, addressSet){
@@ -143,12 +140,44 @@ function setMappingMag(sourceAddress, sinkAddress, value) {
 
 function updateMapping() {
   sourceSinkMapping = new Map();
-  //cartesian product time? No, merge time.
-  for (let [key, mag] of sourceSinkMappingMag.entries()) {
-    sourceSinkMapping.set(key, mag * (sourceSinkMappingSign.get(key) || 1.0));
+  for (let [key, scale] of sourceSinkMappingMag.entries()) {
+    sourceSinkMapping.set(key, scale * (sourceSinkMappingSign.get(key) || 1.0));
   };
 };
 
+function calcSinkValues(sourceState) {
+  var newSinkStateT = new Map(); // temporary tanh-transformed sink vals
+  var newSinkState = new Map(); // replacement sink vals
+  for (let sinkAddress of sinkState.keys()) {
+    newSinkStateT.set(sinkAddress, 0.0);
+  }
+  
+  console.debug("ss", sourceState);
+  console.debug("ss1", sourceSinkMapping);
+  
+  for (let [key, scale] of sourceSinkMapping.entries()) {
+    let [sourceAddress, sinkAddress] = key.split("/");
+    let sourceVal = sourceState.get(sourceAddress) || 0.0;
+    let sinkValT = newSinkStateT.get(sinkAddress) || 0.0;
+    newSinkStateT.set(sinkAddress,
+      sinkValT + scale * Math.tanh(sourceVal)
+    );
+    console.debug("ssq", sourceAddress, sinkAddress, sourceVal, sinkValT, newSinkStateT.get(sinkAddress));
+  };
+  for (let [sinkAddress, sinkValT] of newSinkStateT.entries()) {
+    let sinkKey = sinkAddress.split("-")[0]
+    let sinkVal = Math.atanh(sinkValT);
+    let lastSinkVal = sinkState.get(sinkAddress);
+    console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
+    newSinkState.set(sinkAddress, sinkVal);
+    //This coudl be done more elegantly by filtering the stream
+    if (lastSinkVal !== sinkVal) {
+      console.debug("ssru", sinkAddress, sinkVal);
+      sinkFirehoses.get(sinkKey).onNext([sinkAddress, sinkVal]);
+    }
+  };
+  return newSinkState;
+};
 
 intents.subjects.setMappingSign.subscribe(
   ([sourceAddress, sinkAddress, value]) => setMappingSign(sourceAddress, sinkAddress, value)

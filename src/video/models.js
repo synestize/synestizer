@@ -215,6 +215,7 @@ function updateVideoIO(mediadevices) {
     for (let key of allindevices.keys()) {intents.selectVideoInDevice(key)}
   }
 };
+
 dataStreams.registerSource("video", videoSourceFirehose);
 publishSources();
 
