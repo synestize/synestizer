@@ -1,4 +1,6 @@
 'use strict';
+var transform = require('../lib/transform.js');
+
 
 function AvgColor(params) {
     //1/8 sub-sampled average color
@@ -20,9 +22,9 @@ function AvgColor(params) {
             out[B] += pixels[i * 4 + B]/255;
         }
 
-        out[R] = out[R] / PIXELCOUNT;
-        out[G] = out[G] / PIXELCOUNT;
-        out[B] = out[B] / PIXELCOUNT;
+        out[R] = transform.linBipol(0, PIXELCOUNT, out[R]);
+        out[G] = transform.linBipol(0, PIXELCOUNT, out[G]);
+        out[B] = transform.linBipol(0, PIXELCOUNT, out[B]);
         return out;
     }
     
@@ -126,42 +128,49 @@ function Moment(params) {
             - centralMoments[Y] * centralMoments[V]);
         centralMoments[SV] = (rawSums[SV]/PIXELCOUNT
             - centralMoments[S] * centralMoments[V]);
-        //in fact these components do not vary so very much due to 
-        //automatic color adjustment; So we do custom overdrive
-        cookedMoments[Y] = Math.atan((centralMoments[Y]-0.5)*5
-            )/Math.PI+0.5;
-        cookedMoments[S] = Math.atan((centralMoments[S]-0.5)*10
-            )/Math.PI+0.5;
-        cookedMoments[V] = Math.atan((centralMoments[V]-0.5)*10 
-            )/Math.PI+0.5;
-        //Normalizing the variances is tricky.
+        //in fact these components do not vary so very much, so we overdrive
+        cookedMoments[Y] = transform.linBipol(0.4, 0.6, centralMoments[Y]);
+        cookedMoments[S] = transform.linBipol(0.4, 0.6, centralMoments[S]);
+        cookedMoments[V] = transform.linBipol(0.4, 0.6, centralMoments[V]);
+        //console.debug("mom", centralMoments[Y], centralMoments[S], centralMoments[V], cookedMoments[Y], cookedMoments[S], cookedMoments[V]);
+        //Normalizing the (auto)variances is tricky.
         //Technically the maximal variance is 0.25, for a 50/50 B/W image
         //but I think we can assume a uniform distribution is a good
         // extremal point for us, implying a maximal variance of 1/12
-        //Even that is conservative, so we double it to 24
-        cookedMoments[YY] = centralMoments[YY]*24;
-        cookedMoments[SS] = centralMoments[SS]*24;
-        cookedMoments[VV] = centralMoments[VV]*24;
-        //pure color covariances use the normal formula
-        cookedMoments[YS] = centralMoments[YS]/Math.max(0.0001, Math.sqrt(
-            centralMoments[YY]*centralMoments[SS]))*0.5+0.5;
-        cookedMoments[YV] = centralMoments[YV]/Math.max(0.0001, Math.sqrt(
-            centralMoments[YY]*centralMoments[VV]))*0.5+0.5;
-        cookedMoments[SV] = centralMoments[SV]/Math.max(0.0001, Math.sqrt(
-            centralMoments[SS]*centralMoments[VV]))*0.5+0.5;
+        // Even that is conservative, so we make it 1/20
+        cookedMoments[YY] = transform.linBipol(-0.05, 0.05, centralMoments[YY]);
+        cookedMoments[SS] = transform.linBipol(-0.05, 0.05, centralMoments[SS]);
+        cookedMoments[VV] = transform.linBipol(-0.05, 0.05, centralMoments[VV]);
+        //pure color covariances are reported as correlations.
+        //Occasional weirdness with range outside [-1,1] so I clip for now.
+        cookedMoments[YS] = transform.clipBipol(
+          centralMoments[YS]/Math.max(0.0001, Math.sqrt(
+            centralMoments[YY]*centralMoments[SS])));
+        cookedMoments[YV] = transform.clipBipol(
+          centralMoments[YV]/Math.max(0.0001, Math.sqrt(
+            centralMoments[YY]*centralMoments[VV])));
+        cookedMoments[SV] = transform.clipBipol(
+          centralMoments[SV]/Math.max(0.0001, Math.sqrt(
+            centralMoments[SS]*centralMoments[VV])));
         //color versus axis uses a priori moments for the deterministic axes
-        cookedMoments[IY] = centralMoments[IY]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[YY]))*0.5+0.5;
-        cookedMoments[IS] = centralMoments[IS]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[SS]))*0.5+0.5;
-        cookedMoments[IV] = centralMoments[IV]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[VV]))*0.5+0.5; 
-        cookedMoments[JY] = centralMoments[JY]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[YY]))*0.5+0.5;
-        cookedMoments[JS] = centralMoments[JS]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[SS]))*0.5+0.5;
-        cookedMoments[JV] = centralMoments[JV]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[VV]))*0.5+0.5;
+        cookedMoments[IY] = transform.clipBipol(
+          centralMoments[IY]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[YY])));
+        cookedMoments[IS] = transform.clipBipol(
+          centralMoments[IS]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[SS])));
+        cookedMoments[IV] = transform.clipBipol(
+          centralMoments[IV]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[VV]))); 
+        cookedMoments[JY] = transform.clipBipol(
+          centralMoments[JY]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[YY])));
+        cookedMoments[JS] = transform.clipBipol(
+          centralMoments[JS]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[SS])));
+        cookedMoments[JV] = transform.clipBipol(
+          centralMoments[JV]/Math.max(0.0001, Math.sqrt(
+            0.08333333333*centralMoments[VV])));
         return cookedMoments;
     };
     calc.nDims = nDims;
