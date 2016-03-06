@@ -7,6 +7,7 @@ title: TODO
 * UI improvements
   * default to active MIDI
   * MIDI out solo button
+* set "central" value of param
 * video should use webrtc so that it can handle non-local video sources.
 * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL
 * workflow
@@ -24,7 +25,7 @@ title: TODO
 * App improvements
   * Go to single app object to update all state.
     * make all panels aspects of the same App state for easier rendering.
-  * The current approach is a little bit ad hoc. Princpled people use Cycle.js, but I don't want to write my own MIDI/Video support for them
+  * The current approach is a little bit ad hoc. Principled people use Cycle.js, but I don't want to write my own MIDI/Video support for them
   * [redux](http://redux.js.org/index.html) is a simple alternative to flux that helps a little bit
   * [alt](https://github.com/goatslacker/alt) is a slightly more advanced react.
   * [react-webpack-node](https://github.com/choonkending/react-webpack-node) is an example of how these simplify things
@@ -33,9 +34,11 @@ title: TODO
 
     * input params
     
-        * Video analysis
-        * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)
+        * Video analysis [done]
+        * MIDI CC in [done]
         * GUI widgets
+        * central baseline values
+        * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)
         * Audio analysis
         * device sensors
         * other sensors?
@@ -46,14 +49,15 @@ title: TODO
     * output params
     
       * audio ensemble parameters
-      * MIDI CC out
+      * MIDI CC out [done]
       * OpenSoundControl?
       * General websockets?
 
     * Patches could have a separate mapping GUI for constructing the mapping
     * Copula-function-based covariance
       
-      * tanh and erf copulae
+      * tanh [done]
+      * erf copulae 
 
 * Meta
 
