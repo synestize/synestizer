@@ -52,10 +52,9 @@ var StreamPatchGrid = function(props) {
 };
 var StreamPatchMappingControl = function(props) {
   return (<td className={"mapping " + ((props.sign>0) ? "plus" : "minus") + " " + ((props.mag>0) ? "active" : "inactive")}>
-    <div className="sign" onClick={(ev) => {
-        intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
-    }}><p>{(props.sign>0) ? "+" : "-"}</p></div>
-  <input className="mag" type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" />
+  <input className="mag" type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" onDoubleClick={(ev) => {
+      intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
+  }} />
   </td>)
 };
 function render(state, mountpoint) {
