@@ -7,8 +7,8 @@ title: TODO
 * UI improvements
   * default to active MIDI
   * MIDI out solo button
-* set "central" value of param
-* video should use webrtc so that it can handle non-local video sources.
+  * sink values have suspiciously small variation
+  * set "central" value of param
 * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL
 * workflow
 * https://docs.npmjs.com/misc/config
@@ -59,6 +59,7 @@ title: TODO
       * tanh [done]
       * erf copulae 
 
+* video should use webrtc so that it can handle non-local video sources.
 * Meta
 
     * automatic letsencrypt SSL
