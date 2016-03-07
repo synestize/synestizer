@@ -201,10 +201,11 @@ a, a:hover, a:active, a:focus {
 }
 .mappingmatrix tr th {
   font-weight: normal;
-  position: relative
+  position: relative; /* so that child stateBar elements can be absolutely positioned */
 }
 .mappingmatrix th .stateBar {
-  height: 100%;
+  height: 0.5rem;
+  bottom: 0;
   width: 1em;
   background-color: green;
   opacity: 1;

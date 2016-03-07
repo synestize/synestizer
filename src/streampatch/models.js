@@ -150,7 +150,7 @@ function calcSinkValues(sourceState) {
   var newSinkState = new Map(); // replacement sink vals
   for (let sinkAddress of sinkState.keys()) {
     newSinkStateT.set(sinkAddress, 0.0);
-  }
+  };
   
   // console.debug("ss", sourceState);
   // console.debug("ss1", sourceSinkMapping);

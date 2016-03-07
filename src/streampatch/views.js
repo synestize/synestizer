@@ -30,7 +30,7 @@ var StreamPatchGrid = function(props) {
   // console.debug("out", props.sinkState, sinkNames);
   
   for (var sinkName of sinkNames) {
-    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0}/>);
+    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0} />);
     //console.debug("sink", sinkName, props.sinkState.get(sinkName));
   };
   for (var sourceName of sourceNames) {
