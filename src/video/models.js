@@ -39,9 +39,8 @@ var gfxCtx;
 var statsInbox = Rx.Observer.create(
   function (data) {
     /*
-     * Dasta looks like {topic:"pixels", payload: [1,2,3,...]}
+     * Data looks like {topic:"pixels", payload: [1,2,3,...]}
      */
-    //this should do transfer of arrays to save time
     let payload = data.payload;
     if (payload.buffer !== undefined) {
       videoworker.postMessage(data, [payload.buffer]);

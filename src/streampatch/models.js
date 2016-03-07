@@ -170,7 +170,7 @@ function calcSinkValues(sourceState) {
     let lastSinkVal = sinkState.get(sinkAddress);
     // console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
     newSinkState.set(sinkAddress, sinkVal);
-    //This coudl be done more elegantly by filtering the stream
+    //This could be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
       // console.debug("ssru", sinkAddress, sinkVal);
       sinkFirehoses.get(sinkKey).onNext([sinkAddress, sinkVal]);
