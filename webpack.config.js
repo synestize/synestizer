@@ -7,7 +7,7 @@ module.exports = {
     './src/main'
   ],
   output: {
-    publicPath: '/synestizer/js/',
+    publicPath: './js/',
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },

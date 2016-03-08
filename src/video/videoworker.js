@@ -3,6 +3,7 @@
 var Rx = require('Rx');
 var Statistic = require('./statistic');
 var statistics = new Map();
+
 var inbox = Rx.Observable.fromEvent(self, "message").select((e) => e.data);
 var outbox = new Rx.Subject();
 var results = new Map();
