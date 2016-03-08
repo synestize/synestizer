@@ -1,0 +1,45 @@
+{
+  "name": "synestizer",
+  "version": "1.0.0",
+  "description": "Listen to colours",
+  "main": "js-src/main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "clean": "rm -rf js/*",
+    "prewatch": "npm run clean",
+    "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
+    "dev": "webpack-dev-server  --progress --colors",
+    "build": "NODE_ENV=production webpack -p ",
+    "prebuild": "npm run clean",
+    "prepublish": "npm run build",
+    "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:indigo_listentocolors_net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/synestize/synestizer.git"
+  },
+  "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
+  "license": "GPL-3.0",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-plugin-uglify": "^1.0.2",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "immutable": "^3.7.6",
+    "install": "^0.4.1",
+    "npm": "^3.5.3",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "rx": "^4.0.7",
+    "rx-react": "^0.3.0",
+    "source-map-loader": "^0.1.5",
+    "transducers-js": "^0.4.174",
+    "webpack": "^1.12.12",
+    "worker-loader": "^0.7.0"
+  }
+}
