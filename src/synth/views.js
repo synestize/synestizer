@@ -5,6 +5,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var model = require('./models');
 var intents = require('./intents');
+var synthlib = require('./synthlib/main');
 
 var SynthControls = function(props) {
   return (<div className="streamcontrolset">
@@ -13,7 +14,7 @@ var SynthControls = function(props) {
 };
 function render(state, mountpoint) {
   return ReactDOM.render(
-    <SynthControls activedevice={state.activeoutdevice} alldevices={state.alloutdevices} />,
+    <SynthControls synthlib={synthlib} />,
     mountpoint);
 };
 module.exports = {

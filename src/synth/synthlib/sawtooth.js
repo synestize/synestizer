@@ -1,7 +1,6 @@
 'use strict';
 
 var transform = require('../../lib/transform.js');
+var synth = {};
 
-module.exports = {
-  sawtooth: require("./sawtooth"),
-};
+module.exports = synth;
