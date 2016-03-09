@@ -6,9 +6,10 @@ var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var synthlib = require('./synthlib/main');
 var activesynths = new Map();
-//this is a per-session object and shouldn't be in app state
+
+//per-session object that shouldn't be in app state
 var synthinfo = null;
-var context = null;
+var audioContext = null;
 var inputNode = null;
 var outputNode = null;
 
@@ -62,23 +63,8 @@ intents.subjects.selectSynthOutDevice.subscribe(function(key){
   updateSubject.onNext({activeoutdevice:{$set:key}});
   publishSinks();
 });
-function updateSynthIO(newsynthinfo) {
-  /*
-  var allindevices = new Map();
-  var alloutdevices = new Map();
-  synthinfo = newsynthinfo;
-  for (var [key, val] of synthinfo.inputs.entries()){
-    allindevices.set(key, val.name)
-  };
-  for (var [key, val] of synthinfo.outputs.entries()){
-    alloutdevices.set(key, val.name)
-  };
-  updateSubject.onNext({
-    allindevices: {$set: allindevices},
-    alloutdevices: {$set: alloutdevices}
-  });
-  */
-};
+
+audioContext = new window.AudioContext();
 
 
 module.exports = {
