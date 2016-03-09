@@ -4,6 +4,9 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var dataStreams = require('../streampatch/models');
+var synths = require('./synths/main');
+
+console.debug("synths", synths);
 
 //this is a per-session object and shouldn't be in app state
 var synthinfo= null;
