@@ -4,11 +4,21 @@ title: TODO
 
 # TODO
 
+* currently:
+
+  * implement audio model
+  * this registerSink/publishSink distinction is too complicated; do it in some more natural stream-processing way, possibly using filtering
+  * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
+
 * UI improvements
   * default to active MIDI
   * MIDI out solo button
-  * sink values have suspiciously small variation
+  * animate transitions and updates
   * set "central" value of param
+    
+    * This could be as simple as setting a default mapping from synth slider to output value, by cooperating between streampatch and synth (might need refactor)
+  * switch param mappers to be higher order/factory functions, currying appropriately
+
 * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL
 * workflow
 * https://docs.npmjs.com/misc/config
