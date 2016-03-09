@@ -84,13 +84,13 @@ var freqMidi = function (val) {
 // exponential map to full MIDI spectrum
 // defined in a fancy way to correspond to MIDI frequency
 // note these are self-invoking functions.
-var bipolFreq = function() {
+var bipolFreqAll = function() {
   var freqMiddle = midiFreq(127/2);
   var halfOctaves = (127/2/12);
   return (val) => Math.pow(2, clipBipol(val) * halfOctaves)*freqMiddle; 
 }();
 
-var freqBipol = function (val) {
+var freqBipolAll = function (val) {
   var freqMiddle = midiFreq(127/2);
   var halfOctaves = (127/2/12);
   return (val) => clipBipol(
@@ -98,6 +98,11 @@ var freqBipol = function (val) {
   );
 }();
 
+var bipolEquiOctave = function(min, max, val) {
+  let logmin = Math.log(min)/Math.LOG2;
+  let logmax = Math.log(max)/Math.LOG2;
+  return Math.pow(2, bipolLin(logmin, logmax));
+}
 module.exports = {
   linBipol: linBipol,
   bipolLin: bipolLin,
@@ -110,6 +115,7 @@ module.exports = {
   bipolPerc: bipolPerc,
   freqMidi: freqMidi,
   midiFreq: midiFreq,
-  freqBipol: freqBipol,
-  bipolFreq: bipolFreq,
+  freqBipolAll: freqBipolAll,
+  bipolFreqAll: bipolFreqAll,
+  bipolEquiOctave: bipolEquiOctave,
 };

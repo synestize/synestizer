@@ -30,6 +30,11 @@ var updateSubject = new Rx.Subject();
 function handleSynthSinkMessage ([address, val]) {
 }
 
+function registerSynth (synthName) {
+  //register controls here.
+}
+
+
 function publishSinks() {
   dataStreams.setSinkAddressesFor("synth", state.activecontrols);
 }
