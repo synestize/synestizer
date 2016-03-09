@@ -12,6 +12,7 @@ var MidiApp = require('./midi/app');
 var VideoApp = require('./video/app');
 var SynthApp = require('./synth/app');
 var StreamPatchApp = require('./streampatch/app');
+
 MidiApp(
   document.getElementById('midi-input'),
   document.getElementById('midi-output')

@@ -3,7 +3,7 @@
 var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
-var dataStreams = require('../streampatch/models');
+var streamPatch = require('../streampatch/models');
 var Statistic = require('./statistic');
 
 //Basic video UI state
@@ -101,7 +101,7 @@ function publishSources() {
   for (let idx=0; idx<nDims; idx++) {
     addresses.add("video-Moment-" + idx);
   };
-  dataStreams.setSourceAddressesFor("video", addresses);
+  streamPatch.setSourceAddressesFor("video", addresses);
 };
 //update state object through updateSubject
 updateSubject.subscribe(function (upd) {
@@ -215,7 +215,7 @@ function updateVideoIO(mediadevices) {
   }
 };
 
-dataStreams.registerSource("video", videoSourceFirehose);
+streamPatch.registerSource("video", videoSourceFirehose);
 publishSources();
 
 module.exports = {

@@ -3,7 +3,7 @@
 var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
-var dataStreams = require('../streampatch/models');
+var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
 
 var rawMidiInSubscription;
@@ -36,7 +36,7 @@ function publishSources() {
       addresses.add("midi-cc-"+ cc);
     };
   };
-  dataStreams.setSourceAddressesFor("midi", addresses);
+  streamPatch.setSourceAddressesFor("midi", addresses);
 }
 function publishSinks() {
   let addresses = new Set();
@@ -45,7 +45,7 @@ function publishSinks() {
       addresses.add("midi-cc-"+ cc);
     };
   };
-  dataStreams.setSinkAddressesFor("midi", addresses);
+  streamPatch.setSinkAddressesFor("midi", addresses);
 }
 
 // Interface to MIDI input
@@ -208,8 +208,8 @@ function updateMidiIO(newmidiinfo) {
   });
 };
 
-dataStreams.registerSource("midi", midiSourceFirehose);
-dataStreams.registerSink("midi", handleMidiSinkMessage);
+streamPatch.registerSource("midi", midiSourceFirehose);
+streamPatch.registerSink("midi", handleMidiSinkMessage);
 
 publishSources();
 publishSinks();
