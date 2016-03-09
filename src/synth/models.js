@@ -3,11 +3,14 @@
 var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
-var dataStreams = require('../streampatch/models');
+var streamPatch = require('../streampatch/models');
 var synthlib = require('./synthlib/main');
-
+var activesynths = new Map();
 //this is a per-session object and shouldn't be in app state
-var synthinfo= null;
+var synthinfo = null;
+var context = null;
+var inputNode = null;
+var outputNode = null;
 
 //Basic synth state
 var state = {
@@ -36,10 +39,10 @@ function registerSynth (synthName) {
 
 
 function publishSinks() {
-  dataStreams.setSinkAddressesFor("synth", state.activecontrols);
+  streamPatch.setSinkAddressesFor("synth", state.activecontrols);
 }
 
-dataStreams.registerSink("synth", handleSynthSinkMessage);
+streamPatch.registerSink("synth", handleSynthSinkMessage);
 publishSinks();
 
 //update UI state object through updateSubject
