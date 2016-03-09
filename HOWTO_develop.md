@@ -17,6 +17,21 @@ Your edit URL will look something like this: http://prose.io/#YOURGITHUBUSERNAME
 
 [Sourcecode on github](https://synestize.github.io/synestizer/)
 
+You will need node.js and npm installed.
+Then you run
+
+      npm install
+      npm run watch
+
+this should build a live-updating development version of the app for you to view in the browser.
+
+Apart from that the setup should be the same as for a non-dev user.
+
+### Handy tools
+
+[Firefox has a webaudio editor!](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
+
+
 ### Advanced: documentation subtrees
 
 Advanced class: For convenience we keep documentation and static stuff mirrored
