@@ -1,5 +1,11 @@
 'use strict';
 
+/* TODO:
+ * Mute control
+ * master gain
+ * output compressor
+ */
+
 var Rx = require('Rx');
 var React = require('react');
 var ReactDOM = require('react-dom');
