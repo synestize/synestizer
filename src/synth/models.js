@@ -64,8 +64,29 @@ intents.subjects.selectSynthOutDevice.subscribe(function(key){
   publishSinks();
 });
 
-audioContext = new window.AudioContext();
-
+// raw synthesis interaction:
+function setMasterGain(gain) {
+  if (volumeGain){
+    volumeGain.gain.value = gain;
+  }
+};
+function setMasterTempo(gain) {
+};
+//Create a context with master out volume
+function initContext(window){
+  audioContext = new window.AudioContext();
+  let compressor = audioContext.createDynamicsCompressor();
+  compressor.threshold.value = -50;
+  compressor.knee.value = 40;
+  compressor.ratio.value = 2;
+  compressor.reduction.value = 0; //should be negative for boosts?
+  compressor.attack.value = 0.05;
+  compressor.release.value = 0.3;
+  compressor.connect(audioContext.destination);
+  let volumeGain	= audioContext.createGain();
+  volumeGain.connect(compressor);
+  outputNode = volumeGain;
+}(window);
 
 module.exports = {
   stateSubject: stateSubject,

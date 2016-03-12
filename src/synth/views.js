@@ -18,6 +18,16 @@ var SynthControls = function(props) {
     <h2>Synth Controls go here</h2>
   </div>)
 };
+var MasterVolumeControl = function(props) {
+  return (<div className="streamcontrolset">
+    <h2>Synth Controls go here</h2>
+  </div>)
+};
+var MasterTempoControl = function(props) {
+  return (<div className="streamcontrolset">
+    <h2>Synth Controls go here</h2>
+  </div>)
+};
 function render(state, mountpoint) {
   return ReactDOM.render(
     <SynthControls synthlib={synthlib} />,
