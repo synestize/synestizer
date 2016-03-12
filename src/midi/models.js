@@ -98,7 +98,7 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-intents.subjects.selectMidiInDevice.subscribe(function(key){
+function selectMidiInDevice(key) {
   console.debug("midiin", key);
   updateSubject.onNext({activeindevice:{$set:key}});
   if (midiinfo !==null) {
@@ -109,70 +109,72 @@ intents.subjects.selectMidiInDevice.subscribe(function(key){
       midiinfo.inputs.get(key), 'midimessage'
     ).subscribe(handleMidiInMessage);
   }
-  publishSources();
-});
-intents.subjects.selectMidiInChannel.subscribe(function(i){
+}
+intents.subjects.selectMidiInDevice.subscribe(selectMidiInDevice);
+function selectMidiInChannel(i) {
   updateSubject.onNext({activeinchannel:{$set:i}});
-  publishSources();
-});
-intents.subjects.addMidiInCC.subscribe(function(i){
-  state.activeinccs.add(i);
+}
+intents.subjects.selectMidiInChannel.subscribe(selectMidiInChannel);
+function addMidiInCC(cc) {
+  state.activeinccs.add(cc);
+  let address = "midi-cc-"+ cc;
+  inputStreams.set(address, streamPatch.addSourceAddress(address));
   updateSubject.onNext(
-    {activeinccs:{$set: state.activeinccs.add(i)}}
+    {activeinccs:{$set: state.activeinccs}}
   );
-  publishSources();
-});
-intents.subjects.removeMidiInCC.subscribe(function(i){
-  var newccs = state.activeinccs;
+}
+intents.subjects.addMidiInCC.subscribe(addMidiInCC);
+
+function removeMidiInCC(cc) {
+  let newccs = state.activeinccs;
   newccs.delete(i);
+  let address = "midi-cc-"+ cc;
+  streamPatch.removeSourceAddress(address);
   updateSubject.onNext({activeinccs:{$set:newccs}});
-  publishSources();
-});
-intents.subjects.swapMidiInCC.subscribe(function([i,j]){
-  var newccs = state.activeinccs;
-  newccs.delete(i);
-  newccs.add(j);
+}
+intents.subjects.removeMidiInCC.subscribe(removeMidiInCC);
+
+function setMidiInCC (a) {
+  let newccs = new Set(a);
+  let oldccs = new Set(state.activeinccs);
+  //delete unused
+  for (let cc of setop.difference(oldccs, newccs)) {
+  }
+  let toRemove = setop.difference(oldccs, newccs);
+  let toAdd = setop.difference(newccs, oldccs);
   updateSubject.onNext({activeinccs:{$set:newccs}});
-  publishSources();
-});
-intents.subjects.setMidiInCC.subscribe(function(a){
-  var newccs = new Set(a);
-  updateSubject.onNext({activeinccs:{$set:newccs}});
-  publishSources();
-});
-intents.subjects.selectMidiOutDevice.subscribe(function(key){
+}
+intents.subjects.setMidiInCC.subscribe(setMidiInCC);
+
+function selectMidiOutDevice(key) {
   updateSubject.onNext({activeoutdevice:{$set:key}});
-  publishSinks();
-});
-intents.subjects.selectMidiOutChannel.subscribe(function(i){
-  updateSubject.onNext({activeinchannel:{$set:i}});
-  publishSinks();
-});
-intents.subjects.addMidiOutCC.subscribe(function(i){
+}
+intents.subjects.selectMidiOutDevice.subscribe(selectMidiOutDevice);
+
+function selectMidiOutChannel(i) {
+  updateSubject.onNext({activeoutchannel:{$set:i}});
+}
+intents.subjects.selectMidiOutChannel.subscribe(selectMidiOutChannel);
+
+function addMidiOutCC(i) {
   state.activeoutccs.add(i);
   updateSubject.onNext(
     {activeoutccs:{$set: state.activeoutccs.add(i)}}
   );
-  publishSinks();
-});
-intents.subjects.removeMidiOutCC.subscribe(function(i){
+}
+intents.subjects.addMidiOutCC.subscribe(addMidiOutCC);
+
+function removeMidiOutCC(i) {
   var newccs = state.activeoutccs;
   newccs.delete(i);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
-  publishSinks();
-});
-intents.subjects.swapMidiOutCC.subscribe(function([i,j]){
-  var newccs = state.activeoutccs;
-  newccs.delete(i);
-  newccs.add(j);
-  updateSubject.onNext({activeoutccs:{$set:newccs}});
-  publishSinks();
-});
-intents.subjects.setMidiOutCC.subscribe(function(a){
+}
+intents.subjects.removeMidiOutCC.subscribe(removeMidiOutCC);
+
+function setMidiOutCC(a) {
   var newccs = new Set(a);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
-  publishSinks();
-});
+}
 
 
 //set up midi system
