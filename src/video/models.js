@@ -215,7 +215,7 @@ function updateVideoIO(mediadevices) {
   }
 };
 
-streamPatch.registerSource("video", videoSourceFirehose);
+streamPatch.addSourceAddress("video", videoSourceFirehose);
 publishSources();
 
 module.exports = {

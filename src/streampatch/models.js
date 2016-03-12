@@ -5,11 +5,10 @@
 var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
+var setop = require('../lib/setop.js');
 
 /*
 internal state handles high-speed source updates and slower sink updates
-
-the firehose protocol is a 2-array, [address, value]
 */
 var sourceFirehoses = new Map();
 var sinkFirehoses = new Map();
@@ -25,7 +24,7 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 
 // UI state; control vals are throttled
 // We treat these differently than raw data flows
-// we really don't want to have datasreams re-render the DOM after every update
+// we really don't want to have datastreams re-render the DOM after every update
 var state =  {
   sourceState: sourceState,
   sinkState: sinkState,
@@ -35,6 +34,7 @@ var state =  {
   sourceSinkMappingSign: sourceSinkMappingSign,
 };
 
+//UI-rate state
 var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 //update UI state object through updateSubject
@@ -53,63 +53,62 @@ sourceStateSubject.throttle(20).subscribe(function(sourceState) {
   });
 });
 
-function registerSource(key, observable){
-  sourceFirehoses.set(key, observable);
+function addSourceAddress(address){
+  sourceFirehoses.set(
+    address,
+    sourceFirehoses.get(address) || new Rx.BehaviorSubject(0.0)
+  );
+  let subject = sourceFirehoses.get(address);
   updateSubject.onNext({sourceFirehoses: {$set: sourceFirehoses}})
-  observable.subscribe(
+  subject.subscribe(
     function ([key, val]) {
       sourceState.set(key, val);
       window.sourceState = sourceState;
       sourceStateSubject.onNext(sourceState);
     }
   );
+  return subject;
 }
-function registerSink(key, observer) {
-  let subject = new Rx.Subject();
-  sinkFirehoses.set(key, subject);
+function removeSourceAddress(address) {
+  sourceFirehoses.delete(address);
+  //more?
+  for (let key of [...sourceSinkMappingSign.keys()]) {
+    let [sourceAddress, sinkAddress] = key.split("/");
+    if (!sourceFirehoses.has(sourceAddress)) {
+      sourceSinkMappingSign.delete(key);
+    }
+  }
+  for (let key of [...sourceSinkMappingMag.keys()]) {
+    let [sourceAddress, sinkAddress] = key.split("/");
+    if (!sourceFirehoses.has(sourceAddress)) {
+      sourceSinkMappingMag.delete(key);
+    }
+  }
+}
+function addSinkAddress(address) {
+  sinkFirehoses.set(
+    address,
+    sinkFirehoses.get(address) || new Rx.BehaviorSubject(0.0)
+  );
+  let subject = sinkFirehoses.get(address);
   updateSubject.onNext({sinkFirehoses: {$set: sinkFirehoses}})
-  subject.subscribe(observer);
+  return subject;
 }
-function setSourceAddressesFor(key, addressSet){
-  // console.debug("ssaf", key, addressSet);
-  for (let address of sourceState.keys()) {
-    let thisKey = address.split("-")[0];
-    if ((thisKey === key) && (!addressSet.has(address))) {
-      // console.debug("ssafd", key, thisKey, address);
-      sourceState.delete(address)
-    }
-  };
-  let extantAddresses = new Set(sourceState.keys());
-  for (let address of addressSet) {
-    if (!extantAddresses.has(address)) {
-      // console.debug("ssafa", key, address);
-      sourceState.set(address, 0.0);
+function removeSinkAddress(address) {
+  sinkFirehoses.delete(address);
+  for (let key of [...sourceSinkMappingSign.keys()]) {
+    let [sourceAddress, sinkAddress] = key.split("/");
+    if (!sinkFirehoses.has(sinkAddress)) {
+      sourceSinkMappingSign.delete(key);
     }
   }
-  sourceStateSubject.onNext(sourceState);
-}
-function setSinkAddressesFor(key, addressSet){
-  // console.debug("Ssaf", key, addressSet);
-  for (let address of sinkState.keys()) {
-    let thisKey = address.split("-")[0];
-    if ((thisKey===key) && (!addressSet.has(address))) {
-      // console.debug("Ssafd", key, thisKey, address);
-      sinkState.delete(address)
+  for (let key of [...sourceSinkMappingMag.keys()]) {
+    let [sourceAddress, sinkAddress] = key.split("/");
+    if (!sinkFirehoses.has(sinkAddress)) {
+      sourceSinkMappingMag.delete(key);
     }
   }
-  let extantAddresses = new Set(sinkState.keys());
-  for (let address of addressSet) {
-    if (!extantAddresses.has(address)) {
-      // console.debug("Ssafd", key, address);
-      sinkState.set(address, 0.0);
-    }
-  }
-  sinkStateSubject.onNext(sinkState);
 }
-function addSourceAddress(address){}
-function removeSourceAddress(address){}
-function addSinkAddress(address){}
-function removeSinkAddress(address){}
 function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
   // console.debug("sssms", sourceAddress, sinkAddress, value);
@@ -138,7 +137,9 @@ function setMappingMag(sourceAddress, sinkAddress, value) {
   updateMapping();
 };
 
+
 function updateMapping() {
+  //Calculates the mapping from the polarity and magnitude dictionaries
   sourceSinkMapping = new Map();
   for (let [key, scale] of sourceSinkMappingMag.entries()) {
     sourceSinkMapping.set(key, scale * (sourceSinkMappingSign.get(key) || 1.0));
@@ -191,10 +192,6 @@ module.exports = {
   sourceFirehoses: sourceFirehoses,
   sinkStateSubject: sinkStateSubject,
   sinkFirehoses: sinkFirehoses,
-  registerSource: registerSource,
-  registerSink: registerSink,
-  setSourceAddressesFor: setSourceAddressesFor,
-  setSinkAddressesFor: setSinkAddressesFor,
   addSourceAddress: addSourceAddress,
   removeSourceAddress: removeSourceAddress,
   addSinkAddress: addSinkAddress,

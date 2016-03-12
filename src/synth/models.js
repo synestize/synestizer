@@ -43,7 +43,7 @@ function publishSinks() {
   streamPatch.setSinkAddressesFor("synth", state.activecontrols);
 }
 
-streamPatch.registerSink("synth", handleSynthSinkMessage);
+streamPatch.addSinkAddress("synth", handleSynthSinkMessage);
 publishSinks();
 
 //update UI state object through updateSubject

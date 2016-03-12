@@ -5,6 +5,7 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
+var setop = require('../lib/setop.js');
 
 var rawMidiInSubscription;
 
@@ -27,26 +28,9 @@ var stateSubject = new Rx.BehaviorSubject(state);
 //midi model updates
 var updateSubject = new Rx.Subject();
 
+var inputStreams = new Map();
+var outputStreams = new Map();
 var midiSourceFirehose = new Rx.Subject();
-
-function publishSources() {
-  let addresses = new Set();
-  if (midiinfo !==null) {
-    for (let cc of state.activeinccs) {
-      addresses.add("midi-cc-"+ cc);
-    };
-  };
-  streamPatch.setSourceAddressesFor("midi", addresses);
-}
-function publishSinks() {
-  let addresses = new Set();
-  if (midiinfo !==null) {
-    for (let cc of state.activeoutccs) {
-      addresses.add("midi-cc-"+ cc);
-    };
-  };
-  streamPatch.setSinkAddressesFor("midi", addresses);
-}
 
 // Interface to MIDI input
 function handleMidiInMessage (ev) {
@@ -69,7 +53,7 @@ function handleMidiInMessage (ev) {
     (state.activeinchannel == channel) &&
     state.activeinccs.has(cc)) {
     //console.debug("me", ev.data, midievent);
-    midiSourceFirehose.onNext([midiaddress, val]);
+    inputStreams.get(midiaddress).onNext(val);
   };
 };
 //Interface to MIDI output
@@ -115,6 +99,7 @@ function selectMidiInChannel(i) {
   updateSubject.onNext({activeinchannel:{$set:i}});
 }
 intents.subjects.selectMidiInChannel.subscribe(selectMidiInChannel);
+
 function addMidiInCC(cc) {
   state.activeinccs.add(cc);
   let address = "midi-cc-"+ cc;
@@ -139,10 +124,11 @@ function setMidiInCC (a) {
   let oldccs = new Set(state.activeinccs);
   //delete unused
   for (let cc of setop.difference(oldccs, newccs)) {
+    removeMidiInCC(cc);
+  };
+  for (let cc of setop.difference(newccs, oldccs)) {
+    addMidiInCC(cc);
   }
-  let toRemove = setop.difference(oldccs, newccs);
-  let toAdd = setop.difference(newccs, oldccs);
-  updateSubject.onNext({activeinccs:{$set:newccs}});
 }
 intents.subjects.setMidiInCC.subscribe(setMidiInCC);
 
@@ -157,25 +143,36 @@ function selectMidiOutChannel(i) {
 intents.subjects.selectMidiOutChannel.subscribe(selectMidiOutChannel);
 
 function addMidiOutCC(i) {
-  state.activeoutccs.add(i);
+  state.activeoutccs.add(cc);
+  let address = "midi-cc-"+ cc;
+  outputStreams.set(address, streamPatch.addSinkAddress(address));
   updateSubject.onNext(
-    {activeoutccs:{$set: state.activeoutccs.add(i)}}
+    {activeoutccs:{$set: state.activeoutccs}}
   );
 }
 intents.subjects.addMidiOutCC.subscribe(addMidiOutCC);
 
 function removeMidiOutCC(i) {
-  var newccs = state.activeoutccs;
+  let newccs = state.activeoutccs;
   newccs.delete(i);
+  let address = "midi-cc-"+ cc;
+  streamPatch.removeSinkAddress(address);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
 }
 intents.subjects.removeMidiOutCC.subscribe(removeMidiOutCC);
 
 function setMidiOutCC(a) {
-  var newccs = new Set(a);
-  updateSubject.onNext({activeoutccs:{$set:newccs}});
+  let newccs = new Set(a);
+  let oldccs = new Set(state.activeoutccs);
+  //delete unused
+  for (let cc of setop.difference(oldccs, newccs)) {
+    removeMidiOutCC(cc);
+  };
+  for (let cc of setop.difference(newccs, oldccs)) {
+    addMidiOutCC(cc);
+  }
 }
-
+intents.subjects.setMidiOutCC.subscribe(setMidiOutCC);
 
 //set up midi system
 function init() {
@@ -210,11 +207,11 @@ function updateMidiIO(newmidiinfo) {
   });
 };
 
-streamPatch.registerSource("midi", midiSourceFirehose);
-streamPatch.registerSink("midi", handleMidiSinkMessage);
+streamPatch.addSourceAddress("midi", midiSourceFirehose);
+streamPatch.addSinkAddress("midi", handleMidiSinkMessage);
 
-publishSources();
-publishSinks();
+wireSources();
+wireSinks();
 
 module.exports = {
   init: init,
