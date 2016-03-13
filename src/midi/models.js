@@ -43,7 +43,6 @@ function handleMidiInMessage (ev) {
   var cc = ev.data[1];
   var val = transform.midiBipol(ev.data[2]);
   //midievent[0] = cmd;
-  var midiaddress = ("midi-cc-"+ cc);
 
   //midi commands
   //11: CC
@@ -53,7 +52,7 @@ function handleMidiInMessage (ev) {
     (state.activeinchannel == channel) &&
     state.activeinccs.has(cc)) {
     //console.debug("me", ev.data, midievent);
-    inputStreams.get(midiaddress).onNext(val);
+    inputStreams.get("midi-cc-"+ cc).onNext(val);
   };
 };
 //Interface to MIDI output
@@ -95,6 +94,7 @@ function selectMidiInDevice(key) {
   }
 }
 intents.subjects.selectMidiInDevice.subscribe(selectMidiInDevice);
+
 function selectMidiInChannel(i) {
   updateSubject.onNext({activeinchannel:{$set:i}});
 }
@@ -112,7 +112,7 @@ intents.subjects.addMidiInCC.subscribe(addMidiInCC);
 
 function removeMidiInCC(cc) {
   let newccs = state.activeinccs;
-  newccs.delete(i);
+  newccs.delete(cc);
   let address = "midi-cc-"+ cc;
   streamPatch.removeSourceAddress(address);
   updateSubject.onNext({activeinccs:{$set:newccs}});
@@ -206,12 +206,6 @@ function updateMidiIO(newmidiinfo) {
     alloutdevices: {$set: alloutdevices}
   });
 };
-
-streamPatch.addSourceAddress("midi", midiSourceFirehose);
-streamPatch.addSinkAddress("midi", handleMidiSinkMessage);
-
-wireSources();
-wireSinks();
 
 module.exports = {
   init: init,

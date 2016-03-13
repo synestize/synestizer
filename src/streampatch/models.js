@@ -10,8 +10,8 @@ var setop = require('../lib/setop.js');
 /*
 internal state handles high-speed source updates and slower sink updates
 */
-var sourceFirehoses = new Map();
-var sinkFirehoses = new Map();
+var sourceFirehoseMap = new Map();
+var sinkFirehoseMap = new Map();
 var sourceSinkMappingMag = new Map();
 var sourceSinkMappingSign = new Map();
 var sourceSinkMapping = new Map();
@@ -28,8 +28,8 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 var state =  {
   sourceState: sourceState,
   sinkState: sinkState,
-  sourceFirehoses: sourceFirehoses, //streams of source values
-  sinkFirehoses: sinkFirehoses, //streams of sink values
+  sourceFirehoseMap: sourceFirehoseMap, //streams of source values
+  sinkFirehoseMap: sinkFirehoseMap, //streams of sink values
   sourceSinkMappingMag: sourceSinkMappingMag,
   sourceSinkMappingSign: sourceSinkMappingSign,
 };
@@ -46,7 +46,9 @@ updateSubject.subscribe(function (upd) {
 });
 
 sourceStateSubject.throttle(20).subscribe(function(sourceState) {
+  //console.debug("sss", sourceState);
   sinkState = calcSinkValues(sourceState);
+  sinkStateSubject.onNext(sinkState);
   updateSubject.onNext({
     sourceState: {$set: sourceState},
     sinkState: {$set: sinkState}
@@ -54,57 +56,55 @@ sourceStateSubject.throttle(20).subscribe(function(sourceState) {
 });
 
 function addSourceAddress(address){
-  sourceFirehoses.set(
+  sourceFirehoseMap.set(
     address,
-    sourceFirehoses.get(address) || new Rx.BehaviorSubject(0.0)
+    sourceFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
   );
-  let subject = sourceFirehoses.get(address);
-  updateSubject.onNext({sourceFirehoses: {$set: sourceFirehoses}})
-  subject.subscribe(
-    function ([key, val]) {
-      sourceState.set(key, val);
-      window.sourceState = sourceState;
-      sourceStateSubject.onNext(sourceState);
-    }
-  );
+  let subject = sourceFirehoseMap.get(address);
+  subject.subscribe(function (val) {
+    //console.debug("up", address);
+    sourceState.set(address, val);
+    sourceStateSubject.onNext(sourceState);
+  });
+  updateSubject.onNext({sourceFirehoseMap: {$set: sourceFirehoseMap}})
   return subject;
 }
 function removeSourceAddress(address) {
-  sourceFirehoses.delete(address);
+  sourceFirehoseMap.delete(address);
   //more?
   for (let key of [...sourceSinkMappingSign.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
-    if (!sourceFirehoses.has(sourceAddress)) {
+    if (!sourceFirehoseMap.has(sourceAddress)) {
       sourceSinkMappingSign.delete(key);
     }
   }
   for (let key of [...sourceSinkMappingMag.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
-    if (!sourceFirehoses.has(sourceAddress)) {
+    if (!sourceFirehoseMap.has(sourceAddress)) {
       sourceSinkMappingMag.delete(key);
     }
   }
 }
 function addSinkAddress(address) {
-  sinkFirehoses.set(
+  sinkFirehoseMap.set(
     address,
-    sinkFirehoses.get(address) || new Rx.BehaviorSubject(0.0)
+    sinkFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
   );
-  let subject = sinkFirehoses.get(address);
-  updateSubject.onNext({sinkFirehoses: {$set: sinkFirehoses}})
+  let subject = sinkFirehoseMap.get(address);
+  updateSubject.onNext({sinkFirehoseMap: {$set: sinkFirehoseMap}})
   return subject;
 }
 function removeSinkAddress(address) {
-  sinkFirehoses.delete(address);
+  sinkFirehoseMap.delete(address);
   for (let key of [...sourceSinkMappingSign.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
-    if (!sinkFirehoses.has(sinkAddress)) {
+    if (!sinkFirehoseMap.has(sinkAddress)) {
       sourceSinkMappingSign.delete(key);
     }
   }
   for (let key of [...sourceSinkMappingMag.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
-    if (!sinkFirehoses.has(sinkAddress)) {
+    if (!sinkFirehoseMap.has(sinkAddress)) {
       sourceSinkMappingMag.delete(key);
     }
   }
@@ -153,7 +153,7 @@ function calcSinkValues(sourceState) {
     newSinkStateT.set(sinkAddress, 0.0);
   };
   
-  // console.debug("ss", sourceState);
+  //console.debug("ss", sourceState);
   // console.debug("ss1", sourceSinkMapping);
   
   for (let [key, scale] of sourceSinkMapping.entries()) {
@@ -166,15 +166,14 @@ function calcSinkValues(sourceState) {
     // console.debug("ssq", sourceAddress, sinkAddress, sourceVal, sinkValT, newSinkStateT.get(sinkAddress));
   };
   for (let [sinkAddress, sinkValT] of newSinkStateT.entries()) {
-    let sinkKey = sinkAddress.split("-")[0]
     let sinkVal = Math.atanh(sinkValT);
     let lastSinkVal = sinkState.get(sinkAddress);
-    // console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
+    console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
     newSinkState.set(sinkAddress, sinkVal);
     //This could be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
-      // console.debug("ssru", sinkAddress, sinkVal);
-      sinkFirehoses.get(sinkKey).onNext([sinkAddress, sinkVal]);
+      console.debug("ssru", sinkAddress, sinkVal);
+      sinkFirehoseMap.get(sinkAddress).onNext(sinkVal);
     }
   };
   return newSinkState;
@@ -189,9 +188,9 @@ intents.subjects.setMappingMag.subscribe(
 
 module.exports = {
   sourceStateSubject: sourceStateSubject,
-  sourceFirehoses: sourceFirehoses,
+  sourceFirehoseMap: sourceFirehoseMap,
   sinkStateSubject: sinkStateSubject,
-  sinkFirehoses: sinkFirehoses,
+  sinkFirehoseMap: sinkFirehoseMap,
   addSourceAddress: addSourceAddress,
   removeSourceAddress: removeSourceAddress,
   addSinkAddress: addSinkAddress,

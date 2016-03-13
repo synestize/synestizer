@@ -30,20 +30,24 @@ var state = {
 var stateSubject = new Rx.BehaviorSubject(state);
 //synth model updates
 var updateSubject = new Rx.Subject();
+var outputStreams = new Map();
 
 function handleSynthSinkMessage ([address, val]) {
 }
 
+//We don't have infrastructure for this yet.
 function registerSynth (synthName) {
   //register controls here.
 }
 
-
+//At this stage ,synths presumably don't change, so we just register controls once, here.
 function publishSinks() {
-  streamPatch.setSinkAddressesFor("synth", state.activecontrols);
+  for (let address of state.activecontrols) {
+    let stream = streamPatch.addSinkAddress(address);
+    outputStreams.set(address, stream);
+    stream.subscribe((val) => (console.debug("synth control", address, val)));
+  }
 }
-
-streamPatch.addSinkAddress("synth", handleSynthSinkMessage);
 publishSinks();
 
 //update UI state object through updateSubject

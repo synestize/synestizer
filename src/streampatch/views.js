@@ -12,8 +12,8 @@ var StreamPatchPanel = function(props) {
     <StreamPatchGrid
       sourceState={props.sourceState}
       sinkState={props.sinkState}
-      sourceFirehoses={props.sourceFirehoses}
-      sinkScalars={props.sinkScalars} 
+      sourceFirehoseMap={props.sourceFirehoseMap}
+      sinkFirehoseMap={props.sinkFirehoseMap}
       sourceSinkMappingMag={props.sourceSinkMappingMag}
       sourceSinkMappingSign={props.sourceSinkMappingSign}
     />
@@ -73,8 +73,8 @@ function render(state, mountpoint) {
     <StreamPatchPanel
       sourceState={state.sourceState}
       sinkState={state.sinkState}
-      sourceFirehoses={state.sourceFirehoses}
-      sinkScalars={state.sinkScalars} 
+      sourceFirehoseMap={state.sourceFirehoseMap}
+      sinkFirehoseMap={state.sinkFirehoseMap}
       sourceSinkMappingMag={state.sourceSinkMappingMag} 
       sourceSinkMappingSign={state.sourceSinkMappingSign} 
     />,

@@ -17,7 +17,7 @@ var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 
 //streams
-var videoSourceFirehose = new Rx.Subject()
+var inputStreams = new Map();
 
 //hardware business
 var videoindevices = new Map(); //id -> device
@@ -77,8 +77,8 @@ statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
 function statsStreamSpray(x) {
   for (var [key, data] of x) {
     for (var [index, value] of data.entries()) {
-      videoSourceFirehose.onNext(["video-" + key + "-" + index, value])
-      //console.log("video-" + key + "-" + index +  ", " + value);
+      let address = "video-" + key + "-" + index;
+      inputStreams.get(address).onNext(value);
     }
   }
 }
@@ -99,9 +99,10 @@ function publishSources() {
   //TODO: refactor
   let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
-    addresses.add("video-Moment-" + idx);
+    let address = "video-Moment-" + idx;
+    addresses.add(address);
+    inputStreams.set(address, streamPatch.addSourceAddress(address));
   };
-  streamPatch.setSourceAddressesFor("video", addresses);
 };
 //update state object through updateSubject
 updateSubject.subscribe(function (upd) {
@@ -193,6 +194,7 @@ function init(newVideoDom) {
     updateVideoIO,
     (err) => console.debug(err.stack)
   );
+  publishSources();
 };
 function updateVideoIO(mediadevices) {
   /*
@@ -214,9 +216,6 @@ function updateVideoIO(mediadevices) {
     for (let key of allindevices.keys()) {intents.selectVideoInDevice(key)}
   }
 };
-
-streamPatch.addSourceAddress("video", videoSourceFirehose);
-publishSources();
 
 module.exports = {
   init: init,
