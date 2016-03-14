@@ -6,7 +6,6 @@ title: TODO
 
 * currently:
 
-  * fix mapping doesn't actually seem to work reliably
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
 
@@ -28,7 +27,7 @@ title: TODO
   * https://christianalfoni.github.io/react-webpack-cookbook/
   * https://github.com/petehunt/webpack-howto
   * to get SSL, maybe by creating a caddy deploy workflow to some host
-  * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't seem to support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
+  * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
     * However, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
   
   * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
