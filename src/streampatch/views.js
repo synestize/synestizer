@@ -12,8 +12,6 @@ var StreamPatchPanel = function(props) {
     <StreamPatchGrid
       sourceState={props.sourceState}
       sinkState={props.sinkState}
-      sourceFirehoseMap={props.sourceFirehoseMap}
-      sinkFirehoseMap={props.sinkFirehoseMap}
       sourceSinkMappingMag={props.sourceSinkMappingMag}
       sourceSinkMappingSign={props.sourceSinkMappingSign}
     />
@@ -25,10 +23,8 @@ var StreamPatchGrid = function(props) {
   let sourceNames = Array.from(props.sourceState.keys()).sort();
   let sinkNames = Array.from(props.sinkState.keys()).sort();
   // This could be done best with Rx stream abstractions, I think
-  
   // console.debug("in", props.sourceState, sourceNames);
   // console.debug("out", props.sinkState, sinkNames);
-  
   for (var sinkName of sinkNames) {
     header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0} />);
     //console.debug("sink", sinkName, props.sinkState.get(sinkName));
@@ -73,8 +69,6 @@ function render(state, mountpoint) {
     <StreamPatchPanel
       sourceState={state.sourceState}
       sinkState={state.sinkState}
-      sourceFirehoseMap={state.sourceFirehoseMap}
-      sinkFirehoseMap={state.sinkFirehoseMap}
       sourceSinkMappingMag={state.sourceSinkMappingMag} 
       sourceSinkMappingSign={state.sourceSinkMappingSign} 
     />,

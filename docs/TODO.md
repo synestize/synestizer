@@ -7,7 +7,6 @@ title: TODO
 * currently:
 
   * implement audio model
-  * this registerSink/publishSink distinction is too complicated; do it in some more natural stream-processing way, possibly using filtering
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
 
 * UI improvements

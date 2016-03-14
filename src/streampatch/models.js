@@ -60,6 +60,7 @@ function addSourceAddress(address){
     address,
     sourceFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
   );
+  sourceState.set(address, 0.0);
   let subject = sourceFirehoseMap.get(address);
   subject.subscribe(function (val) {
     //console.debug("up", address);
@@ -71,6 +72,7 @@ function addSourceAddress(address){
 }
 function removeSourceAddress(address) {
   sourceFirehoseMap.delete(address);
+  sinkState.delete(address);
   //more?
   for (let key of [...sourceSinkMappingSign.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
@@ -86,16 +88,23 @@ function removeSourceAddress(address) {
   }
 }
 function addSinkAddress(address) {
+  console.debug("asad", address);
   sinkFirehoseMap.set(
     address,
     sinkFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
   );
+  sinkState.set(address, 0.0);
   let subject = sinkFirehoseMap.get(address);
-  updateSubject.onNext({sinkFirehoseMap: {$set: sinkFirehoseMap}})
+  console.debug("asad2", sinkFirehoseMap, subject);
+  updateSubject.onNext({
+    sinkFirehoseMap: {$set: sinkFirehoseMap},
+    sinkState: {$set: sinkState},
+  });
   return subject;
 }
 function removeSinkAddress(address) {
   sinkFirehoseMap.delete(address);
+  sinkState.delete(address);
   for (let key of [...sourceSinkMappingSign.keys()]) {
     let [sourceAddress, sinkAddress] = key.split("/");
     if (!sinkFirehoseMap.has(sinkAddress)) {
