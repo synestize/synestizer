@@ -204,9 +204,8 @@ a, a:hover, a:active, a:focus {
   position: relative; /* so that child stateBar elements can be absolutely positioned */
 }
 .mappingmatrix th .stateBar {
-  height: 0.5rem;
+  height: 100%;
   bottom: 0;
-  width: 1em;
   background-color: green;
   opacity: 1;
   position: absolute;
