@@ -61,7 +61,7 @@ sourceStateSubject.throttle(20).subscribe(function(sourceState) {
   });
 });
 
-function addSourceAddress(address, label){
+function addSource(address, label){
   sourceMap.set(address, label);
   sourceState.set(address, 0.0);
   let subject = sourceFirehoseMap.get(address);
@@ -81,7 +81,7 @@ function addSourceAddress(address, label){
   })
   return subject;
 }
-function removeSourceAddress(address) {
+function removeSource(address) {
   sinkMap.delete(address);
   sourceFirehoseMap.delete(address);
   sinkState.delete(address);
@@ -104,7 +104,7 @@ function removeSourceAddress(address) {
     sourceFirehoseMap: {$set: sourceFirehoseMap},
   })
 }
-function addSinkAddress(address, label){
+function addSink(address, label){
   sinkMap.set(address, label);
   sinkState.set(address, 0.0);
   let subject = sinkFirehoseMap.get(address);
@@ -124,7 +124,7 @@ function addSinkAddress(address, label){
   })
   return subject;
 }
-function removeSinkAddress(address) {
+function addSinkAddress(address) {
   sinkMap.delete(address);
   sinkFirehoseMap.delete(address);
   sinkState.delete(address);
@@ -224,10 +224,10 @@ module.exports = {
   sourceFirehoseMap: sourceFirehoseMap,
   sinkStateSubject: sinkStateSubject,
   sinkFirehoseMap: sinkFirehoseMap,
-  addSourceAddress: addSourceAddress,
-  removeSourceAddress: removeSourceAddress,
-  addSinkAddress: addSinkAddress,
-  removeSinkAddress: removeSourceAddress,
+  addSource: addSource,
+  removeSource: removeSource,
+  addSink: addSink,
+  addSinkAddress: removeSource,
   setMappingSign: setMappingSign,
   setMappingMag: setMappingMag,
   stateSubject: stateSubject,

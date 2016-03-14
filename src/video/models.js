@@ -103,7 +103,7 @@ function publishSources() {
   let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
     let address = "video-Moment-" + idx;
-    inputStreams.set(address, streamPatch.addSourceAddress(address));
+    inputStreams.set(address, streamPatch.addSource(address));
   };
 };
 //update state object through updateSubject

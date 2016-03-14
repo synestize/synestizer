@@ -68,7 +68,7 @@ var Synth = function(synthKey, outputNode, inputNode) {
   var render = function(dom) {};
   var handleSinkMessage = function([address, val]) {
   };
-  streamPatch.addSinkAddress(synthKey, handleSynthSinkMessage);
+  streamPatch.addSink(synthKey, handleSynthSinkMessage);
   return {
     cleanup: cleanup,
     render: render,

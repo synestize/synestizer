@@ -43,7 +43,7 @@ function registerSynth (synthName) {
 //At this stage ,synths presumably don't change, so we just register controls once, here.
 function publishSinks() {
   for (let address of state.activecontrols) {
-    let stream = streamPatch.addSinkAddress(address);
+    let stream = streamPatch.addSink(address);
     outputStreams.set(address, stream);
     stream.subscribe((val) => (console.debug("synth control", address, val)));
   }
