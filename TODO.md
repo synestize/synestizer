@@ -6,6 +6,7 @@ title: TODO
 
 * currently:
 
+  * fix mapping doesn't actually seem to work reliably
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
 
