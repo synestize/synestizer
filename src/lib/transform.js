@@ -1,5 +1,37 @@
 'use strict';
 
+// [-1,1] -> [-inf, inf]
+var saturate = (val) =>  Math.tanh(val);
+// [-1,1] -> [-inf, inf]
+var desaturate = (val) =>  clipinf(Math.atanh(val));
+
+var clip = function(min, max, val){
+  return Math.min(
+    Math.max(
+      val,
+      -min
+    ), max
+  );
+};
+//clips to [-1,1]
+var clip1 = function(val){
+  return Math.min(
+    Math.max(
+      val,
+      -1
+    ), 1
+  );
+};
+//clips to finite values; we want to do this because Inf*0=NaN
+var clipinf = function(val){
+  return Math.min(
+    Math.max(
+      val,
+      -Number.MAX_VALUE
+    ), Number.MAX_VALUE
+  );
+};
+
 // [min, max]->[-1,1]
 var linBipol = function(min, max, val) {
   let range = max-min;
@@ -104,6 +136,11 @@ var bipolEquiOctave = function(min, max, val) {
   return Math.pow(2, bipolLin(logmin, logmax));
 }
 module.exports = {
+  saturate: saturate,
+  desaturate: desaturate,
+  clip: clip,
+  clip1: clip1,
+  clipinf: clipinf,
   linBipol: linBipol,
   bipolLin: bipolLin,
   intBipol: intBipol,

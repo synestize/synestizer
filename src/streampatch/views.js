@@ -10,6 +10,8 @@ var transform = require('../lib/transform.js');
 var StreamPatchPanel = function(props) {
   return (<div className="streamcontrolset">
     <StreamPatchGrid
+      sourceMap={props.sourceMap}
+      sinkMap={props.sinkMap}
       sourceState={props.sourceState}
       sinkState={props.sinkState}
       sourceSinkMappingMag={props.sourceSinkMappingMag}
@@ -20,8 +22,9 @@ var StreamPatchPanel = function(props) {
 var StreamPatchGrid = function(props) {
   let bodyRows = [];
   let header = [<th key="header"></th>];
-  let sourceNames = Array.from(props.sourceState.keys()).sort();
-  let sinkNames = Array.from(props.sinkState.keys()).sort();
+  let sourceNames = Array.from(props.sourceMap.keys()).sort();
+  let sinkNames = Array.from(props.sinkMap.keys()).sort();
+  
   // This could be done best with Rx stream abstractions, I think
   // console.debug("in", props.sourceState, sourceNames);
   // console.debug("out", props.sinkState, sinkNames);
@@ -67,6 +70,8 @@ var StreamPatchMappingHeaderCell = function(props) {
 function render(state, mountpoint) {
   return ReactDOM.render(
     <StreamPatchPanel
+      sourceMap={state.sourceMap}
+      sinkMap={state.sinkMap}
       sourceState={state.sourceState}
       sinkState={state.sinkState}
       sourceSinkMappingMag={state.sourceSinkMappingMag} 

@@ -6,6 +6,7 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var setop = require('../lib/setop.js');
+var transform = require('../lib/transform.js');
 
 /*
 internal state handles high-speed source updates and slower sink updates
@@ -16,6 +17,9 @@ var sourceSinkMappingMag = new Map();
 var sourceSinkMappingSign = new Map();
 var sourceSinkMapping = new Map();
 
+//metadata of individual controls
+var sourceMap = new Map();
+var sinkMap = new Map();
 //values of individual controls
 var sourceState = window.streamPatchState = new Map();
 var sourceStateSubject = new Rx.BehaviorSubject(sourceState);
@@ -26,6 +30,8 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 // We treat these differently than raw data flows
 // we really don't want to have datastreams re-render the DOM after every update
 var state =  {
+  sourceMap: sourceMap,
+  sinkMap: sinkMap,
   sourceState: sourceState,
   sinkState: sinkState,
   sourceFirehoseMap: sourceFirehoseMap, //streams of source values
@@ -55,22 +61,28 @@ sourceStateSubject.throttle(20).subscribe(function(sourceState) {
   });
 });
 
-function addSourceAddress(address){
-  sourceFirehoseMap.set(
-    address,
-    sourceFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
-  );
+function addSourceAddress(address, label){
+  sourceMap.set(address, label);
   sourceState.set(address, 0.0);
   let subject = sourceFirehoseMap.get(address);
-  subject.subscribe(function (val) {
-    //console.debug("up", address);
-    sourceState.set(address, val);
-    sourceStateSubject.onNext(sourceState);
-  });
-  updateSubject.onNext({sourceFirehoseMap: {$set: sourceFirehoseMap}})
+  if (subject === undefined) {
+    subject = new Rx.BehaviorSubject(0.0);
+    sourceFirehoseMap.set(address, subject);
+    subject.subscribe(function (val) {
+      //console.debug("up", address);
+      sourceState.set(address, val);
+      sourceStateSubject.onNext(sourceState);
+    });
+  }
+  updateSubject.onNext({
+    sourceState: {$set: sourceState},
+    sourceMap: {$set: sourceMap},
+    sourceFirehoseMap: {$set: sourceFirehoseMap},
+  })
   return subject;
 }
 function removeSourceAddress(address) {
+  sinkMap.delete(address);
   sourceFirehoseMap.delete(address);
   sinkState.delete(address);
   //more?
@@ -86,23 +98,34 @@ function removeSourceAddress(address) {
       sourceSinkMappingMag.delete(key);
     }
   }
+  updateSubject.onNext({
+    sourceState: {$set: sourceState},
+    sourceMap: {$set: sourceMap},
+    sourceFirehoseMap: {$set: sourceFirehoseMap},
+  })
 }
-function addSinkAddress(address) {
-  console.debug("asad", address);
-  sinkFirehoseMap.set(
-    address,
-    sinkFirehoseMap.get(address) || new Rx.BehaviorSubject(0.0)
-  );
+function addSinkAddress(address, label){
+  sinkMap.set(address, label);
   sinkState.set(address, 0.0);
   let subject = sinkFirehoseMap.get(address);
-  console.debug("asad2", sinkFirehoseMap, subject);
+  if (subject === undefined) {
+    subject = new Rx.BehaviorSubject(0.0);
+    sinkFirehoseMap.set(address, subject);
+    subject.subscribe(function (val) {
+      //console.debug("up", address);
+      sinkState.set(address, val);
+      sinkStateSubject.onNext(sinkState);
+    });
+  }
   updateSubject.onNext({
-    sinkFirehoseMap: {$set: sinkFirehoseMap},
     sinkState: {$set: sinkState},
-  });
+    sinkMap: {$set: sinkMap},
+    sinkFirehoseMap: {$set: sinkFirehoseMap},
+  })
   return subject;
 }
 function removeSinkAddress(address) {
+  sinkMap.delete(address);
   sinkFirehoseMap.delete(address);
   sinkState.delete(address);
   for (let key of [...sourceSinkMappingSign.keys()]) {
@@ -117,6 +140,11 @@ function removeSinkAddress(address) {
       sourceSinkMappingMag.delete(key);
     }
   }
+  updateSubject.onNext({
+    sinkState: {$set: sinkState},
+    sinkMap: {$set: sinkMap},
+    sinkFirehoseMap: {$set: sinkFirehoseMap},
+  })
 }
 function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
@@ -156,32 +184,28 @@ function updateMapping() {
 };
 
 function calcSinkValues(sourceState) {
-  var newSinkStateT = new Map(); // temporary tanh-transformed sink vals
-  var newSinkState = new Map(); // replacement sink vals
-  for (let sinkAddress of sinkState.keys()) {
-    newSinkStateT.set(sinkAddress, 0.0);
-  };
-  
+  let newSinkStateT = new Map(); // temporary tanh-transformed sink vals
+  let newSinkState = new Map(); // replacement sink vals  
   //console.debug("ss", sourceState);
   // console.debug("ss1", sourceSinkMapping);
   
   for (let [key, scale] of sourceSinkMapping.entries()) {
     let [sourceAddress, sinkAddress] = key.split("/");
     let sourceVal = sourceState.get(sourceAddress) || 0.0;
-    let sinkValT = newSinkStateT.get(sinkAddress) || 0.0;
-    newSinkStateT.set(sinkAddress,
-      sinkValT + scale * Math.tanh(sourceVal)
-    );
-    // console.debug("ssq", sourceAddress, sinkAddress, sourceVal, sinkValT, newSinkStateT.get(sinkAddress));
+    let delta = scale * transform.desaturate(sourceVal);
+    if (delta!==0.0) {
+      newSinkStateT.set(sinkAddress,
+        delta + (newSinkStateT.get(sinkAddress) || 0.0)
+      );
+    };
   };
   for (let [sinkAddress, sinkValT] of newSinkStateT.entries()) {
-    let sinkVal = Math.atanh(sinkValT);
+    let sinkVal = transform.saturate(sinkValT);
     let lastSinkVal = sinkState.get(sinkAddress);
-    console.debug("ssr", sinkAddress, sinkValT, sinkVal, lastSinkVal);
     newSinkState.set(sinkAddress, sinkVal);
     //This could be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
-      console.debug("ssru", sinkAddress, sinkVal);
+      // console.debug("ssru", sinkAddress, sinkVal);
       sinkFirehoseMap.get(sinkAddress).onNext(sinkVal);
     }
   };

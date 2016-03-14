@@ -78,6 +78,10 @@ function statsStreamSpray(x) {
   for (var [key, data] of x) {
     for (var [index, value] of data.entries()) {
       let address = "video-" + key + "-" + index;
+      if ((value < -1) || (value > 1)) {
+        console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
+        value = transform.clip1(value); 
+      }
       inputStreams.get(address).onNext(value);
     }
   }
@@ -94,13 +98,11 @@ statsInbox.onNext({
   }
 });
 function publishSources() {
-  let addresses = new Set();
   //This is weird, initialising the statistic to get its dimension when the params are never used.
   //TODO: refactor
   let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
     let address = "video-Moment-" + idx;
-    addresses.add(address);
     inputStreams.set(address, streamPatch.addSourceAddress(address));
   };
 };
