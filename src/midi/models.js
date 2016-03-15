@@ -142,7 +142,7 @@ function selectMidiOutChannel(i) {
 }
 intents.subjects.selectMidiOutChannel.subscribe(selectMidiOutChannel);
 
-function addMidiOutCC(i) {
+function addMidiOutCC(cc) {
   state.activeoutccs.add(cc);
   let address = "midi-cc-"+ cc;
   outputStreams.set(address, streamPatch.addSink(address));
@@ -152,9 +152,9 @@ function addMidiOutCC(i) {
 }
 intents.subjects.addMidiOutCC.subscribe(addMidiOutCC);
 
-function removeMidiOutCC(i) {
+function removeMidiOutCC(cc) {
   let newccs = state.activeoutccs;
-  newccs.delete(i);
+  newccs.delete(cc);
   let address = "midi-cc-"+ cc;
   streamPatch.removeSink(address);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
@@ -164,6 +164,7 @@ intents.subjects.removeMidiOutCC.subscribe(removeMidiOutCC);
 function setMidiOutCC(a) {
   let newccs = new Set(a);
   let oldccs = new Set(state.activeoutccs);
+  console.debug("setMidiOutCC", a, newccs, oldccs, setop.difference(oldccs, newccs), setop.difference(newccs, oldccs));
   //delete unused
   for (let cc of setop.difference(oldccs, newccs)) {
     removeMidiOutCC(cc);

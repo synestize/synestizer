@@ -124,7 +124,7 @@ function addSink(address, label){
   })
   return subject;
 }
-function addSinkAddress(address) {
+function removeSink(address) {
   sinkMap.delete(address);
   sinkFirehoseMap.delete(address);
   sinkState.delete(address);
@@ -227,7 +227,7 @@ module.exports = {
   addSource: addSource,
   removeSource: removeSource,
   addSink: addSink,
-  addSinkAddress: removeSource,
+  removeSink: removeSink,
   setMappingSign: setMappingSign,
   setMappingMag: setMappingMag,
   stateSubject: stateSubject,
