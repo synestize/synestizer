@@ -9,8 +9,10 @@ title: TODO
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.
+  * save/load
 
 * UI improvements
+  * desaturation should treat +/-1 less "extremely" so that it captures a control.
   * default to active MIDI
   * animate transitions and updates
   * set "central" value of param
@@ -19,9 +21,12 @@ title: TODO
     * or letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
   * switch param mappers to be higher order/factory functions, currying appropriately
 
-* https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL
+* improve help if you have
+
+  * the wrong browser
+  * the wrong version of the right browser
+  * some other camera-app stealing access to the camera
 * workflow
-* https://docs.npmjs.com/misc/config
   * http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
   * http://humaan.com/getting-started-with-webpack-and-react-es6-style/
   * http://survivejs.com/webpack_react/introduction/
