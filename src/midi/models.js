@@ -55,11 +55,9 @@ function handleMidiInMessage (ev) {
   };
 };
 //Interface to MIDI output
-function handleMidiOutMessage(cc, val) {
-  //we should only receive "midi" keyed messages
+function handleMidiOutMessage(cc, scaled) {
   let unmuted = ((state.solocc === null) || (state.solocc===cc)) &&
     (midiinfo.outputs.get(state.activeoutdevice) !== undefined);
-  let scaled = transform.bipolMidi(val);
   //turns [["midi",16,0.5]
   //into [177,16,64]
   let midibytes = [
@@ -145,7 +143,9 @@ function addMidiOutCC(cc) {
   state.activeoutccs.add(cc);
   let address = "midi-cc-"+ cc;
   let subject = streamPatch.addSink(address);
-  subject.subscribe((val) => handleMidiOutMessage(cc, val));
+  subject.map(transform.bipolMidi).distinctUntilChanged().subscribe(
+    (val) => handleMidiOutMessage(cc, val)
+  );
   updateSubject.onNext(
     {activeoutccs:{$set: state.activeoutccs}}
   );
