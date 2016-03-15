@@ -113,6 +113,12 @@ var freqMidi = function (val) {
   // 69 = 440Hz
   return Math.log(val/440)/(Math.LN2) * 12 
 }
+var dbAmp = function(val) {
+  return 0.1;
+}
+var levelDbAmp = function(va) {
+  return 0.1;
+}
 // exponential map to full MIDI spectrum
 // defined in a fancy way to correspond to MIDI frequency
 // note these are self-invoking functions.
@@ -152,6 +158,7 @@ module.exports = {
   bipolPerc: bipolPerc,
   freqMidi: freqMidi,
   midiFreq: midiFreq,
+  dbAmp: dbAmp,
   freqBipolAll: freqBipolAll,
   bipolFreqAll: bipolFreqAll,
   bipolEquiOctave: bipolEquiOctave,

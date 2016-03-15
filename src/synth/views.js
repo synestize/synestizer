@@ -11,7 +11,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var model = require('./models');
 var intents = require('./intents');
-var synthlib = require('./synthlib/main');
+var ensembles = require('./ensembles/main');
 
 var SynthControls = function(props) {
   return (<div className="streamcontrolset">
@@ -30,7 +30,7 @@ var MasterTempoControl = function(props) {
 };
 function render(state, mountpoint) {
   return ReactDOM.render(
-    <SynthControls synthlib={synthlib} />,
+    <SynthControls ensembles={ensembles} />,
     mountpoint);
 };
 module.exports = {

@@ -1,7 +1,6 @@
 'use strict';
 
 var transform = require('../../lib/transform.js');
-var streamPatch = require('../../streampatch/models');
 
 var controls = {
     "00-base-freq": {
@@ -63,12 +62,12 @@ var controls = {
 };
 
 // set up synth in this constructor; return teardown and render functions
-var Synth = function(synthKey, outputNode, inputNode) {
+var Ensemble = function(ensembleKey, stateStream, volatileState) {
   var cleanup = function() {};
   var render = function(dom) {};
   var handleSinkMessage = function([address, val]) {
   };
-  streamPatch.addSink(synthKey, handleSynthSinkMessage);
+  streamPatch.addSink(ensembleKey, handleSynthSinkMessage);
   return {
     cleanup: cleanup,
     render: render,
@@ -77,6 +76,6 @@ var Synth = function(synthKey, outputNode, inputNode) {
 };
 
 //metadata here
-Synth.label = "JustSawTooth";
+Ensemble.label = "JustSawTooth";
 
-module.exports = Synth;
+module.exports = Ensemble;

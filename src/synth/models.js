@@ -4,14 +4,8 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
-var synthlib = require('./synthlib/main');
-var activesynths = new Map();
-
-//per-session object that shouldn't be in app state
-var synthinfo = null;
-var audioContext = null;
-var inputNode = null;
-var outputNode = null;
+var ensembles = require('./ensembles/main');
+var activeEnsembles = new Map();
 
 //Basic synth state
 var state = {
@@ -19,36 +13,32 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
-  activeensembles: ["triad"],
-  activecontrols: new Set([
-    "synth-triad-something", 
-    "synth-triad-somethingelse",
-    "synth-triad-kittens",
-    "synth-triad-mungbeans"])
+  activeensembles: [],
+  activecontrols: new Set(),
+  mastertempo: 120,
+  mastergain: -12,
 };
 //synth model state
 var stateSubject = new Rx.BehaviorSubject(state);
 //synth model updates
 var updateSubject = new Rx.Subject();
 
-function handleSynthSinkMessage ([address, val]) {
-}
+//per-session stuff that shouldn't be in app state
+var volatileState = {
+  synthinfo: null,
+  audioContext: null,
+  inputNode: null,
+  outputNode: null,
+};
 
 //We don't have infrastructure for this yet.
+/*
 function registerSynth (synthName) {
   //register controls here.
 }
+*/
 
-//At this stage ,synths presumably don't change, so we just register controls once, here.
-function publishSinks() {
-  for (let address of state.activecontrols) {
-    let stream = streamPatch.addSink(address);
-    stream.subscribe((val) => (console.debug("synth control", address, val)));
-  }
-}
-publishSinks();
-
-//update UI state object through updateSubject
+//update state object through updateSubject
 updateSubject.subscribe(function (upd) {
   var newState;
   newState = update(state, upd);
@@ -57,26 +47,33 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-intents.subjects.selectSynthInDevice.subscribe(function(key){
+
+
+function selectSynthInDevice(key){
   console.debug("synthin", key);
   updateSubject.onNext({activeindevice:{$set:key}});
 });
-intents.subjects.selectSynthOutDevice.subscribe(function(key){
+intents.subjects.selectSynthInDevice.subscribe(selectSynthInDevice);
+
+function selectSynthOutDevice(key) {
   updateSubject.onNext({activeoutdevice:{$set:key}});
   publishSinks();
 });
+intents.subjects.selectSynthOutDevice.subscribe(selectSynthOutDevice);
 
 // raw synthesis interaction:
 function setMasterGain(gain) {
   if (volumeGain){
     volumeGain.gain.value = gain;
   }
+  updateSubject.onNext({mastergain:{$set:key}});
 };
-function setMasterTempo(gain) {
+function setMasterTempo(tempo) {
+  updateSubject.onNext({activeindevice:{$set:key}});
 };
 //Create a context with master out volume
-function initContext(window){
-  audioContext = new window.AudioContext();
+function initContext(){
+  let audioContext = volatileState.audioContext = new window.AudioContext();
   let compressor = audioContext.createDynamicsCompressor();
   compressor.threshold.value = -50;
   compressor.knee.value = 40;
@@ -85,10 +82,29 @@ function initContext(window){
   compressor.attack.value = 0.05;
   compressor.release.value = 0.3;
   compressor.connect(audioContext.destination);
-  let volumeGain	= audioContext.createGain();
+  let volumeGain = volatilestate.volumeGain = audioContext.createGain();
   volumeGain.connect(compressor);
-  outputNode = volumeGain;
-}(window);
+  let outputNode = volatilestate.outputNode = volumeGain;
+};
+
+function init (){
+  initContext(window);
+  let subject = streamPatch.addSink("synth-tempo");
+  subject.subscribe((val)=>setMasterTempo(bipolEquiOctave(30,480,val)));
+  
+  for (let ensembleKey of ensembles) {
+    console.debug("ensembleKey", ensembleKey);
+    let ensemble = ensembles[ensembleKey];
+    activeEnsembles.set(
+      ensembleKey,
+      ensemble(ensembleKey,
+        stateStream,
+        volatileState,
+      ));
+  }
+}
+
+init();
 
 module.exports = {
   stateSubject: stateSubject,
