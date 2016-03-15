@@ -29,8 +29,9 @@ Apart from that the setup should be the same as for a non-dev user.
 
 ### Handy tools
 
-[Firefox has a webaudio editor!](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
+[Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
 
+For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/)
 
 ### Advanced: documentation subtrees
 

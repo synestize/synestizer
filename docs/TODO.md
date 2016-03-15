@@ -14,6 +14,7 @@ title: TODO
 * UI improvements
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
   * default to active MIDI
+  * friendlier stream names
   * animate transitions and updates
   * set "central" value of param
     
