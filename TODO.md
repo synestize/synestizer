@@ -8,10 +8,10 @@ title: TODO
 
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
+  * MIDI outputs are not being correctly disposed.
 
 * UI improvements
   * default to active MIDI
-  * MIDI out solo button
   * animate transitions and updates
   * set "central" value of param
     
