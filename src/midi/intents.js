@@ -11,7 +11,8 @@ var subjects = {
   selectMidiOutChannel: new Rx.Subject(),
   addMidiOutCC: new Rx.Subject(),
   removeMidiOutCC: new Rx.Subject(),
-  setMidiOutCC: new Rx.Subject()
+  setMidiOutCC: new Rx.Subject(),
+  soloCC: new Rx.Subject()
 };
 var selectMidiInDevice = (key) => subjects.selectMidiInDevice.onNext(key);
 var selectMidiInChannel = (i) => subjects.selectMidiInChannel.onNext(i);
@@ -23,6 +24,7 @@ var selectMidiOutChannel = (i) => subjects.selectMidiOutChannel.onNext(i);
 var addMidiOutCC = (i) => subjects.addMidiOutCC.onNext(i);
 var removeMidiOutCC = (i) => subjects.removeMidiOutCC.onNext(i);
 var setMidiOutCC = (a) => subjects.setMidiOutCC.onNext(a);
+var soloCC = (i) => subjects.soloCC.onNext(i);
 
 module.exports = {
   subjects: subjects,
@@ -35,5 +37,6 @@ module.exports = {
   selectMidiOutChannel: selectMidiOutChannel,
   addMidiOutCC: addMidiOutCC,
   removeMidiOutCC: removeMidiOutCC,
-  setMidiOutCC: setMidiOutCC
+  setMidiOutCC: setMidiOutCC,
+  soloCC: soloCC,
 };

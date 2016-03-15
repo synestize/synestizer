@@ -170,7 +170,18 @@ a, a:hover, a:active, a:focus {
     height: 0.8em;
     padding: 0;
 }
-
+.controls .solocontrol .sololabel {
+  display: inline-block;
+}
+.controls .solocontrol .solobutton {
+  display: inline-block;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem;
+  border: 1px grey solid;
+}
+.controls .solocontrol .solobutton.soloed {
+  background-color: red;
+}
 .streamcontrolset select {
     /* background-color: #f0f; */
     padding: 1px 4px 1px 2px;

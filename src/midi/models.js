@@ -20,12 +20,13 @@ var state = {
   activeoutdevice: null,
   activeinchannel: 1,
   activeoutchannel: 2,
-  activeinccs: new Set([1,2,3]),
-  activeoutccs: new Set([4,5,6])
+  activeinccs: new Set([]),
+  activeoutccs: new Set([]),
+  solocc: null,
 };
-//midi model state
+// model state
 var stateSubject = new Rx.BehaviorSubject(state);
-//midi model updates
+// model updates
 var updateSubject = new Rx.Subject();
 
 var inputStreams = new Map();
@@ -56,11 +57,11 @@ function handleMidiInMessage (ev) {
   };
 };
 //Interface to MIDI output
-function handleMidiSinkMessage([address, val]) {
+function handleMidiOutMessage([address, val]) {
   console.debug(address, val);
-  
   //we should only receive "midi" keyed messages
   let [type, cmd, cc] = address.split("-");
+  let unmuted = ((state.solocc === null) || (state.solocc===cc));
   let scaled = transform.bipolMidi(val);
   //turns [["midi",16,0.5]
   //into [177,16,64]
@@ -69,7 +70,9 @@ function handleMidiSinkMessage([address, val]) {
     cc,
     scaled
   ];
-  midiinfo.outputs.get(state.activeoutdevice).send(midibytes);
+  if (unmuted) {
+    midiinfo.outputs.get(state.activeoutdevice).send(midibytes);
+  };
 };
 
 //update UI state object through updateSubject
@@ -145,7 +148,9 @@ intents.subjects.selectMidiOutChannel.subscribe(selectMidiOutChannel);
 function addMidiOutCC(cc) {
   state.activeoutccs.add(cc);
   let address = "midi-cc-"+ cc;
-  outputStreams.set(address, streamPatch.addSink(address));
+  let subject = streamPatch.addSink(address)
+  outputStreams.set(address, subject);
+  
   updateSubject.onNext(
     {activeoutccs:{$set: state.activeoutccs}}
   );
@@ -156,6 +161,7 @@ function removeMidiOutCC(cc) {
   let newccs = state.activeoutccs;
   newccs.delete(cc);
   let address = "midi-cc-"+ cc;
+  let subject = outputStreams.get(subject);
   streamPatch.removeSink(address);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
 }
@@ -174,6 +180,12 @@ function setMidiOutCC(a) {
   }
 }
 intents.subjects.setMidiOutCC.subscribe(setMidiOutCC);
+
+function soloCC(cc) {
+  console.debug("soloCC", cc);
+  updateSubject.onNext({solocc:{$set: cc}});
+}
+intents.subjects.soloCC.subscribe(soloCC);
 
 //set up midi system
 function init() {

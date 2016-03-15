@@ -56,7 +56,6 @@ var MidiInChannelSelect = function(props) {
     </select>
   </div>)
 };
-
 var MidiInCCSetSelect = function(props) {
   var disabled, selectValue, ccOptNodes=[], htmlName;
   disabled = (props.activedevice !== null);
@@ -85,13 +84,13 @@ function renderMidiIn(state, mountpoint) {
   mountpoint);
 };
 
-
 var MidiOutSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Midi Out</h2>
     <MidiOutDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiOutChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
     <MidiOutCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
+    <MidiSoloCC activeccs={props.activeccs} solocc={props.solocc} />
   </div>)
 };
 var MidiOutDeviceSelect = function(props) {
@@ -159,10 +158,29 @@ var MidiOutCCSetSelect = function(props) {
     </select>
   </div>);
 };
+var MidiSoloCC = function(props) {
+  let activeccs = Array.from(props.activeccs.values()).sort();
+  let solocontrols = [];
+  if (activeccs.length>0) {
+    solocontrols.push(<p className="sololabel" key="sololabel">Solo</p>);
+    solocontrols.push(<div className={"solobutton" + (props.solocc===null ? " soloed" : "")}
+      onClick={(ev) => intents.soloCC(null)} key="nosolo">
+        Off
+      </div>
+    );
+  };
+  for (let cc of activeccs) {
+    let soloed = (cc===props.solocc);
+    solocontrols.push(<div className={"solobutton" + (soloed ? " soloed" : "")}
+      onClick={(ev)=>intents.soloCC(cc)} key={cc}>{cc}</div>
+    );
+  };
+  return (<div className="solocontrol">{solocontrols}</div>);
+};
 function renderMidiOut(state, mountpoint) {
   return ReactDOM.render(
     <MidiOutSelect activedevice={state.activeoutdevice} alldevices={state.alloutdevices} activechannel={state.activeoutchannel}
-      activeccs={state.activeoutccs}  />,
+      activeccs={state.activeoutccs} solocc={state.solocc} />,
     mountpoint);
 };
 module.exports = {
