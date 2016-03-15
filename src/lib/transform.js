@@ -80,13 +80,13 @@ var clipBipol = function(val) {
 };
 //[0,127]->[-1,1]
 var midiBipol = function (val) {
-  return val/127
+  return (val-63.5)/63.5
 };
 //[-1,1]->[0,127]
 //slightly different to ensure 127 is attainable
 var bipolMidi = function (val) {
   return Math.max(Math.min(
-    Math.round(val*127),
+    Math.round(val*63.5 + 63.5),
   127), 0)
 };
 //[0,100]->[-1,1]

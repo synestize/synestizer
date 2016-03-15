@@ -83,7 +83,9 @@ function addSource(address, label){
 }
 function removeSource(address) {
   sinkMap.delete(address);
+  let subject = sourceFirehoseMap.get(address);
   sourceFirehoseMap.delete(address);
+  subject.onCompleted();
   sinkState.delete(address);
   //more?
   for (let key of [...sourceSinkMappingSign.keys()]) {
@@ -126,6 +128,8 @@ function addSink(address, label){
 }
 function removeSink(address) {
   sinkMap.delete(address);
+  let subject = sinkFirehoseMap.get(address);
+  subject.onCompleted();
   sinkFirehoseMap.delete(address);
   sinkState.delete(address);
   for (let key of [...sourceSinkMappingSign.keys()]) {

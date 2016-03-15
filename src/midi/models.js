@@ -57,11 +57,10 @@ function handleMidiInMessage (ev) {
   };
 };
 //Interface to MIDI output
-function handleMidiOutMessage([address, val]) {
-  console.debug(address, val);
+function handleMidiOutMessage(cc, val) {
   //we should only receive "midi" keyed messages
-  let [type, cmd, cc] = address.split("-");
-  let unmuted = ((state.solocc === null) || (state.solocc===cc));
+  let unmuted = ((state.solocc === null) || (state.solocc===cc)) &&
+    (midiinfo.outputs.get(state.activeoutdevice) !== undefined);
   let scaled = transform.bipolMidi(val);
   //turns [["midi",16,0.5]
   //into [177,16,64]
