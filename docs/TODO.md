@@ -16,6 +16,7 @@ title: TODO
   * set "central" value of param
     
     * This could be as simple as setting a default mapping from synth slider to output value, by cooperating between streampatch and synth (might need refactor)
+    * or letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
   * switch param mappers to be higher order/factory functions, currying appropriately
 
 * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Animating_textures_in_WebGL

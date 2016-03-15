@@ -186,7 +186,7 @@ function updateMapping() {
 function calcSinkValues(sourceState) {
   let newSinkStateT = new Map(); // temporary tanh-transformed sink vals
   let newSinkState = new Map(); // replacement sink vals  
-  //console.debug("ss", sourceState);
+  // console.debug("ss", sourceState);
   // console.debug("ss1", sourceSinkMapping);
   
   for (let [key, scale] of sourceSinkMapping.entries()) {
