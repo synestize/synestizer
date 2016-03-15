@@ -51,7 +51,7 @@ function handleMidiInMessage (ev) {
     (state.activeinchannel == channel) &&
     state.activeinccs.has(cc)) {
     //console.debug("me", ev.data, midievent);
-    streamPatch.get("midi-cc-"+ cc).onNext(val);
+    streamPatch.getSourceStream("midi-cc-"+ cc).onNext(val);
   };
 };
 //Interface to MIDI output

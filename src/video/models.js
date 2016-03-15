@@ -79,7 +79,7 @@ function statsStreamSpray(x) {
         console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
         value = transform.clip1(value); 
       };
-      streamPatch.get(address).onNext(value);
+      streamPatch.getSourceStream(address).onNext(value);
     }
   }
 }
