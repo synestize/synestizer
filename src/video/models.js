@@ -16,9 +16,6 @@ var stateSubject = new Rx.BehaviorSubject(state);
 //video model updates
 var updateSubject = new Rx.Subject();
 
-//streams
-var inputStreams = new Map();
-
 //hardware business
 var videoindevices = new Map(); //id -> device
 var videoindevice; //device
@@ -82,7 +79,7 @@ function statsStreamSpray(x) {
         console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
         value = transform.clip1(value); 
       };
-      inputStreams.get(address).onNext(value);
+      streamPatch.get(address).onNext(value);
     }
   }
 }
@@ -103,7 +100,7 @@ function publishSources() {
   let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
     let address = "video-Moment-" + ("000" + (idx + 1)).slice(-3);
-    inputStreams.set(address, streamPatch.addSource(address));
+    streamPatch.addSource(address);
   };
 };
 //update state object through updateSubject

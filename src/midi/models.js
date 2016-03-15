@@ -29,8 +29,6 @@ var stateSubject = new Rx.BehaviorSubject(state);
 // model updates
 var updateSubject = new Rx.Subject();
 
-var inputStreams = new Map();
-var outputStreams = new Map();
 var midiSourceFirehose = new Rx.Subject();
 
 // Interface to MIDI input
@@ -53,7 +51,7 @@ function handleMidiInMessage (ev) {
     (state.activeinchannel == channel) &&
     state.activeinccs.has(cc)) {
     //console.debug("me", ev.data, midievent);
-    inputStreams.get("midi-cc-"+ cc).onNext(val);
+    streamPatch.get("midi-cc-"+ cc).onNext(val);
   };
 };
 //Interface to MIDI output
@@ -105,7 +103,6 @@ intents.subjects.selectMidiInChannel.subscribe(selectMidiInChannel);
 function addMidiInCC(cc) {
   state.activeinccs.add(cc);
   let address = "midi-cc-"+ cc;
-  inputStreams.set(address, streamPatch.addSource(address));
   updateSubject.onNext(
     {activeinccs:{$set: state.activeinccs}}
   );
@@ -147,9 +144,8 @@ intents.subjects.selectMidiOutChannel.subscribe(selectMidiOutChannel);
 function addMidiOutCC(cc) {
   state.activeoutccs.add(cc);
   let address = "midi-cc-"+ cc;
-  let subject = streamPatch.addSink(address)
-  outputStreams.set(address, subject);
-  
+  let subject = streamPatch.addSink(address);
+  subject.subscribe((val) => handleMidiOutMessage(cc, val));
   updateSubject.onNext(
     {activeoutccs:{$set: state.activeoutccs}}
   );
@@ -160,7 +156,6 @@ function removeMidiOutCC(cc) {
   let newccs = state.activeoutccs;
   newccs.delete(cc);
   let address = "midi-cc-"+ cc;
-  let subject = outputStreams.get(subject);
   streamPatch.removeSink(address);
   updateSubject.onNext({activeoutccs:{$set:newccs}});
 }

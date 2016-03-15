@@ -106,6 +106,9 @@ function removeSource(address) {
     sourceFirehoseMap: {$set: sourceFirehoseMap},
   })
 }
+function getSourceStream(address){
+  return sourceFirehoseMap.get(address);
+}
 function addSink(address, label){
   sinkMap.set(address, label);
   sinkState.set(address, 0.0);
@@ -149,6 +152,9 @@ function removeSink(address) {
     sinkMap: {$set: sinkMap},
     sinkFirehoseMap: {$set: sinkFirehoseMap},
   })
+}
+function getSinkStream(address){
+  return sinkFirehoseMap.get(address);
 }
 function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
@@ -230,8 +236,10 @@ module.exports = {
   sinkFirehoseMap: sinkFirehoseMap,
   addSource: addSource,
   removeSource: removeSource,
+  getSourceStream: getSourceStream,
   addSink: addSink,
   removeSink: removeSink,
+  getSinkStream: getSinkStream,
   setMappingSign: setMappingSign,
   setMappingMag: setMappingMag,
   stateSubject: stateSubject,

@@ -30,7 +30,6 @@ var state = {
 var stateSubject = new Rx.BehaviorSubject(state);
 //synth model updates
 var updateSubject = new Rx.Subject();
-var outputStreams = new Map();
 
 function handleSynthSinkMessage ([address, val]) {
 }
@@ -44,7 +43,6 @@ function registerSynth (synthName) {
 function publishSinks() {
   for (let address of state.activecontrols) {
     let stream = streamPatch.addSink(address);
-    outputStreams.set(address, stream);
     stream.subscribe((val) => (console.debug("synth control", address, val)));
   }
 }
