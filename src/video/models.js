@@ -76,12 +76,12 @@ statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
 });
 function statsStreamSpray(x) {
   for (var [key, data] of x) {
-    for (var [index, value] of data.entries()) {
-      let address = "video-" + key + "-" + index;
+    for (var [idx, value] of data.entries()) {
+      let address = "video-" + key + "-" + ("000" + (idx + 1)).slice(-3);
       if ((value < -1) || (value > 1)) {
         console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
         value = transform.clip1(value); 
-      }
+      };
       inputStreams.get(address).onNext(value);
     }
   }
@@ -102,7 +102,7 @@ function publishSources() {
   //TODO: refactor
   let nDims = Statistic.get("Moment")({}).nDims;
   for (let idx=0; idx<nDims; idx++) {
-    let address = "video-Moment-" + idx;
+    let address = "video-Moment-" + ("000" + (idx + 1)).slice(-3);
     inputStreams.set(address, streamPatch.addSource(address));
   };
 };
