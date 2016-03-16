@@ -1,7 +1,3 @@
----
-title: How to use synestizer
----
-
 # How to synestize
 
 So you want to try this out yourself?
