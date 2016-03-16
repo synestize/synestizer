@@ -1,6 +1,3 @@
----
-title: Synestizer 
----
 
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
