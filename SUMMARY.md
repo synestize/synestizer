@@ -1,4 +1,5 @@
 # Summary
 
-* What is Synestizer?
+* [Introduction](README.md)
+* [What is Synestizer?](what_is_synestizer.md)
 
