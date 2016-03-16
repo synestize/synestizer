@@ -40,9 +40,9 @@ into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alt
 
 Get changes 
 
-    git subtree pull --prefix=docs upstream gh-pages
+    git subtree pull --prefix=docs origin gh-pages
     
 Send changes
 
-    git subtree push --prefix=docs upstream gh-pages
+    git subtree push --prefix=docs origin gh-pages
 
