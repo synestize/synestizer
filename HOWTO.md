@@ -1,7 +1,3 @@
----
-title: How to use synestizer
----
-
 # How to synestize
 
 So you want to try this out yourself?
@@ -20,6 +16,7 @@ There are a million ways of serving websites.
 For your own development purposes, we recommend [caddy](https://caddyserver.com/),
 an easy, free, open-source, secure server designed for developing browser apps,
 available for download for most platforms.
+
 This particular method *will* require you to serve the files publicly on the internet for the SSL to work, however...
 If you want to get a genuinely private version you will have to do a little more work.
 

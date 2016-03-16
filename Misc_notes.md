@@ -6,30 +6,6 @@ title: Notes
 
 Notes auditioning for a place in the documentation
 
-## javascript tips
-
-* Jquery is too big. Alternatives:
-
-    * [Qwuery](https://github.com/ded/qwery) + [bonzo](https://github.com/ded/bonzo)
-    * [zepto](http://zeptojs.com/)
-    * [But do we really need jquery](http://youmightnotneedjquery.com/), especially since we don't care about old browsers?
-
-## Javascript dialects
-
-### Coffeescript
-
-Coffeescript makes javascript bearable, but is tricky to debug
-
-### ECMAscript6
-
-ECMAscript 6 is here and supported on [every browser we care about](https://kangax.github.io/compat-table/es6/), and can do [lots of coffeescript stuff](https://robots.thoughtbot.com/replace-coffeescript-with-es6)
-and [lots of good stuff generally](https://github.com/lukehoban/es6features#readme)
-It can also be transpiled to ECMAscript 5 using [babeljs](https://babeljs.io/), and [many other tools](https://github.com/addyosmani/es6-tools)
-
-If you want to make sure your browser has this,
-or any other trendy features,
-you can download a fresh build from http://chromium.woolyss.com/ .
-
 
 ## linear algebra options
 
