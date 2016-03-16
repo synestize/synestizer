@@ -8,6 +8,7 @@ title: TODO
 
   * implement audio model
     * Probably each ensemble should just be a mini-app, with its own view logic etc
+    * probably all apps should include volatile and serializable state members?
   
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.

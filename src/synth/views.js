@@ -1,10 +1,6 @@
 'use strict';
 
-/* TODO:
- * Mute control
- * master gain
- * output compressor
- */
+var ReactDOM = require('react-dom');
 
 var SynthControls = function(props) {
   return (<div className="streamcontrolset">
@@ -21,10 +17,13 @@ var MasterTempoControl = function(props) {
     <h2>Synth Controls go here</h2>
   </div>)
 };
-function render(state, mountpoint) {
+function render(state, mountpoint, models) {
+  let childComponents = [];
+  
   return ReactDOM.render(
-    <SynthControls ensembles={ensembles} />,
-    mountpoint);
+    <SynthControls state={state}> </SynthControls>,
+    mountpoint
+  );
 };
 module.exports = {
   render: render,

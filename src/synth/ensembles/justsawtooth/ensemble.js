@@ -9,7 +9,7 @@ function run(mountpoint, ensembleKey, synthmodels) {
   var cleanup = function() {};
   return {
     cleanup: cleanup,
-    render: views.render,
+    dom: views.Ensemble,
     models: models,
   };
 };

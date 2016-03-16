@@ -10,7 +10,8 @@ function run(mountpoint) {
     console.log(state);
     views.render(
       state,
-      mountpoint
+      mountpoint,
+      models.activeEnsembleMap
     );
   });
   return {

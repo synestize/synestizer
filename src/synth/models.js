@@ -14,7 +14,7 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
-  activeensemblekeys: [],
+  activeensemblestate: new Map(),
   activecontrols: new Set(),
   mastertempo: 120,
   mastergain: -12,
@@ -96,15 +96,16 @@ function init (){
   
   for (let ensembleKey of ensembles) {
     console.debug("ensembleKey", ensembleKey);
-    let ensemble = ensembles[ensembleKey];
-    state.activeensemblekeys.push('ensembleKey');
+    let ensembleconstructor = ensembles[ensembleKey];
+    let ensemble = ensemble(
+      ensembleKey,
+      stateStream,
+      volatileState
+    );
+    state.activeensemblestate.set('ensembleKey', );
     activeEnsembles.set(
       ensembleKey,
-      ensemble(
-        ensembleKey,
-        stateStream,
-        volatileState
-      )
+      ensemble
     );
   }
 }
