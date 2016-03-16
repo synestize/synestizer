@@ -8,5 +8,7 @@
   * [Miscellaneous Notes](Misc_notes.md)
   * [Video analysis](Video_analysis.md)
   * [User interface](UI.md)
+  * [TODO list](TODO.md)
   * [Miscellaneous notes](Misc_notes.md)
 * [FAQ](FAQ.md)
+* [License](LICENSE.md)
