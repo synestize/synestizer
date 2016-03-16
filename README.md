@@ -7,17 +7,16 @@
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.
 - Cage
 
-> „It's time to open the digital window and listen colourwise.”
+> „It's time to open the digital window and listen colorwise.”
 - Koenig
 
 
-This document is made to explain the idea and function of the synestizer project 
-at [synestizer.com](http://synestizer.com) and [listentocolors.net](https://listentocolors.net)
+This document explains the idea and function of the synestizer project at [synestizer.com](http://synestizer.com) and [listentocolors.net](https://listentocolors.net).
 A webapp to listen to the data flow of the camera-imagery. 
 
 ## What is a Synestizer?
 
-The word Synestizer is a blend of the word synthesizer (electric signals converted into sounds) and synaesthesia (sensation together). The synestizer is an attempt to sonify the live imagery of a (web-)camera by making color-values audible in different ways. The idea behind the synestizer is to let visual and audio-input interact to tickle the synapse between your ears and eyes. In many ways visualizers (including screensavers) do this by transforming sound in to animated or generated graphics. The synestizer tries to do the opposite as it translates Red, Green and Blue values to sound. For this effect, or let’s say „sense“, there are new methods and techniques explored, developed and spread online. That's why it is time to open the digital window and listen through it.
+The word Synestizer is a blend of the word synthesizer (electric signals converted into sounds) and synaesthesia (sensation together). The synestizer is an attempt to sonify the live imagery of a (web-)camera by making color-values audible in different ways. The idea behind the synestizer is to let visual and audio-input interact to tickle the synapse between your ears and eyes. In many ways visualizers (including screensavers) do this by transforming sound in to animated or generated graphics. The synestizer tries to do the opposite, as it translates Red, Green and Blue values to sound. For this effect, or let’s say „sense“, there are new methods and techniques explored, developed and spread online. That's why it is time to open the digital window and listen through it.
 
 ## Why working hard to invent a Synestizer? 
 
