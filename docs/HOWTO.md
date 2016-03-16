@@ -14,12 +14,13 @@ But you are not finished yet.
 
 For reasons of security, your web-browser is only permitted to access the camera if it is viewing a "web site", not merely a *file*, so you will be missing a lot of functions if you open it without a web server to help you.
 
-(We will probably make this easier soon using a Chrome App)
+(We will probably make this easier soon using a Chrome App or similar/)
 
 There are a million ways of serving websites.
-For your own personal testing purposes, we recommend [caddy](https://caddyserver.com/),
+For your own development purposes, we recommend [caddy](https://caddyserver.com/),
 an easy, free, open-source, secure server designed for developing browser apps,
 available for download for most platforms.
+
 This particular method *will* require you to serve the files publicly on the internet for the SSL to work, however...
 If you want to get a genuinely private version you will have to do a little more work.
 
@@ -30,4 +31,4 @@ If you want to get a genuinely private version you will have to do a little more
 
 NOTE FOR USERS OF CHROME BETA VERSIONS:
 
-Chrome version 50 seems to have no getUserMedia API by default. What that means is that to access video you have to manually turning it on by clicking [enable experimental web platform features](chrome://flags/#enable-experimental-web-platform-features).
+Chrome version 51 seems to have no getUserMedia API by default. What that means is that to access video you have to manually turning it on by clicking [enable experimental web platform features](chrome://flags/#enable-experimental-web-platform-features).
