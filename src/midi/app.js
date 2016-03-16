@@ -18,6 +18,9 @@ function run(midiinputmountpoint, midioutputmountpoint) {
       midioutputmountpoint
     );
   });
+  return {
+    models: models,
+  };
 };
 
 module.exports = run;

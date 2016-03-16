@@ -14,6 +14,9 @@ function run(inputguimountpoint, displaymountpoint) {
       inputguimountpoint
     );
   });
+  return {
+    models: models,
+  };
 };
 
 module.exports = run;

@@ -1,6 +1,6 @@
 'use strict';
 
-var transform = require('../../lib/transform.js');
+var transform = require('../../../lib/transform.js');
 
 var controls = {
     "00-base-freq": {
@@ -61,21 +61,5 @@ var controls = {
     },
 };
 
-// set up synth in this constructor; return teardown and render functions
-var Ensemble = function(ensembleKey, stateStream, volatileState) {
-  var cleanup = function() {};
-  var render = function(dom) {};
-  var handleSinkMessage = function([address, val]) {
-  };
-  streamPatch.addSink(ensembleKey, handleSynthSinkMessage);
-  return {
-    cleanup: cleanup,
-    render: render,
-    handleSinkMessage: handleSinkMessage,
-  };
-};
-
-//metadata here
-Ensemble.label = "JustSawTooth";
 
 module.exports = Ensemble;

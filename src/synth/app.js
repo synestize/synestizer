@@ -13,6 +13,9 @@ function run(mountpoint) {
       mountpoint
     );
   });
+  return {
+    models: models,
+  };
 };
 
 module.exports = run;

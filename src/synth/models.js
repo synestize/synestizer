@@ -5,7 +5,8 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var ensembles = require('./ensembles/main');
-var activeEnsembles = new Map();
+//contains volatile ensemble data
+var activeEnsembleMap = new Map();
 
 //Basic synth state
 var state = {
@@ -13,7 +14,7 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
-  activeensembles: [],
+  activeensemblekeys: [],
   activecontrols: new Set(),
   mastertempo: 120,
   mastergain: -12,
@@ -52,13 +53,13 @@ updateSubject.subscribe(function (upd) {
 function selectSynthInDevice(key){
   console.debug("synthin", key);
   updateSubject.onNext({activeindevice:{$set:key}});
-});
+};
 intents.subjects.selectSynthInDevice.subscribe(selectSynthInDevice);
 
 function selectSynthOutDevice(key) {
   updateSubject.onNext({activeoutdevice:{$set:key}});
   publishSinks();
-});
+};
 intents.subjects.selectSynthOutDevice.subscribe(selectSynthOutDevice);
 
 // raw synthesis interaction:
@@ -87,6 +88,7 @@ function initContext(){
   let outputNode = volatilestate.outputNode = volumeGain;
 };
 
+//set up DSP and other controls
 function init (){
   initContext(window);
   let subject = streamPatch.addSink("synth-tempo");
@@ -95,12 +97,15 @@ function init (){
   for (let ensembleKey of ensembles) {
     console.debug("ensembleKey", ensembleKey);
     let ensemble = ensembles[ensembleKey];
+    state.activeensemblekeys.push('ensembleKey');
     activeEnsembles.set(
       ensembleKey,
-      ensemble(ensembleKey,
+      ensemble(
+        ensembleKey,
         stateStream,
-        volatileState,
-      ));
+        volatileState
+      )
+    );
   }
 }
 
@@ -108,5 +113,7 @@ init();
 
 module.exports = {
   stateSubject: stateSubject,
-  updateSubject: updateSubject
+  updateSubject: updateSubject,
+  activeEnsembles: activeEnsembles,
+  volatileState: volatileState,
 };

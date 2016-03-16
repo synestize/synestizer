@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  justsawtooth: require("./justsawtooth"),
+  justsawtooth: require("./justsawtooth/ensemble"),
 };
