@@ -1,8 +1,5 @@
----
-title: How to develop synestizer
----
 
-# Participating in Synestizer development
+# How to develop synestizer
 
 You can help with code or with documentation. The procedure is the same either way - [fork us on github](https://github.com/synestize/synestizer) and send us pull requests.
 
