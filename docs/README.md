@@ -1,27 +1,22 @@
----
-title: Synestizer 
----
 
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
 
-# FAQ
+# Synestizer
 
 > „Just open the window...”  J.Cage and focus on listening to what emerges outside.
 - Cage
 
-> „It's time to open the digital window and listen colourwise.”
+> „It's time to open the digital window and listen colorwise.”
 - Koenig
 
-version 150123:
 
-This document is made to explain the idea and function of the synestizer project 
-at [synestizer.com](http://synestizer.com).
-A webapp to listen to the dataflow of the camera-imagery. 
+This document explains the idea and function of the synestizer project at [synestizer.com](http://synestizer.com) and [listentocolors.net](https://listentocolors.net).
+A webapp to listen to the data flow of the camera-imagery. 
 
 ## What is a Synestizer?
 
-The word Synestizer is a blend of the word synthesizer (electric signals converted into sounds) and synaesthesia (sensation together). The synestizer is an attempt to sonify the live imagery of a (web-)camera by making colour-values audible in different ways. The idea behind the synestizer is to let visual and audio-input interact to tickle the synapse between your ears and eyes. In many ways visualizers (including screensavers) do this by transforming sound in to animated or generated graphics. The synestizer tries to do the opposite as it translates Red, Green and Blue values to sound. For this effect or let’s say „sense“ there are new methods and techniques explored, developed and spread online. That's why it is time to open the digital window and listen to it.
+The word Synestizer is a blend of the word synthesizer (electric signals converted into sounds) and synaesthesia (sensation together). The synestizer is an attempt to sonify the live imagery of a (web-)camera by making color-values audible in different ways. The idea behind the synestizer is to let visual and audio-input interact to tickle the synapse between your ears and eyes. In many ways visualizers (including screensavers) do this by transforming sound in to animated or generated graphics. The synestizer tries to do the opposite, as it translates Red, Green and Blue values to sound. For this effect, or let’s say „sense“, there are new methods and techniques explored, developed and spread online. That's why it is time to open the digital window and listen through it.
 
 ## Why working hard to invent a Synestizer? 
 
@@ -66,7 +61,7 @@ This frame is based on the manipulation of short samples that can be recorded im
 
 ## Who develops the synestizer?
 
-Soundartist [Kaspar König](http://www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us.
+Sound artist [Kaspar König](http://www.kasparkoenig.com) loves experimenting with analog and digital techniques to sonify the context imminently surrounding us.
 His interest in interpreting colours, patterns, materials and most recently also wind as an actor to map sound lead to the development of the initial version of the synestizer.
 Now the group is growing and there are new people interested in the project, and we have opened up the code to invite even more to join us.
 Users and artists are welcome to experiment with, and developers, to modify, this thing. 
@@ -76,10 +71,6 @@ Support has also been provided by the [Sonic Sonic Skills research project at th
 
 Want to join us?
 See [github](https://github.com/synestize/synestizer) for the source code.
-
-A big thank you is in order for much previous work that has also been done by: Univ.- Prof. [Peter Kiefer](http://www.klangkunst.de), Prof. Dr. Stefan Reuss, Dr. Roman Mauer, Dr. Michael Liegl, Marc Lingk.
-And the [Forschungsschwerpunkt Medienkonvergenz](http://www.medienkonvergenz.uni-mainz.de/) from the Johannes Gutenberg University in Mainz (D) 
-The Dutch “Stichting de 4 Koningen” supported the development of this Web-app.
 
 Ideas or interest in participation? Just write us an email at synestizer@gmail.com
 
