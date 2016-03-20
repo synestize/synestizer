@@ -81,7 +81,7 @@ var controls = {
     },
 };
 
-audiomaster.volatileStateSubject.subscribe(function(volatileState) {
+audiomaster.volatileStateSubject.first().subscribe(function(volatileState) {
   console.debug("init'd sawtooth", volatileState) 
 });
 module.exports = {

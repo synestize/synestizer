@@ -30,7 +30,6 @@ var volatileState = {
 };
 var volatileStateSubject = new Rx.ReplaySubject(1);
 
-
 //update state object through updateSubject
 updateSubject.subscribe(function (upd) {
   var newState;
@@ -80,9 +79,16 @@ function initContext(){
   let outputNode = volatileState.outputNode = volumeGain;
 };
 
+
+
 //set up DSP and other controls
 function init (){
   initContext(window);
+  //What does this guy need?
+  //A notion of central value
+  //A notion of current value
+  //Optional: notion of unmapped value
+  
   let subject = streamPatch.addSink("audio-tempo");
   subject.subscribe((val)=>setMasterTempo(transform.bipolEquiOctave(30,480,val)));
   volatileStateSubject.onNext(volatileState);

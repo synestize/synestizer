@@ -1,8 +1,8 @@
 //Main entry point for video app
 "use strict";
 
-var views = global.VideoViews = require('./views');
-var models = global.VideoModels = require('./models');
+var views = require('./views');
+var models = require('./models');
 var intents = require('./intents');
 
 function run(inputguimountpoint, displaymountpoint) {
