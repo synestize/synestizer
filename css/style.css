@@ -242,7 +242,7 @@ a, a:hover, a:active, a:focus {
 .mappingmatrix .mapping.minus {
   background-color: rgba(130,0,0,0.5);
 }
-.mappingmatrix .mapping .mag {
+.mappingmatrix .mapping .param {
   display: block;
   width: 4rem;
   height: 1.5rem;

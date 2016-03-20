@@ -3,7 +3,6 @@
 var Rx = require('Rx');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var model = require('./models');
 var intents = require('./intents');
 var transform = require('../lib/transform.js');
 
@@ -52,7 +51,7 @@ var StreamPatchGrid = function(props) {
 };
 var StreamPatchMappingControl = function(props) {
   return (<td className={"mapping " + ((props.sign>0) ? "plus" : "minus") + " " + ((props.mag>0) ? "active" : "inactive")}>
-  <input className="mag" type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" onDoubleClick={(ev) => {
+  <input className="param" type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" onDoubleClick={(ev) => {
       intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
   }} />
   </td>)
