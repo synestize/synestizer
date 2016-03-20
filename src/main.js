@@ -24,11 +24,11 @@ VideoApp(
   document.getElementById('video-display')
 );
 
-var audioapp = AudioApp(
+var audioapp = AudioMasterApp(
   document.getElementById('audio-master')
 );
 
-JustSawTooth(
+AudioJustSawtoothApp(
   document.getElementById('audio-justsawtooth')
 );
 

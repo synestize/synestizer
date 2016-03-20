@@ -1,7 +1,26 @@
 'use strict';
 
-var transform = require('../lib/transform.js');
+var Rx = require('Rx');
+var update = require('react-addons-update');
+var intents = require('./intents');
+var streamPatch = require('../streampatch/models');
+var transform = require('../lib/transform');
 var audiomaster = require('../audio_master/models');
+
+//Basic audio state
+var state = {
+  allindevices: new Map(),
+  alloutdevices: new Map(),
+  activeindevice: null,
+  activeoutdevice: null,
+  activecontrols: new Set(),
+  mastertempo: 120,
+  mastergain: -12,
+};
+//audio model state
+var stateSubject = new Rx.BehaviorSubject(state);
+//audio model updates
+var updateSubject = new Rx.Subject();
 
 var controls = {
     "00-base-freq": {
@@ -65,4 +84,7 @@ var controls = {
 audiomaster.volatileStateSubject.subscribe(function(volatileState) {
   console.debug("init'd sawtooth", volatileState) 
 });
-module.exports = Ensemble;
+module.exports = {
+  stateSubject: stateSubject,
+  updateSubject: updateSubject,
+};

@@ -1,4 +1,6 @@
 'use strict';
+var React = require('react');
+var ReactDOM = require('react-dom');
 
 var Ensemble = function(props) {
   return (<div className="streamcontrolset">
@@ -10,7 +12,7 @@ function render(state, mountpoint) {
   let childComponents = [];
   
   return ReactDOM.render(
-    <SynthControls state={state}> </SynthControls>,
+    <Ensemble state={state}> </Ensemble>,
     mountpoint
   );
 };

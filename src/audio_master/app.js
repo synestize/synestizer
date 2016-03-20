@@ -3,6 +3,7 @@
 
 var views = require('./views');
 var models = require('./models');
+var intents = require('./intents');
 
 function run(mountpoint) {
   models.stateSubject.subscribe(function (state) {

@@ -3,6 +3,7 @@
 
 var views = global.midiviews = require('./views');
 var models = global.midimodels = require('./models');
+var intents = require('./intents');
 
 function run(midiinputmountpoint, midioutputmountpoint) {
   models.init();

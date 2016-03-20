@@ -4,9 +4,7 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
-
-//contains volatile ensemble data
-var activeEnsembleMap = new Map();
+var transform = require('../lib/transform.js');
 
 //Basic audio state
 var state = {
@@ -14,7 +12,6 @@ var state = {
   alloutdevices: new Map(),
   activeindevice: null,
   activeoutdevice: null,
-  activeensemblestate: new Map(),
   activecontrols: new Set(),
   mastertempo: 120,
   mastergain: -12,
@@ -57,15 +54,15 @@ function selectSynthOutDevice(key) {
 };
 intents.subjects.selectSynthOutDevice.subscribe(selectSynthOutDevice);
 
-// raw audioesis interaction:
+// raw audio interaction:
 function setMasterGain(gain) {
   if (volumeGain){
     volumeGain.gain.value = gain;
   }
-  updateSubject.onNext({mastergain:{$set:key}});
+  updateSubject.onNext({mastergain:{$set:gain}});
 };
 function setMasterTempo(tempo) {
-  updateSubject.onNext({activeindevice:{$set:key}});
+  updateSubject.onNext({activeindevice:{$set:tempo}});
 };
 //Create a context with master out volume
 function initContext(){
@@ -87,7 +84,7 @@ function initContext(){
 function init (){
   initContext(window);
   let subject = streamPatch.addSink("audio-tempo");
-  subject.subscribe((val)=>setMasterTempo(bipolEquiOctave(30,480,val)));
+  subject.subscribe((val)=>setMasterTempo(transform.bipolEquiOctave(30,480,val)));
   volatileStateSubject.onNext(volatileState);
 }
 
@@ -96,6 +93,5 @@ init();
 module.exports = {
   stateSubject: stateSubject,
   updateSubject: updateSubject,
-  activeEnsembles: activeEnsembles,
   volatileStateSubject: volatileStateSubject,
 };
