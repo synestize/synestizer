@@ -8,11 +8,6 @@ var transform = require('../lib/transform.js');
 
 //Basic audio state
 var state = {
-  allindevices: new Map(),
-  alloutdevices: new Map(),
-  activeindevice: null,
-  activeoutdevice: null,
-  activecontrols: new Set(),
   mastertempo: 120,
   mastergain: -12,
 };
@@ -39,29 +34,16 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-
-
-function selectSynthInDevice(key){
-  console.debug("audioin", key);
-  updateSubject.onNext({activeindevice:{$set:key}});
-};
-intents.subjects.selectSynthInDevice.subscribe(selectSynthInDevice);
-
-function selectSynthOutDevice(key) {
-  updateSubject.onNext({activeoutdevice:{$set:key}});
-  publishSinks();
-};
-intents.subjects.selectSynthOutDevice.subscribe(selectSynthOutDevice);
-
 // raw audio interaction:
+//unlike the usual synth inteactions this is in plain old decibels.
 function setMasterGain(gain) {
   if (volumeGain){
-    volumeGain.gain.value = gain;
+    volumeGain.gain.value = transform.dbAmp(gain);
   }
   updateSubject.onNext({mastergain:{$set:gain}});
 };
 function setMasterTempo(tempo) {
-  updateSubject.onNext({activeindevice:{$set:tempo}});
+  updateSubject.onNext({mastertempo:{$set:tempo}});
 };
 //Create a context with master out volume
 function initContext(){
@@ -78,8 +60,6 @@ function initContext(){
   volumeGain.connect(compressor);
   let outputNode = volatileState.outputNode = volumeGain;
 };
-
-
 
 //set up DSP and other controls
 function init (){
