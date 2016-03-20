@@ -37,11 +37,13 @@ updateSubject.subscribe(function (upd) {
 // raw audio interaction:
 //unlike the usual synth inteactions this is in plain old decibels.
 function setMasterGain(gain) {
-  if (volumeGain){
-    volumeGain.gain.value = transform.dbAmp(gain);
+  if (volatileState.volumeGain){
+    volatileState.volumeGain.gain.value = transform.dbAmp(gain);
   }
   updateSubject.onNext({mastergain:{$set:gain}});
 };
+intents.subjects.setMasterGain.subscribe(setMasterGain);
+
 function setMasterTempo(tempo) {
   updateSubject.onNext({mastertempo:{$set:tempo}});
 };
