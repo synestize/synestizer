@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var intents = require('./intents');
 
 var SynthControls = function(props) {
   return (<div className="streamcontrolset">
