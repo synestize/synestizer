@@ -20,6 +20,8 @@ function run(midiinputmountpoint, midioutputmountpoint) {
   });
   return {
     models: models,
+    views: views,
+    intents: intents,
   };
 };
 

@@ -16,6 +16,8 @@ function run(inputguimountpoint, displaymountpoint) {
   });
   return {
     models: models,
+    views: views,
+    intents: intents,
   };
 };
 

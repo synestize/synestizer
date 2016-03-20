@@ -17,7 +17,7 @@ var MasterTempoControl = function(props) {
     <h2>Synth Controls go here</h2>
   </div>)
 };
-function render(state, mountpoint, models) {
+function render(state, mountpoint) {
   let childComponents = [];
   
   return ReactDOM.render(

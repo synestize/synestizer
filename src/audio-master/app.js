@@ -1,21 +1,24 @@
-//Main entry point for video app
+//Main entry point for audio app
 "use strict";
 
 var views = require('./views');
 var models = require('./models');
+var ensembles = require('./ensembles/main');
 
 function run(mountpoint) {
   models.stateSubject.subscribe(function (state) {
-    console.log("renderinsynth");
+    console.log("renderinaudio");
     console.log(state);
     views.render(
       state,
       mountpoint,
-      models.activeEnsembleMap
     );
   });
+  
   return {
     models: models,
+    views: views,
+    intents: intents,
   };
 };
 

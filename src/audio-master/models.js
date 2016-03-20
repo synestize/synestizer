@@ -8,7 +8,7 @@ var ensembles = require('./ensembles/main');
 //contains volatile ensemble data
 var activeEnsembleMap = new Map();
 
-//Basic synth state
+//Basic audio state
 var state = {
   allindevices: new Map(),
   alloutdevices: new Map(),
@@ -19,14 +19,14 @@ var state = {
   mastertempo: 120,
   mastergain: -12,
 };
-//synth model state
+//audio model state
 var stateSubject = new Rx.BehaviorSubject(state);
-//synth model updates
+//audio model updates
 var updateSubject = new Rx.Subject();
 
 //per-session stuff that shouldn't be in app state
 var volatileState = {
-  synthinfo: null,
+  audioinfo: null,
   audioContext: null,
   inputNode: null,
   outputNode: null,
@@ -34,7 +34,7 @@ var volatileState = {
 
 //We don't have infrastructure for this yet.
 /*
-function registerSynth (synthName) {
+function registerSynth (audioName) {
   //register controls here.
 }
 */
@@ -51,7 +51,7 @@ updateSubject.subscribe(function (upd) {
 
 
 function selectSynthInDevice(key){
-  console.debug("synthin", key);
+  console.debug("audioin", key);
   updateSubject.onNext({activeindevice:{$set:key}});
 };
 intents.subjects.selectSynthInDevice.subscribe(selectSynthInDevice);
@@ -62,7 +62,7 @@ function selectSynthOutDevice(key) {
 };
 intents.subjects.selectSynthOutDevice.subscribe(selectSynthOutDevice);
 
-// raw synthesis interaction:
+// raw audioesis interaction:
 function setMasterGain(gain) {
   if (volumeGain){
     volumeGain.gain.value = gain;
@@ -91,7 +91,7 @@ function initContext(){
 //set up DSP and other controls
 function init (){
   initContext(window);
-  let subject = streamPatch.addSink("synth-tempo");
+  let subject = streamPatch.addSink("audio-tempo");
   subject.subscribe((val)=>setMasterTempo(bipolEquiOctave(30,480,val)));
   
   for (let ensembleKey of ensembles) {

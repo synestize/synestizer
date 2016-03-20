@@ -15,6 +15,8 @@ function run(mountpoint) {
   });
   return {
     models: models,
+    views: views,
+    intents: intents,
   };
 };
 
