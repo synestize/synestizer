@@ -4,7 +4,7 @@ var Rx = require('Rx');
 var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
-var ensembles = require('./ensembles/main');
+
 //contains volatile ensemble data
 var activeEnsembleMap = new Map();
 
@@ -31,13 +31,8 @@ var volatileState = {
   inputNode: null,
   outputNode: null,
 };
+var volatileStateSubject = new Rx.ReplaySubject(1);
 
-//We don't have infrastructure for this yet.
-/*
-function registerSynth (audioName) {
-  //register controls here.
-}
-*/
 
 //update state object through updateSubject
 updateSubject.subscribe(function (upd) {
@@ -83,9 +78,9 @@ function initContext(){
   compressor.attack.value = 0.05;
   compressor.release.value = 0.3;
   compressor.connect(audioContext.destination);
-  let volumeGain = volatilestate.volumeGain = audioContext.createGain();
+  let volumeGain = volatileState.volumeGain = audioContext.createGain();
   volumeGain.connect(compressor);
-  let outputNode = volatilestate.outputNode = volumeGain;
+  let outputNode = volatileState.outputNode = volumeGain;
 };
 
 //set up DSP and other controls
@@ -93,21 +88,7 @@ function init (){
   initContext(window);
   let subject = streamPatch.addSink("audio-tempo");
   subject.subscribe((val)=>setMasterTempo(bipolEquiOctave(30,480,val)));
-  
-  for (let ensembleKey of ensembles) {
-    console.debug("ensembleKey", ensembleKey);
-    let ensembleconstructor = ensembles[ensembleKey];
-    let ensemble = ensemble(
-      ensembleKey,
-      stateStream,
-      volatileState
-    );
-    state.activeensemblestate.set('ensembleKey', );
-    activeEnsembles.set(
-      ensembleKey,
-      ensemble
-    );
-  }
+  volatileStateSubject.onNext(volatileState);
 }
 
 init();
@@ -116,5 +97,5 @@ module.exports = {
   stateSubject: stateSubject,
   updateSubject: updateSubject,
   activeEnsembles: activeEnsembles,
-  volatileState: volatileState,
+  volatileStateSubject: volatileStateSubject,
 };

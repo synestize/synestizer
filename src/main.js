@@ -11,8 +11,8 @@ pureTabs.init('tabs-link', 'tabs-link-active');
 var MidiApp = require('./midi/app');
 var VideoApp = require('./video/app');
 var StreamPatchApp = require('./streampatch/app');
-var AudioMasterApp = require('./audio-master/app');
-var AudioJustSawtoothApp = require('./audio-justsawtooth/app');
+var AudioMasterApp = require('./audio_master/app');
+var AudioJustSawtoothApp = require('./audio_justsawtooth/app');
 
 MidiApp(
   document.getElementById('midi-input'),
@@ -29,8 +29,7 @@ var audioapp = AudioApp(
 );
 
 JustSawTooth(
-  document.getElementById('audio-justsawtooth'),
-  audioapp
+  document.getElementById('audio-justsawtooth')
 );
 
 StreamPatchApp(

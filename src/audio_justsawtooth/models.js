@@ -1,6 +1,7 @@
 'use strict';
 
-var transform = require('../../../lib/transform.js');
+var transform = require('../lib/transform.js');
+var audiomaster = require('../audio_master/models');
 
 var controls = {
     "00-base-freq": {
@@ -61,5 +62,7 @@ var controls = {
     },
 };
 
-
+audiomaster.volatileStateSubject.subscribe(function(volatileState) {
+  console.debug("init'd sawtooth", volatileState) 
+});
 module.exports = Ensemble;

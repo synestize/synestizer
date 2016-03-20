@@ -3,7 +3,6 @@
 
 var views = require('./views');
 var models = require('./models');
-var ensembles = require('./ensembles/main');
 
 function run(mountpoint) {
   models.stateSubject.subscribe(function (state) {
@@ -11,7 +10,7 @@ function run(mountpoint) {
     console.log(state);
     views.render(
       state,
-      mountpoint,
+      mountpoint
     );
   });
   

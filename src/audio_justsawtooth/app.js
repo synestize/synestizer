@@ -14,7 +14,7 @@ function run(mountpoint, audioapp) {
     console.log(state);
     views.render(
       state,
-      mountpoint,
+      mountpoint
     );
   });
   return {
