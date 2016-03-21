@@ -6,10 +6,10 @@ title: TODO
 
 * currently:
 
+  * switch param mappers to be higher order/factory functions,
+    currying appropriately
+    include inversion where exists.
   * implement audio model
-    * Probably each ensemble should just be a mini-app, with its own view logic etc
-    * probably all apps should include volatile and serializable state members?
-  
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.
   * save/load
@@ -23,7 +23,6 @@ title: TODO
     
     * This could be as simple as setting a default mapping from synth slider to output value, by cooperating between streampatch and synth (might need refactor)
     * or letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
-  * switch param mappers to be higher order/factory functions, currying appropriately
 
 * improve help if you have
 

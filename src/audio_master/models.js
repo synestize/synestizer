@@ -5,11 +5,19 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
+var params = new Map();
+
+params.set("mastertempo", {
+  label: "Master Tempo",
+  address: "00-master-tempo",
+  transform: (val) => transform.bipolEquiOctave(40, 160, val),
+});
 
 //Basic audio state
 var state = {
   mastertempo: 120,
   mastergain: -12,
+  params: params,
 };
 //audio model state
 var stateSubject = new Rx.BehaviorSubject(state);

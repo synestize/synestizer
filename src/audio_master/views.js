@@ -12,15 +12,28 @@ var SynthControls = function(props) {
   </div>)
 };
 var MasterVolume = function(props) {
-  return (<div className="streamcontrol mastergain">
-    <label htmlFor="masterGainSlider">Master Gain </label><input id="masterGainSlider" type="range" value={props.mastergain} onChange={(ev) => intents.setMasterGain(ev.target.value)} min="-40" max="6" step="1" /><span> {props.mastergain}</span>
+  return (<div className="paramControl mastergain">
+    <label className="paramLabel" htmlFor="masterGainSlider">
+      Master Gain
+    </label>
+    <input className="paramSlider" id="masterGainSlider" type="range" value={props.mastergain} onChange={(ev) => intents.setMasterGain(ev.target.value)} min="-40" max="6" step="1" className="paramValue" />
+    <span> {props.mastergain}</span>
   </div>)
 };
 var GenericAudioParam = function(props) {
-  return (<div className="streamcontrol">
-    <input type="range" value={props.mag} onChange={(ev) => intents.setMappingMag(props.sourceName, props.sinkName, ev.target.value)} min="0" max="2" step="any" onDoubleClick={(ev) => {
-      intents.setMappingSign(props.sourceName, props.sinkName, props.sign*-1)
-  }} />
+  return (<div className="paramControl mastergain">
+    <label className="paramLabel"
+      htmlFor={props.paramAddress + "-slider"}>
+      {props.paramLabel}
+    </label>
+    <input className="paramSlider"
+      id={props.paramAddress + "-slider"}
+      type="range"
+      value={props.paramCentralValue}
+      onChange={(ev) => props.intent(props.paramAddress, ev.target.value)}
+      min="-1" max="1" step="any"
+      className="paramValue" />
+    <span>value</span>
   </div>)
 };
 
@@ -28,7 +41,10 @@ function render(state, mountpoint) {
   let childComponents = [];
   
   return ReactDOM.render(
-    <SynthControls mastergain={state.mastergain}> </SynthControls>,
+    <SynthControls
+      mastergain={state.mastergain}
+      params={state.params}
+      intents={intents} />,
     mountpoint
   );
 };
