@@ -7,12 +7,6 @@ var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
 var params = new Map();
 
-params.set("mastertempo", {
-  label: "Master Tempo",
-  address: "00-master-tempo",
-  transform: (val) => transform.bipolEquiOctave(40, 160, val),
-});
-
 //Basic audio state
 var state = {
   mastertempo: 120,
@@ -42,8 +36,14 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
+function addParam(address, param, handler) {
+  params.set(address, param);
+  updateSubject.onNext({params:{$set:params}});
+  let subject = streamPatch.addSink(address);
+  subject.distinctUntilChanged().subscribe(handler);
+}
 // raw audio interaction:
-//unlike the usual synth inteactions this is in plain old decibels.
+// unlike the usual synth inteactions this is in plain old decibels.
 function setMasterGain(gain) {
   if (volatileState.volumeGain){
     volatileState.volumeGain.gain.value = transform.dbAmp(gain);
@@ -55,6 +55,11 @@ intents.subjects.setMasterGain.subscribe(setMasterGain);
 function setMasterTempo(tempo) {
   updateSubject.onNext({mastertempo:{$set:tempo}});
 };
+addParam("00-master-tempo", {
+  label: "Master Tempo",
+  transform: (val) => transform.bipolEquiOctave(40, 160, val),
+}, setMasterTempo);
+
 //Create a context with master out volume
 function initContext(){
   let audioContext = volatileState.audioContext = new window.AudioContext();

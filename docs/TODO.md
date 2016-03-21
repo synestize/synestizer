@@ -8,7 +8,7 @@ title: TODO
 
   * switch param mappers to be higher order/factory functions,
     currying appropriately
-    include inversion where exists.
+    * include inversion where exists.
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.
