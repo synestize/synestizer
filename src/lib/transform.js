@@ -1,9 +1,21 @@
 'use strict';
 
+var R = require('ramda');
+
 // [-1,1] -> [-inf, inf]
-var saturate = (val) =>  Math.tanh(val);
+var saturate = Math.tanh;
 // [-1,1] -> [-inf, inf]
 var desaturate = (val) =>  clipinf(Math.atanh(val));
+
+var identity = (x)=>x;
+
+var perturb = R.compose(
+  saturate,
+  R.sum,
+  R.zipWith(
+    (val, weight) => desaturate(val)*weight
+  )
+);
 
 var clip = function(min, max, val){
   return Math.min(
