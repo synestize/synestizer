@@ -8,16 +8,19 @@ title: TODO
 
   * switch param mappers to be higher order/factory functions,
     currying appropriately
-    * include inversion where exists.
+    * include inversion where exists?
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.
   * save/load
+  
+    * this will be hard without an app model refactor.
 
 * UI improvements
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
+    * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
   * default to active MIDI
-  * friendlier stream names
+  * friendlier stream labels
   * animate transitions and updates
   * set "central" value of param
     
@@ -29,6 +32,8 @@ title: TODO
   * the wrong browser
   * the wrong version of the right browser
   * some other camera-app stealing access to the camera
+  * CPU overload
+  
 * workflow
   * http://www.jonathan-petitcolas.com/2015/05/15/howto-setup-webpack-on-es6-react-application-with-sass.html
   * http://humaan.com/getting-started-with-webpack-and-react-es6-style/

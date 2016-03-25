@@ -6,13 +6,16 @@ title: Video Analysis
 
 ## Ideas for analyses
 
+* Gaussian mixture model
+
+  * we could get a consistent indexing for mixtures
+  by starting our mixtures at known points,
+  e.g. on the colour wheel or the space.
+  Colour wheel alone seems more natural,
+  but might require pre-processing by an inner product to find
+  a good starting spatial coordinate.
 * Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
-* covariance
-
-    * Are the covariance estimates incoherent?
-        Recall the [James-Stein shrinkage problem](http://strimmerlab.org/software/corpcor/) here.
-
 * PCA
 * Haar cascade.
 * random IIR filters
