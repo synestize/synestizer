@@ -29,7 +29,7 @@ var GenericAudioParam = function(props) {
     <input className="paramSlider"
       id={props.paramAddress + "-slider"}
       type="range"
-      value={props.paramCentralValue}
+      value={props.paramMedian}
       onChange={(ev) => props.intent(props.paramAddress, ev.target.value)}
       min="-1" max="1" step="any"
       className="paramValue" />

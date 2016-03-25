@@ -20,7 +20,6 @@ var sourceSinkMapping = new Map();
 //metadata of individual controls
 var sourceMap = new Map();
 var sinkMap = new Map();
-var sinkCentralValueMap = new Map();
 
 //values of individual controls
 var sourceState = new Map();
@@ -34,7 +33,6 @@ var sinkStateSubject = new Rx.BehaviorSubject(sinkState);
 var state =  {
   sourceMap: sourceMap,
   sinkMap: sinkMap,
-  sinkCentralValueMap: sinkCentralValueMap,
   sourceState: sourceState,
   sinkState: sinkState,
   sourceFirehoseMap: sourceFirehoseMap, //streams of source values
@@ -115,7 +113,6 @@ function getSourceStream(address){
 function addSink(address, label){
   sinkMap.set(address, label);
   sinkState.set(address, 0.0);
-  sinkCentralValueMap.set(address, 0.0);
   let subject = sinkFirehoseMap.get(address);
   if (subject === undefined) {
     subject = new Rx.BehaviorSubject(0.0);
@@ -130,13 +127,11 @@ function addSink(address, label){
     sinkState: {$set: sinkState},
     sinkMap: {$set: sinkMap},
     sinkFirehoseMap: {$set: sinkFirehoseMap},
-    sinkCentralValueMap: {$set: sinkCentralValueMap},
   });
   return subject;
 }
 function removeSink(address) {
   sinkMap.delete(address);
-  sinkCentralValueMap.delete(address);
   let subject = sinkFirehoseMap.get(address);
   subject.onCompleted();
   sinkFirehoseMap.delete(address);
@@ -157,7 +152,6 @@ function removeSink(address) {
     sinkState: {$set: sinkState},
     sinkMap: {$set: sinkMap},
     sinkFirehoseMap: {$set: sinkFirehoseMap},
-    sinkCentralValueMap: {$set: sinkCentralValueMap},
   });
 }
 function getSinkStream(address){
@@ -191,10 +185,6 @@ function setMappingMag(sourceAddress, sinkAddress, value) {
   updateMapping();
 };
 
-function setSinkCentralValue(sinkAddress, value) {
-  sinkCentralValueMap.set(sinkAddress, value);
-  updateSubject.onNext({sinkCentralValueMap: {$set: sinkCentralValueMap}});
-}
 function updateMapping() {
   //Calculates the mapping from the polarity and magnitude dictionaries
   sourceSinkMapping = new Map();
@@ -208,10 +198,6 @@ function calcSinkValues() {
   let newSinkState = new Map(); // replacement sink vals  
   // console.debug("ss", sourceState);
   // console.debug("ss1", sourceSinkMapping);
-  // CentralValueMap gives us a perturbation from zero with unit mass.
-  for (let [address, value] of sinkCentralValueMap.entries()) {
-    newSinkStateT.set(address, transform.desaturate(value || 0.0));
-  }
   for (let [key, scale] of sourceSinkMapping.entries()) {
     let [sourceAddress, sinkAddress] = key.split("/");
     let sourceVal = sourceState.get(sourceAddress) || 0.0;
@@ -240,9 +226,6 @@ intents.subjects.setMappingSign.subscribe(
 );
 intents.subjects.setMappingMag.subscribe(
   ([sourceAddress, sinkAddress, value]) => setMappingMag(sourceAddress, sinkAddress, value)
-);
-intents.subjects.setSinkCentralValue.subscribe(
-  ([address, value]) => setSinkCentralValue(address, value)
 );
 
 module.exports = {
