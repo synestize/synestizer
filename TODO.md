@@ -49,6 +49,9 @@ title: TODO
   * [react-webpack-node](https://github.com/choonkending/react-webpack-node) is an example of how these simplify things
   * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
   * Immutable state [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
+  * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
+  * state management could be better. [react-ui](https://github.com/tonyhb/redux-ui)?
+* or use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx). It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx)
 
 * A *patch* should map between
 
