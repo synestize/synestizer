@@ -1,67 +1,33 @@
 'use strict';
 
 var Rx = require('Rx');
-var update = require('react-addons-update');
+var R = require('ramda');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
-var params = new Map();
 
-//Basic audio state
+var _params = {
+  "master-tempo": {
+    label: "Master Tempo",
+    transform: (val) => transform.bipolEquiOctave(40, 160, val),
+  },
+}
+
+//canonical audio app state
 var state = {
-  mastertempo: 120,
   mastergain: -12,
-  params: params,
+  params: {}
 };
-//audio model state
 var stateSubject = new Rx.BehaviorSubject(state);
-//audio model updates
-var updateSubject = new Rx.Subject();
-
-//per-session stuff that shouldn't be in app state
+//volatile, unserializable, side effects
 var volatileState = {
   audioinfo: null,
   audioContext: null,
   inputNode: null,
   outputNode: null,
 };
-var volatileStateSubject = new Rx.ReplaySubject(1);
-
-//update state object through updateSubject
-updateSubject.subscribe(function (upd) {
-  var newState;
-  newState = update(state, upd);
-  //could use an immutable update cycle Here
-  state = newState;
-  stateSubject.onNext(state);
-});
-
-function addParam(address, param, handler) {
-  params.set(address, param);
-  updateSubject.onNext({params:{$set:params}});
-  let subject = streamPatch.addSink(address);
-  subject.distinctUntilChanged().subscribe(handler);
-}
-// raw audio interaction:
-// unlike the usual synth inteactions this is in plain old decibels.
-function setMasterGain(gain) {
-  if (volatileState.volumeGain){
-    volatileState.volumeGain.gain.value = transform.dbAmp(gain);
-  }
-  updateSubject.onNext({mastergain:{$set:gain}});
-};
-intents.subjects.setMasterGain.subscribe(setMasterGain);
-
-function setMasterTempo(tempo) {
-  updateSubject.onNext({mastertempo:{$set:tempo}});
-};
-addParam("00-master-tempo", {
-  label: "Master Tempo",
-  transform: (val) => transform.bipolEquiOctave(40, 160, val),
-}, setMasterTempo);
-
 //Create a context with master out volume
-function initContext(){
+function initAudio(){
   let audioContext = volatileState.audioContext = new window.AudioContext();
   let compressor = audioContext.createDynamicsCompressor();
   compressor.threshold.value = -50;
@@ -71,28 +37,79 @@ function initContext(){
   compressor.attack.value = 0.05;
   compressor.release.value = 0.3;
   compressor.connect(audioContext.destination);
-  let volumeGain = volatileState.volumeGain = audioContext.createGain();
+  let volumeGain = volatileState.volumeGainNode = audioContext.createGain();
   volumeGain.connect(compressor);
   let outputNode = volatileState.outputNode = volumeGain;
 };
 
+// A param has a label, a median value, a transform and
+// (derived) a current value and mapped value and 
+// (volatile) a perturbation stream.
+function decorateWithParams(state) {
+  for (let address of state.params) {
+    let subject = streamPatch.addSink(address);
+    subject.subscribe((value) => setParamPerturbation(address, value));
+  };
+}
+function getVolatileState() {
+  return volatileState
+}
 //set up DSP and other controls
 function init (){
-  initContext(window);
-  //What does this guy need?
-  //A notion of central value
-  //A notion of current value
-  //Optional: notion of unmapped value
-  
-  let subject = streamPatch.addSink("audio-tempo");
-  subject.subscribe((val)=>setMasterTempo(transform.bipolEquiOctave(30,480,val)));
-  volatileStateSubject.onNext(volatileState);
+  initAudio(state, window);
+  decorateWithParams(state);
+  stateSubject.onNext(state);
 }
 
 init();
 
+// raw audio interaction:
+// unlike the usual synth interactions this is in plain decibels.
+function setMasterGain(gain) {
+  state.mastergain = gain;
+  stateSubject.onNext(state);
+};
+intents.subjects.setMasterGain.subscribe(setMasterGain);
+stateSubject.pluck('mastergain').select((v)=>(v!==undefined)).subscribe(
+  (gain) => (volatileState.volumeGainNode.gain.value = transform.dbAmp(gain))
+);
+
+//param audio interaction
+function setMedian(address, value) {
+  state.params[address].median=value;
+  stateSubject.onNext(state);
+};
+intents.subjects.setMedian.subscribe(
+  ([address, value]) => setMedian(address, value)
+);
+
+function setParamPerturbation(address, value) {
+  state.params[address].median=value;  
+  stateSubject.onNext(state);
+}
+intents.subjects.setParamPerturbation.subscribe(
+  ([address, value]) => setParamPerturbation(address, value));
+
+function transformedParamVal(address) {
+  return _params[address].transform(currentParamVal(address))
+}
+function currentParamVal(address) {
+  let param = params[address];
+  return transform.perturb([param.median, param.perturbation], [1, 1])
+}
+function paramLabel(address){
+  return _params[address].label
+}
+//return a dict of perturbed param objects for rendering?
+function perturbedParamSet() {
+ return {};
+}
+
 module.exports = {
   stateSubject: stateSubject,
-  updateSubject: updateSubject,
-  volatileStateSubject: volatileStateSubject,
+  getVolatileState: getVolatileState,
+  transformedParamVal: transformedParamVal,
+  currentParamVal: currentParamVal,
+  paramLabel: paramLabel,
+  perturbedParamSet: perturbedParamSet,
 };

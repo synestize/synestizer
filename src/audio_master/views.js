@@ -37,7 +37,7 @@ var GenericAudioParam = function(props) {
   </div>)
 };
 
-function render(state, mountpoint) {
+function render(state, volatileState, mountpoint) {
   let childComponents = [];
   
   return ReactDOM.render(

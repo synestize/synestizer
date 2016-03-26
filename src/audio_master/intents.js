@@ -7,7 +7,7 @@ var subjects = {
 };
 
 var setMasterGain = (i) => subjects.setMasterGain.onNext(i);
-var setMedian = (address, value) => subjects.setMedian.onNext(i);
+var setMedian = (address, value) => subjects.setMedian.onNext(address, value);
 
 module.exports = {
   subjects: subjects,
