@@ -1,4 +1,6 @@
-<main id="app">
+import React, { Component, PropTypes } from 'react';
+import Video, { Component, PropTypes } from 'react';
+
   <section id="video-display">
     <canvas id="video-canvas"></canvas>
     <video id="video-video" muted autoplay></video>
@@ -46,4 +48,3 @@
       <section id="audio-justsawtooth" class="controls"></section>
     </section>
   </section>
-</main>
