@@ -39,15 +39,15 @@ title: TODO
   
   * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
 * App improvements
+  * The current approach is a little bit ad hoc. Principled people use Cycle.js, but I don't want to write my own MIDI/Video support for Cycle.js
   * Go to single app object to update all state.
     * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
-    * possibly should [switch to redux for this](http://redux.js.org/docs/basics/UsageWithReact.html)
-  * The current approach is a little bit ad hoc. Principled people use Cycle.js, but I don't want to write my own MIDI/Video support for them
-  * [redux](http://redux.js.org/index.html) is a simple alternative to flux that helps a little bit ([see also](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details))
-  * [redux-rx](https://github.com/acdlite/redux-rx) integrates these approaches.
-  * [alt](https://github.com/goatslacker/alt) is a slightly more advanced react.
-  * [react-webpack-node](https://github.com/choonkending/react-webpack-node) is an example of how these simplify things
-  * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
+    * possibly should [switch to redux for this](http://redux.js.org/docs/basics/UsageWithReact.html).  ([see also](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details))
+    * or use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx). It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx)
+    * [alt](https://github.com/goatslacker/alt) is a slightly more advanced react.
+    * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
+  * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
+  * state management could be better. [react-ui](https://github.com/tonyhb/redux-ui)?
   * Immutable state [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 
 * A *patch* should map between
