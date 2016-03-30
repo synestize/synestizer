@@ -6,61 +6,51 @@ var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var transform = require('../lib/transform.js');
 
-var _params = {
-  "master-tempo": {
-    label: "Master Tempo",
-    transform: (val) => transform.bipolEquiOctave(40, 160, val),
-  },
-}
-
 //canonical audio app state
 var state = {
   mastergain: -12,
-  params: {}
+  params:  {
+    "master-tempo": {
+      label: "Master Tempo",
+      transform: (val) => transform.bipolEquiOctave(40, 160, val),
+    },
+  },
+  //volatile, unserializable, side effects"
+  _audio: {
+    audioinfo: null,
+    context: null,
+    inputNode: null,
+    outputNode: null,
+ }
 };
 var stateSubject = new Rx.BehaviorSubject(state);
-//volatile, unserializable, side effects
-var volatileState = {
-  audioinfo: null,
-  audioContext: null,
-  inputNode: null,
-  outputNode: null,
-};
 //Create a context with master out volume
 function initAudio(){
-  let audioContext = volatileState.audioContext = new window.AudioContext();
-  let compressor = audioContext.createDynamicsCompressor();
+  let context = state._audio.context = new window.AudioContext();
+  let compressor = context.createDynamicsCompressor();
   compressor.threshold.value = -50;
   compressor.knee.value = 40;
   compressor.ratio.value = 2;
   compressor.reduction.value = 0; //should be negative for boosts?
   compressor.attack.value = 0.05;
   compressor.release.value = 0.3;
-  compressor.connect(audioContext.destination);
-  let volumeGain = volatileState.volumeGainNode = audioContext.createGain();
-  volumeGain.connect(compressor);
-  let outputNode = volatileState.outputNode = volumeGain;
+  compressor.connect(context.destination);
+  let volumeGainNode = state._volumeGainNode = context.createGain();
+  volumeGainNode.connect(compressor);
+  let outputNode = state._audio.outputNode = volumeGainNode;
+  return state
 };
 
-// A param has a label, a median value, a transform and
-// (derived) a current value and mapped value and 
-// (volatile) a perturbation stream.
-function decorateWithParams(state) {
-  for (let address of state.params) {
-    let subject = streamPatch.addSink(address);
-    subject.subscribe((value) => setParamPerturbation(address, value));
-  };
-}
-function getVolatileState() {
-  return volatileState
-}
 //set up DSP and other controls
 function init (){
-  initAudio(state, window);
-  decorateWithParams(state);
+  state=initAudio(state, window);
+  // A param has a label, a median value, a transform and
+  // (derived) a current value and mapped value and 
+  // (volatile) a perturbation stream.
+  streamPatch.addSink("master-tempo").subscribe(
+    (value) => setParamPerturbation("master-tempo", value));;
   stateSubject.onNext(state);
 }
-
 init();
 
 // raw audio interaction:
@@ -71,7 +61,7 @@ function setMasterGain(gain) {
 };
 intents.subjects.setMasterGain.subscribe(setMasterGain);
 stateSubject.pluck('mastergain').select((v)=>(v!==undefined)).subscribe(
-  (gain) => (volatileState.volumeGainNode.gain.value = transform.dbAmp(gain))
+  (gain) => (state._audio.volumeGainNode.gain.value = transform.dbAmp(gain))
 );
 
 //param audio interaction
@@ -91,25 +81,15 @@ intents.subjects.setParamPerturbation.subscribe(
   ([address, value]) => setParamPerturbation(address, value));
 
 function transformedParamVal(address) {
-  return _params[address].transform(currentParamVal(address))
+  return state.params[address].transform(currentParamVal(address))
 }
 function currentParamVal(address) {
   let param = params[address];
   return transform.perturb([param.median, param.perturbation], [1, 1])
 }
-function paramLabel(address){
-  return _params[address].label
-}
-//return a dict of perturbed param objects for rendering?
-function perturbedParamSet() {
- return {};
-}
 
 module.exports = {
   stateSubject: stateSubject,
-  getVolatileState: getVolatileState,
   transformedParamVal: transformedParamVal,
   currentParamVal: currentParamVal,
-  paramLabel: paramLabel,
-  perturbedParamSet: perturbedParamSet,
 };
