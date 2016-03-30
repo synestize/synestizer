@@ -5,10 +5,14 @@ var ReactDOM = require('react-dom');
 var intents = require('./intents');
 
 var SynthControls = function(props) {
+  let paramscontrols = [];
+  for (let address of props.params){
+    paramscontrols.unshift(<GenericAudioParam action={(ev) => intents.setMedian(ev.target.value)} />)
+  };
   return (<div className="streamcontrolset">
     <h2>Master Controls</h2>
     <MasterVolume mastergain={props.mastergain} />
-    <GenericAudioParam />
+    {paramscontrols}
   </div>)
 };
 var MasterVolume = function(props) {
@@ -16,7 +20,7 @@ var MasterVolume = function(props) {
     <label className="paramLabel" htmlFor="masterGainSlider">
       Master Gain
     </label>
-    <input className="paramSlider" id="masterGainSlider" type="range" value={props.mastergain} onChange={(ev) => intents.setMasterGain(ev.target.value)} min="-40" max="6" step="1" className="paramValue" />
+    <input className="paramSlider" id="masterGainSlider" type="range" value={props.mastergain} onChange={props.action} min="-40" max="6" step="1" className="paramValue" />
     <span> {props.mastergain}</span>
   </div>)
 };
