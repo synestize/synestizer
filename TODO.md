@@ -9,6 +9,12 @@ title: TODO
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
     * include inversion where exists?
+  * refactoring presentation because of craziness.
+    * [smart and dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.1ib9ws3ub)
+    * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
+    * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
+    * [react context](https://facebook.github.io/react/docs/context.html)
+    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * MIDI outputs are not being correctly disposed.
