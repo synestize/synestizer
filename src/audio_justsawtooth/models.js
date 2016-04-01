@@ -80,10 +80,11 @@ var controls = {
       transform: (val) => transform.bipolInt(1, 8, val),
     },
 };
-
-audiomaster.volatileStateSubject.first().subscribe(function(volatileState) {
+/*
+audiomaster._audio..first().subscribe(function(volatileState) {
   console.debug("init'd sawtooth", volatileState) 
 });
+*/
 module.exports = {
   stateSubject: stateSubject,
   updateSubject: updateSubject,
