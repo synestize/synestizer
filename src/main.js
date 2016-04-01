@@ -12,7 +12,7 @@ var MidiApp = require('./midi/app');
 var VideoApp = require('./video/app');
 var StreamPatchApp = require('./streampatch/app');
 var AudioMasterApp = require('./audio_master/app');
-var AudioJustSawtoothApp = require('./audio_justsawtooth/app');
+//var AudioJustSawtoothApp = require('./audio_justsawtooth/app');
 
 MidiApp(
   document.getElementById('midi-input'),
@@ -23,15 +23,15 @@ VideoApp(
   document.getElementById('video-input'),
   document.getElementById('video-display')
 );
-
-var audioapp = AudioMasterApp(
-  document.getElementById('audio-master')
-);
-
-AudioJustSawtoothApp(
-  document.getElementById('audio-justsawtooth')
-);
-
 StreamPatchApp(
   document.getElementById('iomatrix-tab')
 );
+
+AudioMasterApp(
+  document.getElementById('audio-master')
+);
+/*
+AudioJustSawtoothApp(
+  document.getElementById('audio-justsawtooth')
+);
+*/
