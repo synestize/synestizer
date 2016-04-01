@@ -73,10 +73,8 @@ function setPerturbationMasterTempo(value) {
 stateSubject.subscribe(function(state){
   let actualMasterTempo = transform.perturb([
     state.medianMasterTempo, state.perturbationMasterTempo
-  ], [
-    1, 1
   ]);
-  //Do something with clock value
+  //Do something with actualMasterTempo value
 });
 
 module.exports = {
