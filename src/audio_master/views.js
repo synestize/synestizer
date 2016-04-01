@@ -3,52 +3,56 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var intents = require('./intents');
+var transform = require('../lib/transform');
 
 var SynthControls = function(props) {
-  let paramscontrols = [];
-  for (let address of props.params){
-    paramscontrols.unshift(<GenericAudioParam action={(ev) => intents.setMedian(ev.target.value)} />)
-  };
-  return (<div className="streamcontrolset">
+  return (<div className="audiocontrolset">
     <h2>Master Controls</h2>
-    <MasterVolume mastergain={props.mastergain} />
-    {paramscontrols}
+    <MasterGain
+      value={props.mastergain}
+      action={intents.setMasterGain} />
+    <GenericAudioParam
+      median={props.medianMasterTempo}
+      perturbation={props.perturbationMasterTempo}
+      current={transform.perturb([
+        props.medianMasterTempo,
+        props.perturbationMasterTempo
+      ])}
+      action={intents.setMedianMasterTempo}
+      />
   </div>)
 };
-var MasterVolume = function(props) {
+var MasterGain = function({value, action}) {
   return (<div className="paramControl mastergain">
     <label className="paramLabel" htmlFor="masterGainSlider">
       Master Gain
     </label>
-    <input className="paramSlider" id="masterGainSlider" type="range" value={props.mastergain} onChange={props.action} min="-40" max="6" step="1" className="paramValue" />
-    <span> {props.mastergain}</span>
+    <input className="paramSlider" id="masterGainSlider" type="range" value={value} onChange={(ev)=>action(ev.target.value)} min="-40" max="6" step="1" className="paramValue" />
+    <span>{value}</span>
   </div>)
 };
-var GenericAudioParam = function(props) {
-  return (<div className="paramControl mastergain">
+var GenericAudioParam = function({median, perturbation, current, address, label, action}) {
+  return (<div className="paramControl {address}">
     <label className="paramLabel"
-      htmlFor={props.paramAddress + "-slider"}>
-      {props.paramLabel}
+      htmlFor={address + "-slider"}>
+      {label}
     </label>
     <input className="paramSlider"
-      id={props.paramAddress + "-slider"}
+      id={address + "-slider"}
       type="range"
-      value={props.paramMedian}
-      onChange={(ev) => props.intent(props.paramAddress, ev.target.value)}
+      value={median}
+      onChange={(ev)=>action(ev.target.value)}
       min="-1" max="1" step="any"
       className="paramValue" />
-    <span>value</span>
+    <span>{current}</span>
   </div>)
 };
 
-function render(state, volatileState, mountpoint) {
+function render(state, mountpoint) {
   let childComponents = [];
   
   return ReactDOM.render(
-    <SynthControls
-      mastergain={state.mastergain}
-      params={state.params}
-      intents={intents} />,
+    <SynthControls {...state} />,
     mountpoint
   );
 };

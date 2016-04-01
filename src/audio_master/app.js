@@ -11,7 +11,6 @@ function run(mountpoint) {
     console.log(state);
     views.render(
       state,
-      models.getVolatileState(),
       mountpoint
     );
   });
