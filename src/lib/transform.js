@@ -9,13 +9,21 @@ var desaturate = (val) =>  clipinf(Math.atanh(val));
 
 var identity = (x)=>x;
 
-var perturb = R.compose(
+//put together a list of values and weights into a copula
+var combine = R.compose(
   saturate,
   R.sum,
   R.zipWith(
     (val, weight) => desaturate(val)*weight
   )
 );
+//put together a list of values copula-wise with unit weights
+var perturb = R.compose(
+  saturate,
+  R.sum,
+  R.map(desaturate)
+);
+
 
 var clip = function(min, max, val){
   return Math.min(
@@ -153,6 +161,8 @@ var bipolEquiOctave = function(min, max, val) {
 module.exports = {
   saturate: saturate,
   desaturate: desaturate,
+  perturb: perturb,
+  combine: combine,
   clip: clip,
   clip1: clip1,
   clipinf: clipinf,
