@@ -3,14 +3,14 @@ var Rx = require('Rx');
 
 var subjects = {
   setMasterGain: new Rx.Subject(),
-  setMedian: new Rx.Subject(),
+  setMedianMasterTempo: new Rx.Subject(),
 };
 
 var setMasterGain = (i) => subjects.setMasterGain.onNext(i);
-var setMedian = (address, value) => subjects.setMedian.onNext(address, value);
+var setMedianMasterTempo = (value) => subjects.setMedianMasterTempo.onNext(value);
 
 module.exports = {
   subjects: subjects,
   setMasterGain: setMasterGain,
-  setMedian: setMedian,
+  setMedianMasterTempo: setMedianMasterTempo,
 };
