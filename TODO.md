@@ -6,12 +6,13 @@ title: TODO
 
 * currently:
 
+  * MIDI inputs/sources are broken.
+  * MIDI outputs/sinks are not being correctly disposed.
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
     * include inversion where exists?
   * implement audio model
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
-  * MIDI outputs are not being correctly disposed.
   * save/load
   
     * this will be hard without an app model refactor. See below.
