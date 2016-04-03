@@ -6,9 +6,7 @@ var models = require('./models');
 var intents = require('./intents');
 
 function run(mountpoint) {
-  models.stateSubject.subscribe(function (state) {
-    console.log("renderinaudio");
-    console.log(state);
+  models.stateSubject.throttle(30).subscribe(function (state) {
     views.render(
       state,
       mountpoint

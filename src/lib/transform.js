@@ -11,19 +11,14 @@ var identity = (x)=>x;
 
 //put together a list of values and weights into a copula
 var combine = R.compose(
-  saturate,
+  desaturate,
   R.sum,
   R.zipWith(
-    (val, weight) => desaturate(val)*weight
+    (val, weight) => saturate(val)*weight
   )
 );
 //put together a list of values copula-wise with unit weights
-var perturb = R.compose(
-  saturate,
-  R.sum,
-  R.map(desaturate)
-);
-
+var perturb = (vals) => saturate(vals.map(desaturate).reduce((a,b)=>(a+b)))
 
 var clip = function(min, max, val){
   return Math.min(
