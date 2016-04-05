@@ -61,7 +61,7 @@ var StreamPatchMappingHeaderCell = function(props) {
     width: transform.bipolPerc(props.val || 0.0)+"%"
   };
   return (<th scope={props.scope || "column"}>
-    <div className="stateBar" style={divStyle}></div>
+    <div className="state-bar" style={divStyle} />
     {props.name}
   </th>);
 };
