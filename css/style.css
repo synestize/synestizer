@@ -41,14 +41,14 @@ a, a:hover, a:active, a:focus {
 #controlpanels > nav ul.tabs li {
   /*display: block;*/
   flex: 1;
-  border: grey 1px solid;
+  border: #CCC 1px solid;
   padding: 0;
   text-align: center;
   list-style-type: none;
 }
 #controlpanels > nav ul.tabs li a {
   text-decoration: none;
-  color: gray;
+  color: #CCC;
   display: block;
   padding: 1rem;
 }
@@ -121,6 +121,7 @@ a, a:hover, a:active, a:focus {
 .controls .param-control {
   width: 22rem;
   vertical-align: center;
+  display: inline-block;
 }
 .controls .param-control .slider-wrap {
     width: 10rem;
