@@ -7,7 +7,6 @@ var transform = require('../lib/transform');
 
 var SynthControls = function(props) {
   return (<div className="audiocontrolset">
-    <h2>Master Controls</h2>
     <MasterGain
       value={props.masterGain}
       action={intents.setMasterGain} />
@@ -18,6 +17,14 @@ var SynthControls = function(props) {
       actual={props.actualMasterTempo}
       action={intents.setMedianMasterTempo}
       address="master-tempo"
+      />
+    <GenericAudioParam
+      label="Base F"
+      median={props.medianBaseFreq}
+      perturbation={props.perturbationBaseFreq}
+      actual={props.actualBaseFreq}
+      action={intents.setMedianBaseFreq}
+      address="base-freq"
       />
   </div>)
 };

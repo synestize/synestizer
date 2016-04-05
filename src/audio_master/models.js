@@ -54,7 +54,7 @@ Rx.Observable.combineLatest(
   ([gain, outputNode]) => (outputNode.gain.value = transform.dbAmp(gain))
 );
 
-//param audio interaction
+//Master Tempo
 function setMedianMasterTempo(value) {
   state.medianMasterTempo = value;
   stateSubject.onNext(state);
@@ -71,15 +71,37 @@ Rx.Observable.combineLatest(
   stateSubject.pluck('perturbationMasterTempo').distinctUntilChanged()
 ).subscribe(function([a,b]) {
   state.actualMasterTempo = transform.perturb([a||0, b||0]);
-  console.debug("pert", a,b,state.actualMasterTempo);
   stateSubject.onNext(state);
 });
+//baseFreq
+function setMedianBaseFreq(value) {
+  state.medianBaseFreq = value;
+  stateSubject.onNext(state);
+};
+intents.subjects.setMedianBaseFreq.subscribe(
+  (value) => setMedianBaseFreq(value)
+);
+function setPerturbationBaseFreq(value) {
+  state.perturbationBaseFreq=value;  
+  stateSubject.onNext(state);
+};
+Rx.Observable.combineLatest(
+  stateSubject.pluck('medianBaseFreq').distinctUntilChanged(),
+  stateSubject.pluck('perturbationBaseFreq').distinctUntilChanged()
+).subscribe(function([a,b]) {
+  state.actualBaseFreq = transform.perturb([a||0, b||0]);
+  stateSubject.onNext(state);
+});
+
+
 
 //set up DSP and other controls
 function init (){
   _audioState = initAudio(state, window);
   streamPatch.addSink("master-tempo").subscribe(
     (value) => setPerturbationMasterTempo(value));
+  streamPatch.addSink("base-freq").subscribe(
+    (value) => setPerturbationBaseFreq(value));
 }
 init();
 
