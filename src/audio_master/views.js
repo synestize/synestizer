@@ -65,7 +65,6 @@ var GenericAudioParam = function({median, perturbation, actual, address, label, 
         id={address + "-slider-actual"}
         style={divStyle} />
     </div>
-    <span className="mapped-value">{actual.toFixed(2)}</span>
   </div>)
 };
 
