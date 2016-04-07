@@ -7,6 +7,7 @@ title: TODO
 * currently:
 
   * MIDI outputs/sinks are not being correctly disposed.
+  * Need to show perturbation and final value of synth values
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
     * include inversion where exists?
@@ -36,7 +37,7 @@ title: TODO
   * save/load
 
     * this will be hard without an app model refactor. See below.
-  
+
   * optional CSS filters on video
 
 * UI improvements
