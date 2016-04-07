@@ -1,19 +1,20 @@
 'use strict';
 var Rx = require('Rx');
+var sawtooth = require('../audio_justsawtooth/intents');
 
 var subjects = {
   setMasterGain: new Rx.Subject(),
   setMedianMasterTempo: new Rx.Subject(),
-  setMedianBaseFreq: new Rx.Subject(),
 };
 
 var setMasterGain = (i) => subjects.setMasterGain.onNext(i);
 var setMedianMasterTempo = (value) => subjects.setMedianMasterTempo.onNext(value);
 var setMedianBaseFreq = (value) => subjects.setMedianBaseFreq.onNext(value);
 
-module.exports = {
-  subjects: subjects,
+module.exports = Object.assign({
   setMasterGain: setMasterGain,
   setMedianMasterTempo: setMedianMasterTempo,
   setMedianBaseFreq: setMedianBaseFreq,
-};
+}, sawtooth);
+
+module.exports.subjects = Object.assign(subjects, sawtooth.subjects);

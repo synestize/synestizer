@@ -93,6 +93,14 @@ Rx.Observable.combineLatest(
   stateSubject.onNext(state);
 });
 
+Rx.Observable.combineLatest(
+  stateSubject.pluck('actualBaseFreq').distinctUntilChanged(),
+  _audioStateSubject.pluck('outputNode').distinctUntilChanged()
+).filter(
+  (vals)=>Boolean(vals.reduce((a,b)=>(a && (b !== undefined))), true) //check  all values are defined
+).subscribe(
+  ([freq, outputNode]) => (outputNode.gain.value = transform.dbAmp(gain))
+);
 
 
 //set up DSP and other controls

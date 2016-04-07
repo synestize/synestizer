@@ -1,21 +1,15 @@
 'use strict';
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var intents = require('./intents');
+var master = require('../audio_master/views');
+var base_views = require('./base_views');
 
-var Ensemble = function(props) {
+var Sawtooth = function(props) {
   return (<div className="streamcontrolset">
     <h2>Sawtooth controls</h2>
   </div>)
-};
-
-function render(state, mountpoint) {
-  let childComponents = [];
-  
-  return ReactDOM.render(
-    <Ensemble state={state}> </Ensemble>,
-    mountpoint
-  );
 };
 
 module.exports = {
