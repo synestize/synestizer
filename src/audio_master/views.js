@@ -11,7 +11,7 @@ var SynthControls = function(props) {
     <MasterGain
       value={props.masterGain}
       action={intents.setMasterGain} />
-    <GenericAudioParam
+    <base_views.GenericAudioParam
       label="Tempo"
       median={props.medianMasterTempo}
       perturbation={props.perturbationMasterTempo}
@@ -19,7 +19,7 @@ var SynthControls = function(props) {
       action={intents.setMedianMasterTempo}
       address="master-tempo"
       />
-    <GenericAudioParam
+    <base_views.GenericAudioParam
       label="Base F"
       median={props.medianBaseFreq}
       perturbation={props.perturbationBaseFreq}

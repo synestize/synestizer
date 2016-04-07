@@ -1,6 +1,6 @@
 'use strict';
 var Rx = require('Rx');
-var sawtooth = require('../audio_justsawtooth/intents');
+var sawtooth = require('./sawtooth_intents');
 
 var subjects = {
   setMasterGain: new Rx.Subject(),

@@ -6,6 +6,7 @@ var models = require('./models');
 var intents = require('./intents');
 
 function run(mountpoint) {
+  models.init();
   models.stateSubject.throttle(30).subscribe(function (state) {
     views.render(
       state,

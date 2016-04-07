@@ -111,11 +111,9 @@ function init (){
   streamPatch.addSink("base-freq").subscribe(
     (value) => setPerturbationBaseFreq(value));
 }
-init();
-
-
 
 module.exports = {
+  init: init,
   stateSubject: stateSubject,
   _audioStateSubject: _audioStateSubject,
 };
