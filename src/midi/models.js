@@ -101,6 +101,7 @@ intents.subjects.selectMidiInChannel.subscribe(selectMidiInChannel);
 function addMidiInCC(cc) {
   state.activeinccs.add(cc);
   let address = "midi-cc-"+ cc;
+  streamPatch.addSource(address);
   updateSubject.onNext(
     {activeinccs:{$set: state.activeinccs}}
   );
