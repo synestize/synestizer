@@ -6,6 +6,15 @@ title: TODO
 
 * currently:
 
+  * Get Christoph's help moving the yellow.listentocolors.net
+  * randomisation of synth median point on load
+  * random sparse mapping on load
+  * speed of controllers changes when in the background
+  * Better solo UI
+  * Mute all UI
+  * example Ableton set
+  * Default MIDI mapping
+  * instructions when camera is not found
   * MIDI outputs/sinks are not being correctly disposed.
   * Need to show perturbation and final value of synth values
   * switch param mappers to be higher order/factory functions,
