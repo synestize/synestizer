@@ -71,7 +71,8 @@ a, a:hover, a:active, a:focus {
   bottom: 0;
   top:0;
   z-index: -1;
-  -webkit-filter: blur(4px) brightness(1.2) saturate(3);
+  /*-webkit-filter: blur(4px) brightness(1.2) saturate(3);*/
+  -webkit-filter: brightness(1.2) saturate(3);
 }
 
 #video-video {

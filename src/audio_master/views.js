@@ -8,7 +8,7 @@ var base_views = require('./base_views');
 
 var SynthControls = function(props) {
   return (<div className="audiocontrolset">
-    <MasterGain
+    <base_views.MasterGain
       value={props.masterGain}
       action={intents.setMasterGain} />
     <base_views.GenericAudioParam
