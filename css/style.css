@@ -5,13 +5,13 @@ html, body {
 body {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #000;
-    color: #aaa;
+    color: dimgray;
     height: 100%;
     overflow: hidden;
 }
 
 h1, h2, h3 {
-    color: #eee;
+    color: dimgrey;
 }
 
 a, a:hover, a:active, a:focus {
@@ -31,7 +31,7 @@ a, a:hover, a:active, a:focus {
   display: flex;
   flex-direction: column;
   /*background opacity */
-  background-color:rgba(16,16,16,0.5);;
+  background-color:rgba(16,16,16,0.0);;
 }
 #controlpanels > nav ul.tabs {
   display: flex;
@@ -41,20 +41,22 @@ a, a:hover, a:active, a:focus {
 #controlpanels > nav ul.tabs li {
   /*display: block;*/
   flex: 1;
-  border: #CCC 1px solid;
+  margin: -0.075rem 0 0 -0.075rem;
+  border: dimgray 0.15rem solid;
   padding: 0;
   text-align: center;
   list-style-type: none;
 }
 #controlpanels > nav ul.tabs li a {
   text-decoration: none;
-  color: #CCC;
+  color: dimgray;
   display: block;
   padding: 1rem;
 }
 #controlpanels > nav ul.tabs li a.tabs-link-active {
   font-weight: bold;
-  color: white;
+  color: black;
+  background-color: rgba(100,100,100,0.5);
 }
 #controlpanels .tab-content {
   flex: 1 1 auto;
@@ -69,6 +71,7 @@ a, a:hover, a:active, a:focus {
   bottom: 0;
   top:0;
   z-index: -1;
+  -webkit-filter: blur(4px) brightness(1.2) saturate(3);
 }
 
 #video-video {
@@ -179,6 +182,7 @@ a, a:hover, a:active, a:focus {
     display: inline;
     max-width: 10em;
     height: 1.5em;
+    cursor: pointer;
 }
 .streamcontrolset select[multiple] {
   height: auto;
@@ -214,16 +218,19 @@ a, a:hover, a:active, a:focus {
 .mappingmatrix .mapping {
   width: 4.5rem;
   vertical-align: middle;
-  /*margin: 0.25em;*/
   padding: 0 0.25rem 0 0.25rem;
-  background-color: rgba(238,0,0,0.3);
-}
-.mappingmatrix .mapping {
   background-color: rgba(0,0,0,0.5);
-  opacity: 0.7;
+  opacity: 1.0;
+  cursor: pointer;
+}
+.mappingmatrix .mapping input {
+  cursor: pointer;
 }
 .mappingmatrix .mapping.inactive {
   opacity: 0.3;
+}
+.mappingmatrix .mapping:hover {
+  opacity: 1.0;
 }
 .mappingmatrix .mapping.plus {
   background-color: rgba(0,0,0,0.5);
@@ -256,6 +263,7 @@ input[type="number"]:focus {
     border-radius: 0px;
     */
     border: none;
+    cursor: pointer;
 }
 
 input[type=number]::-webkit-inner-spin-button,
