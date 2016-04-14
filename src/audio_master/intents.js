@@ -5,6 +5,7 @@ var sawtooth = require('./sawtooth_intents');
 var subjects = {
   setMasterGain: new Rx.Subject(),
   setMedianMasterTempo: new Rx.Subject(),
+  setMedianBaseFreq: new Rx.Subject(),
 };
 
 var setMasterGain = (i) => subjects.setMasterGain.onNext(i);

@@ -78,6 +78,7 @@ function setMedianBaseFreq(value) {
   state.medianBaseFreq = value;
   stateSubject.onNext(state);
 };
+console.debug("intents", intents);
 intents.subjects.setMedianBaseFreq.subscribe(
   (value) => setMedianBaseFreq(value)
 );
