@@ -7,6 +7,7 @@ title: TODO
 * currently:
 
   * Get Christoph's help moving the yellow.listentocolors.net
+  * optional CSS filters on video
   * randomisation of synth median point on load
   * random sparse mapping on load
   * speed of controllers changes when in the background
