@@ -13,7 +13,7 @@ title: TODO
   * random sparse mapping on load
   * speed of controllers changes when in the background
   * Better solo UI (What does "off" mean?)
-  * Mute all UI
+  * Mute-all UI
   * example Ableton set
   * Default MIDI mapping
   * instructions when camera is not found
