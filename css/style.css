@@ -72,7 +72,6 @@ a, a:hover, a:active, a:focus {
   top:0;
   z-index: -1;
   /*-webkit-filter: blur(4px) brightness(1.2) saturate(3);*/
-  -webkit-transform: scale(-1, 1);
 }
 
 #video-video {
@@ -83,6 +82,7 @@ a, a:hover, a:active, a:focus {
   margin: 0 0 0 0;
   min-width: 100%;
   min-height: 100%;
+  -webkit-transform: scale(-1, 1);
 }
 
 #video-canvas {
@@ -95,8 +95,7 @@ a, a:hover, a:active, a:focus {
 #logo {
     position: fixed;
     bottom: 25px;
-    left: 10px;
-
+    right: 10px;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 4.7rem;
     text-align: center;
