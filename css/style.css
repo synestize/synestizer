@@ -5,13 +5,13 @@ html, body {
 body {
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #000;
-    color: dimgray;
+    color: black;
     height: 100%;
     overflow: hidden;
 }
 
 h1, h2, h3 {
-    color: dimgrey;
+    color: black;
 }
 
 a, a:hover, a:active, a:focus {
@@ -42,14 +42,14 @@ a, a:hover, a:active, a:focus {
   /*display: block;*/
   flex: 1;
   margin: -0.075rem 0 0 -0.075rem;
-  border: dimgray 0.15rem solid;
+  border: black 0.15rem solid;
   padding: 0;
   text-align: center;
   list-style-type: none;
 }
 #controlpanels > nav ul.tabs li a {
   text-decoration: none;
-  color: dimgray;
+  color: black;
   display: block;
   padding: 1rem;
 }
@@ -72,7 +72,7 @@ a, a:hover, a:active, a:focus {
   top:0;
   z-index: -1;
   /*-webkit-filter: blur(4px) brightness(1.2) saturate(3);*/
-  -webkit-filter: brightness(1.2) saturate(3);
+  -webkit-transform: scale(-1, 1);
 }
 
 #video-video {
