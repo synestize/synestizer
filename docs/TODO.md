@@ -8,7 +8,6 @@ title: TODO
 
   * Get Christoph's help moving the yellow.listentocolors.net
   * need to generate MIDI note sequences as well so that we don't need Ableton for output.
-  * paypal donate button
   * optional CSS filters on video
   * randomisation of synth median point on load
   * random sparse mapping on load
