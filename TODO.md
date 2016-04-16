@@ -8,13 +8,12 @@ title: TODO
 
   * Get Christoph's help moving the yellow.listentocolors.net
   * need to generate MIDI note sequences as well so that we don't need Ableton for output.
-  * shorten names of inputs and outputs
   * paypal donate button
   * optional CSS filters on video
   * randomisation of synth median point on load
   * random sparse mapping on load
   * speed of controllers changes when in the background
-  * Better solo UI
+  * Better solo UI (What does "off" mean?)
   * Mute all UI
   * example Ableton set
   * Default MIDI mapping
