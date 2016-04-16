@@ -204,17 +204,22 @@ a, a:hover, a:active, a:focus {
 .mappingmatrix {
   font-size: 0.8rem;
 }
-.mappingmatrix tr th {
+.mappingmatrix th {
   font-weight: normal;
   position: relative; /* so that child state-bar elements can be absolutely positioned */
+  background-color: white;
 }
-.state-bar {
+.mappingmatrix th span {
+    position: relative;
+    z-index: 2;
+}
+.mappingmatrix th .state-bar {
   height: 100%;
   bottom: 0;
-  background-color: green;
+  background-color: palegreen;
   opacity: 1;
   position: absolute;
-  z-index: -1;
+  z-index: 1;
 }
 .mappingmatrix .mapping {
   width: 4.5rem;
