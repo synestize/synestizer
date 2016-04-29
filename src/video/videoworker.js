@@ -8,7 +8,9 @@ var inbox = Rx.Observable.fromEvent(self, "message").select((e) => e.data);
 var outbox = new Rx.Subject();
 var results = new Map();
 
-outbox.subscribe((msg)=>self.postMessage(msg));
+outbox.subscribe((msg)=>{
+  self.postMessage(msg)
+});
 
 inbox.where((x)=>(x.topic==="settings")).subscribe(function(data) {
   // console.debug("settings", data.topic, data.payload);
@@ -28,4 +30,3 @@ inbox.where((x)=>(x.topic==="pixels")).subscribe(function(data) {
     payload: results
   });
 });
-
