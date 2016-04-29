@@ -70,7 +70,8 @@ var MidiInCCSetSelect = function(props) {
         Array.from(props.activeccs.values())
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
-        intents.setMidiInCC([...ev.target.selectedOptions].map((x)=>parseInt(x.value)))}
+        intents.setMidiInCC(
+          Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
     </select>
@@ -150,8 +151,8 @@ var MidiOutCCSetSelect = function(props) {
         Array.from(props.activeccs.values())
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
-        intents.setMidiOutCC([...ev.target.selectedOptions].map(
-          (x) => parseInt(x.value)))}
+        intents.setMidiOutCC(
+          Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
     </select>
