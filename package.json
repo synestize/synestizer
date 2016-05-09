@@ -22,8 +22,10 @@
   },
   "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
   "license": "GPL-3.0",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
+    "webrtc-adapter": "^1.1.0",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-plugin-uglify": "^1.0.2",
