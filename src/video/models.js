@@ -5,6 +5,7 @@ var update = require('react-addons-update');
 var intents = require('./intents');
 var streamPatch = require('../streampatch/models');
 var Statistic = require('./statistic');
+var webrtc = require('webrtc-adapter');
 
 //Basic video UI state
 var state = {
