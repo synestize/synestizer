@@ -7,8 +7,6 @@ title: TODO
 * currently:
 
   * Get Christoph's help moving the yellow.listentocolors.net
-  * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
-  * optional CSS filters on video
   * randomisation of synth median point on load
   * random sparse mapping on load
   * speed of controllers changes when in the background
@@ -48,6 +46,8 @@ title: TODO
   * save/load
 
     * this will be hard without an app model refactor. See below.
+
+  * optional CSS filters on video
 
   * optional CSS filters on video
 
