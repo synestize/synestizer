@@ -7,8 +7,6 @@ title: TODO
 * currently:
 
   * Get Christoph's help moving the yellow.listentocolors.net
-  * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
-  * optional CSS filters on video
   * randomisation of synth median point on load
   * random sparse mapping on load
   * speed of controllers changes when in the background
@@ -22,10 +20,13 @@ title: TODO
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
     * include inversion where exists?
+  * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * save/load
   
     * this will be hard without an app model refactor. See below.
+  
+  * optional CSS filters on video
 
 * UI improvements
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
