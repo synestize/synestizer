@@ -1,6 +1,0 @@
-synestizer.example.com
-markdown /docs {
-  #template template.html
-  css style.css
-  dev
-}
