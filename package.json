@@ -22,23 +22,22 @@
   },
   "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
   "license": "GPL-3.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "webrtc-adapter": "^1.1.0",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-plugin-uglify": "^1.0.2",
-    "babel-preset-react": "^6.3.13",
+    "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",
-    "immutable": "^3.7.6",
+    "immutable": "^3.8.1",
     "ramda": "^0.19.1",
-    "react": "^0.14.6",
+    "react": "^0.14.8",
     "react-addons-update": "^0.14.7",
-    "react-dom": "^0.14.6",
-    "rx": "^4.0.7",
+    "react-dom": "^0.14.8",
+    "rx": "^4.1.0",
     "source-map-loader": "^0.1.5",
-    "webpack": "^1.12.12",
+    "webpack": "^1.13.1",
+    "webrtc-adapter": "^1.2.2",
     "worker-loader": "^0.7.0"
   }
 }
