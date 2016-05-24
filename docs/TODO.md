@@ -16,10 +16,25 @@ title: TODO
     * [react context](https://facebook.github.io/react/docs/context.html)
     * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
   * implement audio model
+  * Get Christoph's help moving the yellow.listentocolors.net
+  * need to generate MIDI note sequences as well so that we don't need Ableton for output.
+  * optional CSS filters on video
+  * randomisation of synth median point on load
+  * random sparse mapping on load
+  * speed of controllers changes when in the background
+  * Better solo UI (What does "off" mean?)
+  * Mute-all UI
+  * example Ableton set
+  * Default MIDI mapping
+  * instructions when camera is not found
+  * MIDI outputs/sinks are not being correctly disposed.
+  * Need to show perturbation and final value of synth values
+  * switch param mappers to be higher order/factory functions,
+    [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
+    * include inversion where exists?
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
-  * MIDI outputs are not being correctly disposed.
   * save/load
-  
+
     * this will be hard without an app model refactor. See below.
 
 * UI improvements
@@ -36,13 +51,13 @@ title: TODO
   * the wrong version of the right browser
   * some other camera-app stealing access to the camera
   * CPU overload
-  
+
 * workflow
 
   * to get SSL, maybe by creating a caddy deploy workflow to some host
   * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
     * However, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
-  
+
   * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
 * App improvements
   * The current approach is a little bit ad hoc. Principled people use Cycle.js, but I don't want to write my own MIDI/Video support for Cycle.js
@@ -59,7 +74,7 @@ title: TODO
 * A *patch* should map between
 
     * input params
-    
+
         * Video analysis [done]
         * MIDI CC in [done]
         * GUI widgets
@@ -71,9 +86,9 @@ title: TODO
           * [Leap Control](https://developer.leapmotion.com/getting-started/javascript)
         * General websockets?
         * OpenSoundControl?
-    
+
     * output params
-    
+
       * audio ensemble parameters
       * MIDI CC out [done]
       * OpenSoundControl?
@@ -81,9 +96,9 @@ title: TODO
 
     * Patches could have a separate mapping GUI for constructing the mapping
     * Copula-function-based covariance
-      
+
       * tanh [done]
-      * erf copulae 
+      * erf copulae
 
 * video should use webrtc so that it can handle non-local video sources.
 * Meta
