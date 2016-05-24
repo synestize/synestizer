@@ -4,7 +4,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Rx from 'rx'
-
+import synestizerApp from './app';
+import App from './views/app';
 //debug mode:
 Rx.config.longStackSupport = true;
 
