@@ -9,14 +9,6 @@ import Rx from 'rx'
 import * as reducers from './reducers'
 import { SET_TAB } from './actions'
 
-//debug mode:
-Rx.config.longStackSupport = true;
+const synestizerApp = combineReducers(reducers)
 
-const store = createStore(synestizerApp)
-
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('app')
-)
+export default synestizerApp

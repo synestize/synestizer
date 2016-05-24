@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+"use strict";
 import Video, { Component, PropTypes } from 'react';
 
   <section id="video-display">
