@@ -85,6 +85,7 @@ title: TODO
   * state management could be better. [react-ui](https://github.com/tonyhb/redux-ui)?
   * Immutable state [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 
+* Go to [rxjs 5.0](https://github.com/ReactiveX/RxJS)
 * A *patch* should map between
 
     * input params
