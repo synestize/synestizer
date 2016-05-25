@@ -7,7 +7,7 @@ title: Notes
 Notes auditioning for a place in the documentation
 
 
-## linear algebra options
+## javascript mathematics
 
 Ranked in descending order of viability:
 
@@ -35,18 +35,18 @@ Ranked in descending order of viability:
     JavaScript (emscripten) port of lmfit library:
 
     "a self-contained C library for Levenberg-Marquardt least-squares
-    minimization and curve fitting" 
+    minimization and curve fitting"
 
     Currently only linear curve fitting is implemented.
 * [linalg](https://github.com/ben-ng/linalg) uses native arrays because of their speed.
-  
+
     > I needed a performance focused linear algebra module for visualizing data
     > in 10+ dimensions, and implementing machine learning algorithms. I quickly
     > learned that naive solutions to linear algebra operations can produce
     > numerical errors so significant they are utterly useless for anything other
     > than casual playtime. After that, I prioritized correctness over
     > performance.”
-  
+
     Untouched since released and small community, which is sad
   because the code looks solid.
 
@@ -55,7 +55,7 @@ Ranked in descending order of viability:
 * [numeric](http://numericjs.com/wordpress/) looks polished
   but has been untouched for 2 years
 * [jmat](https://github.com/lvandeve/jmat) is an actively developed complex matrix library, but we would probably prefer speed to complex number support.
-
+* random variables can be simulated very easily using the [probability distributions library](https://github.com/Mattasher/probability-distributions) 
 
 ## Workflow options
 
@@ -122,7 +122,7 @@ Partial workflow tools:
         * [Observable Methods](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/observable.md#rxobservableprototypetimestampscheduler)
         * [backpressure](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/backpressure.md)
         * [querying](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/querying.md)
-        
+
     * [Both these compared](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/mapping/highland/whyrx.md) Summary: Highland.js is easier to understand, but not as well designed.
     * There are other options - kefir.js and bacon.js - but my brain is full.
 
@@ -135,7 +135,7 @@ Partial workflow tools:
 * Transducers (a library of stream processors)
 
     * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
-  
+
     * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
