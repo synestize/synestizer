@@ -1,12 +1,20 @@
 "use strict";
 
-import { combineReducers } from 'redux'
-import { SET_TAB } from './actions'
+import { SET_VISIBLE_PANE } from './actions'
 
-export function setTab(state = "info", action) {
+export function setVisiblePane(state = "info", action) {
   switch (action.type) {
-    case SET_VISIBILITY_FILTER:
-      return action.filter
+    case SET_VISIBLE_PANE:
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function setVisiblePane(state = "info", action) {
+  switch (action.type) {
+    case SET_VISIBLE_PANE:
+      return action.payload
     default:
       return state
   }

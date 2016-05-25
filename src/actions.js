@@ -2,12 +2,12 @@
  * action types
  */
 
-export const SET_TAB = 'SET_TAB'
+export const SET_VISIBLE_PANE = 'SET_VISIBLE_PANE'
 
 /*
  * action creators
  */
 
-export function setTab(tab) {
-  return { type: SET_TAB, tab }
+export function setPane(tab) {
+  return { type: SET_VISIBLE_PANE, payload: tab }
 }

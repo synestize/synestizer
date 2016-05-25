@@ -2,14 +2,14 @@
 //Main entry point for whole app
 "use strict";
 
-import React, { PropTypes } from 'react'
-import { combineReducers } from 'redux';
 import Rx from 'rx'
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import React, { PropTypes } from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { combineReducers, createStore } from 'redux'
+
 import * as reducers from './reducers'
-import App from './views/app';
+import App from './components/app'
 
 //debug mode:
 Rx.config.longStackSupport = true;
