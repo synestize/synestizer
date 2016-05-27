@@ -24,6 +24,7 @@ Then you open up the terminal on your platform and run the following two command
 This should build a live-updating development version of the app for you to view in the browser.
 
 Now, go to [http://localhost:8080/](http://localhost:8080/), and synestizer should be ready to go!
+And if you go to [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) you will find an interactive debugging system installed too.
 
 ### Notes on public websites and HTTPS
 
