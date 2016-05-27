@@ -10,7 +10,7 @@ Source code for the documentation lives [on github](https://github.com/synestize
 
 ## Offline mode
 
-For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/)
+For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/).
 Download the and unzip code using [ this link](https://github.com/synestize/synestizer/archive/master.zip), or using git if you know what that means.
 
 But you are not finished yet;
