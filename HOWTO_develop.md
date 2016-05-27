@@ -31,6 +31,15 @@ Source code for the documentation lives [on github](https://github.com/synestize
 If you have the app in offline mode, you can do this. All the javascript files in the ```src/``` folder are for editing.
 
 ## Advanced information
+### Handy tools
+
+* [Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
+
+* For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
+
+* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
+
 ### Notes on public websites and HTTPS
 
 If you want to not only host your *own* version of synestizer but share it with others, you have to do more work;
@@ -44,13 +53,8 @@ available for download for most platforms.
 
 If you are doing this advanced stuff, you might also have to think about packaging up the javascript as static assets, which is simpler than using the node.js server. This isbeyond the current scope.
 
-### Handy tools
 
-[Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
-
-For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
-
-### Advanced: documentation subtrees
+### Documentation subtrees
 
 For convenience we keep documentation mirrored
 into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
