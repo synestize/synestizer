@@ -7,8 +7,6 @@ title: TODO
 * currently:
 
   * Get Christoph's help moving the yellow.listentocolors.net
-  * randomisation of synth median point on load
-  * random sparse mapping on load
   * speed of controllers changes when in the background
   * Better solo UI (What does "off" mean?)
   * Mute-all UI
@@ -30,24 +28,11 @@ title: TODO
   * Get Christoph's help moving the yellow.listentocolors.net
   * randomisation of synth median point on load
   * random sparse mapping on load
-  * speed of controllers changes when in the background
-  * Better solo UI (What does "off" mean?)
-  * Mute-all UI
-  * example Ableton set
-  * Default MIDI mapping
-  * instructions when camera is not found
-  * MIDI outputs/sinks are not being correctly disposed.
-  * Need to show perturbation and final value of synth values
-  * switch param mappers to be higher order/factory functions,
-    [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
-    * include inversion where exists?
   * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
   * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
   * save/load
 
     * this will be hard without an app model refactor. See below.
-
-  * optional CSS filters on video
 
   * optional CSS filters on video
 
@@ -61,7 +46,7 @@ title: TODO
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
 
-* improve help if you have
+* improve help message if you have
 
   * the wrong browser
   * the wrong version of the right browser
@@ -120,7 +105,6 @@ title: TODO
 * video should use webrtc so that it can handle non-local video sources.
 * Meta
 
-    * automatic letsencrypt SSL
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
 * prettier docs website
