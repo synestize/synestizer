@@ -1,30 +1,27 @@
 
 # How to develop synestizer
+First, you need to run your own copy of synestizer.
+the best way to do this is offline mode:
 
-You can help with code or with documentation. The procedure is the same either way - [fork us on github](https://github.com/synestize/synestizer) and send us pull requests.
-
-## Documentation
+## Editing Synestizer
+### Edit the documentation
+If all you want to do is update the documentation, you don't even need offline mode.
 
 The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
 Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
 
-## Offline mode
+### Edit the code ("Offline mode")
+If you have the app in offline mode, you can do this. All the javascript files in the ```src/``` folder are for editing.
 
-For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/).
-Download the and unzip code using [ this link](https://github.com/synestize/synestizer/archive/master.zip), or using git if you know what that means.
+## Advanced information
+### Handy tools
 
-But you are not finished yet;
-Now you need to run a [node.js](https://nodejs.org/), which pre-processes the javascript and also provides a web server to access the app.
+* [Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
 
-Then you open up the terminal on your platform and run the following two commands:
+* For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
 
-      npm install
-      npm run dev
+* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
-This should build a live-updating development version of the app for you to view in the browser.
-
-Now, go to [http://localhost:8080/](http://localhost:8080/), and synestizer should be ready to go!
-And if you go to [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) you will find an interactive debugging system installed too.
 
 ### Notes on public websites and HTTPS
 
@@ -46,15 +43,7 @@ You can do this using an appropriate SSH configuration, and the handy script
 
 this is defined in ```package.json```.
 
-### Handy tools
-
-* [Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
-
-* For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
-
-* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-
-### Advanced: documentation subtrees
+### Documentation subtrees
 
 For convenience we keep documentation mirrored
 into the main repository using [subtrees](http://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/).
