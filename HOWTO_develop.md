@@ -8,7 +8,7 @@ You can help with code or with documentation. The procedure is the same either w
 The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
 Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
 
-## Code
+## Offline mode
 
 For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/)
 Download the and unzip code using [ this link](https://github.com/synestize/synestizer/archive/master.zip), or using git if you know what that means.
