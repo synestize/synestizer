@@ -31,20 +31,29 @@ If you want to not only host your *own* version of synestizer but share it with 
 For security reasons, only secure websites (HTTPS) are permitted to access the camera etc.
 
 So you have to run a secure website.
-There are a lot of howto guides to this on the internet.
+There are a lot of how-to guides to this on the internet.
 The easiest is probably
 [caddy](https://caddyserver.com/),
 a free, open-source, secure server designed for developing browser apps,
 available for download for most platforms.
 [Anything which supports letsncrypt](https://github.com/certbot/certbot/wiki/Links) should be simple.
 
-If you are doing this advanced stuff, you might also have to think about packaging up the javascript as static assets, which is simpler than using the node.js server. This isbeyond the current scope.
+If you are doing this advanced stuff,
+you might also have to think about packaging up the javascript as static assets,
+which is faster and safer than using the node.js server.
+You can do this using an appropriate SSH configuration, and the handy script
+
+      npm publish
+
+this is defined in ```package.json```.
 
 ### Handy tools
 
-[Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
+* [Firefox has a webaudio editor](https://developer.mozilla.org/en-US/docs/Tools/Web_Audio_Editor)
 
-For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
+* For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
+
+* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
 ### Advanced: documentation subtrees
 
