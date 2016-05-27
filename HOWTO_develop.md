@@ -1,12 +1,7 @@
 
 # How to develop synestizer
-
-You can help with code or with documentation. The procedure is the same either way - [fork us on github](https://github.com/synestize/synestizer) and send us pull requests.
-
-## Documentation
-
-The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
-Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
+First, you need to run your own copy of synestizer.
+the best way to do this is offline mode:
 
 ## Offline mode
 
@@ -25,6 +20,17 @@ This should build a live-updating development version of the app for you to view
 
 Now, go to [http://localhost:8080/](http://localhost:8080/), and synestizer should be ready to go!
 
+## Editing Synestizer
+### Edit the documentation
+If all you want to do is update the documentation, you don't even need offline mode.
+
+The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
+Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
+
+### Edit the code ("Offline mode")
+If you have the app in offline mode, you can do this. All the javascript files in the ```src/``` folder are for editing.
+
+## Advanced information
 ### Notes on public websites and HTTPS
 
 If you want to not only host your *own* version of synestizer but share it with others, you have to do more work;
