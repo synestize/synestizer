@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux'
 
 import * as reducers from './reducers'
-import App from './components/app'
+import App from './components/App'
 
 //debug mode:
 Rx.config.longStackSupport = true;
