@@ -1,10 +1,16 @@
 # How to synestize
-
+## Setting up the patching matrix
+TBD
+## Connecting MIDI Output to your DAW
+TBD
+## Accepting MIDI input from your MIDI controller
+TBD
 ## Offline mode
 
-Want to run your own copy of synestizer?
-[the sourcecode is on github](https://synestize.github.io/synestizer/).
-Download the and unzip code using [ this link](https://github.com/synestize/synestizer/archive/master.zip), or using ```git``` if you know what that means.
+Want to run your own copy of synestizer? No problem!
+The [sourcecode is on github](https://synestize.github.io/synestizer/).
+Download and unzip that code using [ this link](https://github.com/synestize/synestizer/archive/master.zip).
+(Advanced users and coders who might want to change the software should use ```git```, if you know what that means.)
 
 Now you need to run a [node.js](https://nodejs.org/), which pre-processes the javascript and also provides a web server to access the app.
 
@@ -16,4 +22,4 @@ Then you open up the terminal on your platform and run the following two command
 This should build a live-updating development version of the app for you to view in the browser.
 
 Now, go to [http://localhost:8080/](http://localhost:8080/), and synestizer should be ready to go!
-And if you go to [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) you will find an interactive debugging system installed too.
+And, developers, if you go to [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) you will find an interactive debugging system installed too.
