@@ -1,12 +1,8 @@
----
-title: Requirements
----
-
 # Requirements
 
 * ECMAscript6-compatible browser
 * Webcam
-* either
+* and either
 
-    * A MIDI-controlable audio application, or
+    * A MIDI-controllable audio application, or
     * An audio output device
