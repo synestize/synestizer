@@ -8,9 +8,9 @@ You can help with code or with documentation. The procedure is the same either w
 The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
 Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
 
-## Code
+## Offline mode
 
-For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/)
+For the app itself, [the sourcecode is on github](https://synestize.github.io/synestizer/).
 Download the and unzip code using [ this link](https://github.com/synestize/synestizer/archive/master.zip), or using git if you know what that means.
 
 But you are not finished yet;
@@ -33,9 +33,7 @@ For security reasons, only secure websites (HTTPS) are permitted to access the c
 
 So you have to run a secure website.
 There are a lot of how-to guides to this on the internet.
-The easiest is probably
-[caddy](https://caddyserver.com/),
-a free, open-source, secure server designed for developing browser apps,
+The easiest is probably [caddy](https://caddyserver.com/), a free, open-source, secure server designed for developing browser apps,
 available for download for most platforms.
 [Anything which supports letsncrypt](https://github.com/certbot/certbot/wiki/Links) should be simple.
 
