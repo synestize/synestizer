@@ -2,10 +2,11 @@ var path = require('path');
 
 module.exports = {
   entry: [
-    'index'
+    //'webpack/hot/dev-server' ,
+    './src/index.js'
   ],
   output: {
-    publicPath: './js/',
+    publicPath: 'js/',
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },
