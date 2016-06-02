@@ -9,8 +9,9 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux'
 
 import * as reducers from './reducers'
-import App from './components/App'
+import CurrentApp from './containers/CurrentApp'
 
+console.debug(reducers);
 //debug mode:
 Rx.config.longStackSupport = true;
 
@@ -19,7 +20,7 @@ const store = createStore(synestizerApp)
 
 render(
   <Provider store={store}>
-    <App />
+    <CurrentApp />
   </Provider>,
   document.getElementById('app')
 )

@@ -1,10 +1,13 @@
-import { connect } from 'react-redux'
-import App from '../components/App'
+'use strict';
+import { connect } from 'react-redux';
+import App from '../components/App';
 
+const mapStateToProps = () => {};
+const mapDispatchToProps = () => {};
 
 const CurrentApp = connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)( App );
 
-export default CurrentApp
+export default CurrentApp;
