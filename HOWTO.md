@@ -1,10 +1,16 @@
 # How to synestize
 ## Setting up the patching matrix
+
 TBD
+
 ## Connecting MIDI Output to your DAW
+
 TBD
+
 ## Accepting MIDI input from your MIDI controller
+
 TBD
+
 ## Offline mode
 
 Want to run your own copy of synestizer? No problem!
