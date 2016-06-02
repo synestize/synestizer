@@ -11,7 +11,9 @@ The online documentation is at [synestize.gitbooks.io/synestizer](https://synest
 Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
 
 ### Edit the code ("Offline mode")
-If you have the app in offline mode, you can do this. All the javascript files in the ```src/``` folder are for editing.
+If you have the app in offline mode, you can do this.
+All the javascript files in the ```src/``` folder are for editing.
+Any changes you make will update the offline version automatically.
 
 ## Advanced information
 ### Handy tools
@@ -21,7 +23,6 @@ If you have the app in offline mode, you can do this. All the javascript files i
 * For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
 
 * For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-
 
 ### Notes on public websites and HTTPS
 
@@ -41,7 +42,7 @@ You can do this using an appropriate SSH configuration, and the handy script
 
       npm publish
 
-this is defined in ```package.json```.
+This is defined in ```package.json```.
 
 ### Documentation subtrees
 
