@@ -10,9 +10,18 @@ Javascript is in Ecmascript 2015, a.k.a. ES6, the latest version of Javascript.
 
 ## React
 
+How do I persist DOM nodes? Perhaps [using key](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
+
+How do i communicate across branches of Componenets?
+[Methods?](https://facebook.github.io/react/tips/expose-component-functions.html)
+
 ## Redux
 
-http://redux.js.org/docs/advanced/AsyncActions.html
+* [Components and Super-Components](https://medium.com/@rajaraodv/the-anatomy-of-a-react-redux-app-759282368c5a#.ozt83zza6)
+* [what in blazes are all these "components"?](http://redux.js.org/docs/basics/UsageWithReact.html)
+* [asynchronicity](http://redux.js.org/docs/advanced/AsyncActions.html)
+* [memoization/caching](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
+* How can we batch updates? [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) or [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) are recommended in the redux docs
 
 ## Webpack
 
