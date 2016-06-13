@@ -64,7 +64,7 @@ a, a:hover, a:active, a:focus {
   min-height: 0px;
   padding: 1ex 1em;
 }
-#video-display {
+#video-io {
   position: absolute;
   left: 0;
   right: 0;
