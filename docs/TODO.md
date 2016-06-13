@@ -6,6 +6,7 @@ title: TODO
 
 * currently:
 
+  * refactoring App to be a single object using rex+react
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
   * Better solo UI (What does "off" mean?)
@@ -18,12 +19,6 @@ title: TODO
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
     * include inversion where exists?
-  * refactoring presentation because of craziness.
-    * [smart and dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.1ib9ws3ub)
-    * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
-    * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
-    * [react context](https://facebook.github.io/react/docs/context.html)
-    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
   * implement audio model
   * Get Christoph's help moving the yellow.listentocolors.net
   * randomisation of synth median point on load
@@ -55,18 +50,23 @@ title: TODO
 
 * workflow
 
-  * to get SSL, maybe by creating a caddy deploy workflow to some host
   * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
     * However, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
 
-  * [build docs site automatically?](http://blog.mwaysolutions.com/2014/04/10/static-website-generator-with-grunt-js/)
 * App improvements
-  * The current approach is a little bit ad hoc. Principled people use Cycle.js, but I don't want to write my own MIDI/Video support for Cycle.js
   * Go to single app object to update all state.
-    * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
     * possibly should [switch to redux for this](http://redux.js.org/docs/basics/UsageWithReact.html).  ([see also](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details))
     * or use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx). It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx)
-    * [alt](https://github.com/goatslacker/alt) is a slightly more advanced react.
+    * [smart and dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.1ib9ws3ub)
+    * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
+    * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
+    * [react context](https://facebook.github.io/react/docs/context.html)
+    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
+    * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
+    * [redux asynchrony middleware](http://redux.js.org/docs/advanced/AsyncActions.html)
+    * [react asynchrony made simple](https://reactjsnews.com/redux-middleware)
+    * maybe [ditch redux entirely eventually](https://github.com/jas-chen/rx-redux), but we are sticking with it now because there is more documentation about redux.
+    * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
     * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
   * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
   * state management could be better. [react-ui](https://github.com/tonyhb/redux-ui)?
@@ -80,7 +80,6 @@ title: TODO
         * Video analysis [done]
         * MIDI CC in [done]
         * GUI widgets
-        * central baseline values
         * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)
         * Audio analysis
         * device sensors
