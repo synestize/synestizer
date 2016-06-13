@@ -5,12 +5,12 @@ import Rx from 'rx'
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { combineReducers, createStore } from 'redux'
+import { createStore } from 'redux'
 
-import * as reducers from './reducers'
+import reducer from './reducers/index'
 import CurrentApp from './containers/CurrentApp'
 import videoio_ from 'io/video/index'
-console.debug(reducers);
+
 //debug mode:
 Rx.config.longStackSupport = true;
 
@@ -24,8 +24,7 @@ From the perspective of the App, IO may as well be running on a remote server. a
 IO can get
 */
 
-const synestizerApp = combineReducers(reducers)
-const store = createStore(synestizerApp)
+const store = createStore(reducer)
 
 const approot = render(
   <Provider store={store}>
