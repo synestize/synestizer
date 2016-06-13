@@ -6,14 +6,13 @@ title: Notes
 
 Notes auditioning for a place in the documentation
 
-###  editing documentation
+###  alternatives to Gitbook for editing documentation
 
 * [readthedocs for github](http://docs.readthedocs.org/en/latest/webhooks.html)
 * [mkdocs](http://www.mkdocs.org/)
 * [macdown](http://macdown.uranusjr.com/)
 * [cactus](http://cactusformac.com/docs/) for OSX seems to do a lot of what we want.
 * [prose](http://prose.io)
-* [gitbook](https://www.gitbook.com/) looks reasonably pretty and sells the output as a book on Amazon at the end
 
 ## Remote operation
 
