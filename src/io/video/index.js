@@ -4,7 +4,7 @@ import Rx from 'rx'
 import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
-import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/app'
+import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions'
 import { toObservable } from '../../lib/rx_redux'
 
 //hardware business
@@ -18,13 +18,13 @@ window.videoworker = videoworker;
 window.Videoworker_ = Videoworker_;
 
 let videoDom;
-let store;
 let canvasElem;
 let videoElem;
 let gfxCtx;
 //the browser's opaque media stream which we will need to process into pixel array streams
 let mediaStream;
 
+let store;
 let storeStream;
 let unsubscribe;
 
@@ -183,7 +183,7 @@ function updateVideoIO(mediadevices) {
   }
 };
 
-export default function init(store, newVideoDom) {
+export default function init(store_, newVideoDom) {
   //set up video system
   videoDom = newVideoDom;
   canvasElem = videoDom.querySelector('canvas');
@@ -194,7 +194,8 @@ export default function init(store, newVideoDom) {
     updateVideoIO,
     (err) => console.debug(err.stack)
   );
-  storeStream = Rx.Observable.create(toObservable(store));
+  store = store_;
+  storeStream = toObservable(store);
   storeStream.pluck('current_video_source').distinctUntilChanged().subscribe(
     (key) => {
       doVideoPlumbing(key);

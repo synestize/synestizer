@@ -10,7 +10,6 @@ import { combineReducers, createStore } from 'redux'
 import * as reducers from './reducers'
 import CurrentApp from './containers/CurrentApp'
 import videoio_ from 'io/video/index'
-
 console.debug(reducers);
 //debug mode:
 Rx.config.longStackSupport = true;
