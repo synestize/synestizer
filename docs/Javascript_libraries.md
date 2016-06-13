@@ -10,10 +10,13 @@ Javascript is in Ecmascript 2015, a.k.a. ES6, the latest version of Javascript.
 
 ## React
 
+### If I need to get to DOM nodes...
+e.g. for accesing video.
 How do I persist DOM nodes? Perhaps [using key](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
-
-How do i communicate across branches of Componenets?
+How do i communicate across branches of Components?
 [Methods?](https://facebook.github.io/react/tips/expose-component-functions.html)
+
+But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
 
 ## Redux
 

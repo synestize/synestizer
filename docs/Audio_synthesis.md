@@ -1,11 +1,4 @@
----
-title: Audio synthesis
----
-
 # Audio Synthesis
-
-
-
 
 ## Sequencing
 

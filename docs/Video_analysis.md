@@ -1,7 +1,3 @@
----
-title: Video Analysis
----
-
 # Video Analysis
 
 ## Ideas for analyses
