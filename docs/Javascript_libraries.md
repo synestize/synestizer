@@ -33,7 +33,13 @@ Popular with, e.g. rxvision.
 
 ## Rx.js
 
-* [Rx.js](http://reactivex.io/) -  [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+* [Rx.js](http://reactivex.io/)
+  * [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
+  * [Rx marbles](http://rxmarbles.com/) visualises Rx streams
+  * [xgrommx's Rx book](https://xgrommx.github.io/rx-book/) is the messy but readable reference
+  * [Rx.js official documenation](https://github.com/Reactive-Extensions/RxJS/tree/master/doc) is not always the bst for explaining their verbose and yet uninformative names, but it does have some useful pages, especially
+    * [Which operator use: creation operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md) is the guide to constructors
+    * [Which operator use: instance operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-instance.md) is the guide to instance methods
 
 * stream debuggers
 
