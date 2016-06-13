@@ -1,11 +1,11 @@
 'use strict';
 
-var Rx = require('Rx');
-var update = require('react-addons-update');
-var intents = require('./intents');
-var streamPatch = require('../streampatch/models');
-var transform = require('../lib/transform.js');
-var setop = require('../lib/setop.js');
+import Rx from 'rx'
+import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions'
+import { toObservable } from '../../lib/rx_redux'
+// var streamPatch = require('../streampatch/models');
+var transform = require('../../lib/transform.js');
+var setop = require('../../lib/setop.js');
 
 var rawMidiInSubscription;
 

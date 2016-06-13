@@ -21,6 +21,7 @@ let videoDom;
 let canvasElem;
 let videoElem;
 let gfxCtx;
+
 //the browser's opaque media stream which we will need to process into pixel array streams
 let mediaStream;
 
