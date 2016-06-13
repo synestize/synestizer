@@ -40,6 +40,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-core": "^0.1.1",
+    "redux-thunk": "^2.1.0",
     "rx": "^4.1.0",
     "source-map-loader": "^0.1.5",
     "webpack": "^1.13.1",
