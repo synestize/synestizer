@@ -126,7 +126,7 @@ var midiFreq = function (val) {
 }
 var freqMidi = function (val) {
   // 69 = 440Hz
-  return Math.log(val/440)/(Math.LN2) * 12 
+  return Math.log(val/440)/(Math.LN2) * 12
 }
 var dbAmp = function(val) {
   return Math.pow(10, val/20);
@@ -137,7 +137,7 @@ var dbAmp = function(val) {
 var bipolFreqAll = function() {
   var freqMiddle = midiFreq(127/2);
   var halfOctaves = (127/2/12);
-  return (val) => Math.pow(2, clipBipol(val) * halfOctaves)*freqMiddle; 
+  return (val) => Math.pow(2, clipBipol(val) * halfOctaves)*freqMiddle;
 }();
 
 var freqBipolAll = function (val) {

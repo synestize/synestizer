@@ -2,7 +2,7 @@
 import { Component, PropTypes } from 'react';
 
 
-  <section id="video-display">
+  <section id="video-io">
     <canvas id="video-canvas"></canvas>
     <video id="video-video" muted autoplay></video>
     <h1 id="logo">SYNESTIZER</h1>

@@ -2,7 +2,6 @@
 
 import React, { Component, PropTypes, Children } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
-import VideoDom from './VideoDom';
 
 /*
 Actual DOM refrences can mess wit' ya.
@@ -22,10 +21,8 @@ class App extends Component {
     /*
     React.Children.map something...
     */
-    /* key VideoDom to make the element robust, ref to provide access */
 
     return (<div >
-      <VideoDom ref={(ref) => this.videoDom = ref} key="videodom" />
       Word.
     </div>);
   }

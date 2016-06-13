@@ -12,21 +12,21 @@ outbox.subscribe((msg)=>{
   self.postMessage(msg)
 });
 
-inbox.where((x)=>(x.topic==="settings")).subscribe(function(data) {
-  // console.debug("settings", data.topic, data.payload);
+inbox.where((x)=>(x.type==="settings")).subscribe(function(data) {
+  // console.debug("settings", data.type, data.payload);
   statistics = new Map();
   for (var [statisticKey, params] of data.payload.statistics.entries()) {
     var statFn = Statistic.get(statisticKey)(params);
     statistics.set(statisticKey, statFn);
   }
 });
-inbox.where((x)=>(x.topic==="pixels")).subscribe(function(data) {
-  //console.debug("workerpixels", data.topic, data.payload);
+inbox.where((x)=>(x.type==="pixels")).subscribe(function(data) {
+  //console.debug("workerpixels", data.type, data.payload);
   for (var [statisticKey, statFn] of statistics.entries()) {
     results.set(statisticKey, statFn(data.payload));
   };
   outbox.onNext({
-    topic: "results",
+    type: "results",
     payload: results
   });
 });

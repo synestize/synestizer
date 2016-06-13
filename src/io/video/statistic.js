@@ -1,6 +1,5 @@
 'use strict';
-var transform = require('../lib/transform.js');
-
+import transform from '../../lib/transform'
 
 function AvgColor(params) {
     //1/8 sub-sampled average color
@@ -15,7 +14,7 @@ function AvgColor(params) {
         out[R] = 0;
         out[G] = 0;
         out[B] = 0;
-        
+
         for (var i = 0; i < PIXELCOUNT; i+=8) {
             out[R] += pixels[i * 4 + R]/255;
             out[G] += pixels[i * 4 + G]/255;
@@ -27,7 +26,7 @@ function AvgColor(params) {
         out[B] = transform.linBipol(0, PIXELCOUNT, out[B]);
         return out;
     }
-    
+
     calc.nDims = 3;
     calc.nState = 3;
     return calc;
@@ -51,7 +50,7 @@ function Moment(params) {
     var IY=3, IS=4, IV=5;
     var JY=6, JS=7, JV=8;
     var YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
-    
+
     rawSums = new Float32Array(nDims);
     centralMoments = new Float32Array(nDims);
     cookedMoments = new Float32Array(nDims);
@@ -59,11 +58,11 @@ function Moment(params) {
     function calc(pixels) {
         for (var i = 0; i < nDims; i++) {
             rawSums[i]=0.0;
-        }            
+        }
         for (var j = 0; j < PIXELDIM; j++) {
             for (var i = 0; i < PIXELDIM; i++) {
                 var ij = (PIXELDIM * j + i) * 4;//pixel offset
-                // first we tranform RGB to YSV 
+                // first we tranform RGB to YSV
                 // - effectively a PCA of the color vectors
                 // otherwise we are measuring mostly brightness.
                 ysvij[0] = ( //Y
@@ -72,7 +71,7 @@ function Moment(params) {
                     + 0.00044706*pixels[ij+2]
                 );
                 ysvij[1] = 0.5 + ( //S
-                    - 0.00066563*pixels[ij] 
+                    - 0.00066563*pixels[ij]
                     - 0.00129907*pixels[ij+1]
                     + 0.00196078*pixels[ij+2]
                 );
@@ -83,7 +82,7 @@ function Moment(params) {
                 );
                 ysvij[3] = i/PIXELDIM; //I
                 ysvij[4] = j/PIXELDIM; //J
-                
+
                 rawSums[Y] += ysvij[0];
                 rawSums[S] += ysvij[1];
                 rawSums[V] += ysvij[2];
@@ -161,7 +160,7 @@ function Moment(params) {
             0.08333333333*centralMoments[SS])));
         cookedMoments[IV] = transform.clipBipol(
           centralMoments[IV]/Math.max(0.0001, Math.sqrt(
-            0.08333333333*centralMoments[VV]))); 
+            0.08333333333*centralMoments[VV])));
         cookedMoments[JY] = transform.clipBipol(
           centralMoments[JY]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[YY])));
