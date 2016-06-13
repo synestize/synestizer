@@ -1,7 +1,3 @@
----
-title: Notes
----
-
 # Notes
 
 Notes auditioning for a place in the documentation
