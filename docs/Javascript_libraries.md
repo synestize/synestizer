@@ -1,10 +1,20 @@
-# JS libraries
+# JS Style and libraries
 
-This app is set up as a classic React application.
+This app is set up as a React/Redux application.
 
 Javascript is in Ecmascript 2015, a.k.a. ES6, the latest version of Javascript.
 
+## ES6
+
+Module support in ES6 looks different than the other standards
+
+* [ES6 module syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
+* [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
+* [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+
 ## React
+
+The rendering system for all UI componenets is
 
 ### If I need to get to DOM nodes...
 e.g. for accesing video.
@@ -19,8 +29,8 @@ But I think  I can avoid this by separating DOM streams and React components as 
 * [Components and Super-Components](https://medium.com/@rajaraodv/the-anatomy-of-a-react-redux-app-759282368c5a#.ozt83zza6)
 * [what in blazes are all these "components"?](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [asynchronicity](http://redux.js.org/docs/advanced/AsyncActions.html)
-* [memoization/caching](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
-* How can we batch updates? [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) or [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) are recommended in the redux docs
+* [memoization/ caching](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
+* How can we batch updates? [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) or [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) are recommended in the redux docs.
 
 ## Webpack
 
@@ -29,6 +39,8 @@ webpack is a module bundler
 This means webpack takes modules with dependencies
 and emits static assets representing those modules.
 Popular with, e.g. rxvision.
+
+Webpack works by magic, as far as I can tell, and it has fearsomely complicated and poorly explained configuration. Nonetheless, everyone uses it and so we ignore it and just GO here.
 
 ## Rx.js
 
@@ -40,6 +52,9 @@ Popular with, e.g. rxvision.
     * [Which operator use: creation operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md) is the guide to constructors
     * [Which operator use: instance operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-instance.md) is the guide to instance methods
 
+* Interoperation
+  * [redux-rx](https://github.com/acdlite/redux-rx)
+  
 * stream debuggers
 
     * [percussion](https://github.com/grisendo/Percussion)
@@ -113,6 +128,8 @@ Ranked in descending order of viability:
 
 Is webpack alone enough?
 We might want to use a more complete one later, if necessary.
+
+Let's avoid it for now.
 
 Build tools:
 
