@@ -1,7 +1,3 @@
----
-title: Javascript libraries
----
-
 # JS libraries
 
 This app is set up as a classic React application.
