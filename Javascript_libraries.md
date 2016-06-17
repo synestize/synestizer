@@ -14,9 +14,10 @@ Module support in ES6 looks different than the other standards
 
 ## React
 
-The rendering system for all UI componenets is
+The rendering system for all UI components is React.
 
 ### If I need to get to DOM nodes...
+
 e.g. for accesing video.
 How do I persist DOM nodes? Perhaps [using key](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
 How do i communicate across branches of Components?
@@ -26,11 +27,23 @@ But I think  I can avoid this by separating DOM streams and React components as 
 
 ## Redux
 
+We use Redux to organise the app state.
+
+Coudl also use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
+It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
+However I will start that way because otherwise it's too complicated
+
+
+### Introductions to Redux
+
 * [Components and Super-Components](https://medium.com/@rajaraodv/the-anatomy-of-a-react-redux-app-759282368c5a#.ozt83zza6)
 * [what in blazes are all these "components"?](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [asynchronicity](http://redux.js.org/docs/advanced/AsyncActions.html)
 * [memoization/ caching](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
 * How can we batch updates? [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) or [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) are recommended in the redux docs.
+* [smart and dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.1ib9ws3ub)
+* [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
+* [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
 
 ## Webpack
 
@@ -54,7 +67,7 @@ Webpack works by magic, as far as I can tell, and it has fearsomely complicated 
 
 * Interoperation
   * [redux-rx](https://github.com/acdlite/redux-rx)
-  
+
 * stream debuggers
 
     * [percussion](https://github.com/grisendo/Percussion)
