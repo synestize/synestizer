@@ -51,11 +51,7 @@
 
 * App improvements
   * Go to single app object to update all state.
-    * possibly should [switch to redux for this](http://redux.js.org/docs/basics/UsageWithReact.html).  ([see also](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details))
-    * or use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx). It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx)
-    * [smart and dumb](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.1ib9ws3ub)
-    * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
-    * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
+    * [switch to redux for this](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details)
     * [react context](https://facebook.github.io/react/docs/context.html)
     * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
     * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
@@ -65,11 +61,10 @@
     * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
     * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
   * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
-  * state management could be better. [react-ui](https://github.com/tonyhb/redux-ui)?
-  * Immutable state [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
-  * Consistently use Map or Object everywhere.
+  * Consistently use Map or Object or Immutableverywhere.
 
     * If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
+    * Immutable state? [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 
 * Go to [rxjs 5.0](https://github.com/ReactiveX/RxJS)
 * A *patch* should map between

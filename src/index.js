@@ -21,7 +21,7 @@ We divide Synestizer into two part:
 2. "IO": Rx.js+browser DOM; the interfaces to broser services such as MIDI, Video, microphones and so on.
 
 From the perspective of the App, IO may as well be running on a remote server. although of course it is (for the moment) completely local.
-IO can get
+IO can get to the app via the store, and updates its state from the store using Rx.
 */
 
 const store = createStore(reducer)
