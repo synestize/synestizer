@@ -41,7 +41,7 @@ However I will start that way because otherwise it's too complicated
 
 ### Introductions to Redux
 
-* [switch to redux for this](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details)
+* [redux without profanity](https://tonyhb.gitbooks.io/redux-without-profanity/content/) introduces "select" for resource management and record nomalisations amongst other things
 * [Components and Super-Components](https://medium.com/@rajaraodv/the-anatomy-of-a-react-redux-app-759282368c5a#.ozt83zza6)
 * [what in blazes are all these "components"?](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [asynchronicity](http://redux.js.org/docs/advanced/AsyncActions.html)
