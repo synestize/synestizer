@@ -1,8 +1,13 @@
 # TODO
 
 * currently:
-
-  * refactoring App to be a single object using rex+react
+  * Go to single app object to update all state.
+    * [react context](https://facebook.github.io/react/docs/context.html)
+    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
+    * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
+    * [redux asynchrony middleware](http://redux.js.org/docs/advanced/AsyncActions.html)
+    * [react asynchrony made simple](https://reactjsnews.com/redux-middleware)
+    * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
   * Better solo UI (What does "off" mean?)
@@ -50,16 +55,7 @@
     * However, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
 
 * App improvements
-  * Go to single app object to update all state.
-    * [switch to redux for this](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details)
-    * [react context](https://facebook.github.io/react/docs/context.html)
-    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
-    * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
-    * [redux asynchrony middleware](http://redux.js.org/docs/advanced/AsyncActions.html)
-    * [react asynchrony made simple](https://reactjsnews.com/redux-middleware)
-    * maybe [ditch redux entirely eventually](https://github.com/jas-chen/rx-redux), but we are sticking with it now because there is more documentation about redux.
-    * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
-    * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
+  * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
   * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
   * Consistently use Map or Object or Immutableverywhere.
 
@@ -99,8 +95,6 @@
 * Meta
 
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
-
-* prettier docs website
 
 * speed improvements
 
