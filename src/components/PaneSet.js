@@ -1,14 +1,17 @@
 "use strict";
 import React, { Component, PropTypes } from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
+import { TabNav } from './TabNav'
+import { CurrentPane } from './CurrentPane'
 
-const PaneSet = () => <div>{this.props.children}</div>;
+const PaneSet = ({visiblePane}) => (
+  <div>
+    <TabNav />
+    <CurrentPane visiblePane={visiblePane} />
+  </div>
+)
+
 PaneSet.propTypes = {
-  active: PropTypes.bool.isRequired,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.element
-  ]).isRequired,
+  visiblePane: PropTypes.string.isRequired
 }
 
 export default PaneSet;

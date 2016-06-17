@@ -7,8 +7,8 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
-import reducer from './reducers/index'
-import CurrentApp from './containers/CurrentApp'
+import rootReducer from './reducers/index'
+import PaneSet from './components/PaneSet'
 import videoio_ from 'io/video/index'
 
 //debug mode:
@@ -30,15 +30,13 @@ If it happens, I will name that stat with a double underscore prefix
 }
 */
 
-const store = createStore(reducer)
+const store = createStore(rootReducer);
 
-const approot = render(
+const appRoot = render(
   <Provider store={store}>
-    <CurrentApp />
+    <PaneSet />
   </Provider>,
   document.getElementById('app')
 );
 
 const videoio = videoio_(store, document.getElementById('video-io'));
-
-export default approot;

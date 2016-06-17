@@ -58,7 +58,7 @@ a, a:hover, a:active, a:focus {
   color: black;
   background-color: rgba(100,100,100,0.5);
 }
-#controlpanels .tab-content {
+#controlpanels .pane-content {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0px;

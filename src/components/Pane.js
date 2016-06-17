@@ -1,14 +1,14 @@
 "use strict";
 import React, { Component, PropTypes } from 'react'
-import shallowCompare from 'react-addons-shallow-compare'
 
-const Pane = () => <div>{this.props.children}</div>;
+const Pane = ({paneId, children}) => (
+  <section className="pane-content" key={paneId} id={paneId}>
+    {children}
+  </section>
+)
 Pane.propTypes = {
-  active: PropTypes.bool.isRequired,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.element
-  ]).isRequired,
+  paneId: React.PropTypes.string.isRequired,
+  children: React.PropTypes.node.isRequired
 }
 
 export default Pane;
