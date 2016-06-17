@@ -1,8 +1,9 @@
 # JS Style and libraries
 
-This app is set up as a React/Redux application.
+This app is set up as a React/Redux/Rx application.
+That's 3 different libraries with coincidentally similar names. Sorry.
 
-Javascript is in Ecmascript 2015, a.k.a. ES6, the latest version of Javascript.
+Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of Javascript.
 
 ## ES6
 
@@ -18,7 +19,7 @@ The rendering system for all UI components is React.
 
 ### If I need to get to DOM nodes...
 
-e.g. for accesing video.
+e.g. for accessing video.
 How do I persist DOM nodes? Perhaps [using key](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
 How do i communicate across branches of Components?
 [Methods?](https://facebook.github.io/react/tips/expose-component-functions.html)
@@ -29,13 +30,13 @@ But I think  I can avoid this by separating DOM streams and React components as 
 
 We use Redux to organise the app state.
 
-Coudl also use rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
+Could also use Rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
 It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
 However I will start that way because otherwise it's too complicated
 
-
 ### Introductions to Redux
 
+* [switch to redux for this](https://www.gitbook.com/book/tonyhb/redux-without-profanity/details)
 * [Components and Super-Components](https://medium.com/@rajaraodv/the-anatomy-of-a-react-redux-app-759282368c5a#.ozt83zza6)
 * [what in blazes are all these "components"?](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [asynchronicity](http://redux.js.org/docs/advanced/AsyncActions.html)
