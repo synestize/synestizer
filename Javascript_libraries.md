@@ -26,6 +26,11 @@ How do i communicate across branches of Components?
 
 But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
 
+### If I need to dynamically not render half the app
+https://facebook.github.io/react/docs/reusable-components.html
+
+https://facebook.github.io/react/docs/top-level-api.html#react.children
+
 ## Redux
 
 We use Redux to organise the app state.
