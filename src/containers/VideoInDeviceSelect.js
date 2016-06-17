@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import DeviceSelect from '../components/DeviceSelect';
 import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from './actions'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     panId: state.panId
   }
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setPane: (paneId) => {
       dispatch(setPane(paneId))

@@ -1,23 +1,7 @@
 "use strict";
-import { Component, PropTypes } from 'react';
 
-
-  <section id="video-io">
-    <canvas id="video-canvas"></canvas>
-    <video id="video-video" muted autoplay></video>
-    <h1 id="logo">SYNESTIZER</h1>
-  </section>
-  <section id="controlpanels">
-    <nav>
-      <ul class="tabs">
-        <li><a class="tabs-link tabs-link-active" href="#info-tab">About</a></li>
-        <li><a class="tabs-link" href="#input-tab">Inputs</a></li>
-        <li><a class="tabs-link" href="#output-tab">Outputs</a></li>
-        <li><a class="tabs-link" href="#iomatrix-tab">I/O matrix</a></li>
-        <li><a class="tabs-link" href="#audio-tab">Synths</a></li>
-      </ul>
-    </nav>
-    <section id="info-tab" class="tab-content">
+const Welcome = () => (
+    <section id="welcome" class="tab-content">
       <h2>
         Welcome to Synestizer.
       </h2>
@@ -59,3 +43,6 @@ import { Component, PropTypes } from 'react';
       <section id="audio-justsawtooth" class="controls"></section>
     </section>
   </section>
+)
+
+export default Welcome

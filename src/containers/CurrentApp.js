@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import App from '../components/App';
 import {setPane} from '../actions';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     panId: state.panId
   }
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setPane: (paneId) => {
       dispatch(setPane(paneId))
@@ -19,10 +19,6 @@ const mapDispatchToProps = (dispatch) => {
 const CurrentApp = connect(
   mapStateToProps,
   mapDispatchToProps,
-  undefined, //mergeprops
-  {
-    withRef: true // enable .getWrappedInstance() for Component hackin'
-  }
 )( App );
 
 export default CurrentApp;
