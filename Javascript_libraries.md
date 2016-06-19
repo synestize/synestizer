@@ -31,6 +31,9 @@ https://facebook.github.io/react/docs/reusable-components.html
 
 https://facebook.github.io/react/docs/top-level-api.html#react.children
 
+[9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
+[React.js and dynamic children](http://blog.arkency.com/2014/10/react-dot-js-and-dynamic-children-why-the-keys-are-important/)
+
 ## Redux
 
 We use Redux to organise the app state.
