@@ -25,7 +25,7 @@ a, a:hover, a:active, a:focus {
     background: #585D9A;
 }
 
-#controlpanels {
+#synapp {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -33,12 +33,12 @@ a, a:hover, a:active, a:focus {
   /*background opacity */
   background-color:rgba(16,16,16,0.0);;
 }
-#controlpanels > nav ul.tabs {
+#synapp nav.tabnav ul.tabs {
   display: flex;
   padding: 0;
   margin:0;
 }
-#controlpanels > nav ul.tabs li {
+#synapp nav.tabnav ul.tabs li {
   /*display: block;*/
   flex: 1;
   margin: -0.075rem 0 0 -0.075rem;
@@ -47,18 +47,18 @@ a, a:hover, a:active, a:focus {
   text-align: center;
   list-style-type: none;
 }
-#controlpanels > nav ul.tabs li a {
+#synapp nav.tabnav ul.tabs li a {
   text-decoration: none;
   color: black;
   display: block;
   padding: 1rem;
 }
-#controlpanels > nav ul.tabs li a.tabs-link-active {
+#synapp nav.tabnav ul.tabs li a.active {
   font-weight: bold;
   color: black;
   background-color: rgba(100,100,100,0.5);
 }
-#controlpanels .pane-content {
+#synapp .pane-content {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0px;
@@ -114,12 +114,12 @@ a, a:hover, a:active, a:focus {
 }
 
 /****************************
- * 
+ *
  * new non-WAC controls
  *
  ****************************/
 .controls {
-  
+
 }
 .controls .param-control {
   width: 16rem;

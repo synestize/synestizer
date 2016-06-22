@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import SelectTabLink from '../containers/SelectTabLink'
 
 const TabNav = () => {
-  return (<ul>
+  return (<nav className="tabnav"><ul className="tabs">
     <li>
       <SelectTabLink paneId="welcome" >
         About
@@ -18,6 +18,6 @@ const TabNav = () => {
         Video
       </SelectTabLink>
     </li>
-  </ul>)
+  </ul></nav>)
 }
 export default TabNav;

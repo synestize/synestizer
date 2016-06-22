@@ -36,7 +36,7 @@ const appRoot = render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('synapp')
 );
 
 const videoio = videoio_(store, document.getElementById('video-io'));
