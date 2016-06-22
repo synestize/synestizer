@@ -1,7 +1,6 @@
-'use strict';
-import { SET_VISIBLE_PANE } from '../actions'
+import { SET_VISIBLE_PANE } from '../actions/app'
 
-export default function visiblePane(state = "welcome", action) {
+export function visiblePane(state = "welcome", action) {
   switch (action.type) {
     case SET_VISIBLE_PANE:
       return action.payload

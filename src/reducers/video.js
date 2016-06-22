@@ -39,3 +39,5 @@ const video = combineReducers({
    currentVideoSource,
    validVideoSource
 })
+
+export default video
