@@ -1,6 +1,5 @@
-'use strict';
-import { connect } from 'react-redux';
-import { Pane } from './Pane';
+import Pane from './Pane';
+import React, { Component, PropTypes, Children } from 'react';
 
 const IOPane = () => (<Pane paneId="io-pane" >
     Insert IO here

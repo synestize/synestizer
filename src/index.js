@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 import rootReducer from './reducers/index'
-import PaneSet from './components/PaneSet'
+import App from './containers/App'
 import videoio_ from 'io/video/index'
 
 //debug mode:
@@ -34,7 +34,7 @@ const store = createStore(rootReducer);
 
 const appRoot = render(
   <Provider store={store}>
-    <PaneSet />
+    <App />
   </Provider>,
   document.getElementById('app')
 );

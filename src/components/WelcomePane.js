@@ -1,4 +1,5 @@
-"use strict";
+import React, { Component, PropTypes, Children } from 'react';
+import Pane from './Pane';
 
 const WelcomePane = () => (
     <Pane paneId="welcome">

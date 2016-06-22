@@ -9,9 +9,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const App = connect(
-  mapStateToProps,
+  mapStateToProps //,
   //mapDispatchToProps,
-  undefined, //mergeprops
+  // undefined //mergeprops
 )( PaneSet );
 
 export default App;
