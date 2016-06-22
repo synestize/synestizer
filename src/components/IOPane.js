@@ -1,8 +1,9 @@
 import Pane from './Pane';
+import VideoSettings from './VideoSettings';
 import React, { Component, PropTypes, Children } from 'react';
 
 const IOPane = () => (<Pane paneId="io-pane" >
-    Insert IO here
-</Pane>)
+  <VideoSettings />
+  </Pane>)
 
 export default IOPane;

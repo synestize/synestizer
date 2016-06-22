@@ -7,8 +7,8 @@ const Pane = ({paneId, children}) => (
   </section>
 )
 Pane.propTypes = {
-  paneId: React.PropTypes.string.isRequired,
-  children: React.PropTypes.node.isRequired
+  paneId: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default Pane;

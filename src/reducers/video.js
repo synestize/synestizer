@@ -1,11 +1,11 @@
 'use strict';
-
 import { combineReducers } from 'redux'
+
 import {
   SET_ALL_VIDEO_SOURCES,
   SET_CURRENT_VIDEO_SOURCE,
   SET_VALID_VIDEO_SOURCE
-} from '../actions'
+} from '../actions/video'
 
 export function videoSources(state=new Map(), action) {
   switch (action.type) {

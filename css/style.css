@@ -190,14 +190,14 @@ a, a:hover, a:active, a:focus {
 .streamcontrolset select .option {
     min-height: 1ex;
 }
-.streamcontrolset .streamchooserwidget {
+.streamcontrolset .devicechooserwidget {
   display: inline-block;
   padding: 1ex;
 }
-.streamcontrolset .potential.streamchooserwidget {
+.streamcontrolset .potential.devicechooserwidget {
   font-style: italic;
 }
-.streamcontrolset .potential.streamchooserwidget select option {
+.streamcontrolset .potential.devicechooserwidget select option {
   font-style: italic;
 }
 .mappingmatrix {

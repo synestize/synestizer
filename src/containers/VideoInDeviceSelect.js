@@ -1,28 +1,24 @@
 'use strict';
 import { connect } from 'react-redux';
-import DeviceSelect from '../components/DeviceSelect';
-import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from './actions'
+import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../actions/video'
+import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    panId: state.panId
+    deviceMap: state.video.videoSources,
+    valid: state.video.validVideoSource,
+    currentDevice: state.video.currentVideoSource
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setPane: (paneId) => {
-      dispatch(setPane(paneId))
-    }
+    onChange: (key) => setCurrentVideoSource(key)
   }
 };
 
-const CurrentApp = connect(
+const VideoInDeviceSelect = connect(
   mapStateToProps,
-  mapDispatchToProps,
-  undefined, //mergeprops
-  {
-    withRef: true // enable .getWrappedInstance() for Component hackin'
-  }
-)( App );
+  mapDispatchToProps
+)( DeviceSelect );
 
-export default CurrentApp;
+export default VideoInDeviceSelect;
