@@ -4,17 +4,23 @@ const IntSelect = ({
     disabled,
     currentInt,
     onChange,
-    onRemove,
     name,
     unavailable,
-    max}
+    minInt=0,
+    maxInt}
   ) => {
   const optNodes = [];
-  /*
-  for (let [key, name] of intMap) {
-    let nu = <option value={key} key={key}>{name}</option> ;
+  unavailable = new Set(unavailable ? unavailable : []);
+  for (let idx=minInt;idx<maxInt; idx++) {
+
+    let nu = <option
+      value={idx}
+      key={idx}
+      disable={unavailable.has(idx)} >
+        {idx}
+    </option> ;
     optNodes.push(nu);
-  } */
+  }
   return <div className="intchooserwidget">
     <select name={name} id={name}
         className="intselect"
@@ -23,14 +29,12 @@ const IntSelect = ({
         onChange={(ev)=>onChange(ev.target.value) } >
       {optNodes}
     </select>
-    <span>
   </div>
 }
 
 IntSelect.propTypes = {
   currentInt: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  onRemove: PropTypes.func,
   name: PropTypes.string.isRequired,
   unavailable: PropTypes.array,
   disabled: PropTypes.bool.isRequired

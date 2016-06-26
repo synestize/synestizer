@@ -10,6 +10,7 @@ import { createStore } from 'redux'
 import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
+import midiio_ from 'io/midi/index'
 
 //debug mode:
 Rx.config.longStackSupport = true;
@@ -40,3 +41,4 @@ const appRoot = render(
 );
 
 const videoio = videoio_(store, document.getElementById('video-io'));
+const midiio = midiio_(store);
