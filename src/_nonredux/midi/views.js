@@ -9,8 +9,8 @@ var MidiInSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Midi In</h2>
     <MidiSourceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
-    <MidiInChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
-    <MidiInCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
+    <MidiSourceChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
+    <MidiSourceCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
   </div>)
 };
 var MidiSourceSelect = function(props) {
@@ -38,7 +38,7 @@ var MidiSourceSelect = function(props) {
   </div>
   )
 };
-var MidiInChannelSelect = function(props) {
+var MidiSourceChannelSelect = function(props) {
   var disabled, selectValue, channelOptNodes;
   disabled = (props.activedevice !== null);
   selectValue = props.activechannel || 1;
@@ -50,12 +50,12 @@ var MidiInChannelSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiInChan">Channel</label>
-    <select name="midiInChan" id="midiInChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInChannel(parseInt(ev.target.value))}>
+    <select name="midiInChan" id="midiInChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSourceChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
     </select>
   </div>)
 };
-var MidiInCCSetSelect = function(props) {
+var MidiSourceCCSetSelect = function(props) {
   var disabled, selectValue, ccOptNodes=[], htmlName;
   disabled = (props.activedevice !== null);
   for (let i=0; i<=127; i++) {
@@ -63,14 +63,14 @@ var MidiInCCSetSelect = function(props) {
       <option key={i} value={i}>{i}</option>
     );
   };
-  htmlName = "midiInCCSet";
+  htmlName = "midiSourceCCSet";
   return (<div className="actual streamchooserwidget">
   <label htmlFor={htmlName}>ccs </label>
     <select name={htmlName} multiple={true} id={htmlName} value={
         Array.from(props.activeccs.values())
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
-        intents.setMidiInCC(
+        intents.setMidiSourceCC(
           Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
@@ -79,8 +79,8 @@ var MidiInCCSetSelect = function(props) {
 };
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(
-    <MidiInSelect activedevice={state.activesource} alldevices={state.allsources} activechannel={state.activeinchannel}
-      activeccs={state.activeinccs} />,
+    <MidiInSelect activedevice={state.activesource} alldevices={state.allsources} activechannel={state.activesourcechannel}
+      activeccs={state.activesourceccs} />,
   mountpoint);
 };
 
@@ -88,8 +88,8 @@ var MidiOutSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Midi Out</h2>
     <MidiSinkSelect activedevice={props.activedevice} alldevices={props.alldevices} />
-    <MidiOutChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
-    <MidiOutCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
+    <MidiSinkChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
+    <MidiSinkCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
     <MidiSoloCC activeccs={props.activeccs} solocc={props.solocc} />
   </div>)
 };
@@ -119,7 +119,7 @@ var MidiSinkSelect = function(props) {
   </div>
   )
 };
-var MidiOutChannelSelect = function(props) {
+var MidiSinkChannelSelect = function(props) {
   var disabled, selectValue, channelOptNodes;
   disabled = (props.activedevice !== null);
   selectValue = props.activechannel || 1;
@@ -131,12 +131,12 @@ var MidiOutChannelSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiOutChan">Channel</label>
-    <select name="midiOutChan" id="midiOutChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiOutChannel(parseInt(ev.target.value))}>
+    <select name="midiOutChan" id="midiOutChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSinkChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
     </select>
   </div>)
 };
-var MidiOutCCSetSelect = function(props) {
+var MidiSinkCCSetSelect = function(props) {
   var disabled, selectValue, ccOptNodes=[], htmlName;
   disabled = (props.activedevice !== null);
   for (let i=0; i<=127; i++) {
@@ -144,14 +144,14 @@ var MidiOutCCSetSelect = function(props) {
       <option key={i} value={i}>{i}</option>
     );
   };
-  htmlName = "midiOutCCSet";
+  htmlName = "midiSinkCCSet";
   return (<div className="actual streamchooserwidget">
   <label htmlFor={htmlName}>ccs </label>
     <select name={htmlName} multiple={true} id={htmlName} value={
         Array.from(props.activeccs.values())
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
-        intents.setMidiOutCC(
+        intents.setMidiSinkCC(
           Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
@@ -179,8 +179,8 @@ var MidiSoloCC = function(props) {
 };
 function renderMidiOut(state, mountpoint) {
   return ReactDOM.render(
-    <MidiOutSelect activedevice={state.activesink} alldevices={state.allsinks} activechannel={state.activeoutchannel}
-      activeccs={state.activeoutccs} solocc={state.solocc} />,
+    <MidiOutSelect activedevice={state.activesink} alldevices={state.allsinks} activechannel={state.activesinkchannel}
+      activeccs={state.activesinkccs} solocc={state.solocc} />,
     mountpoint);
 };
 module.exports = {

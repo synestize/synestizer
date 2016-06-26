@@ -3,40 +3,40 @@ var Rx = require('Rx');
 
 var subjects = {
   selectMidiSource: new Rx.Subject(),
-  selectMidiInChannel: new Rx.Subject(),
-  addMidiInCC: new Rx.Subject(),
-  removeMidiInCC: new Rx.Subject(),
-  setMidiInCC: new Rx.Subject(),
+  selectMidiSourceChannel: new Rx.Subject(),
+  addMidiSourceCC: new Rx.Subject(),
+  removeMidiSourceCC: new Rx.Subject(),
+  setMidiSourceCC: new Rx.Subject(),
   selectMidiSink: new Rx.Subject(),
-  selectMidiOutChannel: new Rx.Subject(),
-  addMidiOutCC: new Rx.Subject(),
-  removeMidiOutCC: new Rx.Subject(),
-  setMidiOutCC: new Rx.Subject(),
+  selectMidiSinkChannel: new Rx.Subject(),
+  addMidiSinkCC: new Rx.Subject(),
+  removeMidiSinkCC: new Rx.Subject(),
+  setMidiSinkCC: new Rx.Subject(),
   soloCC: new Rx.Subject()
 };
 var selectMidiSource = (key) => subjects.selectMidiSource.onNext(key);
-var selectMidiInChannel = (i) => subjects.selectMidiInChannel.onNext(i);
-var addMidiInCC = (i) => subjects.addMidiInCC.onNext(i);
-var removeMidiInCC = (i) => subjects.removeMidiInCC.onNext(i);
-var setMidiInCC = (a) => subjects.setMidiInCC.onNext(a);
+var selectMidiSourceChannel = (i) => subjects.selectMidiSourceChannel.onNext(i);
+var addMidiSourceCC = (i) => subjects.addMidiSourceCC.onNext(i);
+var removeMidiSourceCC = (i) => subjects.removeMidiSourceCC.onNext(i);
+var setMidiSourceCC = (a) => subjects.setMidiSourceCC.onNext(a);
 var selectMidiSink = (key) => subjects.selectMidiSink.onNext(key);
-var selectMidiOutChannel = (i) => subjects.selectMidiOutChannel.onNext(i);
-var addMidiOutCC = (i) => subjects.addMidiOutCC.onNext(i);
-var removeMidiOutCC = (i) => subjects.removeMidiOutCC.onNext(i);
-var setMidiOutCC = (a) => subjects.setMidiOutCC.onNext(a);
+var selectMidiSinkChannel = (i) => subjects.selectMidiSinkChannel.onNext(i);
+var addMidiSinkCC = (i) => subjects.addMidiSinkCC.onNext(i);
+var removeMidiSinkCC = (i) => subjects.removeMidiSinkCC.onNext(i);
+var setMidiSinkCC = (a) => subjects.setMidiSinkCC.onNext(a);
 var soloCC = (i) => subjects.soloCC.onNext(i);
 
 module.exports = {
   subjects: subjects,
   selectMidiSource: selectMidiSource,
-  selectMidiInChannel: selectMidiInChannel,
-  addMidiInCC: addMidiInCC,
-  removeMidiInCC: removeMidiInCC,
-  setMidiInCC: setMidiInCC,
+  selectMidiSourceChannel: selectMidiSourceChannel,
+  addMidiSourceCC: addMidiSourceCC,
+  removeMidiSourceCC: removeMidiSourceCC,
+  setMidiSourceCC: setMidiSourceCC,
   selectMidiSink: selectMidiSink,
-  selectMidiOutChannel: selectMidiOutChannel,
-  addMidiOutCC: addMidiOutCC,
-  removeMidiOutCC: removeMidiOutCC,
-  setMidiOutCC: setMidiOutCC,
+  selectMidiSinkChannel: selectMidiSinkChannel,
+  addMidiSinkCC: addMidiSinkCC,
+  removeMidiSinkCC: removeMidiSinkCC,
+  setMidiSinkCC: setMidiSinkCC,
   soloCC: soloCC,
 };

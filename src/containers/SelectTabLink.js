@@ -1,7 +1,7 @@
 'use strict';
 import { connect } from 'react-redux';
 import TabLink from '../components/TabLink';
-import { setVisiblePane } from '../actions';
+import { setVisiblePane } from '../actions/app';
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -4,7 +4,7 @@ import Rx from 'rx'
 import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
-import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions'
+import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
 import { toObservable } from '../../lib/rx_redux'
 
 //hardware business
