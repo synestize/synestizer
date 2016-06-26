@@ -1,5 +1,8 @@
 # Video Analysis
 
+To have a stable API to access audio and video we use webrtc-adapter.
+
+
 ## Ideas for analyses
 
 * Gaussian mixture model
@@ -21,14 +24,14 @@
     * Also arbitrary differences between layers
     * would the color coordinates interact at all?
     * could even takes squared difference features to extract localised frequency
-  
+
 * something like a convolution layer from machine vision?
 * autocorrelation
 * Kalman filters
 * particle filters
 
     * with a loss fn to do with low-variance estimates of next timestep value in IJYUV space
-  
+
 * FFT features (or something else translation/phase-invariant?)
 * exponentially weighted moments
 * inner-product with desired eigen-features
@@ -38,7 +41,7 @@
 * user interaction: They choose a few key scenes, and we try to measure distance from those scenes.
 * other clustering, say, spectral?
 * switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
-* [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html) 
+* [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html)
 * [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 * neural networks?
 
@@ -80,11 +83,11 @@
 
     * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
     * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
-  
+
 * [how to do WebGL-optimized image processing](http://learningwebgl.com/blog/?p=1786)
 * [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
 * [webgl transforms](http://games.greggman.com/game/webgl-2d-matrices/)
-  
+
 * CSS filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
 
 ## Colour handling
