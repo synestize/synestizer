@@ -1,7 +1,7 @@
 'use strict';
 
 import Rx from 'rx'
-import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions'
+import  { setValidMidiSource, setCurrentMidiSource, setAllMidiSources } from '../../actions'
 import { toObservable } from '../../lib/rx_redux'
 // var streamPatch = require('../streampatch/models');
 var transform = require('../../lib/transform.js');
@@ -14,10 +14,10 @@ var midiinfo= null;
 
 //Basic midi state
 var state = {
-  allindevices: new Map(),
-  alloutdevices: new Map(),
-  activeindevice: null,
-  activeoutdevice: null,
+  allsources: new Map(),
+  allsinks: new Map(),
+  activesource: null,
+  activesink: null,
   activeinchannel: 1,
   activeoutchannel: 2,
   activeinccs: new Set([]),
@@ -57,7 +57,7 @@ function handleMidiInMessage (ev) {
 //Interface to MIDI output
 function handleMidiOutMessage(cc, scaled) {
   let unmuted = ((state.solocc === null) || (state.solocc===cc)) &&
-    (midiinfo.outputs.get(state.activeoutdevice) !== undefined);
+    (midiinfo.outputs.get(state.activesink) !== undefined);
   //turns [["midi",16,0.5]
   //into [177,16,64]
   let midibytes = [
@@ -66,7 +66,7 @@ function handleMidiOutMessage(cc, scaled) {
     scaled
   ];
   if (unmuted) {
-    midiinfo.outputs.get(state.activeoutdevice).send(midibytes);
+    midiinfo.outputs.get(state.activesink).send(midibytes);
   };
 };
 
@@ -79,9 +79,9 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-function selectMidiInDevice(key) {
+function selectMidiSource(key) {
   console.debug("midiin", key);
-  updateSubject.onNext({activeindevice:{$set:key}});
+  updateSubject.onNext({activesource:{$set:key}});
   if (midiinfo !==null) {
     if (rawMidiInSubscription !== undefined) {
       rawMidiInSubscription.dispose()
@@ -91,7 +91,7 @@ function selectMidiInDevice(key) {
     ).subscribe(handleMidiInMessage);
   }
 }
-intents.subjects.selectMidiInDevice.subscribe(selectMidiInDevice);
+intents.subjects.selectMidiSource.subscribe(selectMidiSource);
 
 function selectMidiInChannel(i) {
   updateSubject.onNext({activeinchannel:{$set:i}});
@@ -130,10 +130,10 @@ function setMidiInCC (a) {
 }
 intents.subjects.setMidiInCC.subscribe(setMidiInCC);
 
-function selectMidiOutDevice(key) {
-  updateSubject.onNext({activeoutdevice:{$set:key}});
+function selectMidiSink(key) {
+  updateSubject.onNext({activesink:{$set:key}});
 }
-intents.subjects.selectMidiOutDevice.subscribe(selectMidiOutDevice);
+intents.subjects.selectMidiSink.subscribe(selectMidiSink);
 
 function selectMidiOutChannel(i) {
   updateSubject.onNext({activeoutchannel:{$set:i}});
@@ -199,19 +199,19 @@ function init() {
   );
 };
 function updateMidiIO(newmidiinfo) {
-  var allindevices = new Map();
-  var alloutdevices = new Map();
+  var allsources = new Map();
+  var allsinks = new Map();
   midiinfo = newmidiinfo;
   //turn the pseudo-Maps in the midiinfo dict into real maps
   for (var [key, val] of midiinfo.inputs.entries()){
-    allindevices.set(key, val.name)
+    allsources.set(key, val.name)
   };
   for (var [key, val] of midiinfo.outputs.entries()){
-    alloutdevices.set(key, val.name)
+    allsinks.set(key, val.name)
   };
   updateSubject.onNext({
-    allindevices: {$set: allindevices},
-    alloutdevices: {$set: alloutdevices}
+    allsources: {$set: allsources},
+    allsinks: {$set: allsinks}
   });
 };
 

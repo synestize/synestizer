@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import SubPane from './SubPane'
-import VideoInDeviceSelect from '../containers/VideoInDeviceSelect'
+import VideoSourceSelect from '../containers/VideoSourceSelect'
 
 const VideoSettings = () => (
   <SubPane title="Video" name="video">
-    <VideoInDeviceSelect disabled={false} title="Video In" name="videoindevice" />
+    <VideoSourceSelect disabled={false} title="Video In" name="videosource" />
   </SubPane>
 )
 

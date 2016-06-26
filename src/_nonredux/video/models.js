@@ -9,8 +9,8 @@ var webrtc = require('webrtc-adapter');
 
 //Basic video UI state
 var state = {
-  allindevices: new Map(), //id-> device name map
-  activeindevice: null, //id
+  allsources: new Map(), //id-> device name map
+  activesource: null, //id
 };
 //video model state
 var stateSubject = new Rx.BehaviorSubject(state);
@@ -18,8 +18,8 @@ var stateSubject = new Rx.BehaviorSubject(state);
 var updateSubject = new Rx.Subject();
 
 //hardware business
-var videoindevices = new Map(); //id -> device
-var videoindevice; //device
+var videosources = new Map(); //id -> device
+var videosource; //device
 
 //worker thread business
 var Videoworker_ = require('worker!./videoworker');
@@ -113,13 +113,13 @@ updateSubject.subscribe(function (upd) {
   stateSubject.onNext(state);
 });
 
-intents.subjects.selectVideoInDevice.subscribe(function(key){
+intents.subjects.selectVideoSource.subscribe(function(key){
   doVideoPlumbing(key);
-  updateSubject.onNext({activeindevice:{$set:key}});
+  updateSubject.onNext({activesource:{$set:key}});
 });
 
 function doVideoPlumbing(key) {
-  videoindevice = videoindevices.get(key);
+  videosource = videosources.get(key);
   canvasElem.width = PIXELDIM;
   canvasElem.height = PIXELDIM;
   
@@ -200,20 +200,20 @@ function updateVideoIO(mediadevices) {
   /*
   updates lists of available devices.
   */
-  var allindevices = new Map();
-  videoindevices = new Map();
+  var allsources = new Map();
+  videosources = new Map();
   Rx.Observable.from(mediadevices).filter(
     (dev) => ( dev.kind==="videoinput" )
   ).subscribe(function (dev){
-    videoindevices.set(dev.deviceId,dev);
-    allindevices.set(dev.deviceId,dev.label);
+    videosources.set(dev.deviceId,dev);
+    allsources.set(dev.deviceId,dev.label);
   });
   updateSubject.onNext({
-    allindevices: {$set: allindevices},
+    allsources: {$set: allsources},
   });
   //If there is only one device, select it.
-  if (allindevices.size===1) {
-    for (let key of allindevices.keys()) {intents.selectVideoInDevice(key)}
+  if (allsources.size===1) {
+    for (let key of allsources.keys()) {intents.selectVideoSource(key)}
   }
 };
 

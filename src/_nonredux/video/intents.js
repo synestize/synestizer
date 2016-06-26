@@ -2,12 +2,12 @@
 var Rx = require('Rx');
 
 var subjects = {
-  selectVideoInDevice: new Rx.Subject()
+  selectVideoSource: new Rx.Subject()
 };
 
-var selectVideoInDevice = (i) => subjects.selectVideoInDevice.onNext(i);
+var selectVideoSource = (i) => subjects.selectVideoSource.onNext(i);
 
 module.exports = {
   subjects: subjects,
-  selectVideoInDevice: selectVideoInDevice
+  selectVideoSource: selectVideoSource
 };

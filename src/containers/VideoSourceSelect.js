@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-const VideoInDeviceSelect = connect(
+const VideoSourceSelect = connect(
   mapStateToProps,
   mapDispatchToProps
 )( DeviceSelect );
 
-export default VideoInDeviceSelect;
+export default VideoSourceSelect;

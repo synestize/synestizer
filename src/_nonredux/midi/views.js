@@ -8,12 +8,12 @@ var intents = require('./intents');
 var MidiInSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Midi In</h2>
-    <MidiInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
+    <MidiSourceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiInChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
     <MidiInCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
   </div>)
 };
-var MidiInDeviceSelect = function(props) {
+var MidiSourceSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
@@ -31,8 +31,8 @@ var MidiInDeviceSelect = function(props) {
     disabled = true;
   };
   return (<div className="streamchooserwidget">
-    <label htmlFor="midiInDevice">Device </label>
-    <select name="midiInDevice" id="midiInDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiInDevice(ev.target.value)}>
+    <label htmlFor="midiSource">Device </label>
+    <select name="midiSource" id="midiSource" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSource(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
@@ -79,7 +79,7 @@ var MidiInCCSetSelect = function(props) {
 };
 function renderMidiIn(state, mountpoint) {
   return ReactDOM.render(
-    <MidiInSelect activedevice={state.activeindevice} alldevices={state.allindevices} activechannel={state.activeinchannel}
+    <MidiInSelect activedevice={state.activesource} alldevices={state.allsources} activechannel={state.activeinchannel}
       activeccs={state.activeinccs} />,
   mountpoint);
 };
@@ -87,13 +87,13 @@ function renderMidiIn(state, mountpoint) {
 var MidiOutSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Midi Out</h2>
-    <MidiOutDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
+    <MidiSinkSelect activedevice={props.activedevice} alldevices={props.alldevices} />
     <MidiOutChannelSelect activechannel={props.activechannel} activedevice={props.activedevice} />
     <MidiOutCCSetSelect activeccs={props.activeccs} activedevice={props.activedevice} />
     <MidiSoloCC activeccs={props.activeccs} solocc={props.solocc} />
   </div>)
 };
-var MidiOutDeviceSelect = function(props) {
+var MidiSinkSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
@@ -112,8 +112,8 @@ var MidiOutDeviceSelect = function(props) {
     selectValue = "none";
   };
   return (<div className="streamchooserwidget">
-    <label htmlFor="midiOutDevice">Device </label>
-    <select name="midiOutDevice" id="midiOutDevice" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiOutDevice(ev.target.value)}>
+    <label htmlFor="midiSink">Device </label>
+    <select name="midiSink" id="midiSink" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSink(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
@@ -179,7 +179,7 @@ var MidiSoloCC = function(props) {
 };
 function renderMidiOut(state, mountpoint) {
   return ReactDOM.render(
-    <MidiOutSelect activedevice={state.activeoutdevice} alldevices={state.alloutdevices} activechannel={state.activeoutchannel}
+    <MidiOutSelect activedevice={state.activesink} alldevices={state.allsinks} activechannel={state.activeoutchannel}
       activeccs={state.activeoutccs} solocc={state.solocc} />,
     mountpoint);
 };

@@ -8,8 +8,8 @@ import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from 
 import { toObservable } from '../../lib/rx_redux'
 
 //hardware business
-let videoindevices = new Map(); //id -> device
-let videoindevice; //device
+let videosources = new Map(); //id -> device
+let videosource; //device
 
 //worker thread business
 const videoworker =  Videoworker_();
@@ -101,7 +101,7 @@ function publishSources() {
 };
 
 function doVideoPlumbing(key) {
-  videoindevice = videoindevices.get(key);
+  videosource = videosources.get(key);
   canvasElem.width = PIXELDIM;
   canvasElem.height = PIXELDIM;
 
@@ -168,17 +168,17 @@ function updateVideoIO(mediadevices) {
   /*
   updates lists of available devices.
   */
-  let allindevices = new Map();
+  let allsources = new Map();
   Rx.Observable.from(mediadevices).filter(
     (dev) => ( dev.kind==="videoinput" )
   ).subscribe(function (dev){
-    videoindevices.set(dev.deviceId,dev);
-    allindevices.set(dev.deviceId,dev.label);
+    videosources.set(dev.deviceId,dev);
+    allsources.set(dev.deviceId,dev.label);
   });
-  store.dispatch(setAllVideoSources(allindevices));
+  store.dispatch(setAllVideoSources(allsources));
   //If there is only one device, select it.
-  if (allindevices.size===1) {
-    for (let key of allindevices.keys()) {
+  if (allsources.size===1) {
+    for (let key of allsources.keys()) {
       store.dispatch(setCurrentVideoSource(key));
     }
   }

@@ -8,10 +8,10 @@ var intents = require('./intents');
 var VideoInSelect = function(props) {
   return (<div className="streamcontrolset">
     <h2>Video In</h2>
-    <VideoInDeviceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
+    <VideoSourceSelect activedevice={props.activedevice} alldevices={props.alldevices} />
   </div>)
 };
-var VideoInDeviceSelect = function(props) {
+var VideoSourceSelect = function(props) {
   let disabled;
   let deviceOptNodes;
   let selectValue;
@@ -30,8 +30,8 @@ var VideoInDeviceSelect = function(props) {
     deviceOptNodes = [<option key="none" value="none">none</option>];
   };
   return (<div className="streamchooserwidget">
-    <label htmlFor="videoInDevice">Device </label>
-    <select name="videoInDevice" id="videoInDevice" className="videoselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectVideoInDevice(ev.target.value)}>
+    <label htmlFor="videoSource">Device </label>
+    <select name="videoSource" id="videoSource" className="videoselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectVideoSource(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
@@ -40,7 +40,7 @@ var VideoInDeviceSelect = function(props) {
 
 function render(state, mountpoint) {
   return ReactDOM.render(
-    <VideoInSelect activedevice={state.activeindevice} alldevices={state.allindevices}
+    <VideoInSelect activedevice={state.activesource} alldevices={state.allsources}
       activestats={state.activeinstats} />,
   mountpoint);
 };
