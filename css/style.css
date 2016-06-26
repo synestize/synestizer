@@ -64,6 +64,15 @@ a, a:hover, a:active, a:focus {
   min-height: 0px;
   padding: 1ex 1em;
 }
+#synapp label {
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.3rem;
+    /* font-variant: small-caps */ /* too ugly with default font! */
+    text-transform: uppercase;
+    font-size: 80%;
+}
+
 #video-io {
   position: absolute;
   left: 0;
@@ -174,7 +183,7 @@ a, a:hover, a:active, a:focus {
 .controls .solocontrol .solobutton.soloed {
   background-color: red;
 }
-.streamcontrolset select {
+#synapp select {
     /* background-color: #f0f; */
     padding: 1px 4px 1px 2px;
     color: #999;
@@ -184,20 +193,20 @@ a, a:hover, a:active, a:focus {
     height: 1.5em;
     cursor: pointer;
 }
-.streamcontrolset select[multiple] {
+#synapp select[multiple] {
   height: auto;
 }
-.streamcontrolset select .option {
+#synapp select .option {
     min-height: 1ex;
 }
-.streamcontrolset .devicechooserwidget {
+#synapp .devicechooserwidget {
   display: inline-block;
   padding: 1ex;
 }
-.streamcontrolset .potential.devicechooserwidget {
+#synapp .potential.devicechooserwidget {
   font-style: italic;
 }
-.streamcontrolset .potential.devicechooserwidget select option {
+#synapp .potential.devicechooserwidget select option {
   font-style: italic;
 }
 .mappingmatrix {

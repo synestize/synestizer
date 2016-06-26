@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 
 const Pane = ({paneId, children}) => (
-  <section className="pane-content" key={paneId} id={paneId}>
+  <section className={'pane-content ' + paneId} key={paneId} id={paneId}>
     {children}
   </section>
 )
