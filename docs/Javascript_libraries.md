@@ -7,11 +7,17 @@ Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of 
 
 ## ES6
 
-Module support in ES6 looks different than the other standards
+Module support in ES6 looks different than the older standards.
 
 * [ES6 module syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
 * [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
 * [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+
+## HTML5 Multimedia
+
+To have a working API toa ccess audio and video we use webrtc-adapter.
+
+[here's how to get Audio in]( https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource)
 
 ## React
 

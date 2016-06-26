@@ -25,11 +25,7 @@
   * randomisation of synth median point on load
   * random sparse mapping on load
   * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
-  * audio input: https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource
-  * save/load
-
-    * this will be hard without an app model refactor. See below.
-
+  * audio input
   * optional CSS filters on video
 
 * UI improvements
@@ -41,6 +37,7 @@
   * friendlier stream labels
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
+  * Svg widgets? http://stackoverflow.com/a/30579774
 
 * improve help message if you have
 
