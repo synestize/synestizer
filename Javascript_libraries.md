@@ -15,9 +15,11 @@ Module support in ES6 looks different than the older standards.
 
 ## HTML5 Multimedia
 
-To have a working API toa ccess audio and video we use webrtc-adapter.
+see
 
-[here's how to get Audio in]( https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/createMediaStreamSource)
+* [Javascript libraries](Javascript_libraries.md)
+* [Audio synthesis](Audio_synthesis.md)
+
 
 ## React
 
