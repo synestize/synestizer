@@ -31,7 +31,7 @@
 
 * UI improvements
   * more natural frequency mapping, such as
-    * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf)
+    * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
     * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
   * default to active MIDI
