@@ -61,6 +61,13 @@ However I will start that way because otherwise it's too complicated
 * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
 
+### Persisitnece
+
+We are currently using [redux-persist](https://www.npmjs.com/package/redux-persist).
+We could instead use [redux-storge](https://www.npmjs.com/package/redux-storage) or [redux-localstorage](https://www.npmjs.com/package/redux-localstorage).
+
+The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
+
 ## Webpack
 
 [webpack](https://webpack.github.io/)
