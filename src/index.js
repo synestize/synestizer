@@ -13,7 +13,7 @@ import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
 import {getStoredState, autoRehydrate, createPersistor, persistStore, createTransform} from 'redux-persist'
 import localForage from 'localForage'
-import { getq } from 'lib/browser'
+import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 
 //debug mode:
 Rx.config.longStackSupport = true;
@@ -34,7 +34,12 @@ If it happens, I will name that stat with a double underscore prefix
 }
 */
 const persistConf = {
-  blacklist: ['midi.__midiSources', 'video.__videoSources'],
+  blacklist: [
+    'midi.__midiSources',
+    'midi.__validMidiSource',
+    'video.__videoSources',
+    'video.__validVideoSource',
+  ],
   transforms: [],
   debounce: 10,
   storage: localForage
