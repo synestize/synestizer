@@ -2,6 +2,7 @@
 
 * currently:
   * Go to single app object to update all state.
+    * save/load
     * [react context](https://facebook.github.io/react/docs/context.html)
     * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
     * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
