@@ -10,7 +10,6 @@ import {
 import {
   SET_ALL_MIDI_SOURCES,
   SET_VALID_MIDI_SOURCE,
-  SET_MIDI_SOURCE_CHANNEL,
 } from '../actions/midi'
 
 export function visiblePane(state = "welcome", action) {

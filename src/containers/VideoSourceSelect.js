@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (key) => setCurrentVideoSource(key)
+    onChange: (key) => dispatch(setCurrentVideoSource(key))
   }
 };
 

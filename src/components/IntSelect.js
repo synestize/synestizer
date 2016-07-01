@@ -1,11 +1,11 @@
 import React, { Component, PropTypes, Children } from 'react';
 
 const IntSelect = ({
-    disabled,
-    currentInt,
+    currentInt=0,
     onChange,
     name,
     unavailable,
+    disabled=false,
     minInt=0,
     maxInt}
   ) => {
@@ -33,11 +33,13 @@ const IntSelect = ({
 }
 
 IntSelect.propTypes = {
-  currentInt: PropTypes.number.isRequired,
+  currentInt: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   unavailable: PropTypes.array,
-  disabled: PropTypes.bool.isRequired
+  disabled: PropTypes.bool,
+  maxInt: PropTypes.number,
+  minInt: PropTypes.number,
 }
 
 export default IntSelect

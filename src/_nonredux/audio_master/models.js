@@ -20,7 +20,7 @@ var _audioState =  {
     outputNode: undefined,
 };
 var _audioStateSubject = new Rx.BehaviorSubject(_audioState);
-  
+
 //Create a context with master out volume
 function initAudio(){
   let context = _audioState.context = new window.AudioContext();
@@ -63,7 +63,7 @@ intents.subjects.setMedianMasterTempo.subscribe(
   (value) => setMedianMasterTempo(value)
 );
 function setPerturbationMasterTempo(value) {
-  state.perturbationMasterTempo=value;  
+  state.perturbationMasterTempo=value;
   stateSubject.onNext(state);
 };
 Rx.Observable.combineLatest(
@@ -78,12 +78,11 @@ function setMedianBaseFreq(value) {
   state.medianBaseFreq = value;
   stateSubject.onNext(state);
 };
-console.debug("intents", intents);
 intents.subjects.setMedianBaseFreq.subscribe(
   (value) => setMedianBaseFreq(value)
 );
 function setPerturbationBaseFreq(value) {
-  state.perturbationBaseFreq=value;  
+  state.perturbationBaseFreq=value;
   stateSubject.onNext(state);
 };
 Rx.Observable.combineLatest(

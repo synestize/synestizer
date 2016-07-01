@@ -205,6 +205,10 @@ a, a:hover, a:active, a:focus {
   display: inline-block;
   padding: 1ex;
 }
+#synapp .intchooserwidget {
+  display: inline-block;
+  padding: 1ex;
+}
 #synapp .potential.devicechooserwidget {
   font-style: italic;
 }
