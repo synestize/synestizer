@@ -6,7 +6,6 @@ export const getq = (variable) => {
   }
   return(undefined);
 }
-
 export const mapAsObj = (map) => {
   if (typeof(map.set)!=="function") {
     //already a plain object
@@ -30,14 +29,14 @@ export const objAsMap = (obj) =>{
   return map;
 }
 export const arrayAsSet = (arr) => {
-  if (typeof(arr.add)!=="function") {
+  if (typeof(arr.add)==="function") {
     //already a plain aarray
     return arr
   }
-  return new Set(...arr)
+  return new Set(arr)
 }
 export const setAsArray = (set) =>{
-  if (typeof(set.add)==="function") {
+  if (typeof(set.add)!=="function") {
     //already a Map
     return set
   }
