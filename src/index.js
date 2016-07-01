@@ -11,6 +11,8 @@ import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
+import {getStoredState, autoRehydrate, createPersistor, persistStore} from 'redux-persist'
+import localForage from 'localForage'
 
 //debug mode:
 Rx.config.longStackSupport = true;
@@ -30,15 +32,28 @@ If it happens, I will name that stat with a double underscore prefix
   __videoobject: CONFUSINGID,
 }
 */
+const persistConf = {
+  blacklist: [],
+  transforms: [],
+  debounce: 10,
+  storage: localForage
+}
 
-const store = createStore(rootReducer);
+let store;
+let persistor;
+let appRoot;
+let videoio;
+let midiio;
 
-const appRoot = render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('synapp')
-);
-
-const videoio = videoio_(store, document.getElementById('video-io'));
-const midiio = midiio_(store);
+getStoredState(persistConf, (err, restoredState) => {
+  store = createStore(rootReducer, restoredState)
+  persistor = createPersistor(store, persistConf)
+  appRoot = render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('synapp')
+  );
+  videoio = videoio_(store, document.getElementById('video-io'));
+  midiio = midiio_(store);
+})
