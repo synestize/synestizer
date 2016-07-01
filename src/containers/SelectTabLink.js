@@ -5,7 +5,7 @@ import { setVisiblePane } from '../actions/app';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    active: (state.visiblePane == ownProps.paneId),
+    active: (state.__volatile.visiblePane == ownProps.paneId),
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

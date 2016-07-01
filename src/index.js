@@ -34,12 +34,7 @@ If it happens, I will name that stat with a double underscore prefix
 }
 */
 const persistConf = {
-  blacklist: [
-    'midi.__midiSources',
-    'midi.__validMidiSource',
-    'video.__videoSources',
-    'video.__validVideoSource',
-  ],
+  blacklist: ['__volatile'],
   transforms: [],
   debounce: 10,
   storage: localForage
