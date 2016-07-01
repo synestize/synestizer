@@ -5,8 +5,8 @@ import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    deviceMap: state.midi.midiSources,
-    valid: state.midi.validMidiSource,
+    deviceMap: state.midi.__midiSources,
+    valid: state.midi.__validMidiSource,
     currentDevice: state.midi.currentMidiSource
   }
 };

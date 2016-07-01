@@ -7,7 +7,7 @@ import {
   SET_VALID_VIDEO_SOURCE
 } from '../actions/video'
 
-export function videoSources(state=new Map(), action) {
+export function __videoSources(state=new Map(), action) {
   switch (action.type) {
     case SET_ALL_VIDEO_SOURCES:
       return action.payload
@@ -25,7 +25,7 @@ export function currentVideoSource(state="", action) {
   }
 }
 
-export function validVideoSource(state=false, action) {
+export function __validVideoSource(state=false, action) {
   switch (action.type) {
     case SET_VALID_VIDEO_SOURCE:
       return action.payload
@@ -35,9 +35,9 @@ export function validVideoSource(state=false, action) {
 }
 
 const video = combineReducers({
-   videoSources,
+   __videoSources,
    currentVideoSource,
-   validVideoSource
+   __validVideoSource
 })
 
 export default video

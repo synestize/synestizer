@@ -11,8 +11,9 @@ import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
-import {getStoredState, autoRehydrate, createPersistor, persistStore} from 'redux-persist'
+import {getStoredState, autoRehydrate, createPersistor, persistStore, createTransform} from 'redux-persist'
 import localForage from 'localForage'
+import { getq } from 'lib/browser'
 
 //debug mode:
 Rx.config.longStackSupport = true;
@@ -33,7 +34,7 @@ If it happens, I will name that stat with a double underscore prefix
 }
 */
 const persistConf = {
-  blacklist: [],
+  blacklist: ['midi.__midiSources', 'video.__videoSources'],
   transforms: [],
   debounce: 10,
   storage: localForage
@@ -46,8 +47,18 @@ let videoio;
 let midiio;
 
 getStoredState(persistConf, (err, restoredState) => {
-  store = createStore(rootReducer, restoredState)
-  persistor = createPersistor(store, persistConf)
+  //For development we support purging all data
+  if (getq("purge")) {
+    console.warn("purging all local data");
+    store = createStore(rootReducer)
+    persistor = createPersistor(store, persistConf)
+    persistor.purgeAll();
+  } else {
+    store = createStore(rootReducer, restoredState)
+    persistor = createPersistor(store, persistConf)
+  }
+  window.store = store;
+  window.persistor = persistor;
   appRoot = render(
     <Provider store={store}>
       <App />

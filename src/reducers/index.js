@@ -7,5 +7,5 @@ import { visiblePane } from './app'
 export default combineReducers({
   video,
   visiblePane,
-  midi
+  midi,
 })

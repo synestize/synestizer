@@ -12,7 +12,7 @@ import {
   SET_MIDI_SOURCE_CC,
 } from '../actions/midi'
 
-export function midiSources(state=new Map(), action) {
+export function __midiSources(state=new Map(), action) {
   switch (action.type) {
     case SET_ALL_MIDI_SOURCES:
       return action.payload
@@ -30,7 +30,7 @@ export function currentMidiSource(state="", action) {
   }
 }
 
-export function validMidiSource(state=false, action) {
+export function __validMidiSource(state=false, action) {
   switch (action.type) {
     case SET_VALID_MIDI_SOURCE:
       return action.payload
@@ -62,9 +62,9 @@ export function midiSourceCCs(state=new Set([0]), action) {
 }
 
 const midi = combineReducers({
-   midiSources,
+   __midiSources,
    currentMidiSource,
-   validMidiSource,
+   __validMidiSource,
    midiSourceChannel,
    midiSourceCCs
 })
