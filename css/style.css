@@ -122,24 +122,16 @@ a, a:hover, a:active, a:focus {
     cursor: default;
 }
 
-/****************************
- *
- * new non-WAC controls
- *
- ****************************/
-.controls {
-
-}
-.controls .param-control {
+#synapp .param-control {
   width: 16rem;
   vertical-align: center;
   display: inline-block;
 }
-.controls .param-control.mastergain {
+#synapp .param-control.mastergain {
   width: 21rem;
 }
 
-.controls .param-control .slider-wrap {
+#synapp .param-control .slider-wrap {
     width: 10rem;
     height: 1rem;
     margin-left: 0.2rem;
@@ -149,21 +141,21 @@ a, a:hover, a:active, a:focus {
     display: inline-block;
     position: relative;
 }
-.controls .param-control .slider-wrap .slider {
+#synapp .param-control .slider-wrap .slider {
   display: block;
   width: 100%;
   padding: 0;
 }
-.controls .param-control .slider-wrap .slider.actual {
+#synapp .param-control .slider-wrap .slider.actual {
   opacity: 0.5;
 }
-.controls .param-control .label {
+#synapp .param-control .label {
     width: 5rem;
     display: inline-block;
     text-align: right;
     padding-right: 0.3rem;
 }
-.controls .param-control .mapped-value {
+#synapp .param-control .mapped-value {
     width: 4rem;
     display: inline-block;
     text-align: right;
@@ -171,16 +163,16 @@ a, a:hover, a:active, a:focus {
     border: 1px solid #BBB;
     background-color: white;
 }
-.controls .solocontrol .sololabel {
+#synapp .solocontrol .sololabel {
   display: inline-block;
 }
-.controls .solocontrol .solobutton {
+#synapp .solocontrol .solobutton {
   display: inline-block;
   padding: 0.1rem 0.2rem;
   margin: 0.1rem;
   border: 1px grey solid;
 }
-.controls .solocontrol .solobutton.soloed {
+#synapp .solocontrol .solobutton.soloed {
   background-color: red;
 }
 #synapp select {
@@ -209,19 +201,19 @@ a, a:hover, a:active, a:focus {
 #synapp .potential.devicechooserwidget select option {
   font-style: italic;
 }
-.mappingmatrix {
+#synapp .mappingmatrix {
   font-size: 0.8rem;
 }
-.mappingmatrix th {
+#synapp .mappingmatrix th {
   font-weight: normal;
   position: relative; /* so that child state-bar elements can be absolutely positioned */
   background-color: white;
 }
-.mappingmatrix th span {
+#synapp .mappingmatrix th span {
     position: relative;
     z-index: 2;
 }
-.mappingmatrix th .state-bar {
+#synapp .mappingmatrix th .state-bar {
   height: 100%;
   bottom: 0;
   background-color: palegreen;
@@ -229,7 +221,7 @@ a, a:hover, a:active, a:focus {
   position: absolute;
   z-index: 1;
 }
-.mappingmatrix .mapping {
+#synapp .mappingmatrix .mapping {
   width: 4.5rem;
   vertical-align: middle;
   padding: 0 0.25rem 0 0.25rem;
@@ -237,22 +229,22 @@ a, a:hover, a:active, a:focus {
   opacity: 1.0;
   cursor: pointer;
 }
-.mappingmatrix .mapping input {
+#synapp .mappingmatrix .mapping input {
   cursor: pointer;
 }
-.mappingmatrix .mapping.inactive {
+#synapp .mappingmatrix .mapping.inactive {
   opacity: 0.3;
 }
-.mappingmatrix .mapping:hover {
+#synapp .mappingmatrix .mapping:hover {
   opacity: 1.0;
 }
-.mappingmatrix .mapping.plus {
+#synapp .mappingmatrix .mapping.plus {
   background-color: rgba(0,0,0,0.5);
 }
-.mappingmatrix .mapping.minus {
+#synapp .mappingmatrix .mapping.minus {
   background-color: rgba(130,0,0,0.5);
 }
-.mappingmatrix .mapping .param {
+#synapp .mappingmatrix .mapping .param {
   display: block;
   width: 4rem;
   height: 1.5rem;
@@ -260,8 +252,8 @@ a, a:hover, a:active, a:focus {
   padding: 0;
   vertical-align: middle;
 }
-input[type="number"],
-input[type="number"]:focus {
+#synapp input[type="number"],
+#synapp input[type="number"]:focus {
     display: block;
     margin: 0 auto;
     margin-bottom: 5px;
@@ -280,8 +272,8 @@ input[type="number"]:focus {
     cursor: pointer;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+#synapp input[type=number]::-webkit-inner-spin-button,
+#synapp input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
