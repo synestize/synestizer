@@ -57,11 +57,20 @@ export function validVideoSource(state=false, action) {
   }
 }
 
-const __volatile = combineReducers({
+//Now put all these together.
+const midi = combineReducers({
+  midiSources,
+  validMidiSource,
+})
+
+const video = combineReducers({
    videoSources,
    validVideoSource,
-   midiSources,
-   validMidiSource,
+})
+
+const __volatile = combineReducers({
+   midi,
+   video,
    visiblePane
 })
 

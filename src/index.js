@@ -59,12 +59,14 @@ getStoredState(persistConf, (err, restoredState) => {
   }
   window.store = store;
   window.persistor = persistor;
+
+  videoio = videoio_(store, document.getElementById('video-io'));
+  midiio = midiio_(store);
+
   appRoot = render(
     <Provider store={store}>
       <App />
     </Provider>,
     document.getElementById('synapp')
   );
-  videoio = videoio_(store, document.getElementById('video-io'));
-  midiio = midiio_(store);
 })
