@@ -9,7 +9,6 @@ import { union, difference, intersection } from '../../lib/setop'
 
 let rawMidiInSubscription;
 
-//this is a per-session object and shouldn't be in app state
 let midiinfo= null;
 //hardware business
 let midisources = new Map(); //id -> device
@@ -85,12 +84,6 @@ function updateMidiIO(newmidiinfo) {
 };
 
 export default function init(store_) {
-  Rx.Observable.fromPromise(
-    navigator.requestMIDIAccess()
-  ).subscribe(
-    updateMidiIO,
-    (err) => console.debug(err.stack)
-  );
   store = store_;
   storeStream = toObservable(store);
   storeStream.subscribe((state)=>console.debug("MIDISTATENOW", state));
@@ -100,5 +93,11 @@ export default function init(store_) {
       console.log("midkey", key);
     }
   )
+
+  Rx.Observable.fromPromise(
+    navigator.requestMIDIAccess()
+  ).subscribe(updateMidiIO,
+    (err) => console.debug(err.stack)
+  );
   //publishSources();
 };

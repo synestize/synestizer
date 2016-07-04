@@ -7,7 +7,7 @@ const DeviceSelect = ({
     deviceMap,
     name,
     title,
-    valid}
+    valid=true}
   ) => {
   const optNodes = [];
   for (let [key, name] of deviceMap) {
@@ -32,7 +32,7 @@ DeviceSelect.propTypes = {
   deviceMap: PropTypes.instanceOf(Map).isRequired,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  valid: PropTypes.bool.isRequired,
+  valid: PropTypes.bool,
   disabled: PropTypes.bool.isRequired
 }
 
