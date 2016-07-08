@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const TabLink = ({active, children, onClick}) => (
+const Link = ({active, children, onClick}) => (
   <a href="#" className={active ? "active" : ""}
      onClick={e => {
        e.preventDefault()
@@ -11,10 +11,10 @@ const TabLink = ({active, children, onClick}) => (
   </a>
 )
 
-TabLink.propTypes = {
+Link.propTypes = {
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired
 }
 
-export default TabLink;
+export default Link;

@@ -20,7 +20,7 @@ const MidiStreamSettings = ( {
     onChange={onDeviceChange}
     currentDevice={currentDevice}
     deviceMap={deviceMap} name="" />
-  <IntSelect currentNum={currentChannel} onChange={onChannelChange} />
+  <IntSelect currentNum={currentChannel} onChange={onChannelChange} maxNum={16} />
   <MidiCCSet ccset={ccset} adder={ccadder} remover={ccremover} swapper={ccswapper} />
 </div>)
 

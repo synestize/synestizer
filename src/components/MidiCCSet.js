@@ -1,5 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import ActiveMidiCCControl from '../containers/ActiveMidiCCControl'
+import ActiveMidiCCAdd from '../containers/ActiveMidiCCAdd'
 
 const MidiCCSet = ({
     ccset,
@@ -9,10 +10,11 @@ const MidiCCSet = ({
   }) => {
   const ccNodes = [];
   for (let cc of ccset) {
-    ccNodes.push(<ActiveMidiCCControl adder={adder} remove={remover} swapper={swapper} ccset={ccset} />);
+    ccNodes.push(<ActiveMidiCCControl remover={remover} swapper={swapper} ccset={ccset} />);
   }
   return (<div className="ccset">
     {ccNodes}
+    <ActiveMidiCCAdd adder={adder}/>
   </div>)
 }
 

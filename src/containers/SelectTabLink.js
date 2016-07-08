@@ -1,6 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import TabLink from '../components/TabLink';
+import Link from '../components/Link';
 import { setVisiblePane } from '../actions/app';
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const SelectTabLink = connect(
   mapStateToProps,
   mapDispatchToProps
-)( TabLink );
+)( Link );
 
 export default SelectTabLink;
