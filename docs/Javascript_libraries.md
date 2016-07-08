@@ -35,9 +35,6 @@ How do i communicate across branches of Components?
 But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
 
 ### If I need to dynamically not render half the app
-https://facebook.github.io/react/docs/reusable-components.html
-
-https://facebook.github.io/react/docs/top-level-api.html#react.children
 
 [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 [React.js and dynamic children](http://blog.arkency.com/2014/10/react-dot-js-and-dynamic-children-why-the-keys-are-important/)
@@ -61,10 +58,10 @@ However I will start that way because otherwise it's too complicated
 * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
 
-### Persisitnece
+### Persisitence
 
 We are currently using [redux-persist](https://www.npmjs.com/package/redux-persist).
-We could instead use [redux-storge](https://www.npmjs.com/package/redux-storage) or [redux-localstorage](https://www.npmjs.com/package/redux-localstorage).
+We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage) or [redux-localstorage](https://www.npmjs.com/package/redux-localstorage).
 
 The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
 
