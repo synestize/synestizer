@@ -1,31 +1,15 @@
 'use strict';
 import { connect } from 'react-redux';
-import MidiCCSet from '../components/MidiCCSelect.js'
-import { union, difference, intersection } from '../lib/fakesetop'
+import MidiCCSet from '../components/MidiCCSet.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentNum: state.midi.midiSourceChannel,
-    name: 'midisourcecc',
-    maxInt: 127,
-    unavailable: difference(state.midi.midiSourceCCs, [ownProps.cc]),
-  }
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onChange: (ev) => {
-      dispatch(ownProps.swapper(ownProps.cc, ev))
-    },
-    onDelete: () => {
-      dispatch(ownProps.deleter(ownProps.cc))
-    }
+    ccset: ownProps.ccset,
   }
 };
 
 const ActiveMidiCCSet = connect(
   mapStateToProps,
-  mapDispatchToProps
-)( IntSelect );
+)( MidiCCSet );
 
 export default ActiveMidiCCSet;

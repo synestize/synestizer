@@ -1,12 +1,10 @@
 import React, { Component, PropTypes, Children } from 'react';
 
 const DeviceSelect = ({
-    disabled,
+    disabled=false,
     currentDevice,
     onChange,
     deviceMap,
-    name,
-    title,
     valid=true}
   ) => {
   const optNodes = [];
@@ -15,8 +13,7 @@ const DeviceSelect = ({
     optNodes.push(nu);
   }
   return <div className="devicechooserwidget">
-    <label htmlFor={name}>{title}</label>
-    <select name={name} id={name}
+    <select
         className="deviceselect"
         disable={disabled}
         value={currentDevice}
@@ -30,10 +27,8 @@ DeviceSelect.propTypes = {
   currentDevice: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   deviceMap: PropTypes.instanceOf(Map).isRequired,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
   valid: PropTypes.bool,
-  disabled: PropTypes.bool.isRequired
+  disabled: PropTypes.bool
 }
 
 export default DeviceSelect

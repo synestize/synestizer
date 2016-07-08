@@ -1,31 +1,26 @@
 import React, { Component, PropTypes, Children } from 'react';
+import ActiveMidiCCControl from '../containers/ActiveMidiCCControl'
 
-const MidiControlControl = ({
-    disabled,
-    currentNum,
-    onChange,
-    onDelete,
-    unavailable=[],
-    valid=true}
-  ) => {
-  const optNodes = [];
-  return (<div className="ccontrontrol">
-    <IntSelect
-      currentNum={currentNum}
-      unavailable={unavailable}
-      onChange={onChange}
-    />
-  <span onClick={onDelete}>-</span>
+const MidiCCSet = ({
+    ccset,
+    adder,
+    swapper,
+    remover
+  }) => {
+  const ccNodes = [];
+  for (let cc of ccset) {
+    ccNodes.push(<ActiveMidiCCControl adder={adder} remove={remover} swapper={swapper} ccset={ccset} />);
+  }
+  return (<div className="ccset">
+    {ccNodes}
   </div>)
 }
 
-MidiControlControl.propTypes = {
-  currentNum: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  valid: PropTypes.bool,
-  disabled: PropTypes.bool.isRequired,
-  unavailable: PropTypes.array
+MidiCCSet.propTypes = {
+  ccset: PropTypes.array.isRequired,
+  adder: PropTypes.func.isRequired,
+  remover: PropTypes.func.isRequired,
+  swapper: PropTypes.func.isRequired,
 }
 
-export default MidiControlControl
+export default MidiCCSet

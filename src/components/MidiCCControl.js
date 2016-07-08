@@ -1,19 +1,20 @@
 import React, { Component, PropTypes, Children } from 'react';
+import { union, difference, intersection } from '../lib/fakesetop'
 
 const MidiControlControl = ({
     disabled,
-    currentNum,
+    cc,
     onChange,
     onDelete,
-    unavailable=[],
+    ccset,
     valid=true}
   ) => {
-  const optNodes = [];
   return (<div className="ccontrontrol">
     <IntSelect
-      currentNum={currentNum}
-      unavailable={unavailable}
+      currentNum={cc}
+      unavailable={difference(ccset, [cc])}
       onChange={onChange}
+      maxNum="127"
     />
   <span onClick={onDelete}>-</span>
   </div>)

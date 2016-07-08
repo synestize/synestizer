@@ -3,15 +3,14 @@ import React, { Component, PropTypes, Children } from 'react';
 const IntSelect = ({
     currentNum=0,
     onChange,
-    name,
     unavailable,
     disabled=false,
-    minInt=0,
-    maxInt}
+    minNum=0,
+    maxNum}
   ) => {
   const optNodes = [];
   unavailable = new Set(unavailable ? unavailable : []);
-  for (let idx=minInt;idx<maxInt; idx++) {
+  for (let idx=minNum;idx<maxNum; idx++) {
 
     let nu = <option
       value={idx}
@@ -22,7 +21,7 @@ const IntSelect = ({
     optNodes.push(nu);
   }
   return <div className="intchooserwidget">
-    <select name={name} id={name}
+    <select
         className="intselect"
         disable={disabled}
         value={currentNum}
@@ -35,11 +34,10 @@ const IntSelect = ({
 IntSelect.propTypes = {
   currentNum: PropTypes.number,
   onChange: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   unavailable: PropTypes.array,
   disabled: PropTypes.bool,
-  maxInt: PropTypes.number,
-  minInt: PropTypes.number,
+  maxNum: PropTypes.number,
+  minNum: PropTypes.number,
 }
 
 export default IntSelect

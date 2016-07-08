@@ -1,13 +1,27 @@
 import React, { Component, PropTypes } from 'react'
 import SubPane from './SubPane'
-import MidiDeviceSelect from '../containers/MidiDeviceSelect'
-import MidiChannelSelect from '../containers/MidiChannelSelect'
-import MidiSourceCCSelect from '../containers/MidiSourceCCSelect'
+import DeviceSelect from '../components/DeviceSelect'
+import IntSelect from '../components/IntSelect'
+import MidiCCSet from '../components/MidiCCSet'
 
-const MidiStreamSettings = () => (<div>
-  <MidiDeviceSelect />
-  <MidiChannelSelect />
-  <MidiCCSet />
+const MidiStreamSettings = ( {
+  currentChannel,
+  deviceMap,
+  valid,
+  currentDevice,
+  ccadder,
+  ccswapper,
+  ccremover,
+  ccset,
+  onChannelChange,
+  onDeviceChange,
+}) => (<div>
+  <DeviceSelect
+    onChange={onDeviceChange}
+    currentDevice={currentDevice}
+    deviceMap={deviceMap} name="" />
+  <IntSelect currentNum={currentChannel} onChange={onChannelChange} />
+  <MidiCCSet ccset={ccset} adder={ccadder} remover={ccremover} swapper={ccswapper} />
 </div>)
 
 export default MidiStreamSettings;
