@@ -1,7 +1,7 @@
 'use strict';
 
 import Rx from 'rx'
-import  { setValidMidiSource, setCurrentMidiSource, setAllMidiSources } from '../../actions/midi'
+import  { setValidMidiSourceDevice, setCurrentMidiSourceDevice, setAllMidiSourceDevices } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
 // let streamPatch = require('../streampatch/models');
 import { midiBipol, bipolMidi } from '../../lib/transform'
@@ -74,11 +74,11 @@ function updateMidiIO(newmidiinfo) {
     allsinks.set(key, val.name)
     midisinks.set(key, val)
   };
-  store.dispatch(setAllMidiSources(allsources));
+  store.dispatch(setAllMidiSourceDevices(allsources));
   //If there is only one device, select it.
   if (allsources.size===1) {
     for (let key of allsources.keys()) {
-      store.dispatch(setCurrentMidiSource(key));
+      store.dispatch(setCurrentMidiSourceDevice(key));
     }
   }
 };

@@ -8,8 +8,8 @@ import {
 } from '../actions/video'
 
 import {
-  SET_ALL_MIDI_SOURCES,
-  SET_VALID_MIDI_SOURCE,
+  SET_ALL_MIDI_SOURCE_DEVICES,
+  SET_VALID_MIDI_SOURCE_DEVICE,
 } from '../actions/midi'
 
 export function visiblePane(state = "welcome", action) {
@@ -23,7 +23,7 @@ export function visiblePane(state = "welcome", action) {
 
 export function midiSources(state=new Map(), action) {
   switch (action.type) {
-    case SET_ALL_MIDI_SOURCES:
+    case SET_ALL_MIDI_SOURCE_DEVICES:
       return action.payload
     default:
       return state
@@ -32,7 +32,7 @@ export function midiSources(state=new Map(), action) {
 
 export function validMidiSource(state=false, action) {
   switch (action.type) {
-    case SET_VALID_MIDI_SOURCE:
+    case SET_VALID_MIDI_SOURCE_DEVICE:
       return action.payload
     default:
       return state

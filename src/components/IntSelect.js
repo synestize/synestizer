@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 
 const IntSelect = ({
-    currentInt=0,
+    currentNum=0,
     onChange,
     name,
     unavailable,
@@ -25,7 +25,7 @@ const IntSelect = ({
     <select name={name} id={name}
         className="intselect"
         disable={disabled}
-        value={currentInt}
+        value={currentNum}
         onChange={(ev)=>onChange(ev.target.value) } >
       {optNodes}
     </select>
@@ -33,7 +33,7 @@ const IntSelect = ({
 }
 
 IntSelect.propTypes = {
-  currentInt: PropTypes.number,
+  currentNum: PropTypes.number,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   unavailable: PropTypes.array,

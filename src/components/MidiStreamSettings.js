@@ -4,17 +4,10 @@ import MidiDeviceSelect from '../containers/MidiDeviceSelect'
 import MidiChannelSelect from '../containers/MidiChannelSelect'
 import MidiSourceCCSelect from '../containers/MidiSourceCCSelect'
 
-/*
-const allNumbers = [];
-for (let i=0; i<127; i++) {
-  allNumbers.push(i)
-}
-*/
+const MidiStreamSettings = () => (<div>
+  <MidiDeviceSelect />
+  <MidiChannelSelect />
+  <MidiCCSet />
+</div>)
 
-const MidiSettings = () => (
-  <SubPane title="Midi" name="midi">
-  <MidiSourceSection />
-  </SubPane>
-)
-
-export default MidiSettings;
+export default MidiStreamSettings;
