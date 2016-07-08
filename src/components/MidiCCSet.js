@@ -10,7 +10,7 @@ const MidiCCSet = ({
   }) => {
   const ccNodes = [];
   for (let cc of ccset) {
-    ccNodes.push(<ActiveMidiCCControl remover={remover} swapper={swapper} ccset={ccset} />);
+    ccNodes.push(<ActiveMidiCCControl remover={remover} swapper={swapper} ccset={ccset} key={cc} cc={cc}/>);
   }
   return (<div className="ccset">
     {ccNodes}

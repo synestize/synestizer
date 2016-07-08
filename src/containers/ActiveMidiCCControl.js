@@ -5,7 +5,7 @@ import { union, difference, intersection } from '../lib/fakesetop'
 const mapStateToProps = (state, ownProps) => {
   return {
     currentNum: ownProps.cc,
-    unavailable: difference(ownProps.ccset, [ownProps.cc]),
+    ccset: ownProps.ccset
   }
 };
 

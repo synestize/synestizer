@@ -20,15 +20,15 @@ const IntSelect = ({
     </option> ;
     optNodes.push(nu);
   }
-  return <div className="intchooserwidget">
+  return (<div className="intchooserwidget">
     <select
         className="intselect"
         disable={disabled}
         value={currentNum}
-        onChange={(ev)=>onChange(ev.target.value) } >
+        onChange={(ev)=>{console.debug('int',typeof ev, ev); onChange(ev.target.value)}} >
       {optNodes}
     </select>
-  </div>
+  </div>)
 }
 
 IntSelect.propTypes = {

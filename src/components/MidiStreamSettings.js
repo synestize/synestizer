@@ -15,13 +15,14 @@ const MidiStreamSettings = ( {
   ccset,
   onChannelChange,
   onDeviceChange,
-}) => (<div>
+}) => {
+  return (<div>
   <DeviceSelect
     onChange={onDeviceChange}
     currentDevice={currentDevice}
     deviceMap={deviceMap} name="" />
   <IntSelect currentNum={currentChannel} onChange={onChannelChange} maxNum={16} />
   <MidiCCSet ccset={ccset} adder={ccadder} remover={ccremover} swapper={ccswapper} />
-</div>)
+</div>)}
 
 export default MidiStreamSettings;

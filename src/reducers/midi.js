@@ -24,7 +24,7 @@ export function midiSourceChannel(state=0, action) {
   switch (action.type) {
     case SET_MIDI_SOURCE_CHANNEL:
       console.debug("smsc!!!", state, action)
-      return action.payload
+      return parseInt(action.payload)
     default:
       return state
   }

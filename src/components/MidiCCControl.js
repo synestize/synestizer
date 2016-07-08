@@ -1,13 +1,13 @@
 import React, { Component, PropTypes, Children } from 'react';
 import { union, difference, intersection } from '../lib/fakesetop'
+import IntSelect from './IntSelect'
 
-const MidiControlControl = ({
+const MidiCCControl = ({
     disabled,
     cc,
     onChange,
     onDelete,
-    ccset,
-    valid=true}
+    ccset}
   ) => {
   return (<div className="ccontrontrol">
     <IntSelect
@@ -20,13 +20,11 @@ const MidiControlControl = ({
   </div>)
 }
 
-MidiControlControl.propTypes = {
-  currentNum: PropTypes.string.isRequired,
+MidiCCControl.propTypes = {
+  currentNum: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  valid: PropTypes.bool,
-  disabled: PropTypes.bool.isRequired,
-  unavailable: PropTypes.array
+  ccset: PropTypes.array.isRequired
 }
 
-export default MidiControlControl
+export default MidiCCControl
