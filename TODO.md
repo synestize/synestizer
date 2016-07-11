@@ -4,7 +4,6 @@
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
   * example Ableton set
-  * instructions when camera is not found
   * Need to show perturbation and final value of synth values
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
@@ -20,12 +19,11 @@
 * UI improvements
   * save/load
   * MIDI solo UI
-  * go to [font awesome](http://fontawesome.io/icons/)
+  * only show video background some of the time
   * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
     * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
-  * default to active MIDI
   * friendlier stream labels
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
