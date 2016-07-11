@@ -1,22 +1,10 @@
 # TODO
 
 * currently:
-  * Go to single app object to update all state.
-    * save/load
-    * [react context](https://facebook.github.io/react/docs/context.html)
-    * [react connect](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
-    * [redux middleware](http://redux.js.org/docs/advanced/Middleware.html)
-    * [redux asynchrony middleware](http://redux.js.org/docs/advanced/AsyncActions.html)
-    * [react asynchrony made simple](https://reactjsnews.com/redux-middleware)
-    * make all panels aspects of the same App state for easier rendering, e.g. using [react-tabs](https://github.com/reactjs/react-tabs)
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
-  * Better solo UI (What does "off" mean?)
-  * Mute-all UI
   * example Ableton set
-  * Default MIDI mapping
   * instructions when camera is not found
-  * MIDI outputs/sinks are not being correctly disposed.
   * Need to show perturbation and final value of synth values
   * switch param mappers to be higher order/factory functions,
     [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
@@ -30,6 +18,8 @@
   * optional CSS filters on video
 
 * UI improvements
+  * save/load
+  * MIDI solo UI
   * go to [font awesome](http://fontawesome.io/icons/)
   * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
