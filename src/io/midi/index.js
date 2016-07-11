@@ -1,5 +1,3 @@
-'use strict';
-
 import Rx from 'rx'
 import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
@@ -40,7 +38,7 @@ function handleMidiInMessage (ev) {
   if ((cmd===11) &&
     (state.activesourcechannel == channel) &&
     state.activesourceccs.has(cc)) {
-    
+
     streamPatch.getSourceStream("midi-cc-"+ cc).onNext(val);
   };
 };

@@ -1,5 +1,4 @@
-'use strict';
-import transform from '../../lib/transform'
+import *  as transform from '../../lib/transform'
 
 function AvgColor(params) {
     //1/8 sub-sampled average color

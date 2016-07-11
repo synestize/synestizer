@@ -2,8 +2,9 @@ import Rx from 'rx'
 import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
-import  { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
+import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
 import { toObservable } from '../../lib/rx_redux'
+import { clip1 } from '../../lib/transform'
 
 //hardware business
 let videosources = new Map(); //id -> device
@@ -11,7 +12,6 @@ let videosource; //device
 
 //worker thread business
 const videoworker =  Videoworker_();
-//console.debug("vw",videoworker);
 window.videoworker = videoworker;
 window.Videoworker_ = Videoworker_;
 
@@ -26,7 +26,6 @@ let mediaStream;
 let store;
 let storeStream;
 let unsubscribe;
-
 
 const PIXELDIM=64
 
@@ -74,8 +73,8 @@ function statsStreamSpray(x) {
     for (let [idx, value] of data.entries()) {
       let address = "VM" + ("00" + (idx + 1)).slice(-2);
       if ((value < -1) || (value > 1)) {
-        console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
-        value = transform.clip1(value);
+        console.warn("STATISTIC OUT OF RANGE", address, value);
+        value = clip1(value);
       };
       ////streamPatch.getSourceStream(address).onNext(value);
     }
