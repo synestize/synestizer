@@ -12,7 +12,7 @@ const DeviceSelect = ({
     let nu = <option value={key} key={key}>{name}</option> ;
     optNodes.push(nu);
   }
-  return <div className="devicechooserwidget">
+  return (<div className="devicechooserwidget">
     <select
         className="deviceselect"
         disable={disabled}
@@ -20,7 +20,7 @@ const DeviceSelect = ({
         onChange={(ev)=>onChange(ev.target.value) } >
       {optNodes}
     </select>
-  </div>
+  </div>)
 }
 
 DeviceSelect.propTypes = {

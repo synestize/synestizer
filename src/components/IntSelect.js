@@ -11,24 +11,21 @@ const IntSelect = ({
   const optNodes = [];
   unavailable = new Set(unavailable ? unavailable : []);
   for (let idx=minNum;idx<maxNum; idx++) {
-
     let nu = <option
       value={idx}
       key={idx}
-      disable={unavailable.has(idx)} >
+      disabled={unavailable.has(idx)} >
         {idx}
     </option> ;
     optNodes.push(nu);
   }
-  return (<div className="intchooserwidget">
-    <select
-        className="intselect"
-        disable={disabled}
-        value={currentNum}
-        onChange={(ev)=>{console.debug('int',typeof ev, ev); onChange(ev.target.value)}} >
-      {optNodes}
-    </select>
-  </div>)
+  return (<select
+      className="intselect"
+      disabled={disabled}
+      value={currentNum}
+      onChange={ (ev) => onChange(ev.target.value)} >
+    {optNodes}
+  </select>)
 }
 
 IntSelect.propTypes = {

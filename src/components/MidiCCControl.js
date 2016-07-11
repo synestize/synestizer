@@ -14,7 +14,7 @@ const MidiCCControl = ({
       currentNum={cc}
       unavailable={difference(ccset, [cc])}
       onChange={onChange}
-      maxNum="127"
+      maxNum={127}
     />
   <span onClick={onDelete}>-</span>
   </div>)

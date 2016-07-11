@@ -23,23 +23,27 @@ export function currentMidiSource(state="", action) {
 export function midiSourceChannel(state=0, action) {
   switch (action.type) {
     case SET_MIDI_SOURCE_CHANNEL:
-      console.debug("smsc!!!", state, action)
       return parseInt(action.payload)
     default:
       return state
   }
 }
 
-export function midiSourceCCs(state=[], action) {
-  switch (action.type) {
+export function midiSourceCCs(state=[0], {type, payload}) {
+  switch (type) {
     case ADD_MIDI_SOURCE_CC:
-      return union(state, [parseInt(action.payload)])
+      if (payload===undefined){
+        let next = payload;
+        return union(state, [Math.max(-1, ...state)+1])
+      } else {
+        return union(state, [parseInt(payload)])
+      }
     case REMOVE_MIDI_SOURCE_CC:
-      return difference(state, [parseInt(action.payload)])
+      return difference(state, [parseInt(payload)])
     case SET_MIDI_SOURCE_CCS:
-      return [...action.payload]
+      return [...payload]
     case SWAP_MIDI_SOURCE_CC:
-      let [x,y] = action.payload;
+      let [x,y] = payload;
       return union(difference(state,[parseInt(x)]),[parseInt(y)])
     default:
       return state
