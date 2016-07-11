@@ -24,7 +24,7 @@ var videosource; //device
 //worker thread business
 var Videoworker_ = require('worker!./videoworker');
 var videoworker =  Videoworker_();
-//console.debug("vw",videoworker);
+
 window.videoworker = videoworker;
 window.Videoworker_ = Videoworker_;
 
@@ -62,7 +62,7 @@ var statsOutbox = Rx.Observable.create(function (obs) {
 var statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
 statsSubject.where((x)=>(x.topic==="results")).subscribe(function(x) {
-  //console.debug("got stuff back",x);
+
   //report data streams
   statsStreamSpray(x.payload);
   //Now repeat
@@ -78,7 +78,7 @@ function statsStreamSpray(x) {
       let address = "VM" + ("00" + (idx + 1)).slice(-2);
       if ((value < -1) || (value > 1)) {
         console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
-        value = transform.clip1(value); 
+        value = transform.clip1(value);
       };
       streamPatch.getSourceStream(address).onNext(value);
     }
@@ -122,7 +122,7 @@ function doVideoPlumbing(key) {
   videosource = videosources.get(key);
   canvasElem.width = PIXELDIM;
   canvasElem.height = PIXELDIM;
-  
+
   Rx.Observable.fromPromise(
     navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
   ).subscribe(function(mediaStream) {
@@ -132,7 +132,7 @@ function doVideoPlumbing(key) {
     videoElem.src = window.URL.createObjectURL(mediaStream);
     videoElem.play();
   });
-  
+
   gfxCtx = canvasElem.getContext('2d');
 }
 
@@ -157,7 +157,6 @@ function grabPixels() {
       xoffset = Math.floor((vw-vsize)/2);
       yoffset = 0;
   };
-  // console.debug("cv", vw, vh, vAspect, vsize, xoffset, yoffset);
   // The first few frames get lost in Firefox, raising exceptions
   // We make sure this does not break the whole loop by
   // using a try..catch

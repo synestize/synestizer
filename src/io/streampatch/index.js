@@ -53,7 +53,7 @@ updateSubject.subscribe(function (upd) {
 });
 
 sourceStateSubject.throttle(20).subscribe(function(sourceState) {
-  //console.debug("sss", sourceState);
+
   sinkState = calcSinkValues(sourceState);
   sinkStateSubject.onNext(sinkState);
   updateSubject.onNext({
@@ -70,7 +70,7 @@ function addSource(address, label){
     subject = new Rx.BehaviorSubject(0.0);
     sourceFirehoseMap.set(address, subject);
     subject.subscribe(function (val) {
-      //console.debug("up", address);
+
       sourceState.set(address, val);
       sourceStateSubject.onNext(sourceState);
     });
@@ -118,7 +118,7 @@ function addSink(address, label){
     subject = new Rx.BehaviorSubject(0.0);
     sinkFirehoseMap.set(address, subject);
     subject.subscribe(function (val) {
-      //console.debug("up", address);
+
       sinkState.set(address, val);
       sinkStateSubject.onNext(sinkState);
     });
@@ -159,7 +159,7 @@ function getSinkStream(address){
 }
 function setMappingSign(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
-  // console.debug("sssms", sourceAddress, sinkAddress, value);
+
   let key = sourceAddress + "/" + sinkAddress;
   let sourceSinkMappingSign = state.sourceSinkMappingSign;
   if (value>=0.0) {
@@ -173,7 +173,7 @@ function setMappingSign(sourceAddress, sinkAddress, value) {
 
 function setMappingMag(sourceAddress, sinkAddress, value) {
   //Careful. it's messy here because update helpers don't work with Maps, and so our mutation semantics are all fucked up.
-  // console.debug("sssmm", sourceAddress, sinkAddress, value);
+
   let key = sourceAddress + "/" + sinkAddress;
   let sourceSinkMapping = state.sourceSinkMapping;
   if (value===0.0) {
@@ -196,8 +196,8 @@ function updateMapping() {
 function calcSinkValues() {
   let newSinkStateT = new Map(); // temporary tanh-transformed sink vals
   let newSinkState = new Map(); // replacement sink vals
-  // console.debug("ss", sourceState);
-  // console.debug("ss1", sourceSinkMapping);
+
+
   for (let [key, scale] of sourceSinkMapping.entries()) {
     let [sourceAddress, sinkAddress] = key.split("/");
     let sourceVal = sourceState.get(sourceAddress) || 0.0;
@@ -214,7 +214,7 @@ function calcSinkValues() {
     newSinkState.set(sinkAddress, sinkVal);
     //This could be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
-      // console.debug("ssru", sinkAddress, sinkVal);
+      
       sinkFirehoseMap.get(sinkAddress).onNext(sinkVal);
     }
   };

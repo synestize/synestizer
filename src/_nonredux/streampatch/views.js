@@ -23,13 +23,13 @@ var StreamPatchGrid = function(props) {
   let header = [<th key="header"></th>];
   let sourceNames = Array.from(props.sourceMap.keys()).sort();
   let sinkNames = Array.from(props.sinkMap.keys()).sort();
-  
+
   // This could be done best with Rx stream abstractions, I think
-  // console.debug("in", props.sourceState, sourceNames);
-  // console.debug("out", props.sinkState, sinkNames);
+
+
   for (var sinkName of sinkNames) {
     header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0} />);
-    //console.debug("sink", sinkName, props.sinkState.get(sinkName));
+    
   };
   for (var sourceName of sourceNames) {
     let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" val={props.sourceState.get(sourceName) || 0.0}/>];
@@ -73,8 +73,8 @@ function render(state, mountpoint) {
       sinkMap={state.sinkMap}
       sourceState={state.sourceState}
       sinkState={state.sinkState}
-      sourceSinkMappingMag={state.sourceSinkMappingMag} 
-      sourceSinkMappingSign={state.sourceSinkMappingSign} 
+      sourceSinkMappingMag={state.sourceSinkMappingMag}
+      sourceSinkMappingSign={state.sourceSinkMappingSign}
     />,
   mountpoint);
 };

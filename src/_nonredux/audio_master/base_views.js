@@ -22,7 +22,6 @@ var MasterGain = function({value, action}) {
   </div>)
 };
 var GenericAudioParam = function({median, perturbation, actual, address, label, action}) {
-  //console.debug("Styleface", actual, transform.bipolPerc(actual || 0.0));
   let divStyle = {
     width: transform.bipolPerc(actual || 0.0)+"%"
   };

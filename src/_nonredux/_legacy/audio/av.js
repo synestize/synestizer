@@ -1,19 +1,19 @@
 (function( global, document, Rx) {
     'use strict';
-    
+
     var media;
     var _ac=false;
-    
+
     global.media = media = global.media || {};
     media.mics = [];
     media.cams = [];
-    
+
     // shim getUserMedia ;
     global.navigator.getUserMedia = (global.navigator.getUserMedia ||
         global.navigator.webkitGetUserMedia ||
         global.navigator.mozGetUserMedia ||
         global.navigator.msGetUserMedia);
-    
+
     if (global.MediaStreamTrack.getSources===undefined){
         console.debug('This browser does not support MediaStreamTrack.\n\nTry Chrome.');
     } else {
@@ -42,7 +42,7 @@
             "video": true,
             "audio": true,
         };
-        
+
         function getMedia(opts) {
             var newCam, newMic, success, mustUpdate=false;
             newCam = opts.cam || currCam;
@@ -80,7 +80,7 @@
         return getMedia
     };
     media.Media = Media;
-    
+
     function VideoPixelPump(canvElem, vidElem, mediaStream, interval, pixelStream) {
         //get pixel arrays from a canvas element
         //TODO: generate own DOM elements if none are supplied.
@@ -95,7 +95,7 @@
         //optional:
         canvElem.style.width=PIXELDIM+"px";
         canvElem.style.height=PIXELDIM+"px";
-        
+
         //pixelStream = pixelStream || new Rx.ReplaySubject(1); //So that we may always sample
         pixelStream = pixelStream || new Rx.Subject();
         getPixels.pixelStream = pixelStream;
@@ -135,7 +135,6 @@
                 xoffset = Math.floor((vw-vsize)/2);
                 yoffset = 0;
             };
-            // console.debug("cv", vw, vh, vAspect, vsize, xoffset, yoffset);
             // The first few frames get lost in Firefox, raising exceptions
             // We make sure this does not break the whole loop by
             // using a try..catch
@@ -168,12 +167,12 @@
         return getPixels;
     }
     media.VideoPixelPump = VideoPixelPump;
-    
+
     function attachMediaButton(el) {
       el.addEventListener("click", switchCam);
     };
     media.attachMediaButton = attachMediaButton;
-    
+
     function attachFullscreenButton (el) {
         el.addEventListener("click", function(){
             var goFullScreen = !document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement;
@@ -202,7 +201,7 @@
                     document.webkitExitFullscreen();
                 }
             }
-            
+
         });
     };
     media.attachFullscreenButton = attachFullscreenButton;

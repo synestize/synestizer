@@ -36,7 +36,7 @@ function handleMidiInMessage (ev) {
   //filters CC messages out of midi bytes and turns them into key+value
   //into ["midi",-3723423,1,16],-0.377
   //should this be some kind of transducer?
-  //console.debug("hmm", ev);
+
   var cmd = ev.data[0] >> 4;
   var channel = ev.data[0] & 0x0f;
   var cc = ev.data[1];
@@ -50,7 +50,7 @@ function handleMidiInMessage (ev) {
   if ((cmd===11) &&
     (state.activesourcechannel == channel) &&
     state.activesourceccs.has(cc)) {
-    //console.debug("me", ev.data, midievent);
+    
     streamPatch.getSourceStream("midi-cc-"+ cc).onNext(val);
   };
 };
