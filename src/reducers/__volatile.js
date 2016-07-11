@@ -10,6 +10,8 @@ import {
 import {
   SET_ALL_MIDI_SOURCE_DEVICES,
   SET_VALID_MIDI_SOURCE_DEVICE,
+  SET_ALL_MIDI_SINK_DEVICES,
+  SET_VALID_MIDI_SINK_DEVICE,
 } from '../actions/midi'
 
 export function visiblePane(state = "welcome", action) {
@@ -39,6 +41,24 @@ export function validMidiSource(state=false, action) {
   }
 }
 
+export function midiSinks(state=new Map(), action) {
+  switch (action.type) {
+    case SET_ALL_MIDI_SINK_DEVICES:
+      return action.payload
+    default:
+      return state
+  }
+}
+
+export function validMidiSink(state=false, action) {
+  switch (action.type) {
+    case SET_VALID_MIDI_SINK_DEVICE:
+      return action.payload
+    default:
+      return state
+  }
+}
+
 export function videoSources(state=new Map(), action) {
   switch (action.type) {
     case SET_ALL_VIDEO_SOURCES:
@@ -61,6 +81,8 @@ export function validVideoSource(state=false, action) {
 const midi = combineReducers({
   midiSources,
   validMidiSource,
+  midiSinks,
+  validMidiSink,
 })
 
 const video = combineReducers({

@@ -1,7 +1,7 @@
 'use strict';
 
 import Rx from 'rx'
-import  { setValidMidiSourceDevice, setCurrentMidiSourceDevice, setAllMidiSourceDevices } from '../../actions/midi'
+import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
 // let streamPatch = require('../streampatch/models');
 import { midiBipol, bipolMidi } from '../../lib/transform'
@@ -70,15 +70,21 @@ function updateMidiIO(newmidiinfo) {
     allsources.set(key, val.name)
     midisources.set(key, val)
   };
+  store.dispatch(setAllMidiSourceDevices(allsources));
   for (let [key, val] of midiinfo.outputs.entries()){
     allsinks.set(key, val.name)
     midisinks.set(key, val)
   };
-  store.dispatch(setAllMidiSourceDevices(allsources));
+  store.dispatch(setAllMidiSinkDevices(allsinks));
   //If there is only one device, select it.
   if (allsources.size===1) {
     for (let key of allsources.keys()) {
-      store.dispatch(setCurrentMidiSourceDevice(key));
+      store.dispatch(setMidiSourceDevice(key));
+    }
+  }
+  if (allsinks.size===1) {
+    for (let key of allsources.keys()) {
+      store.dispatch(setMidiSinkDevice(key));
     }
   }
 };
@@ -87,7 +93,7 @@ export default function init(store_) {
   store = store_;
   storeStream = toObservable(store);
   storeStream.subscribe((state)=>console.debug("MIDISTATENOW", state));
-  storeStream.pluck('currentMidiSource').distinctUntilChanged().subscribe(
+  storeStream.pluck('midiSourceDevice').distinctUntilChanged().subscribe(
     (key) => {
       //doMidiPlumbing(key);
       console.log("midkey", key);
