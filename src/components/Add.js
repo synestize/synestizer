@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
+import Icon from './Icon'
 
 const Add = ({ onClick}) => (
-  <span onClick={onClick}>
-    +
-  </span>
+  <Icon name="plus-circle" onClick={onClick} />
 )
 
 Add.propTypes = {

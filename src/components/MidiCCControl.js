@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import { union, difference, intersection } from '../lib/fakesetop'
 import IntSelect from './IntSelect'
+import Icon from './Icon'
 
 const MidiCCControl = ({
     disabled,
@@ -16,7 +17,7 @@ const MidiCCControl = ({
       onChange={onChange}
       maxNum={127}
     />
-  <span onClick={onDelete}>-</span>
+    <Icon name="minus-circle" onClick={onDelete} />
   </div>)
 }
 

@@ -1,4 +1,4 @@
-# JS Style and libraries
+# JS /HTML5 Style and libraries
 
 This app is set up as a React/Redux/Rx application.
 That's 3 different libraries with coincidentally similar names. Sorry.
@@ -19,6 +19,8 @@ see
 
 * [Javascript libraries](Javascript_libraries.md)
 * [Audio synthesis](Audio_synthesis.md)
+
+Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
 ## React
 
