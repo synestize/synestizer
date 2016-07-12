@@ -181,7 +181,7 @@ function updateVideoIO(mediadevices) {
   }
 };
 
-export default function init(store_, newVideoDom) {
+export default function init(store_, streamio_, newVideoDom) {
   //set up video system
   videoDom = newVideoDom;
   canvasElem = videoDom.querySelector('canvas');

@@ -1,7 +1,6 @@
 import Rx from 'rx'
 import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
-// let streamPatch = require('../streampatch/models');
 import { midiBipol, bipolMidi } from '../../lib/transform'
 import { union, difference, intersection } from '../../lib/setop'
 
@@ -87,11 +86,11 @@ function updateMidiIO(newmidiinfo) {
   }
 };
 
-export default function init(store_) {
+export default function init(store_, streamio_) {
   store = store_;
   storeStream = toObservable(store);
   storeStream.subscribe((state)=>console.debug("MIDISTATENOW", state));
-  storeStream.pluck('midiSourceDevice').distinctUntilChanged().subscribe(
+  storeStream.pluck('midi', 'midiSourceDevice').distinctUntilChanged().subscribe(
     (key) => {
       //doMidiPlumbing(key);
       console.log("midkey", key);

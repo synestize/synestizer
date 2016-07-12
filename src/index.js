@@ -11,6 +11,7 @@ import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
+import streamio_ from 'io/stream/index'
 import {getStoredState, autoRehydrate, createPersistor, persistStore, createTransform} from 'redux-persist'
 import localForage from 'localForage'
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
@@ -45,6 +46,7 @@ let persistor;
 let appRoot;
 let videoio;
 let midiio;
+let streamio;
 
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
@@ -60,8 +62,9 @@ getStoredState(persistConf, (err, restoredState) => {
   window.store = store;
   window.persistor = persistor;
 
-  videoio = videoio_(store, document.getElementById('video-io'));
-  midiio = midiio_(store);
+  streamio = streamio_(store);
+  videoio = videoio_(store, streamio, document.getElementById('video-io'));
+  midiio = midiio_(store, streamio);
 
   appRoot = render(
     <Provider store={store}>
