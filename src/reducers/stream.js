@@ -18,9 +18,18 @@ import {
 export function sourceStreamMeta(state={}, {type, payload}) {
   switch (type) {
     case ADD_SOURCE_STREAM:
-      return payload
-    case REMOVE_SOURCE_STREAM:
-      return payload
+      {
+        let [key, name] = payload;
+        state = {...state}
+        state[key] = name
+        return state
+      }
+      case REMOVE_SOURCE_STREAM:
+      {
+        let state = {...state}
+        delete state[payload]
+        return state
+      }
     default:
       return state
   }
@@ -29,7 +38,12 @@ export function sourceStreamMeta(state={}, {type, payload}) {
 export function sinkStreamMeta(state={}, {type, payload}) {
   switch (type) {
     case ADD_SINK_STREAM:
-      return payload
+    {
+      let [key, name] = payload;
+      state = {...state}
+      state[key] = name
+      return state
+    }
     case REMOVE_SINK_STREAM:
       return payload
     default:
@@ -40,9 +54,27 @@ export function sinkStreamMeta(state={}, {type, payload}) {
 export function sourceStreamValues(state={}, {type, payload}) {
   switch (type) {
     case ADD_SOURCE_STREAM:
-      return payload
+      {
+        let [key, val] = payload;
+        state = {...state}
+        state[key] = 0.0
+        return state
+      }
     case REMOVE_SOURCE_STREAM:
-      return payload
+      {
+        let state = {...state}
+        delete state[payload]
+        return state
+      }
+    case SET_SOURCE_STREAM_VALUE:
+      {
+        let [key, val] = payload;
+        state = {...state}
+        state[key] = val
+        return state
+      }
+    case SET_ALL_SOURCE_STREAM_VALUES:
+      return { ...state, ...payload };
     default:
       return state
   }
@@ -51,20 +83,89 @@ export function sourceStreamValues(state={}, {type, payload}) {
 export function sinkStreamValues(state={}, {type, payload}) {
   switch (type) {
     case ADD_SINK_STREAM:
-      return payload
+    {
+      let [key, name] = payload;
+      state = {...state}
+      state[key] = 0.0
+      return state
+    }
     case REMOVE_SINK_STREAM:
-      return payload
+    {
+      let state = {...state}
+      delete state[payload]
+      return state
+    }
+    case SET_SINK_STREAM_VALUE:
+    {
+      let [key, val] = payload;
+      state = {...state}
+      state[key] = val
+      return state
+    }
+    case SET_ALL_SINK_STREAM_VALUES:
+      return { ...state, ...payload };
     default:
       return state
   }
 }
 
-export function streamPatch(state={}, {type, payload}) {
+export function sourceSinkScale(state={}, {type, payload}) {
   switch (type) {
     case SET_SOURCE_SINK_SCALE:
-      return payload
+    {
+      let [sourceKey, sinkKey, scale] = payload
+      state = {...state}
+      state[(sourceKey + '/' + sinkKey)] = scale
+      return state
+    }
+    case REMOVE_SINK_STREAM:
+    {
+      let state = {...state}
+      for (let key of state.keys()) {
+        let [sourceKey, sinkKey] = key;
+        if (sinkKey===payload) {
+          delete state[key]
+        }
+      }
+      return state
+    }
+    case REMOVE_SOURCE_STREAM:
+    {
+      let state = {...state}
+      for (let key of state.keys()) {
+        let [sourceKey, sinkKey] = key;
+        if (sourceKey===payload) {
+          delete state[key]
+        }
+      }
+      return state
+    }
+    default:
+      return state
+  }
+}
+
+export function sinkBias(state={}, {type, payload}) {
+  switch (type) {
+    case ADD_SINK_STREAM:
+    {
+      let [key, name] = payload;
+      state = {...state}
+      state[key] = 0.0
+      return state
+    }
+    case REMOVE_SINK_STREAM:
+    {
+      let state = {...state}
+      delete state[payload]
+    }
     case SET_SINK_BIAS:
-      return payload
+    {
+      let [key, val] = payload;
+      state = {...state}
+      state[key] = val
+      return state
+    }
     default:
       return state
   }
@@ -75,7 +176,8 @@ const stream = combineReducers({
    sourceStreamValues,
    sinkStreamMeta,
    sinkStreamValues,
-   streamPatch,
+   sourceSinkScale,
+   sinkBias
 })
 
 export default stream

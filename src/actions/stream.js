@@ -16,24 +16,33 @@ export const SET_SINK_BIAS = 'SET_SINK_BIAS'
 /*
  * action creators
  */
-export function addSourceStream(sourceDict) {
-  return { type: SET_ALL_MIDI_SOURCE_DEVICES, payload: sourceDict }
+export function addSourceStream(key, name) {
+  return { type: ADD_SOURCE_STREAM, payload: [key, name] }
 }
-export function removeSourceStream(sourceId) {
-  return { type: SET_MIDI_SOURCE_DEVICE, payload: sourceId }
+export function removeSourceStream(key) {
+  return { type: REMOVE_SOURCE_STREAM, payload: key }
 }
-export function setSourceStreamValue(yn) {
-  return { type: SET_VALID_MIDI_SOURCE_DEVICE, payload: yn }
+export function setSourceStreamValue(key, value) {
+  return { type: SET_SOURCE_STREAM_VALUE, payload: [key, value] }
 }
-export function addSinkStream(x) {
-  return { type: SET_MIDI_SOURCE_CHANNEL, payload: x }
+export function setAllSourceStreamValues(dict) {
+  return { type: SET_ALL_SOURCE_STREAM_VALUE, payload: dict }
 }
-export function removeSinkStream(x) {
-  return { type: ADD_MIDI_SOURCE_CC, payload: x }
+export function addSinkStream(key, name) {
+  return { type: ADD_SINK_STREAM, payload: [key, name] }
 }
-export function setSourceSinkScale(x) {
-  return { type: REMOVE_MIDI_SOURCE_CC, payload: x }
+export function removeSinkStream(key) {
+  return { type: REMOVE_SINK_STREAM, payload: key }
 }
-export function setSinkBias(x) {
-  return { type: SET_MIDI_SOURCE_CCS, payload: x }
+export function setSinkStreamValue(key, val) {
+  return { type: SET_SINK_STREAM_VALUE, payload: [key, val] }
+}
+export function setAllSinkStreamValue(dict) {
+  return { type: SET_ALL_SINK_STREAM_VALUES, payload: dict }
+}
+export function setSourceSinkScale(sourceKey, sinkKey, value) {
+  return { type: SET_SOURCE_SINK_SCALE, payload: [sourceKey, sinkKey, value] }
+}
+export function setSinkBias(key, val) {
+  return { type: SET_SINK_BIAS, payload: [key, val] }
 }
