@@ -19,6 +19,7 @@ export const ADD_MIDI_SINK_CC = 'ADD_MIDI_SINK_CC'
 export const REMOVE_MIDI_SINK_CC = 'REMOVE_MIDI_SINK_CC'
 export const SET_MIDI_SINK_CCS = 'SET_MIDI_SINK_CCS'
 export const SWAP_MIDI_SINK_CC = 'SWAP_MIDI_SINK_CC'
+export const TOGGLE_SOLO_MIDI_SINK_CC = 'TOGGLE_SOLO_MIDI_SINK_CC'
 
 /*
  * action creators
@@ -72,4 +73,7 @@ export function setMidiSinkCCs(x) {
 }
 export function swapMidiSinkCC(x,y) {
  return { type: SWAP_MIDI_SINK_CC, payload: [x,y] }
+}
+export function soloMidiSinkCC(x) {
+ return { type: TOGGLE_SOLO_MIDI_SINK_CC, payload: x }
 }

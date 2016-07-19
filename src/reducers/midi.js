@@ -15,12 +15,13 @@ import {
   REMOVE_MIDI_SINK_CC,
   SET_MIDI_SINK_CCS,
   SWAP_MIDI_SINK_CC,
+  TOGGLE_SOLO_MIDI_SINK_CC,
 } from '../actions/midi'
 
-export function midiSourceDevice(state="", action) {
-  switch (action.type) {
+export function midiSourceDevice(state="", {type, payload}) {
+  switch (type) {
     case SET_MIDI_SOURCE_DEVICE:
-      return action.payload
+      return payload
     default:
       return state
   }
@@ -56,19 +57,19 @@ export function midiSourceCCs(state=[0], {type, payload}) {
   }
 }
 
-export function midiSinkDevice(state="", action) {
-  switch (action.type) {
+export function midiSinkDevice(state="", {type, payload}) {
+  switch (type) {
     case SET_MIDI_SINK_DEVICE:
-      return action.payload
+      return payload
     default:
       return state
   }
 }
 
-export function midiSinkChannel(state=0, action) {
-  switch (action.type) {
+export function midiSinkChannel(state=0, {type, payload}) {
+  switch (type) {
     case SET_MIDI_SINK_CHANNEL:
-      return parseInt(action.payload)
+      return parseInt(payload)
     default:
       return state
   }
@@ -95,13 +96,24 @@ export function midiSinkCCs(state=[0], {type, payload}) {
   }
 }
 
+export function midiSinkSoloCC(state=null, {type, payload}) {
+  switch (type) {
+    case TOGGLE_SOLO_MIDI_SINK_CC:
+      let newsolo = parseInt(payload);
+      return (newsolo===state) ? null : newsolo;
+    default:
+      return state
+  }
+}
+
 const midi = combineReducers({
    midiSourceDevice,
    midiSourceChannel,
    midiSourceCCs,
    midiSinkDevice,
    midiSinkChannel,
-   midiSinkCCs
+   midiSinkCCs,
+   midiSinkSoloCC
 })
 
 export default midi

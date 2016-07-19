@@ -8,8 +8,20 @@ const MidiCCControl = ({
     cc,
     onChange,
     onDelete,
-    ccset}
+    ccset,
+    onSolo,
+    soloed
+  }
   ) => {
+  let soloButton;
+  if (typeof onSolo !== 'undefined'){
+    soloButton = <span
+      className={'solo-button'+ (soloed ? ' soloed' : '')}
+      onClick={onSolo}>
+      S
+    </span>
+  } else {
+  }
   return (<div className="ccontrontrol">
     <IntSelect
       currentNum={cc}
@@ -17,6 +29,7 @@ const MidiCCControl = ({
       onChange={onChange}
       maxNum={127}
     />
+    {soloButton}
     <Icon name="minus-circle" onClick={onDelete} />
   </div>)
 }
@@ -25,7 +38,9 @@ MidiCCControl.propTypes = {
   currentNum: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  ccset: PropTypes.array.isRequired
+  ccset: PropTypes.array.isRequired,
+  onSolo: PropTypes.func,
+  solo: PropTypes.bool
 }
 
 export default MidiCCControl

@@ -6,15 +6,24 @@ const MidiCCSet = ({
     ccset,
     adder,
     swapper,
-    remover
+    remover,
+    solocc,
+    solotoggler
   }) => {
   const ccNodes = [];
   for (let cc of ccset) {
-    ccNodes.push(<ActiveMidiCCControl remover={remover} swapper={swapper} ccset={ccset} key={cc} cc={cc}/>);
+    ccNodes.push(<ActiveMidiCCControl
+      remover={remover}
+      swapper={swapper}
+      ccset={ccset}
+      key={cc}
+      cc={cc}
+      solotoggler={solotoggler}
+      solocc={solocc} />);
   }
   return (<div className="ccset">
     {ccNodes}
-    <ActiveMidiCCAdd adder={adder}/>
+    <ActiveMidiCCAdd adder={adder} />
   </div>)
 }
 
@@ -22,7 +31,8 @@ MidiCCSet.propTypes = {
   ccset: PropTypes.array.isRequired,
   adder: PropTypes.func.isRequired,
   remover: PropTypes.func.isRequired,
-  swapper: PropTypes.func.isRequired,
+  solocc: PropTypes.func,
+  solocc: PropTypes.number
 }
 
 export default MidiCCSet

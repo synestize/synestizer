@@ -194,7 +194,6 @@ export default function init(store_, streamio_, newVideoDom) {
   );
   store = store_;
   storeStream = toObservable(store);
-  storeStream.subscribe((state)=>console.debug("STATENOW", state));
   storeStream.pluck('currentVideoSource').distinctUntilChanged().subscribe(
     (key) => {
       doVideoPlumbing(key);

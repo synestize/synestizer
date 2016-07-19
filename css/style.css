@@ -173,25 +173,23 @@ a, a:hover, a:active, a:focus {
     border: 1px solid #BBB;
     background-color: white;
 }
-#synapp .solocontrol .sololabel {
-  display: inline-block;
-}
-#synapp .solocontrol .solobutton {
+#synapp .solo-button {
   display: inline-block;
   padding: 0.1rem 0.2rem;
   margin: 0.1rem;
   border: 1px grey solid;
 }
-#synapp .solocontrol .solobutton.soloed {
-  background-color: red;
+#synapp .solo-button.soloed {
+  background-color: blue;
 }
 #synapp select {
     /* background-color: #f0f; */
     padding: 1px 4px 1px 2px;
     color: #999;
-    /*display: inline-block;*/
-    display: inline;
+    display: inline-block;
+    /*display: inline;*/
     max-width: 10em;
+    margin: 0.1rem;
     height: 1.5em;
     cursor: pointer;
 }

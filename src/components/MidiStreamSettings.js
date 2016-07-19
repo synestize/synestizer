@@ -13,6 +13,8 @@ const MidiStreamSettings = ( {
   ccswapper,
   ccremover,
   ccset,
+  ccsolotoggler,
+  solocc,
   onChannelChange,
   onDeviceChange,
 }) => {
@@ -22,7 +24,22 @@ const MidiStreamSettings = ( {
     currentDevice={currentDevice}
     deviceMap={deviceMap} name="" />
   <IntSelect currentNum={currentChannel} onChange={onChannelChange} maxNum={16} />
-  <MidiCCSet ccset={ccset} adder={ccadder} remover={ccremover} swapper={ccswapper} />
+  <MidiCCSet ccset={ccset} adder={ccadder} remover={ccremover} swapper={ccswapper} solotoggler={ccsolotoggler} solocc={solocc}/>
 </div>)}
+
+MidiStreamSettings.propTypes = {
+  ccset: PropTypes.array.isRequired,
+  solocc: PropTypes.number,
+  currentChannel: PropTypes.number.isRequired,
+  deviceMap: PropTypes.instanceOf(Map).isRequired,
+  valid: PropTypes.bool,
+  currentDevice: PropTypes.string,
+  ccadder: PropTypes.func.isRequired,
+  ccswapper: PropTypes.func.isRequired,
+  ccremover: PropTypes.func.isRequired,
+  ccsolotoggler: PropTypes.func,
+  onChannelChange: PropTypes.func.isRequired,
+  onDeviceChange: PropTypes.func.isRequired,
+}
 
 export default MidiStreamSettings;
