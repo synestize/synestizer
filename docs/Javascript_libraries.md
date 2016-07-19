@@ -15,10 +15,16 @@ Module support in ES6 looks different than the older standards.
 
 ## HTML5 Multimedia
 
-see
+not technically a "library", but a "set of things to know"
 
+* To have a stable API to access audio and video we use webrtc-adapter.
 * [Javascript libraries](Javascript_libraries.md)
 * [Audio synthesis](Audio_synthesis.md)
+* [SVG](https://biesnecker.com/2014/10/22/using-reactjs-to-draw-dynamic-svgs/)
+
+  * [practical example 1](https://github.com/getguesstimate/guesstimate-app/blob/master/src/components/lib/FlowGrid/edges.js)
+  * [practical example 2](https://github.com/getguesstimate/guesstimate-app/blob/master/src/components/lib/FlowGrid/edge.js)
+  * [paths explained](https://github.com/jxnblk/paths) [2](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)
 
 Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
@@ -29,7 +35,7 @@ The rendering system for all UI components is React.
 ### If I need to get to DOM nodes...
 
 e.g. for accessing video.
-How do I persist DOM nodes? Perhaps [using key](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
+How do I persist DOM nodes? Perhaps [using keys](https://facebook.github.io/react/docs/multiple-components.html#dynamic-children) and then [relying on a ref](https://facebook.github.io/react/docs/more-about-refs.html)
 How do i communicate across branches of Components?
 [Methods?](https://facebook.github.io/react/tips/expose-component-functions.html)
 
@@ -63,7 +69,7 @@ However I will start that way because otherwise it's too complicated
 * [react+redux](http://redux.js.org/docs/basics/UsageWithReact.html)
 * [thinking in react](https://facebook.github.io/react/docs/thinking-in-react.html)
 
-### Persisitence
+### Persistence
 
 We are currently using [redux-persist](https://www.npmjs.com/package/redux-persist).
 We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage) or [redux-localstorage](https://www.npmjs.com/package/redux-localstorage).
