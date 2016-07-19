@@ -22,11 +22,11 @@ const WelcomePane = () => (
         <img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1" />
       </form>
       <p>
-        &copy; 2016 by <a href="http://www.kasparkoenig.com/">kaspar</a>,
-        <a href="https://danmackinlay.name">dan</a> &amp;
-        <a href="http://www.stahlnow.com">stahl</a>.
-        This work is licensed under a
-        <a rel="license"
+        &copy; 2016 by <a href="http://www.kasparkoenig.com/">kaspar</a>,&nbsp;
+         <a href="https://danmackinlay.name">dan</a> &amp;&nbsp;
+         <a href="http://www.stahlnow.com">stahl</a>.
+        This work is licensed under
+        a <a rel="license"
           href="http://www.gnu.org/licenses/licenses.en.html">
           GNU General Public License, version 2.0 or later.
         </a>.
