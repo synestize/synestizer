@@ -18,7 +18,6 @@
 
 * UI improvements
   * save/load
-  * MIDI solo UI
   * only show video background some of the time
   * more natural frequency mapping, such as
     * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
@@ -28,6 +27,7 @@
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
   * Svg widgets? http://stackoverflow.com/a/30579774
+  * [materialui widgets](http://www.material-ui.com/#/components/slider)?
 
 * improve help message if you have
 
@@ -40,6 +40,7 @@
 
   * We need to get UglifyJS2 minimizing the bloated JS, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
     * However, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
+    * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
 
 * App improvements
   * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
@@ -78,7 +79,7 @@
       * tanh [done]
       * erf copulae
 
-* video should use webrtc so that it can handle non-local video sources.
+* video should handle non-local video sources.
 * Meta
 
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
