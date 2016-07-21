@@ -11,21 +11,30 @@ const PatchMatrix = ({
     sinkBias
   }) => {
   let bodyRows = [];
+  let sourceKeys = Array.from(sourceStreamMeta.keys()).sort();
+  let sinkKeys = Array.from(sinkStreamMeta.keys()).sort();
+  // let sourceKeys = sourceKeys.map((k)=>sourceStreamMeta[k]);
+  // let sinkKeys = sinkKeys.map((k)=>sinkStreamMeta[k]);
   let header = [<th key="header"></th>];
-  let sourceNames = Array.from(sourceMap.keys()).sort();
-  let sinkNames = Array.from(sinkMap.keys()).sort();
-
-  for (var sinkName of sinkNames) {
-    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={sinkState.get(sinkName) || 0.0} />);
+  for (var sinkKey of sinkKeys) {
+    header.push(<StreamPatchMappingHeaderCell key={sinkKey} name={sinkKey} scope="column" val={sinkState.get(sinkKey) || 0.0} />);
 
   };
-  for (var sourceName of sourceNames) {
-    let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" val={sourceState.get(sourceName) || 0.0}/>];
-    for (var sinkName of sinkNames) {
-      cells.push(<StreamPatchMappingControl key={sinkName}
-        sourceName={sourceName} sinkName={sinkName} mag={sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} />)
+  for (var sourceKey of sourceKeys) {
+    let cells = [<StreamPatchMappingHeaderCell
+      key="source"
+      name={sourceKey}
+      scope="row"
+      val={sourceState.get(sourceKey) || 0.0}/>];
+    for (var sinkKey of sinkKeys) {
+      cells.push(<StreamPatchMappingControl
+        key={sinkKey}
+        sourceKey={sourceKey}
+        sinkKey={sinkKey}
+        val={sourceSinkScale[sourceKey+"/"+sinkKey] || 0.0}
+        />)
     };
-    bodyRows.push(<tr key={sourceName}>{cells}</tr>)
+    bodyRows.push(<tr key={sourceKey}>{cells}</tr>)
   };
 
   return (<table className="mappingmatrix">
