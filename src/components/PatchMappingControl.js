@@ -1,15 +1,24 @@
 import React, { PropTypes } from 'react'
 
-const PatchMappingControl = ({val, sourceKey, sinkKey, mag, sign}) => {
-  return (<td className={"mapping " + ((sign>0) ? "plus" : "minus") + " " + ((mag>0) ? "active" : "inactive")}>
-  <input className="param" type="range" value={mag} onChange={(ev) => intents.setMappingMag(sourceKey, sinkKey, ev.target.value)} min="0" max="2" step="any" onDoubleClick={(ev) => {
-      intents.setMappingSign(sourceKey, sinkKey, sign*-1)
-  }} />
+const PatchMappingControl = ({val, sourceKey, sinkKey, onChange}) => {
+  return (<td className={"mapping " + ((val>0) ? "plus " : "minus ") + ((val!==0) ? "active" : "inactive")}>
+  <input
+    className="param"
+    type="range"
+    value={val}
+    onChange={onChange}
+    min="-1"
+    max="1"
+    step="0.125"
+  />
   </td>)
 };
 
 PatchMappingControl.propTypes = {
-  children: PropTypes.node.isRequired
+  val: PropTypes.node.isRequired,
+  sourceKey: PropTypes.string.isRequired,
+  sinkKey: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 export default PatchMappingControl;

@@ -12,7 +12,7 @@ import { addSourceStream,
   setSinkBias,
 } from '../actions/stream'
 
-import PatchMatrix from '../components/PatchMatrix.js'
+import PatchMappingControl from '../components/PatchMappingControl.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -21,12 +21,13 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    onChange: (ev) => dispatch(setMidiSinkChannel(ev)),
   }
 };
 
-const ActivePatchMatrix = connect(
+const ActivePatchMappingControl = connect(
   mapStateToProps,
   mapDispatchToProps
-)( PatchMatrix );
+)( PatchMappingControl );
 
-export default ActivePatchMatrix;
+export default ActivePatchMappingControl;

@@ -1,9 +1,9 @@
 import Pane from './Pane';
 import React, { Component, PropTypes, Children } from 'react';
-import PatchMatrix from './PatchMatrix'
+import ActivePatchMatrix from '../containers/ActivePatchMatrix'
 
 const PatchingPane = () => (<Pane paneId="patching-pane" >
-  <PatchMatrix />
+  <ActivePatchMatrix />
 </Pane>)
 
 export default PatchingPane;
