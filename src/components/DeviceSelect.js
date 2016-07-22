@@ -15,7 +15,7 @@ const DeviceSelect = ({
   return (<div className="devicechooserwidget">
     <select
         className="deviceselect"
-        disable={disabled}
+        disabled={disabled}
         value={currentDevice}
         onChange={(ev)=>onChange(ev.target.value) } >
       {optNodes}
