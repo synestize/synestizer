@@ -186,45 +186,44 @@ export function sinkStreamValues(state={}, {type, payload}) {
 export function sourceSinkScale(state={}, {type, payload}) {
   switch (type) {
     case SET_SOURCE_SINK_SCALE:
-    {
-      let [sourceKey, sinkKey, scale] = payload
-      state = {...state}
-      state[(sourceKey + '/' + sinkKey)] = scale
-      return state
-    }
-    case REMOVE_MIDI_SINK_CC:
-    {
-      let [key, name] = stream_name_midi(payload)
-      return sourceSinkScale(state, removeSinkStream(key))
-    }
-    case REMOVE_SINK_STREAM:
-    {
-      let state = {...state}
-      for (let key of Object.keys(state)) {
-        let [sourceKey, sinkKey] = key;
-        if (sinkKey===payload) {
-          delete state[key]
-        }
+      {
+        let [sourceKey, sinkKey, scale] = payload
+        state = {...state}
+        state[(sourceKey + '/' + sinkKey)] = scale
+        return state
       }
-      return state
-    }
+    case REMOVE_MIDI_SINK_CC:
+      {
+        let [key, name] = stream_name_midi(payload)
+        return sourceSinkScale(state, removeSinkStream(key))
+      }
+    case REMOVE_SINK_STREAM:
+      {
+        let state = {...state}
+        for (let key of Object.keys(state)) {
+          let [sourceKey, sinkKey] = key;
+          if (sinkKey===payload) {
+            delete state[key]
+          }
+        }
+        return state
+      }
     case REMOVE_MIDI_SOURCE_CC:
       {
         let [key, name] = stream_name_midi(payload)
-        console.debug('rems', key, name)
         return sourceSinkScale(state, removeSourceStream(key))
       }
     case REMOVE_SOURCE_STREAM:
-    {
-      let state = {...state}
-      for (let key of Object.keys(state)) {
-        let [sourceKey, sinkKey] = key;
-        if (sourceKey===payload) {
-          delete state[key]
+      {
+        let state = {...state}
+        for (let key of Object.keys(state)) {
+          let [sourceKey, sinkKey] = key;
+          if (sourceKey===payload) {
+            delete state[key]
+          }
         }
+        return state
       }
-      return state
-    }
     default:
       return state
   }

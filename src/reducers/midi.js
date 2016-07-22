@@ -33,7 +33,6 @@ export function midiSourceChannel(state=0, action) {
 }
 
 export function midiSourceCCs(state=[0], {type, payload}) {
-  console.debug("msccs", type, payload)
   let next = state
   switch (type) {
     case ADD_MIDI_SOURCE_CC:
@@ -44,7 +43,6 @@ export function midiSourceCCs(state=[0], {type, payload}) {
       }
       break
     case REMOVE_MIDI_SOURCE_CC:
-      console.debug("msccsdiff", state, [parseInt(payload)])
       next = difference(state, [parseInt(payload)])
       break
   }

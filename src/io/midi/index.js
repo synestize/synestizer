@@ -88,7 +88,6 @@ export default function init(store, streamio) {
   };
 
   storeStream = toObservable(store);
-  storeStream.subscribe((state)=>console.debug("MIDISTATENOW", state));
   storeStream.pluck('midi', 'midiSourceDevice').distinctUntilChanged().subscribe(
     (key) => {
       //doMidiPlumbing(key);
