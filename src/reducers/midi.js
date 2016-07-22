@@ -72,17 +72,8 @@ export function midiSourceCCs(state=[0], {type, payload}) {
       next = union(difference(state,[parseInt(x)]),[parseInt(y)])
       break
   }
-  return (dispatch) => {
-    // let added = difference(next, state)
-    // let removed = difference(state, next)
-    // for (let cc of added) {
-    //   dispatch(addSourceStream('midi-'+cc, 'CC '+cc))
-    // }
-    // for (let cc of removed) {
-    //   dispatch(removeSourceStream('midi-'+cc, 'CC '+cc))
-    // }
-    return next
-  }
+  
+  return next
 }
 
 export function midiSinkDevice(state="", {type, payload}) {
