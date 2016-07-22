@@ -24,22 +24,20 @@
   "license": "GPL-3.0",
   "dependencies": {},
   "devDependencies": {
-    "babel-core": "^6.9.0",
+    "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-system-import-transformer": "^2.2.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-plugin-uglify": "^1.0.2",
     "babel-preset-react": "^6.5.0",
     "babel-runtime": "^6.9.0",
-    "babelify": "^7.2.0",
-    "immutable": "^3.8.1",
+    "babelify": "^7.3.0",
     "localforage": "^1.4.2",
     "ramda": "^0.19.1",
-    "react": "^15.1.0",
+    "react": "^15.2.1",
     "react-addons-pure-render-mixin": "^15.1.0",
     "react-addons-shallow-compare": "^15.1.0",
     "react-addons-update": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react-dom": "^15.2.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-core": "^0.1.1",
@@ -48,7 +46,7 @@
     "rx": "^4.1.0",
     "source-map-loader": "^0.1.5",
     "webpack": "^1.13.1",
-    "webrtc-adapter": "^1.2.2",
-    "worker-loader": "^0.7.0"
+    "webrtc-adapter": "^1.4.0",
+    "worker-loader": "^0.7.1"
   }
 }
