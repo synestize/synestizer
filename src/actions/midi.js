@@ -1,3 +1,5 @@
+import { addSourceStream, removeSourceStream, addSinkStream, removeSinkStream } from './stream'
+
 /*
  * action types
  */
@@ -32,8 +34,11 @@ export function setValidMidiSourceDevice(yn) {
 export function setMidiSourceChannel(x) {
   return { type: SET_MIDI_SOURCE_CHANNEL, payload: x }
 }
-export function addMidiSourceCC(x) {
-  return { type: ADD_MIDI_SOURCE_CC, payload: x }
+export function addMidiSourceCC(cc) {
+  return (dispatch, getState) => {
+    dispatch(addSourceStream('midi-'+cc, 'CC '+cc))
+    return { type: ADD_MIDI_SOURCE_CC, payload: cc }
+  }
 }
 export function removeMidiSourceCC(x) {
   return { type: REMOVE_MIDI_SOURCE_CC, payload: x }
