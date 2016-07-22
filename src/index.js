@@ -5,16 +5,18 @@ import Rx from 'rx'
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 
 import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
 import streamio_ from 'io/stream/index'
-import {getStoredState, autoRehydrate, createPersistor, persistStore, createTransform} from 'redux-persist'
+import { getStoredState, autoRehydrate, createPersistor, persistStore, createTransform } from 'redux-persist'
 import localForage from 'localForage'
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
 
 //debug mode:
 Rx.config.longStackSupport = true;
@@ -41,22 +43,29 @@ const persistConf = {
   storage: localForage
 }
 
+const loggerMiddleware = createLogger()
+
 let store;
 let persistor;
+
 let appRoot;
 let videoio;
 let midiio;
 let streamio;
+let enhancers = applyMiddleware(
+  thunkMiddleware, // lets us dispatch() functions
+  loggerMiddleware // neat middleware that logs actions
+)
 
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   if (getq("purge")) {
     console.warn("purging all local data");
-    store = createStore(rootReducer)
+    store = createStore(rootReducer, null, enhancers)
     persistor = createPersistor(store, persistConf)
     persistor.purgeAll();
   } else {
-    store = createStore(rootReducer, restoredState)
+    store = createStore(rootReducer, restoredState, enhancers)
     persistor = createPersistor(store, persistConf)
   }
   window.store = store;
