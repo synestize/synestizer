@@ -28,11 +28,11 @@ var StreamPatchGrid = function(props) {
 
 
   for (var sinkName of sinkNames) {
-    header.push(<StreamPatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0} />);
+    header.push(<PatchMappingHeaderCell key={sinkName} name={sinkName} scope="column" val={props.sinkState.get(sinkName) || 0.0} />);
 
   };
   for (var sourceName of sourceNames) {
-    let cells = [<StreamPatchMappingHeaderCell key="source" name={sourceName} scope="row" val={props.sourceState.get(sourceName) || 0.0}/>];
+    let cells = [<PatchMappingHeaderCell key="source" name={sourceName} scope="row" val={props.sourceState.get(sourceName) || 0.0}/>];
     for (var sinkName of sinkNames) {
       cells.push(<StreamPatchMappingControl key={sinkName}
         sourceName={sourceName} sinkName={sinkName} mag={props.sourceSinkMappingMag.get(sourceName+"/"+sinkName) || 0.0} sign={props.sourceSinkMappingSign.get(sourceName+"/"+sinkName) || 1.0} />)
@@ -56,7 +56,7 @@ var StreamPatchMappingControl = function(props) {
   }} />
   </td>)
 };
-var StreamPatchMappingHeaderCell = function(props) {
+var PatchMappingHeaderCell = function(props) {
   let divStyle = {
     width: transform.bipolPerc(props.val || 0.0)+"%"
   };

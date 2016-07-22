@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
+import {bipolPerc} from '../lib/transform'
 
 const PatchMappingHeaderCell = ({val, scope, name}) => {
   let divStyle = {
-    width: transform.bipolPerc(val || 0.0)+"%"
+    width: bipolPerc(val || 0.0)+"%"
   };
   return (<th scope={scope || "column"}>
     <div className="state-bar" style={divStyle} />

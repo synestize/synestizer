@@ -17,17 +17,20 @@ const PatchMatrix = ({
   // let sinkKeys = sinkKeys.map((k)=>sinkStreamMeta[k]);
   let header = [<th key="header"></th>];
   for (var sinkKey of sinkKeys) {
-    header.push(<StreamPatchMappingHeaderCell key={sinkKey} name={sinkKey} scope="column" val={sinkState.get(sinkKey) || 0.0} />);
-
+    header.push(<PatchMappingHeaderCell
+      key={sinkKey}
+      name={sinkKey}
+      scope="column"
+      val={sinkState.get(sinkKey) || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
-    let cells = [<StreamPatchMappingHeaderCell
+    let cells = [<PatchMappingHeaderCell
       key="source"
       name={sourceKey}
       scope="row"
-      val={sourceState.get(sourceKey) || 0.0} />];
+      val={sourceStreamValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
-      cells.push(<StreamPatchMappingControl
+      cells.push(<PatchMappingControl
         key={sinkKey}
         sourceKey={sourceKey}
         sinkKey={sinkKey}
