@@ -17,6 +17,10 @@ import {
 } from '../actions/stream'
 
 
+function stream_name_midi(cc) {
+  return ['midi-cc-'+ cc, 'CC ' + cc]
+}
+
 import {
   ADD_MIDI_SOURCE_CC,
   REMOVE_MIDI_SOURCE_CC,
@@ -31,12 +35,26 @@ export function sourceStreamMeta(state={}, {type, payload}) {
         let [key, name] = payload;
         state = {...state}
         state[key] = name
+        return state
       }
-      return state
+    case ADD_MIDI_SOURCE_CC:
+      {
+        let [key, name] = stream_name_midi(payload)
+        state = {...state}
+        state[key] = name
+        return state
+      }
     case REMOVE_SOURCE_STREAM:
       {
         let state = {...state}
         delete state[payload]
+        return state
+      }
+    case REMOVE_MIDI_SOURCE_CC:
+      {
+        let [key, name] = stream_name_midi(payload)
+        state = {...state}
+        delete state[key]
         return state
       }
     default:
