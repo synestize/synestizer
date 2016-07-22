@@ -7,29 +7,12 @@ import {
   SET_MIDI_SOURCE_CHANNEL,
   ADD_MIDI_SOURCE_CC,
   REMOVE_MIDI_SOURCE_CC,
-  SET_MIDI_SOURCE_CCS,
-  SWAP_MIDI_SOURCE_CC,
   SET_MIDI_SINK_DEVICE,
   SET_MIDI_SINK_CHANNEL,
   ADD_MIDI_SINK_CC,
   REMOVE_MIDI_SINK_CC,
-  SET_MIDI_SINK_CCS,
-  SWAP_MIDI_SINK_CC,
   TOGGLE_SOLO_MIDI_SINK_CC,
 } from '../actions/midi'
-
-import {
-  addSourceStream,
-  removeSourceStream,
-  setSourceStreamValue,
-  setAllSourceStreamValues,
-  addSinkStream,
-  removeSinkStream,
-  setSinkStreamValue,
-  setAllSinkStreamValue,
-  setSourceSinkScale,
-  setSinkBias,
-} from '../actions/stream'
 
 export function midiSourceDevice(state="", {type, payload}) {
   switch (type) {
@@ -64,15 +47,7 @@ export function midiSourceCCs(state=[0], {type, payload}) {
       console.debug("msccsdiff", state, [parseInt(payload)])
       next = difference(state, [parseInt(payload)])
       break
-    case SET_MIDI_SOURCE_CCS:
-      next = [...payload]
-      break
-    case SWAP_MIDI_SOURCE_CC:
-      let [x,y] = payload;
-      next = union(difference(state,[parseInt(x)]),[parseInt(y)])
-      break
   }
-  
   return next
 }
 
@@ -105,11 +80,6 @@ export function midiSinkCCs(state=[0], {type, payload}) {
       }
     case REMOVE_MIDI_SINK_CC:
       return difference(state, [parseInt(payload)])
-    case SET_MIDI_SINK_CCS:
-      return [...payload]
-    case SWAP_MIDI_SINK_CC:
-      let [x,y] = payload;
-      return union(difference(state,[parseInt(x)]),[parseInt(y)])
     default:
       return state
   }

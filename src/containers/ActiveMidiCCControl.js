@@ -13,7 +13,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   const disp = {
     onChange: (ev) => {
-      dispatch(ownProps.swapper(ownProps.cc, ev))
+      dispatch(ownProps.adder(ev))
+      dispatch(ownProps.remover(ownProps.cc))
     },
     onDelete: () => {
       dispatch(ownProps.remover(ownProps.cc))

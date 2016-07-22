@@ -5,7 +5,6 @@ import ActiveMidiCCAdd from '../containers/ActiveMidiCCAdd'
 const MidiCCSet = ({
     ccset,
     adder,
-    swapper,
     remover,
     solocc,
     solotoggler
@@ -14,8 +13,8 @@ const MidiCCSet = ({
   for (let cc of ccset) {
     ccNodes.push(<ActiveMidiCCControl
       remover={remover}
-      swapper={swapper}
       ccset={ccset}
+      adder={adder}
       key={cc}
       cc={cc}
       solotoggler={solotoggler}

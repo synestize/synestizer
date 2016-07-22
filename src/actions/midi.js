@@ -8,8 +8,6 @@ export const SET_VALID_MIDI_SOURCE_DEVICE = 'SET_VALID_MIDI_SOURCE_DEVICE'
 export const SET_MIDI_SOURCE_CHANNEL = 'SET_MIDI_SOURCE_CHANNEL'
 export const ADD_MIDI_SOURCE_CC = 'ADD_MIDI_SOURCE_CC'
 export const REMOVE_MIDI_SOURCE_CC = 'REMOVE_MIDI_SOURCE_CC'
-export const SET_MIDI_SOURCE_CCS = 'SET_MIDI_SOURCE_CCS'
-export const SWAP_MIDI_SOURCE_CC = 'SWAP_MIDI_SOURCE_CC'
 
 export const SET_ALL_MIDI_SINK_DEVICES = 'SET_ALL_MIDI_SINK_DEVICES'
 export const SET_MIDI_SINK_DEVICE = 'SET_MIDI_SINK_DEVICE'
@@ -17,8 +15,6 @@ export const SET_VALID_MIDI_SINK_DEVICE = 'SET_VALID_MIDI_SINK_DEVICE'
 export const SET_MIDI_SINK_CHANNEL = 'SET_MIDI_SINK_CHANNEL'
 export const ADD_MIDI_SINK_CC = 'ADD_MIDI_SINK_CC'
 export const REMOVE_MIDI_SINK_CC = 'REMOVE_MIDI_SINK_CC'
-export const SET_MIDI_SINK_CCS = 'SET_MIDI_SINK_CCS'
-export const SWAP_MIDI_SINK_CC = 'SWAP_MIDI_SINK_CC'
 export const TOGGLE_SOLO_MIDI_SINK_CC = 'TOGGLE_SOLO_MIDI_SINK_CC'
 
 /*
@@ -42,12 +38,6 @@ export function addMidiSourceCC(x) {
 export function removeMidiSourceCC(x) {
   return { type: REMOVE_MIDI_SOURCE_CC, payload: x }
 }
-export function setMidiSourceCCs(x) {
-  return { type: SET_MIDI_SOURCE_CCS, payload: x }
-}
-export function swapMidiSourceCC(x,y) {
-  return { type: SWAP_MIDI_SOURCE_CC, payload: [x,y] }
-}
 
 
 export function setAllMidiSinkDevices(sourceDict) {
@@ -67,12 +57,6 @@ export function addMidiSinkCC(x) {
 }
 export function removeMidiSinkCC(x) {
  return { type: REMOVE_MIDI_SINK_CC, payload: x }
-}
-export function setMidiSinkCCs(x) {
- return { type: SET_MIDI_SINK_CCS, payload: x }
-}
-export function swapMidiSinkCC(x,y) {
- return { type: SWAP_MIDI_SINK_CC, payload: [x,y] }
 }
 export function soloMidiSinkCC(x) {
  return { type: TOGGLE_SOLO_MIDI_SINK_CC, payload: x }

@@ -12,8 +12,17 @@ import {
   SET_SINK_STREAM_VALUE,
   SET_ALL_SINK_STREAM_VALUES,
   SET_SOURCE_SINK_SCALE,
-  SET_SINK_BIAS
+  SET_SINK_BIAS,
+
 } from '../actions/stream'
+
+
+import {
+  ADD_MIDI_SOURCE_CC,
+  REMOVE_MIDI_SOURCE_CC,
+  ADD_MIDI_SINK_CC,
+  REMOVE_MIDI_SINK_CC,
+} from '../actions/midi'
 
 export function sourceStreamMeta(state={}, {type, payload}) {
   switch (type) {
@@ -22,9 +31,9 @@ export function sourceStreamMeta(state={}, {type, payload}) {
         let [key, name] = payload;
         state = {...state}
         state[key] = name
-        return state
       }
-      case REMOVE_SOURCE_STREAM:
+      return state
+    case REMOVE_SOURCE_STREAM:
       {
         let state = {...state}
         delete state[payload]
