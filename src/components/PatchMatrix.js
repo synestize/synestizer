@@ -11,8 +11,8 @@ const PatchMatrix = ({
     sinkBias
   }) => {
   let bodyRows = [];
-  let sourceKeys = Array.from(sourceStreamMeta.keys()).sort();
-  let sinkKeys = Array.from(sinkStreamMeta.keys()).sort();
+  let sourceKeys = Array.from(Object.keys(sourceStreamMeta)).sort();
+  let sinkKeys = Array.from(Object.keys(sinkStreamMeta)).sort();
   // let sourceKeys = sourceKeys.map((k)=>sourceStreamMeta[k]);
   // let sinkKeys = sinkKeys.map((k)=>sinkStreamMeta[k]);
   let header = [<th key="header"></th>];
@@ -25,7 +25,7 @@ const PatchMatrix = ({
       key="source"
       name={sourceKey}
       scope="row"
-      val={sourceState.get(sourceKey) || 0.0}/>];
+      val={sourceState.get(sourceKey) || 0.0} />];
     for (var sinkKey of sinkKeys) {
       cells.push(<StreamPatchMappingControl
         key={sinkKey}
