@@ -18,6 +18,19 @@ import {
   TOGGLE_SOLO_MIDI_SINK_CC,
 } from '../actions/midi'
 
+import {
+  addSourceStream,
+  removeSourceStream,
+  setSourceStreamValue,
+  setAllSourceStreamValues,
+  addSinkStream,
+  removeSinkStream,
+  setSinkStreamValue,
+  setAllSinkStreamValue,
+  setSourceSinkScale,
+  setSinkBias,
+} from '../actions/stream'
+
 export function midiSourceDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SOURCE_DEVICE:
@@ -37,24 +50,30 @@ export function midiSourceChannel(state=0, action) {
 }
 
 export function midiSourceCCs(state=[0], {type, payload}) {
+  console.debug("msccs", type, payload)
+  let next = state
   switch (type) {
     case ADD_MIDI_SOURCE_CC:
       if (payload===undefined){
-        let next = payload;
-        return union(state, [Math.max(-1, ...state)+1])
+        next = union(state, [(Math.max(-1, ...state)+1)%128])
       } else {
-        return union(state, [parseInt(payload)])
+        next = union(state, [parseInt(payload)])
       }
+      break
     case REMOVE_MIDI_SOURCE_CC:
-      return difference(state, [parseInt(payload)])
+      console.debug("msccsdiff", state, [parseInt(payload)])
+      next = difference(state, [parseInt(payload)])
+      break
     case SET_MIDI_SOURCE_CCS:
-      return [...payload]
+      next = [...payload]
+      break
     case SWAP_MIDI_SOURCE_CC:
       let [x,y] = payload;
-      return union(difference(state,[parseInt(x)]),[parseInt(y)])
-    default:
-      return state
+      next = union(difference(state,[parseInt(x)]),[parseInt(y)])
+      break
   }
+  
+  return next
 }
 
 export function midiSinkDevice(state="", {type, payload}) {
