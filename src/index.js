@@ -61,7 +61,7 @@ getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   if (getq("purge")) {
     console.warn("purging all local data");
-    store = createStore(rootReducer, null, enhancers)
+    store = createStore(rootReducer, undefined, enhancers)
     persistor = createPersistor(store, persistConf)
     persistor.purgeAll();
   } else {
