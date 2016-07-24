@@ -19,14 +19,14 @@ const PatchMatrix = ({
   for (var sinkKey of sinkKeys) {
     header.push(<PatchMappingHeaderCell
       key={sinkKey}
-      name={sinkKey}
+      name={sinkStreamMeta[sinkKey]}
       scope="column"
       val={sourceStreamValues[sinkKey] || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
       key="source"
-      name={sourceKey}
+      name={sourceStreamMeta[sourceKey]}
       scope="row"
       val={sourceStreamValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
