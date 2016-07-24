@@ -1,6 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setMidiSourceChannel, removeMidiSourceCC, addMidiSourceCC } from '../actions/midi'
+import { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setMidiSourceChannel, removeMidiSourceCC, addMidiSourceCC, addUnknownMidiSourceCC } from '../actions/midi'
 import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,6 +12,7 @@ const mapStateToProps = (state, ownProps) => {
     ccset: state.midi.midiSourceCCs,
     ccadder: addMidiSourceCC,
     ccremover: removeMidiSourceCC,
+    ccunknownadder: addUnknownMidiSourceCC,
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

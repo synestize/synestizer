@@ -32,7 +32,7 @@ export function midiSourceChannel(state=0, action) {
   }
 }
 
-export function midiSourceCCs(state=[0], {type, payload}) {
+export function midiSourceCCs(state=[], {type, payload}) {
   let next = state
   switch (type) {
     case ADD_MIDI_SOURCE_CC:
@@ -67,7 +67,7 @@ export function midiSinkChannel(state=0, {type, payload}) {
   }
 }
 
-export function midiSinkCCs(state=[0], {type, payload}) {
+export function midiSinkCCs(state=[], {type, payload}) {
   switch (type) {
     case ADD_MIDI_SINK_CC:
       if (payload===undefined){
@@ -100,7 +100,7 @@ const midi = combineReducers({
    midiSinkDevice,
    midiSinkChannel,
    midiSinkCCs,
-   midiSinkSoloCC
+   midiSinkSoloCC,
 })
 
 export default midi

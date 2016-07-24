@@ -1,5 +1,15 @@
 import { addSourceStream, removeSourceStream, addSinkStream, removeSinkStream } from './stream'
 
+function nextCC(ccset) {
+  for (let i= Math.max(-1, ...ccset)+1;i<128; i++) {
+    let j = i % 128;
+    if (ccset.indexOf(j)<0) {
+      return j
+    }
+  }
+  return -1
+}
+
 /*
  * action types
  */
@@ -41,6 +51,25 @@ export function removeMidiSourceCC(x) {
   return { type: REMOVE_MIDI_SOURCE_CC, payload: x }
 }
 
+export function addUnknownMidiSourceCC() {
+  return (dispatch, getState) => {
+    const ccset = getState().midi.midiSourceCCs;
+    let newCC = nextCC(ccset)
+    if (newCC >= 0) {
+      dispatch(addMidiSourceCC(newCC));
+    }
+  };
+}
+
+export function addUnknownMidiSinkCC() {
+  return (dispatch, getState) => {
+    const ccset = getState().midi.midiSinkCCs;
+    let newCC = nextCC(ccset)
+    if (newCC >= 0) {
+      dispatch(addMidiSinkCC(newCC));
+    }
+  };
+}
 
 export function setAllMidiSinkDevices(sourceDict) {
  return { type: SET_ALL_MIDI_SINK_DEVICES, payload: sourceDict }

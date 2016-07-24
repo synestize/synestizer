@@ -6,6 +6,7 @@ const MidiCCSet = ({
     ccset,
     adder,
     remover,
+    unknownadder,
     solocc,
     solotoggler
   }) => {
@@ -22,7 +23,7 @@ const MidiCCSet = ({
   }
   return (<div className="ccset">
     {ccNodes}
-    <ActiveMidiCCAdd adder={adder} />
+    <ActiveMidiCCAdd adder={unknownadder} />
   </div>)
 }
 
@@ -30,7 +31,8 @@ MidiCCSet.propTypes = {
   ccset: PropTypes.array.isRequired,
   adder: PropTypes.func.isRequired,
   remover: PropTypes.func.isRequired,
-  solocc: PropTypes.func,
+  unknownadder: PropTypes.func.isRequired,
+  solotoggler: PropTypes.func,
   solocc: PropTypes.number
 }
 
