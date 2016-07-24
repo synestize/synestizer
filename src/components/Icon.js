@@ -5,7 +5,7 @@ const Icon = ({ name, onClick}) => (
 )
 
 Icon.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   name: PropTypes.string.isRequired
 }
 

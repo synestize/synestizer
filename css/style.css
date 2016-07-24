@@ -160,6 +160,9 @@ a, a:hover, a:active, a:focus {
 #synapp select .option {
     min-height: 1ex;
 }
+#synapp i.fa {
+  display: inline-block;
+}
 #synapp .devicechooserwidget {
   display: inline-block;
   padding: 1ex;
@@ -178,7 +181,6 @@ a, a:hover, a:active, a:focus {
 #synapp .mappingmatrix th {
   font-weight: normal;
   position: relative; /* so that child state-bar elements can be absolutely positioned */
-  background-color: white;
 }
 #synapp .mappingmatrix th span {
     position: relative;
@@ -200,9 +202,6 @@ a, a:hover, a:active, a:focus {
   opacity: 1.0;
   cursor: pointer;
 }
-#synapp .mappingmatrix .mapping input {
-  cursor: pointer;
-}
 #synapp .mappingmatrix .mapping.inactive {
   opacity: 0.3;
 }
@@ -215,13 +214,18 @@ a, a:hover, a:active, a:focus {
 #synapp .mappingmatrix .mapping.minus {
   background-color: rgba(130,0,0,0.5);
 }
-#synapp .mappingmatrix .mapping .param {
-  display: block;
-  width: 4rem;
+#synapp .mappingmatrix .mapping input.param {
+  display: inline-block;
+  cursor: pointer;
+  width: 3.8rem;
   height: 1.5rem;
   margin: 0;
   padding: 0;
   vertical-align: middle;
+}
+#synapp .mappingmatrix .mapping i.fa {
+  width: 0.5rem;
+  display: inline-block;
 }
 #synapp input[type="number"],
 #synapp input[type="number"]:focus {

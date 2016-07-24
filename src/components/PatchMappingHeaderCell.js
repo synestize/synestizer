@@ -7,7 +7,7 @@ const PatchMappingHeaderCell = ({val, scope, name}) => {
   };
   return (<th scope={scope || "column"}>
     <div className="state-bar" style={divStyle} />
-    {name}
+    <span className='streamname'>{name}</span>
   </th>);
 };
 
