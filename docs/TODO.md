@@ -5,9 +5,6 @@
   * speed of controllers changes when in the background
   * example Ableton set
   * Need to show perturbation and final value of synth values
-  * switch param mappers to be higher order/factory functions,
-    [currying](https://web.archive.org/web/20140714014530/http://hughfdjackson.com/javascript/why-curry-helps) [appropriately](http://ramdajs.com/docs/#expand)
-    * include inversion where exists?
   * implement audio model
   * Get Christoph's help moving the yellow.listentocolors.net
   * randomisation of synth median point on load
@@ -17,13 +14,10 @@
   * optional CSS filters on video
 
 * UI improvements
-  * save/load
-  * only show video background some of the time
-  * more natural frequency mapping, such as
-    * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
+  * save/load UI (preset names etc)
+  * show video background some of the time
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
     * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
-  * friendlier stream labels
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
   * Svg widgets? http://stackoverflow.com/a/30579774
@@ -80,6 +74,9 @@
       * erf copulae
 
 * video should handle non-local video sources.
+* audio
+  * more natural frequency mapping, such as
+    * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
 * Meta
 
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
