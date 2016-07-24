@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import PatchMappingControl from './PatchMappingControl'
+import ActivePatchMappingControl from '../containers/ActivePatchMappingControl'
 import PatchMappingHeaderCell from './PatchMappingHeaderCell'
 
 const PatchMatrix = ({
@@ -21,7 +21,7 @@ const PatchMatrix = ({
       key={sinkKey}
       name={sinkKey}
       scope="column"
-      val={sinkState.get(sinkKey) || 0.0} />);
+      val={sourceStreamValues[sinkKey] || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
@@ -30,11 +30,11 @@ const PatchMatrix = ({
       scope="row"
       val={sourceStreamValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
-      cells.push(<PatchMappingControl
+      cells.push(<ActivePatchMappingControl
         key={sinkKey}
         sourceKey={sourceKey}
         sinkKey={sinkKey}
-        val={sourceSinkScale[sourceKey+"/"+sinkKey] || 0.0}
+        val={sourceSinkScale[sourceKey+'/'+sinkKey] || 0.0}
         />)
     };
     bodyRows.push(<tr key={sourceKey}>{cells}</tr>)

@@ -14,14 +14,17 @@ import { addSourceStream,
 
 import PatchMappingControl from '../components/PatchMappingControl.js'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, {sourceKey, sinkKey, ...ownProps}) => {
   return {
-    ...state.stream,
+    val: state.stream.sourceSinkScale[sourceKey+'/'+sinkKey],
+    ...ownProps
   }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, {sourceKey, sinkKey}) => {
   return {
-    onChange: (ev) => dispatch(setMidiSinkChannel(ev)),
+    onChange: (ev) => dispatch(
+      setSourceSinkScale(sourceKey, sinkKey, ev.target.value)
+    ),
   }
 };
 
