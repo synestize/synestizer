@@ -14,7 +14,8 @@ const mapStateToProps = (state, ownProps) => {
     ccremover: removeMidiSinkCC,
     ccunknownadder: addUnknownMidiSinkCC,
     ccsolotoggler: soloMidiSinkCC,
-    solocc: state.midi.midiSinkSoloCC
+    solocc: state.midi.midiSinkSoloCC,
+    title: 'Midi Out',
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

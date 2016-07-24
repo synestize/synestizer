@@ -22,7 +22,7 @@ const MidiCCControl = ({
     </span>
   } else {
   }
-  return (<div className="ccontrontrol">
+  return (<div className="ccontrolchooser">
     <IntSelect
       currentNum={cc}
       unavailable={difference(ccset, [cc])}

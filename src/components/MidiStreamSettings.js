@@ -5,6 +5,7 @@ import IntSelect from '../components/IntSelect'
 import MidiCCSet from '../components/MidiCCSet'
 
 const MidiStreamSettings = ( {
+  title,
   currentChannel,
   deviceMap,
   valid,
@@ -18,7 +19,8 @@ const MidiStreamSettings = ( {
   onChannelChange,
   onDeviceChange,
 }) => {
-  return (<div>
+  return (<section>
+    <h3>{title}</h3>
   <DeviceSelect
     onChange={onDeviceChange}
     currentDevice={currentDevice}
@@ -33,9 +35,10 @@ const MidiStreamSettings = ( {
     solotoggler={ccsolotoggler}
     solocc={solocc}
     unknownadder={ccunknownadder} />
-</div>)}
+</section>)}
 
 MidiStreamSettings.propTypes = {
+  title: PropTypes.string.isRequired,
   ccset: PropTypes.array.isRequired,
   solocc: PropTypes.number,
   currentChannel: PropTypes.number.isRequired,

@@ -1,21 +1,22 @@
 html, body {
-    height: 100%;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 body {
-    font-family: 'Roboto Condensed', sans-serif;
-    background-color: #000;
-    color: black;
-    height: 100%;
-    overflow: hidden;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: rgba(80,80,100,1);
+  color: rgba(140,170,170,1);
+  height: 100%;
+  overflow: hidden;
 }
 
 h1, h2, h3 {
-    color: black;
+  color: rgba(140,170,170,1);
 }
 
 a, a:hover, a:active, a:focus {
-    color: #585D9A;
+  color: rgb(131, 135, 183);
+;
 }
 
 ::selection {
@@ -30,8 +31,7 @@ a, a:hover, a:active, a:focus {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  /*background opacity */
-  background-color:rgba(16,16,16,0.0);;
+  background-color: rgba(80,100,100,1);
 }
 #synapp nav.tabnav ul.tabs {
   display: flex;
@@ -42,21 +42,21 @@ a, a:hover, a:active, a:focus {
   /*display: block;*/
   flex: 1;
   margin: -0.075rem 0 0 -0.075rem;
-  border: black 0.15rem solid;
+  border: rgba(140,170,170,1) 0.15rem solid;
   padding: 0;
   text-align: center;
   list-style-type: none;
 }
 #synapp nav.tabnav ul.tabs li a {
   text-decoration: none;
-  color: black;
+  color: rgba(140,170,170,1);
   display: block;
   padding: 1rem;
 }
 #synapp nav.tabnav ul.tabs li a.active {
   font-weight: bold;
   color: black;
-  background-color: rgba(100,100,100,0.5);
+  background-color: rgba(80,100,100,1);
 }
 #synapp .pane-content {
   flex: 1 1 auto;
@@ -65,18 +65,18 @@ a, a:hover, a:active, a:focus {
   padding: 1ex 1em;
 }
 #synapp .pane-content label {
-    display: inline-block;
-    text-align: right;
-    padding-right: 0.3rem;
-    /* font-variant: small-caps */ /* too ugly with default font! */
-    text-transform: uppercase;
-    font-size: 80%;
+  display: inline-block;
+  text-align: right;
+  padding-right: 0.3rem;
+  /* font-variant: small-caps */ /* too ugly with default font! */
+  text-transform: uppercase;
+  font-size: 80%;
 }
-#synapp .pane-content h2 {
+#synapp .pane-content h2, #synapp .pane-content h3 {
   display: inline-block;
 }
 #synapp .subpane {
-  border-bottom: black 1px solid;
+  border-bottom: rgba(140,170,170,1) 1px solid;
   padding-bottom: 0.3em;
 }
 #video-io {
@@ -87,45 +87,6 @@ a, a:hover, a:active, a:focus {
   top:0;
   z-index: -1;
   /*-webkit-filter: blur(4px) brightness(1.2) saturate(3);*/
-}
-
-#video-video {
-  -webkit-transform: scaleX(1);
-  -moz-transform: scaleX(1);
-  position: fixed;
-  display: block;
-  margin: 0 0 0 0;
-  min-width: 100%;
-  min-height: 100%;
-  -webkit-transform: scale(-1, 1);
-}
-
-#video-canvas {
-  width: 64px;
-  height: 64px;
-  display: none;
-  position: absolute;
-}
-
-#logo {
-    position: fixed;
-    bottom: 25px;
-    right: 10px;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 4.7rem;
-    text-align: center;
-    color: #000;
-    /*background-color: #000;*/
-    opacity: 0.5;
-
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    cursor: default;
 }
 
 #synapp .pane-content h2 {
@@ -207,11 +168,9 @@ a, a:hover, a:active, a:focus {
   display: inline-block;
   padding: 1ex;
 }
-#synapp .potential.devicechooserwidget {
-  font-style: italic;
-}
-#synapp .potential.devicechooserwidget select option {
-  font-style: italic;
+#synapp .ccontrolchooser {
+  display: inline-block;
+  padding: 1ex;
 }
 #synapp .mappingmatrix {
   font-size: 0.8rem;
@@ -310,4 +269,44 @@ a, a:hover, a:active, a:focus {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0,0,0,0.2);
+}
+
+
+#video-video {
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  position: fixed;
+  display: block;
+  margin: 0 0 0 0;
+  min-width: 100%;
+  min-height: 100%;
+  -webkit-transform: scale(-1, 1);
+}
+
+#video-canvas {
+  width: 64px;
+  height: 64px;
+  display: none;
+  position: absolute;
+}
+
+#logo {
+    position: fixed;
+    bottom: 25px;
+    right: 10px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 4.7rem;
+    text-align: center;
+    color: #000;
+    /*background-color: #000;*/
+    opacity: 0.5;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: default;
 }

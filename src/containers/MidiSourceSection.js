@@ -13,6 +13,7 @@ const mapStateToProps = (state, ownProps) => {
     ccadder: addMidiSourceCC,
     ccremover: removeMidiSourceCC,
     ccunknownadder: addUnknownMidiSourceCC,
+    title: 'Midi In',
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
