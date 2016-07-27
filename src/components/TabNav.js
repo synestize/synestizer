@@ -18,6 +18,11 @@ const TabNav = () => {
         Patching
       </SelectTabLink>
     </li>
+    <li>
+      <SelectTabLink paneId="performance">
+        Performance
+      </SelectTabLink>
+    </li>
   </ul></nav>)
 }
 export default TabNav;

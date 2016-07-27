@@ -7,8 +7,8 @@ import PerformancePane from './PerformancePane'
 const renderer = {
   io: () => <IOPane />,
   welcome: () => <WelcomePane />,
-  patching: () => <PatchingPane /> //,
-// performance: () => <PerformancePane />
+  patching: () => <PatchingPane />,
+  performance: () => <PerformancePane />
 }
 
 const CurrentPane = ({visiblePane}) => {
@@ -16,7 +16,7 @@ const CurrentPane = ({visiblePane}) => {
 }
 
 CurrentPane.propTypes = {
-  visiblePane: PropTypes.oneOf(['io', 'welcome', 'patching']),
+  visiblePane: PropTypes.oneOf(['io', 'welcome', 'patching', 'performance']),
 }
 
 export default CurrentPane;

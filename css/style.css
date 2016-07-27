@@ -26,17 +26,18 @@ a, a:hover, a:active, a:focus {
     background: #585D9A;
 }
 
-#synapp {
+#synapp, #synapp > div  {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: rgba(80,100,100,1);
 }
 #synapp nav.tabnav ul.tabs {
   display: flex;
   padding: 0;
   margin:0;
+  background-color: rgba(80,100,100,1);
+
 }
 #synapp nav.tabnav ul.tabs li {
   /*display: block;*/
@@ -63,6 +64,10 @@ a, a:hover, a:active, a:focus {
   overflow-y: auto;
   min-height: 0px;
   padding: 1ex 1em;
+  background-color: rgba(80,100,100,1);
+}
+#synapp .pane-content.performance-pane {
+  background-color: rgba(80,100,100,0);
 }
 #synapp .pane-content label {
   display: inline-block;

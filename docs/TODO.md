@@ -15,7 +15,6 @@
 
 * UI improvements
   * save/load UI (preset names etc)
-  * show video background some of the time
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
     * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
   * animate transitions and updates
