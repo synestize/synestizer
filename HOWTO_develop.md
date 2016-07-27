@@ -22,7 +22,6 @@ Any changes you make will update the offline version automatically.
 
 * For debugging MIDI on OSX we recommend [MIDIMonitor](https://www.snoize.com/MIDIMonitor/).
 
-* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
 ### Notes on public websites and HTTPS
 
