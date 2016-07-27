@@ -18,7 +18,6 @@ Module support in ES6 looks different than the older standards.
 not technically a "library", but a "set of things to know"
 
 * To have a stable API to access audio and video we use webrtc-adapter.
-* [Javascript libraries](Javascript_libraries.md)
 * [Audio synthesis](Audio_synthesis.md)
 * [SVG](https://biesnecker.com/2014/10/22/using-reactjs-to-draw-dynamic-svgs/)
 
@@ -31,6 +30,9 @@ Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 ## React
 
 The rendering system for all UI components is React.
+
+* For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+
 
 ### If I need to get to DOM nodes...
 
