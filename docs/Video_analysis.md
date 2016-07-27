@@ -1,5 +1,8 @@
 # Video Analysis
 
+To have a stable API to access audio and video we use webrtc-adapter.
+
+
 ## Ideas for analyses
 
 * Gaussian mixture model
