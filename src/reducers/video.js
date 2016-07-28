@@ -5,17 +5,17 @@ import {
 } from '../actions/video'
 
 import {
-  addSourceStream,
-  removeSourceStream,
-  setSourceStreamValue,
-  setAllSourceStreamValues,
-  addSinkStream,
-  removeSinkStream,
-  setSinkStreamValue,
-  setAllSinkStreamValue,
+  addSourceSignal,
+  removeSourceSignal,
+  setSourceSignalValue,
+  setAllSourceSignalValues,
+  addSinkSignal,
+  removeSinkSignal,
+  setSinkSignalValue,
+  setAllSinkSignalValue,
   setSourceSinkScale,
   setSinkBias,
-} from '../actions/stream'
+} from '../actions/signal'
 
 
 export function currentVideoSource(state="", action) {

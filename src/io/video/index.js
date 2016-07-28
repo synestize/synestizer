@@ -7,7 +7,7 @@ import { toObservable } from '../../lib/rx_redux'
 import { clip1 } from '../../lib/transform'
 
 
-export default function init(store, streamio, videoDom) {
+export default function init(store, signalio, videoDom) {
   //set up video system
   const canvasElem = videoDom.querySelector('canvas');
   const videoElem = videoDom.querySelector('video');
@@ -163,7 +163,7 @@ export default function init(store, streamio, videoDom) {
           console.warn("STATISTIC OUT OF RANGE", address, value);
           value = clip1(value);
         };
-        ////streamPatch.getSourceStream(address).onNext(value);
+        ////streamPatch.getSourceSignal(address).onNext(value);
       }
     }
   }

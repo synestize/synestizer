@@ -4,7 +4,7 @@ import { toObservable } from '../../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../../lib/transform'
 import { union, difference, intersection } from '../../lib/setop'
 
-export default function init(store, streamio) {
+export default function init(store, signalio) {
 
   let rawMidiInSubscription;
 
@@ -39,7 +39,7 @@ export default function init(store, streamio) {
       (state.activesourcechannel == channel) &&
       state.activesourceccs.has(cc)) {
 
-      streamPatch.getSourceStream("midi-cc-"+ cc).onNext(val);
+      streamPatch.getSourceSignal("midi-cc-"+ cc).onNext(val);
     };
   };
   //Interface to MIDI output
@@ -63,6 +63,7 @@ export default function init(store, streamio) {
     let allsources = new Map();
     let allsinks = new Map();
     midiinfo = newmidiinfo;
+
     //turn the pseudo-Maps in the midiinfo dict into real maps
     for (let [key, val] of midiinfo.inputs.entries()){
       allsources.set(key, val.name)

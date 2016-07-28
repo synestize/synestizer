@@ -1,22 +1,22 @@
 'use strict';
 import { connect } from 'react-redux';
-import { addSourceStream,
-  removeSourceStream,
-  setSourceStreamValue,
-  setAllSourceStreamValues,
-  addSinkStream,
-  removeSinkStream,
-  setSinkStreamValue,
-  setAllSinkStreamValue,
+import { addSourceSignal,
+  removeSourceSignal,
+  setSourceSignalValue,
+  setAllSourceSignalValues,
+  addSinkSignal,
+  removeSinkSignal,
+  setSinkSignalValue,
+  setAllSinkSignalValue,
   setSourceSinkScale,
   setSinkBias,
-} from '../actions/stream'
+} from '../actions/signal'
 
 import PatchMatrix from '../components/PatchMatrix.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    ...state.stream,
+    ...state.signal,
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

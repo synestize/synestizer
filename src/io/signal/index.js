@@ -2,7 +2,7 @@ import Rx from 'rx'
 import update from 'react-addons-update'
 import setop from '../../lib/setop.js'
 import transform from '../../lib/transform.js'
-import { addSourceStream, removeSourceStream, setSourceStreamValue, setAllSourceStreamValues, addSinkStream, removeSinkStream, setSinkStreamValue, setAllSinkStreamValue, setSourceSinkScale, setSinkBias } from '../../actions/stream'
+import { addSourceSignal, removeSourceSignal, setSourceSignalValue, setAllSourceSignalValues, addSinkSignal, removeSinkSignal, setSinkSignalValue, setAllSinkSignalValue, setSourceSinkScale, setSinkBias } from '../../actions/signal'
 import { toObservable } from '../../lib/rx_redux'
 import React from 'react'
 
@@ -15,18 +15,23 @@ internal state handles high-speed source updates and slower sink updates
 export default function init(store) {
   const storeStream = toObservable(store);
   /*{
-     sourceStreamMeta,
-     sourceStreamValues,
-     sinkStreamMeta,
-     sinkStreamValues,
+     sourceSignalMeta,
+     sourceSignalValues,
+     sinkSignalMeta,
+     sinkSignalValues,
      sourceSinkScale,
      sinkBias
   }*/
-  storeStream.pluck('stream', 'sourceSinkScale').distinctUntilChanged().subscribe(
+  storeStream.pluck(
+    'signal', 'sourceSinkScale'
+  ).distinctUntilChanged().subscribe(
     (scale) => {
       console.log("stream", scale);
     }
   )
 
-  return {}
+  return {
+    sourceSubject,
+    sinkSubject,
+  }
 }

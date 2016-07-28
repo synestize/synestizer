@@ -11,7 +11,7 @@ import rootReducer from './reducers/index'
 import App from './containers/App'
 import videoio_ from 'io/video/index'
 import midiio_ from 'io/midi/index'
-import streamio_ from 'io/stream/index'
+import signalio_ from 'io/signal/index'
 import { getStoredState, autoRehydrate, createPersistor, persistStore, createTransform } from 'redux-persist'
 import localForage from 'localForage'
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
@@ -51,7 +51,7 @@ let persistor;
 let appRoot;
 let videoio;
 let midiio;
-let streamio;
+let signalio;
 let enhancers = applyMiddleware(
   thunkMiddleware, // lets us dispatch() functions
   loggerMiddleware // neat middleware that logs actions
@@ -71,9 +71,9 @@ getStoredState(persistConf, (err, restoredState) => {
   window.store = store;
   window.persistor = persistor;
 
-  streamio = streamio_(store);
-  videoio = videoio_(store, streamio, document.getElementById('video-io'));
-  midiio = midiio_(store, streamio);
+  signalio = signalio_(store);
+  videoio = videoio_(store, signalio, document.getElementById('video-io'));
+  midiio = midiio_(store, signalio);
 
   appRoot = render(
     <Provider store={store}>

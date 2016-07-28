@@ -3,32 +3,32 @@ import ActivePatchMappingControl from '../containers/ActivePatchMappingControl'
 import PatchMappingHeaderCell from './PatchMappingHeaderCell'
 
 const PatchMatrix = ({
-    sourceStreamMeta,
-    sourceStreamValues,
-    sinkStreamMeta,
-    sinkStreamValues,
+    sourceSignalMeta,
+    sourceSignalValues,
+    sinkSignalMeta,
+    sinkSignalValues,
     sourceSinkScale,
     sinkBias
   }) => {
   let bodyRows = [];
-  let sourceKeys = Array.from(Object.keys(sourceStreamMeta)).sort();
-  let sinkKeys = Array.from(Object.keys(sinkStreamMeta)).sort();
-  // let sourceKeys = sourceKeys.map((k)=>sourceStreamMeta[k]);
-  // let sinkKeys = sinkKeys.map((k)=>sinkStreamMeta[k]);
+  let sourceKeys = Array.from(Object.keys(sourceSignalMeta)).sort();
+  let sinkKeys = Array.from(Object.keys(sinkSignalMeta)).sort();
+  // let sourceKeys = sourceKeys.map((k)=>sourceSignalMeta[k]);
+  // let sinkKeys = sinkKeys.map((k)=>sinkSignalMeta[k]);
   let header = [<th key="header"></th>];
   for (var sinkKey of sinkKeys) {
     header.push(<PatchMappingHeaderCell
       key={sinkKey}
-      name={sinkStreamMeta[sinkKey]}
+      name={sinkSignalMeta[sinkKey]}
       scope="column"
-      val={sourceStreamValues[sinkKey] || 0.0} />);
+      val={sourceSignalValues[sinkKey] || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
       key="source"
-      name={sourceStreamMeta[sourceKey]}
+      name={sourceSignalMeta[sourceKey]}
       scope="row"
-      val={sourceStreamValues[sourceKey] || 0.0} />];
+      val={sourceSignalValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
       cells.push(<ActivePatchMappingControl
         key={sinkKey}
@@ -50,10 +50,10 @@ const PatchMatrix = ({
   </table>)
 };
 PatchMatrix.propTypes = {
-  sourceStreamMeta: PropTypes.object.isRequired,
-  sourceStreamValues: PropTypes.object.isRequired,
-  sinkStreamMeta: PropTypes.object.isRequired,
-  sinkStreamValues: PropTypes.object.isRequired,
+  sourceSignalMeta: PropTypes.object.isRequired,
+  sourceSignalValues: PropTypes.object.isRequired,
+  sinkSignalMeta: PropTypes.object.isRequired,
+  sinkSignalValues: PropTypes.object.isRequired,
   sourceSinkScale: PropTypes.object.isRequired,
   sinkBias: PropTypes.object.isRequired,
 }

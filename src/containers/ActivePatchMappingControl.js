@@ -1,22 +1,22 @@
 'use strict';
 import { connect } from 'react-redux';
-import { addSourceStream,
-  removeSourceStream,
-  setSourceStreamValue,
-  setAllSourceStreamValues,
-  addSinkStream,
-  removeSinkStream,
-  setSinkStreamValue,
-  setAllSinkStreamValue,
+import { addSourceSignal,
+  removeSourceSignal,
+  setSourceSignalValue,
+  setAllSourceSignalValues,
+  addSinkSignal,
+  removeSinkSignal,
+  setSinkSignalValue,
+  setAllSinkSignalValue,
   setSourceSinkScale,
   setSinkBias,
-} from '../actions/stream'
+} from '../actions/signal'
 
 import PatchMappingControl from '../components/PatchMappingControl.js'
 
 const mapStateToProps = (state, {sourceKey, sinkKey, ...ownProps}) => {
   return {
-    val: state.stream.sourceSinkScale[sourceKey+'/'+sinkKey],
+    val: state.signal.sourceSinkScale[sourceKey+'/'+sinkKey],
     ...ownProps
   }
 }

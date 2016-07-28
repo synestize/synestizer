@@ -1,4 +1,4 @@
-import { addSourceStream, removeSourceStream, addSinkStream, removeSinkStream } from './stream'
+import { addSourceSignal, removeSourceSignal, addSinkSignal, removeSinkSignal } from './signal'
 
 function nextCC(ccset) {
   for (let i= Math.max(-1, ...ccset)+1;i<128; i++) {

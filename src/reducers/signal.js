@@ -2,25 +2,25 @@
 import { combineReducers } from 'redux'
 import { union, difference, intersection } from '../lib/fakesetop'
 import {
-  addSourceStream,
-  removeSourceStream,
-  addSinkStream,
-  removeSinkStream,
-  ADD_SOURCE_STREAM,
-  REMOVE_SOURCE_STREAM,
-  SET_SOURCE_STREAM_VALUE,
-  SET_ALL_SOURCE_STREAM_VALUES,
-  ADD_SINK_STREAM,
-  REMOVE_SINK_STREAM,
-  SET_SINK_STREAM_VALUE,
-  SET_ALL_SINK_STREAM_VALUES,
+  addSourceSignal,
+  removeSourceSignal,
+  addSinkSignal,
+  removeSinkSignal,
+  ADD_SOURCE_SIGNAL,
+  REMOVE_SOURCE_SIGNAL,
+  SET_SOURCE_SIGNAL_VALUE,
+  SET_ALL_SOURCE_SIGNAL_VALUES,
+  ADD_SINK_SIGNAL,
+  REMOVE_SINK_SIGNAL,
+  SET_SINK_SIGNAL_VALUE,
+  SET_ALL_SINK_SIGNAL_VALUES,
   SET_SOURCE_SINK_SCALE,
   SET_SINK_BIAS,
 
-} from '../actions/stream'
+} from '../actions/signal'
 
 
-function stream_name_midi(cc) {
+function midiStreamName(cc) {
   return ['midi-cc-'+ cc, 'CC ' + cc]
 }
 
@@ -31,9 +31,9 @@ import {
   REMOVE_MIDI_SINK_CC,
 } from '../actions/midi'
 
-export function sourceStreamMeta(state={}, {type, payload}) {
+export function sourceSignalMeta(state={}, {type, payload}) {
   switch (type) {
-    case ADD_SOURCE_STREAM:
+    case ADD_SOURCE_SIGNAL:
       {
         let [key, name] = payload;
         state = {...state}
@@ -42,12 +42,12 @@ export function sourceStreamMeta(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         state[key] = name
         return state
       }
-    case REMOVE_SOURCE_STREAM:
+    case REMOVE_SOURCE_SIGNAL:
       {
         let state = {...state}
         delete state[payload]
@@ -55,7 +55,7 @@ export function sourceStreamMeta(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -65,9 +65,9 @@ export function sourceStreamMeta(state={}, {type, payload}) {
   }
 }
 
-export function sinkStreamMeta(state={}, {type, payload}) {
+export function sinkSignalMeta(state={}, {type, payload}) {
   switch (type) {
-    case ADD_SINK_STREAM:
+    case ADD_SINK_SIGNAL:
       {
         let [key, name] = payload;
         state = {...state}
@@ -76,12 +76,12 @@ export function sinkStreamMeta(state={}, {type, payload}) {
       }
     case ADD_MIDI_SINK_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         state[key] = name
         return state
       }
-    case REMOVE_SINK_STREAM:
+    case REMOVE_SINK_SIGNAL:
       {
         let state = {...state}
         delete state[payload]
@@ -89,7 +89,7 @@ export function sinkStreamMeta(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SINK_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -99,9 +99,9 @@ export function sinkStreamMeta(state={}, {type, payload}) {
   }
 }
 
-export function sourceStreamValues(state={}, {type, payload}) {
+export function sourceSignalValues(state={}, {type, payload}) {
   switch (type) {
-    case ADD_SOURCE_STREAM:
+    case ADD_SOURCE_SIGNAL:
       {
         let [key, val] = payload;
         state = {...state}
@@ -110,12 +110,12 @@ export function sourceStreamValues(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         state[key] = 0.0
         return state
       }
-    case REMOVE_SOURCE_STREAM:
+    case REMOVE_SOURCE_SIGNAL:
       {
         let state = {...state}
         delete state[payload]
@@ -123,28 +123,28 @@ export function sourceStreamValues(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         delete state[key]
         return state
       }
-    case SET_SOURCE_STREAM_VALUE:
+    case SET_SOURCE_SIGNAL_VALUE:
       {
         let [key, val] = payload;
         state = {...state}
         state[key] = val
         return state
       }
-    case SET_ALL_SOURCE_STREAM_VALUES:
+    case SET_ALL_SOURCE_SIGNAL_VALUES:
       return { ...state, ...payload };
     default:
       return state
   }
 }
 
-export function sinkStreamValues(state={}, {type, payload}) {
+export function sinkSignalValues(state={}, {type, payload}) {
   switch (type) {
-    case ADD_SOURCE_STREAM:
+    case ADD_SOURCE_SIGNAL:
       {
         let [key, val] = payload;
         state = {...state}
@@ -153,12 +153,12 @@ export function sinkStreamValues(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         state[key] = 0.0
         return state
       }
-    case REMOVE_SOURCE_STREAM:
+    case REMOVE_SOURCE_SIGNAL:
       {
         let state = {...state}
         delete state[payload]
@@ -166,12 +166,12 @@ export function sinkStreamValues(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
+        let [key, name] = midiStreamName(payload)
         state = {...state}
         delete state[key]
         return state
       }
-    case SET_SOURCE_STREAM_VALUE:
+    case SET_SOURCE_SIGNAL_VALUE:
       {
         let [key, val] = payload;
         state = {...state}
@@ -194,10 +194,10 @@ export function sourceSinkScale(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SINK_CC:
       {
-        let [key, name] = stream_name_midi(payload)
-        return sourceSinkScale(state, removeSinkStream(key))
+        let [key, name] = midiStreamName(payload)
+        return sourceSinkScale(state, removeSinkSignal(key))
       }
-    case REMOVE_SINK_STREAM:
+    case REMOVE_SINK_SIGNAL:
       {
         let state = {...state}
         for (let key of Object.keys(state)) {
@@ -210,10 +210,10 @@ export function sourceSinkScale(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = stream_name_midi(payload)
-        return sourceSinkScale(state, removeSourceStream(key))
+        let [key, name] = midiStreamName(payload)
+        return sourceSinkScale(state, removeSourceSignal(key))
       }
-    case REMOVE_SOURCE_STREAM:
+    case REMOVE_SOURCE_SIGNAL:
       {
         let state = {...state}
         for (let key of Object.keys(state)) {
@@ -231,14 +231,14 @@ export function sourceSinkScale(state={}, {type, payload}) {
 
 export function sinkBias(state={}, {type, payload}) {
   switch (type) {
-    case ADD_SINK_STREAM:
+    case ADD_SINK_SIGNAL:
     {
       let [key, name] = payload;
       state = {...state}
       state[key] = 0.0
       return state
     }
-    case REMOVE_SINK_STREAM:
+    case REMOVE_SINK_SIGNAL:
     {
       let state = {...state}
       delete state[payload]
@@ -256,10 +256,10 @@ export function sinkBias(state={}, {type, payload}) {
 }
 
 const stream = combineReducers({
-   sourceStreamMeta,
-   sourceStreamValues,
-   sinkStreamMeta,
-   sinkStreamValues,
+   sourceSignalMeta,
+   sourceSignalValues,
+   sinkSignalMeta,
+   sinkSignalValues,
    sourceSinkScale,
    sinkBias
 })
