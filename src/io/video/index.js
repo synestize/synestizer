@@ -10,6 +10,11 @@ import {fromPromise} from 'rxjs/observable/fromPromise';
 import {filter} from 'rxjs/operator/filter';
 import {pluck} from 'rxjs/operator/pluck';
 */
+import  {
+  addSourceSignal,
+  removeSourceSignal,
+} from '../../actions/signal'
+
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
 import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
@@ -140,24 +145,31 @@ export default function init(store, signalio, videoDom) {
         videoworker.terminate();
       };
   });
-  const statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
+  const statsSubject = Rx.Subject.create(statsInbox, statsOutbox).share();
 
   statsSubject.filter((x)=>(x.type==="statmeta")).subscribe(
     ({type, payload}) => {
-      let {signalKeys, signalNames} = payload;
 
+      console.debug('noom', type, payload)
+      let {signalKeys, signalNames} = payload;
+      console.debug(store.getState().signal)
+      let current = store.getState().signal.sourceSignalMeta;
+      console.debug('currs', current)
+      //store.dispatch(setMidiSinkDevice(key));
     }
   );
-  statsSubject.filter((x)=>(x.type==="results")).subscribe(function(x) {
-    //console.debug("got stuff back",x);
-    //report data streams
-    //statsStreamSpray(x.payload);
-    //Now repeat
-    Rx.Scheduler.asap.schedule(
-      pumpPixels,
-      20
-    );
-  });
+  statsSubject.filter((x)=>(x.type==="results")).subscribe(
+    ({type, payload}) => {
+      //console.debug("got stuff back", payload);
+      //report data streams
+      //statsStreamSpray(x.payload);
+      //Now repeat
+      Rx.Scheduler.asap.schedule(
+        pumpPixels,
+        20
+      );
+    }
+  );
   function statsStreamSpray(x) {
     for (let [key, data] of x) {
       for (let [idx, value] of data.entries()) {

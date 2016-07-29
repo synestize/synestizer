@@ -20,11 +20,12 @@ inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
   }
   for (let statKey of Object.keys(payload.statModels)) {
     let params = payload.statModels;
-    let {fn, statSignalKeys, statSignalNames} = statModels[statKey](params)
+    let {fn, keys, names} = statModels[statKey](params)
     liveStatistics[statKey]= fn;
-    signalKeys[statKey] = statSignalKeys;
-    signalNames[statKey] = statSignalNames;
+    signalKeys[statKey] = keys;
+    signalNames[statKey] = names;
   }
+  console.debug('nang', signalKeys, signalNames)
   outbox.next({
     type: 'statmeta',
     payload:{
