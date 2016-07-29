@@ -15,14 +15,19 @@ module.exports = {
     preLoaders: [
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         loader: 'source-map-loader'
       }
     ],
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules(?!\/rxjs))/,
       loader: 'babel',
+      query: {
+        cacheDirectory: '/tmp',
+        "presets": [ "es2015", "react" ],
+        "plugins": ["transform-object-rest-spread", "transform-function-bind" ]
+      }
     }]
   },
   resolve: {

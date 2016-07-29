@@ -1,6 +1,5 @@
-'use strict';
 
-var Rx = require('Rx');
+import Rx from 'rxjs-es/Rx';
 var Statistic = require('./statistic');
 var statistics = new Map();
 
@@ -12,7 +11,7 @@ outbox.subscribe((msg)=>{
   self.postMessage(msg)
 });
 
-inbox.where((x)=>(x.type==="settings")).subscribe(function(data) {
+inbox.filter((x)=>(x.type==="settings")).subscribe(function(data) {
   // console.debug("settings", data.type, data.payload);
   statistics = new Map();
   for (var [statisticKey, params] of data.payload.statistics.entries()) {
@@ -20,12 +19,12 @@ inbox.where((x)=>(x.type==="settings")).subscribe(function(data) {
     statistics.set(statisticKey, statFn);
   }
 });
-inbox.where((x)=>(x.type==="pixels")).subscribe(function(data) {
+inbox.filter((x)=>(x.type==="pixels")).subscribe(function(data) {
   //console.debug("workerpixels", data.type, data.payload);
   for (var [statisticKey, statFn] of statistics.entries()) {
     results.set(statisticKey, statFn(data.payload));
   };
-  outbox.onNext({
+  outbox.next({
     type: "results",
     payload: results
   });

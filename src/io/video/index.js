@@ -1,4 +1,15 @@
-import Rx from 'rx'
+import Rx from 'rxjs-es/Rx'
+/*
+import {Subject} from 'rxjs-es/Subject'
+import {Observable} from 'rxjs-es/Observable'
+import {Observer} from 'rxjs-es/Observer'
+import {Scheduler} from 'rxjs-es/Scheduler'
+import {distinctUntilChanged} from 'rxjs-es/operator/distinctUntilChanged';
+import {fromEvent} from 'rxjs-es/observable/fromEvent';
+import {fromPromise} from 'rxjs-es/observable/fromPromise';
+import {filter} from 'rxjs-es/operator/filter';
+import {pluck} from 'rxjs-es/operator/pluck';
+*/
 import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
@@ -93,7 +104,7 @@ export default function init(store, signalio, videoDom) {
   }
   function pumpPixels() {
     let p = grabPixels();
-    statsInbox.onNext({type:"pixels", payload: p})
+    statsInbox.next({type:"pixels", payload: p})
   }
 
   function updateVideoIO(mediadevices) {
@@ -116,9 +127,9 @@ export default function init(store, signalio, videoDom) {
     }
   };
 
-  //our stream of pixel arrays
-  const statsInbox = Rx.Observer.create(
-    function (data) {
+  //our observer of pixel arrays
+  const statsInbox = {
+    next: (data) => {
       /*
        * Data looks like {type: "pixels", payload: [1,2,3,...]}
        */
@@ -129,10 +140,10 @@ export default function init(store, signalio, videoDom) {
         videoworker.postMessage(data);
       }
     }
-  );
+  };
   const statsOutbox = Rx.Observable.create(function (obs) {
       videoworker.onmessage = function (e) {
-        obs.onNext(e.data);
+        obs.next(e.data);
       };
       videoworker.onerror = function (err, ...args) {
         console.warn(err, args);
@@ -144,12 +155,12 @@ export default function init(store, signalio, videoDom) {
   });
   const statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
-  statsSubject.where((x)=>(x.type==="results")).subscribe(function(x) {
+  statsSubject.filter((x)=>(x.type==="results")).subscribe(function(x) {
     //console.debug("got stuff back",x);
     //report data streams
     statsStreamSpray(x.payload);
     //Now repeat
-    Rx.Scheduler.default.scheduleFuture(
+    Scheduler.asap.scheduleFuture(
       null,
       20,
       pumpPixels
@@ -163,12 +174,12 @@ export default function init(store, signalio, videoDom) {
           console.warn("STATISTIC OUT OF RANGE", address, value);
           value = clip1(value);
         };
-        ////streamPatch.getSourceSignal(address).onNext(value);
+        ////streamPatch.getSourceSignal(address).next(value);
       }
     }
   }
 
-  statsInbox.onNext({
+  statsInbox.next({
     type: "settings",
     payload: {
       statistics: new Map([["Moment", {PIXELDIM: PIXELDIM}]])

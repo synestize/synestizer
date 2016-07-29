@@ -1,4 +1,4 @@
-import Rx from 'rx'
+import Rx from 'rxjs-es/Rx'
 import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../../lib/transform'
@@ -39,7 +39,7 @@ export default function init(store, signalio) {
       (state.activesourcechannel == channel) &&
       state.activesourceccs.has(cc)) {
 
-      streamPatch.getSourceSignal("midi-cc-"+ cc).onNext(val);
+      streamPatch.getSourceSignal("midi-cc-"+ cc).next(val);
     };
   };
   //Interface to MIDI output

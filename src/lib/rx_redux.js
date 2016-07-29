@@ -1,6 +1,4 @@
-'use strict'
-
-import Rx from 'rx'
+import Rx from 'rxjs-es/Rx'
 
 // https://github.com/reactjs/redux/issues/303#issuecomment-125184409\
 /*

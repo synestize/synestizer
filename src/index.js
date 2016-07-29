@@ -1,7 +1,4 @@
 // Main entry point everything
-"use strict";
-
-import Rx from 'rx'
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -18,8 +15,6 @@ import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
-//debug mode:
-Rx.config.longStackSupport = true;
 
 /*
 We divide Synestizer into two part:
