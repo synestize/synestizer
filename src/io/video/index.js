@@ -187,7 +187,8 @@ export default function init(store, signalio, videoDom) {
       const signalVals = x[statKey]
       for (let i=0;i<signalVals.size;i++){
         signalKey = currentSignals[i]
-          of x[statKey]).map((key, )=>{})
+          // of x[statKey]).map((key, )=>{})
+      }
       for (let [idx, value] of data.entries()) {
         let address = "VM" + ("00" + (idx + 1)).slice(-2);
         if ((value < -1) || (value > 1)) {
