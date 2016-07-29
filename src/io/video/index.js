@@ -149,20 +149,31 @@ export default function init(store, signalio, videoDom) {
 
   statsSubject.filter((x)=>(x.type==="statmeta")).subscribe(
     ({type, payload}) => {
-
-      console.debug('noom', type, payload)
       let {signalKeys, signalNames} = payload;
-      console.debug(store.getState().signal)
+      /*
+      //This erases prior video signals; however it also erases their settings,
+      // whcih is not what one wants
       let current = store.getState().signal.sourceSignalMeta;
-      console.debug('currs', current)
-      //store.dispatch(setMidiSinkDevice(key));
+      for (let signalKey of Object.keys(current)) {
+        if (signalKey.indexOf('video-')===0){
+          store.dispatch(removeSourceSignal(signalKey, signalNames[statKey][idx]))
+        }
+      }
+      */
+      //I could probably stitch these together with Rx
+      for (let statKey in signalKeys) {
+        signalKeys[statKey].map((signalKey, idx) => {
+          console.debug('vidsig', statKey, signalKey, signalNames[statKey][idx])
+          store.dispatch(addSourceSignal(signalKey, signalNames[statKey][idx]))
+        });
+      }
     }
   );
   statsSubject.filter((x)=>(x.type==="results")).subscribe(
     ({type, payload}) => {
       //console.debug("got stuff back", payload);
       //report data streams
-      //statsStreamSpray(x.payload);
+      // statsStreamSpray(payload);
       //Now repeat
       Rx.Scheduler.asap.schedule(
         pumpPixels,
