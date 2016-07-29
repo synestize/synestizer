@@ -1,15 +1,15 @@
 # TODO
 
 * currently:
+  * we need ordered keys for the statistic names, or hierearchical structure or something
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
   * example Ableton set
   * Need to show perturbation and final value of synth values
   * implement audio model
   * Get Christoph's help moving the yellow.listentocolors.net
-  * randomisation of synth median point on load
-  * random sparse mapping on load
-  * need to generate MIDI note sequences as well so that we don't need arpeggiators for output.
+  * random sparse mapping button
+  * generate MIDI note sequences as well so that we don't need arpeggiators for output.
   * audio input
   * optional CSS filters on video
 
