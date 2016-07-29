@@ -15,7 +15,7 @@ TBD
 
 Want to run your own copy of synestizer? No problem!
 The [sourcecode is on github](https://synestize.github.io/synestizer/).
-Download and unzip that code using [ this link](https://github.com/synestize/synestizer/archive/master.zip).
+Download and unzip that code using [ this link](https://github.com/synestize/synestizer/archive/indigo.zip).
 (Advanced users and coders who might want to change the software should use ```git```, if you know what that means.)
 
 Now you need to run a [node.js](https://nodejs.org/), which pre-processes the javascript and also provides a web server to access the app.
