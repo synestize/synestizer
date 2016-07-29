@@ -38,12 +38,11 @@
 * App improvements
   * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
   * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
-  * Consistently use Map or Object or Immutableverywhere.
+  * Consistently use Object or Immutableverywhere.
 
     * If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
     * Immutable state? [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 
-* Go to [rxjs 5.0](https://github.com/ReactiveX/RxJS)
 * A *patch* should map between
 
     * input params
@@ -74,8 +73,8 @@
 
 * video should handle non-local video sources.
 * audio
-  * more natural frequency mapping, such as
-    * [sones](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf), mels or erbs
+  * more natural frequency/amplitude mapping, such as
+    * [sone, mels or erbs](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf),
 * Meta
 
     * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
@@ -83,3 +82,11 @@
 * speed improvements
 
   * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
+  * Do partial imports of RxJs
+    ```
+    import {Observable} from 'rxjs/Observable';
+    import {map} from 'rxjs/operator/map';
+
+    Observable.of(1,2,3)::map(x => x + '!!!'); // etc
+    ```
+  * ditch ramda; it's enormous and we barely use it
