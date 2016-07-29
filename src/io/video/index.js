@@ -10,7 +10,6 @@ import {fromPromise} from 'rxjs/observable/fromPromise';
 import {filter} from 'rxjs/operator/filter';
 import {pluck} from 'rxjs/operator/pluck';
 */
-import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
 import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
@@ -28,22 +27,13 @@ export default function init(store, signalio, videoDom) {
   let videosources = new Map(); //id -> device
   let videosource; //device
 
+
   //worker thread business
   const videoworker =  Videoworker_();
   window.videoworker = videoworker;
   window.Videoworker_ = Videoworker_;
 
   const PIXELDIM=64;
-
-  function publishSources() {
-    //This is weird, initialising the statistic to get its dimension when the params are never used.
-    //TODO: refactor
-    let nDims = Statistic.get("Moment")({}).nDims;
-    for (let idx=0; idx<nDims; idx++) {
-      let address = "VM" + ("00" + (idx + 1)).slice(-2);
-      ////streamPatch.addSource(address);
-    };
-  };
 
   function doVideoPlumbing(key) {
     videosource = videosources.get(key);
@@ -129,15 +119,12 @@ export default function init(store, signalio, videoDom) {
 
   //our observer of pixel arrays
   const statsInbox = {
-    next: (data) => {
-      /*
-       * Data looks like {type: "pixels", payload: [1,2,3,...]}
-       */
-      let payload = data.payload;
+    next: ({type, payload}) => {
+      // special for array sharing
       if (payload.buffer !== undefined) {
-        videoworker.postMessage(data, [payload.buffer]);
+        videoworker.postMessage({type, payload}, [payload.buffer]);
       } else {
-        videoworker.postMessage(data);
+        videoworker.postMessage({type, payload});
       }
     }
   };
@@ -155,15 +142,20 @@ export default function init(store, signalio, videoDom) {
   });
   const statsSubject = Rx.Subject.create(statsInbox, statsOutbox);
 
+  statsSubject.filter((x)=>(x.type==="statmeta")).subscribe(
+    ({type, payload}) => {
+      let {signalKeys, signalNames} = payload;
+
+    }
+  );
   statsSubject.filter((x)=>(x.type==="results")).subscribe(function(x) {
     //console.debug("got stuff back",x);
     //report data streams
-    statsStreamSpray(x.payload);
+    //statsStreamSpray(x.payload);
     //Now repeat
-    Rx.Scheduler.asap.scheduleFuture(
-      null,
-      20,
-      pumpPixels
+    Rx.Scheduler.asap.schedule(
+      pumpPixels,
+      20
     );
   });
   function statsStreamSpray(x) {
@@ -180,9 +172,9 @@ export default function init(store, signalio, videoDom) {
   }
 
   statsInbox.next({
-    type: "settings",
+    type: 'settings',
     payload: {
-      statistics: new Map([["Moment", {PIXELDIM: PIXELDIM}]])
+      statModels: {Moment: {PIXELDIM: PIXELDIM}}
     }
   });
 
@@ -199,5 +191,4 @@ export default function init(store, signalio, videoDom) {
       console.log("vidkey", key);
     }
   )
-  publishSources();
 };

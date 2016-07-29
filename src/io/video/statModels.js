@@ -1,6 +1,6 @@
 import *  as transform from '../../lib/transform'
 
-function AvgColor(params) {
+export function AvgColor(params) {
     //1/8 sub-sampled average color
     params = params || {};
 
@@ -25,12 +25,13 @@ function AvgColor(params) {
         out[B] = transform.linBipol(0, PIXELCOUNT, out[B]);
         return out;
     }
-
-    calc.nDims = 3;
-    calc.nState = 3;
-    return calc;
+    return {
+      fn: calc,
+      keys: ['video-red', 'video-green', 'video-blue'],
+      names: ['Red', 'Green', 'Blue']
+    }
 };
-function Moment(params) {
+export function Moment(params) {
     // Gives us moment estimates by the plugin method
     // right now, 1st and 2nd central moments
     // a.k.a. mean and covariance
@@ -171,11 +172,41 @@ function Moment(params) {
             0.08333333333*centralMoments[VV])));
         return cookedMoments;
     };
-    calc.nDims = nDims;
-    calc.nState = nState;
-    return calc;
+    return {
+      fn: calc,
+      keys: [
+        'video-moment-1',
+        'video-moment-2',
+        'video-moment-3',
+        'video-moment-4',
+        'video-moment-5',
+        'video-moment-6',
+        'video-moment-7',
+        'video-moment-8',
+        'video-moment-9',
+        'video-moment-10',
+        'video-moment-11',
+        'video-moment-12',
+        'video-moment-13',
+        'video-moment-14',
+        'video-moment-15',
+      ],
+      names: [
+        '●',
+        '○',
+        '❖',
+        '⦿',
+        '◮',
+        '❒',
+        '☀︎',
+        '☽',
+        '✂︎',
+        '✌︎',
+        '⌖',
+        '⌑',
+        '✪',
+        '❀',
+        '✢',
+      ]
+    }
 };
-module.exports = new Map([
-  ["Moment", Moment],
-  ["AvgColor", AvgColor]
-]);
