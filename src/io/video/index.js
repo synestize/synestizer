@@ -152,7 +152,7 @@ export default function init(store, signalio, videoDom) {
       let {signalKeys, signalNames} = payload;
       /*
       //This erases prior video signals; however it also erases their settings,
-      // whcih is not what one wants
+      // whcih is not what one wants. rather, I should use set differences to change where necessary
       let current = store.getState().signal.sourceSignalMeta;
       for (let signalKey of Object.keys(current)) {
         if (signalKey.indexOf('video-')===0){
@@ -163,7 +163,6 @@ export default function init(store, signalio, videoDom) {
       //I could probably stitch these together with Rx
       for (let statKey in signalKeys) {
         signalKeys[statKey].map((signalKey, idx) => {
-          console.debug('vidsig', statKey, signalKey, signalNames[statKey][idx])
           store.dispatch(addSourceSignal(signalKey, signalNames[statKey][idx]))
         });
       }
@@ -173,7 +172,7 @@ export default function init(store, signalio, videoDom) {
     ({type, payload}) => {
       //console.debug("got stuff back", payload);
       //report data streams
-      // statsStreamSpray(payload);
+      statsStreamSpray(payload);
       //Now repeat
       Rx.Scheduler.asap.schedule(
         pumpPixels,
@@ -182,7 +181,13 @@ export default function init(store, signalio, videoDom) {
     }
   );
   function statsStreamSpray(x) {
-    for (let [key, data] of x) {
+    let currentSignals = store.getState().signal.sourceSignalMeta;
+
+    for (let statKey in x) {
+      const signalVals = x[statKey]
+      for (let i=0;i<signalVals.size;i++){
+        signalKey = currentSignals[i]
+          of x[statKey]).map((key, )=>{})
       for (let [idx, value] of data.entries()) {
         let address = "VM" + ("00" + (idx + 1)).slice(-2);
         if ((value < -1) || (value > 1)) {
