@@ -45,10 +45,6 @@ But I think  I can avoid this by separating DOM streams and React components as 
 
 ### If I need to dynamically not render half the app
 
-https://facebook.github.io/react/docs/reusable-components.html
-
-https://facebook.github.io/react/docs/top-level-api.html#react.children
-
 [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 
 ## Redux
