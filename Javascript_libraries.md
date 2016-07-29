@@ -85,16 +85,19 @@ Webpack works by magic, as far as I can tell, and it has fearsomely complicated 
 
 ## Rx.js
 
-* [Rx.js](http://reactivex.io/)
+We use Rx.js version 5.0, because even though it is less common that Rx.js 4.0, the documentation is less autistic.
+
+* [Rx.js](http://reactivex.io/rxjs/)
+  * [Rx.js 4.0 vs 5.0](https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md)
+  * [we use the CJS installation](http://reactivex.io/rxjs/manual/installation.html#commonjs-via-npm) although ES6 syntax.
+    * [we could do ES6 native but its fiddly and there are bugs](https://github.com/ReactiveX/rxjs/issues/1575)
   * [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
   * [Rx marbles](http://rxmarbles.com/) visualises Rx streams
   * [xgrommx's Rx book](https://xgrommx.github.io/rx-book/) is the messy but readable reference
-  * [Rx.js official documenation](https://github.com/Reactive-Extensions/RxJS/tree/master/doc) is not always the bset for explaining their verbose and yet uninformative names, but it does have some useful pages, especially
-    * [Which operator use: creation operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-static.md) is the guide to constructors
-    * [Which operator use: instance operators](https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/which-instance.md) is the guide to instance methods
+  * [Rx.js official documenation](http://reactivex.io/rxjs/manual/overview.html)
 
 * Interoperation
-  * [redux-rx](https://github.com/acdlite/redux-rx)
+  * we could, but not not yet use [redux-rx](https://github.com/acdlite/redux-rx)
 
 * stream debuggers
 
