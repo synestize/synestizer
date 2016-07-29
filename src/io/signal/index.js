@@ -14,6 +14,8 @@ internal state handles high-speed source updates and slower sink updates
 
 export default function init(store) {
   const storeStream = toObservable(store);
+  const sourceSubject = new Rx.Subject();
+  const sinkSubject = new Rx.Subject();
   /*{
      sourceSignalMeta,
      sourceSignalValues,
@@ -26,7 +28,7 @@ export default function init(store) {
     'signal', 'sourceSinkScale'
   ).distinctUntilChanged().subscribe(
     (scale) => {
-      console.log("stream", scale);
+      console.log("signal", scale);
     }
   )
 

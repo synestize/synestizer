@@ -188,8 +188,10 @@ export function sourceSinkScale(state={}, {type, payload}) {
     case SET_SOURCE_SINK_SCALE:
       {
         let [sourceKey, sinkKey, scale] = payload
+        let mapkey = (sourceKey + '/' + sinkKey)
         state = {...state}
-        state[(sourceKey + '/' + sinkKey)] = scale
+        state[mapkey] = scale
+        if (scale===0) { delete state[mapkey] }
         return state
       }
     case REMOVE_MIDI_SINK_CC:
