@@ -14,17 +14,17 @@ var subjects = {
   setMidiSinkCC: new Rx.Subject(),
   soloCC: new Rx.Subject()
 };
-var selectMidiSource = (key) => subjects.selectMidiSource.onNext(key);
-var selectMidiSourceChannel = (i) => subjects.selectMidiSourceChannel.onNext(i);
-var addMidiSourceCC = (i) => subjects.addMidiSourceCC.onNext(i);
-var removeMidiSourceCC = (i) => subjects.removeMidiSourceCC.onNext(i);
-var setMidiSourceCC = (a) => subjects.setMidiSourceCC.onNext(a);
-var selectMidiSink = (key) => subjects.selectMidiSink.onNext(key);
-var selectMidiSinkChannel = (i) => subjects.selectMidiSinkChannel.onNext(i);
-var addMidiSinkCC = (i) => subjects.addMidiSinkCC.onNext(i);
-var removeMidiSinkCC = (i) => subjects.removeMidiSinkCC.onNext(i);
-var setMidiSinkCC = (a) => subjects.setMidiSinkCC.onNext(a);
-var soloCC = (i) => subjects.soloCC.onNext(i);
+var selectMidiSource = (key) => subjects.mapMidiSource.next(key);
+var selectMidiSourceChannel = (i) => subjects.mapMidiSourceChannel.next(i);
+var addMidiSourceCC = (i) => subjects.addMidiSourceCC.next(i);
+var removeMidiSourceCC = (i) => subjects.removeMidiSourceCC.next(i);
+var setMidiSourceCC = (a) => subjects.setMidiSourceCC.next(a);
+var selectMidiSink = (key) => subjects.mapMidiSink.next(key);
+var selectMidiSinkChannel = (i) => subjects.mapMidiSinkChannel.next(i);
+var addMidiSinkCC = (i) => subjects.addMidiSinkCC.next(i);
+var removeMidiSinkCC = (i) => subjects.removeMidiSinkCC.next(i);
+var setMidiSinkCC = (a) => subjects.setMidiSinkCC.next(a);
+var soloCC = (i) => subjects.soloCC.next(i);
 
 module.exports = {
   subjects: subjects,

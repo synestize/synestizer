@@ -1,4 +1,4 @@
-import Rx from 'rxjs-es/Rx'
+import Rx from 'rxjs/Rx'
 import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../../lib/transform'

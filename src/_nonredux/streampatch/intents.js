@@ -6,8 +6,8 @@ var subjects = {
   setMappingSign: new Rx.Subject(),
 };
 
-var setMappingMag = (sourceAddress, sinkAddress, value) => subjects.setMappingMag.onNext([sourceAddress, sinkAddress, value]);
-var setMappingSign = (sourceAddress, sinkAddress, value) => subjects.setMappingSign.onNext([sourceAddress, sinkAddress, value]);
+var setMappingMag = (sourceAddress, sinkAddress, value) => subjects.setMappingMag.next([sourceAddress, sinkAddress, value]);
+var setMappingSign = (sourceAddress, sinkAddress, value) => subjects.setMappingSign.next([sourceAddress, sinkAddress, value]);
 
 
 module.exports = {

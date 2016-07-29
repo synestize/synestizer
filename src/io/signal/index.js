@@ -1,4 +1,4 @@
-import Rx from 'rxjs-es/Rx'
+import Rx from 'rxjs/Rx'
 import update from 'react-addons-update'
 import setop from '../../lib/setop.js'
 import transform from '../../lib/transform.js'

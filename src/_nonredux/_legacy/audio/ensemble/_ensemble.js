@@ -42,7 +42,7 @@ State models reflect the current state of the model
         // select only values under a particular key, and then only if changed.
         // could also throttle rate here
         incomingStream = paramset.paramValsStream.pluck(label
-        ).sample(100).distinctUntilChanged(
+        ).sample(100)::distinctUntilChanged(
         ).subscribe(function(x){
             sliderEl.val(x)
         });
@@ -60,7 +60,7 @@ State models reflect the current state of the model
         return controlStream.pluck(key
             ).where(function(v){
                 return (v !== undefined) && (!isNaN(v))
-            }).distinctUntilChanged(
+            })::distinctUntilChanged(
             ).map(x => controlMeta[key].scale(x));
     };
     global.ensembles.mappedKeyStream = mappedKeyStream;
@@ -69,7 +69,7 @@ State models reflect the current state of the model
         return controlStream.pluck(key
             ).where(function(v){
                 return (v !== undefined) && (!isNaN(v))
-            }).distinctUntilChanged();
+            })::distinctUntilChanged();
     };
     global.ensembles.keyStream = keyStream;
     
@@ -117,7 +117,7 @@ State models reflect the current state of the model
                 var oldVal = paramVals[key];
                 if (oldVal!=newVal) {
                     paramVals[key]=newVal;
-                    paramValsStream.onNext(paramVals);
+                    paramValsStream.next(paramVals);
                 }
             },
             get: function(key) {return paramVals[key]},
@@ -131,7 +131,7 @@ State models reflect the current state of the model
                 return mappedKeyStream(paramValsStream, key, controlMeta)
             }
         }
-        paramValsStream.onNext(paramVals);
+        paramValsStream.next(paramVals);
         ensemble.setParamSet(data);
         return data;
     };

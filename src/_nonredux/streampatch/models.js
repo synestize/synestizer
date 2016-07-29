@@ -49,14 +49,14 @@ updateSubject.subscribe(function (upd) {
   var newState;
   newState = update(state, upd);
   state = newState;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 });
 
 sourceStateSubject.throttle(20).subscribe(function(sourceState) {
 
   sinkState = calcSinkValues(sourceState);
-  sinkStateSubject.onNext(sinkState);
-  updateSubject.onNext({
+  sinkStateSubject.next(sinkState);
+  updateSubject.next({
     sourceState: {$set: sourceState},
     sinkState: {$set: sinkState}
   });
@@ -72,10 +72,10 @@ function addSource(address, label){
     subject.subscribe(function (val) {
 
       sourceState.set(address, val);
-      sourceStateSubject.onNext(sourceState);
+      sourceStateSubject.next(sourceState);
     });
   }
-  updateSubject.onNext({
+  updateSubject.next({
     sourceState: {$set: sourceState},
     sourceMap: {$set: sourceMap},
     sourceFirehoseMap: {$set: sourceFirehoseMap},
@@ -101,7 +101,7 @@ function removeSource(address) {
       sourceSinkMappingMag.delete(key);
     }
   }
-  updateSubject.onNext({
+  updateSubject.next({
     sourceState: {$set: sourceState},
     sourceMap: {$set: sourceMap},
     sourceFirehoseMap: {$set: sourceFirehoseMap},
@@ -120,10 +120,10 @@ function addSink(address, label){
     subject.subscribe(function (val) {
 
       sinkState.set(address, val);
-      sinkStateSubject.onNext(sinkState);
+      sinkStateSubject.next(sinkState);
     });
   }
-  updateSubject.onNext({
+  updateSubject.next({
     sinkState: {$set: sinkState},
     sinkMap: {$set: sinkMap},
     sinkFirehoseMap: {$set: sinkFirehoseMap},
@@ -148,7 +148,7 @@ function removeSink(address) {
       sourceSinkMappingMag.delete(key);
     };
   };
-  updateSubject.onNext({
+  updateSubject.next({
     sinkState: {$set: sinkState},
     sinkMap: {$set: sinkMap},
     sinkFirehoseMap: {$set: sinkFirehoseMap},
@@ -167,7 +167,7 @@ function setMappingSign(sourceAddress, sinkAddress, value) {
   } else {
     sourceSinkMappingSign.set(key, -1);
   };
-  updateSubject.onNext({sourceSinkMappingSign: { $set: sourceSinkMappingSign}});
+  updateSubject.next({sourceSinkMappingSign: { $set: sourceSinkMappingSign}});
   updateMapping();
 };
 
@@ -181,7 +181,7 @@ function setMappingMag(sourceAddress, sinkAddress, value) {
   } else {
     sourceSinkMappingMag.set(key, value);
   };
-  updateSubject.onNext({sourceSinkMappingMag: { $set: sourceSinkMappingMag}});
+  updateSubject.next({sourceSinkMappingMag: { $set: sourceSinkMappingMag}});
   updateMapping();
 };
 
@@ -215,7 +215,7 @@ function calcSinkValues() {
     //This could be done more elegantly by filtering the stream
     if (lastSinkVal !== sinkVal) {
       
-      sinkFirehoseMap.get(sinkAddress).onNext(sinkVal);
+      sinkFirehoseMap.get(sinkAddress).next(sinkVal);
     }
   };
   return newSinkState;

@@ -8,9 +8,9 @@ var subjects = {
   setMedianBaseFreq: new Rx.Subject(),
 };
 
-var setMasterGain = (i) => subjects.setMasterGain.onNext(i);
-var setMedianMasterTempo = (value) => subjects.setMedianMasterTempo.onNext(value);
-var setMedianBaseFreq = (value) => subjects.setMedianBaseFreq.onNext(value);
+var setMasterGain = (i) => subjects.setMasterGain.next(i);
+var setMedianMasterTempo = (value) => subjects.setMedianMasterTempo.next(value);
+var setMedianBaseFreq = (value) => subjects.setMedianBaseFreq.next(value);
 
 module.exports = Object.assign({
   setMasterGain: setMasterGain,

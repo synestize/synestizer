@@ -49,11 +49,11 @@ var statsInbox = Rx.Observer.create(
 );
 var statsOutbox = Rx.Observable.create(function (obs) {
     videoworker.onmessage = function (e) {
-      obs.onNext(e.data);
+      obs.next(e.data);
     };
     videoworker.onerror = function (err, ...args) {
       console.warn(err, args);
-      obs.onError(err);
+      obs.error(err);
     };
     return function () {
       videoworker.terminate();
@@ -80,7 +80,7 @@ function statsStreamSpray(x) {
         console.warn("STATISTIC OUT OF RANGE", address, value, transform.clip1(value));
         value = transform.clip1(value);
       };
-      streamPatch.getSourceStream(address).onNext(value);
+      streamPatch.getSourceStream(address).next(value);
     }
   }
 }
@@ -89,7 +89,7 @@ var mediaStream;
 
 const PIXELDIM=64
 
-statsInbox.onNext({
+statsInbox.next({
   topic: "settings",
   payload: {
     statistics: new Map([["Moment", {PIXELDIM: PIXELDIM}]])
@@ -110,12 +110,12 @@ updateSubject.subscribe(function (upd) {
   newState = update(state, upd);
   //could use an immutable update cycle Here
   state = newState;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 });
 
-intents.subjects.selectVideoSource.subscribe(function(key){
+intents.subjects.mapVideoSource.subscribe(function(key){
   doVideoPlumbing(key);
-  updateSubject.onNext({activesource:{$set:key}});
+  updateSubject.next({activesource:{$set:key}});
 });
 
 function doVideoPlumbing(key) {
@@ -178,7 +178,7 @@ function grabPixels() {
 }
 function pumpPixels() {
   let p = grabPixels();
-  statsInbox.onNext({topic:"pixels", payload: p})
+  statsInbox.next({topic:"pixels", payload: p})
 }
 
 function init(newVideoDom) {
@@ -207,12 +207,12 @@ function updateVideoIO(mediadevices) {
     videosources.set(dev.deviceId,dev);
     allsources.set(dev.deviceId,dev.label);
   });
-  updateSubject.onNext({
+  updateSubject.next({
     allsources: {$set: allsources},
   });
   //If there is only one device, select it.
   if (allsources.size===1) {
-    for (let key of allsources.keys()) {intents.selectVideoSource(key)}
+    for (let key of allsources.keys()) {intents.mapVideoSource(key)}
   }
 };
 

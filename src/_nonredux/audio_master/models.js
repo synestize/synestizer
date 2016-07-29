@@ -41,13 +41,13 @@ function initAudio(){
 // unlike the usual synth interactions this is in plain decibels.
 function setMasterGain(gain) {
   state.masterGain = gain;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 };
 intents.subjects.setMasterGain.subscribe(setMasterGain);
 
 Rx.Observable.combineLatest(
-  stateSubject.pluck('masterGain').distinctUntilChanged(),
-  _audioStateSubject.pluck('outputNode').distinctUntilChanged()
+  stateSubject.pluck('masterGain')::distinctUntilChanged(),
+  _audioStateSubject.pluck('outputNode')::distinctUntilChanged()
 ).filter(
   (vals)=>Boolean(vals.reduce((a,b)=>(a && b))) //makes sure all values are truthy
 ).subscribe(
@@ -57,45 +57,45 @@ Rx.Observable.combineLatest(
 //Master Tempo
 function setMedianMasterTempo(value) {
   state.medianMasterTempo = value;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 };
 intents.subjects.setMedianMasterTempo.subscribe(
   (value) => setMedianMasterTempo(value)
 );
 function setPerturbationMasterTempo(value) {
   state.perturbationMasterTempo=value;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 };
 Rx.Observable.combineLatest(
-  stateSubject.pluck('medianMasterTempo').distinctUntilChanged(),
-  stateSubject.pluck('perturbationMasterTempo').distinctUntilChanged()
+  stateSubject.pluck('medianMasterTempo')::distinctUntilChanged(),
+  stateSubject.pluck('perturbationMasterTempo')::distinctUntilChanged()
 ).subscribe(function([a,b]) {
   state.actualMasterTempo = transform.perturb([a||0, b||0]);
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 });
 //baseFreq
 function setMedianBaseFreq(value) {
   state.medianBaseFreq = value;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 };
 intents.subjects.setMedianBaseFreq.subscribe(
   (value) => setMedianBaseFreq(value)
 );
 function setPerturbationBaseFreq(value) {
   state.perturbationBaseFreq=value;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 };
 Rx.Observable.combineLatest(
-  stateSubject.pluck('medianBaseFreq').distinctUntilChanged(),
-  stateSubject.pluck('perturbationBaseFreq').distinctUntilChanged()
+  stateSubject.pluck('medianBaseFreq')::distinctUntilChanged(),
+  stateSubject.pluck('perturbationBaseFreq')::distinctUntilChanged()
 ).subscribe(function([a,b]) {
   state.actualBaseFreq = transform.perturb([a||0, b||0]);
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 });
 
 Rx.Observable.combineLatest(
-  stateSubject.pluck('actualBaseFreq').distinctUntilChanged(),
-  _audioStateSubject.pluck('outputNode').distinctUntilChanged()
+  stateSubject.pluck('actualBaseFreq')::distinctUntilChanged(),
+  _audioStateSubject.pluck('outputNode')::distinctUntilChanged()
 ).filter(
   (vals)=>Boolean(vals.reduce((a,b)=>(a && (b !== undefined))), true) //check  all values are defined
 ).subscribe(

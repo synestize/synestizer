@@ -1,14 +1,14 @@
-import Rx from 'rxjs-es/Rx'
+import Rx from 'rxjs/Rx'
 /*
-import {Subject} from 'rxjs-es/Subject'
-import {Observable} from 'rxjs-es/Observable'
-import {Observer} from 'rxjs-es/Observer'
-import {Scheduler} from 'rxjs-es/Scheduler'
-import {distinctUntilChanged} from 'rxjs-es/operator/distinctUntilChanged';
-import {fromEvent} from 'rxjs-es/observable/fromEvent';
-import {fromPromise} from 'rxjs-es/observable/fromPromise';
-import {filter} from 'rxjs-es/operator/filter';
-import {pluck} from 'rxjs-es/operator/pluck';
+import {Subject} from 'rxjs/Subject'
+import {Observable} from 'rxjs/Observable'
+import {Observer} from 'rxjs/Observer'
+import {Scheduler} from 'rxjs/Scheduler'
+import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
+import {fromEvent} from 'rxjs/observable/fromEvent';
+import {fromPromise} from 'rxjs/observable/fromPromise';
+import {filter} from 'rxjs/operator/filter';
+import {pluck} from 'rxjs/operator/pluck';
 */
 import Statistic from './statistic'
 import webrtc from 'webrtc-adapter'
@@ -147,7 +147,7 @@ export default function init(store, signalio, videoDom) {
       };
       videoworker.onerror = function (err, ...args) {
         console.warn(err, args);
-        obs.onError(err);
+        obs.error(err);
       };
       return function () {
         videoworker.terminate();
@@ -160,7 +160,7 @@ export default function init(store, signalio, videoDom) {
     //report data streams
     statsStreamSpray(x.payload);
     //Now repeat
-    Scheduler.asap.scheduleFuture(
+    Rx.Scheduler.asap.scheduleFuture(
       null,
       20,
       pumpPixels

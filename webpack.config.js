@@ -21,7 +21,7 @@ module.exports = {
     ],
     loaders: [{
       test: /\.jsx?$/,
-      exclude: /(node_modules(?!\/rxjs))/,
+      exclude: /(node_modules)/,
       loader: 'babel',
       query: {
         cacheDirectory: '/tmp',

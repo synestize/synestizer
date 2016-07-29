@@ -8,10 +8,10 @@ var subjects = {
   selectSynth: new Rx.Subject(),
 };
 
-var setSawtoothGain = (i) => subjects.setSawtoothGain.onNext(i);
-var selectSynthSource = (i) => subjects.selectSynthSource.onNext(i);
-var selectSynthSink = (i) => subjects.selectSynthSink.onNext(i);
-var selectSynth = (i) => subjects.selectSynth.onNext(i);
+var setSawtoothGain = (i) => subjects.setSawtoothGain.next(i);
+var selectSynthSource = (i) => subjects.mapSynthSource.next(i);
+var selectSynthSink = (i) => subjects.mapSynthSink.next(i);
+var selectSynth = (i) => subjects.mapSynth.next(i);
 
 module.exports = {
   subjects: subjects,

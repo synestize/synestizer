@@ -155,7 +155,7 @@
             }
             if (pixels.length>0) {
                 //Yay! it worked
-                pixelStream.onNext(pixels);
+                pixelStream.next(pixels);
             };
             return getPixels;
         };

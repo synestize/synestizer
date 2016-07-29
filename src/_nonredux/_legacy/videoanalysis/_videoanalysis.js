@@ -25,11 +25,11 @@
         // Create observable to handle the messages
         var observable = Rx.Observable.create(function (obs) {
             worker.onmessage = function (data) {
-                obs.onNext(data);
+                obs.next(data);
             };
 
             worker.onerror = function (err) {
-                obs.onError(err);
+                obs.error(err);
             };
 
             return function () {
@@ -55,7 +55,7 @@
                 console.log('Completed');
             });
 
-        statWorkerSubject.onNext(525);
+        statWorkerSubject.next(525);
         //Things get crazy here because we don't know how long statistics take
         //So we roll our own backpressure using a tail call
         //TODO: there is a recursive scheduler built in to the system already.
@@ -72,7 +72,7 @@
         //This tail call should recalculate each new batch of statistics
         //25ms after the last one finished
         function statsAndMoreStats(pixels){
-            outboxStream.onNext(calcStats(pixels));
+            outboxStream.next(calcStats(pixels));
             global.setTimeout(function(){
                 pixelPump.pixelStream.take(1).subscribe(statsAndMoreStats)
             }, 25);

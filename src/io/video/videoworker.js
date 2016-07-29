@@ -1,9 +1,9 @@
 
-import Rx from 'rxjs-es/Rx';
+import Rx from 'rxjs/Rx';
 var Statistic = require('./statistic');
 var statistics = new Map();
 
-var inbox = Rx.Observable.fromEvent(self, "message").select((e) => e.data);
+var inbox = Rx.Observable.fromEvent(self, "message").map((e) => e.data);
 var outbox = new Rx.Subject();
 var results = new Map();
 

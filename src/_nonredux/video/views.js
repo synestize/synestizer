@@ -31,7 +31,7 @@ var VideoSourceSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="videoSource">Device </label>
-    <select name="videoSource" id="videoSource" className="videoselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectVideoSource(ev.target.value)}>
+    <select name="videoSource" id="videoSource" className="videoselect" disable={disabled} value={selectValue} onChange={(ev) => intents.mapVideoSource(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>

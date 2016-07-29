@@ -5,7 +5,7 @@ var subjects = {
   selectVideoSource: new Rx.Subject()
 };
 
-var selectVideoSource = (i) => subjects.selectVideoSource.onNext(i);
+var selectVideoSource = (i) => subjects.mapVideoSource.next(i);
 
 module.exports = {
   subjects: subjects,

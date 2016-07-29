@@ -32,7 +32,7 @@ var MidiSourceSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiSource">Device </label>
-    <select name="midiSource" id="midiSource" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSource(ev.target.value)}>
+    <select name="midiSource" id="midiSource" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.mapMidiSource(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
@@ -50,7 +50,7 @@ var MidiSourceChannelSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiInChan">Channel</label>
-    <select name="midiInChan" id="midiInChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSourceChannel(parseInt(ev.target.value))}>
+    <select name="midiInChan" id="midiInChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.mapMidiSourceChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
     </select>
   </div>)
@@ -71,7 +71,7 @@ var MidiSourceCCSetSelect = function(props) {
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
         intents.setMidiSourceCC(
-          Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
+          Array.prototype.slice.call( ev.target.mapedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
     </select>
@@ -113,7 +113,7 @@ var MidiSinkSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiSink">Device </label>
-    <select name="midiSink" id="midiSink" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSink(ev.target.value)}>
+    <select name="midiSink" id="midiSink" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.mapMidiSink(ev.target.value)}>
       {deviceOptNodes}
     </select>
   </div>
@@ -131,7 +131,7 @@ var MidiSinkChannelSelect = function(props) {
   };
   return (<div className="streamchooserwidget">
     <label htmlFor="midiOutChan">Channel</label>
-    <select name="midiOutChan" id="midiOutChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.selectMidiSinkChannel(parseInt(ev.target.value))}>
+    <select name="midiOutChan" id="midiOutChan" className="midiselect" disable={disabled} value={selectValue} onChange={(ev) => intents.mapMidiSinkChannel(parseInt(ev.target.value))}>
       {channelOptNodes}
     </select>
   </div>)
@@ -152,7 +152,7 @@ var MidiSinkCCSetSelect = function(props) {
       } className="midiselect" disable={disabled} onChange={(ev) => {
         /* extracting multiple values is nasty and asymmetrical */
         intents.setMidiSinkCC(
-          Array.prototype.slice.call( ev.target.selectedOptions ).map((x)=>parseInt(x.value)))}
+          Array.prototype.slice.call( ev.target.mapedOptions ).map((x)=>parseInt(x.value)))}
     }>
       {ccOptNodes}
     </select>

@@ -51,7 +51,7 @@ function handleMidiInMessage (ev) {
     (state.activesourcechannel == channel) &&
     state.activesourceccs.has(cc)) {
     
-    streamPatch.getSourceStream("midi-cc-"+ cc).onNext(val);
+    streamPatch.getSourceStream("midi-cc-"+ cc).next(val);
   };
 };
 //Interface to MIDI output
@@ -76,12 +76,12 @@ updateSubject.subscribe(function (upd) {
   newState = update(state, upd);
   //could use an immutable update cycle Here
   state = newState;
-  stateSubject.onNext(state);
+  stateSubject.next(state);
 });
 
 function selectMidiSource(key) {
   console.debug("midiin", key);
-  updateSubject.onNext({activesource:{$set:key}});
+  updateSubject.next({activesource:{$set:key}});
   if (midiinfo !==null) {
     if (rawMidiInSubscription !== undefined) {
       rawMidiInSubscription.dispose()
@@ -91,18 +91,18 @@ function selectMidiSource(key) {
     ).subscribe(handleMidiInMessage);
   }
 }
-intents.subjects.selectMidiSource.subscribe(selectMidiSource);
+intents.subjects.mapMidiSource.subscribe(selectMidiSource);
 
 function selectMidiSourceChannel(i) {
-  updateSubject.onNext({activesourcechannel:{$set:i}});
+  updateSubject.next({activesourcechannel:{$set:i}});
 }
-intents.subjects.selectMidiSourceChannel.subscribe(selectMidiSourceChannel);
+intents.subjects.mapMidiSourceChannel.subscribe(selectMidiSourceChannel);
 
 function addMidiSourceCC(cc) {
   state.activesourceccs.add(cc);
   let address = "midi-cc-"+ cc;
   streamPatch.addSource(address);
-  updateSubject.onNext(
+  updateSubject.next(
     {activesourceccs:{$set: state.activesourceccs}}
   );
 }
@@ -113,7 +113,7 @@ function removeMidiSourceCC(cc) {
   newccs.delete(cc);
   let address = "midi-cc-"+ cc;
   streamPatch.removeSource(address);
-  updateSubject.onNext({activesourceccs:{$set:newccs}});
+  updateSubject.next({activesourceccs:{$set:newccs}});
 }
 intents.subjects.removeMidiSourceCC.subscribe(removeMidiSourceCC);
 
@@ -131,23 +131,23 @@ function setMidiSourceCC (a) {
 intents.subjects.setMidiSourceCC.subscribe(setMidiSourceCC);
 
 function selectMidiSink(key) {
-  updateSubject.onNext({activesink:{$set:key}});
+  updateSubject.next({activesink:{$set:key}});
 }
-intents.subjects.selectMidiSink.subscribe(selectMidiSink);
+intents.subjects.mapMidiSink.subscribe(selectMidiSink);
 
 function selectMidiSinkChannel(i) {
-  updateSubject.onNext({activesinkchannel:{$set:i}});
+  updateSubject.next({activesinkchannel:{$set:i}});
 }
-intents.subjects.selectMidiSinkChannel.subscribe(selectMidiSinkChannel);
+intents.subjects.mapMidiSinkChannel.subscribe(selectMidiSinkChannel);
 
 function addMidiSinkCC(cc) {
   state.activesinkccs.add(cc);
   let address = "midi-cc-"+ cc;
   let subject = streamPatch.addSink(address);
-  subject.map(transform.bipolMidi).distinctUntilChanged().subscribe(
+  subject.map(transform.bipolMidi)::distinctUntilChanged().subscribe(
     (val) => handleMidiOutMessage(cc, val)
   );
-  updateSubject.onNext(
+  updateSubject.next(
     {activesinkccs:{$set: state.activesinkccs}}
   );
 }
@@ -158,7 +158,7 @@ function removeMidiSinkCC(cc) {
   newccs.delete(cc);
   let address = "midi-cc-"+ cc;
   streamPatch.removeSink(address);
-  updateSubject.onNext({activesinkccs:{$set:newccs}});
+  updateSubject.next({activesinkccs:{$set:newccs}});
 }
 intents.subjects.removeMidiSinkCC.subscribe(removeMidiSinkCC);
 
@@ -178,7 +178,7 @@ intents.subjects.setMidiSinkCC.subscribe(setMidiSinkCC);
 
 function soloCC(cc) {
   console.debug("soloCC", cc);
-  updateSubject.onNext({solocc:{$set: cc}});
+  updateSubject.next({solocc:{$set: cc}});
 }
 intents.subjects.soloCC.subscribe(soloCC);
 
@@ -209,7 +209,7 @@ function updateMidiIO(newmidiinfo) {
   for (var [key, val] of midiinfo.outputs.entries()){
     allsinks.set(key, val.name)
   };
-  updateSubject.onNext({
+  updateSubject.next({
     allsources: {$set: allsources},
     allsinks: {$set: allsinks}
   });
