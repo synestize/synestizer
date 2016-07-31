@@ -14,7 +14,7 @@
   * optional CSS filters on video
 
 * UI improvements
-  * save/load UI (preset names etc)
+  * UI for save/load (preset names etc)
   * desaturation should treat +/-1 less "extremely" so that it captures a control.
     * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
   * animate transitions and updates
@@ -40,7 +40,6 @@
   * Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
   * Consistently use Object or Immutableverywhere.
 
-    * If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
     * Immutable state? [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 
 * A *patch* should map between

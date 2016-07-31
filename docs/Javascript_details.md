@@ -13,6 +13,10 @@ Module support in ES6 looks different than the older standards.
 * [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
 * [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
 
+### Tips
+
+If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
+
 ## HTML5 Multimedia
 
 not technically a "library", but a "set of things to know"
