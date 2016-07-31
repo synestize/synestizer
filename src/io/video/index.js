@@ -205,7 +205,7 @@ export default function init(store, signalio, videoDom) {
         ////streamPatch.getSourceSignal(address).next(value);
       }
     }
-    signalio.sourceSubject.next(sourceUpdates);
+    signalio.sourceUpdates.next(sourceUpdates);
   }
 
   statsInbox.next({
