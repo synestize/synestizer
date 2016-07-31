@@ -1,11 +1,11 @@
 'use strict';
 import { connect } from 'react-redux';
 import Link from '../components/Link';
-import { setVisiblePane } from '../actions/app';
+import { setVisiblePane } from '../actions/gui';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    active: (state.__volatile.visiblePane == ownProps.paneId),
+    active: (state.gui.visiblePane == ownProps.paneId),
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
