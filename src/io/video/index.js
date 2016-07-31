@@ -31,7 +31,9 @@ export default function init(store, signalio, videoDom) {
   //hardware business
   let videosources = new Map(); //id -> device
   let videosource; //device
-
+  let signalKeys;
+  let signalNames;
+  let signalNameFromKey;
 
   //worker thread business
   const videoworker =  Videoworker_();
@@ -149,7 +151,11 @@ export default function init(store, signalio, videoDom) {
 
   statsSubject.filter((x)=>(x.type==="statmeta")).subscribe(
     ({type, payload}) => {
-      let {signalKeys, signalNames} = payload;
+      ({signalKeys, signalNames} = payload);
+      signalNameFromKey = {};
+      // console.debug("signalKeys", signalKeys);
+      // console.debug("signalNames", signalNames);
+
       /*
       //This erases prior video signals; however it also erases their settings,
       // whcih is not what one wants. rather, I should use set differences to change where necessary
@@ -163,6 +169,7 @@ export default function init(store, signalio, videoDom) {
       //I could probably stitch these together with Rx
       for (let statKey in signalKeys) {
         signalKeys[statKey].map((signalKey, idx) => {
+
           store.dispatch(addSourceSignal(signalKey, signalNames[statKey][idx]))
         });
       }
@@ -181,18 +188,15 @@ export default function init(store, signalio, videoDom) {
     }
   );
   function statsStreamSpray(x) {
-    let currentSignals = store.getState().signal.sourceSignalMeta;
-
+    let sourceSignalMeta = store.getState().signal.sourceSignalMeta;
     for (let statKey in x) {
       const signalVals = x[statKey]
       for (let i=0;i<signalVals.size;i++){
-        signalKey = currentSignals[i]
-          // of x[statKey]).map((key, )=>{})
-      }
-      for (let [idx, value] of data.entries()) {
-        let address = "VM" + ("00" + (idx + 1)).slice(-2);
+        signalKey = signalKeys[statKey][i]
+        console.debug('spraying', statKey, signalKey, value);
+        //let signalName = sourceSignalMeta[signalKey]
         if ((value < -1) || (value > 1)) {
-          console.warn("STATISTIC OUT OF RANGE", address, value);
+          console.warn("STATISTIC OUT OF RANGE", signalKey, value);
           value = clip1(value);
         };
         ////streamPatch.getSourceSignal(address).next(value);

@@ -1,20 +1,16 @@
 import *  as transform from '../../lib/transform'
 
-export function AvgColor(params) {
+export function AvgColor({PIXELDIM=64}) {
     //1/8 sub-sampled average color
-    params = params || {};
-
-    var PIXELDIM=params.PIXELDIM || 64; //64x64 grid is all we use.
-    var PIXELCOUNT=PIXELDIM*PIXELDIM;
-    params = params || {};
-    var out = new Float32Array(3);
-    var R=0, G=1, B=2;
+    const PIXELCOUNT=PIXELDIM*PIXELDIM;
+    const out = new Float32Array(3);
+    let R=0, G=1, B=2;
     function calc(pixels) {
         out[R] = 0;
         out[G] = 0;
         out[B] = 0;
 
-        for (var i = 0; i < PIXELCOUNT; i+=8) {
+        for (let i = 0; i < PIXELCOUNT; i+=8) {
             out[R] += pixels[i * 4 + R]/255;
             out[G] += pixels[i * 4 + G]/255;
             out[B] += pixels[i * 4 + B]/255;
@@ -31,37 +27,32 @@ export function AvgColor(params) {
       names: ['Red', 'Green', 'Blue']
     }
 };
-export function Moment(params) {
+export function Moment({PIXELDIM=64}) {
     // Gives us moment estimates by the plugin method
     // right now, 1st and 2nd central moments
     // a.k.a. mean and covariance
     // TODO: check that all variances are correctly normalised
     // Occasionally they seem to be outside of [0,1]
-    params = params || {};
-
-    var PIXELDIM=params.PIXELDIM || 64; //64x64 grid is all we use.
-    var PIXELCOUNT=PIXELDIM*PIXELDIM;
-    var rawSums, centralMoments, cookedMoments, ysvij;
-    var nDims=15;
-    var nState=15;
+    const PIXELCOUNT=PIXELDIM*PIXELDIM;
+    let nDims=15;
     // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
     // This is very confusing.
-    var Y=0, S=1, V=2;
-    var IY=3, IS=4, IV=5;
-    var JY=6, JS=7, JV=8;
-    var YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
+    let Y=0, S=1, V=2;
+    let IY=3, IS=4, IV=5;
+    let JY=6, JS=7, JV=8;
+    let YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
 
-    rawSums = new Float32Array(nDims);
-    centralMoments = new Float32Array(nDims);
-    cookedMoments = new Float32Array(nDims);
-    ysvij = new Float32Array(5);
+    const rawSums = new Float32Array(nDims);
+    const centralMoments = new Float32Array(nDims);
+    const cookedMoments = new Float32Array(nDims);
+    const ysvij = new Float32Array(5);
     function calc(pixels) {
-        for (var i = 0; i < nDims; i++) {
+        for (let i = 0; i < nDims; i++) {
             rawSums[i]=0.0;
         }
-        for (var j = 0; j < PIXELDIM; j++) {
-            for (var i = 0; i < PIXELDIM; i++) {
-                var ij = (PIXELDIM * j + i) * 4;//pixel offset
+        for (let j = 0; j < PIXELDIM; j++) {
+            for (let i = 0; i < PIXELDIM; i++) {
+                let ij = (PIXELDIM * j + i) * 4;//pixel offset
                 // first we tranform RGB to YSV
                 // - effectively a PCA of the color vectors
                 // otherwise we are measuring mostly brightness.

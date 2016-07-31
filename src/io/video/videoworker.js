@@ -25,7 +25,6 @@ inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
     signalKeys[statKey] = keys;
     signalNames[statKey] = names;
   }
-  console.debug('nang', signalKeys, signalNames)
   outbox.next({
     type: 'statmeta',
     payload:{
