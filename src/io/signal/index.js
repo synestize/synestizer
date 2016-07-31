@@ -8,13 +8,19 @@ import React from 'react'
 typeof window !== "undefined" && (window.React = React); // for devtools
 
 /*
-internal state handles high-speed source updates and slower sink updates
+internal state handles high-speed source updates and periodic sink updates and UI updates
 */
 
 export default function init(store) {
   const storeStream = toObservable(store);
   const sourceSubject = new Rx.Subject();
   const sinkSubject = new Rx.Subject();
+
+  let sourceState = {}
+  let sinkState = {}
+
+  sourceSubject.subscribe((upd)=>sourceState = {...sourceState, ...upd})
+  //sourceSubject.subscribe((upd)=>console.debug( sourceState))
   /*{
      sourceSignalMeta,
      sourceSignalValues,
