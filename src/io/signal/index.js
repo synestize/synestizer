@@ -14,19 +14,17 @@ internal state handles high-speed source updates and periodic sink updates and U
 export default function init(store) {
   const storeStream = toObservable(store);
   const sourceUpdates = new Rx.Subject();
-  const sourceStateSubject = new Rx.Subject();
 
-  let sourceState = {}
   let sinkState = {}
 
-  sourceUpdates.subscribe((upd)=>{
-    //maybe there is already a merge operator for this? yes, scan.
-    //http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-scan
-    sourceState = {...sourceState, ...upd}
-    sourceStateSubject.next(sourceState)
-  })
-  const sinkObs = sourceStateSubject.throttle(50).map(projectSources).share();
-
+  const sourceStateSubject = sourceUpdates.publish().scan(
+    (sourceState, upd)=>({...sourceState, ...upd}),
+    {}
+  )
+  const sinkObs = sourceStateSubject.throttle(50).map(projectObs).share();
+  sourceStateSubject.throttle(50).subscribe(
+    (vals) => store.dispatch(setAllSourceSignalValues(vals))
+  )
   //sourceUpdates.subscribe((upd)=>console.debug( sourceState))
   /*{
      sourceSignalMeta,
@@ -43,7 +41,9 @@ export default function init(store) {
       console.log("signal", scale);
     }
   )
-  function projectObs(source) {}
+  function projectObs(source) {
+    return source
+  }
 
   return {
     sourceUpdates,
