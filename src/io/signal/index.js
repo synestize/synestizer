@@ -1,5 +1,4 @@
 import Rx from 'rxjs/Rx'
-import update from 'react-addons-update'
 import setop from '../../lib/setop.js'
 import transform from '../../lib/transform.js'
 import { addSourceSignal, removeSourceSignal, setSourceSignalValue, setAllSourceSignalValues, addSinkSignal, removeSinkSignal, setSinkSignalValue, setAllSinkSignalValue, setSourceSinkScale, setSinkBias } from '../../actions/signal'
