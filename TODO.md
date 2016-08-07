@@ -1,7 +1,8 @@
 # TODO
 
 * currently:
-  * we need ordered keys for the statistic names, or hierearchical structure or something
+  * we need ordered keys for the statistic names,
+    or hierarchical structure or something
   * Get Christoph's help moving the yellow.listentocolors.net
   * speed of controllers changes when in the background
   * example Ableton set
@@ -9,16 +10,21 @@
   * implement audio model
   * Get Christoph's help moving the yellow.listentocolors.net
   * random sparse mapping button
-  * generate MIDI note sequences as well so that we don't need arpeggiators for output.
+  * generate MIDI note sequences as well so that
+    we don't need arpeggiators for output.
   * audio input
   * optional CSS filters on video
 
 * UI improvements
   * save/load UI (preset names etc)
-  * desaturation should treat +/-1 less "extremely" so that it captures a control.
-    * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
+  * desaturation should treat +/-1 less "extremely"
+    so that it captures a control.
+    * this is probably simplest to achieve by clipping inputs
+      to [-0.999, 0.999], which is not fancy but probably fine.
   * animate transitions and updates
-  * set "central" value of param by letting each output parameter have a "center" parameter and also display perturbation, augmenting the output stream model
+  * set "central" value of param by letting each output parameter have a
+    "center" parameter and also display perturbation,
+    augmenting the output stream model
   * Svg widgets? http://stackoverflow.com/a/30579774
   * [materialui widgets](http://www.material-ui.com/#/components/slider)?
 
