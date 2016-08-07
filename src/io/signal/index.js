@@ -1,5 +1,4 @@
 import Rx from 'rxjs/Rx'
-import update from 'react-addons-update'
 import setop from '../../lib/setop.js'
 import transform from '../../lib/transform.js'
 import { addSourceSignal, removeSourceSignal, setSourceSignalValue, setAllSourceSignalValues, addSinkSignal, removeSinkSignal, setSinkSignalValue, setAllSinkSignalValue, setSourceSinkScale, setSinkBias } from '../../actions/signal'
@@ -9,13 +8,24 @@ import React from 'react'
 typeof window !== "undefined" && (window.React = React); // for devtools
 
 /*
-internal state handles high-speed source updates and slower sink updates
+internal state handles high-speed source updates and periodic sink updates and UI updates
 */
 
 export default function init(store) {
   const storeStream = toObservable(store);
-  const sourceSubject = new Rx.Subject();
-  const sinkSubject = new Rx.Subject();
+  const sourceUpdates = new Rx.Subject();
+
+  let sinkState = {}
+
+  const sourceStateSubject = sourceUpdates.publish().scan(
+    (sourceState, upd)=>({...sourceState, ...upd}),
+    {}
+  )
+  const sinkObs = sourceStateSubject.throttle(50).map(projectObs).share();
+  sourceStateSubject.throttle(50).subscribe(
+    (vals) => store.dispatch(setAllSourceSignalValues(vals))
+  )
+  //sourceUpdates.subscribe((upd)=>console.debug( sourceState))
   /*{
      sourceSignalMeta,
      sourceSignalValues,
@@ -31,9 +41,12 @@ export default function init(store) {
       console.log("signal", scale);
     }
   )
+  function projectObs(source) {
+    return source
+  }
 
   return {
-    sourceSubject,
-    sinkSubject,
+    sourceUpdates,
+    sinkObs,
   }
 }

@@ -4,7 +4,7 @@ import PaneSet from '../components/PaneSet';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    visiblePane: state.__volatile.visiblePane
+    visiblePane: state.gui.visiblePane
   }
 };
 
