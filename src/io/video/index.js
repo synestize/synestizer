@@ -157,8 +157,9 @@ export default function init(store, signalio, videoDom) {
       // console.debug("signalNames", signalNames);
 
       /*
-      //This erases prior video signals; however it also erases their settings,
-      // whcih is not what one wants. rather, I should use set differences to change where necessary
+      // This erases prior video signals; however it also erases their settings,
+      // which is not what one wants.
+      // rather, I should use set differences to change where necessary
       let current = store.getState().signal.sourceSignalMeta;
       for (let signalKey of Object.keys(current)) {
         if (signalKey.indexOf('video-')===0){
@@ -169,7 +170,6 @@ export default function init(store, signalio, videoDom) {
       //I could probably stitch these together with Rx
       for (let statKey in signalKeys) {
         signalKeys[statKey].map((signalKey, idx) => {
-
           store.dispatch(addSourceSignal(signalKey, signalNames[statKey][idx]))
         });
       }

@@ -1,7 +1,18 @@
 import Rx from 'rxjs/Rx'
 import setop from '../../lib/setop.js'
 import transform from '../../lib/transform.js'
-import { addSourceSignal, removeSourceSignal, setSourceSignalValue, setAllSourceSignalValues, addSinkSignal, removeSinkSignal, setSinkSignalValue, setAllSinkSignalValue, setSourceSinkScale, setSinkBias } from '../../actions/signal'
+import {
+  addSourceSignal,
+  removeSourceSignal,
+  setSourceSignalValue,
+  setAllSourceSignalValues,
+  addSinkSignal,
+  removeSinkSignal,
+  setSinkSignalValue,
+  setAllSinkSignalValues,
+  setSourceSinkScale,
+  setSinkBias
+} from '../../actions/signal'
 import { toObservable } from '../../lib/rx_redux'
 import React from 'react'
 
@@ -15,17 +26,19 @@ export default function init(store) {
   const storeStream = toObservable(store);
   const sourceUpdates = new Rx.Subject();
 
-  let sinkState = {}
-
-  const sourceStateSubject = sourceUpdates.publish().scan(
+  // sourceUpdates.subscribe((x)=>console.debug('sigstate2', x))
+  const sourceStateSubject = sourceUpdates.scan(
     (sourceState, upd)=>({...sourceState, ...upd}),
     {}
-  )
-  const sinkObs = sourceStateSubject.throttle(50).map(projectObs).share();
-  sourceStateSubject.throttle(50).subscribe(
-    (vals) => store.dispatch(setAllSourceSignalValues(vals))
-  )
-  //sourceUpdates.subscribe((upd)=>console.debug( sourceState))
+  ).throttleTime(1000).share();
+  // sourceStateSubject.subscribe((x)=>console.debug('sigstate3', x))
+  sourceStateSubject.subscribe((vals) => {
+    store.dispatch(setAllSourceSignalValues(vals))
+  });
+  const sinkStateSubject = sourceStateSubject.map(projectObs).share();
+  sinkStateSubject.subscribe((vals) => {
+    store.dispatch(setAllSinkSignalValues(vals))
+  });
   /*{
      sourceSignalMeta,
      sourceSignalValues,
@@ -34,6 +47,7 @@ export default function init(store) {
      sourceSinkScale,
      sinkBias
   }*/
+  // This is prolly unnecessary
   storeStream.pluck(
     'signal', 'sourceSinkScale'
   ).distinctUntilChanged().subscribe(
@@ -42,11 +56,12 @@ export default function init(store) {
     }
   )
   function projectObs(source) {
+    console.debug('project', source);
     return source
   }
 
   return {
     sourceUpdates,
-    sinkObs,
+    sinkStateSubject,
   }
 }

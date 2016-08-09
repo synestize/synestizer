@@ -26,7 +26,7 @@ export function setSourceSignalValue(key, value) {
   return { type: SET_SOURCE_SIGNAL_VALUE, payload: [key, value] }
 }
 export function setAllSourceSignalValues(dict) {
-  return { type: SET_ALL_SOURCE_SIGNAL_VALUE, payload: dict }
+  return { type: SET_ALL_SOURCE_SIGNAL_VALUES, payload: dict }
 }
 export function addSinkSignal(key, name) {
   return { type: ADD_SINK_SIGNAL, payload: [key, name] }
@@ -37,7 +37,7 @@ export function removeSinkSignal(key) {
 export function setSinkSignalValue(key, val) {
   return { type: SET_SINK_SIGNAL_VALUE, payload: [key, val] }
 }
-export function setAllSinkSignalValue(dict) {
+export function setAllSinkSignalValues(dict) {
   return { type: SET_ALL_SINK_SIGNAL_VALUES, payload: dict }
 }
 export function setSourceSinkScale(sourceKey, sinkKey, value) {
