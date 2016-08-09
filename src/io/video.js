@@ -13,16 +13,16 @@ import {pluck} from 'rxjs/operator/pluck';
 import  {
   addSourceSignal,
   removeSourceSignal,
-} from '../../actions/signal'
+} from '../actions/signal'
 
 import webrtc from 'webrtc-adapter'
-import Videoworker_ from 'worker!./videoworker'
+import Videoworker_ from 'worker!./video/videoworker'
 import {
   setValidVideoSource,
   setCurrentVideoSource,
-  setAllVideoSources } from '../../actions/video'
-import { toObservable } from '../../lib/rx_redux'
-import { clip1 } from '../../lib/transform'
+  setAllVideoSources } from '../actions/video'
+import { toObservable } from '../lib/rx_redux'
+import { clip1 } from '../lib/transform'
 
 
 export default function init(store, signalio, videoDom) {

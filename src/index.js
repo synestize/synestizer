@@ -6,9 +6,9 @@ import { createStore, applyMiddleware } from 'redux'
 
 import rootReducer from './reducers/index'
 import App from './containers/App'
-import videoio_ from 'io/video/index'
-import midiio_ from 'io/midi/index'
-import signalio_ from 'io/signal/index'
+import videoio_ from 'io/video'
+import midiio_ from 'io/midi'
+import signalio_ from 'io/signal'
 import {
   getStoredState,
   autoRehydrate,

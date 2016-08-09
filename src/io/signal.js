@@ -1,6 +1,6 @@
 import Rx from 'rxjs/Rx'
-import setop from '../../lib/setop.js'
-import transform from '../../lib/transform.js'
+import setop from '../lib/setop.js'
+import transform from '../lib/transform.js'
 import {
   addSourceSignal,
   removeSourceSignal,
@@ -12,8 +12,8 @@ import {
   setAllSinkSignalValues,
   setSourceSinkScale,
   setSinkBias
-} from '../../actions/signal'
-import { toObservable } from '../../lib/rx_redux'
+} from '../actions/signal'
+import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 
 typeof window !== "undefined" && (window.React = React); // for devtools
