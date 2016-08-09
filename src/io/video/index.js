@@ -188,24 +188,22 @@ export default function init(store, signalio, videoDom) {
     }
   );
   function statsStreamSpray(x) {
-    const sourceUpdates = {}
+    const sourceUpdate = {}
     //let sourceSignalMeta = store.getState().signal.sourceSignalMeta;
     for (let statKey in x) {
       const signalVals = x[statKey]
       for (let i=0;i<signalVals.length;i++){
         let signalKey = signalKeys[statKey][i]
         let value = signalVals[i]
-        // console.debug('spraying', statKey, signalKey, value);
-          //let signalName = sourceSignalMeta[signalKey]
         if ((value < -1) || (value > 1)) {
           console.warn("STATISTIC OUT OF RANGE", signalKey, value);
           value = clip1(value);
         };
-        sourceUpdates[signalKey] = value;
-        ////streamPatch.getSourceSignal(address).next(value);
+        sourceUpdate[signalKey] = value;
       }
     }
-    signalio.sourceUpdates.next(sourceUpdates);
+    //console.debug('SPRAYED', sourceUpdate);
+    signalio.sourceUpdates.next(sourceUpdate);
   }
 
   statsInbox.next({
