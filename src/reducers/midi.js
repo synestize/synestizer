@@ -58,7 +58,7 @@ export function sinkDevice(state="", {type, payload}) {
   }
 }
 
-export function sourceChannel(state=0, {type, payload}) {
+export function sinkChannel(state=0, {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_CHANNEL:
       return parseInt(payload)

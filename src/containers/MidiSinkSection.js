@@ -1,6 +1,15 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, setMidiSinkChannel, removeMidiSinkCC, addMidiSinkCC, soloMidiSinkCC, addUnknownMidiSinkCC } from '../actions/midi'
+import {
+  setValidMidiSinkDevice,
+  setMidiSinkDevice,
+  setAllMidiSinkDevices,
+  setMidiSinkChannel,
+  removeMidiSinkCC,
+  addMidiSinkCC,
+  soloMidiSinkCC,
+  addUnknownMidiSinkCC
+} from '../actions/midi'
 import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {
