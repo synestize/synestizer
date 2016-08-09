@@ -7,7 +7,7 @@ import { addSourceSignal,
   addSinkSignal,
   removeSinkSignal,
   setSinkSignalValue,
-  setAllSinkSignalValue,
+  setAllSinkSignalValues,
   setSourceSinkScale,
   setSinkBias,
 } from '../actions/signal'

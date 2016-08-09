@@ -21,7 +21,7 @@ const PatchMatrix = ({
       key={sinkKey}
       name={sinkSignalMeta[sinkKey]}
       scope="column"
-      val={sourceSignalValues[sinkKey] || 0.0} />);
+      val={sinkSignalValues[sinkKey] || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
