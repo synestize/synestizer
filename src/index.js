@@ -45,7 +45,7 @@ const persistConf = {
   storage: localForage
 }
 
-const loggerMiddleware = createLogger()
+//const loggerMiddleware = createLogger()
 
 let store;
 let persistor;
@@ -55,8 +55,8 @@ let videoio;
 let midiio;
 let signalio;
 let enhancers = applyMiddleware(
-  thunkMiddleware, // lets us dispatch() functions
-  loggerMiddleware // neat middleware that logs actions
+  thunkMiddleware //, // lets us dispatch() functions
+  //loggerMiddleware // logs actions
 )
 
 getStoredState(persistConf, (err, restoredState) => {
