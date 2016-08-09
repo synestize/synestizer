@@ -53,7 +53,7 @@ export function removeMidiSourceCC(x) {
 
 export function addUnknownMidiSourceCC() {
   return (dispatch, getState) => {
-    const ccset = getState().midi.midiSourceCCs;
+    const ccset = getState().midi.sourceCCs;
     let newCC = nextCC(ccset)
     if (newCC >= 0) {
       dispatch(addMidiSourceCC(newCC));
@@ -63,7 +63,7 @@ export function addUnknownMidiSourceCC() {
 
 export function addUnknownMidiSinkCC() {
   return (dispatch, getState) => {
-    const ccset = getState().midi.midiSinkCCs;
+    const ccset = getState().midi.sinkCCs;
     let newCC = nextCC(ccset)
     if (newCC >= 0) {
       dispatch(addMidiSinkCC(newCC));

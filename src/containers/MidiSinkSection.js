@@ -5,16 +5,16 @@ import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentChannel: state.midi.midiSinkChannel,
-    deviceMap: state.__volatile.midi.midiSinks,
+    currentChannel: state.midi.sourceChannel,
+    deviceMap: state.__volatile.midi.sinks,
     valid: state.__volatile.midi.validMidiSink,
-    currentDevice: state.midi.midiSinkDevice,
-    ccset: state.midi.midiSinkCCs,
+    currentDevice: state.midi.sinkDevice,
+    ccset: state.midi.sinkCCs,
     ccadder: addMidiSinkCC,
     ccremover: removeMidiSinkCC,
     ccunknownadder: addUnknownMidiSinkCC,
     ccsolotoggler: soloMidiSinkCC,
-    solocc: state.midi.midiSinkSoloCC,
+    solocc: state.midi.sinkSoloCC,
     title: 'Midi Out',
   }
 };

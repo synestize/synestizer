@@ -17,15 +17,15 @@ export default function init(store, signalio) {
 
   let midiinfo= null;
   //hardware business
-  let midisources = new Map(); //id -> device
-  let midisinks = new Map(); //id -> device
-  let midisource; //device
-  let midiSourceChannel;
-  let midiSourceCCs;
-  let midiSinkChannel;
-  let midiSinkCCs;
+  let sources = new Map(); //id -> device
+  let sinks = new Map(); //id -> device
+  let sourceChannel;
+  let sourceCCs;
+  let sinkChannel;
+  let sinkCCs;
   let storeStream;
   let unsubscribe;
+  let sinkSoloCC;
 
   const midiSourceFirehose = new Rx.Subject();
 
@@ -44,11 +44,14 @@ export default function init(store, signalio) {
     //9: Note on
     //8: Note off
 
-    if ((cmd===11) &&
-      (state.midiSourceChannel == channel) &&
-      state.activesourceccs.has(cc)) {
-        const upd = {}
-        upd["midi-cc-"+ cc] = val
+    if (
+      (cmd===11) &&
+      (sourceChannel == channel) &&
+      (sourceCCs.indexOf(cc)>-1)
+    ) {
+      const upd = {}
+      upd["midi-cc-"+ cc] = val
+      console.debug('MIDO', upd);
       signalio.sourceUpdates.next(upd);
     };
   };
@@ -59,7 +62,7 @@ export default function init(store, signalio) {
     //turns [["midi",16,0.5]
     //into [177,16,64]
     let midibytes = [
-      176 + state.activesinkchannel,
+      176 + sourceChannel,
       cc,
       scaled
     ];
@@ -77,12 +80,12 @@ export default function init(store, signalio) {
     //turn the pseudo-Maps in the midiinfo dict into real maps
     for (let [key, val] of midiinfo.inputs.entries()){
       allsources.set(key, val.name)
-      midisources.set(key, val)
+      sources.set(key, val)
     };
     store.dispatch(setAllMidiSourceDevices(allsources));
     for (let [key, val] of midiinfo.outputs.entries()){
       allsinks.set(key, val.name)
-      midisinks.set(key, val)
+      sinks.set(key, val)
     };
     store.dispatch(setAllMidiSinkDevices(allsinks));
     //If there is a device, select it.
@@ -96,13 +99,13 @@ export default function init(store, signalio) {
 
   storeStream = toObservable(store);
   storeStream.pluck(
-      'midi', 'midiSourceDevice'
+      'midi', 'sourceDevice'
     ).distinctUntilChanged().subscribe(
       (key) => {
         console.log("midisourcekey", key);
         if (midiinfo !==null) {
           if (rawMidiInSubscription !== null) {
-            rawMidiInSubscription.dispose()
+            rawMidiInSubscription.unsubscribe()
           };
           rawMidiInSubscription = Rx.Observable.fromEvent(
             midiinfo.inputs.get(key), 'midimessage'

@@ -14,7 +14,7 @@ import {
   TOGGLE_SOLO_MIDI_SINK_CC,
 } from '../actions/midi'
 
-export function midiSourceDevice(state="", {type, payload}) {
+export function sourceDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SOURCE_DEVICE:
       return payload
@@ -23,7 +23,7 @@ export function midiSourceDevice(state="", {type, payload}) {
   }
 }
 
-export function midiSourceChannel(state=0, action) {
+export function sourceChannel(state=0, action) {
   switch (action.type) {
     case SET_MIDI_SOURCE_CHANNEL:
       return parseInt(action.payload)
@@ -32,7 +32,7 @@ export function midiSourceChannel(state=0, action) {
   }
 }
 
-export function midiSourceCCs(state=[], {type, payload}) {
+export function sourceCCs(state=[], {type, payload}) {
   let next = state
   switch (type) {
     case ADD_MIDI_SOURCE_CC:
@@ -49,7 +49,7 @@ export function midiSourceCCs(state=[], {type, payload}) {
   return next
 }
 
-export function midiSinkDevice(state="", {type, payload}) {
+export function sinkDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_DEVICE:
       return payload
@@ -58,7 +58,7 @@ export function midiSinkDevice(state="", {type, payload}) {
   }
 }
 
-export function midiSinkChannel(state=0, {type, payload}) {
+export function sourceChannel(state=0, {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_CHANNEL:
       return parseInt(payload)
@@ -67,7 +67,7 @@ export function midiSinkChannel(state=0, {type, payload}) {
   }
 }
 
-export function midiSinkCCs(state=[], {type, payload}) {
+export function sinkCCs(state=[], {type, payload}) {
   switch (type) {
     case ADD_MIDI_SINK_CC:
       if (payload===undefined){
@@ -83,7 +83,7 @@ export function midiSinkCCs(state=[], {type, payload}) {
   }
 }
 
-export function midiSinkSoloCC(state=null, {type, payload}) {
+export function sinkSoloCC(state=null, {type, payload}) {
   switch (type) {
     case TOGGLE_SOLO_MIDI_SINK_CC:
       let newsolo = parseInt(payload);
@@ -94,13 +94,13 @@ export function midiSinkSoloCC(state=null, {type, payload}) {
 }
 
 const midi = combineReducers({
-   midiSourceDevice,
-   midiSourceChannel,
-   midiSourceCCs,
-   midiSinkDevice,
-   midiSinkChannel,
-   midiSinkCCs,
-   midiSinkSoloCC,
+   sourceDevice,
+   sourceChannel,
+   sourceCCs,
+   sinkDevice,
+   sourceChannel,
+   sinkCCs,
+   sinkSoloCC,
 })
 
 export default midi
