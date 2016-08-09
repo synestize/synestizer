@@ -56,7 +56,7 @@ export default function init(store) {
     }
   )
   function projectObs(source) {
-    console.debug('project', source);
+    // console.debug('project', source);
     return source
   }
 

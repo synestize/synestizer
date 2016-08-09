@@ -17,7 +17,10 @@ import  {
 
 import webrtc from 'webrtc-adapter'
 import Videoworker_ from 'worker!./videoworker'
-import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../../actions/video'
+import {
+  setValidVideoSource,
+  setCurrentVideoSource,
+  setAllVideoSources } from '../../actions/video'
 import { toObservable } from '../../lib/rx_redux'
 import { clip1 } from '../../lib/transform'
 

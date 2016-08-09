@@ -1,19 +1,29 @@
 import Rx from 'rxjs/Rx'
-import  { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setValidMidiSinkDevice, setMidiSinkDevice, setAllMidiSinkDevices, } from '../../actions/midi'
+import  {
+  setValidMidiSourceDevice,
+  setMidiSourceDevice,
+  setAllMidiSourceDevices,
+  setValidMidiSinkDevice,
+  setMidiSinkDevice,
+  setAllMidiSinkDevices
+} from '../../actions/midi'
 import { toObservable } from '../../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../../lib/transform'
 import { union, difference, intersection } from '../../lib/setop'
 
 export default function init(store, signalio) {
 
-  let rawMidiInSubscription;
+  let rawMidiInSubscription=null;
 
   let midiinfo= null;
   //hardware business
   let midisources = new Map(); //id -> device
   let midisinks = new Map(); //id -> device
   let midisource; //device
-
+  let midiSourceChannel;
+  let midiSourceCCs;
+  let midiSinkChannel;
+  let midiSinkCCs;
   let storeStream;
   let unsubscribe;
 
@@ -22,24 +32,24 @@ export default function init(store, signalio) {
   // Interface to MIDI input
   function handleMidiInMessage (ev) {
     //filters CC messages out of midi bytes and turns them into key+value
-    //into ["midi",-3723423,1,16],-0.377
-    //should this be some kind of transducer?
 
     let cmd = ev.data[0] >> 4;
     let channel = ev.data[0] & 0x0f;
     let cc = ev.data[1];
     let val = midiBipol(ev.data[2]);
     //midievent[0] = cmd;
-
+    console.debug('MODI', cmd, channel, cc, val);
     //midi commands
     //11: CC
     //9: Note on
     //8: Note off
-    if ((cmd===11) &&
-      (state.activesourcechannel == channel) &&
-      state.activesourceccs.has(cc)) {
 
-      streamPatch.getSourceSignal("midi-cc-"+ cc).next(val);
+    if ((cmd===11) &&
+      (state.midiSourceChannel == channel) &&
+      state.activesourceccs.has(cc)) {
+        const upd = {}
+        upd["midi-cc-"+ cc] = val
+      signalio.sourceUpdates.next(upd);
     };
   };
   //Interface to MIDI output
@@ -75,25 +85,37 @@ export default function init(store, signalio) {
       midisinks.set(key, val)
     };
     store.dispatch(setAllMidiSinkDevices(allsinks));
-    //If there is only one device, select it.
-    if (allsources.size===1) {
-      for (let key of allsources.keys()) {
-        store.dispatch(setMidiSourceDevice(key));
-      }
+    //If there is a device, select it.
+    for (let key of allsources.keys()) {
+      store.dispatch(setMidiSourceDevice(key));
     }
-    if (allsinks.size===1) {
-      for (let key of allsources.keys()) {
-        store.dispatch(setMidiSinkDevice(key));
-      }
+    for (let key of allsinks.keys()) {
+      store.dispatch(setMidiSinkDevice(key));
     }
   };
 
   storeStream = toObservable(store);
-  storeStream.pluck('midi', 'midiSourceDevice').distinctUntilChanged().subscribe(
-    (key) => {
-      //doMidiPlumbing(key);
-      console.log("midkey", key);
-    }
+  storeStream.pluck(
+      'midi', 'midiSourceDevice'
+    ).distinctUntilChanged().subscribe(
+      (key) => {
+        console.log("midisourcekey", key);
+        if (midiinfo !==null) {
+          if (rawMidiInSubscription !== null) {
+            rawMidiInSubscription.dispose()
+          };
+          rawMidiInSubscription = Rx.Observable.fromEvent(
+            midiinfo.inputs.get(key), 'midimessage'
+          ).subscribe(handleMidiInMessage);
+        }
+      }
+  )
+  storeStream.pluck(
+      'midi', 'midiSinkDevice'
+    ).distinctUntilChanged().subscribe(
+      (key) => {
+        console.log("midisinkkey", key);
+      }
   )
 
   Rx.Observable.fromPromise(
@@ -101,9 +123,7 @@ export default function init(store, signalio) {
   ).subscribe(updateMidiIO,
     (err) => console.debug(err.stack)
   );
-  //publishSources();
   return {
-    unsubscribe: () => null,
     playNote: () => null
   }
 };
