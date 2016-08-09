@@ -12,13 +12,9 @@ import { midiBipol, bipolMidi } from '../../lib/transform'
 import { union, difference, intersection } from '../../lib/setop'
 
 export default function init(store, signalio) {
-
-  let rawMidiInSubscription=null;
-
-  let midiinfo= null;
+  let rawMidiInSubscription = null;
+  let midiinfo = null;
   //hardware business
-  let sources = new Map(); //id -> device
-  let sinks = new Map(); //id -> device
   let sourceChannel;
   let sourceCCs;
   let sinkChannel;
@@ -73,27 +69,31 @@ export default function init(store, signalio) {
 
   //set up midi system
   function updateMidiIO(newmidiinfo) {
-    let allsources = new Map();
-    let allsinks = new Map();
+    let sourceNames = new Map();
+    let sinkNames = new Map();
+    let state = store.getState();
+
     midiinfo = newmidiinfo;
 
-    //turn the pseudo-Maps in the midiinfo dict into real maps
     for (let [key, val] of midiinfo.inputs.entries()){
-      allsources.set(key, val.name)
-      sources.set(key, val)
+      sourceNames.set(key, val.name)
     };
-    store.dispatch(setAllMidiSourceDevices(allsources));
+    store.dispatch(setAllMidiSourceDevices(sourceNames));
     for (let [key, val] of midiinfo.outputs.entries()){
-      allsinks.set(key, val.name)
-      sinks.set(key, val)
+      sinkNames.set(key, val.name)
     };
-    store.dispatch(setAllMidiSinkDevices(allsinks));
-    //If there is a device, select it.
-    for (let key of allsources.keys()) {
-      store.dispatch(setMidiSourceDevice(key));
+    store.dispatch(setAllMidiSinkDevices(sinkNames));
+    if (sourceNames.has(state.midi.sourceDevice)) {
+      store.dispatch(setMidiSourceDevice(state.midi.sourceDevice));
+      store.dispatch(setValidMidiSourceDevice(true));
+    } else {
+      store.dispatch(setValidMidiSourceDevice(false));
     }
-    for (let key of allsinks.keys()) {
-      store.dispatch(setMidiSinkDevice(key));
+    if (sinkNames.has(state.midi.sinkDevice)) {
+      store.dispatch(setMidiSinkDevice(state.midi.sinkDevice));
+      store.dispatch(setValidMidiSinkDevice(true));
+    } else {
+      store.dispatch(setValidMidiSinkDevice(false));
     }
   };
 
@@ -114,7 +114,23 @@ export default function init(store, signalio) {
       }
   )
   storeStream.pluck(
-      'midi', 'midiSinkDevice'
+      'midi', 'sourceChannel'
+    ).distinctUntilChanged().subscribe(
+      (x) => {
+        sourceChannel = x;
+        console.log("midisourcechannel", x);
+      }
+  )
+  storeStream.pluck(
+      'midi', 'sourceCCs'
+    ).distinctUntilChanged().subscribe(
+      (x) => {
+        sourceCCs = x;
+        console.log("midisourceccs", x);
+      }
+  )
+  storeStream.pluck(
+      'midi', 'sinkDevice'
     ).distinctUntilChanged().subscribe(
       (key) => {
         console.log("midisinkkey", key);
