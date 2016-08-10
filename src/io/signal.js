@@ -1,5 +1,4 @@
 import Rx from 'rxjs/Rx'
-import setop from '../lib/setop.js'
 import transform from '../lib/transform.js'
 import {
   addSourceSignal,

@@ -9,7 +9,6 @@ import  {
 } from '../actions/midi'
 import { toObservable } from '../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../lib/transform'
-import { union, difference, intersection } from '../lib/setop'
 
 export default function init(store, signalio) {
   let rawMidiInSubscription = null;
