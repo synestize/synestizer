@@ -102,7 +102,7 @@ export default function init(store, signalio) {
       'midi', 'sourceDevice'
     ).distinctUntilChanged().subscribe(
       (key) => {
-        console.log("midisourcekey", key);
+        console.debug("midisourcekey", key);
         if (midiinfo !==null) {
           if (rawMidiInSubscription !== null) {
             rawMidiInSubscription.unsubscribe()
@@ -118,7 +118,7 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(
       (x) => {
         sourceChannel = x;
-        console.log("midisourcechannel", x);
+        console.debug("midisourcechannel", x);
       }
   )
   storeStream.pluck(
