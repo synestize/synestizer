@@ -70,9 +70,11 @@ getStoredState(persistConf, (err, restoredState) => {
     store = createStore(rootReducer, restoredState, enhancers)
     persistor = createPersistor(store, persistConf)
   }
-  window.store = store;
-  window.persistor = persistor;
-
+  if (typeof window !== "undefined") {
+    window.store = store;
+    window.persistor = persistor;
+    window.React = React;
+  }
   signalio = signalio_(store);
   videoio = videoio_(store, signalio, document.getElementById('video-io'));
   midiio = midiio_(store, signalio);

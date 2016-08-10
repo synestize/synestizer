@@ -15,8 +15,6 @@ import {
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 
-typeof window !== "undefined" && (window.React = React); // for devtools
-
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
 */
