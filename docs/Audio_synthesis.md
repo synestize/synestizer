@@ -2,6 +2,7 @@
 
 ## Sequencing
 
+* [motor.js](https://github.com/willurmston/motor.js) is a step sequencer library
 * [old school sequencing example](https://github.com/mudcube/MIDI.js/blob/master/js/midi/player.js) from a MIDI player.
 * alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js), which attempts to guarantee strong timing.
 
