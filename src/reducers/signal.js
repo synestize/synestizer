@@ -171,6 +171,8 @@ export function sinkSignalValues(state={}, {type, payload}) {
         state[key] = val
         return state
       }
+    case SET_ALL_SINK_SIGNAL_VALUES:
+      return { ...state, ...payload };
     default:
       return state
   }

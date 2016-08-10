@@ -27,7 +27,7 @@ export default function init(store) {
   const sourceStateSubject = sourceUpdates.scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  ).throttleTime(1000).share();
+  ).throttleTime(30).share();
   // sourceStateSubject.subscribe((x)=>console.debug('sigstate3', x))
   sourceStateSubject.subscribe((vals) => {
     store.dispatch(setAllSourceSignalValues(vals))
@@ -55,10 +55,8 @@ export default function init(store) {
     for (let key in sourceSinkScale) {
       let scale = sourceSinkScale[key];
       let [sourceAddress, sinkAddress] = key.split("/");
-      console.debug('dd', key, sourceAddress, sinkAddress, scale)
       let sourceVal = sourceVals[sourceAddress] || 0.0;
       let delta = scale * desaturate(sourceVal);
-      console.debug('ee', delta, scale, desaturate(sourceVal))
 
       if (delta !== 0.0) {
         sinkValsT[sinkAddress] = delta + (
@@ -66,11 +64,10 @@ export default function init(store) {
         )
       };
     };
-    console.debug('sinkValsT', sinkValsT)
     for (let sinkAddress in sinkValsT) {
       sinkVals[sinkAddress] = saturate(sinkValsT[sinkAddress]);
     };
-    console.debug('sinkVals', sinkVals)
+    // console.debug('sinkVals', sinkVals)
     return sinkVals
   }
 
