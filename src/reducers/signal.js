@@ -15,14 +15,8 @@ import {
   SET_ALL_SINK_SIGNAL_VALUES,
   SET_SOURCE_SINK_SCALE,
   SET_SINK_BIAS,
-
 } from '../actions/signal'
-
-
-function midiStreamName(cc) {
-  return ['midi-cc-'+ cc, 'CC ' + cc]
-}
-
+import { midiStreamName } from '../io/midi/util'
 import {
   ADD_MIDI_SOURCE_CC,
   REMOVE_MIDI_SOURCE_CC,
