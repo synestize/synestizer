@@ -20,7 +20,7 @@ Notes auditioning for a place in the documentation
 
 ## iOS version
 
-... (is viable)[http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/] but we won't start just yet.
+... [is possible](http://matt.might.net/articles/how-to-native-iphone-ipad-apps-in-javascript/) but we won't start just yet.
 
 See also [react-native](https://facebook.github.io/react-native/).
 
