@@ -18,20 +18,22 @@ const PatchMatrix = ({
   let header = [<th key="header"></th>];
   for (var sinkKey of sinkKeys) {
     header.push(<PatchMappingHeaderCell
-      key={sinkKey}
+      key={"sink-" + sinkKey}
+      signalKey={"sink-" + sinkKey}
       name={sinkSignalMeta[sinkKey]}
       scope="column"
       val={sinkSignalValues[sinkKey] || 0.0} />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
-      key="source"
+      key={"source-" + sourceKey}
+      signalKey={"source-" + sourceKey}
       name={sourceSignalMeta[sourceKey]}
       scope="row"
       val={sourceSignalValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
       cells.push(<ActivePatchMappingControl
-        key={sinkKey}
+        key={"sink-" + sinkKey}
         sourceKey={sourceKey}
         sinkKey={sinkKey}
         val={sourceSinkScale[sourceKey+'/'+sinkKey] || 0.0}
