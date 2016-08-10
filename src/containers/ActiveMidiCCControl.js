@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import MidiCCControl from '../components/MidiCCControl.js'
-import { union, difference, intersection } from '../lib/fakesetop'
+import { union, difference, intersection } from '../lib/collections'
 
 const mapStateToProps = (state, ownProps) => {
   return {

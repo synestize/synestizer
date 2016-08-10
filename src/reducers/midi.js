@@ -1,6 +1,6 @@
 'use strict';
 import { combineReducers } from 'redux'
-import { union, difference, intersection } from '../lib/fakesetop'
+import { union, difference, intersection } from '../lib/collections'
 
 import {
   SET_MIDI_SOURCE_DEVICE,
