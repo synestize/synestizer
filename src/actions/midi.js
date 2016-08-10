@@ -13,7 +13,6 @@ function nextCC(ccset) {
 /*
  * action types
  */
-
 export const SET_ALL_MIDI_SOURCE_DEVICES = 'SET_ALL_MIDI_SOURCE_DEVICES'
 export const SET_MIDI_SOURCE_DEVICE = 'SET_MIDI_SOURCE_DEVICE'
 export const SET_VALID_MIDI_SOURCE_DEVICE = 'SET_VALID_MIDI_SOURCE_DEVICE'

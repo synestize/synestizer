@@ -75,7 +75,7 @@ export default function init(store, signalio, videoDom) {
     //so once again we guess!
     vAspect = vw/vh;
     vsize = Math.min(vw, vh);
-    if (vAspect<1){ //taller than wide
+    if (vAspect < 1){ //taller than wide
         xoffset = 0;
         yoffset = Math.floor((vh-vsize)/2);
     } else { //wider than tall
@@ -120,7 +120,7 @@ export default function init(store, signalio, videoDom) {
     });
     store.dispatch(setAllVideoSources(allsources));
     //If there is only one device, select it.
-    if (allsources.size===1) {
+    if (allsources.size === 1) {
       for (let key of allsources.keys()) {
         store.dispatch(setCurrentVideoSource(key));
       }

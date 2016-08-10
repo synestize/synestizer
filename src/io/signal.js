@@ -25,7 +25,7 @@ export default function init(store) {
 
   // sourceUpdates.subscribe((x)=>console.debug('sigstate2', x))
   const sourceStateSubject = sourceUpdates.scan(
-    (sourceState, upd)=>({...sourceState, ...upd}),
+    (sourceState, upd) => ({...sourceState, ...upd}),
     {}
   ).throttleTime(1000).share();
   // sourceStateSubject.subscribe((x)=>console.debug('sigstate3', x))

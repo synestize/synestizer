@@ -1,6 +1,6 @@
-// [-1,1] <- [-inf, inf]
+// [-inf, inf] -> [-1,1]
 export const saturate = Math.tanh;
-// [-1,1] -> [-inf, inf]
+// [-1,1] <- [-inf, inf]
 export const desaturate = (val) => clipinf(Math.atanh(val));
 
 export const identity = (x)=>x;
