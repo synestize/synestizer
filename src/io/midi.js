@@ -20,15 +20,13 @@ export default function init(store, signalio) {
   let sinkChannel;
   let sinkCCs;
   let storeStream;
-  let unsubscribe;
   let sinkSoloCC;
-
-  const midiSourceFirehose = new Rx.Subject();
+  let validSource = false;
+  let validSink = false;
 
   // Interface to MIDI input
   function handleMidiInMessage (ev) {
     //filters CC messages out of midi bytes and turns them into key+value
-
     let cmd = ev.data[0] >> 4;
     let channel = ev.data[0] & 0x0f;
     let cc = ev.data[1];
@@ -97,6 +95,7 @@ export default function init(store, signalio) {
     }
   };
 
+  // Now that the MIDI system is set up, plug this app in to it.
   function plugMidiIn() {
     const key = store.getState().midi.sourceDevice;
     if (midiinfo !==null) {
@@ -115,22 +114,15 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(plugMidiIn)
   storeStream.pluck(
       '__volatile', 'midi', 'validSource'
-    ).distinctUntilChanged().subscribe(plugMidiIn)
+    ).distinctUntilChanged().subscribe(
+      (validity)=> {validSource = validity; plugMidiIn()}
+    )
 
   storeStream.pluck(
       'midi', 'sourceChannel'
     ).distinctUntilChanged().subscribe(
       (x) => {
         sourceChannel = x;
-        console.debug("midisourcechannel", x);
-      }
-  )
-  storeStream.pluck(
-      'midi', 'sinkChannel'
-    ).distinctUntilChanged().subscribe(
-      (x) => {
-        sinkChannel = x;
-        console.debug("midisinkchannel", x);
       }
   )
   storeStream.pluck(
@@ -138,7 +130,6 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(
       (x) => {
         sourceCCs = x;
-        console.log("midisourceccs", x);
       }
   )
   storeStream.pluck(
@@ -146,6 +137,26 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(
       (key) => {
         console.log("midisinkkey", key);
+      }
+  )
+  storeStream.pluck(
+      '__volatile', 'midi', 'validSink'
+    ).distinctUntilChanged().subscribe(
+      (validity)=> {validSink = validity}
+    )
+
+  storeStream.pluck(
+      'midi', 'sinkChannel'
+    ).distinctUntilChanged().subscribe(
+      (x) => {
+        sinkChannel = x;
+      }
+  )
+  storeStream.pluck(
+      'midi', 'sinkCCs'
+    ).distinctUntilChanged().subscribe(
+      (x) => {
+        sinkCCs = x;
       }
   )
 
