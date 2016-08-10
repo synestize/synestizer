@@ -98,7 +98,7 @@ const midi = combineReducers({
    sourceChannel,
    sourceCCs,
    sinkDevice,
-   sourceChannel,
+   sinkChannel,
    sinkCCs,
    sinkSoloCC,
 })

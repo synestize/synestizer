@@ -14,7 +14,7 @@ import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentChannel: state.midi.sourceChannel,
+    currentChannel: state.midi.sinkChannel,
     deviceMap: state.__volatile.midi.sinks,
     valid: state.__volatile.midi.validMidiSink,
     currentDevice: state.midi.sinkDevice,
