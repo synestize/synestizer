@@ -92,4 +92,3 @@
 
     Observable.of(1,2,3)::map(x => x + '!!!'); // etc
     ```
-  * ditch ramda; it's enormous and we barely use it
