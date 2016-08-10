@@ -1,5 +1,3 @@
-import R from 'ramda'
-
 // [-1,1] <- [-inf, inf]
 export const saturate = Math.tanh;
 // [-1,1] -> [-inf, inf]
@@ -7,14 +5,6 @@ export const desaturate = (val) => clipinf(Math.atanh(val));
 
 export const identity = (x)=>x;
 
-//put together a list of values and weights into a copula
-export const combine = R.compose(
-  desaturate,
-  R.sum,
-  R.zipWith(
-    (val, weight) => saturate(val)*weight
-  )
-);
 //put together a list of values copula-wise with unit weights
 export const perturb = (vals) => saturate(vals.map(desaturate).reduce((a,b)=>(a+b)))
 
