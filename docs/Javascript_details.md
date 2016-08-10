@@ -22,6 +22,8 @@ If we want to use Object, remember, ``Object.keys(thing).length`` will get the s
 not technically a "library", but a "set of things to know"
 
 * To have a stable API to access audio and video we use webrtc-adapter.
+* [HackTimer](https://github.com/turuslan/HackTimer) stops the browser timing from getting throttled when the tab is in the background
+* [motor.js](https://github.com/willurmston/motor.js) is a step sequencer library
 * [Audio synthesis](Audio_synthesis.md)
 * [SVG](https://biesnecker.com/2014/10/22/using-reactjs-to-draw-dynamic-svgs/)
 
