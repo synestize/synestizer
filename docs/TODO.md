@@ -14,8 +14,6 @@
 
 * UI improvements
   * UI for save/load (preset names etc)
-  * desaturation should treat +/-1 less "extremely" so that it captures a control.
-    * this is probably simplest to achieve by clipping inputs to [-0.999, 0.999], which is not fancy but probably fine.
   * animate transitions and updates
   * set "central" value of param by letting each output parameter have a
     "bias" parameter

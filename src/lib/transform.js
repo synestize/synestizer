@@ -1,7 +1,15 @@
+// if our values are mostly 7 bits, this is a good scale factor to
+// offset them
+const midiScale = 127.5/128
+
 // [-inf, inf] -> [-1,1]
-export const saturate = Math.tanh;
+export const saturate = (val) => Math.tanh(val/midiScale)*midiScale;
 // [-1,1] <- [-inf, inf]
-export const desaturate = (val) => clipinf(Math.atanh(val));
+export const desaturate = (val) => clipinf(
+  Math.atanh(
+    val * midiScale
+  ) / midiScale
+);
 
 export const identity = (x)=>x;
 
