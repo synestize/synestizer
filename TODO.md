@@ -3,6 +3,7 @@
 * currently:
   * stop speed of controllers changing when in the background
   * example Ableton set
+  * midi channel and CC numbers shoudl match Ableton convention
   * Need to show perturbation and final value of synth values
   * implement audio model
   * Get Christoph's help moving the yellow.listentocolors.net
