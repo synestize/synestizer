@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-import transform from '../lib/transform.js'
+import { saturate, desaturate } from '../lib/transform.js'
 import {
   addSourceSignal,
   removeSourceSignal,
@@ -44,17 +44,34 @@ export default function init(store) {
      sourceSinkScale,
      sinkBias
   }*/
-  // This is prolly unnecessary
-  storeStream.pluck(
-    'signal', 'sourceSinkScale'
-  ).distinctUntilChanged().subscribe(
-    (scale) => {
-      console.log("signal", scale);
-    }
-  )
-  function projectObs(source) {
+
+  function projectObs(sourceVals) {
     // console.debug('project', source);
-    return source
+    const sourceSinkScale = store.getState().signal.sourceSinkScale;
+    const sourceValsT = {}
+    const sinkVals = {}
+    // temporary tanh-transformed sink vals
+    const sinkValsT = {}
+    for (let key in sourceSinkScale) {
+      let scale = sourceSinkScale[key];
+      let [sourceAddress, sinkAddress] = key.split("/");
+      console.debug('dd', key, sourceAddress, sinkAddress, scale)
+      let sourceVal = sourceVals[sourceAddress] || 0.0;
+      let delta = scale * desaturate(sourceVal);
+      console.debug('ee', delta, scale, desaturate(sourceVal))
+
+      if (delta !== 0.0) {
+        sinkValsT[sinkAddress] = delta + (
+          sinkValsT[sinkAddress] || 0.0
+        )
+      };
+    };
+    console.debug('sinkValsT', sinkValsT)
+    for (let sinkAddress in sinkValsT) {
+      sinkVals[sinkAddress] = saturate(sinkValsT[sinkAddress]);
+    };
+    console.debug('sinkVals', sinkVals)
+    return sinkVals
   }
 
   return {
