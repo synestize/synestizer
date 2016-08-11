@@ -1,16 +1,20 @@
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import {map} from 'rxjs/operator/map';
+import {filter} from 'rxjs/operator/filter';
+import {fromEvent} from 'rxjs/observable/fromEvent';
 
-import Rx from 'rxjs/Rx';
 import * as statModels from './statModels'
 const liveStatistics = {};
 
-const inbox = Rx.Observable.fromEvent(self, "message").map((e) => e.data);
-const outbox = new Rx.Subject();
+const inbox = Observable::fromEvent(self, "message")::map((e) => e.data);
+const outbox = new Subject();
 
 outbox.subscribe((msg)=>{
   self.postMessage(msg)
 });
 
-inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
+inbox::filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
   // console.debug("settings", type, payload);
   // Theoretically we can initialise stats with different params whcih woudl get different numbers of params, so we pass metadata back to the main thread from here
   let signalKeys = {};
@@ -34,7 +38,7 @@ inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
   })
 });
 
-inbox.filter((x)=>(x.type==="pixels")).subscribe(function({type, payload}) {
+inbox::filter((x)=>(x.type==="pixels")).subscribe(function({type, payload}) {
   // console.debug("workerpixels", type, payload);
   const results = {};
   for (let statKey of Object.keys(liveStatistics)) {
@@ -45,5 +49,3 @@ inbox.filter((x)=>(x.type==="pixels")).subscribe(function({type, payload}) {
     payload: results
   });
 });
-
-export default {}
