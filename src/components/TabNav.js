@@ -19,6 +19,11 @@ const TabNav = () => {
       </SelectTabLink>
     </li>
     <li>
+      <SelectTabLink paneId="audio">
+        Audio
+      </SelectTabLink>
+    </li>
+    <li>
       <SelectTabLink paneId="performance">
         Performance
       </SelectTabLink>
