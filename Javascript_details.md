@@ -38,7 +38,6 @@ The rendering system for all UI components is React.
 
 * For debugging the user interface, we recommend [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
-
 ### If I need to get to DOM nodes...
 
 e.g. for accessing video.
