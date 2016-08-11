@@ -1,5 +1,47 @@
 import *  as transform from '../../lib/transform'
 
+export function RandomFilter({
+    PIXELDIM=64,
+    LAYER1SIZE=200,
+    LAYER2SIZE=15,
+  }) {
+    const PIXELCOUNT = PIXELDIM*PIXELDIM;
+    let nDims = 15;
+
+    const layer1 = new Float32Array(nDims);
+
+    function calc(pixels) {
+        for (let i = 0; i < nDims; i++) {
+            rawSums[i]=0.0;
+        }
+        for (let j = 0; j < PIXELDIM; j++) {
+            for (let i = 0; i < PIXELDIM; i++) {
+                let ij = (PIXELDIM * j + i) * 4;//pixel offset
+                // first we tranform RGB to YSV
+                // - effectively a PCA of the color vectors
+                // otherwise we are measuring mostly brightness.
+                ysvij[0] = ( //Y
+                      0.00117255*pixels[ij]
+                    + 0.00230200*pixels[ij+1]
+                    + 0.00044706*pixels[ij+2]
+                );
+            }
+        }
+
+        cookedMoments[Y] = transform.linBipol(0.4, 0.6, centralMoments[Y]);
+        return cookedMoments;
+    };
+    return {
+      fn: calc,
+      keys: [
+        'video-randfilt-1',
+      ],
+      names: [
+        '●',
+      ]
+    }
+};
+
 export function AvgColor({PIXELDIM=64}) {
     //1/8 sub-sampled average color
     const PIXELCOUNT=PIXELDIM*PIXELDIM;
