@@ -1,9 +1,12 @@
-"use strict";
 import React, { Component, PropTypes } from 'react'
+import BrandingBox from './BrandingBox'
 
 const Pane = ({paneId, children}) => (
-  <section className={'pane-content ' + paneId} key={paneId} id={paneId}>
-    {children}
+  <section className={'pane-wrapper ' + paneId} id={paneId}>
+    <BrandingBox />
+    <div className='pane-content'>
+      {children}
+    </div>
   </section>
 )
 Pane.propTypes = {
