@@ -8,9 +8,7 @@ import  {
   setAllAudioSinkDevices
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
-import { midiBipol, bipolAudio } from '../lib/transform'
-import { midiStreamName } from '../io/audio/util'
-
+import { dbAmp, freqMidi, midiFreq } from '../lib/transform'
 
 export default function init(store, signalio) {
   let rawAudioInSubscription = null;
@@ -20,9 +18,9 @@ export default function init(store, signalio) {
   let sourceControls;
   let sinkChannel;
   let sinkControls;
-  let storeStream;
   let validSource = false;
   let validSink = false;
+  let storeStream = toObservable(store);
 
   //Create a context with master out volume
   function initAudio(){
@@ -73,17 +71,8 @@ export default function init(store, signalio) {
   // Now that the MIDI system is set up, plug this app in to it.
   function plugAudioIn() {
     const key = store.getState().midi.sourceDevice;
-    if (midiinfo !==null) {
-      let dev = midiinfo.inputs.get(key);
-      if (rawAudioInSubscription !== null) {
-        rawAudioInSubscription.unsubscribe()
-      };
-      rawAudioInSubscription = Rx.Observable.fromEvent(
-        dev, 'midimessage'
-      ).subscribe(handleAudioInMessage);
-    }
   }
-  storeStream = toObservable(store);
+
   storeStream.pluck(
       'audio', 'sourceDevice'
     ).distinctUntilChanged().subscribe(plugAudioIn)
@@ -91,50 +80,27 @@ export default function init(store, signalio) {
       '__volatile', 'audio', 'validSource'
     ).distinctUntilChanged().subscribe(
       (validity)=> {validSource = validity; plugAudioIn()}
-    )
-
+  )
   storeStream.pluck(
       'audio', 'sourceChannel'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sourceChannel = x;
-      }
-  )
-  storeStream.pluck(
-      'audio', 'sourceCCs'
-    ).distinctUntilChanged().subscribe(
-      (x) => {
-        sourceCCs = x;
-      }
-  )
-  storeStream.pluck(
-      'audio', 'sinkDevice'
-    ).distinctUntilChanged().subscribe(
-      (key) => {
-        console.log("midisinkkey", key);
-      }
+      (x) => {sourceChannel = x;}
   )
   storeStream.pluck(
       '__volatile', 'audio', 'validSink'
     ).distinctUntilChanged().subscribe(
-      (validity)=> {validSink = validity}
-    )
-
+      (validity)=> {validSink = validity;}
+  )
   storeStream.pluck(
       'audio', 'sinkChannel'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sinkChannel = x;
-      }
+      (x) => {sinkChannel = x;}
   )
   storeStream.pluck(
       'audio', 'sinkCCs'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sinkControls = x;
-      }
+      (x) => {sinkControls = x}
   )
-
   Rx.Observable.fromPromise(
     navigator.requestMIDIAccess()
   ).subscribe(updateAudioIO,

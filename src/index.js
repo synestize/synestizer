@@ -8,6 +8,7 @@ import rootReducer from './reducers'
 import App from './containers/App'
 import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
+import audioio_ from 'io/audio'
 import signalio_ from 'io/signal'
 import {
   getStoredState,
@@ -54,6 +55,7 @@ let appRoot;
 let videoio;
 let midiio;
 let signalio;
+let audioio;
 let enhancers = applyMiddleware(
   thunkMiddleware //, // lets us dispatch() functions
   //loggerMiddleware // logs actions
@@ -78,7 +80,7 @@ getStoredState(persistConf, (err, restoredState) => {
   signalio = signalio_(store);
   videoio = videoio_(store, signalio, document.getElementById('video-io'));
   midiio = midiio_(store, signalio);
-
+  audioio = audioio_(store, signalio);
   appRoot = render(
     <Provider store={store}>
       <App />

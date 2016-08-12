@@ -130,6 +130,7 @@ export default function init(store, signalio) {
       rawMidiOutSubscription = signalio.sinkStateSubject.subscribe(handleSink)
     }
   }
+  //Now actually use this infrastructure
   plugMidiIn()
   storeStream.pluck(
       'midi', 'sourceDevice'
