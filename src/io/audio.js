@@ -11,6 +11,7 @@ import { toObservable } from '../lib/rx_redux'
 import { midiBipol, bipolAudio } from '../lib/transform'
 import { midiStreamName } from '../io/audio/util'
 
+
 export default function init(store, signalio) {
   let rawAudioInSubscription = null;
   let midiinfo = null;
@@ -22,6 +23,22 @@ export default function init(store, signalio) {
   let storeStream;
   let validSource = false;
   let validSink = false;
+
+  //Create a context with master out volume
+  function initAudio(){
+    let context = _audioState.context = new window.AudioContext();
+    let compressor = context.createDynamicsCompressor();
+    compressor.threshold.value = -50;
+    compressor.knee.value = 40;
+    compressor.ratio.value = 2;
+    compressor.reduction.value = 0; //should be negative for boosts?
+    compressor.attack.value = 0.05;
+    compressor.release.value = 0.3;
+    compressor.connect(context.destination);
+    let outputNode = _audioStateSubject.outputNode = context.createGain();
+    outputNode.connect(compressor);
+    return _audioState
+  };
 
   //set up midi system
   function updateAudioIO(newmidiinfo) {
