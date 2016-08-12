@@ -1,6 +1,6 @@
 import { addSourceSignal, removeSourceSignal, addSinkSignal, removeSinkSignal } from './signal'
 
-function nextCC(ccset) {
+export function nextCC(ccset) {
   for (let i= Math.max(-1, ...ccset)+1;i<128; i++) {
     let j = i % 128;
     if (ccset.indexOf(j)<0) {
@@ -9,7 +9,6 @@ function nextCC(ccset) {
   }
   return -1
 }
-
 /*
  * action types
  */

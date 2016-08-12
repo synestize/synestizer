@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { union, difference, intersection } from '../lib/collections'
+import { midiStreamName } from '../io/midi/util'
 
 import {
   SET_MIDI_SOURCE_DEVICE,
@@ -48,6 +49,25 @@ export function sourceCCs(state=[], {type, payload}) {
   return next
 }
 
+export function sourceCCMap(state={}, {type, payload}) {
+  let newState, key;
+  switch (type) {
+    case ADD_MIDI_SOURCE_CC:
+      newState = {...state}
+      key = midiStreamName(payload)[0];
+      newState[key] = payload
+      return newState
+    case REMOVE_MIDI_SOURCE_CC:
+      newState = {...state}
+      key = midiStreamName(payload)[0];
+      delete newState[key]
+      return newState
+    default:
+      return state
+  }
+  return newState
+}
+
 export function sinkDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_DEVICE:
@@ -82,6 +102,26 @@ export function sinkCCs(state=[], {type, payload}) {
   }
 }
 
+export function sinkCCMap(state={}, {type, payload}) {
+  let newState, key;
+  switch (type) {
+    case ADD_MIDI_SINK_CC:
+      newState = {...state}
+      key = midiStreamName(payload)[0];
+      newState[key] = payload
+      console.debug('smang', key, newState);
+      return newState
+    case REMOVE_MIDI_SINK_CC:
+      newState = {...state}
+      key = midiStreamName(payload)[0];
+      delete newState[key]
+      return newState
+    default:
+      return state
+  }
+  return newState
+}
+
 export function sinkSoloCC(state=null, {type, payload}) {
   switch (type) {
     case TOGGLE_SOLO_MIDI_SINK_CC:
@@ -96,9 +136,11 @@ const midi = combineReducers({
    sourceDevice,
    sourceChannel,
    sourceCCs,
+   sourceCCMap,
    sinkDevice,
    sinkChannel,
    sinkCCs,
+   sinkCCMap,
    sinkSoloCC,
 })
 

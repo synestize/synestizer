@@ -13,16 +13,20 @@ import { midiStreamName } from '../io/midi/util'
 
 export default function init(store, signalio) {
   let rawMidiInSubscription = null;
+  let rawMidiOutSubscription = null;
   let midiinfo = null;
   //hardware business
   let sourceChannel;
   let sourceCCs;
+  let sourceCCMap = {};
+  let sinkDevice = null;
   let sinkChannel;
   let sinkCCs;
-  let storeStream;
+  let sinkCCMap = {};
   let sinkSoloCC;
   let validSource = false;
   let validSink = false;
+  let storeStream = toObservable(store);
 
   // Interface to MIDI input
   function handleMidiInMessage (ev) {
@@ -50,19 +54,27 @@ export default function init(store, signalio) {
     };
   };
   //Interface to MIDI output
-  function handleMidiOutMessage(cc, scaled) {
-    let unmuted = ((state.solocc === null) || (state.solocc===cc)) &&
-      (midiinfo.outputs.get(state.activesink) !== undefined);
+  function handleSink(sinkState) {
+    for (let key in sinkState) {
+      let cc = sinkCCMap[key];
+      if (cc !== undefined) {
+        emitMidiOutCC(cc, sinkState[key])
+      }
+    }
+  };
+
+  function emitMidiOutCC(cc, scaled) {
+    let unmuted = ((sinkSoloCC === null) || (sinkSoloCC===cc)) &&
+      (sinkDevice !== null);
+    if (!unmuted) {return}
     //turns [["midi",16,0.5]
     //into [177,16,64]
     let midibytes = [
       176 + sourceChannel,
       cc,
-      scaled
+      bipolMidi(scaled)
     ];
-    if (unmuted) {
-      midiinfo.outputs.get(state.activesink).send(midibytes);
-    };
+    sinkDevice.send(midibytes);
   };
 
   //set up midi system
@@ -98,7 +110,7 @@ export default function init(store, signalio) {
   // Now that the MIDI system is set up, plug this app in to it.
   function plugMidiIn() {
     const key = store.getState().midi.sourceDevice;
-    if (midiinfo !==null) {
+    if (midiinfo !== null) {
       let dev = midiinfo.inputs.get(key);
       if (rawMidiInSubscription !== null) {
         rawMidiInSubscription.unsubscribe()
@@ -108,7 +120,17 @@ export default function init(store, signalio) {
       ).subscribe(handleMidiInMessage);
     }
   }
-  storeStream = toObservable(store);
+  function plugMidiOut() {
+    const key = store.getState().midi.sinkDevice;
+    if (midiinfo !==null) {
+      sinkDevice = midiinfo.outputs.get(key);
+      if (rawMidiOutSubscription !== null) {
+        rawMidiOutSubscription.unsubscribe()
+      };
+      rawMidiOutSubscription = signalio.sinkStateSubject.subscribe(handleSink)
+    }
+  }
+  plugMidiIn()
   storeStream.pluck(
       'midi', 'sourceDevice'
     ).distinctUntilChanged().subscribe(plugMidiIn)
@@ -117,48 +139,48 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(
       (validity)=> {validSource = validity; plugMidiIn()}
     )
-
   storeStream.pluck(
       'midi', 'sourceChannel'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sourceChannel = x;
-      }
+      (x) => sourceChannel = x
   )
   storeStream.pluck(
       'midi', 'sourceCCs'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sourceCCs = x;
-      }
+      (x) => sourceCCs = x
   )
   storeStream.pluck(
-      'midi', 'sinkDevice'
+      'midi', 'sourceCCMap'
     ).distinctUntilChanged().subscribe(
-      (key) => {
-        console.log("midisinkkey", key);
-      }
+      (x) => sourceCCMap = (x || {})
   )
+  plugMidiOut()
+  storeStream.pluck(
+      'midi', 'sinkDevice'
+    ).distinctUntilChanged().subscribe(plugMidiOut);
   storeStream.pluck(
       '__volatile', 'midi', 'validSink'
     ).distinctUntilChanged().subscribe(
-      (validity)=> {validSink = validity}
+      (validity)=> {validSink = validity; plugMidiOut()}
     )
-
   storeStream.pluck(
       'midi', 'sinkChannel'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sinkChannel = x;
-      }
+      (x) => sinkChannel = x
   )
   storeStream.pluck(
       'midi', 'sinkCCs'
     ).distinctUntilChanged().subscribe(
-      (x) => {
-        sinkCCs = x;
-      }
+      (x) => sinkCCs = x
   )
+  storeStream.pluck(
+      'midi', 'sinkCCMap'
+    ).distinctUntilChanged().subscribe(
+      (x) => sinkCCMap = (x || {})
+  )
+  storeStream.pluck(
+      'midi', 'sinkSoloCC'
+    ).distinctUntilChanged().subscribe((x)=>sinkSoloCC=x);
 
   Rx.Observable.fromPromise(
     navigator.requestMIDIAccess()
