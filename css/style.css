@@ -1,17 +1,22 @@
+:root {
+  --base-bg-color: rgba(110,80,120,1);
+  --base-fg-color: rgba(160,150,160,1);
+  --base-fg-color-highlight: rgba(200,150,200,1);
+}
 html, body {
   height: 100%;
   overflow: hidden;
 }
 body {
   font-family: 'Roboto Condensed', sans-serif;
-  background-color: rgba(80,80,100,1);
-  color: rgba(140,170,170,1);
+  background-color: var(--base-fg-color);
+  color: var(--base-fg-color);
   height: 100%;
   overflow: hidden;
 }
 
 h1, h2, h3 {
-  color: rgba(140,170,170,1);
+  color: var(--base-fg-color);
 }
 
 a, a:hover, a:active, a:focus {
@@ -36,35 +41,35 @@ a, a:hover, a:active, a:focus {
   display: flex;
   padding: 0;
   margin:0;
-  background-color: rgba(80,100,100,1);
+  background-color: var(--base-bg-color);
 
 }
 #synapp nav.tabnav ul.tabs li {
   /*display: block;*/
   flex: 1;
   margin: -0.075rem 0 0 -0.075rem;
-  border: rgba(140,170,170,1) 0.15rem solid;
+  border: var(--base-fg-color) 0.15rem solid;
   padding: 0;
   text-align: center;
   list-style-type: none;
 }
 #synapp nav.tabnav ul.tabs li a {
   text-decoration: none;
-  color: rgba(140,170,170,1);
+  color: var(--base-fg-color);
   display: block;
   padding: 1rem;
 }
 #synapp nav.tabnav ul.tabs li a.active {
   font-weight: bold;
-  color: black;
-  background-color: rgba(80,100,100,1);
+  color: var(--base-fg-color-highlight);
+  background-color: var(--base-bg-color);
 }
 #synapp .pane-content {
   flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0px;
   padding: 1ex 1em;
-  background-color: rgba(80,100,100,1);
+  background-color: var(--base-bg-color);
 }
 #synapp .pane-content.performance-pane {
   background-color: rgba(80,100,100,0);
@@ -81,7 +86,7 @@ a, a:hover, a:active, a:focus {
   display: inline-block;
 }
 #synapp .subpane {
-  border-bottom: rgba(140,170,170,1) 1px solid;
+  border-bottom: var(--base-fg-color) 1px solid;
   padding-bottom: 0.3em;
 }
 #video-io {
@@ -257,7 +262,6 @@ a, a:hover, a:active, a:focus {
     -webkit-appearance: none;
     margin: 0;
 }
-
 
 /**
  Scrollbars
