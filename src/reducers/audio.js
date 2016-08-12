@@ -4,13 +4,13 @@ import { union, difference, intersection } from '../lib/collections'
 import {
   SET_AUDIO_SOURCE_DEVICE,
   SET_AUDIO_SOURCE_CHANNEL,
-  ADD_AUDIO_SOURCE_CC,
-  REMOVE_AUDIO_SOURCE_CC,
+  ADD_AUDIO_SOURCE_CONTROL,
+  REMOVE_AUDIO_SOURCE_CONTROL,
   SET_AUDIO_SINK_DEVICE,
   SET_AUDIO_SINK_CHANNEL,
-  ADD_AUDIO_SINK_CC,
-  REMOVE_AUDIO_SINK_CC,
-  TOGGLE_SOLO_AUDIO_SINK_CC,
+  ADD_AUDIO_SINK_CONTROL,
+  REMOVE_AUDIO_SINK_CONTROL,
+  TOGGLE_SOLO_AUDIO_SINK_CONTROL,
 } from '../actions/midi'
 
 export function sourceDevice(state="", {type, payload}) {
@@ -34,14 +34,14 @@ export function sourceChannel(state=0, action) {
 export function sourceCCs(state=[], {type, payload}) {
   let next = state
   switch (type) {
-    case ADD_AUDIO_SOURCE_CC:
+    case ADD_AUDIO_SOURCE_CONTROL:
       if (payload===undefined){
         next = union(state, [(Math.max(-1, ...state)+1)%128])
       } else {
         next = union(state, [parseInt(payload)])
       }
       break
-    case REMOVE_AUDIO_SOURCE_CC:
+    case REMOVE_AUDIO_SOURCE_CONTROL:
       next = difference(state, [parseInt(payload)])
       break
   }
@@ -68,14 +68,14 @@ export function sinkChannel(state=0, {type, payload}) {
 
 export function sinkCCs(state=[], {type, payload}) {
   switch (type) {
-    case ADD_AUDIO_SINK_CC:
+    case ADD_AUDIO_SINK_CONTROL:
       if (payload===undefined){
         let next = payload;
         return union(state, [Math.max(-1, ...state)+1])
       } else {
         return union(state, [parseInt(payload)])
       }
-    case REMOVE_AUDIO_SINK_CC:
+    case REMOVE_AUDIO_SINK_CONTROL:
       return difference(state, [parseInt(payload)])
     default:
       return state
@@ -84,7 +84,7 @@ export function sinkCCs(state=[], {type, payload}) {
 
 export function sinkSoloCC(state=null, {type, payload}) {
   switch (type) {
-    case TOGGLE_SOLO_AUDIO_SINK_CC:
+    case TOGGLE_SOLO_AUDIO_SINK_CONTROL:
       let newsolo = parseInt(payload);
       return (newsolo===state) ? null : newsolo;
     default:

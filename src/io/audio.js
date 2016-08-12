@@ -1,72 +1,30 @@
 import Rx from 'rxjs/Rx'
 import  {
-  setValidMidiSourceDevice,
-  setMidiSourceDevice,
-  setAllMidiSourceDevices,
-  setValidMidiSinkDevice,
-  setMidiSinkDevice,
-  setAllMidiSinkDevices
-} from '../actions/midi'
+  setValidAudioSourceDevice,
+  setAudioSourceDevice,
+  setAllAudioSourceDevices,
+  setValidAudioSinkDevice,
+  setAudioSinkDevice,
+  setAllAudioSinkDevices
+} from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
-import { midiBipol, bipolMidi } from '../lib/transform'
-import { midiStreamName } from '../io/midi/util'
+import { midiBipol, bipolAudio } from '../lib/transform'
+import { midiStreamName } from '../io/audio/util'
 
 export default function init(store, signalio) {
-  let rawMidiInSubscription = null;
+  let rawAudioInSubscription = null;
   let midiinfo = null;
   //hardware business
   let sourceChannel;
-  let sourceCCs;
+  let sourceControls;
   let sinkChannel;
-  let sinkCCs;
+  let sinkControls;
   let storeStream;
-  let sinkSoloCC;
   let validSource = false;
   let validSink = false;
 
-  // Interface to MIDI input
-  function handleMidiInMessage (ev) {
-    //filters CC messages out of midi bytes and turns them into key+value
-    let cmd = ev.data[0] >> 4;
-    let channel = ev.data[0] & 0x0f;
-    let cc = ev.data[1];
-    let val = midiBipol(ev.data[2]);
-    // midievent[0] = cmd;
-    // console.debug('MODI', cmd, channel, cc, val);
-    // midi commands
-    // 11: CC
-    // 9: Note on
-    // 8: Note off
-
-    if (
-      (cmd===11) &&
-      (sourceChannel == channel) &&
-      (sourceCCs.indexOf(cc)>-1)
-    ) {
-      const upd = {}
-      upd[midiStreamName(cc)[0]] = val
-      // console.debug('MIDO', upd);
-      signalio.sourceUpdates.next(upd);
-    };
-  };
-  //Interface to MIDI output
-  function handleMidiOutMessage(cc, scaled) {
-    let unmuted = ((state.solocc === null) || (state.solocc===cc)) &&
-      (midiinfo.outputs.get(state.activesink) !== undefined);
-    //turns [["midi",16,0.5]
-    //into [177,16,64]
-    let midibytes = [
-      176 + sourceChannel,
-      cc,
-      scaled
-    ];
-    if (unmuted) {
-      midiinfo.outputs.get(state.activesink).send(midibytes);
-    };
-  };
-
   //set up midi system
-  function updateMidiIO(newmidiinfo) {
+  function updateAudioIO(newmidiinfo) {
     let sourceNames = new Map();
     let sinkNames = new Map();
     let state = store.getState();
@@ -76,93 +34,93 @@ export default function init(store, signalio) {
     for (let [key, val] of midiinfo.inputs.entries()){
       sourceNames.set(key, val.name)
     };
-    store.dispatch(setAllMidiSourceDevices(sourceNames));
+    store.dispatch(setAllAudioSourceDevices(sourceNames));
     for (let [key, val] of midiinfo.outputs.entries()){
       sinkNames.set(key, val.name)
     };
-    store.dispatch(setAllMidiSinkDevices(sinkNames));
+    store.dispatch(setAllAudioSinkDevices(sinkNames));
     if (sourceNames.has(state.midi.sourceDevice)) {
-      store.dispatch(setMidiSourceDevice(state.midi.sourceDevice));
-      store.dispatch(setValidMidiSourceDevice(true));
+      store.dispatch(setAudioSourceDevice(state.midi.sourceDevice));
+      store.dispatch(setValidAudioSourceDevice(true));
     } else {
-      store.dispatch(setValidMidiSourceDevice(false));
+      store.dispatch(setValidAudioSourceDevice(false));
     }
     if (sinkNames.has(state.midi.sinkDevice)) {
-      store.dispatch(setMidiSinkDevice(state.midi.sinkDevice));
-      store.dispatch(setValidMidiSinkDevice(true));
+      store.dispatch(setAudioSinkDevice(state.midi.sinkDevice));
+      store.dispatch(setValidAudioSinkDevice(true));
     } else {
-      store.dispatch(setValidMidiSinkDevice(false));
+      store.dispatch(setValidAudioSinkDevice(false));
     }
   };
 
   // Now that the MIDI system is set up, plug this app in to it.
-  function plugMidiIn() {
+  function plugAudioIn() {
     const key = store.getState().midi.sourceDevice;
     if (midiinfo !==null) {
       let dev = midiinfo.inputs.get(key);
-      if (rawMidiInSubscription !== null) {
-        rawMidiInSubscription.unsubscribe()
+      if (rawAudioInSubscription !== null) {
+        rawAudioInSubscription.unsubscribe()
       };
-      rawMidiInSubscription = Rx.Observable.fromEvent(
+      rawAudioInSubscription = Rx.Observable.fromEvent(
         dev, 'midimessage'
-      ).subscribe(handleMidiInMessage);
+      ).subscribe(handleAudioInMessage);
     }
   }
   storeStream = toObservable(store);
   storeStream.pluck(
-      'midi', 'sourceDevice'
-    ).distinctUntilChanged().subscribe(plugMidiIn)
+      'audio', 'sourceDevice'
+    ).distinctUntilChanged().subscribe(plugAudioIn)
   storeStream.pluck(
-      '__volatile', 'midi', 'validSource'
+      '__volatile', 'audio', 'validSource'
     ).distinctUntilChanged().subscribe(
-      (validity)=> {validSource = validity; plugMidiIn()}
+      (validity)=> {validSource = validity; plugAudioIn()}
     )
 
   storeStream.pluck(
-      'midi', 'sourceChannel'
+      'audio', 'sourceChannel'
     ).distinctUntilChanged().subscribe(
       (x) => {
         sourceChannel = x;
       }
   )
   storeStream.pluck(
-      'midi', 'sourceCCs'
+      'audio', 'sourceCCs'
     ).distinctUntilChanged().subscribe(
       (x) => {
         sourceCCs = x;
       }
   )
   storeStream.pluck(
-      'midi', 'sinkDevice'
+      'audio', 'sinkDevice'
     ).distinctUntilChanged().subscribe(
       (key) => {
         console.log("midisinkkey", key);
       }
   )
   storeStream.pluck(
-      '__volatile', 'midi', 'validSink'
+      '__volatile', 'audio', 'validSink'
     ).distinctUntilChanged().subscribe(
       (validity)=> {validSink = validity}
     )
 
   storeStream.pluck(
-      'midi', 'sinkChannel'
+      'audio', 'sinkChannel'
     ).distinctUntilChanged().subscribe(
       (x) => {
         sinkChannel = x;
       }
   )
   storeStream.pluck(
-      'midi', 'sinkCCs'
+      'audio', 'sinkCCs'
     ).distinctUntilChanged().subscribe(
       (x) => {
-        sinkCCs = x;
+        sinkControls = x;
       }
   )
 
   Rx.Observable.fromPromise(
     navigator.requestMIDIAccess()
-  ).subscribe(updateMidiIO,
+  ).subscribe(updateAudioIO,
     (err) => console.debug(err.stack)
   );
   return {

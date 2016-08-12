@@ -47,6 +47,7 @@
     "redux-thunk": "^2.1.0",
     "rxjs": "^5.0.0-beta.10",
     "source-map-loader": "^0.1.5",
+    "tone": "^0.7.1",
     "webpack": "^1.13.1",
     "webrtc-adapter": "^1.4.0",
     "worker-loader": "^0.7.1"
