@@ -1,7 +1,7 @@
 // Perhaps better a stream of note triggers?
 // Generate a stream for any given pattern?
 // If they share a common clock?
-// So I guess this should just run whenever, and schedule events of an 
+// So I guess this should just run whenever, and schedule events of an
 
 (function(global, _, Rx){
     'use strict';
@@ -14,7 +14,7 @@
         // Rx.Scheduler(now, schedule, scheduleRelative, scheduleAbsolute)
         // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/schedulers/scheduler.md#rxschedulernow-schedule-schedulerelative-scheduleabsolute
         // TODO: fix the time advancing function, which is too coarse at the moment.
-        
+
         /* Comparer required for scheduling priority */
         function comparer (x, y) {
             if (x > y) { return 1; }
@@ -35,7 +35,7 @@
                 console.debug("pumpcallback", stuff, logicalscheduler.rtstate)
             }
         }
-        
+
         var logicalscheduler = new Rx.VirtualTimeScheduler(
             LOOKAHEAD, comparer);
         logicalscheduler.rtstate = state;
@@ -45,7 +45,7 @@
         logicalscheduler.add = function (absolute, relative) {
             return absolute + relative;
         };
-       
+
         logicalscheduler.toDateTimeOffset = function (absolute) {
             //Hmm. Not convinced this one is right.
             // return new Date(absolute).getTime();
@@ -154,12 +154,12 @@
         logicalscheduler.stop = function () {
             clocktask.dispose();
         }
-        
+
         return logicalscheduler;
     }
     audio.BeatScheduler = BeatScheduler;
     function playSynth(){
-        
+
     }
-    
+
 })(this, _, Rx);
