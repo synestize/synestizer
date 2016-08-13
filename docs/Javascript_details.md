@@ -73,9 +73,11 @@ However I will start that way because otherwise it's too complicated
 ### Persistence
 
 We are currently using [redux-persist](https://www.npmjs.com/package/redux-persist).
-We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage) or [redux-localstorage](https://www.npmjs.com/package/redux-localstorage).
+It imports a LOT of code in dependencies though...
+We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage)
 
 The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
+redux-storage supports [many backends](https://www.npmjs.com/browse/keyword/redux-storage-engine).
 
 ## Webpack
 
