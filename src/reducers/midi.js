@@ -109,7 +109,6 @@ export function sinkCCMap(state={}, {type, payload}) {
       newState = {...state}
       key = midiStreamName(payload)[0];
       newState[key] = payload
-      console.debug('smang', key, newState);
       return newState
     case REMOVE_MIDI_SINK_CC:
       newState = {...state}
