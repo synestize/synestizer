@@ -3,13 +3,13 @@ import IOPane from './IOPane'
 import WelcomePane from './WelcomePane'
 import PatchingPane from './PatchingPane'
 import PerformancePane from './PerformancePane'
-import AudioPane from './AudioPane'
+import SoundPane from './SoundPane'
 
 const renderer = {
   io: () => <IOPane />,
   welcome: () => <WelcomePane />,
   patching: () => <PatchingPane />,
-  audio: () => <AudioPane />,
+  sound: () => <SoundPane />,
   performance: () => <PerformancePane />
 }
 
@@ -19,7 +19,7 @@ const CurrentPane = ({visiblePane}) => {
 
 CurrentPane.propTypes = {
   visiblePane: PropTypes.oneOf([
-    'io', 'welcome', 'patching', 'performance', 'audio'
+    'io', 'welcome', 'patching', 'performance', 'sound'
   ]),
 }
 

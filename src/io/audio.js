@@ -9,9 +9,9 @@ import  {
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, midiFreq } from '../lib/transform'
+import webrtc from 'webrtc-adapter'
 
 export default function init(store, signalio) {
-  let rawAudioInSubscription = null;
   let midiinfo = null;
   //hardware business
   let sourceChannel;
@@ -21,6 +21,41 @@ export default function init(store, signalio) {
   let validSource = false;
   let validSink = false;
   let storeStream = toObservable(store);
+
+  function doAudioPlumbing(key) {
+    videosource = videosources.get(key);
+    canvasElem.width = PIXELDIM;
+    canvasElem.height = PIXELDIM;
+
+    Rx.Observable.fromPromise(
+      navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
+    ).subscribe(function(mediaStream) {
+      //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
+      Rx.Observable.fromEvent(
+        videoElem, "loadedmetadata").subscribe(pumpPixels);
+      videoElem.src = window.URL.createObjectURL(mediaStream);
+      videoElem.play();
+    });
+  }
+  function updateVideoIO(mediadevices) {
+    /*
+    updates lists of available devices.
+    */
+    let allsources = new Map();
+    Rx.Observable.from(mediadevices).filter(
+      (dev) => ( dev.kind==="videoinput" )
+    ).subscribe(function (dev){
+      videosources.set(dev.deviceId,dev);
+      allsources.set(dev.deviceId,dev.label);
+    });
+    store.dispatch(setAllVideoSources(allsources));
+    //If there is only one device, select it.
+    if (allsources.size === 1) {
+      for (let key of allsources.keys()) {
+        store.dispatch(setCurrentVideoSource(key));
+      }
+    }
+  };
 
   //Create a context with master out volume
   function initAudio(){

@@ -10,7 +10,7 @@ const TabNav = () => {
     </li>
     <li>
       <SelectTabLink paneId="io" >
-        IO
+        Hardware
       </SelectTabLink>
     </li>
     <li>
@@ -19,8 +19,8 @@ const TabNav = () => {
       </SelectTabLink>
     </li>
     <li>
-      <SelectTabLink paneId="audio">
-        Audio
+      <SelectTabLink paneId="sound">
+        Sound
       </SelectTabLink>
     </li>
     <li>
