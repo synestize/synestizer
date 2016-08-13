@@ -8,7 +8,11 @@
 
 ## Webaudio information
 
-There are too many resources online to list. [Start here](http://livingthing.danmackinlay.name/javascript_audio.html)
+There are too many resources online to list.
+[Start here](http://livingthing.danmackinlay.name/javascript_audio.html)
+
+[accessing microphone](http://typedarray.org/from-microphone-to-wav-with-getusermedia-and-web-audio/)
+[getusermedia examples](https://webrtc.github.io/samples/src/content/devices/input-output/)
 
 ## Alternatives to WebAudio
 
