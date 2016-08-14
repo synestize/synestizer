@@ -9,7 +9,7 @@ import  {
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
-import webrtc from 'webrtc-adapter'
+import {deviceSubject} from '../lib/av'
 
 export default function init(store, signalio) {
   //hardware business
@@ -126,9 +126,7 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(
       (x) => {sinkControls = x}
   )
-  Rx.Observable.fromPromise(
-    navigator.mediaDevices.enumerateDevices()
-  ).subscribe(updateAudioIO,
+  deviceSubject.subscribe(updateAudioIO,
     (err) => console.debug(err.stack)
   );
   return {

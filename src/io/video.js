@@ -15,7 +15,7 @@ import  {
   removeSourceSignal,
 } from '../actions/signal'
 
-import webrtc from 'webrtc-adapter'
+import {deviceSubject} from '../lib/av'
 import Videoworker_ from 'worker!./video/videoworker'
 import {
   setValidVideoSource,
@@ -215,9 +215,7 @@ export default function init(store, signalio, videoDom) {
     }
   });
 
-  Rx.Observable.fromPromise(
-    navigator.mediaDevices.enumerateDevices()
-  ).subscribe(
+  deviceSubject.subscribe(
     updateVideoIO,
     (err) => console.debug(err.stack)
   );
