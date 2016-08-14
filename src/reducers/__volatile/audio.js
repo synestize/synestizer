@@ -4,7 +4,7 @@ import {
   SET_VALID_AUDIO_SOURCE_DEVICE,
   SET_ALL_AUDIO_SINK_DEVICES,
   SET_VALID_AUDIO_SINK_DEVICE,
-} from '../../actions/midi'
+} from '../../actions/audio'
 
 export function sources(state=new Map(), action) {
   switch (action.type) {

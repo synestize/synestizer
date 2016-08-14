@@ -35,7 +35,7 @@ export default function init(store, signalio) {
     ).subscribe(function(mediaStream) {
       //we can play the audio now, but we need to get audio metadata before the dimensions work etc, so we start from the onloaded event.
       Rx.Observable.fromEvent(
-        audioElem, "loadedmetadata").subscribe(pumpPixels);
+        audioElem, 'loadedmetadata').subscribe(pumpPixels);
       audioElem.src = window.URL.createObjectURL(mediaStream);
       audioElem.play();
     });
@@ -66,49 +66,31 @@ export default function init(store, signalio) {
     let state = store.getState();
 
     devinfo = newdevinfo;
-    console.debug('mediadevices', devinfo);
+    // console.debug('mediadevices', devinfo);
 
+    let i=0;
     for (let dev of devinfo){
-      if (dev.kind==="audioinput") {
-        sourceNames.set(dev.deviceId, dev.label || '???')
+      if (dev.kind==='audioinput') {
+        sourceNames.set(dev.deviceId, dev.label || ('device ' + i))
       }
-      else if (dev.kind==="audioinput") {
-        sinkNames.set(dev.deviceId, dev.label || '???')
+      else if (dev.kind==='audiooutput') {
+        sinkNames.set(dev.deviceId, dev.label || ('device ' + i))
       };
+      i++;
     }
     store.dispatch(setAllAudioSourceDevices(sourceNames));
     store.dispatch(setAllAudioSinkDevices(sinkNames));
+
     if (sourceNames.has(state.audio.sourceDevice)) {
-      store.dispatch(setAudioSourceDevice(state.audio.sourceDevice));
       store.dispatch(setValidAudioSourceDevice(true));
     } else {
       store.dispatch(setValidAudioSourceDevice(false));
     }
     if (sinkNames.has(state.audio.sinkDevice)) {
-      store.dispatch(setAudioSinkDevice(state.audio.sinkDevice));
       store.dispatch(setValidAudioSinkDevice(true));
     } else {
       store.dispatch(setValidAudioSinkDevice(false));
     }
-    for (let dev of devinfo) {
-      console.debug('dev',dev)
-    }
-    /*
-    Rx.Observable.from(mediadevices).filter(
-      (dev) => ( dev.kind==="audioinput" )
-    ).subscribe(function (dev){
-      sourceDevices.set(dev.deviceId,dev);
-      sourceNames.set(dev.deviceId,dev.label);
-    });
-    store.dispatch(setAllAudioSources(sourceNames));
-    //Select first device
-    if (sourceNames.size === 1) {
-      for (let key of sourceNames.keys()) {
-        store.dispatch(setCurrentAudioSource(key));
-      }
-    }
-    */
-
   };
 
   // Now that the MIDI system is set up, plug this app in to it.

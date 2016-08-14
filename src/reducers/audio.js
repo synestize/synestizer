@@ -13,7 +13,7 @@ import {
   TOGGLE_SOLO_AUDIO_SINK_CONTROL,
 } from '../actions/audio'
 
-export function sourceDevice(state="", {type, payload}) {
+export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
     case SET_AUDIO_SOURCE_DEVICE:
       return payload
@@ -48,7 +48,7 @@ export function sourceCCs(state=[], {type, payload}) {
   return next
 }
 
-export function sinkDevice(state="", {type, payload}) {
+export function sinkDevice(state="default", {type, payload}) {
   switch (type) {
     case SET_AUDIO_SINK_DEVICE:
       return payload

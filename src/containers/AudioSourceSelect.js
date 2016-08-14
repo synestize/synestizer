@@ -1,18 +1,18 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidAudioSource, setCurrentAudioSource, setAllAudioSources } from '../actions/audio'
+import { setValidAudioSource, setAudioSourceDevice, setAllAudioSources } from '../actions/audio'
 import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    deviceMap: state.__volatile.audio.audioSources,
-    valid: state.__volatile.audio.validAudioSource,
-    currentDevice: state.audio.currentAudioSource
+    deviceMap: state.__volatile.audio.sources,
+    valid: state.__volatile.audio.validSource,
+    currentDevice: state.audio.sourceDevice
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (key) => dispatch(setCurrentAudioSource(key))
+    onChange: (key) => dispatch(setAudioSourceDevice(key))
   }
 };
 
