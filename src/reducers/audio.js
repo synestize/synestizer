@@ -11,7 +11,7 @@ import {
   ADD_AUDIO_SINK_CONTROL,
   REMOVE_AUDIO_SINK_CONTROL,
   TOGGLE_SOLO_AUDIO_SINK_CONTROL,
-} from '../actions/midi'
+} from '../actions/audio'
 
 export function sourceDevice(state="", {type, payload}) {
   switch (type) {
@@ -92,7 +92,7 @@ export function sinkSoloCC(state=null, {type, payload}) {
   }
 }
 
-const midi = combineReducers({
+const audio = combineReducers({
    sourceDevice,
    sourceChannel,
    sourceCCs,
@@ -102,4 +102,4 @@ const midi = combineReducers({
    sinkSoloCC,
 })
 
-export default midi
+export default audio
