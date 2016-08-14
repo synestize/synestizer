@@ -32,8 +32,8 @@ export default function init(store, signalio, videoDom) {
   const gfxCtx = canvasElem.getContext('2d');
 
   //hardware business
-  let videosources = new Map(); //id -> device
-  let videosource; //device
+  let sources = new Map(); //id -> device
+  let source; //device
 
   let signalKeys;
   let signalNames;
@@ -47,7 +47,7 @@ export default function init(store, signalio, videoDom) {
   const PIXELDIM=64;
 
   function doVideoPlumbing(key) {
-    videosource = videosources.get(key);
+    source = sources.get(key);
     canvasElem.width = PIXELDIM;
     canvasElem.height = PIXELDIM;
 
@@ -116,7 +116,7 @@ export default function init(store, signalio, videoDom) {
     Rx.Observable.from(mediadevices).filter(
       (dev) => ( dev.kind==="videoinput" )
     ).subscribe(function (dev){
-      videosources.set(dev.deviceId,dev);
+      sources.set(dev.deviceId, dev);
       sourceNames.set(dev.deviceId, dev.label);
     });
     store.dispatch(setAllVideoSources(sourceNames));
@@ -222,7 +222,7 @@ export default function init(store, signalio, videoDom) {
     (err) => console.debug(err.stack)
   );
   const storeStream = toObservable(store);
-  storeStream.pluck('currentVideoSource').distinctUntilChanged().subscribe(
+  storeStream.pluck('source').distinctUntilChanged().subscribe(
     (key) => {
       doVideoPlumbing(key);
       console.log("vidkey", key);

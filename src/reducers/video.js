@@ -18,7 +18,7 @@ import {
 } from '../actions/signal'
 
 
-export function currentVideoSource(state="", {type, payload}) {
+export function source(state="", {type, payload}) {
   switch (type) {
     case SET_CURRENT_VIDEO_SOURCE:
       return payload
@@ -28,7 +28,7 @@ export function currentVideoSource(state="", {type, payload}) {
 }
 
 const video = combineReducers({
-   currentVideoSource,
+   source,
 })
 
 export default video

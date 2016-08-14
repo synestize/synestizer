@@ -5,9 +5,9 @@ import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    deviceMap: state.__volatile.video.videoSources,
-    valid: state.__volatile.video.validVideoSource,
-    currentDevice: state.video.currentVideoSource
+    deviceMap: state.__volatile.video.sources,
+    valid: state.__volatile.video.validSource,
+    currentDevice: state.video.source
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
