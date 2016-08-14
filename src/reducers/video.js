@@ -18,10 +18,10 @@ import {
 } from '../actions/signal'
 
 
-export function currentVideoSource(state="", action) {
-  switch (action.type) {
+export function currentVideoSource(state="", {type, payload}) {
+  switch (type) {
     case SET_CURRENT_VIDEO_SOURCE:
-      return action.payload
+      return payload
     default:
       return state
   }

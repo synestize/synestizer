@@ -34,6 +34,7 @@ export default function init(store, signalio, videoDom) {
   //hardware business
   let videosources = new Map(); //id -> device
   let videosource; //device
+
   let signalKeys;
   let signalNames;
   let signalNameFromKey;
@@ -111,19 +112,17 @@ export default function init(store, signalio, videoDom) {
     /*
     updates lists of available devices.
     */
-    let allsources = new Map();
+    let sourceNames = new Map();
     Rx.Observable.from(mediadevices).filter(
       (dev) => ( dev.kind==="videoinput" )
     ).subscribe(function (dev){
       videosources.set(dev.deviceId,dev);
-      allsources.set(dev.deviceId,dev.label);
+      sourceNames.set(dev.deviceId, dev.label);
     });
-    store.dispatch(setAllVideoSources(allsources));
-    //If there is only one device, select it.
-    if (allsources.size === 1) {
-      for (let key of allsources.keys()) {
-        store.dispatch(setCurrentVideoSource(key));
-      }
+    store.dispatch(setAllVideoSources(sourceNames));
+    //If there is a device, select it.
+    if (sourceNames.size >= 1) {
+      store.dispatch(setCurrentVideoSource(sourceNames.keys().next().value));
     }
   };
 
