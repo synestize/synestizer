@@ -1,13 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import { addSourceSignal,
-  removeSourceSignal,
-  setSourceSignalValue,
-  setAllSourceSignalValues,
-  addSinkSignal,
-  removeSinkSignal,
-  setSinkSignalValue,
-  setAllSinkSignalValues,
+import {
   setSourceSinkScale,
   setSinkBias,
 } from '../actions/signal'

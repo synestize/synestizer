@@ -1,22 +1,12 @@
 'use strict';
 import { connect } from 'react-redux';
-import { addSourceSignal,
-  removeSourceSignal,
-  setSourceSignalValue,
-  setAllSourceSignalValues,
-  addSinkSignal,
-  removeSinkSignal,
-  setSinkSignalValue,
-  setAllSinkSignalValues,
-  setSourceSinkScale,
-  setSinkBias,
-} from '../actions/signal'
 
 import PatchMatrix from '../components/PatchMatrix.js'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     ...state.signal,
+    ...state.__volatile.signal
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
