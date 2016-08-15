@@ -10,6 +10,7 @@ import  {
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import {deviceSubject} from '../lib/av'
+import triad_ from './audio/triad'
 
 export default function init(store, signalio) {
   //hardware business
@@ -25,6 +26,8 @@ export default function init(store, signalio) {
   let validSource = false;
   let validSink = false;
   let storeStream = toObservable(store);
+
+  let ensembles = {}
 
   function doAudioSinkPlumbing() {
     const key = store.getState().audio.sourceDevice;
@@ -51,10 +54,13 @@ export default function init(store, signalio) {
     compressor.connect(context.destination);
     let outputNode = context.createGain();
     outputNode.connect(compressor);
-    return {
+
+    let audio = {
       context,
       outputNode
     }
+    ensembles.triad = triad_(store, signalio, audio)
+    return audio
   };
 
   //set up audio system
@@ -108,8 +114,7 @@ export default function init(store, signalio) {
       (validity)=> {validSink = validity;}
   )
   storeStream.pluck(
-  storeStream.pluck(
-      'audio', 'sinkCCs'
+      'audio', 'sinkControls'
     ).distinctUntilChanged().subscribe(
       (x) => {sinkControls = x}
   )
