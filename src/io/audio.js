@@ -18,6 +18,7 @@ export default function init(store, signalio) {
   let sourceDevice; //device
   let sinkDevices = new Map(); //id -> device
   let sinkDevice; //device
+  let context;
 
   let sourceChannel;
   let sourceControls;
@@ -27,27 +28,26 @@ export default function init(store, signalio) {
   let validSink = false;
   let storeStream = toObservable(store);
 
-  function doAudioPlumbing(key) {
-    sourceDevice = sourceDevices.get(key);
-
+  function doAudioSinkPlumbing() {
+    const key = store.getState().audio.sourceDevice;
     Rx.Observable.fromPromise(
-      navigator.mediaDevices.getUserMedia({deviceId:key, audio:true})
-    ).subscribe(function(mediaStream) {
-      //we can play the audio now, but we need to get audio metadata before the dimensions work etc, so we start from the onloaded event.
-      Rx.Observable.fromEvent(
-        audioElem, 'loadedmetadata').subscribe(pumpPixels);
-      audioElem.src = window.URL.createObjectURL(mediaStream);
-      audioElem.play();
-    });
+      navigator.mediaDevices.getUserMedia({deviceId:key, audio: true})
+    ).subscribe(initAudioContext);
   }
   //Create a context with master out volume
-  function initAudioContext(){
-    let context = new window.AudioContext();
+  //Don't yet understand how this will work for the microphone etc
+  function initAudioContext(dev){
+    if (context!==undefined) {
+      context.close()
+    }
+    sourceDevice = dev;
+    context = new window.AudioContext();
+    window.audioContext = context;
     let compressor = context.createDynamicsCompressor();
     compressor.threshold.value = -50;
     compressor.knee.value = 40;
     compressor.ratio.value = 2;
-    compressor.reduction.value = 0; //should be negative for boosts?
+    // compressor.reduction.value = 0; //should be negative for boosts?
     compressor.attack.value = 0.05;
     compressor.release.value = 0.3;
     compressor.connect(context.destination);
@@ -70,11 +70,14 @@ export default function init(store, signalio) {
 
     let i=0;
     for (let dev of devinfo){
+      let label = dev.label || ('device ' + i);
       if (dev.kind==='audioinput') {
-        sourceNames.set(dev.deviceId, dev.label || ('device ' + i))
+        sourceNames.set(dev.deviceId, label)
+        sourceDevices.set(dev.deviceId, dev)
       }
       else if (dev.kind==='audiooutput') {
-        sinkNames.set(dev.deviceId, dev.label || ('device ' + i))
+        sinkNames.set(dev.deviceId, label)
+        sourceDevices.set(dev.deviceId, dev)
       };
       i++;
     }
@@ -93,18 +96,13 @@ export default function init(store, signalio) {
     }
   };
 
-  // Now that the MIDI system is set up, plug this app in to it.
-  function plugAudioIn() {
-    const key = store.getState().audio.sourceDevice;
-  }
-
   storeStream.pluck(
       'audio', 'sourceDevice'
-    ).distinctUntilChanged().subscribe(plugAudioIn)
+    ).distinctUntilChanged().subscribe(doAudioSinkPlumbing)
   storeStream.pluck(
       '__volatile', 'audio', 'validSource'
     ).distinctUntilChanged().subscribe(
-      (validity)=> {validSource = validity; plugAudioIn()}
+      (validity)=> {validSource = validity; doAudioSinkPlumbing()}
   )
   storeStream.pluck(
       'audio', 'sourceChannel'
