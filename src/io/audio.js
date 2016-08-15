@@ -20,9 +20,7 @@ export default function init(store, signalio) {
   let sinkDevice; //device
   let context;
 
-  let sourceChannel;
   let sourceControls;
-  let sinkChannel;
   let sinkControls;
   let validSource = false;
   let validSink = false;
@@ -105,20 +103,11 @@ export default function init(store, signalio) {
       (validity)=> {validSource = validity; doAudioSinkPlumbing()}
   )
   storeStream.pluck(
-      'audio', 'sourceChannel'
-    ).distinctUntilChanged().subscribe(
-      (x) => {sourceChannel = x;}
-  )
-  storeStream.pluck(
       '__volatile', 'audio', 'validSink'
     ).distinctUntilChanged().subscribe(
       (validity)=> {validSink = validity;}
   )
   storeStream.pluck(
-      'audio', 'sinkChannel'
-    ).distinctUntilChanged().subscribe(
-      (x) => {sinkChannel = x;}
-  )
   storeStream.pluck(
       'audio', 'sinkCCs'
     ).distinctUntilChanged().subscribe(

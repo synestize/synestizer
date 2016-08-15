@@ -2,12 +2,10 @@ import { combineReducers } from 'redux'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
-  SET_AUDIO_SOURCE_CHANNEL,
   PUBLISH_AUDIO_SOURCE_CONTROL,
   UNPUBLISH_AUDIO_SOURCE_CONTROL,
   SET_AUDIO_SOURCE_CONTROL,
   SET_AUDIO_SINK_DEVICE,
-  SET_AUDIO_SINK_CHANNEL,
   ADD_AUDIO_SINK_CONTROL,
   REMOVE_AUDIO_SINK_CONTROL,
   PUBLISH_AUDIO_SINK_CONTROL,
@@ -19,15 +17,6 @@ export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
     case SET_AUDIO_SOURCE_DEVICE:
       return payload
-    default:
-      return state
-  }
-}
-
-export function sourceChannel(state=0, action) {
-  switch (action.type) {
-    case SET_AUDIO_SOURCE_CHANNEL:
-      return parseInt(action.payload)
     default:
       return state
   }
@@ -49,15 +38,6 @@ export function sinkDevice(state="default", {type, payload}) {
   switch (type) {
     case SET_AUDIO_SINK_DEVICE:
       return payload
-    default:
-      return state
-  }
-}
-
-export function sinkChannel(state=0, {type, payload}) {
-  switch (type) {
-    case SET_AUDIO_SINK_CHANNEL:
-      return parseInt(payload)
     default:
       return state
   }
@@ -97,10 +77,8 @@ export function sinkControlMeta(state={}, {type, payload}) {
 
 const audio = combineReducers({
    sourceDevice,
-   sourceChannel,
   //  sourceControlVals,
    sinkDevice,
-   sinkChannel,
    sinkControlVals,
 })
 
