@@ -4,8 +4,8 @@ import MidiSettings from './MidiSettings';
 import AudioSettings from './AudioSettings';
 import React, { Component, PropTypes, Children } from 'react';
 
-const IOPane = () => {return (
-  <Pane paneId="io-pane" >
+const IOPane = ({version}) => {return (
+  <Pane paneId="io-pane" version={version}>
     <VideoSettings />
     <AudioSettings />
     <MidiSettings />

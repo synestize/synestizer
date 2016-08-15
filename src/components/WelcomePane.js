@@ -1,8 +1,8 @@
 import React, { Component, PropTypes, Children } from 'react';
 import Pane from './Pane';
 
-const WelcomePane = () => (
-    <Pane paneId="welcome">
+const WelcomePane = ({version}) => (
+    <Pane paneId="welcome" version={version}>
       <h2>
         Welcome to Synestizer.
       </h2>

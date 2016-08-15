@@ -1,6 +1,6 @@
-const BrandingBox = () => (<div className='branding-box'>
+const BrandingBox = ({version}) => (<div className='branding-box'>
   <div className='branding-info'>
-    <h1>Synestizer <span className='version'>Violet edition.</span></h1>
+    <h1>Synestizer <span className='version'>{version} edition.</span></h1>
   </div>
 </div>)
 

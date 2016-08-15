@@ -22,6 +22,7 @@ import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
+export const version = "Violet"
 
 /*
 We divide Synestizer into two part:
@@ -83,7 +84,7 @@ getStoredState(persistConf, (err, restoredState) => {
   audioio = audioio_(store, signalio);
   appRoot = render(
     <Provider store={store}>
-      <App />
+      <App version={version}/>
     </Provider>,
     document.getElementById('synapp')
   );

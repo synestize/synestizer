@@ -1,7 +1,7 @@
 import Pane from './Pane';
 import React, { Component, PropTypes, Children } from 'react';
 
-const PerformancePane = () => (<Pane paneId="performance-pane" >
+const PerformancePane = ({version}) => (<Pane paneId="performance-pane" version={version}>
     Insert performance here
 </Pane>)
 
