@@ -30,7 +30,15 @@ export default function init(store, signalio) {
   let validSink = false;
   let storeStream = toObservable(store);
 
+  let actaulControlValueStream = new BehaviorSubject(
+    store.getState().audio.sinkControlNominalVals
+  );
   let ensembles = {}
+
+  const audioInfrastructure = {
+    actaulControlValueStream,
+    ensembles
+  }
 
   function doAudioSinkPlumbing() {
     const key = store.getState().audio.sourceDevice;
@@ -58,12 +66,11 @@ export default function init(store, signalio) {
     let outputNode = context.createGain();
     outputNode.connect(compressor);
 
-    let audio = {
+    Object.assign(audioInfrastructure, {
       context,
-      outputNode
-    }
-    ensembles.triad = triad_(store, signalio, audio)
-    return audio
+      outputNode,
+    })
+    ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
 
   //set up audio system
@@ -124,7 +131,5 @@ export default function init(store, signalio) {
   deviceSubject.subscribe(updateAudioIO,
     (err) => console.debug(err.stack)
   );
-  return {
-    playNote: () => null
-  }
+  return audioInfrastructure
 };

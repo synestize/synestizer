@@ -3,7 +3,7 @@ import {
   SET_ALL_AUDIO_SOURCE_DEVICES,
   SET_VALID_AUDIO_SOURCE_DEVICE,
   SET_ALL_AUDIO_SINK_DEVICES,
-  SET_VALID_AUDIO_SINK_DEVICE,
+  SET_VALID_AUDIO_SINK_DEVICE
 } from '../../actions/audio'
 
 export function sources(state=new Map(), action) {

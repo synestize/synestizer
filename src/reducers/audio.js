@@ -10,7 +10,8 @@ import {
   REMOVE_AUDIO_SINK_CONTROL,
   PUBLISH_AUDIO_SINK_CONTROL,
   UNPUBLISH_AUDIO_SINK_CONTROL,
-  SET_AUDIO_SINK_CONTROL,
+  SET_AUDIO_SINK_CONTROL_NOMINAL_VALUE,
+  ADD_ENSEMBLE
 } from '../actions/audio'
 
 export function sourceDevice(state="default", {type, payload}) {
@@ -43,7 +44,7 @@ export function sinkDevice(state="default", {type, payload}) {
   }
 }
 
-export function sinkControlVals(state={}, {type, payload}) {
+export function sinkControlNominalVals(state={}, {type, payload}) {
   let next = state;
   switch (type) {
     case ADD_AUDIO_SINK_CONTROL:
@@ -53,7 +54,7 @@ export function sinkControlVals(state={}, {type, payload}) {
     case REMOVE_AUDIO_SINK_CONTROL:
       next = {...state}
       delete next[payload.key]
-    case SET_AUDIO_SINK_CONTROL:
+    case SET_AUDIO_SINK_CONTROL_NOMINAL_VALUE:
       next = {...state}
       next[payload.key] = payload.val
   }
@@ -74,12 +75,22 @@ export function sinkControlMeta(state={}, {type, payload}) {
   return next
 }
 
+function ensembles(state={}, {type, payload}) {
+  let next = state;
+  switch (type) {
+    case ADD_ENSEMBLE:
+      next = {...state}
+      next[payload.key] = payload
+      break
+  }
+  return next
+}
 
 const audio = combineReducers({
    sourceDevice,
   //  sourceControlVals,
    sinkDevice,
-   sinkControlVals,
+   sinkControlNominalVals,
 })
 
 export default audio
