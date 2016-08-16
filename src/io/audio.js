@@ -1,4 +1,7 @@
-import Rx from 'rxjs/Rx'
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+
 import  {
   setValidAudioSourceDevice,
   setAudioSourceDevice,
@@ -9,7 +12,7 @@ import  {
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
-import {deviceSubject} from '../lib/av'
+import { deviceSubject } from '../lib/av'
 import triad_ from './audio/triad'
 
 export default function init(store, signalio) {
@@ -31,7 +34,7 @@ export default function init(store, signalio) {
 
   function doAudioSinkPlumbing() {
     const key = store.getState().audio.sourceDevice;
-    Rx.Observable.fromPromise(
+    Observable::fromPromise(
       navigator.mediaDevices.getUserMedia({deviceId:key, audio: true})
     ).subscribe(initAudioContext);
   }
