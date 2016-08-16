@@ -17,7 +17,7 @@ export const ADD_AUDIO_SINK_CONTROL = 'ADD_AUDIO_SINK_CONTROL'
 export const REMOVE_AUDIO_SINK_CONTROL = 'REMOVE_AUDIO_SINK_CONTROL'
 export const PUBLISH_AUDIO_SINK_CONTROL = 'PUBLISH_AUDIO_SINK_CONTROL'
 export const UNPUBLISH_AUDIO_SINK_CONTROL = 'UNPUBLISH_AUDIO_SINK_CONTROL'
-export const SET_AUDIO_SINK_CONTROL_NOMINAL_VALUE = 'SET_AUDIO_SINK_CONTROL_NOMINAL_VALUE'
+export const SET_AUDIO_SINK_CONTROL_BIAS = 'SET_AUDIO_SINK_CONTROL_BIAS'
 export const ADD_ENSEMBLE = 'ADD_ENSEMBLE'
 /*
  * action creators
@@ -62,7 +62,7 @@ export function unpublishAudioSinkControl(key) {
  return { type: UNPUBLISH_AUDIO_SINK_CONTROL, payload: key }
 }
 export function setAudioSinkControlNominalValue(key, val) {
- return { type: SET_AUDIO_SINK_CONTROL_NOMINAL_VALUE, payload: {key, val}}
+ return { type: SET_AUDIO_SINK_CONTROL_BIAS, payload: {key, val}}
 }
 export function addEnsemble(meta) {
   return { type: ADD_ENSEMBLE, payload: meta }

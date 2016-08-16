@@ -31,7 +31,7 @@ export default function init(store, signalio) {
   let storeStream = toObservable(store);
 
   let actaulControlValueStream = new BehaviorSubject(
-    store.getState().audio.sinkControlNominalVals
+    store.getState().audio.sinkControlBias
   );
   let ensembles = {}
 
