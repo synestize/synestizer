@@ -79,17 +79,21 @@ export function _sinkControl(state={}, {type, payload}) {
     case SET_AUDIO_SINK_CONTROL_SCALE:
       next.scale = val
       break
+    default:
+      return state
   }
   return next
 }
 
-export function sinkControlSignal(state={}, {type, payload}) {
+export function sinkControlSignals(state={}, {type, payload}) {
   switch (type) {
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
       let next = {...state};
       let {key, val} = payload;
       next[val] = key
       return next
+    default:
+      return state
   }
 }
 function ensembles(state={}, {type, payload}) {
@@ -99,6 +103,8 @@ function ensembles(state={}, {type, payload}) {
       next = {...state}
       next[payload.key] = payload
       break
+    default:
+      return state
   }
   return next
 }
@@ -108,6 +114,8 @@ const audio = combineReducers({
   //  sourceControlVals,
    sinkDevice,
    sinkControls,
+   sinkControlSignals,
+   ensembles,
 })
 
 export default audio

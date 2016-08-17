@@ -15,6 +15,8 @@ import {
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 
+const SIGNAL_RATE = 100;
+const UI_RATE = 300;
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
 */
@@ -27,13 +29,13 @@ export default function init(store) {
   const sourceStateSubject = sourceUpdates.scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  ).throttleTime(30).share();
+  ).throttleTime(SIGNAL_RATE).share();
   // sourceStateSubject.subscribe((x)=>console.debug('sigstate3', x))
-  sourceStateSubject.subscribe((vals) => {
+  sourceStateSubject.throttleTime(UI_RATE).subscribe((vals) => {
     store.dispatch(setAllSourceSignalValues(vals))
   });
   const sinkStateSubject = sourceStateSubject.map(projectObs).share();
-  sinkStateSubject.subscribe((vals) => {
+  sinkStateSubject.throttleTime(UI_RATE).subscribe((vals) => {
     store.dispatch(setAllSinkSignalValues(vals))
   });
   /*{
