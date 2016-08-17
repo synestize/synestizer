@@ -3,6 +3,7 @@
 ## currently
 
 * audio manages all UI/signal wrangling for ensembles
+* audio publishes a certain number of signal buses and maps individual controllers to each
 * stop speed of controllers changing when in the background
 * midi channel numbers should match Ableton convention
 * Need to show perturbation and final value of synth values
