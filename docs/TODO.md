@@ -7,22 +7,21 @@
 * stop speed of controllers changing when in the background
 * midi channel numbers should match Ableton convention
 * Need to show perturbation and final value of synth values
+* set "central" value of param by letting each output parameter have a
+  "bias" parameter
 * implement audio model
+* audio input
 * Get Christoph's help moving the yellow.listentocolors.net
 * random sparse mapping button
 * generate MIDI note sequences as well so that
   we don't need arpeggiators for output.
-* audio input
 * optional CSS filters on video
-* remove JSX from the CurrentPane and go to firect React invocation
-* Do partial imports of RxJs as in videoworker.js
+* remove JSX from the CurrentPane and go to direct React invocation
 
 ## UI improvements
 
 * UI for save/load (preset names etc)
 * animate transitions and updates
-* set "central" value of param by letting each output parameter have a
-  "bias" parameter
 * Svg widgets? http://stackoverflow.com/a/30579774
 * [materialui widgets](http://www.material-ui.com/#/components/slider)?
 * improve help message if you have
@@ -39,7 +38,6 @@
 ## User workflow
 
 * Allow configuring app from the URL, e.g. with [react-router](https://github.com/reactjs/react-router)
-* Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
 * video should handle non-local video sources.
 * audio
   * more natural frequency/amplitude mapping, such as
@@ -64,3 +62,4 @@
 ## speed improvements
 
 * [asm.js](http://www.slideshare.net/fitc_slideshare/leveraging-asmjsclientside)
+* Memoize derived state, e.g. with [reselect](https://github.com/reactjs/reselect) ([example in action](http://redux.js.org/docs/recipes/ComputingDerivedData.html))
