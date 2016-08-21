@@ -23,6 +23,12 @@ import {
   ADD_MIDI_SINK_CC,
   REMOVE_MIDI_SINK_CC,
 } from '../actions/midi'
+import { audioSinkStreamName } from '../io/audio/util'
+import {
+  PUBLISH_AUDIO_SINK_SIGNAL,
+  UNPUBLISH_AUDIO_SINK_SIGNAL,
+} from '../actions/audio'
+
 
 export function sourceSignalMeta(state={}, {type, payload}) {
   switch (type) {
@@ -74,6 +80,13 @@ export function sinkSignalMeta(state={}, {type, payload}) {
         state[key] = name
         return state
       }
+    case PUBLISH_AUDIO_SINK_SIGNAL:
+      {
+        let [key, name] = audioSinkStreamName(payload)
+        state = {...state}
+        state[key] = name
+        return state
+      }
     case REMOVE_SINK_SIGNAL:
       {
         let state = {...state}
@@ -83,6 +96,13 @@ export function sinkSignalMeta(state={}, {type, payload}) {
     case REMOVE_MIDI_SINK_CC:
       {
         let [key, name] = midiStreamName(payload)
+        state = {...state}
+        delete state[key]
+        return state
+      }
+    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+      {
+        let [key, name] = audioSinkStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -103,22 +123,6 @@ export function sourceSinkScale(state={}, {type, payload}) {
         if (scale===0) { delete state[mapkey] }
         return state
       }
-    case REMOVE_MIDI_SINK_CC:
-      {
-        let [key, name] = midiStreamName(payload)
-        return sourceSinkScale(state, removeSinkSignal(key))
-      }
-    case REMOVE_SINK_SIGNAL:
-      {
-        let state = {...state}
-        for (let key of Object.keys(state)) {
-          let [sourceKey, sinkKey] = key;
-          if (sinkKey===payload) {
-            delete state[key]
-          }
-        }
-        return state
-      }
     case REMOVE_MIDI_SOURCE_CC:
       {
         let [key, name] = midiStreamName(payload)
@@ -130,6 +134,27 @@ export function sourceSinkScale(state={}, {type, payload}) {
         for (let key of Object.keys(state)) {
           let [sourceKey, sinkKey] = key;
           if (sourceKey===payload) {
+            delete state[key]
+          }
+        }
+        return state
+      }
+    case REMOVE_MIDI_SINK_CC:
+      {
+        let [key, name] = midiStreamName(payload)
+        return sourceSinkScale(state, removeSinkSignal(key))
+      }
+    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+      {
+        let [key, name] = audioSinkStreamName(payload)
+        return sourceSinkScale(state, removeSinkSignal(key))
+      }
+    case REMOVE_SINK_SIGNAL:
+      {
+        let state = {...state}
+        for (let key of Object.keys(state)) {
+          let [sourceKey, sinkKey] = key;
+          if (sinkKey===payload) {
             delete state[key]
           }
         }
