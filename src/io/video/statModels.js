@@ -1,4 +1,5 @@
 import *  as transform from '../../lib/transform'
+import {miscSymbols} from '../../lib/names';
 
 export function RandomFilter({
     PIXELDIM=64,
@@ -224,22 +225,6 @@ export function Moment({PIXELDIM=64}) {
         'video-moment-14',
         'video-moment-15',
       ],
-      names: [
-        '●',
-        '○',
-        '❖',
-        '⦿',
-        '◮',
-        '❒',
-        '☀︎',
-        '☽',
-        '✂︎',
-        '✌︎',
-        '⌖',
-        '⌑',
-        '✪',
-        '❀',
-        '✢',
-      ]
+      names: miscSymbols,
     }
 };

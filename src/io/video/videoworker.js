@@ -3,7 +3,6 @@ import {Subject} from 'rxjs/Subject';
 import {map} from 'rxjs/operator/map';
 import {filter} from 'rxjs/operator/filter';
 import {fromEvent} from 'rxjs/observable/fromEvent';
-
 import * as statModels from './statModels'
 const liveStatistics = {};
 
