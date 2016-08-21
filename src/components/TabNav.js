@@ -10,7 +10,7 @@ const TabNav = () => {
     </li>
     <li>
       <SelectTabLink paneId="io" >
-        Hardware
+        Settings
       </SelectTabLink>
     </li>
     <li>

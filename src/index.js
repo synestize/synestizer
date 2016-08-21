@@ -47,7 +47,7 @@ const persistConf = {
   storage: localForage
 }
 
-//const loggerMiddleware = createLogger()
+const loggerMiddleware = createLogger()
 
 let store;
 let persistor;
@@ -58,8 +58,8 @@ let midiio;
 let signalio;
 let audioio;
 let enhancers = applyMiddleware(
-  thunkMiddleware //, // lets us dispatch() functions
-  //loggerMiddleware // logs actions
+  thunkMiddleware, // lets us dispatch() functions
+  loggerMiddleware // logs actions
 )
 
 getStoredState(persistConf, (err, restoredState) => {

@@ -1,24 +1,25 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidAudioSink, setAudioSinkDevice, setAllAudioSinks } from '../actions/audio'
-import DeviceSelect from '../components/DeviceSelect.js'
+import {
+  setMaxNAudioSinkSignals
+ } from '../actions/audio'
+import IntSelect from '../components/IntSelect'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    deviceMap: state.__volatile.audio.sinks,
-    valid: state.__volatile.audio.validSink,
-    currentDevice: state.audio.sinkDevice
+    currentNum: state.audio.nSinkControlSignals,
+    maxNum: 21
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (key) => dispatch(setAudioSinkDevice(key))
+    onChange: (i) => dispatch(setMaxNAudioSinkSignals(i))
   }
 };
 
-const AudioSinkSelect = connect(
+const AudioSignalMax = connect(
   mapStateToProps,
   mapDispatchToProps
-)( DeviceSelect );
+)( IntSelect );
 
-export default AudioSinkSelect;
+export default AudioSignalMax;

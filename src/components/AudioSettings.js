@@ -8,7 +8,7 @@ const AudioSettings = () => (
   <SubPane title="Audio" name="video">
     <AudioSourceSelect disabled={false} title="Audio In" name="audiosource" />
     <AudioSinkSelect disabled={false} title="Audio Out" name="audiosink" />
-    <AudioSignalMax title="Audio Signal select" />
+    Number of buses: <AudioSignalMax />
   </SubPane>
 )
 

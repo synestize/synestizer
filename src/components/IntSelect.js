@@ -23,7 +23,7 @@ const IntSelect = ({
       className="intselect"
       disabled={disabled}
       value={currentNum}
-      onChange={ (ev) => onChange(ev.target.value)} >
+      onChange={ (ev) => onChange(parseInt(ev.target.value))} >
     {optNodes}
   </select>)
 }

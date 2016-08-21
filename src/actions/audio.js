@@ -17,7 +17,7 @@ export const ADD_AUDIO_SINK_CONTROL = 'ADD_AUDIO_SINK_CONTROL'
 export const REMOVE_AUDIO_SINK_CONTROL = 'REMOVE_AUDIO_SINK_CONTROL'
 export const PUBLISH_AUDIO_SINK_SIGNAL = 'PUBLISH_AUDIO_SINK_SIGNAL'
 export const UNPUBLISH_AUDIO_SINK_SIGNAL = 'UNPUBLISH_AUDIO_SINK_SIGNAL'
-export const SET_MAX_N_AUDIO_SINK_SIGNAL = 'SET_MAX_N_AUDIO_SINK_SIGNAL'
+export const SET_N_AUDIO_SINK_SIGNALS = 'SET_N_AUDIO_SINK_SIGNALS'
 export const SET_AUDIO_SINK_CONTROL_BIAS = 'SET_AUDIO_SINK_CONTROL_BIAS'
 export const SET_AUDIO_SINK_CONTROL_SCALE = 'SET_AUDIO_SINK_CONTROL_SCALE'
 export const SET_AUDIO_SINK_CONTROL_SIGNAL = 'SET_AUDIO_SINK_CONTROL_SIGNAL'
@@ -61,8 +61,8 @@ export function publishAudioSinkSignal(key) {
 export function unpublishAudioSinkSignal(key) {
  return { type: UNPUBLISH_AUDIO_SINK_SIGNAL, payload: key }
 }
-export function setMaxNAudioSinkSignal(i) {
-  return {type: SET_MAX_N_AUDIO_SINK_SIGNAL, payload: i }
+export function setMaxNAudioSinkSignals(i) {
+  return {type: SET_N_AUDIO_SINK_SIGNALS, payload: i }
 }
 export function setAudioSinkControlBias(key, val) {
  return { type: SET_AUDIO_SINK_CONTROL_BIAS, payload: {key, val}}

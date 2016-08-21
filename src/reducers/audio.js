@@ -10,6 +10,7 @@ import {
   REMOVE_AUDIO_SINK_CONTROL,
   PUBLISH_AUDIO_SINK_SIGNAL,
   UNPUBLISH_AUDIO_SINK_SIGNAL,
+  SET_N_AUDIO_SINK_SIGNALS,
   SET_AUDIO_SINK_CONTROL_BIAS,
   SET_AUDIO_SINK_CONTROL_SCALE,
   SET_AUDIO_SINK_CONTROL_SIGNAL,
@@ -47,7 +48,7 @@ export function sinkDevice(state="default", {type, payload}) {
 }
 export function nSinkControlSignals(state=0, {type, payload}) {
   switch (type) {
-    case SET_MAX_N_AUDIO_SINK_SIGNAL:
+    case SET_N_AUDIO_SINK_SIGNALS:
       return payload
     default:
       return state
@@ -141,6 +142,7 @@ const audio = combineReducers({
   //  sourceControlVals,
    sinkDevice,
    sinkControls,
+   nSinkControlSignals,
    sinkControlSignals,
    ensembles,
 })
