@@ -27,11 +27,13 @@ module.exports = {
         cacheDirectory: '/tmp',
         "presets": [
           "es2015",
-          "react"
+          "react",
+          // "escompress"
         ],
         "plugins": [
           "transform-object-rest-spread",
-          "transform-function-bind"
+          "transform-function-bind",
+          "transform-dead-code-elimination"
         ]
       }
     }]

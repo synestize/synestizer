@@ -79,15 +79,24 @@ We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage
 The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
 redux-storage supports [many backends](https://www.npmjs.com/browse/keyword/redux-storage-engine).
 
-## Webpack
+## Building
 
-[webpack](https://webpack.github.io/)
-webpack is a module bundler
-This means webpack takes modules with dependencies
-and emits static assets representing those modules.
-Popular with, e.g. rxvision.
+We mostly use [webpack](https://webpack.github.io/)
+webpack is a module bundler.
+This means webpack takes modules spread across multiple files with dependencies
+and a smaller number of files which include the functionality..
+It's the dominant build system right now for web apps, at least for community-supported react-based ones.
 
 Webpack works by magic, as far as I can tell, and it has fearsomely complicated and poorly explained configuration. Nonetheless, everyone uses it and so we ignore it and just GO here.
+
+`webpack.config.js` has all our configuration, which does various things
+
+* Compules JSX to JS, to support React
+* compresses the javascript in development mode
+  * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
+  * I recomend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination]
+  *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
+  * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
 
 ## Rx.js
 
