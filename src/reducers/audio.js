@@ -45,20 +45,25 @@ export function sinkDevice(state="default", {type, payload}) {
       return state
   }
 }
-
+export function nSinkControlSignals(state=0, {type, payload}) {
+  switch (type) {
+    case SET_MAX_N_AUDIO_SINK_SIGNAL:
+      return payload
+    default:
+      return state
+  }
+}
 export function sinkControls(state={}, {type, payload}) {
   let next = state;
   switch (type) {
-    case ADD_AUDIO_SINK_CONTROL:
-      next = {...state}
-      next[payload.key] = payload
-      return next
     case REMOVE_AUDIO_SINK_CONTROL:
       next = {...state}
       delete next[payload]
       return next
+    case ADD_AUDIO_SINK_CONTROL:
     case SET_AUDIO_SINK_CONTROL_BIAS:
     case SET_AUDIO_SINK_CONTROL_SCALE:
+    case UNPUBLISH_AUDIO_SINK_SIGNAL:
       let {key, val} = payload;
       next = {...state}
       next[key] = _sinkControl(next[key], {type, payload})
@@ -69,20 +74,32 @@ export function sinkControls(state={}, {type, payload}) {
 }
 
 //Only individual controls are edited here
-export function _sinkControl(state={
-    signal: null,
-  }, {type, payload}) {
-  let next = {...state};
+export function _sinkControl(
+    state={},
+    {type, payload}
+  ) {
+  let next;
   let {key, val} = payload;
   switch (type) {
+    case ADD_AUDIO_SINK_CONTROL:
+      next = {...state, ...payload}
+      return next
     case SET_AUDIO_SINK_CONTROL_BIAS:
+      next = {...state};
       next.bias = val
       break
     case SET_AUDIO_SINK_CONTROL_SCALE:
+      next = {...state};
       next.scale = val
       break
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
+      next = {...state};
       next.signal = val
+      break
+    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+      if (next.signal === payload) {
+        next.signal = null
+      }
       break
     default:
       return state

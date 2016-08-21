@@ -7,8 +7,6 @@
 * stop speed of controllers changing when in the background
 * midi channel numbers should match Ableton convention
 * Need to show perturbation and final value of synth values
-* set "central" value of param by letting each output parameter have a
-  "bias" parameter
 * implement audio model
 * audio input
 * Get Christoph's help moving the yellow.listentocolors.net

@@ -8,11 +8,14 @@ import  {
   setAllAudioSourceDevices,
   setValidAudioSinkDevice,
   setAudioSinkDevice,
-  setAllAudioSinkDevices
+  setAllAudioSinkDevices,
+  publishAudioSourceSignal,
+  unpublishAudioSourceSignal
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import { deviceSubject } from '../lib/av'
+import { audioSinkStreamName } from './audio/util'
 import triad_ from './audio/triad'
 
 export default function init(store, signalio) {
@@ -30,13 +33,13 @@ export default function init(store, signalio) {
   let validSink = false;
   let storeStream = toObservable(store);
 
-  let actaulControlValueStream = new BehaviorSubject(
+  let actualControlValueStream = new BehaviorSubject(
     store.getState().audio.sinkControlBias
   );
   let ensembles = {}
 
   const audioInfrastructure = {
-    actaulControlValueStream,
+    actualControlValueStream,
     ensembles
   }
 
@@ -111,22 +114,42 @@ export default function init(store, signalio) {
   };
 
   storeStream.pluck(
-      'audio', 'sourceDevice'
-    ).distinctUntilChanged().subscribe(doAudioSinkPlumbing)
-  storeStream.pluck(
-      '__volatile', 'audio', 'validSource'
-    ).distinctUntilChanged().subscribe(
-      (validity)=> {validSource = validity; doAudioSinkPlumbing()}
+    'audio', 'sourceDevice'
+  ).distinctUntilChanged().subscribe(
+    doAudioSinkPlumbing
   )
   storeStream.pluck(
-      '__volatile', 'audio', 'validSink'
-    ).distinctUntilChanged().subscribe(
-      (validity)=> {validSink = validity;}
+    '__volatile', 'audio', 'validSource'
+  ).distinctUntilChanged().subscribe(
+    (validity)=> {validSource = validity; doAudioSinkPlumbing()}
   )
   storeStream.pluck(
-      'audio', 'sinkControls'
-    ).distinctUntilChanged().subscribe(
+    '__volatile', 'audio', 'validSink'
+  ).distinctUntilChanged().subscribe(
+    (validity)=> {validSink = validity;}
+  )
+  storeStream.pluck(
+    'audio', 'sinkControls'
+  ).distinctUntilChanged().subscribe(
       (x) => {sinkControls = x}
+  )
+  storeStream.pluck(
+    'audio', 'nSinkControlSignals'
+  ).distinctUntilChanged().subscribe(
+    (n) => {
+      const currN = Object.keys(
+        store.getState().signal.sinkSignalMeta
+      ).filter((k)=>(k.startsWith('audio-'))).size
+      if (currN<n) {
+        for (let i=currN; i<n; i++) {
+          store.dispatch(publishAudioSourceSignal(i))
+        }
+      } else if (currN>n) {
+        for (let i=n; i<currN; i++) {
+          store.dispatch(unpublishAudioSourceSignal(i))
+        }
+      }
+    }
   )
   deviceSubject.subscribe(updateAudioIO,
     (err) => console.debug(err.stack)

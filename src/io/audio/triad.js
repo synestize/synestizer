@@ -1,19 +1,18 @@
 import Rx from 'rxjs/Rx'
 import  {
-  setValidAudioSourceDevice,
-  setAudioSourceDevice,
-  setAllAudioSourceDevices,
-  setValidAudioSinkDevice,
-  setAudioSinkDevice,
-  setAllAudioSinkDevices,
+  addAudioSinkControl,
   addEnsemble
 } from '../../actions/audio'
 import { dbAmp, freqMidi, audioFreq } from '../../lib/transform'
-
 export default function init(store, signalio, audio) {
   /*
    *
    */
+  store.dispatch(addAudioSinkControl({
+    key: 'audio|triad|key-0001',
+    name: "Key 1",
+    ensemble: "Triad",
+  }));
   return {
   }
 };
