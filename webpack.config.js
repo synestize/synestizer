@@ -25,8 +25,14 @@ module.exports = {
       loader: 'babel',
       query: {
         cacheDirectory: '/tmp',
-        "presets": [ "es2015", "react" ],
-        "plugins": ["transform-object-rest-spread", "transform-function-bind" ]
+        "presets": [
+          "es2015",
+          "react"
+        ],
+        "plugins": [
+          "transform-object-rest-spread",
+          "transform-function-bind"
+        ]
       }
     }]
   },
