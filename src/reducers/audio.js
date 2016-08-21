@@ -2,8 +2,8 @@ import { combineReducers } from 'redux'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
-  PUBLISH_AUDIO_SOURCE_SIGNAL,
-  UNPUBLISH_AUDIO_SOURCE_SIGNAL,
+  // PUBLISH_AUDIO_SOURCE_SIGNAL,
+  // UNPUBLISH_AUDIO_SOURCE_SIGNAL,
   SET_AUDIO_SOURCE_CONTROL,
   SET_AUDIO_SINK_DEVICE,
   ADD_AUDIO_SINK_CONTROL,
@@ -69,7 +69,9 @@ export function sinkControls(state={}, {type, payload}) {
 }
 
 //Only individual controls are edited here
-export function _sinkControl(state={}, {type, payload}) {
+export function _sinkControl(state={
+    signal: null,
+  }, {type, payload}) {
   let next = {...state};
   let {key, val} = payload;
   switch (type) {
@@ -79,6 +81,9 @@ export function _sinkControl(state={}, {type, payload}) {
     case SET_AUDIO_SINK_CONTROL_SCALE:
       next.scale = val
       break
+    case SET_AUDIO_SINK_CONTROL_SIGNAL:
+      next.signal = val
+      break
     default:
       return state
   }
@@ -86,11 +91,16 @@ export function _sinkControl(state={}, {type, payload}) {
 }
 
 export function sinkControlSignals(state={}, {type, payload}) {
+  let next;
   switch (type) {
-    case SET_AUDIO_SINK_CONTROL_SIGNAL:
-      let next = {...state};
+    case PUBLISH_AUDIO_SINK_SIGNAL:
+      next = {...state};
       let {key, val} = payload;
       next[val] = key
+      return next
+    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+      next = {...state};
+      delete next[payload]
       return next
     default:
       return state
