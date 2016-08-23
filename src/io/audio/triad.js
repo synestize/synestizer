@@ -9,8 +9,8 @@ export default function init(store, signalio, audio) {
    *
    */
   store.dispatch(addAudioSinkControl({
-    key: 'audio|triad|key-0001',
-    name: "Key 1",
+    key: 'audio|triad|pitch-0001',
+    name: "Pitch 1",
     ensemble: "Triad",
   }));
   return {
