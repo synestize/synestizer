@@ -15,8 +15,8 @@ import {
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 
-const SIGNAL_RATE = 100;
-const UI_RATE = 5000;
+const SIGNAL_RATE = 50;
+const UI_RATE = 50;
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
 */
