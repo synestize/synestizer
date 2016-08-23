@@ -98,6 +98,7 @@ export function _sinkControl(
       next.signal = val
       break
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
+      next = {...state};
       if (next.signal === payload) {
         next.signal = null
       }
