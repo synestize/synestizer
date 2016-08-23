@@ -1,5 +1,5 @@
 import React, { Component, PropTypes, Children } from 'react';
-import GenericAudioParam from '../containers/GenericAudioParam'
+import GenericAudioParam from './GenericAudioParam'
 
 const EnsembleTriad = ({
     audioControlset,

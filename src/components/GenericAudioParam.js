@@ -1,7 +1,7 @@
-import * as transform from '../lib/transform'
+import React, { Component, PropTypes, Children } from 'react';
 
-export default const GenericAudioParam = ({
-  median,
+const GenericAudioParam = ({
+  bias,
   perturbation,
   actual,
   address,
@@ -19,7 +19,7 @@ export default const GenericAudioParam = ({
       <input className="slider value"
         id={address + "-slider"}
         type="range"
-        value={median}
+        value={bias}
         onChange={(ev)=>action(ev.target.value)}
         min="-1" max="1" step="any" />
       <div className="state-bar"
@@ -28,3 +28,14 @@ export default const GenericAudioParam = ({
     </div>
   </div>)
 };
+
+GenericAudioParam.propTypes = {
+  bias: PropTypes.array.isRequired,
+  perturbation: PropTypes.func.isRequired,
+  actual: PropTypes.func.isRequired,
+  address: PropTypes.func.isRequired,
+  label: PropTypes.func,
+  action: PropTypes.func.isRequired
+}
+
+export default GenericAudioParam

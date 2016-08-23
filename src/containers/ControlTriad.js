@@ -28,9 +28,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return disp
 };
 
-const EnsembleTriad = connect(
+const ControlTriad = connect(
   mapStateToProps,
   mapDispatchToProps
 )( EnsembleTriad );
 
-export default EnsembleTriad;
+export default ControlTriad;
