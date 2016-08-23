@@ -9,6 +9,16 @@
   <link rel="stylesheet" href="./css/normalize.css">
   <link rel="stylesheet" href="./css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/style.css">
+  <script>
+    //Make sure SSL or it will silently break
+    if (
+      !(
+        window.location.host.startsWith("127.0.0.1") || window.location.host.startsWith("localhost")
+      ) && (window.location.protocol != "https:")
+    ) {
+      window.location.protocol = "https";
+    }
+  </script>
 </head>
 
 <body>

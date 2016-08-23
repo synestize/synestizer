@@ -8,8 +8,8 @@ const WelcomePane = ({version}) => (
       </h2>
       <p>
         Please enable your webcam in the browser and activate your loudspeakers.<br />
-        This app requires an updated version of <a href="http://www.google.com/chrome/">chrome</a>.<br />
-        <a href="http://synestize.github.io/synestizer/">More info.</a>
+        This app requires an updated version of <a href="https://www.google.com/chrome/">chrome</a>.<br />
+        <a href="https://synestize.github.io/synestizer/">More info.</a>
       </p>
       <p>
         If you like this project you can donate to it:
@@ -22,7 +22,7 @@ const WelcomePane = ({version}) => (
         <img alt="" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1" />
       </form>
       <p>
-        &copy; 2016 by <a href="http://www.kasparkoenig.com/">kaspar</a>,&nbsp;
+        &copy; 2016 by <a href="https://www.kasparkoenig.com/">kaspar</a>,&nbsp;
          <a href="https://danmackinlay.name">dan</a> &amp;&nbsp;
          <a href="http://www.stahlnow.com">stahl</a>.
         This work is licensed under

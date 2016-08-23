@@ -2,6 +2,9 @@
 
 ## currently
 
+* force HTTPS on live version
+  * https://www.benburwell.com/posts/configuring-cloudflare-universal-ssl/
+  * https://gist.github.com/konklone/9968713
 * audio manages all UI/signal wrangling for ensembles
 * audio publishes a certain number of signal buses and maps individual controllers to each
 * stop speed of controllers changing when in the background
