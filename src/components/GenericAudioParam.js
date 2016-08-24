@@ -1,41 +1,48 @@
 import React, { Component, PropTypes, Children } from 'react';
+import {bipolPerc} from '../lib/transform'
 
 const GenericAudioParam = ({
-  bias,
-  perturbation,
-  actual,
-  address,
+  bias=0,
+  scale=0,
+  actual=0,
+  signal="",
+  sinkControlKey,
   label,
-  action}) => {
+  onBiasChange,
+  onScaleChange,
+  onSignalChange}) => {
   let divStyle = {
-    width: transform.bipolPerc(actual || 0.0)+"%"
+    width: bipolPerc(actual || 0.0)+"%"
   };
-  return (<div className={"param-control " + address} >
+  return (<div className={"param-control " + sinkControlKey} >
     <label className="label"
-      htmlFor={address + "-slider"}>
+      htmlFor={sinkControlKey + "-slider"}>
       {label}
     </label>
     <div className="slider-wrap">
       <input className="slider value"
-        id={address + "-slider"}
+        id={sinkControlKey + "-slider"}
         type="range"
         value={bias}
-        onChange={(ev)=>action(ev.target.value)}
+        onChange={(ev)=>onBiasChange(ev.target.value)}
         min="-1" max="1" step="any" />
       <div className="state-bar"
-        id={address + "-slider-actual"}
+        id={sinkControlKey + "-slider-actual"}
         style={divStyle} />
     </div>
   </div>)
 };
 
 GenericAudioParam.propTypes = {
-  bias: PropTypes.array.isRequired,
-  perturbation: PropTypes.func.isRequired,
-  actual: PropTypes.func.isRequired,
-  address: PropTypes.func.isRequired,
-  label: PropTypes.func,
-  action: PropTypes.func.isRequired
+  bias: PropTypes.number,
+  scale: PropTypes.number,
+  actual: PropTypes.number,
+  sinkControlKey: PropTypes.string.isRequired,
+  signal: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  onBiasChange: PropTypes.func.isRequired,
+  onScaleChange: PropTypes.func.isRequired,
+  onSignalChange: PropTypes.func.isRequired
 }
 
 export default GenericAudioParam
