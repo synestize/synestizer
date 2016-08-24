@@ -12,6 +12,7 @@ Module support in ES6 looks different than the older standards.
 * [ES6 module syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
 * [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
 * [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+* [module importing is a complicated standards battle](http://www.jbrantly.com/es6-modules-with-typescript-and-webpack/)
 
 ### Tips
 

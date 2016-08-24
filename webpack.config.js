@@ -33,7 +33,8 @@ module.exports = {
         "plugins": [
           "transform-object-rest-spread",
           "transform-function-bind",
-          "transform-dead-code-elimination"
+          "transform-dead-code-elimination",
+          "system-import-transformer"
         ]
       }
     }]

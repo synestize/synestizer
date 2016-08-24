@@ -17,7 +17,13 @@ import {
   persistStore,
   createTransform
 } from 'redux-persist'
-import localForage from 'localForage'
+/*
+ Localforage imports weirdly:
+ https://github.com/localForage/localForage/issues/577
+ Perhaps the noPArse solution is better though?
+ */
+import localForage from "localforage/src/localforage"
+
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
