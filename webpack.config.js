@@ -19,6 +19,7 @@ module.exports = {
         loader: 'source-map-loader'
       }
     ],
+    noParse: /node_modules\/localforage\/dist\/localforage.js/,
     loaders: [{
       test: /\.jsx?$/,
       exclude: /(node_modules)/,
@@ -33,8 +34,7 @@ module.exports = {
         "plugins": [
           "transform-object-rest-spread",
           "transform-function-bind",
-          "transform-dead-code-elimination",
-          "system-import-transformer"
+          "transform-dead-code-elimination"
         ]
       }
     }]
