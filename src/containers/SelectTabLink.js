@@ -1,4 +1,3 @@
-'use strict';
 import { connect } from 'react-redux';
 import Link from '../components/Link';
 import { setVisiblePane } from '../actions/gui';
