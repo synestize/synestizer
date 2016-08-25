@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-const AudioSourceSelect = connect(
+const AudioSourceDeviceSelect = connect(
   mapStateToProps,
   mapDispatchToProps
 )( DeviceSelect );
 
-export default AudioSourceSelect;
+export default AudioSourceDeviceSelect;
