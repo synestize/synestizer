@@ -14,8 +14,7 @@ import {
   */
 
 const mapStateToProps = (state, {sinkControlKey}) => {
-  console.debug('blerp', state.audio.sinkControls[sinkControlKey])
-  return {...state.audio.sinkControls[sinkControlKey]}
+  return {...state.audio.sinkControls[sinkControlKey], sinkControlKey}
 };
 
 const mapDispatchToProps = (dispatch, {sinkControlKey}) => {

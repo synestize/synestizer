@@ -1,5 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
+import AudioSinkSignalSelect from '../containers/AudioSinkSignalSelect'
 
 const GenericAudioParam = ({
   bias=0,
@@ -15,6 +16,9 @@ const GenericAudioParam = ({
     width: bipolPerc(actual || 0.0)+"%"
   };
   return (<div className={"param-control " + sinkControlKey} >
+    <AudioSinkSignalSelect
+      onSignalChange={onSignalChange}
+      sinkControlKey={sinkControlKey} />
     <label className="label"
       htmlFor={sinkControlKey + "-slider"}>
       {label}
