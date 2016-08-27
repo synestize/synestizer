@@ -1,5 +1,3 @@
-import { addSourceSignal, removeSourceSignal, addSinkSignal, removeSinkSignal } from './signal'
-
 export function nextCC(ccset) {
   for (let i= Math.max(-1, ...ccset)+1;i<128; i++) {
     let j = i % 128;

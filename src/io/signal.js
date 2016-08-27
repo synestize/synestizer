@@ -1,22 +1,15 @@
 import Rx from 'rxjs/Rx'
 import { saturate, desaturate } from '../lib/transform.js'
 import {
-  addSourceSignal,
-  removeSourceSignal,
-  setSourceSignalValue,
   setAllSourceSignalValues,
-  addSinkSignal,
-  removeSinkSignal,
-  setSinkSignalValue,
   setAllSinkSignalValues,
-  setSourceSinkScale,
-  setSinkBias
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 
 const SIGNAL_RATE = 5000;
 const UI_RATE = 5000;
+
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
 */

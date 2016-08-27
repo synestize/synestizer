@@ -1,5 +1,3 @@
-import { addSourceSignal, removeSourceSignal, addSinkSignal, removeSinkSignal } from './signal'
-
 /*
  * action types
  */

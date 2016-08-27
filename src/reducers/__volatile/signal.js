@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux'
 import { union, difference, intersection } from '../../lib/collections'
 import {
-  addSourceSignal,
-  removeSourceSignal,
-  addSinkSignal,
-  removeSinkSignal,
   ADD_SOURCE_SIGNAL,
   REMOVE_SOURCE_SIGNAL,
   SET_SOURCE_SIGNAL_VALUE,

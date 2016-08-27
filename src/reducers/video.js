@@ -9,8 +9,6 @@ import {
   removeSourceSignal,
   setSourceSignalValue,
   setAllSourceSignalValues,
-  addSinkSignal,
-  removeSinkSignal,
   setSinkSignalValue,
   setAllSinkSignalValues,
   setSourceSinkScale,
