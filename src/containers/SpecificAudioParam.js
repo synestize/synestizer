@@ -19,14 +19,14 @@ const mapStateToProps = (state, {sinkControlKey}) => {
 
 const mapDispatchToProps = (dispatch, {sinkControlKey}) => {
   return {
-    onBiasChange: (ev) => {
-      dispatch(setAudioSinkControlBias(sinkControlKey, parseFloat(ev)))
+    onBiasChange: (val) => {
+      dispatch(setAudioSinkControlBias(sinkControlKey, parseFloat(val)))
     },
-    onScaleChange: (ev) => {
-      dispatch(setAudioSinkControlScale(sinkControlKey, parseFloat(ev)))
+    onScaleChange: (val) => {
+      dispatch(setAudioSinkControlScale(sinkControlKey, parseFloat(val)))
     },
-    onSignalChange: (ev) => {
-      dispatch(setAudioSinkControlSignal(sinkControlKey, parseFloat(ev)))
+    onSignalChange: (sinkSignalKey) => {
+      dispatch(setAudioSinkControlSignal(sinkControlKey, sinkSignalKey))
     },
   }
 };

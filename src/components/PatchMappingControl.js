@@ -7,7 +7,7 @@ const PatchMappingControl = ({val, sourceKey, sinkKey, onSetScale}) => {
       className="param"
       type="range"
       value={val}
-      onChange={(ev)=>onSetScale(ev.target.value)}
+      onChange={(ev)=>onSetScale(parseFloat(ev.target.value))}
       min="-1"
       max="1"
       step="0.125"
