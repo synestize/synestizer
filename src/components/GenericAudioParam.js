@@ -16,12 +16,13 @@ const GenericAudioParam = ({
     width: bipolPerc(actual || 0.0)+"%"
   };
   return (<div className={"param-control " + sinkControlKey} >
+    {label}
     <AudioSinkSignalSelect
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
     <label className="label"
       htmlFor={sinkControlKey + "-slider"}>
-      {label}
+      Value
     </label>
     <div className="slider-wrap">
       <input className="slider value"

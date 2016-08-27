@@ -42,7 +42,7 @@
   * more natural frequency/amplitude mapping, such as
     * [sone, mels or erbs](http://www.icad.org/Proceedings/2006/FergusonCabrera2006.pdf),
 
-### new input params
+### new input signals
 
 * GUI widgets?
 * [Fiducial tracking](https://github.com/mkalten/reacTIVision/tree/master/ext/libfidtrack)?
@@ -53,7 +53,7 @@
 * General websockets?
 * OpenSoundControl?
 
-### new output params
+### new output signals
 
 * OpenSoundControl?
 * General websockets?
