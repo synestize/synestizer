@@ -43,8 +43,7 @@ export default function init(store) {
      sourceSignalValues,
      sinkSignalMeta,
      sinkSignalValues,
-     sourceSinkScale,
-     sinkBias
+     sourceSinkScale
   }*/
 
   function projectObs(sourceVals) {

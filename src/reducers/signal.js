@@ -165,37 +165,10 @@ export function sourceSinkScale(state={}, {type, payload}) {
   }
 }
 
-export function sinkBias(state={}, {type, payload}) {
-  switch (type) {
-    case ADD_SINK_SIGNAL:
-    {
-      let [key, name] = payload;
-      state = {...state}
-      state[key] = 0.0
-      return state
-    }
-    case REMOVE_SINK_SIGNAL:
-    {
-      let state = {...state}
-      delete state[payload]
-    }
-    case SET_SINK_BIAS:
-    {
-      let [key, val] = payload;
-      state = {...state}
-      state[key] = val
-      return state
-    }
-    default:
-      return state
-  }
-}
-
 const stream = combineReducers({
    sourceSignalMeta,
    sinkSignalMeta,
-   sourceSinkScale,
-   sinkBias
+   sourceSinkScale
 })
 
 export default stream

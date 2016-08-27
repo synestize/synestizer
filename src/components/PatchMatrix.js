@@ -7,8 +7,7 @@ const PatchMatrix = ({
     sourceSignalValues,
     sinkSignalMeta,
     sinkSignalValues,
-    sourceSinkScale,
-    sinkBias
+    sourceSinkScale
   }) => {
   let bodyRows = [];
   let sourceKeys = Array.from(Object.keys(sourceSignalMeta)).sort();
@@ -56,8 +55,7 @@ PatchMatrix.propTypes = {
   sourceSignalValues: PropTypes.object.isRequired,
   sinkSignalMeta: PropTypes.object.isRequired,
   sinkSignalValues: PropTypes.object.isRequired,
-  sourceSinkScale: PropTypes.object.isRequired,
-  sinkBias: PropTypes.object.isRequired,
+  sourceSinkScale: PropTypes.object.isRequired
 }
 
 export default PatchMatrix;
