@@ -82,7 +82,7 @@ export function sinkSignalMeta(state={}, {type, payload}) {
       {
         let [key, name] = audioSinkStreamName(payload)
         state = {...state}
-        state[key] = {name, owner: "Sound"}
+        state[key] = {name, owner: "Audio"}
         return state
       }
     case REMOVE_SINK_SIGNAL:

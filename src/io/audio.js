@@ -137,9 +137,10 @@ export default function init(store, signalio) {
     'audio', 'nSinkControlSignals'
   ).distinctUntilChanged().subscribe(
     (n) => {
+      let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
       const currN = Object.keys(
-        store.getState().signal.sinkSignalMeta
-      ).filter((k)=>(k.startsWith('audio-'))).length
+        sinkSignalMeta
+      ).filter((k)=>(sinkSignalMeta[k].owner==="Audio")).length
       if (currN<n) {
         for (let i=currN; i<n; i++) {
           store.dispatch(publishAudioSinkSignal(i))

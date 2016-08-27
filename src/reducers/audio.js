@@ -47,7 +47,7 @@ export function sinkDevice(state="default", {type, payload}) {
       return state
   }
 }
-export function nSinkControlSignals(state=0, {type, payload}) {
+export function nSinkControlSignals(state=6, {type, payload}) {
   switch (type) {
     case SET_N_AUDIO_SINK_SIGNALS:
       return payload
