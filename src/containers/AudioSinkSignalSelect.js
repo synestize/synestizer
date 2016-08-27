@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import Select from '../components/Select.js'
 
 const mapStateToProps = (state, {sinkControlKey, onSignalChange}) => {
-  console.debug('franq', state.audio.sinkControlSignals, state.audio.sinkControls[sinkControlKey])
   return {
     optDict: state.audio.sinkControlSignals,
-    currentOpt: sinkControlKey,
+    currentOpt: state.audio.sinkControls[sinkControlKey].signal,
     onChange: (key) => onSignalChange(key) // NB this is a dispatcher
   }
 };

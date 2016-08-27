@@ -65,6 +65,7 @@ export function sinkControls(state={}, {type, payload}) {
     case ADD_AUDIO_SINK_CONTROL:
     case SET_AUDIO_SINK_CONTROL_BIAS:
     case SET_AUDIO_SINK_CONTROL_SCALE:
+    case SET_AUDIO_SINK_CONTROL_SIGNAL:
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
       let {key, val} = payload;
       next = {...state}
@@ -89,21 +90,21 @@ export function _sinkControl(
     case SET_AUDIO_SINK_CONTROL_BIAS:
       next = {...state};
       next.bias = val
-      break
+      return next
     case SET_AUDIO_SINK_CONTROL_SCALE:
       next = {...state};
       next.scale = val
-      break
+      return next
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
       next = {...state};
       next.signal = val
-      break
+      return next
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
       next = {...state};
       if (next.signal === payload) {
         next.signal = null
       }
-      break
+      return next
     default:
       return state
   }
