@@ -16,7 +16,7 @@ const mapStateToProps = (state, {sourceKey, sinkKey, ...ownProps}) => {
 const mapDispatchToProps = (dispatch, {sourceKey, sinkKey}) => {
   return {
     onSetScale: (val=0) => dispatch(
-      setSourceSinkScale(sourceKey, sinkKey, val)
+      setSourceSinkScale(sourceKey, sinkKey, parseFloat(val))
     ),
   }
 };

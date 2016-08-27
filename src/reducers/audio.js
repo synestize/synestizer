@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { audioSinkStreamName } from '../io/audio/util'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
@@ -110,16 +111,17 @@ export function _sinkControl(
 }
 
 export function sinkControlSignals(state={}, {type, payload}) {
-  let next;
+  let next, key, val;
   switch (type) {
     case PUBLISH_AUDIO_SINK_SIGNAL:
       next = {...state};
-      let {key, val} = payload;
-      next[val] = key
+      [key, val] = audioSinkStreamName(payload);
+      next[key] = val
       return next
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
       next = {...state};
-      delete next[payload]
+      [key, val] = audioSinkStreamName(payload);
+      delete next[key]
       return next
     default:
       return state

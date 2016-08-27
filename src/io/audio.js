@@ -140,20 +140,12 @@ export default function init(store, signalio) {
       const currN = Object.keys(
         store.getState().signal.sinkSignalMeta
       ).filter((k)=>(k.startsWith('audio-'))).length
-      // console.debug(
-      //   'nsinkb', currN, n)
       if (currN<n) {
-        // console.debug(
-        //   'nsinkc', 'too few')
         for (let i=currN; i<n; i++) {
-          // console.debug(publishAudioSinkSignal(i))
           store.dispatch(publishAudioSinkSignal(i))
         }
       } else if (currN>n) {
-        // console.debug(
-        //   'nsinkc', 'too many')
         for (let i=n; i<currN; i++) {
-          // console.debug(unpublishAudioSinkSignal(i))
           store.dispatch(unpublishAudioSinkSignal(i))
         }
       }

@@ -5,13 +5,13 @@ import Select from '../components/Select.js'
 const mapStateToProps = (state, {sinkControlKey, onSignalChange}) => {
   console.debug('franq', state.audio.sinkControlSignals, state.audio.sinkControls[sinkControlKey])
   return {
-    optDict: state.__volatile.audio.sources,
-    currentOpt: state.audio.sourceDevice
+    optDict: state.audio.sinkControlSignals,
+    currentOpt: sinkControlKey,
+    onChange: (key) => onSignalChange(key) // NB this is a dispatcher
   }
 };
 const mapDispatchToProps = (dispatch, {sinkControlKey, onSignalChange}) => {
   return {
-    onChange: (key) => onSignalChange(key)
   }
 };
 

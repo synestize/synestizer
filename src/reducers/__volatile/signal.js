@@ -13,7 +13,6 @@ import {
   REMOVE_SINK_SIGNAL,
   SET_SINK_SIGNAL_VALUE,
   SET_ALL_SINK_SIGNAL_VALUES,
-  SET_SOURCE_SINK_SCALE,
   SET_SINK_BIAS,
 } from '../../actions/signal'
 import { midiStreamName } from '../../io/midi/util'
