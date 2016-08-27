@@ -20,13 +20,25 @@ const GenericAudioParam = ({
     <AudioSinkSignalSelect
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
+    <div className="scale-slider-wrap">
+      <label className="label"
+        htmlFor={sinkControlKey + "-scale-slider"}>
+        scale
+      </label>
+      <input className="slider scale"
+        id={sinkControlKey + "-scale-slider"}
+        type="range"
+        value={scale}
+        onChange={(ev)=>onScaleChange(ev.target.value)}
+        min="-1" max="1" step="0.0625" />
+    </div>
     <label className="label"
-      htmlFor={sinkControlKey + "-slider"}>
+      htmlFor={sinkControlKey + "-bias-slider"}>
       Value
     </label>
-    <div className="slider-wrap">
-      <input className="slider value"
-        id={sinkControlKey + "-slider"}
+    <div className="bias-slider-wrap">
+      <input className="slider bias"
+        id={sinkControlKey + "-bias-slider"}
         type="range"
         value={bias}
         onChange={(ev)=>onBiasChange(ev.target.value)}
