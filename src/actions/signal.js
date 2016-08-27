@@ -16,8 +16,8 @@ export const SET_SINK_BIAS = 'SET_SINK_BIAS'
 /*
  * action creators
  */
-export function addSourceSignal(key, name) {
-  return { type: ADD_SOURCE_SIGNAL, payload: [key, name] }
+export function addSourceSignal(meta) {
+  return { type: ADD_SOURCE_SIGNAL, payload: meta }
 }
 export function removeSourceSignal(key) {
   return { type: REMOVE_SOURCE_SIGNAL, payload: key }
@@ -28,8 +28,8 @@ export function setSourceSignalValue(key, value) {
 export function setAllSourceSignalValues(dict) {
   return { type: SET_ALL_SOURCE_SIGNAL_VALUES, payload: dict }
 }
-export function addSinkSignal(key, name) {
-  return { type: ADD_SINK_SIGNAL, payload: [key, name] }
+export function addSinkSignal(meta) {
+  return { type: ADD_SINK_SIGNAL, payload: meta }
 }
 export function removeSinkSignal(key) {
   return { type: REMOVE_SINK_SIGNAL, payload: key }

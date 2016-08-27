@@ -172,7 +172,11 @@ export default function init(store, signalio, videoDom) {
       //I could probably stitch these together with Rx
       for (let statKey in signalKeys) {
         signalKeys[statKey].map((signalKey, idx) => {
-          store.dispatch(addSourceSignal(signalKey, signalNames[statKey][idx]))
+          store.dispatch(addSourceSignal({
+            key: signalKey,
+            name: signalNames[statKey][idx],
+            owner: "Video"
+          }))
         });
       }
     }

@@ -19,7 +19,7 @@ const PatchMatrix = ({
     header.push(<PatchMappingHeaderCell
       key={"sink-" + sinkKey}
       signalKey={"sink-" + sinkKey}
-      name={sinkSignalMeta[sinkKey]}
+      name={sinkSignalMeta[sinkKey].owner + "/" + sinkSignalMeta[sinkKey].name}
       scope="column"
       val={sinkSignalValues[sinkKey] || 0.0} />);
   };
@@ -27,7 +27,7 @@ const PatchMatrix = ({
     let cells = [<PatchMappingHeaderCell
       key={"source-" + sourceKey}
       signalKey={"source-" + sourceKey}
-      name={sourceSignalMeta[sourceKey]}
+      name={sourceSignalMeta[sourceKey].owner + "/" + sourceSignalMeta[sourceKey].name}
       scope="row"
       val={sourceSignalValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {

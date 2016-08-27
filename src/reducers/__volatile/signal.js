@@ -27,9 +27,8 @@ export function sourceSignalValues(state={}, {type, payload}) {
   switch (type) {
     case ADD_SOURCE_SIGNAL:
       {
-        let [key, val] = payload;
         state = {...state}
-        state[key] = 0.0
+        state[payload.key] = 0.0
         return state
       }
     case ADD_MIDI_SOURCE_CC:
@@ -70,9 +69,8 @@ export function sinkSignalValues(state={}, {type, payload}) {
   switch (type) {
     case ADD_SOURCE_SIGNAL:
       {
-        let [key, val] = payload;
         state = {...state}
-        state[key] = 0.0
+        state[payload.key] = 0.0
         return state
       }
     case ADD_MIDI_SOURCE_CC:

@@ -34,16 +34,15 @@ export function sourceSignalMeta(state={}, {type, payload}) {
   switch (type) {
     case ADD_SOURCE_SIGNAL:
       {
-        let [key, name] = payload;
         state = {...state}
-        state[key] = name
+        state[payload.key] = payload
         return state
       }
     case ADD_MIDI_SOURCE_CC:
       {
         let [key, name] = midiStreamName(payload)
         state = {...state}
-        state[key] = name
+        state[key] = {name, owner: "MIDI"}
         return state
       }
     case REMOVE_SOURCE_SIGNAL:
@@ -68,23 +67,22 @@ export function sinkSignalMeta(state={}, {type, payload}) {
   switch (type) {
     case ADD_SINK_SIGNAL:
       {
-        let [key, name] = payload;
         state = {...state}
-        state[key] = name
+        state[payload.key] = payload
         return state
       }
     case ADD_MIDI_SINK_CC:
       {
         let [key, name] = midiStreamName(payload)
         state = {...state}
-        state[key] = name
+        state[key] = {name, owner: "MIDI"}
         return state
       }
     case PUBLISH_AUDIO_SINK_SIGNAL:
       {
         let [key, name] = audioSinkStreamName(payload)
         state = {...state}
-        state[key] = name
+        state[key] = {name, owner: "Sound"}
         return state
       }
     case REMOVE_SINK_SIGNAL:

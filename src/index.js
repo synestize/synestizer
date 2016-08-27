@@ -63,8 +63,8 @@ let midiio;
 let signalio;
 let audioio;
 let enhancers = applyMiddleware(
-  thunkMiddleware, // lets us dispatch() functions
-  loggerMiddleware // logs actions
+  thunkMiddleware//, // lets us dispatch() functions
+  //loggerMiddleware // logs actions
 )
 
 getStoredState(persistConf, (err, restoredState) => {
