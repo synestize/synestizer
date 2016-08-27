@@ -2,11 +2,9 @@
 
 ## currently
 
-* force HTTPS on live version
-  * https://www.benburwell.com/posts/configuring-cloudflare-universal-ssl/
-  * https://gist.github.com/konklone/9968713
 * audio manages all UI/signal wrangling for ensembles
 * audio publishes a certain number of signal buses and maps individual controllers to each
+* video, midi and audio all publish signals slightly differently; should make this consistent
 * stop speed of controllers changing when in the background
 * midi channel numbers should match Ableton convention
 * Need to show perturbation and final value of synth values
