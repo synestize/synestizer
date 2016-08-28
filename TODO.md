@@ -20,6 +20,8 @@
 ## UI improvements
 
 * UI for save/load (preset names etc)
+* compress down bias/scale widgets when not in use
+* show level of attachable signals
 * animate transitions and updates
 * Svg widgets? http://stackoverflow.com/a/30579774
 * [materialui widgets](http://www.material-ui.com/#/components/slider)?
