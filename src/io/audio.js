@@ -19,6 +19,7 @@ import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import { deviceSubject } from '../lib/av'
 import { audioSinkStreamName } from './audio/util'
+import Tone from 'tone/build/Tone.js'
 import triad_ from './audio/triad'
 
 export default function init(store, signalio) {
@@ -55,25 +56,25 @@ export default function init(store, signalio) {
   //Don't yet understand how this will work for the microphone etc
   function initAudioContext(dev){
     if (context!==undefined) {
+      //Tone.dispose()
       context.close()
     }
     sourceDevice = dev;
     context = new window.AudioContext();
     window.audioContext = context;
-    let compressor = context.createDynamicsCompressor();
-    compressor.threshold.value = -50;
-    compressor.knee.value = 40;
-    compressor.ratio.value = 2;
-    // compressor.reduction.value = 0; //should be negative for boosts?
-    compressor.attack.value = 0.05;
-    compressor.release.value = 0.3;
-    compressor.connect(context.destination);
-    let outputNode = context.createGain();
-    outputNode.connect(compressor);
-
+    Tone.setContext(context)
+    let masterCompressor = new Tone.Compressor({
+    	"threshold" : -6,
+    	"ratio" : 2,
+    	"attack" : 0.5,
+    	"release" : 0.1
+    });
+    //route everything through the filter
+    //and compressor before going to the speakers
+    Tone.Master.chain(masterCompressor);
     Object.assign(audioInfrastructure, {
       context,
-      outputNode,
+      tone: Tone
     })
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
