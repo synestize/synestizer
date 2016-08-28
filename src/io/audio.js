@@ -43,8 +43,8 @@ export default function init(store, signalio) {
     ensembles
   }
 
-  function doAudioSinkPlumbing() {
-    const key = store.getState().audio.sourceDevice;
+  function doAudioSinkDevicePlumbing() {
+    const key = store.getState().audio.sinkDevice;
     Observable::fromPromise(
       navigator.mediaDevices.getUserMedia({deviceId:key, audio: true})
     ).subscribe(initAudioContext);
@@ -116,12 +116,12 @@ export default function init(store, signalio) {
   storeStream.pluck(
     'audio', 'sourceDevice'
   ).distinctUntilChanged().subscribe(
-    doAudioSinkPlumbing
+    doAudioSinkDevicePlumbing
   )
   storeStream.pluck(
     '__volatile', 'audio', 'validSource'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {validSource = validity; doAudioSinkPlumbing()}
+    (validity)=> {validSource = validity; doAudioSinkDevicePlumbing()}
   )
   storeStream.pluck(
     '__volatile', 'audio', 'validSink'
