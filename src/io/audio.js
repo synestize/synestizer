@@ -2,7 +2,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-
+import { share } from 'rxjs/operator/share';
+import { saturate, desaturate } from '../lib/transform.js'
 import  {
   setValidAudioSourceDevice,
   setAudioSourceDevice,
@@ -113,8 +114,22 @@ export default function init(store, signalio) {
     }
   };
 
-  function calcAudioControls(sinkControls, sinkState) {
-    console.debug('calcAudioControls', sinkControls, sinkState)
+  function calcAudioControls(sinkControls, signalState) {
+    const actualSinkControlValues = {}
+    // console.debug('calcAudioControls', sinkControls, signalState);
+    for (let controlKey in sinkControls) {
+      let controlMeta = sinkControls[controlKey];
+      // console.debug('nu', controlKey, controlMeta)
+      actualSinkControlValues[controlKey] = saturate(
+        desaturate(controlMeta.bias || 0.0) +
+        (
+          (controlMeta.scale || 0.0) *
+          desaturate(signalState[controlMeta.signal] || 0.0)
+        )
+      )
+      // console.debug('mu', actualSinkControlValues[controlKey])
+    }
+    return actualSinkControlValues;
   }
 
   storeStream.pluck(
@@ -139,13 +154,16 @@ export default function init(store, signalio) {
       let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
       const currN = Object.keys(
         sinkSignalMeta
-      ).filter((k)=>(sinkSignalMeta[k].owner==="Audio")).length
+      ).filter((k)=>(sinkSignalMeta[k].owner==="Audio")).length;
+      // console.debug('signalpub', n, currN)
       if (currN<n) {
         for (let i=currN; i<n; i++) {
+          // console.debug('signaladd', i)
           store.dispatch(publishAudioSinkSignal(i))
         }
       } else if (currN>n) {
         for (let i=n; i<currN; i++) {
+          // console.debug('signaldel', i)
           store.dispatch(unpublishAudioSinkSignal(i))
         }
       }
@@ -159,8 +177,11 @@ export default function init(store, signalio) {
       'audio', 'sinkControls'
     ).distinctUntilChanged(),
     signalio.sinkStateSubject,
-    calcAudioControls).subscribe(
-      (val) => actualControlValueStream.next(val)
+    calcAudioControls
+  ).subscribe(
+      (val) => {
+        actualControlValueStream.next(val)
+      }
     );
   return audioInfrastructure
 };

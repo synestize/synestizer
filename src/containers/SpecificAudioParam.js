@@ -5,13 +5,6 @@ import {
   setAudioSinkControlScale,
   setAudioSinkControlSignal
 } from '../actions/audio';
-/* bias,
-  perturbation,
-  actual,
-  address,
-  label,
-  action
-  */
 
 const mapStateToProps = (state, {sinkControlKey}) => {
   return {...state.audio.sinkControls[sinkControlKey], sinkControlKey}
