@@ -88,14 +88,16 @@ This means webpack takes modules spread across multiple files with dependencies
 and a smaller number of files which include the functionality..
 It's the dominant build system right now for web apps, at least for community-supported react-based ones.
 
-Webpack works by magic, as far as I can tell, and it has fearsomely complicated and poorly explained configuration. Nonetheless, everyone uses it and so we ignore it and just GO here.
+Webpack works by magic, as far as I can tell, and it has
+fearsomely complicated and poorly explained configuration.
+Nonetheless, everyone uses it and so we ignore it and just GO here.
 
 `webpack.config.js` has all our configuration, which does various things
 
 * Compules JSX to JS, to support React
 * compresses the javascript in development mode
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
-  * I recomend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination]
+  * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
   *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
   * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
 
@@ -105,11 +107,10 @@ We use Rx.js version 5.0, because even though it is less common that Rx.js 4.0, 
 
 * [Rx.js](http://reactivex.io/rxjs/)
   * [Rx.js 4.0 vs 5.0](https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md)
-  * [we use the CJS installation](http://reactivex.io/rxjs/manual/installation.html#commonjs-via-npm) although ES6 syntax.
+  * [we use the CJS installation](http://reactivex.io/rxjs/manual/installation.html#commonjs-via-npm) although
     * [we could do ES6 native but its fiddly and there are bugs](https://github.com/ReactiveX/rxjs/issues/1575)
   * [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
   * [Rx marbles](http://rxmarbles.com/) visualises Rx streams
-  * [xgrommx's Rx book](https://xgrommx.github.io/rx-book/) is the messy but readable reference
   * [Rx.js official documenation](http://reactivex.io/rxjs/manual/overview.html)
 
 * Interoperation
