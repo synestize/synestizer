@@ -12,4 +12,9 @@ const IOPane = ({version}) => {return (
   </Pane>
 )}
 
+
+IOPane.propTypes = {
+  version: PropTypes.string.isRequired,
+}
+
 export default IOPane;

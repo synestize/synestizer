@@ -17,15 +17,13 @@ const Select = ({
     let nu = <option value={key} key={key}>{optDict[key]}</option> ;
     optNodes.push(nu);
   }
-  return (<div className={className+"-wrap"}>
-    <select
-        className={className}
-        disabled={disabled}
-        value={currentOpt}
-        onChange={(ev)=>onChange(ev.target.value) } >
-      {optNodes}
-    </select>
-  </div>)
+  return (<select
+      className={className}
+      disabled={disabled}
+      value={currentOpt}
+      onChange={(ev)=>onChange(ev.target.value) } >
+    {optNodes}
+  </select>)
 }
 
 Select.propTypes = {

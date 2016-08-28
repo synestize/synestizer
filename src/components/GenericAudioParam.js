@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import AudioSinkSignalSelect from '../containers/AudioSinkSignalSelect'
+import LabeledSlider from '../components/LabeledSlider'
 
 const GenericAudioParam = ({
   bias=0,
@@ -12,41 +13,29 @@ const GenericAudioParam = ({
   onBiasChange,
   onScaleChange,
   onSignalChange}) => {
-  let divStyle = {
-    width: bipolPerc(actual || 0.0)+"%"
-  };
+
   return (<div className={"param-control " + sinkControlKey} >
-    {label}
+    <h3 className="audio-sink-name">
+      {label}
+    </h3>
     <AudioSinkSignalSelect
+      className="audio-sink-signal-select"
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
-    <div className="scale-slider-wrap">
-      <label className="label"
-        htmlFor={sinkControlKey + "-scale-slider"}>
-        scale
-      </label>
-      <input className="slider scale"
-        id={sinkControlKey + "-scale-slider"}
-        type="range"
-        value={scale}
-        onChange={(ev)=>onScaleChange(ev.target.value)}
-        min="-1" max="1" step="0.0625" />
-    </div>
-    <label className="label"
-      htmlFor={sinkControlKey + "-bias-slider"}>
-      Value
-    </label>
-    <div className="bias-slider-wrap">
-      <input className="slider bias"
-        id={sinkControlKey + "-bias-slider"}
-        type="range"
-        value={bias}
-        onChange={(ev)=>onBiasChange(ev.target.value)}
-        min="-1" max="1" step="any" />
-      <div className="state-bar"
-        id={sinkControlKey + "-slider-actual"}
-        style={divStyle} />
-    </div>
+    <LabeledSlider
+      uniqueKey={sinkControlKey+"-scale-slider"}
+      className="scale"
+      onChange={onScaleChange}
+      step={0.0625}
+      labelText="scale"
+      value={scale} />
+    <LabeledSlider
+      uniqueKey={sinkControlKey+"-bias-slider"}
+      className="bias"
+      onChange={onBiasChange}
+      step={0.0625}
+      labelText="bias"
+      value={bias} />
   </div>)
 };
 

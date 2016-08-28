@@ -109,6 +109,7 @@ a, a:hover, a:active, a:focus {
   font-size: 80%;
 }
 #synapp .pane-content h2, #synapp .pane-content h3 {
+  padding-right: 1em;
   display: inline-block;
 }
 #synapp .subpane {
@@ -216,13 +217,13 @@ a, a:hover, a:active, a:focus {
 }
 #synapp .mappingmatrix th {
   font-weight: normal;
-  position: relative; /* so that child state-bar elements can be absolutely positioned */
+  position: relative; /* so that child shadow-state-bar elements can be absolutely positioned */
 }
 #synapp .mappingmatrix th span {
     position: relative;
     z-index: 2;
 }
-#synapp .mappingmatrix th .state-bar {
+#synapp .mappingmatrix th .shadow-state-bar {
   height: 100%;
   bottom: 0;
   background-color: palegreen;

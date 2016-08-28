@@ -6,7 +6,7 @@ const PatchMappingHeaderCell = ({val, scope, name, signalKey}) => {
     width: bipolPerc(val || 0.0)+"%"
   };
   return (<th scope={scope || "column"} data-signal={signalKey}>
-    <div className="state-bar" style={divStyle} />
+    <div className="shadow-state-bar" style={divStyle} />
     <span className='signalname'>{name}</span>
   </th>);
 };
