@@ -118,7 +118,7 @@ export default function init(store, signalio) {
   }
 
   storeStream.pluck(
-    'audio', 'sourceDevice'
+    'audio', 'sinkDevice'
   ).distinctUntilChanged().subscribe(
     doAudioSinkDevicePlumbing
   )
