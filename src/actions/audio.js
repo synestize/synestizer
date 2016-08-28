@@ -6,8 +6,6 @@ export const SET_AUDIO_SOURCE_DEVICE = 'SET_AUDIO_SOURCE_DEVICE'
 export const SET_VALID_AUDIO_SOURCE_DEVICE = 'SET_VALID_AUDIO_SOURCE_DEVICE'
 export const PUBLISH_AUDIO_SOURCE_SIGNAL = 'PUBLISH_AUDIO_SOURCE_SIGNAL'
 export const UNPUBLISH_AUDIO_SOURCE_SIGNAL = 'UNPUBLISH_AUDIO_SOURCE_SIGNAL'
-export const SET_AUDIO_SOURCE_CONTROL_NOMINAL_VALUE = 'SET_AUDIO_SOURCE_CONTROL_NOMINAL_VALUE'
-
 export const SET_ALL_AUDIO_SINK_DEVICES = 'SET_ALL_AUDIO_SINK_DEVICES'
 export const SET_AUDIO_SINK_DEVICE = 'SET_AUDIO_SINK_DEVICE'
 export const SET_VALID_AUDIO_SINK_DEVICE = 'SET_VALID_AUDIO_SINK_DEVICE'
@@ -19,6 +17,8 @@ export const SET_N_AUDIO_SINK_SIGNALS = 'SET_N_AUDIO_SINK_SIGNALS'
 export const SET_AUDIO_SINK_CONTROL_BIAS = 'SET_AUDIO_SINK_CONTROL_BIAS'
 export const SET_AUDIO_SINK_CONTROL_SCALE = 'SET_AUDIO_SINK_CONTROL_SCALE'
 export const SET_AUDIO_SINK_CONTROL_SIGNAL = 'SET_AUDIO_SINK_CONTROL_SIGNAL'
+export const SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE = 'SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE'
+export const SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES = 'SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES'
 export const ADD_ENSEMBLE = 'ADD_ENSEMBLE'
 /*
  * action creators
@@ -70,6 +70,12 @@ export function setAudioSinkControlScale(key, val) {
 }
 export function setAudioSinkControlSignal(key, val) {
  return { type: SET_AUDIO_SINK_CONTROL_SIGNAL, payload: {key, val}}
+}
+export function setAudioSinkControlActualValue(key, val) {
+ return { type: SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE, payload: {key, val}}
+}
+export function setAllAudioSinkControlActualValues(vals) {
+  return { type: SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES, payload: vals}
 }
 export function addEnsemble(meta) {
   return { type: ADD_ENSEMBLE, payload: meta }

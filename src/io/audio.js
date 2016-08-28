@@ -4,6 +4,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { share } from 'rxjs/operator/share';
 import { saturate, desaturate } from '../lib/transform.js'
+import { setAllAudioSinkControlActualValues } from '../actions/audio';
 import  {
   setValidAudioSourceDevice,
   setAudioSourceDevice,
@@ -183,5 +184,6 @@ export default function init(store, signalio) {
         actualControlValueStream.next(val)
       }
     );
+  actualControlValueStream.subscribe(setAllAudioSinkControlActualValues)
   return audioInfrastructure
 };

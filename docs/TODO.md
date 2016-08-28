@@ -34,6 +34,7 @@
 
 ## developer workflow
 
+* move `audioSinkControl` actual values into `__volatile` state
 * move update rate into app settings
 * Immutable state? [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
