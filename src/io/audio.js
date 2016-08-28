@@ -1,6 +1,7 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import  {
   setValidAudioSourceDevice,
@@ -28,7 +29,6 @@ export default function init(store, signalio) {
   let context;
 
   let sourceControls;
-  let sinkControls;
   let validSource = false;
   let validSink = false;
   let storeStream = toObservable(store);
@@ -113,6 +113,10 @@ export default function init(store, signalio) {
     }
   };
 
+  function calcAudioControls(sinkControls, sinkState) {
+    console.debug('calcAudioControls', sinkControls, sinkState)
+  }
+
   storeStream.pluck(
     'audio', 'sourceDevice'
   ).distinctUntilChanged().subscribe(
@@ -127,11 +131,6 @@ export default function init(store, signalio) {
     '__volatile', 'audio', 'validSink'
   ).distinctUntilChanged().subscribe(
     (validity)=> {validSink = validity;}
-  )
-  storeStream.pluck(
-    'audio', 'sinkControls'
-  ).distinctUntilChanged().subscribe(
-      (x) => {sinkControls = x}
   )
   storeStream.pluck(
     'audio', 'nSinkControlSignals'
@@ -155,5 +154,13 @@ export default function init(store, signalio) {
   deviceSubject.subscribe(updateAudioIO,
     (err) => console.debug(err.stack)
   );
+  Observable::combineLatest(
+    storeStream.pluck(
+      'audio', 'sinkControls'
+    ).distinctUntilChanged(),
+    signalio.sinkStateSubject,
+    calcAudioControls).subscribe(
+      (val) => actualControlValueStream.next(val)
+    );
   return audioInfrastructure
 };
