@@ -8,6 +8,7 @@ const LabeledSlider = ({
     step="any",
     className="",
     shadowVal,
+    disabled=false
   }) => {
   let shadowValDisplay;
   if (shadowVal!==undefined) {
@@ -20,7 +21,7 @@ const LabeledSlider = ({
   }
   return (
     <div key="uniqueKey" className={className + " labeled-slider-wrap"}>
-      <label className="label"
+      <label className={"label" + (disabled ? " disabled": "") }
         htmlFor={uniqueKey + "-slider"}>
         {labelText}
       </label>
@@ -29,7 +30,8 @@ const LabeledSlider = ({
         type="range"
         value={value}
         onChange={(ev)=>onChange(parseFloat(ev.target.value))}
-        min="-1" max="1" step={step} />
+        min="-1" max="1" step={step}
+        disabled={disabled} />
       {shadowValDisplay}
     </div>
   )
@@ -43,6 +45,7 @@ LabeledSlider.propTypes = {
   uniqueKey: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   shadowVal: PropTypes.number,
+  disabled: PropTypes.bool,
 }
 
 export default LabeledSlider;

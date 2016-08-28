@@ -28,7 +28,8 @@ const GenericAudioParam = ({
       onChange={onScaleChange}
       step={0.0625}
       labelText="scale"
-      value={scale} />
+      value={scale}
+      disabled={!Boolean(signal)} />
     <LabeledSlider
       uniqueKey={sinkControlKey+"-bias-slider"}
       className="bias"
