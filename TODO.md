@@ -21,6 +21,7 @@
 
 * UI for save/load (preset names etc)
 * compress down bias/scale widgets when not in use
+* sacle widgets shoudl be attached to signal select widgets in audio stuff
 * show level of attachable signals
 * animate transitions and updates
 * Svg widgets? http://stackoverflow.com/a/30579774
