@@ -21,7 +21,7 @@
 
 * UI for save/load (preset names etc)
 * compress down bias/scale widgets when not in use
-* sacle widgets shoudl be attached to signal select widgets in audio stuff
+* scale widgets should be attached to signal select widgets in audio stuff
 * show level of attachable signals
 * animate transitions and updates
 * Svg widgets? http://stackoverflow.com/a/30579774
@@ -34,6 +34,7 @@
 
 ## developer workflow
 
+* move update rate into app settings
 * Immutable state? [1](https://facebook.github.io/react/docs/advanced-performance.html) [2](https://blog.risingstack.com/the-react-js-way-flux-architecture-with-immutable-js/)
 * better [git workflows](http://www.toptal.com/git/git-workflows-for-pros-a-good-git-guide)
 
