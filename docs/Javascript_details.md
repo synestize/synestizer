@@ -128,7 +128,6 @@ We use Rx.js version 5.0, because even though it is less common that Rx.js 4.0, 
     * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
-    * [underarm](http://simplectic.com/projects/underarm/) provides transducers for underscore and is based upon [transduce.js](https://github.com/transduce/transduce)
 
 ## Mathematics
 
