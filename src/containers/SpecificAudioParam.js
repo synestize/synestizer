@@ -7,7 +7,11 @@ import {
 } from '../actions/audio';
 
 const mapStateToProps = (state, {sinkControlKey}) => {
-  return {...state.audio.sinkControls[sinkControlKey], sinkControlKey}
+  return {
+    ...state.audio.sinkControls[sinkControlKey],
+    sinkControlKey,
+    actual: state.__volatile.audio.sinkActualValues[sinkControlKey]
+  }
 };
 
 const mapDispatchToProps = (dispatch, {sinkControlKey}) => {

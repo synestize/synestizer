@@ -134,21 +134,20 @@ export default function init(store, signalio) {
     }
     return actualSinkControlValues;
   }
-
+  storeStream.pluck(
+    '__volatile', 'audio', 'validSource'
+  ).distinctUntilChanged().subscribe(
+    (validity)=> {validSource = validity;}
+  )
   storeStream.pluck(
     'audio', 'sinkDevice'
   ).distinctUntilChanged().subscribe(
     doAudioSinkDevicePlumbing
   )
   storeStream.pluck(
-    '__volatile', 'audio', 'validSource'
-  ).distinctUntilChanged().subscribe(
-    (validity)=> {validSource = validity; doAudioSinkDevicePlumbing()}
-  )
-  storeStream.pluck(
     '__volatile', 'audio', 'validSink'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {validSink = validity;}
+    (validity)=> {validSink = validity; doAudioSinkDevicePlumbing()}
   )
   storeStream.pluck(
     'audio', 'nSinkControlSignals'
@@ -182,10 +181,11 @@ export default function init(store, signalio) {
     signalio.sinkStateSubject,
     calcAudioControls
   ).subscribe(
-      (val) => {
-        actualControlValueStream.next(val)
-      }
-    );
-  actualControlValueStream.subscribe(setAllAudioSinkControlActualValues)
+    (val) => {
+      actualControlValueStream.next(val)
+    }
+  );
+  actualControlValueStream.subscribe(setAllAudioSinkControlActualValues);
+  
   return audioInfrastructure
 };

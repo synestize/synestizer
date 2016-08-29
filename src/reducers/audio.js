@@ -15,8 +15,6 @@ import {
   SET_AUDIO_SINK_CONTROL_BIAS,
   SET_AUDIO_SINK_CONTROL_SCALE,
   SET_AUDIO_SINK_CONTROL_SIGNAL,
-  SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
-  SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
   ADD_ENSEMBLE
 } from '../actions/audio'
 
@@ -68,7 +66,6 @@ export function sinkControls(state={}, {type, payload}) {
     case SET_AUDIO_SINK_CONTROL_BIAS:
     case SET_AUDIO_SINK_CONTROL_SCALE:
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
-    case SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE:
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
       let {key, val} = payload;
       if (key===undefined) {
@@ -76,11 +73,6 @@ export function sinkControls(state={}, {type, payload}) {
       }
       next = {...state}
       next[key] = _sinkControl(next[key], {type, payload})
-      return next
-    case SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES:
-      for (let key in payload) {
-        next[key].actual = payload[key]
-      }
       return next
     default:
       return state
@@ -109,10 +101,6 @@ export function _sinkControl(
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
       next = {...state};
       next.signal = val
-      return next
-    case SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE:
-      next = {...state};
-      next.actual = val
       return next
     case UNPUBLISH_AUDIO_SINK_SIGNAL:
       next = {...state};
