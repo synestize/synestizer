@@ -75,7 +75,8 @@ export default function init(store, signalio) {
     Object.assign(audioInfrastructure, {
       context,
       tone: Tone
-    })
+    });
+    Tone.Transport.start();
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
 
