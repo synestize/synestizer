@@ -7,7 +7,6 @@
 * video, midi and audio all publish signals slightly differently; should make this consistent
 * stop speed of controllers changing when in the background
 * midi channel numbers should match Ableton convention
-* Need to show perturbation and final value of synth values
 * implement audio model
 * audio input
 * Get Christoph's help moving the yellow.listentocolors.net
@@ -19,9 +18,12 @@
 
 ## UI improvements
 
+* master bpm
+* master gain
 * UI for save/load (preset names etc)
 * compress down bias/scale widgets when not in use
 * scale widgets should be attached to signal select widgets in audio stuff
+* Need to show perturbation and final value of synth values
 * show level of attachable signals
 * animate transitions and updates
 * Svg widgets? http://stackoverflow.com/a/30579774
