@@ -6,6 +6,7 @@ import {
   SET_VALID_AUDIO_SINK_DEVICE,
   SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
   SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
+  SET_MASTER_LEVEL
 } from '../../actions/audio'
 
 export function sources(state=new Map(), {type, payload}) {
@@ -58,6 +59,15 @@ export function sinkActualValues(state={}, {type, payload}) {
   }
 }
 
+export function level(state=0.0, {type, payload}) {
+  let next;
+  switch (type) {
+    case SET_MASTER_LEVEL:
+      return payload
+    default:
+      return state
+  }
+}
 
 //Now put all these together.
 export default combineReducers({
@@ -65,5 +75,6 @@ export default combineReducers({
   validSource,
   sinks,
   validSink,
-  sinkActualValues
+  sinkActualValues,
+  level
 })

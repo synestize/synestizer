@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     min: -60,
     max: 6,
     step: 1,
+    level: state.__volatile.audio.level
   }
 };
 
