@@ -72,9 +72,10 @@ export default function init(store, signalio) {
     	"attack" : 0.5,
     	"release" : 0.1
     });
-    //route everything through the filter
-    //and compressor before going to the speakers
-    Tone.Master.chain(masterCompressor);
+    //route everything through
+    //compressor before going to the speakers
+    let meter = new Tone.Meter("level");
+    Tone.Master.chain(masterCompressor, meter);
     Object.assign(audioInfrastructure, {
       context,
       tone: Tone
@@ -191,13 +192,13 @@ export default function init(store, signalio) {
   //
   actualControlValues.throttleTime(UI_RATE).subscribe(
     setAllAudioSinkControlActualValues);
-    
+
   /// Master parameters are special and are handled differently, through the UI direct
   storeStream.pluck(
     'audio', 'master', 'gain'
-  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
+  ).subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
+  ).subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
   return audioInfrastructure
 };
