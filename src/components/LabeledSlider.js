@@ -8,7 +8,9 @@ const LabeledSlider = ({
     step="any",
     className="",
     shadowVal,
-    disabled=false
+    disabled=false,
+    min=-1,
+    max=1,
   }) => {
   let shadowValDisplay;
   if (shadowVal!==undefined) {
@@ -30,7 +32,7 @@ const LabeledSlider = ({
         type="range"
         value={value}
         onChange={(ev)=>onChange(parseFloat(ev.target.value))}
-        min="-1" max="1" step={step}
+        min={min} max={max} step={step}
         disabled={disabled} />
       {shadowValDisplay}
     </div>
@@ -39,6 +41,8 @@ const LabeledSlider = ({
 
 LabeledSlider.propTypes = {
   value: PropTypes.number.isRequired,
+  min: PropTypes.number,
+  max: PropTypes.number,
   step: PropTypes.number,
   className: PropTypes.string,
   labelText: PropTypes.string.isRequired,

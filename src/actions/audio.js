@@ -19,6 +19,8 @@ export const SET_AUDIO_SINK_CONTROL_SCALE = 'SET_AUDIO_SINK_CONTROL_SCALE'
 export const SET_AUDIO_SINK_CONTROL_SIGNAL = 'SET_AUDIO_SINK_CONTROL_SIGNAL'
 export const SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE = 'SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE'
 export const SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES = 'SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES'
+export const SET_MASTER_TEMPO = 'SET_MASTER_TEMPO'
+export const SET_MASTER_GAIN = 'SET_MASTER_GAIN'
 export const ADD_ENSEMBLE = 'ADD_ENSEMBLE'
 /*
  * action creators
@@ -76,6 +78,12 @@ export function setAudioSinkControlActualValue(key, val) {
 }
 export function setAllAudioSinkControlActualValues(vals) {
   return { type: SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES, payload: vals}
+}
+export function setMasterTempo(bpm) {
+  return { type: SET_MASTER_TEMPO, payload: bpm}
+}
+export function setMasterGain(db) {
+  return { type: SET_MASTER_GAIN, payload: db}
 }
 export function addEnsemble(meta) {
   return { type: ADD_ENSEMBLE, payload: meta }

@@ -17,10 +17,10 @@ const mapStateToProps = (state, {sinkControlKey}) => {
 const mapDispatchToProps = (dispatch, {sinkControlKey}) => {
   return {
     onBiasChange: (val) => {
-      dispatch(setAudioSinkControlBias(sinkControlKey, parseFloat(val)))
+      dispatch(setAudioSinkControlBias(sinkControlKey, val))
     },
     onScaleChange: (val) => {
-      dispatch(setAudioSinkControlScale(sinkControlKey, parseFloat(val)))
+      dispatch(setAudioSinkControlScale(sinkControlKey, val))
     },
     onSignalChange: (sinkSignalKey) => {
       dispatch(setAudioSinkControlSignal(sinkControlKey, sinkSignalKey))

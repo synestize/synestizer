@@ -1,9 +1,11 @@
 import Pane from './Pane';
 import ControlTriad from '../containers/ControlTriad';
+import AudioMasterControls from '../components/AudioMasterControls';
 import React, { Component, PropTypes, Children } from 'react';
 
 const SoundPane = ({version}) => (
   <Pane paneId="audio-pane" version={version}>
+    <AudioMasterControls />
     <ControlTriad />
   </Pane>)
 

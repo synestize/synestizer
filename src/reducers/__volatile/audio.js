@@ -5,7 +5,7 @@ import {
   SET_ALL_AUDIO_SINK_DEVICES,
   SET_VALID_AUDIO_SINK_DEVICE,
   SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
-  SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES
+  SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
 } from '../../actions/audio'
 
 export function sources(state=new Map(), {type, payload}) {

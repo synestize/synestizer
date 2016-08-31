@@ -15,6 +15,8 @@ import {
   SET_AUDIO_SINK_CONTROL_BIAS,
   SET_AUDIO_SINK_CONTROL_SCALE,
   SET_AUDIO_SINK_CONTROL_SIGNAL,
+  SET_MASTER_GAIN,
+  SET_MASTER_TEMPO,
   ADD_ENSEMBLE
 } from '../actions/audio'
 
@@ -144,14 +146,38 @@ function ensembles(state={}, {type, payload}) {
   return next
 }
 
+export function gain(state=-10, {type, payload}) {
+  switch (type) {
+    case SET_MASTER_GAIN:
+      return payload
+    default:
+      return state
+  }
+}
+
+export function tempo(state=105, {type, payload}) {
+  switch (type) {
+    case SET_MASTER_TEMPO:
+      return payload
+    default:
+      return state
+  }
+}
+
+const master = combineReducers({
+  gain,
+  tempo
+})
+
 const audio = combineReducers({
    sourceDevice,
-  //  sourceControlVals,
+   // sourceControlVals,
    sinkDevice,
    sinkControls,
    nSinkControlSignals,
    sinkControlSignals,
    ensembles,
+   master,
 })
 
 export default audio
