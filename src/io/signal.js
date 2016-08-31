@@ -6,9 +6,7 @@ import {
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
-
-const SIGNAL_RATE = 5000;
-const UI_RATE = 5000;
+import {SIGNAL_RATE, UI_RATE } from '../settings'
 
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates

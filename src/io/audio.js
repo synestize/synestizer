@@ -19,6 +19,8 @@ import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import { deviceSubject } from '../lib/av'
 import { audioSinkStreamName } from './audio/util'
+import {SIGNAL_RATE, UI_RATE } from '../settings'
+
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
 import triad_ from './audio/triad'
