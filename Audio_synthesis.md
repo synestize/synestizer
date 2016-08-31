@@ -6,6 +6,9 @@
 * [old school sequencing example](https://github.com/mudcube/MIDI.js/blob/master/js/midi/player.js) from a MIDI player.
 * alternatively, one can use DSP as a sequencer, as with [tone.js](https://github.com/Tonejs/Tone.js), which attempts to guarantee strong timing.
 
+  * [Tone transport HOWTO](https://github.com/Tonejs/Tone.js/wiki/Transport)
+  * [Tone documentation](https://tonejs.github.io/docs/#Loop)
+
 ## Webaudio information
 
 There are too many resources online to list.
