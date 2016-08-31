@@ -20,6 +20,7 @@ import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import { deviceSubject } from '../lib/av'
 import { audioSinkStreamName } from './audio/util'
 import Tone from 'tone/build/Tone.js'
+window.Tone = Tone;
 import triad_ from './audio/triad'
 
 export default function init(store, signalio) {
@@ -186,6 +187,11 @@ export default function init(store, signalio) {
     }
   );
   actualControlValueStream.subscribe(setAllAudioSinkControlActualValues);
-  
+  storeStream.pluck(
+    'audio', 'master', 'gain'
+  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db))
+  storeStream.pluck(
+    'audio', 'master', 'tempo'
+  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm))
   return audioInfrastructure
 };
