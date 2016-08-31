@@ -43,9 +43,9 @@ export default function init(store, signalio) {
     store.getState().audio.sinkControlBias
   );
   let ensembles = {}
-
+  let  actualControlValues = actualControlValueStream.share()
   const audioInfrastructure = {
-    actualControlValueStream,
+    actualControlValues,
     ensembles
   }
 
@@ -188,12 +188,16 @@ export default function init(store, signalio) {
       actualControlValueStream.next(val)
     }
   );
-  actualControlValueStream.subscribe(setAllAudioSinkControlActualValues);
+  //
+  actualControlValues.throttleTime(UI_RATE).subscribe(
+    setAllAudioSinkControlActualValues);
+    
+  /// Master parameters are special and are handled differently, through the UI direct
   storeStream.pluck(
     'audio', 'master', 'gain'
-  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db))
+  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm))
+  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
   return audioInfrastructure
 };
