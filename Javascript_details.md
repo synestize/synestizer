@@ -52,6 +52,9 @@ But I think  I can avoid this by separating DOM streams and React components as 
 
 [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 
+### If i want easy graphing
+* for people using react.js, [Victory](https://formidable.com/open-source/victory/) 
+
 ## Redux
 
 We use Redux to organise the app state.

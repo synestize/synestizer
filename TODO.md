@@ -18,8 +18,7 @@
 
 ## UI improvements
 
-* master bpm
-* master gain
+* show master level
 * UI for save/load (preset names etc)
 * compress down bias/scale widgets when not in use
 * scale widgets should be attached to signal select widgets in audio stuff
