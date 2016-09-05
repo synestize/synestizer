@@ -12,7 +12,7 @@ Module support in ES6 looks different than the older standards.
 * [ES6 module syntax](http://www.2ality.com/2014/09/es6-modules-final.html)
 * [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
 * [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
-* [module importing is a complicated standards battle](http://www.jbrantly.com/es6-modules-with-typescript-and-webpack/)
+* [module importing can be a complicated standards battle](http://www.jbrantly.com/es6-modules-with-typescript-and-webpack/)
 
 ### Tips
 
@@ -53,7 +53,7 @@ But I think  I can avoid this by separating DOM streams and React components as 
 [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 
 ### If i want easy graphing
-* for people using react.js, [Victory](https://formidable.com/open-source/victory/) 
+* for people using react.js, [Victory](https://formidable.com/open-source/victory/)
 
 ## Redux
 
