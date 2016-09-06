@@ -251,6 +251,9 @@ a, a:hover, a:active, a:focus {
 #synapp .mappingmatrix .mapping.minus {
   background-color: rgba(130,0,0,0.5);
 }
+#synapp input[disabled], #synapp input.inactive {
+  opacity: 0.5;
+}
 #synapp .mappingmatrix .mapping input.param {
   display: inline-block;
   cursor: pointer;

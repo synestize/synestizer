@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import AudioSinkSignalSelect from '../containers/AudioSinkSignalSelect'
-import LabeledSlider from '../components/LabeledSlider'
+import MarkedLiveSlider from '../components/MarkedLiveSlider'
 
 const GenericAudioParam = ({
   bias=0,
@@ -22,7 +22,7 @@ const GenericAudioParam = ({
       className="audio-sink-signal-select"
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
-    <LabeledSlider
+    <MarkedLiveSlider
       uniqueKey={sinkControlKey+"-scale-slider"}
       className="scale"
       onChange={onScaleChange}
@@ -30,7 +30,7 @@ const GenericAudioParam = ({
       labelText="scale"
       value={scale}
       disabled={!Boolean(signal)} />
-    <LabeledSlider
+    <MarkedLiveSlider
       uniqueKey={sinkControlKey+"-bias-slider"}
       className="bias"
       onChange={onBiasChange}
