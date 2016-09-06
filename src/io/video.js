@@ -187,7 +187,7 @@ export default function init(store, signalio, videoDom) {
       //report data streams
       statsStreamSpray(payload);
       //Now repeat
-      Rx.Scheduler.asap.schedule(
+      Rx.Scheduler.async.schedule(
         pumpPixels,
         20
       );
