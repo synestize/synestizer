@@ -107,7 +107,30 @@ Nonetheless, everyone uses it and so we ignore it and just GO here.
 * If you want to update dependencies, the command looks omsething like this:
 
 ```
- npm install --save-dev --upgrade react react-dom redux rxjs tone webrtc-adapter worker-loader  babel-preset-react babel localforage webpack babel-preset-es2015 babel-plugin-transform-dead-code-elimination babel-plugin-transform-function-bind babel-plugin-transform-object-rest-spread babel-plugin-system-import-transformer babelify redux-persist redux-logger redux-thunk source-map-loader babel-cli
+npm install --save-dev --upgrade \
+  babel-cli \
+  babel-core \
+  babel-loader \
+  babel-plugin-system-import-transformer \
+  babel-plugin-transform-dead-code-elimination\
+  babel-plugin-transform-function-bind \
+  babel-plugin-transform-object-rest-spread \
+  babel-preset-es2015 \
+  babel-preset-react \
+  localforage \
+  react \
+  react-dom \
+  react-redux \
+  redux \
+  redux-logger \
+  redux-persist \
+  redux-thunk \
+  rxjs \
+  source-map-loader \
+  tone \
+  webpack \
+  webrtc-adapter \
+  worker-loader \
 ```
 
 ## Rx.js
