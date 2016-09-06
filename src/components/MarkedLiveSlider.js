@@ -12,21 +12,22 @@ const MarkedLiveSlider = ({
   }) => {
   let shadowValDisplay;
   if (shadowVal!==undefined) {
-    let divStyle = {
-      width: bipolPerc(actual || 0.0)+"%"
-    };
-    shadowValDisplay = (<div className="shadow-state-bar"
-      style={divStyle} />)
+    shadowValDisplay = (<input
+      className="shadow-slider "
+      type="range"
+      value={shadowVal}
+      min={min} max={max} step={step}
+      disabled={disabled} />)
   }
   return (
-    <div key="uniqueKey" className={className + " labeled-slider-wrap"}>
-
-      <input className="slider scale"
+    <div className={className + " marked-slider-wrap"}>
+      <input className="slider"
         type="range"
         value={value}
         onChange={(ev)=>onChange(parseFloat(ev.target.value))}
         min={min} max={max} step={step}
         disabled={disabled} />
+      <div className="zero-mark"></div>
       {shadowValDisplay}
     </div>
   )
