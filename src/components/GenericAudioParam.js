@@ -9,11 +9,13 @@ const GenericAudioParam = ({
   actual=0,
   signal="",
   sinkControlKey,
+  actualSinkSignalValue,
+  actualSinkControlValue,
   label,
   onBiasChange,
   onScaleChange,
   onSignalChange}) => {
-
+    
   return (<div className={"param-control " + sinkControlKey} >
     <h3 className="audio-sink-name">
       {label}
@@ -23,19 +25,20 @@ const GenericAudioParam = ({
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
     <MarkedLiveSlider
-      uniqueKey={sinkControlKey+"-scale-slider"}
       className="scale"
       onChange={onScaleChange}
       step={0.0625}
       labelText="scale"
       value={scale}
-      disabled={!Boolean(signal)} />
+      shadowVal={actualSinkSignalValue}
+      disabled={!Boolean(signal)}
+    />
     <MarkedLiveSlider
-      uniqueKey={sinkControlKey+"-bias-slider"}
       className="bias"
       onChange={onBiasChange}
       step={0.0625}
       labelText="bias"
+      shadowVal={actualSinkControlValue}
       value={bias} />
   </div>)
 };
@@ -45,6 +48,8 @@ GenericAudioParam.propTypes = {
   scale: PropTypes.number,
   actual: PropTypes.number,
   sinkControlKey: PropTypes.string.isRequired,
+  actualSinkSignalValue: PropTypes.number,
+  actualSinkControlValue: PropTypes.number,
   signal: PropTypes.string,
   label: PropTypes.string.isRequired,
   onBiasChange: PropTypes.func.isRequired,

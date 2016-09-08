@@ -17,7 +17,7 @@ const MarkedLiveSlider = ({
       type="range"
       value={shadowVal}
       min={min} max={max} step={step}
-      disabled={disabled} />)
+      disabled={disabled} readOnly={true} />)
   }
   return (
     <div className={className + " marked-slider-wrap"}>

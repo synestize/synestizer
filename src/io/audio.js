@@ -4,7 +4,6 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { share } from 'rxjs/operator/share';
 import { saturate, desaturate } from '../lib/transform.js'
-import { setAllAudioSinkControlActualValues } from '../actions/audio';
 import  {
   setValidAudioSourceDevice,
   setAudioSourceDevice,
@@ -13,7 +12,8 @@ import  {
   setAudioSinkDevice,
   setAllAudioSinkDevices,
   publishAudioSinkSignal,
-  unpublishAudioSinkSignal
+  unpublishAudioSinkSignal,
+  setAllAudioSinkControlActualValues
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
@@ -190,8 +190,9 @@ export default function init(store, signalio) {
     }
   );
   //
-  actualControlValues.throttleTime(UI_RATE).subscribe(
-    setAllAudioSinkControlActualValues);
+  actualControlValues.throttleTime(UI_RATE).subscribe((vals) => {
+    store.dispatch(setAllAudioSinkControlActualValues(vals));
+  });
 
   /// Master parameters are special and are handled differently, through the UI direct
   storeStream.pluck(
