@@ -33,6 +33,14 @@ not technically a "library", but a "set of things to know"
 
 Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
+
+See Also
+
+[stying sliders](http://www.quirksmode.org/blog/archives/2015/11/styling_and_scr.html)
+
+[more styling sliders](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/)
+
+
 ## React
 
 The rendering system for all UI components is React.
