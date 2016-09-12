@@ -8,8 +8,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     value: state.audio.master.tempo,
     label: "Tempo",
-    min: 40,
-    max: 200,
+    min: 20,
+    max: 400,
     step: 1,
     units: "bpm"
   }

@@ -5,7 +5,7 @@ import Select from '../components/Select.js'
 const mapStateToProps = (state, {sinkControlKey, onSignalChange}) => {
   return {
     optDict: state.audio.sinkControlSignals,
-    currentOpt: state.audio.sinkControls[sinkControlKey].signal,
+    currentOpt: (state.audio.sinkControls[sinkControlKey] || {}).signal,
     onChange: (key) => onSignalChange(key) // NB this is a dispatcher
   }
 };

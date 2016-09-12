@@ -7,7 +7,9 @@ import {
 } from '../actions/audio';
 
 const mapStateToProps = (state, {sinkControlKey}) => {
-  let sinkSignalKey = state.audio.sinkControls[sinkControlKey].signal;
+  let sinkSignalKey = (
+    state.audio.sinkControls[sinkControlKey] || {}
+  ).signal;
   return {
     ...state.audio.sinkControls[sinkControlKey],
     sinkControlKey,
