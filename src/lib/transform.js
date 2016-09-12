@@ -69,9 +69,11 @@ export const bipolLin = (min, max, val) => {
 export const intBipol = (min, max, val) => {
   let range = max-min;
   let middle = (max+min)/2
-  return Math.max(Math.min(
-    (val-middle) * 2 / range,
-  max), min);
+  return Math.max(
+    Math.min(
+      (val-middle) * 2 / range,
+      max
+    ), min);
 };
 //we do rounding for integers
 export const bipolInt = (min, max, val) => {
