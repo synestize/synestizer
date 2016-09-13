@@ -126,6 +126,7 @@ npm install --save-dev --upgrade \
   babel-preset-es2015 \
   babel-preset-react \
   localforage \
+  node-static \
   react \
   react-dom \
   react-redux \
