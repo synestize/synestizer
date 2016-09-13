@@ -1,4 +1,9 @@
 // Main entry point everything
+// Attempt to short-circuit the timer throttle
+// see https://blog.pivotal.io/labs/labs/chrome-and-firefox-throttle-settimeout-setinterval-in-inactive-tabs
+import 'script!hacktimer/HackTimer.js';
+import 'script!hacktimer/HackTimerWorker.js'
+
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
