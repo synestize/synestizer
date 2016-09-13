@@ -63,6 +63,10 @@ But I think  I can avoid this by separating DOM streams and React components as 
 ### If i want easy graphing
 * for people using react.js, [Victory](https://formidable.com/open-source/victory/)
 
+### Alternatives
+
+* [Preact](https://preactjs.com/) is smaller than React. Does it work for us?
+
 ## Redux
 
 We use Redux to organise the app state.
@@ -112,6 +116,7 @@ Nonetheless, everyone uses it and so we ignore it and just GO here.
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
   *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
   * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
+* [Why can't anyone write a simpel webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
 * If you want to update dependencies, the command looks omsething like this:
 
 ```
