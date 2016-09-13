@@ -14,7 +14,9 @@
     "build": "NODE_ENV=production webpack -p ",
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
-    "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:violet_listentocolors_net"
+    "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:violet_listentocolors_net",
+    "preserve": "build",
+    "serve": "static"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
     "babel-runtime": "^6.9.0",
     "hacktimer": "^1.1.0",
     "localforage": "^1.4.2",
+    "node-static": "^0.7.8",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
@@ -44,7 +47,7 @@
     "redux-logger": "^2.6.1",
     "redux-persist": "^3.5.0",
     "redux-thunk": "^2.1.0",
-    "rxjs": "^5.0.0-beta.11",
+    "rxjs": "^5.0.0-beta.12",
     "source-map-loader": "^0.1.5",
     "tone": "^0.7.1",
     "webpack": "^1.13.2",
