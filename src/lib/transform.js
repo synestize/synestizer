@@ -42,7 +42,6 @@ export const clipinf = (val) => (
     ), Number.MAX_VALUE
   )
 );
-
 // [min, max]->[-1,1]
 export const linBipol = (min, max, val) => {
   let range = max-min;
