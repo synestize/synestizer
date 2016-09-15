@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
-import UnmappedAudioParam from '../components/UnmappedAudioParam.js'
+import AudioMasterGain from '../components/AudioMasterGain.js'
 import {
   setMasterGain,
+  toggleMasterMute,
 } from '../actions/audio';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    value: state.audio.master.gain,
+    gain: state.audio.master.gain,
+    mute: state.audio.master.mute,
     label: "Gain",
     min: -60,
     max: 6,
@@ -17,15 +19,18 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (val) => {
+    onChangeGain: (val) => {
       dispatch(setMasterGain(val))
+    },
+    onChangeMute: (val) => {
+      dispatch(toggleMasterMute(!ownProps.mute))
     },
   }
 };
 
-const AudioMasterGain = connect(
+const ActiveAudioMasterGain = connect(
   mapStateToProps,
   mapDispatchToProps
-)( UnmappedAudioParam );
+)( AudioMasterGain );
 
-export default AudioMasterGain;
+export default ActiveAudioMasterGain;

@@ -21,6 +21,8 @@ export const SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE = 'SET_AUDIO_SINK_CONTROL_ACTUA
 export const SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES = 'SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES'
 export const SET_MASTER_TEMPO = 'SET_MASTER_TEMPO'
 export const SET_MASTER_GAIN = 'SET_MASTER_GAIN'
+export const SET_MASTER_MUTE = 'SET_MASTER_MUTE'
+export const TOGGLE_MASTER_MUTE = 'TOGGLE_MASTER_MUTE'
 export const ADD_ENSEMBLE = 'ADD_ENSEMBLE'
 /*
  * action creators
@@ -84,6 +86,12 @@ export function setMasterTempo(bpm) {
 }
 export function setMasterGain(db) {
   return { type: SET_MASTER_GAIN, payload: db}
+}
+export function setMasterMute(val) {
+  return { type: SET_MASTER_MUTE, payload: val}
+}
+export function toggleMasterMute() {
+  return { type: TOGGLE_MASTER_MUTE, payload: null}
 }
 export function addEnsemble(meta) {
   return { type: ADD_ENSEMBLE, payload: meta }

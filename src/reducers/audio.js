@@ -16,6 +16,8 @@ import {
   SET_AUDIO_SINK_CONTROL_SCALE,
   SET_AUDIO_SINK_CONTROL_SIGNAL,
   SET_MASTER_GAIN,
+  SET_MASTER_MUTE,
+  TOGGLE_MASTER_MUTE,
   SET_MASTER_TEMPO,
   ADD_ENSEMBLE
 } from '../actions/audio'
@@ -155,6 +157,17 @@ export function gain(state=-10, {type, payload}) {
   }
 }
 
+export function mute(state=false, {type, payload}) {
+  switch (type) {
+    case SET_MASTER_MUTE:
+      return payload
+    case TOGGLE_MASTER_MUTE:
+      return !state
+    default:
+      return state
+  }
+}
+
 export function tempo(state=105, {type, payload}) {
   switch (type) {
     case SET_MASTER_TEMPO:
@@ -166,6 +179,7 @@ export function tempo(state=105, {type, payload}) {
 
 const master = combineReducers({
   gain,
+  mute,
   tempo
 })
 

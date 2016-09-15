@@ -2,43 +2,50 @@ import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import LabeledSlider from '../components/LabeledSlider'
 
-const UnmappedAudioParam = ({
+const AudioMasterGain = ({
   label,
-  value,
-  onChange,
+  gain,
+  onChangeGain,
+  onChangeMute,
+  mute,
   min=0,
   max=100,
   step="any",
   units="db",
 }) => {
 
-  return (<div className={"unmapped-param-control"} >
+  return (<div className={"unmapped-param-control audio-master-gain"} >
     <LabeledSlider
       uniqueKey={label+"unmappedcontrolthing"}
       className="unmapped-control"
-      onChange={onChange}
+      onChange={onChangeGain}
       min={min}
       max={max}
       step={step}
       labelText={label}
-      value={value} />
+      value={gain} />
     <span className="unmapped-value">
-      {value}
+      {gain}
     </span>
     <span className="unmapped-units">
       {units}
     </span>
+    <span className={"mute button " + String(mute)} onClick={onChangeMute}>
+      mute
+    </span>
   </div>)
 };
 
-UnmappedAudioParam.propTypes = {
-  value: PropTypes.number.isRequired,
+AudioMasterGain.propTypes = {
+  gain: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
   step: PropTypes.number,
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChangeGain: PropTypes.func.isRequired,
+  onChangeMute: PropTypes.func.isRequired,
+  mute: PropTypes.bool.isRequired,
   units: PropTypes.string,
 }
 
-export default UnmappedAudioParam
+export default AudioMasterGain

@@ -4,7 +4,7 @@ import  {
   addEnsemble
 } from '../../actions/audio'
 
-import { dbAmp, freqMidi, audioFreq, bipolLin, bipolInt } from '../../lib/transform'
+import { bipolLin, bipolInt } from '../../lib/transform'
 export default function init(store, signalio, audio) {
   /*
    *

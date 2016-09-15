@@ -109,36 +109,15 @@ export const percBipol = (val) => (
   )
 );
 //[-1,1]->[0,100]
-//slightly different to ensure 127 is attainable
+//slightly different to ensure 100 is attainable
 export const bipolPerc = (val) =>(
   Math.max(Math.min(
     Math.round(val*50+50),
   100), 0)
 );
-// 69 = 440Hz
-export const midiFreq = (val) =>  (Math.pow(2, (val - 69)/12)*440)
-export const freqMidi = (val) => (Math.log(val/440)/(Math.LN2) * 12)
-export const dbAmp = (val) => (Math.pow(10, val/20))
-
-// exponential map to full MIDI spectrum
-// defined in a fancy way to correspond to MIDI frequency
-// note these are self-invoking functions.
-export const bipolFreqAll = function() {
-  const freqMiddle = midiFreq(127/2);
-  const halfOctaves = (127/2/12);
-  return (val) => Math.pow(2, clipBipol(val) * halfOctaves)*freqMiddle;
-}();
-
-export const freqBipolAll = function (val) {
-  const freqMiddle = midiFreq(127/2);
-  const halfOctaves = (127/2/12);
-  return (val) => clipBipol(
-    Math.log(2, val/freqMiddle)/(Math.LN2)/halfOctaves
-  );
-}();
 
 export const bipolEquiOctave = function(min, max, val) {
-  let logmin = Math.log(min)/Math.LOG2;
-  let logmax = Math.log(max)/Math.LOG2;
+  const logmin = Math.log(min)/Math.LOG2;
+  const logmax = Math.log(max)/Math.LOG2;
   return Math.pow(2, bipolLin(logmin, logmax));
 }

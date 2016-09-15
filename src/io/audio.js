@@ -16,7 +16,6 @@ import  {
   setAllAudioSinkControlActualValues
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
-import { dbAmp, freqMidi, audioFreq } from '../lib/transform'
 import { deviceSubject } from '../lib/av'
 import { audioSinkStreamName } from './audio/util'
 import {SIGNAL_RATE, UI_RATE } from '../settings'
@@ -197,9 +196,15 @@ export default function init(store, signalio) {
   /// Master parameters are special and are handled differently, through the UI direct
   storeStream.pluck(
     'audio', 'master', 'gain'
-  ).subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
+  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
+  storeStream.pluck(
+    'audio', 'master', 'mute'
+  ).distinctUntilChanged().subscribe((val)=>{
+    console.debug('mute', val);
+    Tone.Master.mute = val
+  })
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
+  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
   return audioInfrastructure
 };
