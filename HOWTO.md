@@ -20,6 +20,7 @@ Currently there are two different versions and hence two different links:
 
 * [indigo](https://github.com/synestize/synestizer/archive/indigo.zip), an old version
 * [violet](https://github.com/synestize/synestizer/archive/violet.zip), a recent rewrite
+* The latest version is always the [master](https://github.com/synestize/synestizer/archive/master.zip) version. At the moment, this is the same as the ```violet``` version.
 
 (Advanced users and coders who might want to change the software should use ```git```, if you know what that means.)
 
