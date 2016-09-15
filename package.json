@@ -15,7 +15,7 @@
     "prebuild": "npm run clean",
     "prepublish": "npm run build",
     "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:violet_listentocolors_net",
-    "preserve": "build",
+    "preserve": "npm run build",
     "serve": "static"
   },
   "repository": {
