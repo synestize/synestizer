@@ -17,6 +17,12 @@ import {
   persistStore,
   createTransform
 } from 'redux-persist'
+
+import * as offline from 'offline-plugin/runtime'
+offline.install()
+window.offline = offline;
+console.debug('offline', offline);
+
 /*
  Localforage imports weirdly:
  https://github.com/localForage/localForage/issues/577

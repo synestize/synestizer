@@ -1,4 +1,5 @@
 var path = require('path');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry: [
@@ -6,7 +7,7 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    publicPath: 'js/',
+    publicPath: '/js/',
     path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },
@@ -41,5 +42,23 @@ module.exports = {
   },
   resolve: {
     modulesDirectories: [path.join(__dirname, 'src'), 'node_modules']
-  }
+  },
+  plugins: [
+    // it always better if OfflinePlugin is the last plugin added
+    new OfflinePlugin({
+      publicPath: '/js/',
+      externals: [
+        '/css/normalize.css',
+        '/css/font-awesome.css',
+        '/css/style.css',
+        '/index.html'
+      ],
+      relativePaths: false,
+      AppCache: false,
+      ServiceWorker: {
+        output: '/sw.js',
+        navigateFallbackURL: '/index.html'
+      }
+    })
+  ]
 };
