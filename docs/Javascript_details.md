@@ -35,7 +35,7 @@ Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
 See Also
 
-[stying sliders](http://www.quirksmode.org/blog/archives/2015/11/styling_and_scr.html)
+[styling sliders](http://www.quirksmode.org/blog/archives/2015/11/styling_and_scr.html)
 
 [more styling sliders](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/)
 
@@ -111,18 +111,18 @@ Nonetheless, everyone uses it and so we ignore it and just GO here.
 `webpack.config.js` has the actual configuration, which does various things.
 `package.json` lists the various libraries ("dependencies")
 that are assembled together by npm.
-It isn't webpack-specific, as all `npm` packages use it,
+It isn't specific to webpack, as all `npm` packages use it,
 but we use webpack here.
 
 * Compiles JSX to JS, to support React
 * compresses the javascript slightly in production mode
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
-  *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
+  *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448)
   * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
   * Or Webpack's  [uglifyjsplugin](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
 * [Why can't anyone write a simple webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
-* If you want to update dependencies, the command looks omsething like this:
+* If you want to update dependencies, the command looks like this:
 
 ```
 npm install --save-dev --upgrade \
@@ -204,7 +204,7 @@ Ranked in descending order of viability:
 
 * [sylvester](http://sylvester.jcoglan.com/) the original, but predates much modern optimisation such as native arrays and asm.js
 * [jStat](https://github.com/jstat/jstat) is a statistical library written in JavaScript that allows you to perform advanced statistical operations without the need of a dedicated statistical language (e.g. MATLAB or R).
-  Includes a tidy linear algebra library, but could be better optimised.
+  Includes a tidy linear algebra library, but could be better optimized.
 * [lmfit](https://github.com/jvail/lmfit.js)
 
     JavaScript (emscripten) port of lmfit library:
