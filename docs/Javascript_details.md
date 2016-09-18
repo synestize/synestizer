@@ -97,26 +97,32 @@ redux-storage supports [many backends](https://www.npmjs.com/browse/keyword/redu
 
 ## Building
 
-We mostly use [webpack](https://webpack.github.io/), which is built on [npm](https://npmjs.org/).
+We mostly use [webpack](https://webpack.github.io/), which is built on
+[npm](https://npmjs.org/).
 webpack is a module bundler.
 This means webpack takes modules spread across multiple files with dependencies
 and a smaller number of files which include the functionality..
-It's the dominant build system right now for web apps, at least for community-supported react-based ones.
+It's the dominant build system right now for web apps,
+at least for community-supported react-based ones.
 
 Webpack works by magic, as far as I can tell, and it has
 fearsomely complicated and poorly explained configuration.
 Nonetheless, everyone uses it and so we ignore it and just GO here.
 
 `webpack.config.js` has the actual configuration, which does various things.
-`package.json` lists the various libraries ("dependencies") that are assembled together by webpack.
+`package.json` lists the various libraries ("dependencies")
+that are assembled together by npm.
+It isn't webpack-specific, as all `npm` packages use it,
+but we use webpack here.
 
 * Compiles JSX to JS, to support React
-* compresses the javascript in development mode
+* compresses the javascript slightly in production mode
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
   *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448) booooring
   * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
-* [Why can't anyone write a simpel webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
+  * Or Webpack's  [uglifyjsplugin](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
+* [Why can't anyone write a simple webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
 * If you want to update dependencies, the command looks omsething like this:
 
 ```
