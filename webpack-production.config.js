@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var OfflinePlugin = require('offline-plugin');
 
 module.exports = {
   entry: [
@@ -50,7 +51,24 @@ module.exports = {
     //   "NODE_ENV"
     // ]),
     new webpack.DefinePlugin({
-      PRODUCTION: JSON.stringify(false)
+      PRODUCTION: JSON.stringify(true)
+    }),
+    // it always better if OfflinePlugin is the last plugin added
+    new OfflinePlugin({
+      publicPath: '/js/',
+      externals: [
+        '/css/normalize.css',
+        '/css/font-awesome.css',
+        '/css/style.css',
+        '/index.html'
+      ],
+      relativePaths: false,
+      AppCache: false,
+      ServiceWorker: {
+        events: true,
+        output: '/sw.js',
+        navigateFallbackURL: '/index.html'
+      }
     })
   ]
 };

@@ -19,9 +19,14 @@ import {
 } from 'redux-persist'
 
 import * as offline from 'offline-plugin/runtime'
-offline.install()
-window.offline = offline;
-console.debug('offline', offline);
+
+if (PRODUCTION) {
+  offline.install()
+  window.offline = offline;
+  console.debug('offline', offline);
+} else {
+  console.debug('dev mode', offline);
+}
 
 /*
  Localforage imports weirdly:
