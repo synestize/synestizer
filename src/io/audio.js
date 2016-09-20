@@ -142,17 +142,17 @@ export default function init(store, signalio) {
   storeStream.pluck(
     '__volatile', 'audio', 'validSource'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {validSource = validity;}
-  )
-  storeStream.pluck(
-    'audio', 'sinkDevice'
-  ).distinctUntilChanged().subscribe(
-    doAudioSinkDevicePlumbing
+    (validity)=> {
+      validSource = validity;
+      console.debug('validSource', validSource);
+    }
   )
   storeStream.pluck(
     '__volatile', 'audio', 'validSink'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {validSink = validity;
+    (validity)=> {
+      validSink = validity;
+      console.debug('validSink', validSink);
       store.dispatch(setAudioReady(false));
       doAudioSinkDevicePlumbing();
       store.dispatch(setAudioReady(true))
