@@ -44,13 +44,13 @@ export default function init(store, signalio) {
     store.getState().audio.sinkControlBias
   );
   let ensembles = {}
-  let  actualControlValues = actualControlValueStream.share()
+  let actualControlValues = actualControlValueStream.share()
   const audioInfrastructure = {
     actualControlValues,
     ensembles
   }
 
-  function doAudioSinkDevicePlumbing() {
+  function doAudioDevicePlumbing() {
     const key = store.getState().audio.sinkDevice;
     Observable::fromPromise(
       navigator.mediaDevices.getUserMedia({deviceId:key, audio: true})
@@ -58,12 +58,12 @@ export default function init(store, signalio) {
   }
   //Create a context with master out volume
   //Don't yet understand how this will work for the microphone etc
-  function initAudioContext(dev){
+  function initAudioContext(sinkDev){
     if (context!==undefined) {
       //Tone.dispose()
       context.close()
     }
-    sourceDevice = dev;
+    sinkDevice = sinkDev;
     context = new window.AudioContext();
     window.audioContext = context;
     Tone.setContext(context)
@@ -85,11 +85,13 @@ export default function init(store, signalio) {
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
 
-  //set up audio system
+  // set up audio system
   function updateAudioIO(newdevinfo) {
+    store.dispatch(setAudioReady(false));
+    store.dispatch(setValidAudioSourceDevice(false));
+    store.dispatch(setValidAudioSinkDevice(false));
     let sourceNames = new Map();
     let sinkNames = new Map();
-    let state = store.getState();
 
     devinfo = newdevinfo;
     // console.debug('mediadevices', devinfo);
@@ -109,17 +111,6 @@ export default function init(store, signalio) {
     }
     store.dispatch(setAllAudioSourceDevices(sourceNames));
     store.dispatch(setAllAudioSinkDevices(sinkNames));
-
-    if (sourceNames.has(state.audio.sourceDevice)) {
-      store.dispatch(setValidAudioSourceDevice(true));
-    } else {
-      store.dispatch(setValidAudioSourceDevice(false));
-    }
-    if (sinkNames.has(state.audio.sinkDevice)) {
-      store.dispatch(setValidAudioSinkDevice(true));
-    } else {
-      store.dispatch(setValidAudioSinkDevice(false));
-    }
   };
 
   function calcAudioControls(sinkControls, signalState) {
@@ -140,24 +131,43 @@ export default function init(store, signalio) {
     return actualSinkControlValues;
   }
   storeStream.pluck(
-    '__volatile', 'audio', 'validSource'
+    'audio', 'sourceDevice'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {
-      validSource = validity;
-      console.debug('validSource', validSource);
+    (sourceDev)=> {
+      store.dispatch(
+        setValidAudioSourceDevice(sourceDevices.has(sourceDev))
+      );
     }
   )
   storeStream.pluck(
-    '__volatile', 'audio', 'validSink'
+    'audio', 'sinkDevice'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {
-      validSink = validity;
-      console.debug('validSink', validSink);
-      store.dispatch(setAudioReady(false));
-      doAudioSinkDevicePlumbing();
-      store.dispatch(setAudioReady(true))
+    (sinkDev)=> {
+      console.debug('sinkd', sinkDev, sinkDevices)
+      store.dispatch(
+        setValidAudioSinkDevice(sinkDevices.has(sinkDev))
+      );
     }
   )
+
+  Observable::combineLatest(
+    storeStream.pluck(
+      '__volatile', 'audio', 'validSource'
+    ).distinctUntilChanged(),
+    storeStream.pluck(
+      '__volatile', 'audio', 'validSink'
+    ).distinctUntilChanged()
+  ).subscribe(([sourceValidity, sinkValidity])=>{
+      validSource = sourceValidity;
+      validSink = sinkValidity;
+      console.debug('validSource', validSource);
+      console.debug('validSink', validSink);
+      if (validSink) {
+        doAudioDevicePlumbing();
+      }
+    }
+  )
+
   storeStream.pluck(
     '__volatile', 'audio', 'audioReady'
   ).distinctUntilChanged().subscribe((ready)=>{
@@ -228,6 +238,8 @@ export default function init(store, signalio) {
 
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))
+  ).distinctUntilChanged().subscribe((bpm)=>{
+    Tone.Transport.bpm.rampTo(bpm, 0.1)
+  });
   return audioInfrastructure
 };
