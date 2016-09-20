@@ -11,9 +11,11 @@
     "prewatch": "npm run clean",
     "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
     "dev": "webpack-dev-server  --progress --colors --inline --hot",
-    "build": "NODE_ENV=production webpack -p --config webpack-production.config.js",
     "prebuild": "npm run clean",
-    "prepublish": "npm run build",
+    "build": "NODE_ENV=production webpack -p --config webpack.config.js",
+    "preproductionbuild": "npm run clean",
+    "productionbuild": "NODE_ENV=production webpack -p --config webpack-production.config.js",
+    "prepublish": "npm run productionbuild",
     "publish": "NODE_ENV=production rsync -av --delete css fonts js sound index.html listentocolors:violet_listentocolors_net",
     "preserve": "npm run build",
     "serve": "static"

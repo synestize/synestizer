@@ -45,7 +45,7 @@ module.exports = {
     modulesDirectories: [path.join(__dirname, 'src'), 'node_modules']
   },
   plugins: [
-    // Note sure that this one is necessary. see
+    // Not sure that this one is necessary. see
     // https://github.com/webpack/docs/wiki/list-of-plugins#environmentplugin
     // new webpack.EnvironmentPlugin([
     //   "NODE_ENV"
@@ -53,22 +53,5 @@ module.exports = {
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true)
     }),
-    // it always better if OfflinePlugin is the last plugin added
-    new OfflinePlugin({
-      publicPath: '/js/',
-      externals: [
-        '/css/normalize.css',
-        '/css/font-awesome.css',
-        '/css/style.css',
-        '/index.html'
-      ],
-      relativePaths: false,
-      AppCache: false,
-      ServiceWorker: {
-        events: true,
-        output: '/sw.js',
-        navigateFallbackURL: '/index.html'
-      }
-    })
   ]
 };
