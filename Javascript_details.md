@@ -154,18 +154,18 @@ npm install --save-dev --upgrade \
 
 ## Rx.js
 
-We use Rx.js version 5.0, because even though it is less common that Rx.js 4.0, the documentation is less autistic.
+We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the documentation is way better.
 
 * [Rx.js](http://reactivex.io/rxjs/)
   * [Rx.js 4.0 vs 5.0](https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md)
   * [we use the CJS installation](http://reactivex.io/rxjs/manual/installation.html#commonjs-via-npm) although
-    * [we could do ES6 native but its fiddly and there are bugs](https://github.com/ReactiveX/rxjs/issues/1575)
+    * [we could do ES6 native but it's fiddly](https://github.com/ReactiveX/rxjs/issues/1575)
   * [here is a HOWTO guide](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754)
   * [Rx marbles](http://rxmarbles.com/) visualises Rx streams
   * [Rx.js official documenation](http://reactivex.io/rxjs/manual/overview.html)
 
 * Interoperation
-  * we could, but not not yet use [redux-rx](https://github.com/acdlite/redux-rx)
+  * we could, but do not currently use [redux-rx](https://github.com/acdlite/redux-rx)
 
 * stream debuggers
 
