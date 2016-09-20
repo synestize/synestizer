@@ -9,6 +9,7 @@ export const UNPUBLISH_AUDIO_SOURCE_SIGNAL = 'UNPUBLISH_AUDIO_SOURCE_SIGNAL'
 export const SET_ALL_AUDIO_SINK_DEVICES = 'SET_ALL_AUDIO_SINK_DEVICES'
 export const SET_AUDIO_SINK_DEVICE = 'SET_AUDIO_SINK_DEVICE'
 export const SET_VALID_AUDIO_SINK_DEVICE = 'SET_VALID_AUDIO_SINK_DEVICE'
+export const SET_AUDIO_READY = 'SET_AUDIO_READY'
 export const ADD_AUDIO_SINK_CONTROL = 'ADD_AUDIO_SINK_CONTROL'
 export const REMOVE_AUDIO_SINK_CONTROL = 'REMOVE_AUDIO_SINK_CONTROL'
 export const PUBLISH_AUDIO_SINK_SIGNAL = 'PUBLISH_AUDIO_SINK_SIGNAL'
@@ -44,6 +45,9 @@ export function setAudioSinkDevice(sourceId) {
 }
 export function setValidAudioSinkDevice(yn) {
  return { type: SET_VALID_AUDIO_SINK_DEVICE, payload: yn }
+}
+export function setAudioReady(yn) {
+ return { type: SET_AUDIO_READY, payload: yn }
 }
 export function publishAudioSourceSignal(key) {
  return { type: PUBLISH_AUDIO_SOURCE_SIGNAL, payload: key }

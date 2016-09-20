@@ -13,7 +13,8 @@ import  {
   setAllAudioSinkDevices,
   publishAudioSinkSignal,
   unpublishAudioSinkSignal,
-  setAllAudioSinkControlActualValues
+  setAllAudioSinkControlActualValues,
+  setAudioReady
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
@@ -36,6 +37,7 @@ export default function init(store, signalio) {
   let sourceControls;
   let validSource = false;
   let validSink = false;
+  let audioReady = false;
   let storeStream = toObservable(store);
 
   let actualControlValueStream = new BehaviorSubject(
@@ -150,8 +152,17 @@ export default function init(store, signalio) {
   storeStream.pluck(
     '__volatile', 'audio', 'validSink'
   ).distinctUntilChanged().subscribe(
-    (validity)=> {validSink = validity; doAudioSinkDevicePlumbing()}
+    (validity)=> {validSink = validity;
+      store.dispatch(setAudioReady(false));
+      doAudioSinkDevicePlumbing();
+      store.dispatch(setAudioReady(true))
+    }
   )
+  storeStream.pluck(
+    '__volatile', 'audio', 'audioReady'
+  ).distinctUntilChanged().subscribe((ready)=>{
+    audioReady=ready
+  });
   storeStream.pluck(
     'audio', 'nSinkControlSignals'
   ).distinctUntilChanged().subscribe(
@@ -194,15 +205,27 @@ export default function init(store, signalio) {
   });
 
   /// Master parameters are special and are handled differently, through the UI direct
-  storeStream.pluck(
-    'audio', 'master', 'gain'
-  ).distinctUntilChanged().subscribe((db)=>Tone.Master.volume.rampTo(db, 0.1))
-  storeStream.pluck(
-    'audio', 'master', 'mute'
-  ).distinctUntilChanged().subscribe((val)=>{
-    console.debug('mute', val);
-    Tone.Master.mute = val
-  })
+  Observable::combineLatest(
+    storeStream.pluck(
+      'audio', 'master', 'gain'
+    ).distinctUntilChanged(),
+    storeStream.pluck(
+      'audio', 'master', 'mute'
+    ).distinctUntilChanged(),
+    storeStream.pluck(
+      '__volatile', 'audio', 'audioReady'
+    ).distinctUntilChanged()
+  ).subscribe(
+    ([gain, mute, ready]) => {
+      console.debug('gm', gain, mute, ready);
+      //I'm sure there is a more "RX" way of doing this.
+      if (ready){
+        Tone.Master.mute = mute;
+        if (!mute) Tone.Master.volume.rampTo(gain, 0.1)
+      }
+    }
+  );
+
   storeStream.pluck(
     'audio', 'master', 'tempo'
   ).distinctUntilChanged().subscribe((bpm)=>Tone.Transport.bpm.rampTo(bpm, 0.1))

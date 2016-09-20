@@ -6,6 +6,7 @@ import {
   SET_VALID_AUDIO_SINK_DEVICE,
   SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
   SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
+  SET_AUDIO_READY
 } from '../../actions/audio'
 
 export function sources(state=new Map(), {type, payload}) {
@@ -44,6 +45,15 @@ export function validSink(state=false, {type, payload}) {
   }
 }
 
+export function audioReady(state=false, {type, payload}) {
+  switch (type) {
+    case SET_AUDIO_READY:
+      return payload
+    default:
+      return state
+  }
+}
+
 export function sinkActualValues(state={}, {type, payload}) {
   let next;
   switch (type) {
@@ -65,5 +75,6 @@ export default combineReducers({
   validSource,
   sinks,
   validSink,
+  audioReady,
   sinkActualValues
 })
