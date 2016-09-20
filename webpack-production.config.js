@@ -8,8 +8,8 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    publicPath: '/js/',
-    path: path.join(__dirname, 'js'),
+    publicPath: '/',
+    path: path.join(__dirname, ''),
     filename: 'bundle.js'
   },
   devtool: 'eval',
@@ -55,19 +55,21 @@ module.exports = {
     }),
     // it always better if OfflinePlugin is the last plugin added
     new OfflinePlugin({
-      publicPath: '/js/',
+      publicPath: '/',
       externals: [
         '/css/normalize.css',
         '/css/font-awesome.css',
         '/css/style.css',
         '/index.html'
       ],
+      rewrites: {
+        '/': '/index.html'
+      },
       relativePaths: false,
       AppCache: false,
       ServiceWorker: {
         events: true,
-        output: '/sw.js',
-        navigateFallbackURL: '/index.html'
+        output: 'sw.js',
       }
     })
   ]

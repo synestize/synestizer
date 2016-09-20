@@ -9,3 +9,6 @@ node_modules
 
 # ignore built javascript files
 js/
+bundle.js
+*.worker.js
+sw.js
