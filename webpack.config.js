@@ -7,8 +7,8 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    publicPath: '/',
-    path: path.join(__dirname, ''),
+    publicPath: '/js/',
+    path: path.join(__dirname, 'js'),
     filename: 'bundle.js'
   },
   devtool: 'eval',
