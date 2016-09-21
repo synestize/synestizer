@@ -38,7 +38,7 @@ export default function init(store, signalio) {
   let validSource = false;
   let validSink = false;
   let audioReady = false;
-  let storeStream = toObservable(store);
+  let storeStream = toObservable(store).share();
 
   let actualControlValueStream = new BehaviorSubject(
     store.getState().audio.sinkControlBias
@@ -49,47 +49,12 @@ export default function init(store, signalio) {
     actualControlValues,
     ensembles
   }
-
-  function doAudioDevicePlumbing() {
-    const key = store.getState().audio.sinkDevice;
-    Observable::fromPromise(
-      navigator.mediaDevices.getUserMedia({deviceId:key, audio: true})
-    ).subscribe(initAudioContext);
-  }
-  //Create a context with master out volume
-  //Don't yet understand how this will work for the microphone etc
-  function initAudioContext(sinkDev){
-    if (context!==undefined) {
-      //Tone.dispose()
-      context.close()
-    }
-    sinkDevice = sinkDev;
-    context = new window.AudioContext();
-    window.audioContext = context;
-    Tone.setContext(context)
-    let masterCompressor = new Tone.Compressor({
-    	"threshold" : -6,
-    	"ratio" : 2,
-    	"attack" : 0.5,
-    	"release" : 0.1
-    });
-    //route everything through
-    //compressor before going to the speakers
-    let meter = new Tone.Meter("level");
-    Tone.Master.chain(masterCompressor, meter);
-    Object.assign(audioInfrastructure, {
-      context,
-      tone: Tone
-    });
-    Tone.Transport.start();
-    ensembles.triad = triad_(store, signalio, audioInfrastructure)
-  };
-
   // set up audio system
-  function updateAudioIO(newdevinfo) {
-    store.dispatch(setAudioReady(false));
-    store.dispatch(setValidAudioSourceDevice(false));
-    store.dispatch(setValidAudioSinkDevice(false));
+  deviceSubject.subscribe(
+    knowAudioDevices,
+    (err) => console.debug(err.stack)
+  )
+  function knowAudioDevices(newdevinfo) {
     let sourceNames = new Map();
     let sinkNames = new Map();
 
@@ -113,66 +78,55 @@ export default function init(store, signalio) {
     store.dispatch(setAllAudioSinkDevices(sinkNames));
   };
 
-  function calcAudioControls(sinkControls, signalState) {
-    const actualSinkControlValues = {}
-    // console.debug('calcAudioControls', sinkControls, signalState);
-    for (let controlKey in sinkControls) {
-      let controlMeta = sinkControls[controlKey];
-      // console.debug('nu', controlKey, controlMeta)
-      actualSinkControlValues[controlKey] = saturate(
-        desaturate(controlMeta.bias || 0.0) +
-        (
-          (controlMeta.scale || 0.0) *
-          desaturate(signalState[controlMeta.signal] || 0.0)
-        )
-      )
-      // console.debug('mu', actualSinkControlValues[controlKey])
-    }
-    return actualSinkControlValues;
-  }
-  storeStream.pluck(
-    'audio', 'sourceDevice'
-  ).distinctUntilChanged().subscribe(
-    (sourceDev)=> {
-      store.dispatch(
-        setValidAudioSourceDevice(sourceDevices.has(sourceDev))
-      );
-    }
-  )
-  storeStream.pluck(
-    'audio', 'sinkDevice'
-  ).distinctUntilChanged().subscribe(
-    (sinkDev)=> {
-      console.debug('sinkd', sinkDev, sinkDevices)
-      store.dispatch(
-        setValidAudioSinkDevice(sinkDevices.has(sinkDev))
-      );
-    }
-  )
-
   Observable::combineLatest(
     storeStream.pluck(
-      '__volatile', 'audio', 'validSource'
+      '__volatile', 'audio', 'sources'
     ).distinctUntilChanged(),
     storeStream.pluck(
-      '__volatile', 'audio', 'validSink'
-    ).distinctUntilChanged()
-  ).subscribe(([sourceValidity, sinkValidity])=>{
-      validSource = sourceValidity;
-      validSink = sinkValidity;
-      console.debug('validSource', validSource);
-      console.debug('validSink', validSink);
-      if (validSink) {
-        doAudioDevicePlumbing();
-      }
+      'audio', 'sourceDevice'
+    ).distinctUntilChanged(),
+  ).subscribe(
+    ([allSources, sourceDev])=> {
+      store.dispatch(
+        setValidAudioSourceDevice(allSources.has(sourceDev))
+      );
+    }
+  )
+  Observable::combineLatest(
+    storeStream.pluck(
+      '__volatile', 'audio', 'sinks'
+    ).distinctUntilChanged(),
+    storeStream.pluck(
+      'audio', 'sinkDevice'
+    ).distinctUntilChanged(),
+  ).subscribe(
+    ([allSinks, sinkDev])=> {
+      store.dispatch(
+        setValidAudioSinkDevice(allSinks.has(sinkDev))
+      );
     }
   )
 
   storeStream.pluck(
-    '__volatile', 'audio', 'audioReady'
-  ).distinctUntilChanged().subscribe((ready)=>{
-    audioReady=ready
+    '__volatile', 'audio', 'validSink'
+  ).distinctUntilChanged().subscribe((valid)=>{
+    if (valid) {
+      doAudioSinkDevicePlumbing();
+    }
   });
+  Observable::combineLatest(
+    storeStream.pluck(
+      '__volatile', 'audio', 'validSink'
+    ).distinctUntilChanged(),
+    storeStream.pluck(
+      '__volatile', 'audio', 'validSource'
+    ).distinctUntilChanged()
+  ).subscribe(([sourceValidity, sinkValidity])=>{
+    if (sourceValidity & sinkValidity) {
+      // doAudioSourcDevicePlumbing();
+    }
+  })
+
   storeStream.pluck(
     'audio', 'nSinkControlSignals'
   ).distinctUntilChanged().subscribe(
@@ -195,9 +149,41 @@ export default function init(store, signalio) {
       }
     }
   )
-  deviceSubject.subscribe(updateAudioIO,
-    (err) => console.debug(err.stack)
-  );
+  function doAudioSinkDevicePlumbing() {
+    const sinkDevKey = store.getState().audio.sinkDevice;
+    Observable::fromPromise(
+      navigator.mediaDevices.getUserMedia({deviceId:sinkDevKey, audio: true})
+    ).subscribe(initAudioContext);
+  }
+  //Create a context with master out volume
+  //Don't yet understand how this will work for the microphone etc
+  function initAudioContext(sinkDev){
+    if (context!==undefined) {
+      //Tone.dispose()
+      context.close()
+    }
+    sinkDevice = sinkDev;
+    context = new window.AudioContext();
+    window.audioContext = context;
+    Tone.setContext(context)
+    let masterCompressor = new Tone.Compressor({
+      "threshold" : -6,
+      "ratio" : 2,
+      "attack" : 0.5,
+      "release" : 0.1
+    });
+    //route everything through
+    //compressor before going to the speakers
+    let meter = new Tone.Meter("level");
+    Tone.Master.chain(masterCompressor, meter);
+    Object.assign(audioInfrastructure, {
+      context,
+      tone: Tone
+    });
+    Tone.Transport.start();
+    ensembles.triad = triad_(store, signalio, audioInfrastructure)
+  };
+
   Observable::combineLatest(
     storeStream.pluck(
       'audio', 'sinkControls'
@@ -209,6 +195,24 @@ export default function init(store, signalio) {
       actualControlValueStream.next(val)
     }
   );
+  function calcAudioControls(sinkControls, signalState) {
+    const actualSinkControlValues = {}
+    // console.debug('calcAudioControls', sinkControls, signalState);
+    for (let controlKey in sinkControls) {
+      let controlMeta = sinkControls[controlKey];
+      // console.debug('nu', controlKey, controlMeta)
+      actualSinkControlValues[controlKey] = saturate(
+        desaturate(controlMeta.bias || 0.0) +
+        (
+          (controlMeta.scale || 0.0) *
+          desaturate(signalState[controlMeta.signal] || 0.0)
+        )
+      )
+      // console.debug('mu', actualSinkControlValues[controlKey])
+    }
+    return actualSinkControlValues;
+  }
+
   //
   actualControlValues.throttleTime(UI_RATE).subscribe((vals) => {
     store.dispatch(setAllAudioSinkControlActualValues(vals));
