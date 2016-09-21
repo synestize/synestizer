@@ -222,27 +222,22 @@ export default function init(store, signalio) {
   Observable::combineLatest(
     storeStream.pluck(
       'audio', 'master', 'gain'
-    ).distinctUntilChanged(),
+    ),
     storeStream.pluck(
       'audio', 'master', 'mute'
-    ).distinctUntilChanged(),
-    storeStream.pluck(
-      '__volatile', 'audio', 'audioReady'
-    ).distinctUntilChanged()
+    ),
   ).subscribe(
-    ([gain, mute, ready]) => {
-      console.debug('gm', gain, mute, ready);
+    ([gain, mute]) => {
+      console.debug('gm', gain, mute);
       //I'm sure there is a more "RX" way of doing this.
-      if (ready){
-        Tone.Master.mute = mute;
-        if (!mute) Tone.Master.volume.rampTo(gain, 0.1)
-      }
+      Tone.Master.mute = mute;
+      if (!mute) Tone.Master.volume.rampTo(gain, 0.1)
     }
   );
 
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).distinctUntilChanged().subscribe((bpm)=>{
+  ).subscribe((bpm)=>{
     Tone.Transport.bpm.rampTo(bpm, 0.1)
   });
   return audioInfrastructure
