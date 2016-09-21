@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
-import AudioSinkSignalSelect from '../containers/AudioSinkSignalSelect'
+import AnySignalSelect from '../containers/AnySignalSelect'
 import MarkedLiveSlider from '../components/MarkedLiveSlider'
 
 const GenericAudioParam = ({
@@ -15,13 +15,13 @@ const GenericAudioParam = ({
   onBiasChange,
   onScaleChange,
   onSignalChange}) => {
-    
+
   return (<div className={"param-control " + sinkControlKey} >
     <h3 className="audio-sink-name">
       {label}
     </h3>
-    <AudioSinkSignalSelect
-      className="audio-sink-signal-select"
+    <AnySignalSelect
+      className="any-signal-select"
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
     <MarkedLiveSlider

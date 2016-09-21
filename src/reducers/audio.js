@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { audioSinkStreamName } from '../io/audio/util'
+import { genericSignalName } from '../io/signal/util'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
@@ -9,9 +9,6 @@ import {
   SET_AUDIO_SINK_DEVICE,
   ADD_AUDIO_SINK_CONTROL,
   REMOVE_AUDIO_SINK_CONTROL,
-  PUBLISH_AUDIO_SINK_SIGNAL,
-  UNPUBLISH_AUDIO_SINK_SIGNAL,
-  SET_N_AUDIO_SINK_SIGNALS,
   SET_AUDIO_SINK_CONTROL_BIAS,
   SET_AUDIO_SINK_CONTROL_SCALE,
   SET_AUDIO_SINK_CONTROL_SIGNAL,
@@ -21,6 +18,9 @@ import {
   SET_MASTER_TEMPO,
   ADD_ENSEMBLE
 } from '../actions/audio'
+import {
+  UNPUBLISH_GENERIC_SINK_SIGNAL,
+} from '../actions/signal'
 
 export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
@@ -51,14 +51,6 @@ export function sinkDevice(state="default", {type, payload}) {
       return state
   }
 }
-export function nSinkControlSignals(state=6, {type, payload}) {
-  switch (type) {
-    case SET_N_AUDIO_SINK_SIGNALS:
-      return payload
-    default:
-      return state
-  }
-}
 export function sinkControls(state={}, {type, payload}) {
   let next = state;
   switch (type) {
@@ -70,7 +62,7 @@ export function sinkControls(state={}, {type, payload}) {
     case SET_AUDIO_SINK_CONTROL_BIAS:
     case SET_AUDIO_SINK_CONTROL_SCALE:
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
-    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+    case UNPUBLISH_GENERIC_SINK_SIGNAL:
       let {key, val} = payload;
       if (key===undefined) {
         console.warn('arsebastard!', state, {type, payload})
@@ -106,7 +98,7 @@ export function _sinkControl(
       next = {...state};
       next.signal = val
       return next
-    case UNPUBLISH_AUDIO_SINK_SIGNAL:
+    case UNPUBLISH_GENERIC_SINK_SIGNAL:
       next = {...state};
       if (next.signal === payload) {
         next.signal = null
@@ -116,24 +108,6 @@ export function _sinkControl(
       return state
   }
   return next
-}
-
-export function sinkControlSignals(state={}, {type, payload}) {
-  let next, key, val;
-  switch (type) {
-    case PUBLISH_AUDIO_SINK_SIGNAL:
-      next = {...state};
-      [key, val] = audioSinkStreamName(payload);
-      next[key] = val
-      return next
-    case UNPUBLISH_AUDIO_SINK_SIGNAL:
-      next = {...state};
-      [key, val] = audioSinkStreamName(payload);
-      delete next[key]
-      return next
-    default:
-      return state
-  }
 }
 function ensembles(state={}, {type, payload}) {
   let next = state;
@@ -188,8 +162,6 @@ const audio = combineReducers({
    // sourceControlVals,
    sinkDevice,
    sinkControls,
-   nSinkControlSignals,
-   sinkControlSignals,
    ensembles,
    master,
 })

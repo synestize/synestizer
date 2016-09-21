@@ -14,9 +14,9 @@ const mapDispatchToProps = (dispatch, {sinkControlKey, onSignalChange}) => {
   }
 };
 
-const AudioSourceDeviceSelect = connect(
+const AnySignalSelect = connect(
   mapStateToProps,
   mapDispatchToProps
 )( Select );
 
-export default AudioSourceDeviceSelect;
+export default AnySignalSelect;

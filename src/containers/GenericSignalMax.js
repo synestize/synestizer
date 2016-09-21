@@ -1,25 +1,28 @@
 'use strict';
 import { connect } from 'react-redux';
 import {
-  setMaxNAudioSinkSignals
- } from '../actions/audio'
+  setMaxNGenericSinkSignals
+} from '../actions/signal'
 import IntSelect from '../components/IntSelect'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    currentNum: state.audio.nSinkControlSignals,
+    currentNum: state.signal.nGenericSinkSignals,
     maxNum: 21
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (i) => dispatch(setMaxNAudioSinkSignals(i))
+    onChange: (i) => {
+      console.debug('setMaxNGenericSinkSignals', i)
+      dispatch(setMaxNGenericSinkSignals(i))
+    }
   }
 };
 
-const AudioSignalMax = connect(
+const GenericSignalMax = connect(
   mapStateToProps,
   mapDispatchToProps
 )( IntSelect );
 
-export default AudioSignalMax;
+export default GenericSignalMax;

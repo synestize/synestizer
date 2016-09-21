@@ -2,6 +2,7 @@ import Pane from './Pane';
 import VideoSettings from './VideoSettings';
 import MidiSettings from './MidiSettings';
 import AudioSettings from './AudioSettings';
+import SignalSettings from './SignalSettings';
 import React, { Component, PropTypes, Children } from 'react';
 
 const IOPane = ({version}) => {return (
@@ -9,6 +10,7 @@ const IOPane = ({version}) => {return (
     <VideoSettings />
     <AudioSettings />
     <MidiSettings />
+    <SignalSettings />
   </Pane>
 )}
 

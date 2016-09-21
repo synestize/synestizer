@@ -12,6 +12,9 @@ export const SET_SINK_SIGNAL_VALUE = 'SET_SINK_SIGNAL_VALUE'
 export const SET_ALL_SINK_SIGNAL_VALUES = 'SET_ALL_SINK_SIGNAL_VALUES'
 export const SET_SOURCE_SINK_SCALE = 'SET_SOURCE_SINK_SCALE'
 export const SET_SINK_BIAS = 'SET_SINK_BIAS'
+export const PUBLISH_GENERIC_SINK_SIGNAL = 'PUBLISH_GENERIC_SINK_SIGNAL'
+export const UNPUBLISH_GENERIC_SINK_SIGNAL = 'UNPUBLISH_GENERIC_SINK_SIGNAL'
+export const SET_N_GENERIC_SINK_SIGNALS = 'SET_N_GENERIC_SINK_SIGNALS'
 
 /*
  * action creators
@@ -45,4 +48,13 @@ export function setSourceSinkScale(sourceKey, sinkKey, value) {
 }
 export function setSinkBias(key, val) {
   return { type: SET_SINK_BIAS, payload: [key, val] }
+}
+export function publishGenericSinkSignal(key) {
+ return { type: PUBLISH_GENERIC_SINK_SIGNAL, payload: key }
+}
+export function unpublishGenericSinkSignal(key) {
+ return { type: UNPUBLISH_GENERIC_SINK_SIGNAL, payload: key }
+}
+export function setMaxNGenericSinkSignals(i) {
+  return {type: SET_N_GENERIC_SINK_SIGNALS, payload: i }
 }

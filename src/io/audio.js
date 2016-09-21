@@ -11,14 +11,11 @@ import  {
   setValidAudioSinkDevice,
   setAudioSinkDevice,
   setAllAudioSinkDevices,
-  publishAudioSinkSignal,
-  unpublishAudioSinkSignal,
   setAllAudioSinkControlActualValues,
   setAudioReady
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
-import { audioSinkStreamName } from './audio/util'
 import {SIGNAL_RATE, UI_RATE } from '../settings'
 
 import Tone from 'tone/build/Tone.js'
@@ -127,28 +124,6 @@ export default function init(store, signalio) {
     }
   })
 
-  storeStream.pluck(
-    'audio', 'nSinkControlSignals'
-  ).distinctUntilChanged().subscribe(
-    (n) => {
-      let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
-      const currN = Object.keys(
-        sinkSignalMeta
-      ).filter((k)=>(sinkSignalMeta[k].owner==="Audio")).length;
-      // console.debug('signalpub', n, currN)
-      if (currN<n) {
-        for (let i=currN; i<n; i++) {
-          // console.debug('signaladd', i)
-          store.dispatch(publishAudioSinkSignal(i))
-        }
-      } else if (currN>n) {
-        for (let i=n; i<currN; i++) {
-          // console.debug('signaldel', i)
-          store.dispatch(unpublishAudioSinkSignal(i))
-        }
-      }
-    }
-  )
   function doAudioSinkDevicePlumbing() {
     const sinkDevKey = store.getState().audio.sinkDevice;
     Observable::fromPromise(

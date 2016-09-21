@@ -3,6 +3,8 @@ import { saturate, desaturate } from '../lib/transform.js'
 import {
   setAllSourceSignalValues,
   setAllSinkSignalValues,
+  publishGenericSinkSignal,
+  unpublishGenericSinkSignal,
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
@@ -62,7 +64,28 @@ export default function init(store) {
     // console.debug('sinkVals', sinkVals)
     return sinkVals
   }
-
+  storeStream.pluck(
+    'signal', 'nGenericSinkSignals'
+  ).distinctUntilChanged().subscribe(
+    (n) => {
+      let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
+      const currN = Object.keys(
+        sinkSignalMeta
+      ).filter((k)=>(sinkSignalMeta[k].owner==="Signal")).length;
+      // console.debug('signalpub', n, currN)
+      if (currN<n) {
+        for (let i=currN; i<n; i++) {
+          // console.debug('signaladd', i)
+          store.dispatch(publishGenericSinkSignal(i))
+        }
+      } else if (currN>n) {
+        for (let i=n; i<currN; i++) {
+          // console.debug('signaldel', i)
+          store.dispatch(unpublishGenericSinkSignal(i))
+        }
+      }
+    }
+  )
   return {
     sourceUpdates,
     sinkStateSubject,
