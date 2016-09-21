@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { union, difference, intersection } from '../lib/collections'
-import { midiStreamName } from '../io/midi/util'
+import { midiInStreamName, midiOutStreamName } from '../io/midi/util'
 
 import {
   SET_MIDI_SOURCE_DEVICE,
@@ -54,12 +54,12 @@ export function sourceCCMap(state={}, {type, payload}) {
   switch (type) {
     case ADD_MIDI_SOURCE_CC:
       newState = {...state}
-      key = midiStreamName(payload)[0];
+      key = midiInStreamName(payload)[0];
       newState[key] = payload
       return newState
     case REMOVE_MIDI_SOURCE_CC:
       newState = {...state}
-      key = midiStreamName(payload)[0];
+      key = midiInStreamName(payload)[0];
       delete newState[key]
       return newState
     default:
@@ -107,12 +107,12 @@ export function sinkCCMap(state={}, {type, payload}) {
   switch (type) {
     case ADD_MIDI_SINK_CC:
       newState = {...state}
-      key = midiStreamName(payload)[0];
+      key = midiOutStreamName(payload)[0];
       newState[key] = payload
       return newState
     case REMOVE_MIDI_SINK_CC:
       newState = {...state}
-      key = midiStreamName(payload)[0];
+      key = midiOutStreamName(payload)[0];
       delete newState[key]
       return newState
     default:

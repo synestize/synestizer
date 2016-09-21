@@ -9,7 +9,7 @@ import  {
 } from '../actions/midi'
 import { toObservable } from '../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../lib/transform'
-import { midiStreamName } from '../io/midi/util'
+import { midiInStreamName, midiOutStreamName } from '../io/midi/util'
 
 export default function init(store, signalio) {
   let rawMidiInSubscription = null;
@@ -48,7 +48,7 @@ export default function init(store, signalio) {
       (sourceCCs.indexOf(cc)>-1)
     ) {
       const upd = {}
-      upd[midiStreamName(cc)[0]] = val
+      upd[midiInStreamName(cc)[0]] = val
       // console.debug('MIDO', upd);
       signalio.sourceUpdates.next(upd);
     };

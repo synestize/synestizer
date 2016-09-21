@@ -19,7 +19,7 @@ import {
   UNPUBLISH_GENERIC_SINK_SIGNAL,
   SET_N_GENERIC_SINK_SIGNALS,
 } from '../actions/signal'
-import { midiStreamName } from '../io/midi/util'
+import { midiInStreamName, midiOutStreamName } from '../io/midi/util'
 import {
   ADD_MIDI_SOURCE_CC,
   REMOVE_MIDI_SOURCE_CC,
@@ -39,7 +39,7 @@ export function sourceSignalMeta(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         state[key] = {name, owner: "MIDI"}
         return state
@@ -52,7 +52,7 @@ export function sourceSignalMeta(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -72,7 +72,7 @@ export function sinkSignalMeta(state={}, {type, payload}) {
       }
     case ADD_MIDI_SINK_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiOutStreamName(payload)
         state = {...state}
         state[key] = {name, owner: "MIDI"}
         return state
@@ -81,7 +81,7 @@ export function sinkSignalMeta(state={}, {type, payload}) {
       {
         let [key, name] = genericSignalName(payload)
         state = {...state}
-        state[key] = {name, owner: "Audio"}
+        state[key] = {name, owner: "Signal"}
         return state
       }
     case REMOVE_SINK_SIGNAL:
@@ -92,7 +92,7 @@ export function sinkSignalMeta(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SINK_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiOutStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -122,7 +122,7 @@ export function sourceSinkScale(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         return sourceSinkScale(state, removeSourceSignal(key))
       }
     case REMOVE_SOURCE_SIGNAL:
@@ -138,7 +138,7 @@ export function sourceSinkScale(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SINK_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiOutStreamName(payload)
         return sourceSinkScale(state, removeSinkSignal(key))
       }
     case UNPUBLISH_GENERIC_SINK_SIGNAL:

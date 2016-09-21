@@ -11,7 +11,7 @@ import {
   SET_ALL_SINK_SIGNAL_VALUES,
   SET_SINK_BIAS,
 } from '../../actions/signal'
-import { midiStreamName } from '../../io/midi/util'
+import { midiInStreamName, midiOutStreamName} from '../../io/midi/util'
 import {
   ADD_MIDI_SOURCE_CC,
   REMOVE_MIDI_SOURCE_CC,
@@ -29,7 +29,7 @@ export function sourceSignalValues(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         state[key] = 0.0
         return state
@@ -42,7 +42,7 @@ export function sourceSignalValues(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         delete state[key]
         return state
@@ -71,7 +71,7 @@ export function sinkSignalValues(state={}, {type, payload}) {
       }
     case ADD_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         state[key] = 0.0
         return state
@@ -84,7 +84,7 @@ export function sinkSignalValues(state={}, {type, payload}) {
       }
     case REMOVE_MIDI_SOURCE_CC:
       {
-        let [key, name] = midiStreamName(payload)
+        let [key, name] = midiInStreamName(payload)
         state = {...state}
         delete state[key]
         return state
