@@ -1,5 +1,4 @@
 import *  as transform from '../../lib/transform'
-import {miscSymbols} from '../../lib/names';
 
 export function RandomFilter({
     PIXELDIM=64,
@@ -206,6 +205,7 @@ export function Moment({PIXELDIM=64}) {
             0.08333333333*centralMoments[VV])));
         return cookedMoments;
     };
+
     return {
       fn: calc,
       keys: [
@@ -225,6 +225,24 @@ export function Moment({PIXELDIM=64}) {
         'video-moment-14',
         'video-moment-15',
       ],
-      names: miscSymbols,
+      // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
+      // This is very confusing.
+      names: [
+        'Bright',
+        'Blue',
+        'Red',
+        'Right⌑Bright',
+        'Right⌑Blue',
+        'Right⌑Red',
+        'Up⌑Bright',
+        'Up⌑Blue',
+        'Up⌑Red',
+        'Bright²',
+        'Bright⌑Blue',
+        'Bright⌑Red',
+        'Blue²',
+        'Blue⌑Red',
+        'Red²',
+      ]
     }
 };
