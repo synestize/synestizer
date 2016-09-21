@@ -1,11 +1,5 @@
-# Sphinx documentation
-docs/_build/
-
-bower_components
+npm-debug.log
 node_modules
-
-#ignore server cryptographic assets
-.caddy/
 
 # ignore built javascript files
 js/
