@@ -63,11 +63,18 @@ let videoio;
 let midiio;
 let signalio;
 let audioio;
-let enhancers = applyMiddleware(
-  thunkMiddleware//, // lets us dispatch() functions
-  //loggerMiddleware // logs actions
-)
+let enhancers;
 
+if (!PRODUCTION) {
+  enhancers = applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // logs actions
+  )
+} else {
+  enhancers = applyMiddleware(
+    thunkMiddleware // lets us dispatch() functions
+  )
+}
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   if (getq("purge")) {
