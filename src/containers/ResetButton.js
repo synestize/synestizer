@@ -11,6 +11,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
       dispatch(reset())
+      window.location.reload()
     }
   }
 };
