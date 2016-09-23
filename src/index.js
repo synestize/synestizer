@@ -40,7 +40,7 @@ From the perspective of the App, IO may as well be running on a remote server.
 although of course it is (for the moment) completely local.
 IO can get to the app via the store, and updates its state from the store using Rx.
 
-IO needs to put volatile state in the app, although I'm trying to avoid that.
+IO needs to put volatile state in the app, although I'm trying to minimize that.
 I will name that state with a double underscore prefix
 {
   __videoobject: CONFUSINGID,

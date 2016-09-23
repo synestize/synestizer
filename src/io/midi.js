@@ -188,6 +188,7 @@ export default function init(store, signalio) {
   ).subscribe(updateMidiIO,
     (err) => console.debug(err.stack)
   );
+  
   return {
     playNote: () => null
   }

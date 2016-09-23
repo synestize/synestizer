@@ -6,8 +6,11 @@ import __volatile from './reducers/__volatile'
 import gui from './reducers/gui'
 import signal from './reducers/signal'
 import audio from './reducers/audio'
+import {
+  RESET
+} from './actions/gui'
 
-export default combineReducers({
+const comboReducer = combineReducers({
   video,
   midi,
   audio,
@@ -15,3 +18,12 @@ export default combineReducers({
   gui,
   __volatile
 })
+
+export default function (state={}, action) {
+  switch (action.type) {
+    case RESET:
+      return comboReducer(undefined, action)
+    default:
+      return comboReducer(state, action)
+  }
+}
