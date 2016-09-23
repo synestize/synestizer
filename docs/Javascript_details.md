@@ -116,11 +116,14 @@ but we use webpack here.
 
 * Compiles JSX to JS, to support React
 * compresses the javascript slightly in production mode
-  * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress).
-  * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
-  *  NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448)
+  * NB: Usually you see this with UglifyJS2, but it [doesn't support ES6](https://github.com/mishoo/UglifyJS2/issues/448). However, there is an experimental [branch that partly works](https://github.com/mishoo/UglifyJS2/issues/448#issuecomment-249158142)
+  ```
+  "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony"
+  ```
   * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
   * Or Webpack's  [uglifyjsplugin](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
+  * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress). This is our current solution
+  * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
 * [Why can't anyone write a simple webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
 * If you want to update dependencies, the command looks like this:
 
