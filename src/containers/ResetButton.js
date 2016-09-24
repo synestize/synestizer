@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reset } from '../actions/gui';
+import { resetToNothing } from '../actions/gui';
 import Button from '../components/Button';
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch(reset())
+      dispatch(resetToNothing())
       window.location.reload()
     }
   }

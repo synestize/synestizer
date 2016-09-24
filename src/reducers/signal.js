@@ -232,7 +232,7 @@ export function sourceSinkScale(state={}, {type, payload}) {
       return state
   }
 }
-export function nGenericSinkSignals(state=0, {type, payload}) {
+export function nGenericSinkSignals(state=1, {type, payload}) {
   switch (type) {
     case SET_N_GENERIC_SINK_SIGNALS:
       return payload

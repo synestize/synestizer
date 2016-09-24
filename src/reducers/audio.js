@@ -77,7 +77,11 @@ export function sinkControls(state={}, {type, payload}) {
 
 //Individual controls are edited here
 export function _sinkControl(
-    state={},
+    state={
+      scale: 0.5,
+      bias: 0.0,
+      signal: 'generic-0000'
+    },
     {type, payload}
   ) {
   let next;

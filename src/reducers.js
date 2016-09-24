@@ -7,7 +7,7 @@ import gui from './reducers/gui'
 import signal from './reducers/signal'
 import audio from './reducers/audio'
 import {
-  RESET
+  RESET_TO_NOTHING
 } from './actions/gui'
 
 const partialReducer = combineReducers({
@@ -21,7 +21,7 @@ const partialReducer = combineReducers({
 
 export default function (state={}, action) {
   switch (action.type) {
-    case RESET:
+    case RESET_TO_NOTHING:
       return partialReducer(undefined, action)
     default:
       return partialReducer(state, action)

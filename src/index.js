@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-
+import { resetToNothing, resetToDefault } from './actions/gui'
 import rootReducer from './reducers'
 import App from './containers/App'
 import videoio_ from 'io/video'
@@ -82,11 +82,16 @@ getStoredState(persistConf, (err, restoredState) => {
     store = createStore(rootReducer, undefined, enhancers)
     persistor = createPersistor(store, persistConf)
     persistor.purgeAll();
+    store.dispatch(resetToDefault(store.getState()))
   } else {
-    store = createStore(rootReducer, restoredState, enhancers)
+    console.warn("restoring", restoredState);
+    store = createStore(rootReducer, restoredState, enhancers);
     persistor = createPersistor(store, persistConf)
+    if (restoredState===undefined) {
+      store.dispatch(resetToDefault(store.getState()))
+    }
   }
-  if (typeof window !== "undefined") {
+  if ( window !== undefined) {
     window.store = store;
     window.persistor = persistor;
     window.React = React;
