@@ -78,17 +78,28 @@ if (!PRODUCTION) {
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   if (getq("purge")) {
-    console.warn("purging all local data");
     store = createStore(rootReducer, undefined, enhancers)
     persistor = createPersistor(store, persistConf)
     persistor.purgeAll();
-    store.dispatch(resetToDefault(store.getState()))
+    console.warn("purging all local data", store.getState());
+    signalio = signalio_(store);
+    videoio = videoio_(store, signalio, document.getElementById('video-io'));
+    midiio = midiio_(store, signalio);
+    audioio = audioio_(store, signalio);
+    store.dispatch(resetToDefault())
   } else {
     console.warn("restoring", restoredState);
     store = createStore(rootReducer, restoredState, enhancers);
     persistor = createPersistor(store, persistConf)
-    if (restoredState===undefined) {
-      store.dispatch(resetToDefault(store.getState()))
+    signalio = signalio_(store);
+    videoio = videoio_(store, signalio, document.getElementById('video-io'));
+    midiio = midiio_(store, signalio);
+    audioio = audioio_(store, signalio);
+    if (
+      (restoredState===undefined) ||
+      (Object.keys(restoredState).length === 0)
+    ) {
+      store.dispatch(resetToDefault())
     }
   }
   if ( window !== undefined) {
@@ -96,10 +107,6 @@ getStoredState(persistConf, (err, restoredState) => {
     window.persistor = persistor;
     window.React = React;
   }
-  signalio = signalio_(store);
-  videoio = videoio_(store, signalio, document.getElementById('video-io'));
-  midiio = midiio_(store, signalio);
-  audioio = audioio_(store, signalio);
   appRoot = render(
     <Provider store={store}>
       <App version={version}/>

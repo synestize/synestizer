@@ -21,6 +21,9 @@ import {
 import {
   REMOVE_GENERIC_SINK_SIGNAL,
 } from '../actions/signal'
+import {
+  RESET_TO_DEFAULT
+} from '../actions/gui'
 
 export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
@@ -70,6 +73,26 @@ export function sinkControls(state={}, {type, payload}) {
       next = {...state}
       next[key] = _sinkControl(next[key], {type, payload})
       return next
+    case RESET_TO_DEFAULT:
+      {
+        let signalKeys = Object.keys(
+          payload.signal.comboSignalMeta
+        ).sort();
+        let audioSinkControlKeys = Object.keys(
+          payload.audio.sinkControls
+        ).sort();
+        state = {...state}
+        let i = 0;
+        for (let controlKey of audioSinkControlKeys){
+          let signalKey = signalKeys[i];
+          let control = {...(state[controlKey] || {})}
+          control.signal = signalKey;
+          control.scale = 0.5 * Math.pow((-1),i)
+          i = (i + 1) % (signalKeys.length)
+          state[controlKey] = control
+        }
+        return state
+      }
     default:
       return state
   }

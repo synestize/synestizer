@@ -203,7 +203,7 @@ export default function init(store, signalio) {
     ),
   ).subscribe(
     ([gain, mute]) => {
-      console.debug('gm', gain, mute);
+      // console.debug('gm', gain, mute);
       //I'm sure there is a more "RX" way of doing this.
       Tone.Master.mute = mute;
       if (!mute) Tone.Master.volume.rampTo(gain, 0.1)

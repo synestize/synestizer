@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
-import { resetToDefault } from '../actions/gui';
+import { resetToNothing } from '../actions/gui';
 import Button from '../components/Button';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    text: 'reset'
+    text: 'NUKE'
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch(resetToDefault())
+      dispatch(resetToNothing())
+      window.location.reload()
     }
   }
 };

@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onChange: (i) => {
-      console.debug('setMaxNGenericSinkSignals', i)
+      // console.debug('setMaxNGenericSinkSignals', i)
       dispatch(setMaxNGenericSinkSignals(i))
     }
   }

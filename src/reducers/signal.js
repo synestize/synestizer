@@ -24,6 +24,9 @@ import {
   ADD_MIDI_SINK_CC,
   REMOVE_MIDI_SINK_CC,
 } from '../actions/midi'
+import {
+  RESET_TO_DEFAULT
+} from '../actions/gui'
 import { genericSinkSignalName } from '../io/signal/util'
 
 
@@ -225,6 +228,20 @@ export function sourceSinkScale(state={}, {type, payload}) {
           if (sinkKey===payload) {
             delete state[key]
           }
+        }
+        return state
+      }
+    case RESET_TO_DEFAULT:
+      {
+        let sourceKeys = Object.keys(payload.signal.sourceSignalMeta).sort();
+        let sinkKeys = Object.keys(payload.signal.sinkSignalMeta).sort();
+        state = {}
+        let i = 0;
+        for (let sinkKey of sinkKeys){
+          let sourceKey = sourceKeys[i];
+          let mapkey = (sourceKey + '/' + sinkKey)
+          state[mapkey] = 0.5;
+          i = (i + 1) % (sourceKeys.length)
         }
         return state
       }
