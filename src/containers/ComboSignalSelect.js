@@ -3,10 +3,18 @@ import { connect } from 'react-redux';
 import Select from '../components/Select.js'
 
 const mapStateToProps = (state, {sinkControlKey, onSignalChange}) => {
+  const signalMeta = state.signal.comboSignalMeta
+  const optDict = {}
+  let keys = Array.from(Object.keys(signalMeta)).sort();
+  for (let key of keys) {
+    optDict[key] = signalMeta[key].owner + '/' + signalMeta[key].name
+  }
+
   return {
-    optDict: state.audio.sinkControlSignals,
+    optDict,
     currentOpt: (state.audio.sinkControls[sinkControlKey] || {}).signal,
-    onChange: (key) => onSignalChange(key) // NB this is a dispatcher
+    // NB this is a dispatcher - should move it
+    onChange: (key) => onSignalChange(key)
   }
 };
 const mapDispatchToProps = (dispatch, {sinkControlKey, onSignalChange}) => {
@@ -14,9 +22,9 @@ const mapDispatchToProps = (dispatch, {sinkControlKey, onSignalChange}) => {
   }
 };
 
-const AnySignalSelect = connect(
+const ComboSignalSelect = connect(
   mapStateToProps,
   mapDispatchToProps
 )( Select );
 
-export default AnySignalSelect;
+export default ComboSignalSelect;

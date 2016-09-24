@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { genericSignalName } from '../io/signal/util'
+import { genericSinkSignalName } from '../io/signal/util'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
@@ -19,7 +19,7 @@ import {
   ADD_ENSEMBLE
 } from '../actions/audio'
 import {
-  UNPUBLISH_GENERIC_SINK_SIGNAL,
+  REMOVE_GENERIC_SINK_SIGNAL,
 } from '../actions/signal'
 
 export function sourceDevice(state="default", {type, payload}) {
@@ -62,7 +62,7 @@ export function sinkControls(state={}, {type, payload}) {
     case SET_AUDIO_SINK_CONTROL_BIAS:
     case SET_AUDIO_SINK_CONTROL_SCALE:
     case SET_AUDIO_SINK_CONTROL_SIGNAL:
-    case UNPUBLISH_GENERIC_SINK_SIGNAL:
+    case REMOVE_GENERIC_SINK_SIGNAL:
       let {key, val} = payload;
       if (key===undefined) {
         console.warn('arsebastard!', state, {type, payload})
@@ -98,7 +98,7 @@ export function _sinkControl(
       next = {...state};
       next.signal = val
       return next
-    case UNPUBLISH_GENERIC_SINK_SIGNAL:
+    case REMOVE_GENERIC_SINK_SIGNAL:
       next = {...state};
       if (next.signal === payload) {
         next.signal = null

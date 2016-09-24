@@ -10,7 +10,7 @@ import {
   RESET
 } from './actions/gui'
 
-const comboReducer = combineReducers({
+const partialReducer = combineReducers({
   video,
   midi,
   audio,
@@ -22,8 +22,8 @@ const comboReducer = combineReducers({
 export default function (state={}, action) {
   switch (action.type) {
     case RESET:
-      return comboReducer(undefined, action)
+      return partialReducer(undefined, action)
     default:
-      return comboReducer(state, action)
+      return partialReducer(state, action)
   }
 }

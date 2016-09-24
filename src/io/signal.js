@@ -3,8 +3,8 @@ import { saturate, desaturate } from '../lib/transform.js'
 import {
   setAllSourceSignalValues,
   setAllSinkSignalValues,
-  publishGenericSinkSignal,
-  unpublishGenericSinkSignal,
+  addGenericSinkSignal,
+  removeGenericSinkSignal,
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
@@ -76,12 +76,12 @@ export default function init(store) {
       if (currN<n) {
         for (let i=currN; i<n; i++) {
           // console.debug('signaladd', i)
-          store.dispatch(publishGenericSinkSignal(i))
+          store.dispatch(addGenericSinkSignal(i))
         }
       } else if (currN>n) {
         for (let i=n; i<currN; i++) {
           // console.debug('signaldel', i)
-          store.dispatch(unpublishGenericSinkSignal(i))
+          store.dispatch(removeGenericSinkSignal(i))
         }
       }
     }

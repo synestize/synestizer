@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
-import AnySignalSelect from '../containers/AnySignalSelect'
+import ComboSignalSelect from '../containers/ComboSignalSelect'
 import MarkedLiveSlider from '../components/MarkedLiveSlider'
 
 const GenericAudioParam = ({
@@ -9,7 +9,7 @@ const GenericAudioParam = ({
   actual=0,
   signal="",
   sinkControlKey,
-  actualSinkSignalValue,
+  actualSignalValue,
   actualSinkControlValue,
   label,
   onBiasChange,
@@ -20,7 +20,7 @@ const GenericAudioParam = ({
     <h3 className="audio-sink-name">
       {label}
     </h3>
-    <AnySignalSelect
+    <ComboSignalSelect
       className="any-signal-select"
       onSignalChange={onSignalChange}
       sinkControlKey={sinkControlKey} />
@@ -30,7 +30,7 @@ const GenericAudioParam = ({
       step={0.0625}
       labelText="scale"
       value={scale}
-      shadowVal={actualSinkSignalValue}
+      shadowVal={actualSignalValue}
       disabled={!Boolean(signal)}
     />
     <MarkedLiveSlider
@@ -48,7 +48,7 @@ GenericAudioParam.propTypes = {
   scale: PropTypes.number,
   actual: PropTypes.number,
   sinkControlKey: PropTypes.string.isRequired,
-  actualSinkSignalValue: PropTypes.number,
+  actualSignalValue: PropTypes.number,
   actualSinkControlValue: PropTypes.number,
   signal: PropTypes.string,
   label: PropTypes.string.isRequired,
