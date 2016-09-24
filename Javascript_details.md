@@ -120,7 +120,7 @@ but we use webpack here.
   ```
   "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony"
   ```
-  * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does it at the babel layer, so we could compile to ES5 and uglify?
+  * However if we really wanted to use that, there is [babel-plugin-uglify](https://www.npmjs.com/package/babel-plugin-uglify) which does AFTER compilation to javascript, so we could compile to ES5 and uglify?
   * Or Webpack's  [uglifyjsplugin](https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin)
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress). This is our current solution
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
@@ -152,7 +152,7 @@ npm install --save-dev --upgrade \
   tone \
   webpack \
   webrtc-adapter \
-  worker-loader \
+  worker-loader
 ```
 
 ## Rx.js
