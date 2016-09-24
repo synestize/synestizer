@@ -1,4 +1,9 @@
-import Rx from 'rxjs/Rx'
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { scan } from 'rxjs/operator/scan';
+import { throttleTime } from 'rxjs/operator/throttleTime';
+
 import { saturate, desaturate } from '../lib/transform.js'
 import {
   setAllSourceSignalValues,
@@ -16,53 +21,56 @@ internal state handles high-speed source updates and periodic sink updates and U
 
 export default function init(store) {
   const storeStream = toObservable(store);
-  const sourceUpdates = new Rx.Subject();
+  const sourceUpdates = new Subject();
 
-  // sourceUpdates.subscribe((x)=>console.debug('sigstate2', x))
-  const sourceStateSubject = sourceUpdates.scan(
+  const sourceStateSubject = new BehaviorSubject();
+  const sinkStateSubject = new BehaviorSubject();
+  const comboStateSubject = new BehaviorSubject();
+
+  sourceUpdates::scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  ).throttleTime(SIGNAL_RATE).share();
-  // sourceStateSubject.subscribe((x)=>console.debug('sigstate3', x))
-  sourceStateSubject.throttleTime(UI_RATE).subscribe((vals) => {
-    store.dispatch(setAllSourceSignalValues(vals))
+  )::throttleTime(SIGNAL_RATE).subscribe(
+    (sourceState) => {
+      sourceStateSubject.next(sourceState)
+    }
+  )
+  sourceStateSubject.throttleTime(UI_RATE).subscribe((state) => {
+    store.dispatch(setAllSourceSignalValues(state))
   });
-  const sinkStateSubject = sourceStateSubject.map(projectObs).share();
-  sinkStateSubject.throttleTime(UI_RATE).subscribe((vals) => {
-    store.dispatch(setAllSinkSignalValues(vals))
+  sourceStateSubject.subscribe(
+    (sourceState)=>{
+      const sinkState = projectObs(sourceState)
+      sinkStateSubject.next(sinkState)
+      comboStateSubject.next({...sourceState, ...sinkState})
+    }
+  )
+  sinkStateSubject::throttleTime(UI_RATE).subscribe((sinkState) => {
+    store.dispatch(setAllSinkSignalValues(sinkState))
   });
-  /*{
-     sourceSignalMeta,
-     sourceSignalValues,
-     sinkSignalMeta,
-     sinkSignalValues,
-     sourceSinkScale
-  }*/
-
-  function projectObs(sourceVals) {
-    // console.debug('project', source);
+  function projectObs(sourceState={}) {
     const sourceSinkScale = store.getState().signal.sourceSinkScale;
-    const sourceValsT = {}
-    const sinkVals = {}
+    const sourceStateT = {}
+    const sinkState = {}
     // temporary tanh-transformed sink vals
-    const sinkValsT = {}
+    const sinkStateT = {}
     for (let key in sourceSinkScale) {
       let scale = sourceSinkScale[key];
       let [sourceAddress, sinkAddress] = key.split("/");
-      let sourceVal = sourceVals[sourceAddress] || 0.0;
+      let sourceVal = sourceState[sourceAddress] || 0.0;
       let delta = scale * desaturate(sourceVal);
 
       if (delta !== 0.0) {
-        sinkValsT[sinkAddress] = delta + (
-          sinkValsT[sinkAddress] || 0.0
+        sinkStateT[sinkAddress] = delta + (
+          sinkStateT[sinkAddress] || 0.0
         )
       };
     };
-    for (let sinkAddress in sinkValsT) {
-      sinkVals[sinkAddress] = saturate(sinkValsT[sinkAddress]);
+    for (let sinkAddress in sinkStateT) {
+      sinkState[sinkAddress] = saturate(sinkStateT[sinkAddress]);
     };
-    // console.debug('sinkVals', sinkVals)
-    return sinkVals
+    // console.debug('sinkState', sinkState)
+    return sinkState
   }
   storeStream.pluck(
     'signal', 'nGenericSinkSignals'
@@ -88,6 +96,8 @@ export default function init(store) {
   )
   return {
     sourceUpdates,
+    sourceStateSubject,
     sinkStateSubject,
+    comboStateSubject,
   }
 }

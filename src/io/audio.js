@@ -163,7 +163,7 @@ export default function init(store, signalio) {
     storeStream.pluck(
       'audio', 'sinkControls'
     ).distinctUntilChanged(),
-    signalio.sinkStateSubject,
+    signalio.comboStateSubject,
     calcAudioControls
   ).subscribe(
     (val) => {
