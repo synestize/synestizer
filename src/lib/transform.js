@@ -36,7 +36,7 @@ export const clip = (min, max, val) => (
   Math.min(
     Math.max(
       val,
-      -min
+      min
     ), max
   )
 );
@@ -49,6 +49,7 @@ export const clip1 = (val) => (
     ), 1
   )
 );
+
 //clips to finite values; we want to do this because Inf*0=NaN
 export const clipinf = (val) => (
   Math.min(
@@ -98,14 +99,7 @@ export const bipolInt = (min, max, val) => {
     Math.round(val*range*0.5 + middle),
   max), min);
 };
-export const clipBipol = (val) => (
-  Math.min(
-    Math.max(
-      val,
-      -1
-    ), 1
-  )
-);
+
 //[0,127]->[-1,1]
 export const midiBipol = (val) => (val-63.5)/63.5;
 //[-1,1]->[0,127]
@@ -132,8 +126,14 @@ export const bipolPerc = (val) =>(
   100), 0)
 );
 
-  export const bipolEquiOctave = function(min, max, val) {
+export const bipolEquiOctave = function(min, max, val) {
   const logmin = Math.log(min)/(Math.LN2);
   const logmax = Math.log(max)/(Math.LN2);
   return Math.pow(2, bipolLin(logmin, logmax, val));
+}
+
+export const bipolLookup = (array, val) => {
+  const arrlen = array.length
+  if (arrlen<2) {return array[0]}
+  return array[bipolInt(0, arrlen-1, val)]
 }
