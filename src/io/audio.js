@@ -160,7 +160,6 @@ export default function init(store, signalio) {
     Tone.Master.chain(masterCompressor, meter);
     Object.assign(audioInfrastructure, {
       context,
-      tone: Tone
     });
     Tone.Transport.start();
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
