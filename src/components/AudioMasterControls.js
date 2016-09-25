@@ -1,10 +1,10 @@
 import * as transform from '../lib/transform'
-import ActiveAudioMasterGain from '../containers/ActiveAudioMasterGain'
+import MasterAudioGain from '../containers/MasterAudioGain'
 import ActiveAudioMasterTempo from '../containers/ActiveAudioMasterTempo'
 
 const AudioMasterControls = function(props) {
   return (<div className="audiocontrolset">
-    <ActiveAudioMasterGain />
+    <MasterAudioGain />
     <ActiveAudioMasterTempo />
   </div>)
 };

@@ -2,7 +2,7 @@ import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import LabeledSlider from '../components/LabeledSlider'
 
-const AudioMasterGain = ({
+const AudioGainFader = ({
   label,
   gain,
   onChangeGain,
@@ -36,7 +36,7 @@ const AudioMasterGain = ({
   </div>)
 };
 
-AudioMasterGain.propTypes = {
+AudioGainFader.propTypes = {
   gain: PropTypes.number.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,
@@ -48,4 +48,4 @@ AudioMasterGain.propTypes = {
   units: PropTypes.string,
 }
 
-export default AudioMasterGain
+export default AudioGainFader

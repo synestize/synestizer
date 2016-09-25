@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import AudioMasterGain from '../components/AudioMasterGain.js'
+import AudioGainFader from '../components/AudioGainFader.js'
 import {
   setMasterGain,
   toggleMasterMute,
@@ -28,9 +28,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-const ActiveAudioMasterGain = connect(
+const MasterAudioGain = connect(
   mapStateToProps,
   mapDispatchToProps
-)( AudioMasterGain );
+)( AudioGainFader );
 
-export default ActiveAudioMasterGain;
+export default MasterAudioGain;
