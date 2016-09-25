@@ -175,32 +175,32 @@ export function Moment({PIXELDIM=64}) {
         cookedMoments[VV] = transform.linBipol(-0.05, 0.05, centralMoments[VV]);
         //pure color covariances are reported as correlations.
         //Occasional weirdness with range outside [-1,1] so I clip for now.
-        cookedMoments[YS] = transform.clipBipol(
+        cookedMoments[YS] = transform.clip1(
           centralMoments[YS]/Math.max(0.0001, Math.sqrt(
             centralMoments[YY]*centralMoments[SS])));
-        cookedMoments[YV] = transform.clipBipol(
+        cookedMoments[YV] = transform.clip1(
           centralMoments[YV]/Math.max(0.0001, Math.sqrt(
             centralMoments[YY]*centralMoments[VV])));
-        cookedMoments[SV] = transform.clipBipol(
+        cookedMoments[SV] = transform.clip1(
           centralMoments[SV]/Math.max(0.0001, Math.sqrt(
             centralMoments[SS]*centralMoments[VV])));
         //color versus axis uses a priori moments for the deterministic axes
-        cookedMoments[IY] = transform.clipBipol(
+        cookedMoments[IY] = transform.clip1(
           centralMoments[IY]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[YY])));
-        cookedMoments[IS] = transform.clipBipol(
+        cookedMoments[IS] = transform.clip1(
           centralMoments[IS]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[SS])));
-        cookedMoments[IV] = transform.clipBipol(
+        cookedMoments[IV] = transform.clip1(
           centralMoments[IV]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[VV])));
-        cookedMoments[JY] = transform.clipBipol(
+        cookedMoments[JY] = transform.clip1(
           centralMoments[JY]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[YY])));
-        cookedMoments[JS] = transform.clipBipol(
+        cookedMoments[JS] = transform.clip1(
           centralMoments[JS]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[SS])));
-        cookedMoments[JV] = transform.clipBipol(
+        cookedMoments[JV] = transform.clip1(
           centralMoments[JV]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[VV])));
         return cookedMoments;
