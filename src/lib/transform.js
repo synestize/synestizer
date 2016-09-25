@@ -1,20 +1,37 @@
-// if our values are mostly 7 bits, this is a good scale factor to
-// offset them
-const midiScale = 127.5/128
+/*
+ * various mathematical transforms,
+ * mostly to do with getting values in the [-1,1] range
+ * transformed into musical units
+ */
+
+// if our values are mostly 7 bits, e.g. MIDI,
+// this is a good scale factor
+const sevenBitSafe = 127.5/128
+// If we are using 7 bits, we need to clip to a safe range
+// This comes to [-3.13, 3.13]
+const maxSafe = Math.atanh(
+  1.0 * sevenBitSafe
+) / sevenBitSafe
+console.debug('maxSafe', maxSafe);
 
 // [-inf, inf] -> [-1,1]
-export const saturate = (val) => Math.tanh(val/midiScale)*midiScale;
+export const saturate = (val) => Math.tanh(
+  val / sevenBitSafe
+) * sevenBitSafe;
+
 // [-1,1] <- [-inf, inf]
 export const desaturate = (val) => clipinf(
   Math.atanh(
-    val * midiScale
-  ) / midiScale
+    val * sevenBitSafe
+  ) / sevenBitSafe
 );
 
 export const identity = (x)=>x;
 
 //put together a list of values copula-wise with unit weights
-export const perturb = (vals) => saturate(vals.map(desaturate).reduce((a,b)=>(a+b)))
+export const perturb = (vals) => saturate(
+  vals.map(desaturate).reduce((a,b)=>(a+b))
+)
 
 export const clip = (min, max, val) => (
   Math.min(
@@ -38,8 +55,8 @@ export const clipinf = (val) => (
   Math.min(
     Math.max(
       val,
-      -Number.MAX_VALUE
-    ), Number.MAX_VALUE
+      -maxSafe
+    ), maxSafe
   )
 );
 // [min, max]->[-1,1]
