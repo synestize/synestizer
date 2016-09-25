@@ -13,7 +13,7 @@ import {
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
-import {SIGNAL_RATE, UI_RATE } from '../settings'
+import {SIGNAL_PERIOD_MS, UI_PERIOD_MS } from '../settings'
 
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
@@ -30,12 +30,12 @@ export default function init(store) {
   sourceUpdates::scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  )::throttleTime(SIGNAL_RATE).subscribe(
+  )::throttleTime(SIGNAL_PERIOD_MS).subscribe(
     (sourceState) => {
       sourceStateSubject.next(sourceState)
     }
   )
-  sourceStateSubject.throttleTime(UI_RATE).subscribe((state) => {
+  sourceStateSubject.throttleTime(UI_PERIOD_MS).subscribe((state) => {
     store.dispatch(setAllSourceSignalValues(state))
   });
   sourceStateSubject.subscribe(
@@ -45,7 +45,7 @@ export default function init(store) {
       comboStateSubject.next({...sourceState, ...sinkState})
     }
   )
-  sinkStateSubject::throttleTime(UI_RATE).subscribe((sinkState) => {
+  sinkStateSubject::throttleTime(UI_PERIOD_MS).subscribe((sinkState) => {
     store.dispatch(setAllSinkSignalValues(sinkState))
   });
   function projectObs(sourceState={}) {

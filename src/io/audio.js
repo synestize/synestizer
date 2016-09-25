@@ -16,7 +16,14 @@ import  {
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
-import {SIGNAL_RATE, UI_RATE } from '../settings'
+import {
+  SIGNAL_PERIOD_MS,
+  UI_PERIOD_MS,
+  SIGNAL_PERIOD,
+  UI_PERIOD,
+  SIGNAL_RATE,
+  UI_RATE,
+} from '../settings'
 
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
@@ -189,7 +196,7 @@ export default function init(store, signalio) {
   }
 
   //
-  actualControlValues.throttleTime(UI_RATE).subscribe((vals) => {
+  actualControlValues.throttleTime(UI_PERIOD_MS).subscribe((vals) => {
     store.dispatch(setAllAudioSinkControlActualValues(vals));
   });
 
