@@ -65,8 +65,8 @@ let signalio;
 let audioio;
 let enhancers;
 
-// if (!PRODUCTION) {
-if (false) {
+if (!PRODUCTION) {
+// if (false) {
   enhancers = applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
     loggerMiddleware // logs actions

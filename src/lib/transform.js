@@ -32,14 +32,15 @@ export const perturb = (vals) => saturate(
   vals.map(desaturate).reduce((a,b)=>(a+b))
 )
 
-export const clip = (min, max, val) => (
-  Math.min(
+export const clip = (min, max, val) => {
+  [min, max] = [min, max].sort();
+  return Math.min(
     Math.max(
       val,
       min
     ), max
   )
-);
+};
 //clips to [-1,1]
 export const clip1 = (val) => (
   Math.min(
@@ -59,6 +60,7 @@ export const clipinf = (val) => (
     ), maxSafe
   )
 );
+
 // [min, max]->[-1,1]
 export const linBipol = (min, max, val) => {
   let range = max-min;
@@ -74,30 +76,25 @@ export const linBipol = (min, max, val) => {
 export const bipolLin = (min, max, val) => {
   let range = max-min;
   let middle = (max+min)/2
-  return Math.min(
-    Math.max(
-      val * range * 0.5 + middle,
-      min
-    ), max
-  );
+  return clip(min, max,
+    val * range * 0.5 + middle,
+  )
 };
 //we do rounding for integers
 export const intBipol = (min, max, val) => {
   let range = max-min;
   let middle = (max+min)/2
-  return Math.max(
-    Math.min(
-      (val-middle) * 2 / range,
-      max
-    ), min);
+  return clip(min, max,
+    (val-middle) * 2 / range,
+  )
 };
 //we do rounding for integers
 export const bipolInt = (min, max, val) => {
   let range = max-min;
   let middle = (max+min)/2
-  return Math.max(Math.min(
+  return clip(min, max,
     Math.round(val*range*0.5 + middle),
-  max), min);
+  )
 };
 
 //[0,127]->[-1,1]

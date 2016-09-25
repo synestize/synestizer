@@ -67,113 +67,97 @@ export default function init(store, signalio, audio) {
   let offsets = [0, 5, 10];
   let retriggerInterval = Tone.Time('1m');
   let noteInterval = Tone.Time(retriggerInterval).mult(0.25);
-  let gate = Tone.Time(retriggerInterval).mult(0.25);
+  let gateScale = 0.5;
   let gain = 0.0;
-  let notes = [];
+  let arpy;
 
-  function updateNotes() {
+  function notes() {
+    const notes = []
+    let dur =  Tone.Time(retriggerInterval).mult(gateScale);
     for (let i=0; i<3; i++) {
       const note = {
         time: Tone.Time(noteInterval).mult(i).eval(),
         note: Tone.Frequency(
           wrap(bottom, bottom+12, offsets[i]),
-          "midi"
-        )
+          "midi",
+        ),
+        dur
+
       }
-      console.debug('note', i, note)
       notes[i] = note
     }
+    return notes
   }
+
   let synth = new Tone.PolySynth(
     9, Tone.Synth
   ).toMaster();
 
   const playNote = (time, value) => {
-    console.debug('playNote', time, value, gate.eval())
     synth.triggerAttackRelease(
       value.note,
-      gate,
+      value.dur,
       time);
   }
-  const arpeggiate = (time, dummy, whatever) => {
-    console.debug('arptime', time, dummy, whatever)
-    if (value.note!==0) return
-    synth.releaseAll(time)
-    const strum = new Tone.Part(
-      playNote,
-      notes);
-    strum.start(time)
+
+  const multiArpeggiate= (time) => {
+    if (arpy!==undefined) {
+      arpy.stop(time)
+      arpy.dispose()
+    }
+    arpy = new Tone.Part(playNote, notes())
+    arpy.loopStart = 0
+    arpy.loopEnd = retriggerInterval
+    arpy.loop = true
+    arpy.start(time)
   }
 
-  updateNotes()
-  
-  const masterLoop = new Tone.Part(arpeggiate, [
-    {time:0, note: 0},
-    {time:1, note: 1},
-    {time:2, note: 2},
-    {time:1000, note: 1},
-  ])
-  masterLoop.stop(0)
-  masterLoop.loopStart = 0
-  masterLoop.loopEnd = retriggerInterval
-  masterLoop.loop = true
-  masterLoop.start('2m')
+  const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('1m');
 
   audio.actualControlValues.pluck('triad|pitch-0001').subscribe(
     (val)=>{
       offsets[0] = bipolInt(0, 3, val || 0.0);
-      updateNotes();
     }
   );
   audio.actualControlValues.pluck('triad|pitch-0002').subscribe(
     (val)=>{
       offsets[1] = bipolInt(4, 7, val || 0.0);
-      updateNotes();
     }
   );
   audio.actualControlValues.pluck('triad|pitch-0003').subscribe(
     (val)=>{
       offsets[2] = bipolInt(8, 12, val || 0.0);
-      updateNotes();
     }
   );
   audio.actualControlValues.pluck('triad|bottom').subscribe(
     (val)=>{
       bottom = bipolInt(40, 70, val || 0.0);
-      updateNotes();
     }
   );
   audio.actualControlValues.pluck('triad|gate').subscribe(
     (val)=>{
-      gate = Tone.Time(retriggerInterval).mult(
-        bipolEquiOctave(0.25, 2.0, val || 0.0)
-      )
-      console.debug('gate', gate.eval())
+      gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
     }
   );
   audio.actualControlValues.pluck('triad|retriggerinterval')::map(
     (val)=>bipolLookup(
-      ['16n', '8n', '4n', '2n', '1m', '2m', '4m'],
+      ['16n', '8n', '4n', '2n', '1m'],
       val || 0.0)
     )::distinctUntilChanged().subscribe(
       (val)=>{
-        retriggerInterval = val;
-        masterLoop.loopEnd = retriggerInterval
-        console.debug('retriggerInterval', retriggerInterval)
+        retriggerInterval = Tone.Time(val);
       }
   )
   audio.actualControlValues.pluck('triad|arprate').subscribe(
     (val)=>{
       noteInterval = Tone.Time(retriggerInterval).mult(
-        bipolEquiOctave(1.0, 0.125, val || 0.0)
+        bipolLin(0.5, 0.0, val || 0.0)
       )
-      updateNotes();
     }
   );
   audio.actualControlValues.pluck('triad|gain').subscribe(
     (val)=>{
       gain = bipolLin(-30.0, 0.0, val || 0.0)
-      console.debug('gain', gain)
     }
   );
 
