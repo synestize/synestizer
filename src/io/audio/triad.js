@@ -1,10 +1,15 @@
-import Rx from 'rxjs/Rx'
 import  {
   addAudioSinkControl,
   addEnsemble
 } from '../../actions/audio'
 
-import { bipolLin, bipolInt } from '../../lib/transform'
+import {
+  bipolLin,
+  bipolInt,
+  bipolEquiOctave,
+  bipolLookup
+} from '../../lib/transform'
+
 export default function init(store, signalio, audio) {
   /*
    *
@@ -40,11 +45,23 @@ export default function init(store, signalio, audio) {
     label: "Gate",
     ensemble: "Triad",
   }));
+  store.dispatch(addAudioSinkControl({
+    key: 'triad|rate',
+    label: "Arp rate",
+    ensemble: "Triad",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'triad|retrigger',
+    label: "Arp retrigger",
+    ensemble: "Triad",
+  }));
 
-  let gate = 0.25;
   let octaveBottom = 0.0;
   let octaveRange = 0.0;
   let offsets = [0, 5, 10];
+  let gate = 0.25;
+  let rate = 1;
+  let retrigger = 1;
 
   let notes = [
     Tone.Frequency(60, "midi"),
@@ -78,6 +95,30 @@ export default function init(store, signalio, audio) {
   audio.actualControlValues.pluck('triad|octave-range').subscribe(
     (val)=>{
       octaveRange = (val || 0.0)
+    }
+  );
+  audio.actualControlValues.pluck('triad|gate').subscribe(
+    (val)=>{
+      gate = Tone.Time(retrigger).mult(
+        bipolEquiOctave(0.25, 4, val || 0.0)
+      ).eval()
+      console.debug('gate', gate)
+    }
+  );
+  audio.actualControlValues.pluck('triad|retrigger').subscribe(
+    (val)=>{
+      retrigger = bipolLookup(
+        ['16n', '8n', '4n', '2n', '1m', '2m', '4m'],
+        val || 0.0)
+      console.debug('retrigger', retrigger)
+    }
+  );
+  audio.actualControlValues.pluck('triad|rate').subscribe(
+    (val)=>{
+      rate = Tone.Time(retrigger).mult(
+        bipolEquiOctave(0.25, 1.0, val || 0.0)
+      ).quantize('64n')
+      console.debug('rate', rate.eval())
     }
   );
 
