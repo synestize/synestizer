@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import LabeledSlider from '../components/LabeledSlider'
+import MuteButton from '../components/MuteButton'
 
 const AudioGainFader = ({
   label,
@@ -30,9 +31,7 @@ const AudioGainFader = ({
     <span className="unmapped-units">
       {units}
     </span>
-    <span className={"mute button " + String(mute)} onClick={onChangeMute}>
-      mute
-    </span>
+    <MuteButton mute={mute} onClick={onChangeMute} />
   </div>)
 };
 
