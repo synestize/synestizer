@@ -12,7 +12,6 @@ const sevenBitSafe = 127.5/128
 const maxSafe = Math.atanh(
   1.0 * sevenBitSafe
 ) / sevenBitSafe
-console.debug('maxSafe', maxSafe);
 
 // [-inf, inf] -> [-1,1]
 export const saturate = (val) => Math.tanh(
@@ -133,8 +132,8 @@ export const bipolPerc = (val) =>(
   100), 0)
 );
 
-export const bipolEquiOctave = function(min, max, val) {
-  const logmin = Math.log(min)/Math.LOG2;
-  const logmax = Math.log(max)/Math.LOG2;
-  return Math.pow(2, bipolLin(logmin, logmax));
+  export const bipolEquiOctave = function(min, max, val) {
+  const logmin = Math.log(min)/(Math.LN2);
+  const logmax = Math.log(max)/(Math.LN2);
+  return Math.pow(2, bipolLin(logmin, logmax, val));
 }
