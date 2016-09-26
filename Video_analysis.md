@@ -45,7 +45,6 @@ The second moments are the sample covariance /correlation of this unpacked matri
 ## Ideas for the future
 
 * nearest-neighbours in color space
-* Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
 * PCA
 * Haar cascade.
