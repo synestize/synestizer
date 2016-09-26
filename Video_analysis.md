@@ -3,21 +3,34 @@
 ## How it works now
 
 At the moment, we use a very simple and easy model;
-We calculate the first two sample moments of the video data.
+We calculate the first two "central sample moments" of the video data.
+In plain language, this is the *mean* and the *covariance*.
+Since all the statistics are normalized, this ends up being the same thing as the sample *correlation*, which might be more familiar.
 
 Approximately 25 times per second we receive 3 matrixes full of pixel information from the video camera. Depending on the camera, this could be 1 megapixel or approximately 3 megabytes of data per frame
 
 This is too much data, however, for such simple statistics, so we preprocess it in the following ways.
 
 First, we *downsample* the video and chop it into a 64x64 pixel square.
+
 Second, we convert the colorspace from Red/Green/Blue to [Y/Cb/Cr](https://en.wikipedia.org/wiki/YCbCr)
-because otherwise blue and green are too similar).
+because otherwise blue and green are too similar to each other,
+and *everything* is too similar to brightness).
 Approximately speaking, "Y" is "brightness", "Cb" is "blueness"
 and "Cr" is "Redness".
 
-![YCbCr space](./media/YCbCr.GIF)
+At this stage we have 3 64x64 matrixes, a $Y$ matrix, a $C_b$ matrix and a $C_r$ matrix.
+For each of these we calculate the mean, a Y-mean, a Cb-mean and a Cr-mean.
+These are the "first moments".
+
+Now for the "second moments.
 
 
+Then we add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 1. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 1.
+
+![YCbCr space, from https://en.wikipedia.org/wiki/File:YCbCr.GIF](./media/YCbCr.GIF)
+
+Next, we
 
 ## Ideas for the future
 
