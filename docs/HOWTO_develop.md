@@ -32,7 +32,7 @@ So you have to run a secure website.
 There are a lot of how-to guides to this on the internet.
 The easiest is probably [caddy](https://caddyserver.com/), a free, open-source, secure server designed for developing browser apps,
 available for download for most platforms.
-[Anything which supports letsncrypt](https://github.com/certbot/certbot/wiki/Links) should be simple.
+[Anything which supports letsencrypt](https://github.com/certbot/certbot/wiki/Links) should be simple.
 
 If you are doing this advanced stuff,
 you might also have to think about packaging up the javascript as static assets,
