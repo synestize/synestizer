@@ -19,11 +19,12 @@ and *everything* is too similar to brightness).
 Approximately speaking, "Y" is "brightness", "Cb" is "blueness"
 and "Cr" is "Redness".
 
-At this stage we have 3 64x64 matrixes, a $Y$ matrix, a $C_b$ matrix and a $C_r$ matrix.
-For each of these we calculate the mean, a Y-mean, a Cb-mean and a Cr-mean.
-These are the "first moments".
+At this stage we have 3 64x64 matrixes: $$ Y,C_b,C_r. $$
 
-Now for the "second moments.
+For each of these we calculate the mean, a Y-mean, a Cb-mean and a Cr-mean.
+These are the *first moments*.
+
+Now for the *second moments*.
 
 
 Then we add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 1. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 1.
