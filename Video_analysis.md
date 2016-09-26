@@ -26,33 +26,71 @@ At this stage we have 3 64x64 matrixes: $$ Y,C^b,C^r. $$
 
 For each of these we calculate the mean, a Y-mean, $$ \bar{Y}, $$ a Cb-mean $$ \bar{C}^b $$ etc
 
-$$ \bar{Y} = \sum_{i=1}^{64}\sum_{j=1}^{64} Y_{ij} $$
+$$ \bar{Y} = \frac{1}{64}\sum_{i=1}^{64}\frac{1}{64}\sum_{j=1}^{64} Y_{ij} $$
 
 These are the *first moments*.
 
 Now for the *second moments*....
 
-We add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x(64x64) sample matrix:
+We add spatial coordinates to the pixels - a pixel on the left side of the screen has a $$ V $$ coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a $$ U $$ coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x4096 sample matrix (We call the first column $$U$$ and the second column $$V$$
 
-$$ X_1 := \begin{align*}1, 1, Y_{11}, C^b_{11} C^r_{11}\end{align*}$$
+$$ \begin{align*}
+X &:= \begin{pmatrix}
+1 & 1 & Y_{1,1} & C^b_{1,1} & C^r_{1,1}\\
+1 & 2 & Y_{1,2} & C^b_{1,2} & C^r_{1,2}\\
+\vdots &\vdots& \vdots &\vdots &\vdots\\
+1 & 64 & Y_{1,64} & C^b_{1,64} & C^r_{1,64}\\
+2 & 1 & Y_{2,1} & C^b_{2,1} & C^r_{2,1}\\
+\vdots &\vdots& \vdots &\vdots &\vdots\\
+64 & 64 & Y_{64,64} & C^b_{64,64} & C^r_{64,64}\\
+\end{pmatrix}\\
+&= \begin{pmatrix}\mathbf{u}&\mathbf{v}&\mathbf{y}&\mathbf{c}^b&\mathbf{c}^r\end{pmatrix}
+\end{align*}$$
 
-$$ X_2 := \begin{align*}1, 2, Y_{12}, C^b_{12} C^r_{12}\end{align*}$$
 
-...
 
-The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$
+The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$ But for these remaining values we can calculate covariances, e.g.
+
+$$
+\begin{align*}
+\operatorname{Cov}(\mathbf{u},\mathbf{y}) &= \frac{1}{4096} \sum_{i=1}^{4096} (\mathbf{u}_i-\bar{\mathbf{u}})(\mathbf{y}_i-\bar{\mathbf{y}})
+\end{align*}
+$$
+We can also calcualte self-variance, e.g. $$ \operatorname{Cov}(\mathbf{y},\mathbf{y}) $$ which is just the usual variance.
+The **u,v** columns aren't interesting, because we just made them up, so we do *not* calculate $$ \operatorname{Cov}(\mathbf{u},\mathbf{u}),  \operatorname{Cov}(\mathbf{u},\mathbf{v}),  \operatorname{Cov}(\mathbf{v},\mathbf{v})  $$, but all the rest are interesting. So, for example $$ \operatorname{Cov}(\mathbf{u},\mathbf{c}^b) $$ tells you how much the red *increases* as you go *up* the page.
+
+**NB** this part is constantly changing.
+If you notice that I've flipped green and red, or up and down, then feel free to update the documentation ;-)
+
+## Mapping the statistics
+
+The problem now is that these value are *arbitrary*. Who cares if $$\bar{\mathbf{C}^b}=0.78$$? What does that number mean?
+What MIDI note is $$0.78$$? What MIDI CC value?
+What tempo? How can we relate *statistics* to *parameters*?
+
+The answer is that we choose a common language.
+
+In Synestizer/LTC, *all* the numbers are transformed so that they range between -1 and +1. And all musical parameters expect a number from -1 to +1... Then we map -1 to, say, a low note like C2 and +1 to a high note like C4, and everything else in between to notes in between, e.g. 0 goes to C3 and 0.5 to G3 and so on.
+
+We can also make combination parameters from the existing parameters. When you use the `Patching` interface to create a MIDI CC output, or a combination signal... this is how it works. Let's say you have a combination signal $$ \alpha $$ 
+
+Then you can choose some scale parameter and some other inputs, $$s_1, s_2,\dots,$$ and we create a combination output that still fits in the $$(-1,1)$$ range like this.
+
+$$
+\alpha = \phi\left(s_1\phi^{-1}(\operatorname{Cov}(\mathbf{u},\mathbf{y})) + s_2\phi^{-1}(\bar{\mathbf{x}}) + \dots\right) 
+$$
+
+Here $$\phi$$ is any 'sigmoid' function and $$\phi^{-1}$$ is the inverse function. 
+
+Sigmoid functions 'squash' a possibly-infinite number range into the $$(-1,1)$$ range.
+
+![Erf function, from https://en.wikipedia.org/wiki/Sigmoid_function#/media/File:Error_Function.svg](./media/Error_Function.svg)
+
+
 
 ## Ideas for the future
 
-* Gaussian mixture model
-
-  * we could get a consistent indexing for mixtures
-  by starting our mixtures at known points,
-  e.g. on the colour wheel or the space.
-  Colour wheel alone seems more natural,
-  but might require pre-processing by an inner product to find
-  a good starting spatial coordinate.
-* Compressive-sensing-style hacks, such as sparse random projections
+* nearest-neighbours in color space
 * image descriptors
 * PCA
 * Haar cascade.
