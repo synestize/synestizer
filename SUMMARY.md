@@ -5,7 +5,7 @@
 * [How to synestize](HOWTO.md)
 * [How to to develop synestizer](HOWTO_develop.md)
    * [Javascript libraries](Javascript_details.md)
-       * Javascript_video_analysis
+       * [Javascript_video_analysis](javascriptvideo_analysis.md)
    * [Audio synthesis](Audio_synthesis.md)
    * [Video analysis](Video_analysis.md)
    * [TODO list](TODO.md)
