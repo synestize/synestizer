@@ -1,9 +1,25 @@
 # Video Analysis
 
-To have a stable API to access audio and video we use webrtc-adapter.
+## How it works now
+
+At the moment, we use a very simple and easy model;
+We calculate the first two sample moments of the video data.
+
+Approximately 25 times per second we receive 3 matrixes full of pixel information from the video camera. Depending on the camera, this could be 1 megapixel or approximately 3 megabytes of data per frame
+
+This is too much data, however, for such simple statistics, so we preprocess it in the following ways.
+
+First, we *downsample* the video and chop it into a 64x64 pixel square.
+Second, we convert the colorspace from Red/Green/Blue to [Y/Cb/Cr](https://en.wikipedia.org/wiki/YCbCr)
+because otherwise blue and green are too similar).
+Approximately speaking, "Y" is "brightness", "Cb" is "blueness"
+and "Cr" is "Redness".
+
+![YCbCr space](./media/YCbCr.GIF)
 
 
-## Ideas for analyses
+
+## Ideas for the future
 
 * Gaussian mixture model
 
