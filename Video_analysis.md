@@ -32,7 +32,7 @@ These are the *first moments*.
 
 Now for the *second moments*....
 
-We add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x(64x64) sample matrix:
+We add spatial coordinates to the pixels - a pixel on the left side of the screen has a $$ U $$ coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a $$ V $$ coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x(64x64) sample matrix:
 
 $$ X_1 := \begin{align*}1, 1, Y_{11}, C^b_{11} C^r_{11}\end{align*}$$
 
@@ -44,14 +44,7 @@ The second moments are the sample covariance /correlation of this unpacked matri
 
 ## Ideas for the future
 
-* Gaussian mixture model
-
-  * we could get a consistent indexing for mixtures
-  by starting our mixtures at known points,
-  e.g. on the colour wheel or the space.
-  Colour wheel alone seems more natural,
-  but might require pre-processing by an inner product to find
-  a good starting spatial coordinate.
+* nearest-neighbours in color space
 * Compressive-sensing-style hacks, such as sparse random projections
 * image descriptors
 * PCA
