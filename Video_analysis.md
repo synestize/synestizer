@@ -34,8 +34,7 @@ Now for the *second moments*....
 
 We add spatial coordinates to the pixels - a pixel on the left side of the screen has a $$ V $$ coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a $$ U $$ coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x4096 sample matrix (We call the first column $$U$$ and the second column $$V$$
 
-$$ \begin{aligned}
-X &:= \begin{pmatrix}
+$$ \begin{aligned}X &:= \begin{pmatrix}
 1 & 1 & Y_{1,1} & C^b_{1,1} & C^r_{1,1}\\
 1 & 2 & Y_{1,2} & C^b_{1,2} & C^r_{1,2}\\
 \vdots &\vdots& \vdots &\vdots &\vdots\\
@@ -44,19 +43,17 @@ X &:= \begin{pmatrix}
 \vdots &\vdots& \vdots &\vdots &\vdots\\
 64 & 64 & Y_{64,64} & C^b_{64,64} & C^r_{64,64}\\
 \end{pmatrix}\\
-&= \begin{pmatrix}\mathbf{u}&\mathbf{v}&\mathbf{y}&\mathbf{c}^b&\mathbf{c}^r\end{pmatrix}
-\end{aligned}$$
+&= \begin{pmatrix}\mathbf{u}&\mathbf{v}&\mathbf{y}&\mathbf{c}^b&\mathbf{c}^r\end{pmatrix}\end{aligned} $$
 
 
 
 The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$ But for these remaining values we can calculate covariances, e.g.
 
 $$
-\begin{aligned}
-\operatorname{Cov}(\mathbf{u},\mathbf{y}) &= \frac{1}{4096} \sum_{i=1}^{4096} (\mathbf{u}_i-\bar{\mathbf{u}})(\mathbf{y}_i-\bar{\mathbf{y}})
-\end{aligned}
+\begin{aligned}\operatorname{Cov}(\mathbf{u},\mathbf{y}) &= \frac{1}{4096} \sum_{i=1}^{4096} (\mathbf{u}_i-\bar{\mathbf{u}})(\mathbf{y}_i-\bar{\mathbf{y}})\end{aligned}
 $$
-We can also calcualte self-variance, e.g. $$ \operatorname{Cov}(\mathbf{y},\mathbf{y}) $$ which is just the usual variance.
+
+We can also calculate self-variance, e.g. $$ \operatorname{Cov}(\mathbf{y},\mathbf{y}) $$ which is just the usual variance.
 The **u,v** columns aren't interesting, because we just made them up, so we do *not* calculate $$ \operatorname{Cov}(\mathbf{u},\mathbf{u}),  \operatorname{Cov}(\mathbf{u},\mathbf{v}),  \operatorname{Cov}(\mathbf{v},\mathbf{v})  $$, but all the rest are interesting. So, for example $$ \operatorname{Cov}(\mathbf{u},\mathbf{c}^b) $$ tells you how much the red *increases* as you go *up* the page.
 
 **NB** this part is constantly changing.
