@@ -21,7 +21,10 @@ export const SET_MASTER_TEMPO = 'SET_MASTER_TEMPO'
 export const SET_MASTER_GAIN = 'SET_MASTER_GAIN'
 export const SET_MASTER_MUTE = 'SET_MASTER_MUTE'
 export const TOGGLE_MASTER_MUTE = 'TOGGLE_MASTER_MUTE'
-export const ADD_ENSEMBLE = 'ADD_ENSEMBLE'
+
+export const TOGGLE_TRIAD_MUTE = 'TOGGLE_TRIAD_MUTE'
+
+
 /*
  * action creators
  */
@@ -85,6 +88,6 @@ export function setMasterMute(val) {
 export function toggleMasterMute() {
   return { type: TOGGLE_MASTER_MUTE, payload: null}
 }
-export function addEnsemble(meta) {
-  return { type: ADD_ENSEMBLE, payload: meta }
+export function toggleTriadMute() {
+  return { type: TOGGLE_TRIAD_MUTE, payload: null}
 }

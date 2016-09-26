@@ -3,7 +3,6 @@ import { map } from 'rxjs/operator/map';
 
 import  {
   addAudioSinkControl,
-  addEnsemble
 } from '../../actions/audio'
 
 import {
@@ -63,7 +62,6 @@ export default function init(store, signalio, audio) {
   }));
 
   let bottom = 0.0;
-  let octaveRange = 0.0;
   let offsets = [0, 5, 10];
   let retriggerInterval = Tone.Time('1m');
   let noteInterval = Tone.Time(retriggerInterval).mult(0.25);

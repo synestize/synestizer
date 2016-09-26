@@ -16,7 +16,6 @@ import {
   SET_MASTER_MUTE,
   TOGGLE_MASTER_MUTE,
   SET_MASTER_TEMPO,
-  ADD_ENSEMBLE
 } from '../actions/audio'
 import {
   REMOVE_GENERIC_SINK_SIGNAL,
@@ -24,6 +23,7 @@ import {
 import {
   RESET_TO_DEFAULT
 } from '../actions/gui'
+import triad from './audio/triad'
 
 export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
@@ -136,18 +136,6 @@ export function _sinkControl(
   }
   return next
 }
-function ensembles(state={}, {type, payload}) {
-  let next = state;
-  switch (type) {
-    case ADD_ENSEMBLE:
-      next = {...state}
-      next[payload.key] = payload
-      break
-    default:
-      return state
-  }
-  return next
-}
 
 export function gain(state=-10, {type, payload}) {
   switch (type) {
@@ -189,8 +177,8 @@ const audio = combineReducers({
    // sourceControlVals,
    sinkDevice,
    sinkControls,
-   ensembles,
    master,
+   triad
 })
 
 export default audio

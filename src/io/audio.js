@@ -12,7 +12,7 @@ import  {
   setAudioSinkDevice,
   setAllAudioSinkDevices,
   setAllAudioSinkControlActualValues,
-  setAudioReady
+  setAudioReady,
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
