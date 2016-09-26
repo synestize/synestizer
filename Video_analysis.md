@@ -93,6 +93,7 @@ Sigmoid functions 'squash' a possibly-infinite number range into the $$(-1,1)$$ 
 
 
 ## Ideas for the future
+The technically-minded might notice that we are doing *marginal* coorrelation, not conditional, partial correlation. Should our next step be to calculate a full linear regression and report partial correlations? Or should we try something much more complex again?
 
 * nearest-neighbours in color space
 * image descriptors
