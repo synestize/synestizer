@@ -157,7 +157,7 @@ export function mute(state=true, {type, payload}) {
   }
 }
 
-export function tempo(state=105, {type, payload}) {
+export function tempo(state=1000, {type, payload}) {
   switch (type) {
     case SET_MASTER_TEMPO:
       return payload
