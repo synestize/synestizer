@@ -72,7 +72,20 @@ The answer is that we choose a common language.
 
 In Synestizer/LTC, *all* the numbers are transformed so that they range between -1 and +1. And all musical parameters expect a number from -1 to +1... Then we map -1 to, say, a low note like C2 and +1 to a high note like C4, and everything else in between to notes in between, e.g. 0 goes to C3 and 0.5 to G3 and so on.
 
-T
+We can also make combination parameters from the existing parameters. When you use the `Patching` interface to create a MIDI CC output, or a combination signal... this is how it works. Let's say you have a combination signal $$ \alpha $$ 
+
+Then you can choose some scale parameter and some other inputs, $$s_1, s_2,\dots,$$ and we create a combination output that still fits in the $$(-1,1)$$ range like this.
+
+$$
+\alpha = \phi\left(s_1\phi^{-1}(\operatorname{Cov}(\mathbf{u},\mathbf{y})) + s_2\phi^{-1}(\bar{\mathbf{x}}) + \dots\right) 
+$$
+
+Here $$\phi$$ is any 'sigmoid' function and $$\phi^{-1}$$ is the inverse function. 
+
+Sigmoid functions 'squash' a possibly-infinite number range into the $$(-1,1)$$ range.
+
+![Erf function, from https://en.wikipedia.org/wiki/Sigmoid_function#/media/File:Error_Function.svg](./media/Error_Function.svg)
+
 
 
 ## Ideas for the future
