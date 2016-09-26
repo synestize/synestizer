@@ -23,9 +23,6 @@ and "Cr" is "Redness".
 
 
 At this stage we have 3 64x64 matrixes: $$ Y,C^b,C^r. $$
-You can imagine them like this:
-
-![By User:Brianski - Concept from en:Image:YUV_components.jpg, original public domain image at en:Image:Barns_grand_tetons.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=2792866](./media/Barn-yuv.png)
 
 For each of these we calculate the mean, a Y-mean, $$ \bar{Y}, $$ a Cb-mean $$ \bar{C}^b $$ etc
 
@@ -37,7 +34,7 @@ Now for the *second moments*....
 
 We add spatial coordinates to the pixels - a pixel on the left side of the screen has a $$ V $$ coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a $$ U $$ coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x4096 sample matrix (We call the first column $$U$$ and the second column $$V$$
 
-$$ \begin{align*}
+$$ \begin{aligned}
 X &:= \begin{pmatrix}
 1 & 1 & Y_{1,1} & C^b_{1,1} & C^r_{1,1}\\
 1 & 2 & Y_{1,2} & C^b_{1,2} & C^r_{1,2}\\
@@ -48,7 +45,7 @@ X &:= \begin{pmatrix}
 64 & 64 & Y_{64,64} & C^b_{64,64} & C^r_{64,64}\\
 \end{pmatrix}\\
 &= \begin{pmatrix}\mathbf{u}&\mathbf{v}&\mathbf{y}&\mathbf{c}^b&\mathbf{c}^r\end{pmatrix}
-\end{align*}$$
+\end{aligned}$$
 
 
 
@@ -60,7 +57,7 @@ $$
 \end{align*}
 $$
 We can also calcualte self-variance, e.g. $$ \operatorname{Cov}(\mathbf{y},\mathbf{y}) $$ which is just the usual variance.
-The **u,v** columns aren't interesting, because we just made them up, so we do *not* calculate $$ \operatorname{Cov}(\mathbf{u},\mathbf{u}),  \operatorname{Cov}(\mathbf{u},\mathbf{v}),  \operatorname{Cov}(\mathbf{v},\mathbf{v})  $$, but all the rest are useful. So, for example $$ \operatorname{Cov}(\mathbf{u},\mathbf{c}^b) $$ tells you how much the red *increases* as you go *up* the page.
+The **u,v** columns aren't interesting, because we just made them up, so we do *not* calculate $$ \operatorname{Cov}(\mathbf{u},\mathbf{u}),  \operatorname{Cov}(\mathbf{u},\mathbf{v}),  \operatorname{Cov}(\mathbf{v},\mathbf{v})  $$, but all the rest are interesting. So, for example $$ \operatorname{Cov}(\mathbf{u},\mathbf{c}^b) $$ tells you how much the red *increases* as you go *up* the page.
 
 **NB** this part is constantly changing.
 If you notice that I've flipped green and red, or up and down, then feel free to update the documentation ;-)
@@ -73,11 +70,10 @@ What tempo? How can we relate *statistics* to *parameters*?
 
 The answer is that we choose a common language.
 
-In Synestizer/LTC, *all* the numbers are transformed so that they range between -1 and +1. And all musical parameters expect a number from -1 to +1... Then we map -1 to, say, a low note like C2 and +1 to a high note like C4, and everything else in between goes to notes in between, e.g. 0 goes to C3 and 0.5 to G3 and so on.
+In Synestizer/LTC, *all* the numbers are transformed so that they range between -1 and +1. And all musical parameters expect a number from -1 to +1... Then we map -1 to, say, a low note like C2 and +1 to a high note like C4, and everything else in between to notes in between, e.g. 0 goes to C3 and 0.5 to G3 and so on.
 
-We can also make combination parameters from the existing parameters. When you use the `Patching` interface to create a MIDI CC output, or a combination signal... this is how it works.
+We can also make combination parameters from the existing parameters. When you use the `Patching` interface to create a MIDI CC output, or a combination signal... this is how it works. Let's say you have a combination signal $$ \alpha $$ 
 
-Let's say you have a combination signal $$ \alpha $$.
 Then you can choose some scale parameter and some other inputs, $$s_1, s_2,\dots,$$ and we create a combination output that still fits in the $$(-1,1)$$ range like this.
 
 $$
@@ -93,7 +89,6 @@ Sigmoid functions 'squash' a possibly-infinite number range into the $$(-1,1)$$ 
 
 
 ## Ideas for the future
-The technically-minded might notice that we are doing *marginal* coorrelation, not conditional, partial correlation. Should our next step be to calculate a full linear regression and report partial correlations? Or should we try something much more complex again?
 
 * nearest-neighbours in color space
 * image descriptors
@@ -101,10 +96,15 @@ The technically-minded might notice that we are doing *marginal* coorrelation, n
 * Haar cascade.
 * random IIR filters
 * cascaded IIR lowpass filters at successively lower resolution
-* peaks, troughs
-* max pooling, min pooling
-* Relu
+
+    * You know what could lower the dimension further? Reporting only the extremest n extrema of the filtered fields, and the coordinates thereof.
+    * Also arbitrary differences between layers
+    * would the color coordinates interact at all?
+    * could even takes squared difference features to extract localised frequency
+
+* something like a convolution layer from machine vision?
 * autocorrelation
+* particle filters
 * FFT features (or something else translation/phase-invariant?)
 * inner-product with desired eigen-features
 * user interaction: They choose a few key scenes, and we try to measure distance from those scenes.
@@ -127,7 +127,36 @@ The technically-minded might notice that we are doing *marginal* coorrelation, n
     * http://techtalks.tv/talks/randomized-decision-forests-and-their-applications-in-computer-vision-jamie/59432/
 
 
+## Machine vision libraries
 
+* tangible.js tracks a bunch of useful libraries such as [machine vision in js](http://tangiblejs.com/libraries/computer-vision)
+* [tracking.js](http://trackingjs.com/) does cool stuff already
+* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
+* [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
+* [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
+* [blob detection](http://blog.acipo.com/blob-detection-js/)
+* [segmentation engine](http://vision.akshaybhat.com/)
+* [graphcut](http://www.jscuts.com/graphcuts/)
+
+## WebGL optimisation
+
+* notes about webgl support - e.g.
+* FFT options for mobile.
+
+    * [webgl fft paper](http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf)
+    * [webgl fft demo](https://github.com/wuhao1117/WebGL-Ocean-FFT). No open-source, sadly.
+    * [MDC animates textures in webgl ](https://developer.mozilla.org/en-US/docs/Web/WebGL/Animating_textures_in_WebGL)
+
+* video+WebGL:
+
+    * [live video in webgl](http://learningthreejs.com/blog/2012/02/07/live-video-in-webgl/)
+    * [three.js and video](http://threejs.org/examples/#canvas_materials_video)
+
+* [how to do WebGL-optimized image processing](http://learningwebgl.com/blog/?p=1786)
+* [good plain intro](http://www.html5rocks.com/en/tutorials/webgl/webgl_fundamentals/)
+* [webgl transforms](http://games.greggman.com/game/webgl-2d-matrices/)
+
+* CSS filters to shunt to GPU? blur+invert+opacity gives us a cheap edge detection
 
 ## Colour handling
 
