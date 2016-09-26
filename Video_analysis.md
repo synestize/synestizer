@@ -49,15 +49,31 @@ X &:= \begin{pmatrix}
 
 
 
-The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$ The *u,v* columns aren't interesting, because we just made them up. But for the remaining values we can calculate covariances, e.g.
+The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$ But for these remaining values we can calculate covariances, e.g.
 
 $$
 \begin{align*}
 \operatorname{Cov}(\mathbf{u},\mathbf{y}) &= \frac{1}{4096} \sum_{i=1}^{4096} (\mathbf{u}_i-\bar{\mathbf{u}})(\mathbf{y}_i-\bar{\mathbf{y}})
 \end{align*}
 $$
+We can also calcualte self-variance, e.g. $$ \operatorname{Cov}(\mathbf{y},\mathbf{y}) $$ which is just the usual variance.
+The **u,v** columns aren't interesting, because we just made them up, so we do *not* calculate $$ \operatorname{Cov}(\mathbf{u},\mathbf{u}),  \operatorname{Cov}(\mathbf{u},\mathbf{v}),  \operatorname{Cov}(\mathbf{v},\mathbf{v})  $$, but all the rest are interesting. So, for example $$ \operatorname{Cov}(\mathbf{u},\mathbf{c}^b) $$ tells you how much the red *increases* as you go *up* the page.
+
+**NB** this part is constantly changing.
+If you notice that I've flipped green and red, or up and down, then feel free to update the documentation ;-)
 
 ## Mapping the statistics
+
+The problem now is that these value are *arbitrary*. Who cares if $$\bar{\mathbf{C}^b}=0.78$$? What does that number mean?
+What MIDI note is $$0.78$$? What MIDI CC value?
+What tempo? How can we relate *statistics* to *parameters*?
+
+The answer is that we choose a common language.
+
+In Synestizer/LTC, *all* the numbers are transformed so that they range between -1 and +1. And all musical parameters expect a number from -1 to +1... Then we map -1 to, say, a low note like C2 and +1 to a high note like C4, and everything else in between to notes in between, e.g. 0 goes to C3 and 0.5 to G3 and so on.
+
+T
+
 
 ## Ideas for the future
 
