@@ -19,19 +19,28 @@ and *everything* is too similar to brightness).
 Approximately speaking, "Y" is "brightness", "Cb" is "blueness"
 and "Cr" is "Redness".
 
-At this stage we have 3 64x64 matrixes: $$ Y,C_b,C_r. $$
-
-For each of these we calculate the mean, a Y-mean, a Cb-mean and a Cr-mean.
-These are the *first moments*.
-
-Now for the *second moments*.
-
-
-Then we add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 1. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 1.
-
 ![YCbCr space, from https://en.wikipedia.org/wiki/File:YCbCr.GIF](./media/YCbCr.GIF)
 
-Next, we
+
+At this stage we have 3 64x64 matrixes: $$ Y,C^b,C^r. $$
+
+For each of these we calculate the mean, a Y-mean, $$ \bar{Y}, $$ a Cb-mean $$ \bar{C}^b $$ etc
+
+$$ \bar{Y} = \sum_{i=1}^{64}\sum_{j=1}^{64} Y_{ij} $$
+
+These are the *first moments*.
+
+Now for the *second moments*....
+
+We add spatial coordinates to the pixels - a pixel on the left side of the screen has an x coordinate of 0. On the right side it has a coordinate of 64. On the bottom of the screen it would have a Y coordinate of 0 and on the top, 64. Now we "unpack" these index matrices into a 5x(64x64) sample matrix:
+
+$$ X_1 := \begin{align*}1, 1, Y_{11}, C^b_{11} C^r_{11}\end{align*}$$
+
+$$ X_2 := \begin{align*}1, 2, Y_{12}, C^b_{12} C^r_{12}\end{align*}$$
+
+...
+
+The second moments are the sample covariance /correlation of this unpacked matrix $$ X. $$
 
 ## Ideas for the future
 
