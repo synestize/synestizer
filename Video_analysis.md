@@ -66,20 +66,11 @@ The second moments are the sample covariance /correlation of this unpacked matri
 
 * something like a convolution layer from machine vision?
 * autocorrelation
-* Kalman filters
 * particle filters
-
-    * with a loss fn to do with low-variance estimates of next timestep value in IJYUV space
-
 * FFT features (or something else translation/phase-invariant?)
-* exponentially weighted moments
 * inner-product with desired eigen-features
-* Features based on correlation with eigenfeatures (even fourier ones?)
-* MCMC updating
-* Gaussian mixture models
 * user interaction: They choose a few key scenes, and we try to measure distance from those scenes.
 * other clustering, say, spectral?
-* switch to YUV-style projections - say, [JPEG YCbCr](https://en.wikipedia.org/wiki/YCbCr#JPEG_conversion) for correlation structures.
 * [motion detection](http://www.adobe.com/devnet/html5/articles/javascript-motion-detection.html)
 * [various sweet segmenations hacks](https://stackoverflow.com/questions/31071781/html5-canvas-image-segmentation)
 * neural networks?
@@ -87,7 +78,7 @@ The second moments are the sample covariance /correlation of this unpacked matri
     * We can [train them online](https://cs.stanford.edu/people/karpathy/convnetjs/)
     * https://github.com/karpathy/recurrentjs
     * or use a high-performance pre-trained JS prediction models via [neocortex.js](https://github.com/scienceai/neocortex)?
-    Note this woudl also get us features for free even if we ignore the model.
+    Note this would also get us features for free even if we ignore the model.
     * can we do *recursive* NN for realtime stuff this way?
     * Examples from keras https://github.com/fchollet/keras/tree/master/examples
     * torch examples http://www.di.ens.fr/willow/research/weakcnn/ https://hal.inria.fr/hal-01015140
