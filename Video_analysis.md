@@ -92,7 +92,7 @@ The second moments are the sample covariance /correlation of this unpacked matri
 ## Machine vision libraries
 
 * tangible.js tracks a bunch of useful libraries such as [machine vision in js](http://tangiblejs.com/libraries/computer-vision)
-* [tracking.js]http://trackingjs.com/) does cool stuff already
+* [tracking.js](http://trackingjs.com/) does cool stuff already
 * so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
 * [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
