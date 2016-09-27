@@ -100,7 +100,7 @@ export default function init(store, signalio, audio) {
 
   const multiArpeggiate= (time) => {
     if (arpy!==undefined) {
-      arpy.stop(time)
+      arpy.stop(time-0.01)
       arpy.dispose()
     }
     arpy = new Tone.Part(playNote, notes())

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { share } from 'rxjs/operator/share';
+import { sampleTime } from 'rxjs/operator/sampleTime';
 import { saturate, desaturate } from '../lib/transform.js'
 import  {
   setValidAudioSourceDevice,
@@ -161,7 +162,8 @@ export default function init(store, signalio) {
     Object.assign(audioInfrastructure, {
       context,
     });
-    Tone.Transport.start();
+    Tone.Transport.bpm.value = 1000
+    Tone.Transport.start('1m');
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
 
@@ -218,7 +220,7 @@ export default function init(store, signalio) {
 
   storeStream.pluck(
     'audio', 'master', 'tempo'
-  ).subscribe((bpm)=>{
+  )::sampleTime(100).subscribe((bpm)=>{
     Tone.Transport.bpm.rampTo(bpm, 0.1)
   });
   return audioInfrastructure
