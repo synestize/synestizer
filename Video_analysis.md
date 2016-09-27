@@ -80,7 +80,8 @@ Sigmoid functions 'squash' a possibly-infinite number range into the $$(-1,1)$$ 
 
 ![Erf function, from https://en.wikipedia.org/wiki/Sigmoid_function#/media/File:Error_Function.svg](./media/Error_Function.svg)
 
-
+In Synestizer, these $$ s_i $$ parameters are represented as the slider positions in the patching interface:
+![Scale factor mapping up](media/mapping_ui.png)
 
 ## Ideas for the future
 
