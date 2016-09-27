@@ -195,7 +195,7 @@ export default function init(store, signalio) {
   }
 
   //
-  actualControlValues.throttleTime(UI_PERIOD_MS).subscribe((vals) => {
+  actualControlValues.sampleTime(UI_PERIOD_MS).subscribe((vals) => {
     store.dispatch(setAllAudioSinkControlActualValues(vals));
   });
 

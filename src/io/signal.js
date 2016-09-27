@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { scan } from 'rxjs/operator/scan';
-import { throttleTime } from 'rxjs/operator/throttleTime';
+import { sampleTime } from 'rxjs/operator/sampleTime';
 
 import { saturate, desaturate } from '../lib/transform.js'
 import {
@@ -30,12 +30,12 @@ export default function init(store) {
   sourceUpdates::scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  )::throttleTime(SIGNAL_PERIOD_MS).subscribe(
+  )::sampleTime(SIGNAL_PERIOD_MS).subscribe(
     (sourceState) => {
       sourceStateSubject.next(sourceState)
     }
   )
-  sourceStateSubject.throttleTime(UI_PERIOD_MS).subscribe((state) => {
+  sourceStateSubject::sampleTime(UI_PERIOD_MS).subscribe((state) => {
     store.dispatch(setAllSourceSignalValues(state))
   });
   sourceStateSubject.subscribe(
@@ -45,7 +45,7 @@ export default function init(store) {
       comboStateSubject.next({...sourceState, ...sinkState})
     }
   )
-  sinkStateSubject::throttleTime(UI_PERIOD_MS).subscribe((sinkState) => {
+  sinkStateSubject::sampleTime(UI_PERIOD_MS).subscribe((sinkState) => {
     store.dispatch(setAllSinkSignalValues(sinkState))
   });
   function projectObs(sourceState={}) {
