@@ -112,6 +112,7 @@ export default function init(store, signalio, audio) {
     }
     if (arpy!==undefined) {
       oldarpy = arpy;
+      arpy = undefined;
       oldarpy.stop(time )
       oldarpy.dispose()
     }
