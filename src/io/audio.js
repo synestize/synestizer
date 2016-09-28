@@ -162,7 +162,7 @@ export default function init(store, signalio) {
     Object.assign(audioInfrastructure, {
       context,
     });
-    Tone.Transport.bpm.value = 1000
+    Tone.Transport.bpm.value = 1100
     Tone.Transport.start('1m');
     ensembles.triad = triad_(store, signalio, audioInfrastructure)
   };
