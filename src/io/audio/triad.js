@@ -98,7 +98,7 @@ export default function init(store, signalio, audio) {
       time);
   }
 
-  const multiArpeggiate= (time) => {
+  const multiArpeggiate = (time) => {
     console.debug('ma',time)
     if (arpy!==undefined) {
       arpy.stop(time-0.01 )
