@@ -1,5 +1,7 @@
 import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
 import { map } from 'rxjs/operator/map';
+import { pluck } from 'rxjs/operator/pluck';
+import { toObservable } from '../../lib/rx_redux'
 
 import  {
   addAudioSinkControl,
@@ -68,6 +70,7 @@ export default function init(store, signalio, audio) {
   let gateScale = 0.5;
   let gain = 0.0;
   let arpy;
+  let mute = false;
 
   function notes() {
     const notes = []
@@ -112,12 +115,18 @@ export default function init(store, signalio, audio) {
       oldarpy.stop(time )
       oldarpy.dispose()
     }
-    arpy = new Tone.Part(playNote, seq)
-    arpy.loopStart = 0
-    arpy.loopEnd = Tone.Time(retriggerInterval)
-    arpy.loop = true
-    arpy.start(time)
+    if (!mute) {
+      arpy = new Tone.Part(playNote, seq)
+      arpy.loopStart = 0
+      arpy.loopEnd = Tone.Time(retriggerInterval)
+      arpy.loop = true
+      arpy.start(time)
+    }
   }
+  toObservable(store)::pluck('audio', 'triad', 'mute').subscribe((newMute)=>{
+    console.debug('triadmute', newMute)
+    mute = newMute;
+  });
 
   const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
