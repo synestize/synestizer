@@ -104,12 +104,12 @@ export default function init(store, signalio, audio) {
   const multiArpeggiate = (time) => {
     let seq = notes()
     let oldarpy;
-    console.debug('ma', time,
-      Tone.Time(retriggerInterval).eval(),
-    )
-    for (let n of seq) {
-      console.debug('n', n.time.eval(), n.dur.eval() )
-    }
+    // console.debug('ma', time,
+    //   Tone.Time(retriggerInterval).eval(),
+    // )
+    // for (let n of seq) {
+    //   console.debug('n', n.time.eval(), n.dur.eval() )
+    // }
     if (arpy!==undefined) {
       oldarpy = arpy;
       arpy = undefined;
@@ -125,7 +125,7 @@ export default function init(store, signalio, audio) {
     }
   }
   toObservable(store)::pluck('audio', 'triad', 'mute').subscribe((newMute)=>{
-    console.debug('triadmute', newMute)
+    // console.debug('triadmute', newMute)
     mute = newMute;
   });
 
