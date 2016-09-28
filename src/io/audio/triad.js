@@ -74,7 +74,7 @@ export default function init(store, signalio, audio) {
     let dur =  Tone.Time(retriggerInterval).mult(gateScale);
     for (let i=0; i<3; i++) {
       const note = {
-        time: Tone.Time(noteInterval).mult(i).eval(),
+        time: Tone.Time(noteInterval).mult(i),
         note: Tone.Frequency(
           wrap(bottom, bottom+12, offsets[i]),
           "midi",
@@ -99,14 +99,22 @@ export default function init(store, signalio, audio) {
   }
 
   const multiArpeggiate = (time) => {
-    console.debug('ma',time)
-    if (arpy!==undefined) {
-      arpy.stop(time-0.01 )
-      arpy.dispose()
+    let seq = notes()
+    let oldarpy;
+    console.debug('ma', time,
+      Tone.Time(retriggerInterval).eval(),
+    )
+    for (let n of seq) {
+      console.debug('n', n.time.eval(), n.dur.eval() )
     }
-    arpy = new Tone.Part(playNote, notes())
+    if (arpy!==undefined) {
+      oldarpy = arpy;
+      oldarpy.stop(time )
+      oldarpy.dispose()
+    }
+    arpy = new Tone.Part(playNote, seq)
     arpy.loopStart = 0
-    arpy.loopEnd = retriggerInterval
+    arpy.loopEnd = Tone.Time(retriggerInterval)
     arpy.loop = true
     arpy.start(time)
   }
