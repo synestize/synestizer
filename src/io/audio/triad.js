@@ -99,8 +99,9 @@ export default function init(store, signalio, audio) {
   }
 
   const multiArpeggiate= (time) => {
+    console.debug('ma',time)
     if (arpy!==undefined) {
-      arpy.stop(time-0.01)
+      arpy.stop(time-0.01 )
       arpy.dispose()
     }
     arpy = new Tone.Part(playNote, notes())
@@ -110,7 +111,7 @@ export default function init(store, signalio, audio) {
     arpy.start(time)
   }
 
-  const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('1m');
+  const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
   audio.actualControlValues.pluck('triad|pitch-0001').subscribe(
     (val)=>{
