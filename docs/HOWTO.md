@@ -42,10 +42,10 @@ In addition, you can visit [http://localhost:8080/webpack-dev-server/](http://lo
 
 TBD
 
-## Connecting MIDI Output to your DAW
+## Sending MIDI Output to your DAW
 
 TBD
 
-## Accepting MIDI input from your MIDI controller
+## Receiving MIDI input from your MIDI controller
 
 TBD
