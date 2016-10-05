@@ -6,7 +6,8 @@ const TriadControl = ({
     onChangeMute,
     mute
   }) => {
-  return (<div className="audioControlset">
+  return (<div className="audiocontrolset">
+    <h3>Triad</h3>
     <SpecificAudioParam sinkControlKey='triad|pitch-0001' />
     <SpecificAudioParam sinkControlKey='triad|pitch-0002' />
     <SpecificAudioParam sinkControlKey='triad|pitch-0003' />

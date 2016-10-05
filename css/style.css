@@ -260,6 +260,15 @@ a, a:hover, a:active, a:focus {
     cursor: pointer;
 }
 
+#synapp .audiocontrolset {
+  border-style: solid;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  display: block;
+  border-width: 1px;
+  border-radius: 8px;
+}
+
 #synapp input[type=number]::-webkit-inner-spin-button,
 #synapp input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -301,6 +310,7 @@ a, a:hover, a:active, a:focus {
 #synapp .button.mute.true {
   background-color: red;
 }
+
 
 /**
  Scrollbars

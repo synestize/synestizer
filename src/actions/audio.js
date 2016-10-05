@@ -91,3 +91,6 @@ export function toggleMasterMute() {
 export function toggleTriadMute() {
   return { type: TOGGLE_TRIAD_MUTE, payload: null}
 }
+export function toggleBubbleChamberMute() {
+  return { type: TOGGLE_BUBBLE_CHAMBER_MUTE, payload: null}
+}
