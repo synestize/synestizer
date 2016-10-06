@@ -7,7 +7,7 @@ import {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    mute: state.audio.triad.mute,
+    mute: state.audio.bubbleChamber.mute,
   }
 };
 
