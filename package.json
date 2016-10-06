@@ -39,7 +39,6 @@
     "babel-preset-escompress": "^1.0.0",
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.9.0",
-    "hacktimer": "git://github.com/turuslan/HackTimer",
     "localforage": "^1.4.2",
     "node-static": "^0.7.9",
     "react": "^15.3.2",
