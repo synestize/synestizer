@@ -1,5 +1,5 @@
 import Rx from 'rxjs/Rx'
-/*
+
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 import {Observer} from 'rxjs/Observer'
@@ -9,7 +9,10 @@ import {fromEvent} from 'rxjs/observable/fromEvent';
 import {fromPromise} from 'rxjs/observable/fromPromise';
 import {filter} from 'rxjs/operator/filter';
 import {pluck} from 'rxjs/operator/pluck';
-*/
+import {interval} from 'rxjs/operator/timeInterval';
+
+import {SIGNAL_PERIOD_MS, UI_PERIOD_MS } from '../settings'
+
 import  {
   addSourceSignal,
   removeSourceSignal,
@@ -24,12 +27,12 @@ import {
 import { toObservable } from '../lib/rx_redux'
 import { clip1 } from '../lib/transform'
 
-
 export default function init(store, signalio, videoDom) {
   //set up video system
   const canvasElem = videoDom.querySelector('canvas');
   const videoElem = videoDom.querySelector('video');
   const gfxCtx = canvasElem.getContext('2d');
+  let pixelPump;
 
   //hardware business
   let sources = new Map(); //id -> device
@@ -104,8 +107,10 @@ export default function init(store, signalio, videoDom) {
     }
   }
   function pumpPixels() {
-    let p = grabPixels();
-    statsInbox.next({type:"pixels", payload: p})
+    pixelPump = Rx.Observable.interval(SIGNAL_PERIOD_MS);
+    pixelPump.subscribe(() => {
+      statsInbox.next({type:"pixels", payload: grabPixels()})
+    });
   }
 
   function updateVideoIO(mediadevices) {
@@ -186,11 +191,6 @@ export default function init(store, signalio, videoDom) {
       //console.debug("got stuff back", payload);
       //report data streams
       statsStreamSpray(payload);
-      //Now repeat
-      Rx.Scheduler.async.schedule(
-        pumpPixels,
-        20
-      );
     }
   );
   function statsStreamSpray(x) {
