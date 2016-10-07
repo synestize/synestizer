@@ -3,7 +3,6 @@ import Rx from 'rxjs/Rx'
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 import {Observer} from 'rxjs/Observer'
-import {Scheduler} from 'rxjs/Scheduler'
 import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
 import {fromEvent} from 'rxjs/observable/fromEvent';
 import {fromPromise} from 'rxjs/observable/fromPromise';

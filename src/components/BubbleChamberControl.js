@@ -12,9 +12,9 @@ const BubbleChamberControl = ({
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0002' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0003' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|bottom' />
-    <SpecificAudioParam sinkControlKey='bubbleChamber|gate' />
-    <SpecificAudioParam sinkControlKey='bubbleChamber|arprate' />
-    <SpecificAudioParam sinkControlKey='bubbleChamber|retriggerinterval' />
+    <SpecificAudioParam sinkControlKey='bubbleChamber|rate' />
+    <SpecificAudioParam sinkControlKey='bubbleChamber|density' />
+    <SpecificAudioParam sinkControlKey='bubbleChamber|shuffle' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|gain' />
     <MuteButton mute={mute} onClick={onChangeMute} />
   </div>)

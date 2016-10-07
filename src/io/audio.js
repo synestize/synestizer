@@ -29,7 +29,7 @@ import {
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
 import triad_ from './audio_ensemble/triad'
-import bubbleChamber_ from './audio_ensemble/bubble_chamber'
+import bubbleChamber_ from './audio_ensemble/bubbleChamber'
 
 export default function init(store, signalio) {
   //hardware business
