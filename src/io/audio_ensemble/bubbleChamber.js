@@ -19,6 +19,10 @@ import {
   wrap
 } from '../../lib/math'
 
+import {
+  subSignal
+} from '../../lib/signalMangle'
+
 import Tone from 'tone/build/Tone.js'
 
 export default function init(store, signalio, audio) {
@@ -129,39 +133,49 @@ export default function init(store, signalio, audio) {
       arpy.start(time)
     }
   }
-  toObservable(store)::pluck('audio', 'triad', 'mute').subscribe((newMute)=>{
+  toObservable(store)::pluck(
+    'audio',
+    'bubbleChamber',
+    'mute'
+  ).subscribe((newMute)=>{
     // console.debug('triadmute', newMute)
     mute = newMute;
   });
 
   const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
-  audio.actualControlValues.pluck('triad|pitch-0001').subscribe(
+  let mappedVals = audio.actualControlValues::map(
+    subSignal('bubbleChamber|')
+  ).subscribe((sig)=>{
+    console.debug('sig', sig)
+  })
+
+  audio.actualControlValues.pluck('bubbleChamber|pitch-0001').subscribe(
     (val)=>{
       offsets[0] = bipolInt(0, 3, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|pitch-0002').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|pitch-0002').subscribe(
     (val)=>{
       offsets[1] = bipolInt(4, 7, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|pitch-0003').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|pitch-0003').subscribe(
     (val)=>{
       offsets[2] = bipolInt(8, 12, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|bottom').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|bottom').subscribe(
     (val)=>{
       bottom = bipolInt(40, 70, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|gate').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|gate').subscribe(
     (val)=>{
       gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
     }
   );
-  audio.actualControlValues.pluck('triad|retriggerinterval')::map(
+  audio.actualControlValues.pluck('bubbleChamber|retriggerinterval')::map(
     (val)=>bipolLookup(
       ['16n', '8n', '4n', '2n', '1m'],
       val || 0.0)
@@ -170,14 +184,14 @@ export default function init(store, signalio, audio) {
         retriggerInterval = Tone.Time(val);
       }
   )
-  audio.actualControlValues.pluck('triad|arprate').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|arprate').subscribe(
     (val)=>{
       noteInterval = Tone.Time(retriggerInterval).mult(
         bipolLin(0.5, 0.0, val || 0.0)
       )
     }
   );
-  audio.actualControlValues.pluck('triad|gain').subscribe(
+  audio.actualControlValues.pluck('bubbleChamber|gain').subscribe(
     (val)=>{
       gain = bipolLin(-30.0, 0.0, val || 0.0)
     }
