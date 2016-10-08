@@ -23,17 +23,17 @@ import Tone from 'tone/build/Tone.js'
 
 export default function init(store, signalio, audio) {
   store.dispatch(addAudioSinkControl({
-    key: 'triad|pitch-0001',
+    key: 'triad|pitch__0001',
     label: "Pitch 1",
     ensemble: "Triad",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'triad|pitch-0002',
+    key: 'triad|pitch__0002',
     label: "Pitch 2",
     ensemble: "Triad",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'triad|pitch-0003',
+    key: 'triad|pitch__0003',
     label: "Pitch 3",
     ensemble: "Triad",
   }));
@@ -131,17 +131,17 @@ export default function init(store, signalio, audio) {
 
   const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
-  audio.actualControlValues.pluck('triad|pitch-0001').subscribe(
+  audio.actualControlValues.pluck('triad|pitch__0001').subscribe(
     (val)=>{
       offsets[0] = bipolInt(0, 3, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|pitch-0002').subscribe(
+  audio.actualControlValues.pluck('triad|pitch__0002').subscribe(
     (val)=>{
       offsets[1] = bipolInt(4, 7, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('triad|pitch-0003').subscribe(
+  audio.actualControlValues.pluck('triad|pitch__0003').subscribe(
     (val)=>{
       offsets[2] = bipolInt(8, 12, val || 0.0);
     }

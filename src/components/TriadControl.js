@@ -8,9 +8,9 @@ const TriadControl = ({
   }) => {
   return (<div className="audiocontrolset">
     <h3>Triad</h3>
-    <SpecificAudioParam sinkControlKey='triad|pitch-0001' />
-    <SpecificAudioParam sinkControlKey='triad|pitch-0002' />
-    <SpecificAudioParam sinkControlKey='triad|pitch-0003' />
+    <SpecificAudioParam sinkControlKey='triad|pitch__0001' />
+    <SpecificAudioParam sinkControlKey='triad|pitch__0002' />
+    <SpecificAudioParam sinkControlKey='triad|pitch__0003' />
     <SpecificAudioParam sinkControlKey='triad|bottom' />
     <SpecificAudioParam sinkControlKey='triad|gate' />
     <SpecificAudioParam sinkControlKey='triad|arprate' />
