@@ -1,10 +1,10 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { scan } from 'rxjs/operator/scan';
-import { sampleTime } from 'rxjs/operator/sampleTime';
-import {pluck} from 'rxjs/operator/pluck';
-import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
+import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/sampleTime';
+import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { saturate, desaturate } from '../lib/transform.js'
 import {
@@ -29,15 +29,15 @@ export default function init(store) {
   const sinkStateSubject = new BehaviorSubject();
   const comboStateSubject = new BehaviorSubject();
 
-  sourceUpdates::scan(
+  sourceUpdates.scan(
     (sourceState, upd) => ({...sourceState, ...upd}),
     {}
-  )::sampleTime(SIGNAL_PERIOD_MS).subscribe(
+  ).sampleTime(SIGNAL_PERIOD_MS).subscribe(
     (sourceState) => {
       sourceStateSubject.next(sourceState)
     }
   )
-  sourceStateSubject::sampleTime(UI_PERIOD_MS).subscribe((state) => {
+  sourceStateSubject.sampleTime(UI_PERIOD_MS).subscribe((state) => {
     store.dispatch(setAllSourceSignalValues(state))
   });
   sourceStateSubject.subscribe(
@@ -47,7 +47,7 @@ export default function init(store) {
       comboStateSubject.next({...sourceState, ...sinkState})
     }
   )
-  sinkStateSubject::sampleTime(UI_PERIOD_MS).subscribe((sinkState) => {
+  sinkStateSubject.sampleTime(UI_PERIOD_MS).subscribe((sinkState) => {
     store.dispatch(setAllSinkSignalValues(sinkState))
   });
   function projectObs(sourceState={}) {
@@ -74,9 +74,9 @@ export default function init(store) {
     // console.debug('sinkState', sinkState)
     return sinkState
   }
-  storeStream::pluck(
+  storeStream.pluck(
     'signal', 'nGenericSinkSignals'
-  )::distinctUntilChanged().subscribe(
+  ).distinctUntilChanged().subscribe(
     (n) => {
       let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
       const currN = Object.keys(

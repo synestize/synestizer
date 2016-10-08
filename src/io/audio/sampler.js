@@ -1,6 +1,6 @@
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { map } from 'rxjs/operator/map';
-import { pluck } from 'rxjs/operator/pluck';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/pluck';
 import { toObservable } from '../../lib/rx_redux'
 
 import  {

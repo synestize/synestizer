@@ -1,6 +1,6 @@
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { map } from 'rxjs/operator/map';
-import { pluck } from 'rxjs/operator/pluck';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/pluck';
 import { toObservable } from '../../lib/rx_redux'
 
 import  {
@@ -124,55 +124,55 @@ export default function init(store, signalio, audio) {
       arpy.start(time)
     }
   }
-  toObservable(store)::pluck('audio', 'triad', 'mute').subscribe((newMute)=>{
+  toObservable(store).pluck('audio', 'triad', 'mute').subscribe((newMute)=>{
     // console.debug('triadmute', newMute)
     mute = newMute;
   });
 
   const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
-  audio.actualControlValues::pluck('triad|pitch-0001').subscribe(
+  audio.actualControlValues.pluck('triad|pitch-0001').subscribe(
     (val)=>{
       offsets[0] = bipolInt(0, 3, val || 0.0);
     }
   );
-  audio.actualControlValues::pluck('triad|pitch-0002').subscribe(
+  audio.actualControlValues.pluck('triad|pitch-0002').subscribe(
     (val)=>{
       offsets[1] = bipolInt(4, 7, val || 0.0);
     }
   );
-  audio.actualControlValues::pluck('triad|pitch-0003').subscribe(
+  audio.actualControlValues.pluck('triad|pitch-0003').subscribe(
     (val)=>{
       offsets[2] = bipolInt(8, 12, val || 0.0);
     }
   );
-  audio.actualControlValues::pluck('triad|bottom').subscribe(
+  audio.actualControlValues.pluck('triad|bottom').subscribe(
     (val)=>{
       bottom = bipolInt(40, 70, val || 0.0);
     }
   );
-  audio.actualControlValues::pluck('triad|gate').subscribe(
+  audio.actualControlValues.pluck('triad|gate').subscribe(
     (val)=>{
       gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
     }
   );
-  audio.actualControlValues::pluck('triad|retriggerinterval')::map(
+  audio.actualControlValues.pluck('triad|retriggerinterval').map(
     (val)=>bipolLookup(
       ['16n', '8n', '4n', '2n', '1m'],
       val || 0.0)
-    )::distinctUntilChanged().subscribe(
+    ).distinctUntilChanged().subscribe(
       (val)=>{
         retriggerInterval = Tone.Time(val);
       }
   )
-  audio.actualControlValues::pluck('triad|arprate').subscribe(
+  audio.actualControlValues.pluck('triad|arprate').subscribe(
     (val)=>{
       noteInterval = Tone.Time(retriggerInterval).mult(
         bipolLin(0.5, 0.0, val || 0.0)
       )
     }
   );
-  audio.actualControlValues::pluck('triad|gain').subscribe(
+  audio.actualControlValues.pluck('triad|gain').subscribe(
     (val)=>{
       gain = bipolLin(-30.0, 0.0, val || 0.0)
     }

@@ -1,11 +1,11 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { share } from 'rxjs/operator/share';
-import {pluck} from 'rxjs/operator/pluck';
-import { sampleTime } from 'rxjs/operator/sampleTime';
-import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromPromise';
+import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/sampleTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 import { saturate, desaturate } from '../lib/transform.js'
 import  {
@@ -47,13 +47,13 @@ export default function init(store, signalio) {
   let validSource = false;
   let validSink = false;
   let audioReady = false;
-  let storeStream = toObservable(store)::share();
+  let storeStream = toObservable(store).share();
 
   let actualControlValueStream = new BehaviorSubject(
     store.getState().audio.sinkControlBias
   );
   let ensembles = {}
-  let actualControlValues = actualControlValueStream::share()
+  let actualControlValues = actualControlValueStream.share()
   const audioInfrastructure = {
     actualControlValues,
     ensembles
@@ -87,13 +87,13 @@ export default function init(store, signalio) {
     store.dispatch(setAllAudioSinkDevices(sinkNames));
   };
 
-  Observable::combineLatest(
-    storeStream::pluck(
+  Observable.combineLatest(
+    storeStream.pluck(
       '__volatile', 'audio', 'sources'
-    )::distinctUntilChanged(),
-    storeStream::pluck(
+    ).distinctUntilChanged(),
+    storeStream.pluck(
       'audio', 'sourceDevice'
-    )::distinctUntilChanged(),
+    ).distinctUntilChanged(),
   ).subscribe(
     ([allSources, sourceDev])=> {
       store.dispatch(
@@ -101,13 +101,13 @@ export default function init(store, signalio) {
       );
     }
   )
-  Observable::combineLatest(
-    storeStream::pluck(
+  Observable.combineLatest(
+    storeStream.pluck(
       '__volatile', 'audio', 'sinks'
-    )::distinctUntilChanged(),
-    storeStream::pluck(
+    ).distinctUntilChanged(),
+    storeStream.pluck(
       'audio', 'sinkDevice'
-    )::distinctUntilChanged(),
+    ).distinctUntilChanged(),
   ).subscribe(
     ([allSinks, sinkDev])=> {
       store.dispatch(
@@ -116,20 +116,20 @@ export default function init(store, signalio) {
     }
   )
 
-  storeStream::pluck(
+  storeStream.pluck(
     '__volatile', 'audio', 'validSink'
-  )::distinctUntilChanged().subscribe((valid)=>{
+  ).distinctUntilChanged().subscribe((valid)=>{
     if (valid) {
       doAudioSinkDevicePlumbing();
     }
   });
-  Observable::combineLatest(
-    storeStream::pluck(
+  Observable.combineLatest(
+    storeStream.pluck(
       '__volatile', 'audio', 'validSink'
-    )::distinctUntilChanged(),
-    storeStream::pluck(
+    ).distinctUntilChanged(),
+    storeStream.pluck(
       '__volatile', 'audio', 'validSource'
-    )::distinctUntilChanged()
+    ).distinctUntilChanged()
   ).subscribe(([sourceValidity, sinkValidity])=>{
     if (sourceValidity & sinkValidity) {
       // doAudioSourcDevicePlumbing();
@@ -138,7 +138,7 @@ export default function init(store, signalio) {
 
   function doAudioSinkDevicePlumbing() {
     const sinkDevKey = store.getState().audio.sinkDevice;
-    Observable::fromPromise(
+    Observable.fromPromise(
       navigator.mediaDevices.getUserMedia({deviceId:sinkDevKey, audio: true})
     ).subscribe(initAudioContext);
   }
@@ -183,10 +183,10 @@ export default function init(store, signalio) {
     )
   };
 
-  Observable::combineLatest(
-    storeStream::pluck(
+  Observable.combineLatest(
+    storeStream.pluck(
       'audio', 'sinkControls'
-    )::distinctUntilChanged(),
+    ).distinctUntilChanged(),
     signalio.comboStateSubject,
     calcAudioControls
   ).subscribe(
@@ -213,16 +213,16 @@ export default function init(store, signalio) {
   }
 
   //
-  actualControlValues::sampleTime(UI_PERIOD_MS).subscribe((vals) => {
+  actualControlValues.sampleTime(UI_PERIOD_MS).subscribe((vals) => {
     store.dispatch(setAllAudioSinkControlActualValues(vals));
   });
 
   /// Master parameters are special and are handled differently, through the UI direct
-  Observable::combineLatest(
-    storeStream::pluck(
+  Observable.combineLatest(
+    storeStream.pluck(
       'audio', 'master', 'gain'
     ),
-    storeStream::pluck(
+    storeStream.pluck(
       'audio', 'master', 'mute'
     ),
   ).subscribe(
@@ -234,9 +234,9 @@ export default function init(store, signalio) {
     }
   );
   // We sample the tempo slider once per second because of instability
-  storeStream::pluck(
+  storeStream.pluck(
     'audio', 'master', 'tempo'
-  )::sampleTime(1000)::distinctUntilChanged().subscribe((bpm)=>{
+  ).sampleTime(1000).distinctUntilChanged().subscribe((bpm)=>{
     if (Tone.Transport.state === "started") {
       console.debug('bpm', bpm, Tone.Transport.bpm.value)
       Tone.Transport.bpm.value = bpm

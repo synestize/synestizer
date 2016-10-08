@@ -1,7 +1,8 @@
-import 'rxjs/add/distinctUntilChanged';
-import 'rxjs/add/map';
-import 'rxjs/add/pluck';
-import 'rxjs/add/share';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/pluck';
+import 'rxjs/add/operator/share';
+
 import { toObservable } from '../../lib/rx_redux'
 
 import  {

@@ -35,7 +35,6 @@ module.exports = {
         ],
         "plugins": [
           "transform-object-rest-spread",
-          "transform-function-bind",
           "transform-dead-code-elimination"
         ]
       }
