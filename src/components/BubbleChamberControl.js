@@ -11,6 +11,7 @@ const BubbleChamberControl = ({
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0001' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0002' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0003' />
+    <SpecificAudioParam sinkControlKey='bubbleChamber|pitch-0004' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|bottom' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|rate' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|density' />

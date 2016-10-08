@@ -1,6 +1,7 @@
-import { distinctUntilChanged } from 'rxjs/operator/distinctUntilChanged';
-import { map } from 'rxjs/operator/map';
-import { pluck } from 'rxjs/operator/pluck';
+import 'rxjs/add/distinctUntilChanged';
+import 'rxjs/add/map';
+import 'rxjs/add/pluck';
+import 'rxjs/add/share';
 import { toObservable } from '../../lib/rx_redux'
 
 import  {
@@ -92,7 +93,6 @@ export default function init(store, signalio, audio) {
           "midi",
         ),
         dur
-
       }
       notes[i] = note
     }
@@ -133,7 +133,7 @@ export default function init(store, signalio, audio) {
       arpy.start(time)
     }
   }
-  toObservable(store)::pluck(
+  toObservable(store).pluck(
     'audio',
     'bubbleChamber',
     'mute'
@@ -144,59 +144,66 @@ export default function init(store, signalio, audio) {
 
   const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
 
-  let mappedVals = audio.actualControlValues::map(
+  let subSig = audio.actualControlValues.map(
     subSignal('bubbleChamber|')
-  ).subscribe((sig)=>{
-    console.debug('sig', sig)
+  ).share().subscribe((sig)=>{
+    console.debug('sig', sig);
   })
-
-  audio.actualControlValues.pluck('bubbleChamber|pitch-0001').subscribe(
+  subSig.pluck('pitch-0001').subscribe(
     (val)=>{
-      offsets[0] = bipolInt(0, 3, val || 0.0);
+      console.debug('pitch-0001', val, offsets[0]);
+      offsets[0] = bipolInt(0, 11, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|pitch-0002').subscribe(
+  /*
+  subSig.pluck('pitch-0002').subscribe(
     (val)=>{
-      offsets[1] = bipolInt(4, 7, val || 0.0);
+      offsets[1] = bipolInt(3, 5, val || 0.0);
+      console.debug('pitch-0002', val, offsets[1]);
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|pitch-0003').subscribe(
+  subSig.pluck('pitch-0003').subscribe(
     (val)=>{
-      offsets[2] = bipolInt(8, 12, val || 0.0);
+      offsets[2] = bipolInt(7, 9, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|bottom').subscribe(
+  subSig.pluck('pitch-0004').subscribe(
+    (val)=>{
+      offsets[2] = bipolInt(10, 13, val || 0.0);
+    }
+  );
+  subSig.pluck('bottom').subscribe(
     (val)=>{
       bottom = bipolInt(40, 70, val || 0.0);
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|gate').subscribe(
+  subSig.pluck('rate').subscribe(
     (val)=>{
       gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|retriggerinterval')::map(
+  subSig.pluck('density').map(
     (val)=>bipolLookup(
       ['16n', '8n', '4n', '2n', '1m'],
       val || 0.0)
-    )::distinctUntilChanged().subscribe(
+    ).distinctUntilChanged().subscribe(
       (val)=>{
         retriggerInterval = Tone.Time(val);
       }
   )
-  audio.actualControlValues.pluck('bubbleChamber|arprate').subscribe(
+  subSig.pluck('shuffle').subscribe(
     (val)=>{
       noteInterval = Tone.Time(retriggerInterval).mult(
         bipolLin(0.5, 0.0, val || 0.0)
       )
     }
   );
-  audio.actualControlValues.pluck('bubbleChamber|gain').subscribe(
+  subSig.pluck('gain').subscribe(
     (val)=>{
       gain = bipolLin(-30.0, 0.0, val || 0.0)
     }
   );
-
+  */
   return {
   }
 };
