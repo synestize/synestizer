@@ -29,27 +29,27 @@ import Tone from 'tone/build/Tone.js'
 
 export default function init(store, signalio, audio) {
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|pitch-0001',
+    key: 'bubbleChamber|pitch__0001',
     label: "I",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|pitch-0002',
+    key: 'bubbleChamber|pitch__0002',
     label: "II",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|pitch-0003',
+    key: 'bubbleChamber|pitch__0003',
     label: "III",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|pitch-0004',
+    key: 'bubbleChamber|pitch__0004',
     label: "IV",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bottom',
+    key: 'bubbleChamber|bottomNote1',
     label: "Octave",
     ensemble: "Bubble Chamber",
   }));
@@ -74,8 +74,9 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
 
-  let bottom = 0.0;
-  let offsets = [0, 4, 7, undefined];
+  let bottomNote1 = 0.0;
+  let basePitch = 0;
+  let intervals = [0, 4, 7, undefined];
   let retriggerInterval = Tone.Time('1m');
   let noteInterval = Tone.Time(retriggerInterval).mult(0.25);
   let gateScale = 0.5;
@@ -90,7 +91,7 @@ export default function init(store, signalio, audio) {
       const note = {
         time: Tone.Time(noteInterval).mult(i),
         note: Tone.Frequency(
-          wrap(bottom, bottom+12, offsets[i]),
+          wrap(bottomNote1, bottomNote1+12, intervals[i]),
           "midi",
         ),
         dur
@@ -147,32 +148,13 @@ export default function init(store, signalio, audio) {
   let subSig = audio.actualControlValues.map(
     subSignal('bubbleChamber|')
   ).share();
-  console.debug('wat', subSig);
-  subSig.pluck('pitch-0001').subscribe(
-    (val)=>{
-      offsets[0] = bipolInt(0, 11, val || 0.0);
-    }
-  );
-  subSig.pluck('pitch-0002').subscribe(
-    (val)=>{
-      offsets[1] = bipolInt(3, 5, val || 0.0);
-    }
-  );
-  subSig.pluck('pitch-0003').subscribe(
-    (val)=>{
-      offsets[2] = bipolInt(7, 9, val || 0.0);
-    }
-  );
-  subSig.pluck('pitch-0004').subscribe(
-    (val)=>{
-      offsets[2] = bipolInt(10, 13, val || 0.0);
-    }
-  );
-  subSig.pluck('bottom').subscribe(
-    (val)=>{
-      bottom = bipolInt(40, 70, val || 0.0);
-    }
-  );
+  subSig.subscribe((sig) => {
+    basePitch = bipolInt(0, 11, sig.pitch__0001  || 0.0);
+    intervals[1] = bipolInt(3, 5, sig.pitch__0002 || 0.0);
+    intervals[2] = bipolInt(7, 9, sig.pitch__0003 || 0.0);
+    intervals[3] = bipolInt(10, 13, sig.pitch__0004 || 0.0);
+    bottomNote1 = bipolInt(40, 70, sig.bottomNote1 || 0.0);
+  });
   subSig.pluck('rate').subscribe(
     (val)=>{
       gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
