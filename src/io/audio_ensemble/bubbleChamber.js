@@ -139,7 +139,6 @@ export default function init(store, signalio, audio) {
     'bubbleChamber',
     'mute'
   ).subscribe((newMute)=>{
-    // console.debug('triadmute', newMute)
     mute = newMute;
   });
 
@@ -147,20 +146,16 @@ export default function init(store, signalio, audio) {
 
   let subSig = audio.actualControlValues.map(
     subSignal('bubbleChamber|')
-  ).share().subscribe((sig)=>{
-    console.debug('sig', sig);
-  })
+  ).share();
+  console.debug('wat', subSig);
   subSig.pluck('pitch-0001').subscribe(
     (val)=>{
-      console.debug('pitch-0001', val, offsets[0]);
       offsets[0] = bipolInt(0, 11, val || 0.0);
     }
   );
-  /*
   subSig.pluck('pitch-0002').subscribe(
     (val)=>{
       offsets[1] = bipolInt(3, 5, val || 0.0);
-      console.debug('pitch-0002', val, offsets[1]);
     }
   );
   subSig.pluck('pitch-0003').subscribe(
@@ -204,7 +199,6 @@ export default function init(store, signalio, audio) {
       gain = bipolLin(-30.0, 0.0, val || 0.0)
     }
   );
-  */
   return {
   }
 };
