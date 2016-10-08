@@ -1,14 +1,14 @@
-import Rx from 'rxjs/Rx'
-
 import {Subject} from 'rxjs/Subject'
 import {Observable} from 'rxjs/Observable'
 import {Observer} from 'rxjs/Observer'
 import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
 import {fromEvent} from 'rxjs/observable/fromEvent';
 import {fromPromise} from 'rxjs/observable/fromPromise';
+import {from} from 'rxjs/observable/from';
 import {filter} from 'rxjs/operator/filter';
 import {pluck} from 'rxjs/operator/pluck';
-import {interval} from 'rxjs/operator/timeInterval';
+import {interval} from 'rxjs/observable/interval';
+import { share } from 'rxjs/operator/share';
 
 import {SIGNAL_PERIOD_MS, UI_PERIOD_MS } from '../settings'
 
@@ -53,11 +53,11 @@ export default function init(store, signalio, videoDom) {
     canvasElem.width = PIXELDIM;
     canvasElem.height = PIXELDIM;
 
-    Rx.Observable.fromPromise(
+    Observable::fromPromise(
       navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
     ).subscribe(function(mediaStream) {
       //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
-      Rx.Observable.fromEvent(
+      Observable::fromEvent(
         videoElem, "loadedmetadata").subscribe(pumpPixels);
       videoElem.src = window.URL.createObjectURL(mediaStream);
       videoElem.play();
@@ -106,7 +106,7 @@ export default function init(store, signalio, videoDom) {
     }
   }
   function pumpPixels() {
-    pixelPump = Rx.Observable.interval(SIGNAL_PERIOD_MS);
+    pixelPump = Observable::interval(SIGNAL_PERIOD_MS);
     pixelPump.subscribe(() => {
       statsInbox.next({type:"pixels", payload: grabPixels()})
     });
@@ -117,7 +117,7 @@ export default function init(store, signalio, videoDom) {
     updates lists of available devices.
     */
     let sourceNames = new Map();
-    Rx.Observable.from(mediadevices).filter(
+    Observable::from(mediadevices)::filter(
       (dev) => ( dev.kind==="videoinput" )
     ).subscribe(function (dev){
       sources.set(dev.deviceId, dev);
@@ -141,7 +141,7 @@ export default function init(store, signalio, videoDom) {
       }
     }
   };
-  const statsOutbox = Rx.Observable.create(function (obs) {
+  const statsOutbox = Observable.create(function (obs) {
       videoworker.onmessage = function (e) {
         obs.next(e.data);
       };
@@ -153,9 +153,9 @@ export default function init(store, signalio, videoDom) {
         videoworker.terminate();
       };
   });
-  const statsSubject = Rx.Subject.create(statsInbox, statsOutbox).share();
+  const statsSubject = Subject.create(statsInbox, statsOutbox)::share();
 
-  statsSubject.filter((x)=>(x.type==="statmeta")).subscribe(
+  statsSubject::filter((x)=>(x.type==="statmeta")).subscribe(
     ({type, payload}) => {
       ({signalKeys, signalNames} = payload);
       signalNameFromKey = {};
@@ -185,7 +185,7 @@ export default function init(store, signalio, videoDom) {
       }
     }
   );
-  statsSubject.filter((x)=>(x.type==="results")).subscribe(
+  statsSubject::filter((x)=>(x.type==="results")).subscribe(
     ({type, payload}) => {
       //console.debug("got stuff back", payload);
       //report data streams
@@ -223,7 +223,7 @@ export default function init(store, signalio, videoDom) {
     (err) => console.debug(err.stack)
   );
   const storeStream = toObservable(store);
-  storeStream.pluck('source').distinctUntilChanged().subscribe(
+  storeStream::pluck('source')::distinctUntilChanged().subscribe(
     (key) => {
       doVideoPlumbing(key);
       console.log("vidkey", key);

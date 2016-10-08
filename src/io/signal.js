@@ -3,6 +3,8 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { scan } from 'rxjs/operator/scan';
 import { sampleTime } from 'rxjs/operator/sampleTime';
+import {pluck} from 'rxjs/operator/pluck';
+import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
 
 import { saturate, desaturate } from '../lib/transform.js'
 import {
@@ -72,9 +74,9 @@ export default function init(store) {
     // console.debug('sinkState', sinkState)
     return sinkState
   }
-  storeStream.pluck(
+  storeStream::pluck(
     'signal', 'nGenericSinkSignals'
-  ).distinctUntilChanged().subscribe(
+  )::distinctUntilChanged().subscribe(
     (n) => {
       let sinkSignalMeta = store.getState().signal.sinkSignalMeta;
       const currN = Object.keys(

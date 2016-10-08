@@ -1,4 +1,12 @@
-import Rx from 'rxjs/Rx'
+import {Subject} from 'rxjs/Subject'
+import {Observable} from 'rxjs/Observable'
+import {Observer} from 'rxjs/Observer'
+import {distinctUntilChanged} from 'rxjs/operator/distinctUntilChanged';
+import {fromEvent} from 'rxjs/observable/fromEvent';
+import {fromPromise} from 'rxjs/observable/fromPromise';
+import {from} from 'rxjs/observable/from';
+import {pluck} from 'rxjs/operator/pluck';
+import { share } from 'rxjs/operator/share';
 import  {
   setValidMidiSourceDevice,
   setMidiSourceDevice,
@@ -115,7 +123,7 @@ export default function init(store, signalio) {
       if (rawMidiInSubscription !== null) {
         rawMidiInSubscription.unsubscribe()
       };
-      rawMidiInSubscription = Rx.Observable.fromEvent(
+      rawMidiInSubscription = Observable::fromEvent(
         dev, 'midimessage'
       ).subscribe(handleMidiInMessage);
     }
@@ -132,63 +140,63 @@ export default function init(store, signalio) {
   }
   //Now actually use this infrastructure
   plugMidiIn()
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sourceDevice'
-    ).distinctUntilChanged().subscribe(plugMidiIn)
-  storeStream.pluck(
+    )::distinctUntilChanged().subscribe(plugMidiIn)
+  storeStream::pluck(
       '__volatile', 'midi', 'validSource'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (validity)=> {validSource = validity; plugMidiIn()}
     )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sourceChannel'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sourceChannel = x
   )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sourceCCs'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sourceCCs = x
   )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sourceCCMap'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sourceCCMap = (x || {})
   )
   plugMidiOut()
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sinkDevice'
-    ).distinctUntilChanged().subscribe(plugMidiOut);
-  storeStream.pluck(
+    )::distinctUntilChanged().subscribe(plugMidiOut);
+  storeStream::pluck(
       '__volatile', 'midi', 'validSink'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (validity)=> {validSink = validity; plugMidiOut()}
     )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sinkChannel'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sinkChannel = x
   )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sinkCCs'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sinkCCs = x
   )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sinkCCMap'
-    ).distinctUntilChanged().subscribe(
+    )::distinctUntilChanged().subscribe(
       (x) => sinkCCMap = (x || {})
   )
-  storeStream.pluck(
+  storeStream::pluck(
       'midi', 'sinkSoloCC'
-    ).distinctUntilChanged().subscribe((x)=>sinkSoloCC=x);
+    )::distinctUntilChanged().subscribe((x)=>sinkSoloCC=x);
 
-  Rx.Observable.fromPromise(
+  Observable::fromPromise(
     navigator.requestMIDIAccess()
   ).subscribe(updateMidiIO,
     (err) => console.debug(err.stack)
   );
-  
+
   return {
     playNote: () => null
   }
