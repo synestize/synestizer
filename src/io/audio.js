@@ -31,7 +31,6 @@ import {
 
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
-import triad_ from './audio_ensemble/triad'
 import bubbleChamber_ from './audio_ensemble/bubbleChamber'
 
 export default function init(store, signalio) {
@@ -175,9 +174,6 @@ export default function init(store, signalio) {
     Tone.Transport.scheduleOnce(() => {
       Tone.Transport.bpm.value = store.getState().audio.master.tempo || 100
     }, '+5')
-    ensembles.triad = triad_(
-      store, signalio, audioInfrastructure
-    )
     ensembles.bubbleChamber = bubbleChamber_(
       store, signalio, audioInfrastructure
     )
