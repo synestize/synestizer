@@ -54,29 +54,41 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|rate',
+    key: 'bubbleChamber|rate1',
     label: "Rate",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|density',
+    key: 'bubbleChamber|density1',
     label: "Density",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|shuffle',
+    key: 'bubbleChamber|shuffle1',
     label: "Shuffle",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|gain',
+    key: 'bubbleChamber|delay1',
+    label: "Delay",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|smear1',
+    label: "Smear",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|gain1',
     label: "Gain",
     ensemble: "Bubble Chamber",
   }));
 
   let bottomNote1 = 0.0;
-  let basePitch = 0;
-  let intervals = [0, 4, 7, undefined];
+  let seq1 = 0;
+
+  let basePitch = 0; // key
+  let intervals = [0, 4, 7, 9]; // intervals above key
   let retriggerInterval = Tone.Time('1m');
   let noteInterval = Tone.Time(retriggerInterval).mult(0.25);
   let gateScale = 0.5;
@@ -84,7 +96,7 @@ export default function init(store, signalio, audio) {
   let arpy;
   let mute = false;
 
-  function notes() {
+  function notes(bottom) {
     const notes = []
     let dur =  Tone.Time(retriggerInterval).mult(gateScale);
     for (let i=0; i<3; i++) {
@@ -101,12 +113,23 @@ export default function init(store, signalio, audio) {
     return notes
   }
 
-  let synth = new Tone.PolySynth(
-    9, Tone.Synth
-  ).toMaster();
+  let delay1 = new Tone.FeedbackDelay("8n", 0.0).toMaster();
+  delay1.wet.rampTo(0.5, '1m');
+  delay1.feedback.rampTo(0.5, '1m');
+  let voice1  = new Tone.Sampler({
+    "url" : "./audio/505/hh.mp3",
+    "volume" : -10,
+    "envelope" : {
+      "attack" : 0.02,
+      "decay" : 0.1,
+      "sustain" : 0.2,
+      "release" : 0.9,
+    }
+  });
+  voice1.connect(delay1);
 
   const playNote = (time, value) => {
-    synth.triggerAttackRelease(
+    voice1.triggerAttackRelease(
       value.note,
       value.dur,
       time);

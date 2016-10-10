@@ -31,7 +31,7 @@ import {
 
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
-import bubbleChamber_ from './audio_ensemble/bubbleChamber'
+import bubbleChamber_ from './audioEnsemble/bubbleChamber'
 
 export default function init(store, signalio) {
   //hardware business
