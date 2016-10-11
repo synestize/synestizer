@@ -6,13 +6,19 @@ import PerformancePane from './PerformancePane'
 import SoundPane from './SoundPane'
 
 const CurrentPane = ({visiblePane, version}) => {
-  return {
-    io: () => <IOPane version={version}/>,
-    welcome: () => <WelcomePane version={version} />,
-    patching: () => <PatchingPane version={version} />,
-    sound: () => <SoundPane version={version} />,
-    performance: () => <PerformancePane version={version} />
-  }[visiblePane]()
+  switch (visiblePane) {
+    case 'io':
+      return <IOPane version={version}/>
+    case 'welcome':
+      return <WelcomePane version={version} />
+    case 'performance':
+      return <PerformancePane version={version} />
+    case 'patching':
+      return <PatchingPane version={version} />
+    case 'sound':
+    default:
+      return <SoundPane version={version} />
+  }
 }
 
 CurrentPane.propTypes = {
