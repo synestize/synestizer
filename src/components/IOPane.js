@@ -4,6 +4,8 @@ import MidiSettings from './MidiSettings';
 import AudioSettings from './AudioSettings';
 import SignalSettings from './SignalSettings';
 import AppSettings from './AppSettings';
+import ActivePatchMatrix from '../containers/ActivePatchMatrix'
+
 import React, { Component, PropTypes, Children } from 'react';
 
 const IOPane = ({version}) => {return (
@@ -12,6 +14,7 @@ const IOPane = ({version}) => {return (
     <AudioSettings />
     <MidiSettings />
     <SignalSettings />
+    <ActivePatchMatrix />
     <AppSettings />
   </Pane>
 )}

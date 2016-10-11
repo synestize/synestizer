@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import IOPane from './IOPane'
 import WelcomePane from './WelcomePane'
-import PatchingPane from './PatchingPane'
 import PerformancePane from './PerformancePane'
 import SoundPane from './SoundPane'
 
@@ -13,8 +12,6 @@ const CurrentPane = ({visiblePane, version}) => {
       return <WelcomePane version={version} />
     case 'performance':
       return <PerformancePane version={version} />
-    case 'patching':
-      return <PatchingPane version={version} />
     case 'sound':
     default:
       return <SoundPane version={version} />
@@ -23,7 +20,7 @@ const CurrentPane = ({visiblePane, version}) => {
 
 CurrentPane.propTypes = {
   visiblePane: PropTypes.oneOf([
-    'io', 'welcome', 'patching', 'performance', 'sound'
+    'io', 'welcome', 'performance', 'sound'
   ]),
   version: PropTypes.string.isRequired
 }
