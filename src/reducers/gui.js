@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 
 import { SET_VISIBLE_PANE } from '../actions/gui'
 
-export function visiblePane(state = "welcome", action) {
+export function visiblePane(state = "sound", action) {
   switch (action.type) {
     case SET_VISIBLE_PANE:
       return action.payload
