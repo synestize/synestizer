@@ -55,12 +55,12 @@ export default function init(store, signalio, audio) {
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|rate1',
-    label: "Rate",
+    label: "Rate 1",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|density1',
-    label: "Density",
+    label: "Density 1",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -90,15 +90,17 @@ export default function init(store, signalio, audio) {
   let seq1 = 0;
 
   let basePitch = 0; // key
-  let intervals = [0, 4, 7, 9]; // intervals above key
+  let pitchIntervals = [0, 4, 7, 9]; // pitchIntervals above key
+
+  let voice1timeInterval = 4;
   let voice1counter = 0;
   let step = "8n";
 
-  function nextPitch(i, bottomNote, intervals, scramble) {
+  function nextPitch(i, bottomNote, pitchIntervals, scramble) {
     return {
       time: Tone.Time(noteInterval).mult(i),
       note: Tone.Frequency(
-        wrap(bottomNote1, bottomNote1+12, intervals[i]),
+        wrap(bottomNote1, bottomNote1+12, pitchIntervals[i]),
         "midi",
       ),
       step
@@ -122,7 +124,7 @@ export default function init(store, signalio, audio) {
     "envelope" : {
       "attack" : 0.02,
       "decay" : 0.1,
-      "sustain" : 0.2,
+      "sustain" : 0.5,
       "release" : 0.9,
     }
   });
@@ -143,44 +145,34 @@ export default function init(store, signalio, audio) {
     mute = newMute;
   });
 
-  const masterLoop = new Tone.Loop(multiArpeggiate, "1m").start('+1m');
-
   let subSig = audio.actualControlValues.map(
     subSignal('bubbleChamber|')
   ).share();
   subSig.subscribe((sig) => {
     basePitch = bipolInt(0, 11, sig.pitch__0001  || 0.0);
-    intervals[1] = bipolInt(3, 5, sig.pitch__0002 || 0.0);
-    intervals[2] = bipolInt(7, 9, sig.pitch__0003 || 0.0);
-    intervals[3] = bipolInt(10, 13, sig.pitch__0004 || 0.0);
+    pitchIntervals[1] = bipolInt(3, 5, sig.pitch__0002 || 0.0);
+    pitchIntervals[2] = bipolInt(7, 9, sig.pitch__0003 || 0.0);
+    pitchIntervals[3] = bipolInt(10, 13, sig.pitch__0004 || 0.0);
     bottomNote1 = bipolInt(40, 70, sig.bottomNote1 || 0.0);
-  });
-  subSig.pluck('rate').subscribe(
-    (val)=>{
-      gateScale = bipolEquiOctave(0.25, 2.0, val || 0.0)
-    }
-  );
-  subSig.pluck('density').map(
-    (val)=>bipolLookup(
-      ['16n', '8n', '4n', '2n', '1m'],
-      val || 0.0)
-    ).distinctUntilChanged().subscribe(
-      (val)=>{
-        retriggerInterval = Tone.Time(val);
-      }
-  )
-  subSig.pluck('scramble').subscribe(
-    (val)=>{
-      noteInterval = Tone.Time(retriggerInterval).mult(
-        bipolLin(0.5, 0.0, val || 0.0)
-      )
-    }
-  );
-  subSig.pluck('gain').subscribe(
-    (val)=>{
-      gain = bipolLin(-30.0, 0.0, val || 0.0)
-    }
-  );
+    voice1timeInterval = bipolLookup(
+      [8, 6, 4, 3, 2, 1],
+      sig.density1 || 0.0);
+    voice1timeInterval = bipolLookup(
+      [8, 6, 4, 3, 2, 1],
+      sig.rate1 || 0.0);
+    voice1delay = bipolLookup(
+      [8, 6, 4, 3, 2, 1],
+      sig.delay1 || 0.0);
+    voice1delay = bipolLin(
+      0, 1,
+      sig.smear1 || 0.0);
+    voice1scramble = bipolInt(
+      0, 32,
+      sig.scramble1 || 0.0);
+    voice1gain = bipolLin(
+      -30.0, 0.0,
+      sig.gain || 0.0);
+    });
   return {
   }
 };
