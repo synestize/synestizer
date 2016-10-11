@@ -64,8 +64,8 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|shuffle1',
-    label: "Shuffle",
+    key: 'bubbleChamber|scramble1',
+    label: "scramble",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -84,40 +84,40 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
 
+  let mute = false;
+
   let bottomNote1 = 0.0;
   let seq1 = 0;
 
   let basePitch = 0; // key
   let intervals = [0, 4, 7, 9]; // intervals above key
-  let retriggerInterval = Tone.Time('1m');
-  let noteInterval = Tone.Time(retriggerInterval).mult(0.25);
-  let gateScale = 0.5;
-  let gain = 0.0;
-  let arpy;
-  let mute = false;
+  let voice1counter = 0;
+  let step = "8n";
 
-  function notes(bottom) {
-    const notes = []
-    let dur =  Tone.Time(retriggerInterval).mult(gateScale);
-    for (let i=0; i<3; i++) {
-      const note = {
-        time: Tone.Time(noteInterval).mult(i),
-        note: Tone.Frequency(
-          wrap(bottomNote1, bottomNote1+12, intervals[i]),
-          "midi",
-        ),
-        dur
-      }
-      notes[i] = note
+  function nextPitch(i, bottomNote, intervals, scramble) {
+    return {
+      time: Tone.Time(noteInterval).mult(i),
+      note: Tone.Frequency(
+        wrap(bottomNote1, bottomNote1+12, intervals[i]),
+        "midi",
+      ),
+      step
     }
-    return notes
   }
+
+  let loop1 = new Tone.Loop(
+    (time) => {
+      console.debug('loop', time, voice1counter);
+      voice1counter = (voice1counter + 1) % 32;
+    },
+    step
+  ).start('1m');
 
   let delay1 = new Tone.FeedbackDelay("8n", 0.0).toMaster();
   delay1.wet.rampTo(0.5, '1m');
   delay1.feedback.rampTo(0.5, '1m');
   let voice1  = new Tone.Sampler({
-    "url" : "./audio/505/hh.mp3",
+    "url" : "./sound/panflute_c4.mp3",
     "volume" : -10,
     "envelope" : {
       "attack" : 0.02,
@@ -128,36 +128,13 @@ export default function init(store, signalio, audio) {
   });
   voice1.connect(delay1);
 
-  const playNote = (time, value) => {
+  const playNote1 = (time, value) => {
     voice1.triggerAttackRelease(
       value.note,
       value.dur,
       time);
   }
 
-  const multiArpeggiate = (time) => {
-    let seq = notes()
-    let oldarpy;
-    // console.debug('ma', time,
-    //   Tone.Time(retriggerInterval).eval(),
-    // )
-    // for (let n of seq) {
-    //   console.debug('n', n.time.eval(), n.dur.eval() )
-    // }
-    if (arpy!==undefined) {
-      oldarpy = arpy;
-      arpy = undefined;
-      oldarpy.stop(time )
-      oldarpy.dispose()
-    }
-    if (!mute) {
-      arpy = new Tone.Part(playNote, seq)
-      arpy.loopStart = 0
-      arpy.loopEnd = Tone.Time(retriggerInterval)
-      arpy.loop = true
-      arpy.start(time)
-    }
-  }
   toObservable(store).pluck(
     'audio',
     'bubbleChamber',
@@ -192,7 +169,7 @@ export default function init(store, signalio, audio) {
         retriggerInterval = Tone.Time(val);
       }
   )
-  subSig.pluck('shuffle').subscribe(
+  subSig.pluck('scramble').subscribe(
     (val)=>{
       noteInterval = Tone.Time(retriggerInterval).mult(
         bipolLin(0.5, 0.0, val || 0.0)
