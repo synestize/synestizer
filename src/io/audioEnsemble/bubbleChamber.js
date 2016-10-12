@@ -49,7 +49,7 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bottomNote1',
+    key: 'bubbleChamber|voice1bottom',
     label: "Octave",
     ensemble: "Bubble Chamber",
   }));
@@ -86,34 +86,21 @@ export default function init(store, signalio, audio) {
 
   let mute = false;
 
-  let bottomNote1 = 0.0;
+  let voice1bottom = 0.0;
   let seq1 = 0;
 
   let basePitch = 0; // key
   let pitchIntervals = [0, 4, 7, 9]; // pitchIntervals above key
 
-  let voice1timeInterval = 4;
   let voice1counter = 0;
-  let step = "8n";
+  let voice1timeMul = 4;
+  let voice1delay = 0;
+  let voice1smear = 0;
+  let voice1scramble = 0;
+  let voice1gain = 0;
 
-  function nextPitch(i, bottomNote, pitchIntervals, scramble) {
-    return {
-      time: Tone.Time(noteInterval).mult(i),
-      note: Tone.Frequency(
-        wrap(bottomNote1, bottomNote1+12, pitchIntervals[i]),
-        "midi",
-      ),
-      step
-    }
-  }
-
-  let loop1 = new Tone.Loop(
-    (time) => {
-      console.debug('loop', time, voice1counter);
-      voice1counter = (voice1counter + 1) % 32;
-    },
-    step
-  ).start('1m');
+  let step = "16n";
+  let i = 0;
 
   let delay1 = new Tone.FeedbackDelay("8n", 0.0).toMaster();
   delay1.wet.rampTo(0.5, '1m');
@@ -130,7 +117,7 @@ export default function init(store, signalio, audio) {
   });
   voice1.connect(delay1);
 
-  const playNote1 = (time, value) => {
+  const playVoice1Note = (time, value) => {
     voice1.triggerAttackRelease(
       value.note,
       value.dur,
@@ -153,26 +140,63 @@ export default function init(store, signalio, audio) {
     pitchIntervals[1] = bipolInt(3, 5, sig.pitch__0002 || 0.0);
     pitchIntervals[2] = bipolInt(7, 9, sig.pitch__0003 || 0.0);
     pitchIntervals[3] = bipolInt(10, 13, sig.pitch__0004 || 0.0);
-    bottomNote1 = bipolInt(40, 70, sig.bottomNote1 || 0.0);
-    voice1timeInterval = bipolLookup(
+    /*
+    voice1timeMul = bipolLookup(
       [8, 6, 4, 3, 2, 1],
       sig.density1 || 0.0);
-    voice1timeInterval = bipolLookup(
-      [8, 6, 4, 3, 2, 1],
+      */
+    voice1bottom = bipolInt(40, 70, sig.voice1bottom || 0.0);
+    voice1timeMul = bipolLookup(
+      [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.rate1 || 0.0);
     voice1delay = bipolLookup(
-      [8, 6, 4, 3, 2, 1],
+      [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.delay1 || 0.0);
     voice1delay = bipolLin(
       0, 1,
       sig.smear1 || 0.0);
     voice1scramble = bipolInt(
-      0, 32,
+      1, 32,
       sig.scramble1 || 0.0);
     voice1gain = bipolLin(
       -30.0, 0.0,
       sig.gain || 0.0);
-    });
+  });
+
+  let loop1 = new Tone.Loop(
+    (time) => {
+      i = (i + 1) % 64;
+      console.debug('loop', time, i);
+      if (i % voice1timeMul === 0) {
+        note = nextNote(
+          i,
+          voice1bottom,
+          pitchIntervals,
+          voice1scramble,
+          voice1timeMul);
+        playVoice1Note(time, note)
+      }
+    },
+    step
+  ).start('1m');
+  function nextNote(
+    i,
+    bottomNote,
+    pitchIntervals,
+    scramble,
+    timeMul
+  ) {
+    let idx = (i + 17) * scramble % 3;
+    return {
+      dur: Tone.Time(step).mult(timeMul),
+      note: Tone.Frequency(
+        wrap(bottomNote, bottomNote+12, basePitch + pitchIntervals[i]),
+        "midi",
+      ),
+    }
+  }
+
+
   return {
   }
 };
