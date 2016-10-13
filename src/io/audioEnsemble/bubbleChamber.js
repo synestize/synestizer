@@ -79,7 +79,7 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|gain1',
+    key: 'bubbleChamber|voice1gain',
     label: "Gain",
     ensemble: "Bubble Chamber",
   }));
@@ -97,15 +97,19 @@ export default function init(store, signalio, audio) {
   let voice1delayTime = 0;
   let voice1smear = 0;
   let voice1scramble = 0;
-  let voice1gain = 0;
+  let voice1gainLevel = 0;
+  let voice1basePitch = Tone.Frequency("C4").toMidi();
 
   let step = "16n";
   let i = 0;
 
-  let voice1delay = new Tone.FeedbackDelay("8n", 0.0).toMaster();
-  voice1delay.wet.rampTo(0.5, '1m');
-  voice1delay.feedback.rampTo(0.5, '1m');
-  let voice1  = new Tone.Sampler({
+  let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
+  let voice1delayNode = new Tone.FeedbackDelay("8n", 0.0);
+  voice1delayNode.connect(voice1gainNode)
+  voice1gainNode.toMaster();
+  voice1delayNode.wet.rampTo(0.5, '4n');
+  voice1delayNode.feedback.rampTo(0.5, '4n');
+  let voice1synth  = new Tone.Sampler({
     "url" : "./sound/panflute_c4.mp3",
     "volume" : -10,
     "envelope" : {
@@ -115,14 +119,15 @@ export default function init(store, signalio, audio) {
       "release" : 0.9,
     }
   });
-  voice1.connect(voice1delay);
+  voice1synth.connect(voice1delayNode);
+
 
   const playVoice1Note = (time, value) => {
-    console.debug('nowt', value)
-    voice1.triggerAttackRelease(
-      value.note,
+    voice1synth.triggerAttackRelease(
+      value.note - voice1basePitch,
+      time,
       value.dur,
-      time);
+      );
   }
 
   toObservable(store).pluck(
@@ -148,28 +153,35 @@ export default function init(store, signalio, audio) {
     voice1bottom = bipolInt(40, 70, sig.voice1bottom || 0.0);
     voice1timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
-      sig.rate1 || 0.0);
+      sig.voice1rate || 0.0);
+    // console.debug('voice1rate', sig.voice1rate, voice1timeMul)
+
     voice1delayTime = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice1delayTime || 0.0);
     voice1smear = bipolLin(
-      0, 1,
+      0, 0.95,
       sig.voice1smear || 0.0);
     voice1scramble = bipolInt(
-      1, 32,
-      sig.voice1scramble || 0.0);
-    voice1gain = bipolLin(
+      1, 7,
+      sig.voice1scramble || 0.0) * 2 + 1;
+    voice1gainLevel = bipolLin(
       -30.0, 0.0,
-      sig.gain || 0.0);
+      sig.voice1gain || 0.0);
+    voice1gainNode.gain.rampTo(voice1gainLevel, 0.1)
+    voice1delayNode.wet.rampTo(voice1smear, '4n');
+    voice1delayNode.feedback.rampTo(1-voice1smear, '4n');
+    let actualdel = Tone.Time('16n').mult(voice1delayTime).eval()
+    voice1delayNode.delayTime.rampTo(actualdel, actualdel);
   });
 
   let loop1 = new Tone.Loop(
     (time) => {
       i = (i + 1) % 64;
-      console.debug('loop', time, i);
+      // console.debug('loop', time, i);
       if (i % voice1timeMul === 0) {
         let note = nextNote(
-          i,
+          i/voice1timeMul,
           voice1bottom,
           pitchIntervals,
           voice1scramble,
@@ -187,15 +199,12 @@ export default function init(store, signalio, audio) {
     timeMul
   ) {
     let idx = (i + 17) * scramble % 3;
+    // console.debug('inner', i, scramble, idx, pitchIntervals[idx])
     return {
       dur: Tone.Time(step).mult(timeMul).eval(),
-      note: Tone.Frequency(
-        wrap(bottomNote, bottomNote+12, basePitch + pitchIntervals[i]),
-        "midi",
-      ).eval(),
+      note: wrap(bottomNote, bottomNote+12, basePitch + pitchIntervals[idx]),
     }
   }
-
 
   return {
   }
