@@ -84,7 +84,6 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
 
-  let mute = false;
 
   let voice1bottom = 0.0;
   let seq1 = 0;
@@ -150,9 +149,9 @@ export default function init(store, signalio, audio) {
   ).share();
   subSig.subscribe((sig) => {
     basePitch = bipolInt(0, 11, sig.pitch__0001  || 0.0);
-    pitchIntervals[1] = bipolInt(3, 5, sig.pitch__0002 || 0.0);
-    pitchIntervals[2] = bipolInt(7, 9, sig.pitch__0003 || 0.0);
-    pitchIntervals[3] = bipolInt(10, 13, sig.pitch__0004 || 0.0);
+    pitchIntervals[1] = bipolInt(2, 6, sig.pitch__0002 || 0.0);
+    pitchIntervals[2] = bipolInt(6, 10, sig.pitch__0003 || 0.0);
+    pitchIntervals[3] = bipolInt(9, 13, sig.pitch__0004 || 0.0);
     voice1timeMul = bipolLin(
       0.1, 1.0,
       sig.voice1density || 0.0);
