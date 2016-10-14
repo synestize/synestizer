@@ -22,8 +22,10 @@ export const SET_MASTER_GAIN = 'SET_MASTER_GAIN'
 export const SET_MASTER_MUTE = 'SET_MASTER_MUTE'
 export const TOGGLE_MASTER_MUTE = 'TOGGLE_MASTER_MUTE'
 
-export const TOGGLE_TRIAD_MUTE = 'TOGGLE_TRIAD_MUTE'
-export const TOGGLE_BUBBLE_CHAMBER_MUTE = 'TOGGLE_BUBBLE_CHAMBER_MUTE'
+export const TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE = 'TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE'
+export const TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE = 'TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE'
+export const TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE = 'TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE'
+export const TOGGLE_BUBBLE_CHAMBER_VOICE_4_MUTE = 'TOGGLE_BUBBLE_CHAMBER_VOICE_4_MUTE'
 
 
 /*
@@ -89,9 +91,15 @@ export function setMasterMute(val) {
 export function toggleMasterMute() {
   return { type: TOGGLE_MASTER_MUTE, payload: null}
 }
-export function toggleTriadMute() {
-  return { type: TOGGLE_TRIAD_MUTE, payload: null}
+export function toggleBubbleChamberMuteVoice1() {
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: null}
 }
-export function toggleBubbleChamberMute() {
-  return { type: TOGGLE_BUBBLE_CHAMBER_MUTE, payload: null}
+export function toggleBubbleChamberMuteVoice2() {
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE, payload: null}
+}
+export function toggleBubbleChamberMuteVoice3() {
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE, payload: null}
+}
+export function toggleBubbleChamberMuteVoice4() {
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_4_MUTE, payload: null}
 }
