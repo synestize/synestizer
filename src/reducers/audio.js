@@ -23,7 +23,7 @@ import {
 import {
   RESET_TO_DEFAULT
 } from '../actions/gui'
-import triad from './audio/triad'
+
 import bubbleChamber from './audio/bubbleChamber'
 
 export function sourceDevice(state="default", {type, payload}) {
@@ -179,7 +179,6 @@ const audio = combineReducers({
    sinkDevice,
    sinkControls,
    master,
-   triad,
    bubbleChamber
 })
 
