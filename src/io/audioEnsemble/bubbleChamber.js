@@ -99,6 +99,7 @@ export default function init(store, signalio, audio) {
   let voice1scramble = 0;
   let voice1gainLevel = 0;
   let voice1basePitch = Tone.Frequency("C4").toMidi();
+  let voice1mute = false;
 
   let step = "16n";
   let i = 0;
@@ -121,6 +122,12 @@ export default function init(store, signalio, audio) {
   });
   voice1synth.connect(voice1delayNode);
 
+  toObservable(store).pluck(
+    'audio', 'bubbleChamber', 'voice1mute'
+  ).subscribe((val)=>{
+    // console.debug('triadmute', newMute)
+    voice1mute = val;
+  });
 
   const playVoice1Note = (time, value) => {
     voice1synth.triggerAttackRelease(
