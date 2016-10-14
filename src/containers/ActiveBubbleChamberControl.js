@@ -2,19 +2,34 @@ import { connect } from 'react-redux';
 import BubbleChamberControl from '../components/BubbleChamberControl.js'
 import { union, difference, intersection } from '../lib/collections'
 import {
-  toggleBubbleChamberMute
+  toggleBubbleChamberVoice1Mute,
+  toggleBubbleChamberVoice2Mute,
+  toggleBubbleChamberVoice3Mute,
+  toggleBubbleChamberVoice4Mute,
 } from '../actions/audio';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    mute: state.audio.bubbleChamber.mute,
+    voice1mute: state.audio.bubbleChamber.voice1mute,
+    voice2mute: state.audio.bubbleChamber.voice2mute,
+    voice3mute: state.audio.bubbleChamber.voice3mute,
+    voice4mute: state.audio.bubbleChamber.voice4mute,
   }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChangeMute: (val) => {
-      dispatch(toggleBubbleChamberMute())
+    onChangeVoice1Mute: (val) => {
+      dispatch(toggleBubbleChamberVoice1Mute())
+    },
+    onChangeVoice2Mute: (val) => {
+      dispatch(toggleBubbleChamberVoice2Mute())
+    },
+    onChangeVoice3Mute: (val) => {
+      dispatch(toggleBubbleChamberVoice3Mute())
+    },
+    onChangeVoice4Mute: (val) => {
+      dispatch(toggleBubbleChamberVoice4Mute())
     },
   }
 };

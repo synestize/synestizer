@@ -306,6 +306,7 @@ a, a:hover, a:active, a:focus {
     display: inline-block;
     border-width: 1px;
     cursor: pointer;
+    background-color: rgba(0,0,0,0.5);
 }
 #synapp .button.mute.true {
   background-color: red;

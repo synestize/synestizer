@@ -91,15 +91,15 @@ export function setMasterMute(val) {
 export function toggleMasterMute() {
   return { type: TOGGLE_MASTER_MUTE, payload: null}
 }
-export function toggleBubbleChamberMuteVoice1() {
+export function toggleBubbleChamberVoice1Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: null}
 }
-export function toggleBubbleChamberMuteVoice2() {
+export function toggleBubbleChamberVoice2Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE, payload: null}
 }
-export function toggleBubbleChamberMuteVoice3() {
+export function toggleBubbleChamberVoice3Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE, payload: null}
 }
-export function toggleBubbleChamberMuteVoice4() {
+export function toggleBubbleChamberVoice4Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_4_MUTE, payload: null}
 }
