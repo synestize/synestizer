@@ -1,0 +1,375 @@
+:root {
+  --base-bg-color: rgba(110,80,120,1);
+  --translucent-bg-color: rgba(110,80,120,0.2);
+  --base-fg-color: rgba(160,150,160,1);
+  --base-fg-color-highlight: rgba(200,150,200,1);
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: var(--base-fg-color);
+  color: var(--base-fg-color);
+  height: 100%;
+  overflow: hidden;
+}
+
+h1, h2, h3 {
+  color: var(--base-fg-color);
+}
+
+a, a:hover, a:active, a:focus {
+  color: rgb(131, 135, 183);
+;
+}
+
+::selection {
+    background: #585D9A;
+}
+::-moz-selection {
+    background: #585D9A;
+}
+
+#synapp, #synapp > div  {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#synapp nav.tabnav ul.tabs {
+  display: flex;
+  padding: 0;
+  margin:0;
+  background-color: var(--base-bg-color);
+
+}
+#synapp nav.tabnav ul.tabs li {
+  /*display: block;*/
+  flex: 1;
+  margin: -0.075rem 0 0 -0.075rem;
+  border: var(--base-fg-color) 0.15rem solid;
+  padding: 0;
+  text-align: center;
+  list-style-type: none;
+}
+#synapp nav.tabnav ul.tabs li a {
+  text-decoration: none;
+  color: var(--base-fg-color);
+  display: block;
+  padding: 1rem;
+}
+#synapp nav.tabnav ul.tabs li a.active {
+  font-weight: bold;
+  color: var(--base-fg-color-highlight);
+  background-color: var(--base-bg-color);
+}
+#synapp .pane-wrapper {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0px;
+  padding: 1ex 1em;
+  background-color: var(--translucent-bg-color);
+  position: relative;
+}
+#synapp .pane-wrapper.performance-pane {
+  background-color: rgba(255,255,255,0);
+}
+#synapp .pane-content {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255,255,255,0);
+}
+#synapp .branding-box {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  opacity: 0.5;
+}
+#synapp .branding-box .branding-info {
+  position: absolute;
+  right: 2em;
+  bottom: 3em;
+}
+#synapp .branding-box .branding-info h1 {
+  text-transform: uppercase;
+}
+#synapp .branding-box .branding-info h1 .version{
+  font-size: 80%;
+  font-variant: italic;
+  display: block;
+}
+#synapp .pane-content label {
+  display: inline-block;
+  text-align: right;
+  padding-right: 0.3rem;
+  /* font-variant: small-caps */ /* too ugly with default font! */
+  text-transform: uppercase;
+  font-size: 80%;
+}
+#synapp .pane-content h2, #synapp .pane-content h3 {
+  padding-right: 1em;
+  display: inline-block;
+}
+#synapp .subpane {
+  border-bottom: var(--base-fg-color) 1px solid;
+  padding-bottom: 0.3em;
+}
+#video-io {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top:0;
+  z-index: -1;
+  /*-webkit-filter: blur(4px) brightness(1.2) saturate(3);*/
+}
+
+#synapp .pane-content h2 {
+  display: inline-block;
+}
+
+#synapp .param-control {
+  width: 16rem;
+  vertical-align: center;
+  display: inline-block;
+  padding: 0.5rem;
+}
+#synapp .param-control.mastergain {
+  width: 21rem;
+}
+
+#synapp .param-control .label {
+    width: 5rem;
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.3rem;
+}
+#synapp .solo-button {
+  display: inline-block;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem;
+  border: 1px grey solid;
+}
+#synapp .solo-button.soloed {
+  background-color: blue;
+}
+#synapp select {
+    /* background-color: #f0f; */
+    padding: 1px 4px 1px 2px;
+    color: #999;
+    display: inline-block;
+    /*display: inline;*/
+    max-width: 10em;
+    margin: 0.1rem;
+    height: 1.5em;
+    cursor: pointer;
+}
+#synapp select .option {
+    min-height: 1ex;
+}
+#synapp i.fa {
+  display: inline-block;
+}
+#synapp .devicechooserwidget {
+  display: inline-block;
+  padding: 1ex;
+}
+#synapp .intchooserwidget {
+  display: inline-block;
+  padding: 1ex;
+}
+#synapp .ccontrolchooser {
+  display: inline-block;
+  padding: 1ex;
+}
+#synapp .mappingmatrix {
+  font-size: 0.8rem;
+}
+#synapp .mappingmatrix th {
+  font-weight: normal;
+  position: relative; /* so that child shadow-state-bar elements can be absolutely positioned */
+}
+#synapp .mappingmatrix th span {
+    position: relative;
+    z-index: 2;
+}
+#synapp .mappingmatrix th .shadow-state-bar {
+  height: 100%;
+  bottom: 0;
+  background-color: palegreen;
+  opacity: 1;
+  position: absolute;
+  z-index: 1;
+}
+#synapp .mappingmatrix .mapping {
+  width: 4.5rem;
+  vertical-align: middle;
+  padding: 0 0.25rem 0 0.25rem;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1.0;
+  cursor: pointer;
+}
+#synapp .mappingmatrix .mapping.inactive {
+  opacity: 0.3;
+}
+#synapp .mappingmatrix .mapping:hover {
+  opacity: 1.0;
+}
+#synapp .mappingmatrix .mapping.plus {
+  background-color: rgba(0,0,0,0.5);
+}
+#synapp .mappingmatrix .mapping.minus {
+  background-color: rgba(130,0,0,0.5);
+}
+#synapp input[disabled], #synapp input.inactive {
+  opacity: 0.5;
+}
+#synapp .mappingmatrix .mapping input.param {
+  display: inline-block;
+  cursor: pointer;
+  width: 3.8rem;
+  height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+#synapp .mappingmatrix .mapping i.fa {
+  width: 0.5rem;
+  display: inline-block;
+}
+#synapp input[type="number"],
+#synapp input[type="number"]:focus {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    font-size: 0.65rem;
+    width: 4rem;
+    height: auto;
+    padding: 0.2rem;
+    background-color: #000;
+    opacity: 0.5;
+    color: #eee;
+    /*
+    border-color: #fff;
+    border-radius: 0px;
+    */
+    border: none;
+    cursor: pointer;
+}
+
+#synapp .audiocontrolset {
+  border-style: solid;
+  padding: 0.2rem;
+  margin: 0.2rem;
+  display: block;
+  border-width: 1px;
+  border-radius: 8px;
+}
+
+#synapp input[type=number]::-webkit-inner-spin-button,
+#synapp input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#synapp .marked-slider-wrap {
+  position: relative;
+  height: 1em;
+
+}
+#synapp .marked-slider-wrap .slider {
+    position: absolute;
+    width: 100%;
+    height: 1em;
+    z-index: 3;
+}
+#synapp .marked-slider-wrap .zero-mark {
+  position: absolute;
+  width: 50%;
+  border-right: black 2px solid;
+  height: 1em;
+  z-index: 2;
+}
+#synapp .marked-slider-wrap .shadow-slider {
+    position: absolute;
+    width: 100%;
+    height: 1em;
+    z-index: 1;
+    color: black;
+}
+#synapp .button {
+    border-style: solid;
+    padding: 0.2rem;
+    margin: 0.2rem;
+    display: inline-block;
+    border-width: 1px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.5);
+}
+#synapp .button.mute.true {
+  background-color: red;
+}
+
+
+/**
+ Scrollbars
+ */
+ ::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);*/
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(238,238,238,1);
+    /*-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);*/
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0,0,0,0.2);
+}
+
+
+#video-video {
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  position: fixed;
+  display: block;
+  margin: 0 0 0 0;
+  min-width: 100%;
+  min-height: 100%;
+  -webkit-transform: scale(-1, 1);
+}
+
+#video-canvas {
+  width: 64px;
+  height: 64px;
+  display: none;
+  position: absolute;
+}
+
+#logo {
+    position: fixed;
+    bottom: 25px;
+    right: 10px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 4.7rem;
+    text-align: center;
+    color: #000;
+    /*background-color: #000;*/
+    opacity: 0.5;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    cursor: default;
+}

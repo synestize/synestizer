@@ -1,0 +1,60 @@
+{
+  "name": "synestizer",
+  "version": "1.0.0",
+  "description": "Listen to colours",
+  "main": "src/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "clean": "rm -rf js/*",
+    "prewatch": "npm run clean",
+    "watch": "webpack --progress --colors --watch --debug --output-pathinfo",
+    "dev": "webpack-dev-server  --progress --colors --inline --hot",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack -p --config webpack.config.js",
+    "preproductionbuild": "npm run clean",
+    "productionbuild": "NODE_ENV=production webpack -p --config webpack-production.config.js",
+    "prepublish": "npm run productionbuild",
+    "publish": "NODE_ENV=production rsync -av --progress --delete css fonts js sound index.html listentocolors:violet_listentocolors_net",
+    "preserve": "npm run build",
+    "serve": "static"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/synestize/synestizer.git"
+  },
+  "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
+  "license": "GPL-3.0",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-system-import-transformer": "^2.4.0",
+    "babel-plugin-transform-dead-code-elimination": "^2.2.1",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-escompress": "^1.0.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-runtime": "^6.9.0",
+    "localforage": "^1.4.3",
+    "node-static": "^0.7.9",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-core": "^0.1.1",
+    "redux-logger": "^2.7.0",
+    "redux-persist": "^3.5.0",
+    "redux-thunk": "^2.1.0",
+    "rxjs": "^5.0.0-rc.1",
+    "script-loader": "^0.7.0",
+    "source-map-loader": "^0.1.5",
+    "tone": "git+https://github.com/Tonejs/Tone.js.git",
+    "webpack": "^1.13.2",
+    "webrtc-adapter": "^1.4.0",
+    "worker-loader": "^0.7.1"
+  }
+}
