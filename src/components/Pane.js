@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import BrandingBox from './BrandingBox'
+import { VERSION } from '../settings'
 
-const Pane = ({paneId, children, version}) => (
+const Pane = ({paneId, children}) => (
   <section className={'pane-wrapper ' + paneId} id={paneId}>
-    <BrandingBox version={version}/>
+    <BrandingBox />
     <div className='pane-content'>
       {children}
     </div>
@@ -12,7 +13,6 @@ const Pane = ({paneId, children, version}) => (
 Pane.propTypes = {
   paneId: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  version: PropTypes.string.isRequired
 }
 
 export default Pane;

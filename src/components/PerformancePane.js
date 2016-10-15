@@ -1,8 +1,10 @@
 import Pane from './Pane';
 import React, { Component, PropTypes, Children } from 'react';
 
-const PerformancePane = ({version}) => (<Pane paneId="performance-pane" version={version}>
+const PerformancePane = ({}) => (
+  <Pane paneId="performance-pane" >
     Insert performance here
-</Pane>)
+  </Pane>
+)
 
 export default PerformancePane;

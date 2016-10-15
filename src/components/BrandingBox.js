@@ -1,6 +1,8 @@
-const BrandingBox = ({version}) => (<div className='branding-box'>
+import { VERSION } from '../settings'
+
+const BrandingBox = () => (<div className='branding-box'>
   <div className='branding-info'>
-    <h1>Synestizer <span className='version'>{version} edition.</span></h1>
+    <h1>Synestizer <span className='version'>{VERSION} edition.</span></h1>
   </div>
 </div>)
 

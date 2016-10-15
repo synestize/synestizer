@@ -8,8 +8,8 @@ import ActivePatchMatrix from '../containers/ActivePatchMatrix'
 
 import React, { Component, PropTypes, Children } from 'react';
 
-const IOPane = ({version}) => {return (
-  <Pane paneId="io-pane" version={version}>
+const IOPane = ({}) => {return (
+  <Pane paneId="io-pane"  >
     <VideoSettings />
     <AudioSettings />
     <MidiSettings />
@@ -20,8 +20,6 @@ const IOPane = ({version}) => {return (
 )}
 
 
-IOPane.propTypes = {
-  version: PropTypes.string.isRequired,
-}
+IOPane.propTypes = {}
 
 export default IOPane;

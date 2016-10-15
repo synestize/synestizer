@@ -3,26 +3,26 @@ import IOPane from './IOPane'
 import WelcomePane from './WelcomePane'
 import PerformancePane from './PerformancePane'
 import SoundPane from './SoundPane'
+import { VERSION } from '../settings'
 
-const CurrentPane = ({visiblePane, version}) => {
+const CurrentPane = ({visiblePane}) => {
   switch (visiblePane) {
     case 'io':
-      return <IOPane version={version}/>
+      return <IOPane />
     case 'welcome':
-      return <WelcomePane version={version} />
+      return <WelcomePane />
     case 'performance':
-      return <PerformancePane version={version} />
+      return <PerformancePane />
     case 'sound':
     default:
-      return <SoundPane version={version} />
+      return <SoundPane />
   }
 }
 
 CurrentPane.propTypes = {
   visiblePane: PropTypes.oneOf([
     'io', 'welcome', 'performance', 'sound'
-  ]),
-  version: PropTypes.string.isRequired
+  ])
 }
 
 export default CurrentPane;

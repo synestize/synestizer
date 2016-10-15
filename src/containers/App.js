@@ -5,7 +5,6 @@ import PaneSet from '../components/PaneSet';
 const mapStateToProps = (state, ownProps) => {
   return {
     visiblePane: state.gui.visiblePane,
-    version: ownProps.version
   }
 };
 
