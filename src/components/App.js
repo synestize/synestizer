@@ -1,9 +1,11 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ArchimedeanSlider from './ArchimedeanSlider'
+import ScaleSlider from './ScaleSlider'
 
 const App = ({}) => {
   return (<div className="meh" >
+    <ScaleSlider />
     <ArchimedeanSlider
       className="test-class-1"
       bias={0.5}

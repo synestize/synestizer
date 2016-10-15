@@ -1,5 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
+import {ScaleSlider} from './ScaleSlider'
 
 const ArchimedeanSlider = ({
   bias=0,
@@ -36,7 +37,10 @@ const ArchimedeanSlider = ({
       >
         <style>
             { `.track { fill:${trackFill} };
-            .biasThumb { fill:${biasThumbFill}` }
+            .biasThumb { fill:${biasThumbFill} ;
+              cursor: move;}
+            };
+            .scaleArrow { fill:${scaleFill};` }
         </style>
         <rect
           x={trackLeft}
@@ -49,15 +53,21 @@ const ArchimedeanSlider = ({
           y1={midY}
           y2={height}
           stroke="orange"
-          fill="transparent" stroke-width="2"/>
+          fill="transparent" strokeWidth="2"/>
         <rect
           x={trackLeft}
           y={trackMidY-trackHeight/2}
           width={trackLen}
           height={trackHeight} />
         <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
-        <polygon points="50 160, 55 180, 70 180, 60 190, 65 205, 50 195, 35 205, 40 190, 30 180, 45 180"/>
-        <path className="" d='M0 24 L0 40 L64 32 Z'  style={{fill:'blue'}}/>
+        <ScaleSlider scale={scale}
+          perturb={perturb}
+          width={64}
+          height={36}
+          onChange={onScaleChange}
+          scaleFill={scaleFill}
+          x={0}
+          y={0} />
       </svg>
     {bias}/{scale}/{value}/{perturb}
   </div>)
