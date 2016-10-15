@@ -10,7 +10,7 @@ html, body {
 }
 body {
   font-family: 'Roboto Condensed', sans-serif;
-  background-color: var(--base-fg-color);
+  background-color: var(--base-bg-color);
   color: var(--base-fg-color);
   height: 100%;
   overflow: hidden;
