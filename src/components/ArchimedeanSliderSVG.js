@@ -21,14 +21,15 @@ const ArchimedeanSliderSVG = ({
   tickColor="orange",
   biasBackingFill="white",
   binderColor="orange",
-  transform=''
+  transform='',
+  actualColor='orange'
 }) => {
   const biasHeight = 2* height/3;
   const biasTop = height-biasHeight;
   const biasMid = (biasHeight + height)/2;
   const midX = width/2;
 
-  const thumbSize = biasHeight/3;
+  const thumbSize = biasHeight/4;
   const trackHeight = biasHeight/5;
   const trackLeft = thumbSize;
   const trackRight = width - trackLeft;
@@ -44,33 +45,43 @@ const ArchimedeanSliderSVG = ({
   const scaleMidY = scaleHeight/2;
   return (
     <g transform={transform}>
-      <style>
-          { `.track { fill:${trackFill} };
-          .biasThumb { fill:${biasThumbFill} ;
-            cursor: move;}
-          };` }
-      </style>
-      <rect
-        x={0}
-        y={biasTop}
-        width={width}
-        height={biasHeight}
-        fill={biasBackingFill}
-      />
-      <rect
-        x={trackLeft}
-        y={trackMidY-trackHeight/2}
-        width={trackLen}
-        height={trackHeight} />
-      <line
-        x1={midX}
-        x2={midX}
-        y1={biasTop}
-        y2={height}
-        stroke={tickColor}
-        fill="transparent"
-        strokeWidth="2"/>
-      <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
+      <g>
+        <style>
+            { `.track { fill:${trackFill} };
+            .biasThumb { fill:${biasThumbFill} ;
+              cursor: move;}
+            };` }
+        </style>
+        <rect
+          x={0}
+          y={biasTop}
+          width={width}
+          height={biasHeight}
+          fill={biasBackingFill}
+        />
+        <rect
+          x={trackLeft}
+          y={trackMidY-trackHeight/2}
+          width={trackLen}
+          height={trackHeight} />
+        <line
+          x1={midX}
+          x2={midX}
+          y1={biasTop}
+          y2={height}
+          stroke={tickColor}
+          fill="transparent"
+          strokeWidth="2"/>
+        <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
+        <line
+          x1={biasThumbX}
+          x2={valueThumbX}
+          y1={trackMidY}
+          y2={trackMidY}
+          stroke={actualColor}
+          fill="transparent"
+          strokeWidth={trackHeight} />
+      </g>
       <ScaleSliderSVG scale={scale}
         perturb={perturb}
         width={scaleWidth}
@@ -88,7 +99,6 @@ const ArchimedeanSliderSVG = ({
         stroke={binderColor}
         fill="transparent"
         strokeWidth="2"/>
-      <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
     </g>
   )
 };
