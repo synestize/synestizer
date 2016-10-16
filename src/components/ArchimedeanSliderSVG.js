@@ -2,7 +2,35 @@ import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 
-class ArchimedeanSliderSVG extends React.Component{
+class ArchimedeanSliderSVG extends Component{
+  constructor(props) {
+    super(props);
+    this.inGesture = false;
+    this.gestureStartX = 0;
+    this.gestureStartY = 0;
+    //this.state = {count: props.initialCount};
+  }
+  handleMouseDown = (e) => {
+    this.inGesture = true;
+    this.gestureStartX = e.clientX;
+    this.gestureStartY = e.clientY;
+    console.debug('handleMouseDown', e.clientX, e.clientY, this.inGesture)
+  }
+  handleMouseUp = (e) => {
+    this.inGesture = false;
+    console.debug('handleMouseUp', this.inGesture)
+  }
+  handleMouseLeave = (e) => {
+    this.inGesture = false;
+    console.debug('handleMouseLeave', this.inGesture)
+  }
+  handleMouseMove = (e) => {
+    console.debug('handleMouseMove', e.clientX, e.clientY, this.inGesture)
+  }
+  handleDoubleClick = (e) => {
+    this.props.onBiasDoubleClick();
+    console.debug('handleDoubleClick', this.inGesture)
+  }
   render = () => {
     let {
       bias=0,
@@ -12,8 +40,6 @@ class ArchimedeanSliderSVG extends React.Component{
       className='',
       width=256,
       height=96,
-      onScaleChange,
-      onBiasChange,
       biasFill='brown', // move this to CSS?
       trackFill='gray',
       scaleArrowFill='blue',
@@ -24,7 +50,11 @@ class ArchimedeanSliderSVG extends React.Component{
       biasBackingFill='white',
       binderColor='orange',
       transform='',
-      actualColor='orange'
+      actualColor='orange',
+      onBiasDoubleClick,
+      onBiasChange,
+      onScaleChange,
+      onScaleDoubleClick
     } = this.props;
     const biasHeight = 2* height/3;
     const biasTop = height-biasHeight;
@@ -47,7 +77,16 @@ class ArchimedeanSliderSVG extends React.Component{
     const scaleMidY = scaleHeight/2;
 
     let c = (<g transform={transform}>
-        <g>
+        <g
+            onMouseDown={this.handleMouseDown}
+            onMouseMove={this.handleMouseMove}
+            onMouseUp={this.handleMouseUp}
+            onMouseLeave={this.handleMouseLeave}
+            onDoubleClick={this.handleDoubleClick}
+            // onTouchStart={this.handleTouchStart}
+            // onTouchEnd={this.handleTouchEnd}
+            // onTouchMove={this.handleTouchMove}
+          >
           <style>
               { `.track { fill:${trackFill} };
               .biasThumb { fill:${biasThumbFill} ;
