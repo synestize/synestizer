@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ComboSignalSelect from '../containers/ComboSignalSelect'
-import MarkedLiveSlider from '../components/MarkedLiveSlider'
+import ArchimedeanSlider from '../components/ArchimedeanSlider'
 
 const GenericAudioParam = ({
   bias=0,
@@ -23,23 +23,32 @@ const GenericAudioParam = ({
     <ComboSignalSelect
       className="any-signal-select"
       onSignalChange={onSignalChange}
-      sinkControlKey={sinkControlKey} />
-    <MarkedLiveSlider
-      className="scale"
-      onChange={onScaleChange}
-      step={0.0625}
-      labelText="scale"
-      value={scale}
-      shadowVal={actualSignalValue}
-      disabled={!Boolean(signal)}
+      sinkControlKey={sinkControlKey}
     />
-    <MarkedLiveSlider
-      className="bias"
-      onChange={onBiasChange}
-      step={0.0625}
-      labelText="bias"
-      shadowVal={actualSinkControlValue}
-      value={bias} />
+    <ArchimedeanSlider
+      bias={bias}
+      scale={scale}
+      perturbedValue={actualSignalValue}
+      perturb={actualSignalValue}
+      className=''
+      width={256}
+      height={96}
+      biasFill='brown'
+      trackFill='gray'
+      scaleArrowFill='blue'
+      scaleBackingFill='black'
+      perturbArrowFill='rgba(0,0,255,0.8)'
+      biasThumbFill='black'
+      tickColor='orange'
+      biasBackingFill='white'
+      binderColor='orange'
+      transform=''
+      actualColor='orange'
+      onBiasDoubleClick={()=>null}
+      onBiasChange={onBiasChange}
+      onScaleDoubleClick={()=>null}
+      onScaleChange={onScaleChange}
+    />
   </div>)
 };
 
