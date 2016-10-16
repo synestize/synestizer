@@ -34,7 +34,8 @@ module.exports = {
         ],
         "plugins": [
           "transform-object-rest-spread",
-          "transform-dead-code-elimination"
+          "transform-dead-code-elimination",
+          "transform-class-properties"
         ]
       }
     }]
