@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
-import {ScaleSlider} from './ScaleSlider'
+import ScaleSlider from './ScaleSlider'
 
 const ArchimedeanSlider = ({
   bias=0,
@@ -15,7 +15,8 @@ const ArchimedeanSlider = ({
   biasFill="brown", // move this to CSS?
   scaleFill="red",
   trackFill="gray",
-  biasThumbFill="black"
+  biasThumbFill="black",
+  tickColor="orange",
 }) => {
   const midX = width/2;
   const midY = height/2;
@@ -52,8 +53,9 @@ const ArchimedeanSlider = ({
           x2={midX}
           y1={midY}
           y2={height}
-          stroke="orange"
-          fill="transparent" strokeWidth="2"/>
+          stroke={tickColor}
+          fill="transparent"
+          strokeWidth="2"/>
         <rect
           x={trackLeft}
           y={trackMidY-trackHeight/2}
@@ -71,7 +73,7 @@ const ArchimedeanSlider = ({
       </svg>
   )
 };
-
+/*  */
 ArchimedeanSlider.propTypes = {
   bias: PropTypes.number,
   scale: PropTypes.number,
