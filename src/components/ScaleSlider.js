@@ -35,32 +35,34 @@ const ScaleSlider = ({
       style={{fill:perturbArrowFill}}
     />
   }
-  console.debug('pol', `${left} 0, ${right} ${midY}, ${left} ${height}`)
   return (<svg
         width={width}
         height={height}
         xmlns='http://www.w3.org/2000/svg'
         xmlnsXlink='http://www.w3.org/1999/xlink'
-        transform={transform} >
+      >
       <style>
           { `.backing { fill: ${scaleBackingFill} };` }
       </style>
-      <rect
-        x={0}
-        y={0}
-        width={width}
-        height={height}
-        className='backing' />
-      {arrow}
-      {shadowArrow}
-      <line
-        x1={midX}
-        x2={midX}
-        y1={0}
-        y2={height}
-        stroke={tickColor}
-        fill='transparent'
-        strokeWidth='2'/>
+      <g transform={transform}>
+        <rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          className='backing' />
+        {arrow}
+        {shadowArrow}
+        <line
+          x1={midX}
+          x2={midX}
+          y1={0}
+          y2={height}
+          stroke={tickColor}
+          fill='transparent'
+          strokeWidth='2'
+        />
+      </g>
     </svg>
   )
 };

@@ -28,7 +28,8 @@ const ArchimedeanSlider = ({
   const trackMidY = 3*height/4;
   const biasThumbX = midX + trackLen /2 * bias;
   const valueThumbX = midX + trackLen /2 * value;
-
+  const x=7;
+  const y=12;
   return (
       <svg
           width={width}
@@ -68,8 +69,7 @@ const ArchimedeanSlider = ({
           height={36}
           onChange={onScaleChange}
           scaleFill={scaleFill}
-          x={0}
-          y={0} />
+          transform={`translate(${x},${y})`} />
       </svg>
   )
 };
