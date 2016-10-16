@@ -52,7 +52,7 @@ const ArchimedeanSliderSVG = ({
         width={width}
         height={height}
         onChange={onBiasChange}
-        onDoubleClick={onScaleDoubleClick}
+        onDoubleClick={onBiasDoubleClick}
         value={bias}
       >
       <style>

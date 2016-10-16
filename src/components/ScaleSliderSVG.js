@@ -1,5 +1,6 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
+import GestureableSVG from './GestureableSVG'
 
 const ScaleSliderSVG = ({
   scale=0.5,
@@ -8,6 +9,7 @@ const ScaleSliderSVG = ({
   width=80,
   height=32,
   onChange=()=>null,
+  onDoubleClick=()=>null,
   scaleArrowFill='blue',
   scaleBackingFill='black',
   perturbArrowFill='rgba(0,0,255,0.8)',
@@ -33,7 +35,14 @@ const ScaleSliderSVG = ({
       style={{fill:perturbArrowFill}}
     />
   }
-  return (<g transform={transform}>
+  return (<GestureableSVG
+      width={width}
+      height={height}
+      onChange={onChange}
+      onDoubleClick={onDoubleClick}
+      value={scale}
+      transform={transform}
+    >
     <style>
         { `.backing { fill: ${scaleBackingFill} };` }
     </style>
@@ -54,7 +63,7 @@ const ScaleSliderSVG = ({
       fill='transparent'
       strokeWidth='2'
     />
-    </g>
+    </GestureableSVG>
   )
 };
 

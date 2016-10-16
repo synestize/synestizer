@@ -37,8 +37,10 @@ class GestureableSVG extends Component{
       value=0,
       onDoubleClick,
       onChange,
+      transform='',
     } = this.props;
     let c = (<g
+      transform={transform}
       onMouseDown={this.handleMouseDown}
       onMouseMove={this.handleMouseMove}
       onMouseUp={this.handleMouseUp}
@@ -58,6 +60,7 @@ GestureableSVG.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
   onDoubleClick: PropTypes.func,
+  transform: PropTypes.string,
 }
 
 export default GestureableSVG;
