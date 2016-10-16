@@ -5,7 +5,9 @@ import ScaleSlider from './ScaleSlider'
 
 const App = ({}) => {
   return (<div className="meh" >
-    <ScaleSlider />
+    <ScaleSlider
+      height={40}
+      width={150} />
     <ArchimedeanSlider
       className="test-class-1"
       bias={0.5}

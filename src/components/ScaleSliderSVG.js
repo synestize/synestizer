@@ -12,8 +12,6 @@ const ScaleSliderSVG = ({
   scaleBackingFill='black',
   perturbArrowFill='rgba(0,0,255,0.8)',
   tickColor='orange',
-  x=0,
-  y=0,
   transform=''
 }) => {
   const midX = width/2;
@@ -65,12 +63,11 @@ ScaleSliderSVG.propTypes = {
   scale: PropTypes.number,
   value: PropTypes.number,
   perturb: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
   onChange: PropTypes.func,
   scaleArrowFill: PropTypes.string,
   scaleBackingFill: PropTypes.string,
   className: PropTypes.string,
+  transform: PropTypes.string,
 }
 
 export default ScaleSliderSVG
