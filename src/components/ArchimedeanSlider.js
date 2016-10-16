@@ -28,7 +28,7 @@ const ArchimedeanSlider = ({
   const biasThumbX = midX + trackLen /2 * bias;
   const valueThumbX = midX + trackLen /2 * value;
 
-  return (<div className={"param-control " + className} >
+  return (
       <svg
           width={width}
           height={height}
@@ -69,8 +69,7 @@ const ArchimedeanSlider = ({
           x={0}
           y={0} />
       </svg>
-    {bias}/{scale}/{value}/{perturb}
-  </div>)
+  )
 };
 
 ArchimedeanSlider.propTypes = {
