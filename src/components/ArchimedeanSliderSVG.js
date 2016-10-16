@@ -7,20 +7,20 @@ const ArchimedeanSliderSVG = ({
   scale=0,
   value=0,
   perturb=0,
-  className="",
+  className='',
   width=256,
   height=96,
   onScaleChange,
   onBiasChange,
-  biasFill="brown", // move this to CSS?
-  trackFill="gray",
+  biasFill='brown', // move this to CSS?
+  trackFill='gray',
   scaleArrowFill='blue',
   scaleBackingFill='black',
   perturbArrowFill='rgba(0,0,255,0.8)',
-  biasThumbFill="black",
-  tickColor="orange",
-  biasBackingFill="white",
-  binderColor="orange",
+  biasThumbFill='black',
+  tickColor='orange',
+  biasBackingFill='white',
+  binderColor='orange',
   transform='',
   actualColor='orange'
 }) => {
@@ -70,8 +70,8 @@ const ArchimedeanSliderSVG = ({
           y1={biasTop}
           y2={height}
           stroke={tickColor}
-          fill="transparent"
-          strokeWidth="2"/>
+          fill='transparent'
+          strokeWidth='2'/>
         <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
         <line
           x1={biasThumbX}
@@ -79,7 +79,7 @@ const ArchimedeanSliderSVG = ({
           y1={trackMidY}
           y2={trackMidY}
           stroke={actualColor}
-          fill="transparent"
+          fill='transparent'
           strokeWidth={trackHeight} />
       </g>
       <ScaleSliderSVG scale={scale}
@@ -97,8 +97,8 @@ const ArchimedeanSliderSVG = ({
         y1={trackMidY}
         y2={scaleMidY}
         stroke={binderColor}
-        fill="transparent"
-        strokeWidth="2"/>
+        fill='transparent'
+        strokeWidth='2'/>
     </g>
   )
 };
