@@ -8,34 +8,35 @@ class ArchimedeanSliderSVG extends Component{
     this.inGesture = false;
     this.gestureStartX = 0;
     this.gestureStartY = 0;
-    //this.state = {count: props.initialCount};
+    this.gestureStartVal = props.bias || 0.0
   }
   handleMouseDown = (e) => {
     this.inGesture = true;
     this.gestureStartX = e.clientX;
     this.gestureStartY = e.clientY;
-    console.debug('handleMouseDown', e.clientX, e.clientY, this.inGesture)
+    this.gestureStartVal = this.props.bias;
   }
   handleMouseUp = (e) => {
     this.inGesture = false;
-    console.debug('handleMouseUp', this.inGesture)
   }
   handleMouseLeave = (e) => {
     this.inGesture = false;
-    console.debug('handleMouseLeave', this.inGesture)
   }
   handleMouseMove = (e) => {
-    console.debug('handleMouseMove', e.clientX, e.clientY, this.inGesture)
+    if (this.inGesture) {
+      let delta = 2.0 * (e.clientX-this.gestureStartX) / this.props.width
+      this.props.onBiasChange(
+        Math.max(-1, Math.min(1, this.gestureStartVal + delta)));
+    }
   }
   handleDoubleClick = (e) => {
     this.props.onBiasDoubleClick();
-    console.debug('handleDoubleClick', this.inGesture)
   }
   render = () => {
     let {
       bias=0,
       scale=0,
-      value=0,
+      perturbedValue=0,
       perturb=0,
       className='',
       width=256,
@@ -68,7 +69,7 @@ class ArchimedeanSliderSVG extends Component{
     const trackLen = trackRight - trackLeft;
     const trackMidY = biasTop + biasHeight/2;
     const biasThumbX = midX + trackLen /2 * bias;
-    const valueThumbX = midX + trackLen /2 * value;
+    const valueThumbX = midX + trackLen /2 * perturbedValue;
 
     const scaleHeight = height - biasHeight;
     const scaleWidth = width/2;
@@ -148,7 +149,7 @@ class ArchimedeanSliderSVG extends Component{
 ArchimedeanSliderSVG.propTypes = {
   bias: PropTypes.number,
   scale: PropTypes.number,
-  value: PropTypes.number,
+  perturbedValue: PropTypes.number,
   perturb: PropTypes.number,
   onBiasChange: PropTypes.func,
   onScaleChange: PropTypes.func,

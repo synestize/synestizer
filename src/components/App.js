@@ -17,7 +17,9 @@ class App extends Component{
     return (<div className="meh" >
       <ArchimedeanSlider
         className="test-class-1"
-        onBiasChange={()=>null}
+        onBiasChange={(val)=>{
+          this.setState({'bias': val})
+        }}
         onBiasDoubleClick={()=>{
           this.setState({'bias': 0.0})
         }}
