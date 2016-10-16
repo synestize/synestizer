@@ -30,11 +30,15 @@ module.exports = {
         "presets": [
           "es2015",
           "react",
+          "stage-0",
           // "escompress"
         ],
         "plugins": [
-          "transform-object-rest-spread",
-          "transform-dead-code-elimination"
+          // "transform-es2015-destructuring",
+          // // "transform-es2015-spread",
+          // "transform-dead-code-elimination",
+          // "transform-object-rest-spread",
+          "transform-class-properties",
         ]
       }
     }]
