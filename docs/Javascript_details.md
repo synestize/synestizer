@@ -20,7 +20,7 @@ If we want to use Object, remember, ``Object.keys(thing).length`` will get the s
 
 ## HTML5 Multimedia
 
-not technically a "library", but a "set of things to know"
+Not technically a "library", but a "set of things to know"
 
 * To have a stable API to access audio and video we use webrtc-adapter.
 * [Audio synthesis](Audio_synthesis.md)
