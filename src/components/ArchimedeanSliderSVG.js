@@ -96,6 +96,7 @@ const ArchimedeanSliderSVG = ({
       width={scaleWidth}
       height={scaleHeight}
       onChange={onScaleChange}
+      onDoubleClick={onScaleDoubleClick}
       scaleArrowFill={scaleArrowFill}
       scaleBackingFill={scaleBackingFill}
       perturbArrowFill={perturbArrowFill}
