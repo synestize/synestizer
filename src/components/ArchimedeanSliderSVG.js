@@ -27,7 +27,7 @@ const ArchimedeanSliderSVG = ({
     onScaleChange,
     onScaleDoubleClick
   }) => {
-  const biasHeight = 2* height/3;
+  const biasHeight = 2* height/4;
   const biasTop = height-biasHeight;
   const biasMid = (biasHeight + height)/2;
   const midX = width/2;
@@ -43,7 +43,7 @@ const ArchimedeanSliderSVG = ({
 
   const scaleHeight = height - biasHeight;
   const scaleWidth = width/2;
-  const scaleLeft = (width - scaleWidth) * (1 + scale) / 2;
+  const scaleLeft = (width - scaleWidth) * (1 + bias) / 2;
   const scaleMidX = scaleLeft + scaleWidth/2;
   const scaleMidY = scaleHeight/2;
 

@@ -8,8 +8,8 @@ const ScaleSliderSVG = ({
   className='',
   width=80,
   height=32,
-  onChange=()=>null,
-  onDoubleClick=()=>null,
+  onChange,
+  onDoubleClick,
   scaleArrowFill='blue',
   scaleBackingFill='black',
   perturbArrowFill='rgba(0,0,255,0.8)',
@@ -51,7 +51,8 @@ const ScaleSliderSVG = ({
       y={0}
       width={width}
       height={height}
-      className='backing' />
+      className='backing'
+    />
     {arrow}
     {shadowArrow}
     <line
