@@ -24,11 +24,7 @@ Not technically a "library", but a "set of things to know"
 
 * To have a stable API to access audio and video we use webrtc-adapter.
 * [Audio synthesis](Audio_synthesis.md)
-* [SVG](https://biesnecker.com/2014/10/22/using-reactjs-to-draw-dynamic-svgs/)
-
-  * [practical example 1](https://github.com/getguesstimate/guesstimate-app/blob/master/src/components/lib/FlowGrid/edges.js)
-  * [practical example 2](https://github.com/getguesstimate/guesstimate-app/blob/master/src/components/lib/FlowGrid/edge.js)
-  * [paths explained](https://github.com/jxnblk/paths) [2](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths)
+* SVG - see the [SVG HOWTO](SVG_HOWTO.md).
 
 Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
@@ -182,7 +178,6 @@ We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the docu
     * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
     * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
-
 
 
 ## Alternative build tools
