@@ -12,15 +12,15 @@ class GestureableSVG extends Component{
   }
   handleMouseDown = (e) => {
     this.inGesture = true;
+    // Hack bypasses react and also SVG's limitations about mouse behaviour
+    document.addEventListener('mouseup', this.handleMouseUp, false);
     this.gestureStartX = e.clientX;
     this.gestureStartY = e.clientY;
     this.gestureStartVal = this.props.value;
   }
   handleMouseUp = (e) => {
     this.inGesture = false;
-  }
-  handleMouseLeave = (e) => {
-    this.inGesture = false;
+    document.removeEventListener('mouseup', this.handleMouseUp, false);
   }
   handleMouseMove = (e) => {
     if (this.inGesture) {
@@ -28,6 +28,9 @@ class GestureableSVG extends Component{
       this.props.onChange(
         Math.max(-1, Math.min(1, this.gestureStartVal + delta)));
     }
+  }
+  componentWillUnmount = () => {
+    document.removeEventListener('mouseup', this.handleMouseUp, false);
   }
   handleDoubleClick = (e) => {
     this.props.onDoubleClick();
@@ -42,9 +45,8 @@ class GestureableSVG extends Component{
     let c = (<g
       transform={transform}
       onMouseDown={this.handleMouseDown}
-      onMouseMove={this.handleMouseMove}
       onMouseUp={this.handleMouseUp}
-      onMouseLeave={this.handleMouseLeave}
+      onMouseMove={this.handleMouseMove}
       onDoubleClick={this.handleDoubleClick}
       // onTouchStart={this.handleTouchStart}
       // onTouchEnd={this.handleTouchEnd}
