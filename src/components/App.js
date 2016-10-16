@@ -23,9 +23,12 @@ class App extends Component{
         onBiasDoubleClick={()=>{
           this.setState({'bias': 0.0})
         }}
-        onScaleChange={()=>null}
-        onScaleDoubleClick={()=>null}
-        height={50}
+        onScaleChange={(val)=>{
+          this.setState({'scale': val})
+        }}
+        onScaleDoubleClick={()=>{
+          this.setState({'scale': 0.0})
+        }}        height={50}
         width={200}
         {...this.state} />
     </div>)
