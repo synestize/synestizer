@@ -14,16 +14,8 @@ const ArchimedeanSlider = (props) => {
 };
 
 ArchimedeanSlider.propTypes = {
-  bias: PropTypes.number,
-  scale: PropTypes.number,
-  value: PropTypes.number,
-  perturb: PropTypes.number,
-  x: PropTypes.number,
-  y: PropTypes.number,
-  onChange: PropTypes.func,
-  scaleArrowFill: PropTypes.string,
-  scaleBackingFill: PropTypes.string,
-  className: PropTypes.string,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 }
 
 export default ArchimedeanSlider
