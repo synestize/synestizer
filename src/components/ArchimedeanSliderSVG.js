@@ -31,41 +31,41 @@ const ArchimedeanSliderSVG = ({
   const x=7;
   const y=12;
   return (
-      <g>
-        <style>
-            { `.track { fill:${trackFill} };
-            .biasThumb { fill:${biasThumbFill} ;
-              cursor: move;}
-            };
-            .scaleArrow { fill:${scaleFill};` }
-        </style>
-        <rect
-          x={trackLeft}
-          y={trackMidY-trackHeight/2}
-          width={trackLen}
-          height={trackHeight} />
-        <line
-          x1={midX}
-          x2={midX}
-          y1={midY}
-          y2={height}
-          stroke={tickColor}
-          fill="transparent"
-          strokeWidth="2"/>
-        <rect
-          x={trackLeft}
-          y={trackMidY-trackHeight/2}
-          width={trackLen}
-          height={trackHeight} />
-        <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
-        <ScaleSliderSVG scale={scale}
-          perturb={perturb}
-          width={64}
-          height={36}
-          onChange={onScaleChange}
-          scaleFill={scaleFill}
-          transform={`translate(${x},${y})`} />
-      </g>
+    <g>
+      <style>
+          { `.track { fill:${trackFill} };
+          .biasThumb { fill:${biasThumbFill} ;
+            cursor: move;}
+          };
+          .scaleArrow { fill:${scaleFill};` }
+      </style>
+      <rect
+        x={trackLeft}
+        y={trackMidY-trackHeight/2}
+        width={trackLen}
+        height={trackHeight} />
+      <line
+        x1={midX}
+        x2={midX}
+        y1={midY}
+        y2={height}
+        stroke={tickColor}
+        fill="transparent"
+        strokeWidth="2"/>
+      <rect
+        x={trackLeft}
+        y={trackMidY-trackHeight/2}
+        width={trackLen}
+        height={trackHeight} />
+      <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
+      <ScaleSliderSVG scale={scale}
+        perturb={perturb}
+        width={64}
+        height={36}
+        onChange={onScaleChange}
+        scaleFill={scaleFill}
+        transform={`translate(${x},${y})`} />
+    </g>
   )
 };
 /*  */

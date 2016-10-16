@@ -36,26 +36,26 @@ const ScaleSliderSVG = ({
     />
   }
   return (<g transform={transform}>
-      <style>
-          { `.backing { fill: ${scaleBackingFill} };` }
-      </style>
-      <rect
-        x={0}
-        y={0}
-        width={width}
-        height={height}
-        className='backing' />
-      {arrow}
-      {shadowArrow}
-      <line
-        x1={midX}
-        x2={midX}
-        y1={0}
-        y2={height}
-        stroke={tickColor}
-        fill='transparent'
-        strokeWidth='2'
-      />
+    <style>
+        { `.backing { fill: ${scaleBackingFill} };` }
+    </style>
+    <rect
+      x={0}
+      y={0}
+      width={width}
+      height={height}
+      className='backing' />
+    {arrow}
+    {shadowArrow}
+    <line
+      x1={midX}
+      x2={midX}
+      y1={0}
+      y2={height}
+      stroke={tickColor}
+      fill='transparent'
+      strokeWidth='2'
+    />
     </g>
   )
 };
