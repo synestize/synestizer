@@ -1,22 +1,25 @@
-'use strict';
 import { connect } from 'react-redux';
 import {
   setSourceSinkScale,
   setSinkBias,
 } from '../actions/signal'
+import ScaleSlider from '../components/ScaleSlider'
 
-import PatchMappingControl from '../components/PatchMappingControl.js'
 
 const mapStateToProps = (state, {sourceKey, sinkKey, ...ownProps}) => {
   return {
-    val: state.signal.sourceSinkScale[sourceKey+'/'+sinkKey],
+    scale: state.signal.sourceSinkScale[sourceKey+'/'+sinkKey]|| 0.0,
     ...ownProps
   }
 }
 const mapDispatchToProps = (dispatch, {sourceKey, sinkKey}) => {
   return {
-    onSetScale: (val=0) => dispatch(
-      setSourceSinkScale(sourceKey, sinkKey, val)
+    onChange: (val=0) => {
+      dispatch(
+        setSourceSinkScale(sourceKey, sinkKey, val))
+    },
+    onDoubleClick:  (val=0) => dispatch(
+      setSourceSinkScale(sourceKey, sinkKey, 0.0)
     ),
   }
 };
@@ -24,6 +27,6 @@ const mapDispatchToProps = (dispatch, {sourceKey, sinkKey}) => {
 const ActivePatchMappingControl = connect(
   mapStateToProps,
   mapDispatchToProps
-)( PatchMappingControl );
+)( ScaleSlider );
 
 export default ActivePatchMappingControl;

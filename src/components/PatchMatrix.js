@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react'
 import ActivePatchMappingControl from '../containers/ActivePatchMappingControl'
 import PatchMappingHeaderCell from './PatchMappingHeaderCell'
 
+/*
+* How the hell did i make a presentational componenet which includes so much state management?
+* needs refactor
+*/
+
 const PatchMatrix = ({
     sourceSignalMeta,
     sourceSignalValues,
@@ -31,12 +36,14 @@ const PatchMatrix = ({
       scope="row"
       val={sourceSignalValues[sourceKey] || 0.0} />];
     for (var sinkKey of sinkKeys) {
-      cells.push(<ActivePatchMappingControl
-        key={"sink-" + sinkKey}
-        sourceKey={sourceKey}
-        sinkKey={sinkKey}
-        val={sourceSinkScale[sourceKey+'/'+sinkKey] || 0.0}
-        />)
+      cells.push(<td className="mapping" key={"sink-" + sinkKey}>
+        <ActivePatchMappingControl
+          sourceKey={sourceKey}
+          sinkKey={sinkKey}
+          width={80}
+          height={32}
+        />
+      </td>)
     };
     bodyRows.push(<tr key={sourceKey}>{cells}</tr>)
   };
