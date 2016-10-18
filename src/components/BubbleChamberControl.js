@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import SpecificAudioParam from '../containers/SpecificAudioParam'
 import MuteButton from '../components/MuteButton'
+import SubPane from '../components/SubPane'
 
 const BubbleChamberControl = ({
     onChangeVoice1Mute,
@@ -12,13 +13,13 @@ const BubbleChamberControl = ({
     voice3mute,
     voice4mute,
   }) => {
-  return (<div className="subpane">
-    <h2 className='vert'>Bubble Chamber</h2>
+  return (<SubPane className='vert'>
+    <h2>Bubble Chamber</h2>
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0001' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0002' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0003' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0004' />
-    <div className='voice1'>
+    <SubPane className='vert'>
       <h3>Voice 1</h3>
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1rate' />
@@ -28,8 +29,8 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1gain' />
       <MuteButton mute={voice1mute} onClick={onChangeVoice1Mute} />
-    </div>
-    <div className='voice1'>
+    </SubPane>
+    <SubPane className='vert'>
       <h3>Voice 2</h3>
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2rate' />
@@ -39,8 +40,8 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2gain' />
       <MuteButton mute={voice2mute} onClick={onChangeVoice2Mute} />
-    </div>
-  </div>)
+    </SubPane>
+  </SubPane>)
 }
 
 BubbleChamberControl.propTypes = {

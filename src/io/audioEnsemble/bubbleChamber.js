@@ -30,7 +30,7 @@ import Tone from 'tone/build/Tone.js'
 export default function init(store, signalio, audio) {
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|pitch__0001',
-    label: "I",
+    label: "Root",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -69,7 +69,7 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|voice1delayTime',
+    key: 'bubbleChamber|voice1delayScale',
     label: "Delay",
     ensemble: "Bubble Chamber",
   }));
@@ -104,7 +104,7 @@ export default function init(store, signalio, audio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|voice2delayTime',
+    key: 'bubbleChamber|voice2delayScale',
     label: "Delay",
     ensemble: "Bubble Chamber",
   }));
@@ -129,7 +129,7 @@ export default function init(store, signalio, audio) {
   let voice1bottom = 0.0;
   let voice1counter = 0;
   let voice1timeMul = 4;
-  let voice1delayTime = 0;
+  let voice1delayScale = 0;
   let voice1smear = 0;
   let voice1scramble = 0;
   let voice1gainLevel = 0;
@@ -139,7 +139,7 @@ export default function init(store, signalio, audio) {
   let voice2bottom = 0.0;
   let voice2counter = 0;
   let voice2timeMul = 4;
-  let voice2delayTime = 0;
+  let voice2delayScale = 0;
   let voice2smear = 0;
   let voice2scramble = 0;
   let voice2gainLevel = 0;
@@ -279,9 +279,9 @@ export default function init(store, signalio, audio) {
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice1rate || 0.0);
 
-    voice1delayTime = bipolLookup(
+    voice1delayScale = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
-      sig.voice1delayTime || 0.0);
+      sig.voice1delayScale || 0.0);
     voice1smear = bipolLin(
       0, 0.95,
       sig.voice1smear || 0.0);
@@ -294,7 +294,11 @@ export default function init(store, signalio, audio) {
       -30.0, 0.0,
       sig.voice1gain || 0.0);
     voice1gainNode.gain.rampTo(voice1gainLevel, 0.1)
-    let voice1actualDelTime = Tone.Time('16n').mult(voice1delayTime).eval()
+    let voice1actualDelTime = Math.min(
+      Tone.Time('16n').mult(
+      voice1delayScale)
+      .eval(),
+      1)
     voice1delayNode.delayTime.rampTo(voice1actualDelTime, '4n');
 
     voice2timeMul = bipolLin(
@@ -306,9 +310,9 @@ export default function init(store, signalio, audio) {
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice2rate || 0.0);
 
-    voice2delayTime = bipolLookup(
+    voice2delayScale = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
-      sig.voice2delayTime || 0.0);
+      sig.voice2delayScale || 0.0);
     voice2smear = bipolLin(
       0, 0.95,
       sig.voice2smear || 0.0);
@@ -321,11 +325,14 @@ export default function init(store, signalio, audio) {
       -30.0, 0.0,
       sig.voice2gain || 0.0);
     voice2gainNode.gain.rampTo(voice2gainLevel, 0.1)
-    let voice2actualDelTime = Tone.Time('16n').mult(voice2delayTime).eval()
+    let voice2actualDelTime = Math.min(
+      Tone.Time('16n').mult(
+        voice2delayScale
+      ).eval(),
+      1)
     voice2delayNode.delayTime.rampTo(voice2actualDelTime, '4n');
 
   });
-
 
   function nextNote(
     voice1idx,

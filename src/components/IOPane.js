@@ -12,8 +12,8 @@ const IOPane = ({}) => {return (
   <Pane paneId="io-pane"  >
     <VideoSettings />
     <AudioSettings />
-    <MidiSettings />
     <SignalSettings />
+    <MidiSettings />
     <ActivePatchMatrix />
     <AppSettings />
   </Pane>

@@ -115,39 +115,44 @@ a, a:hover, a:active, a:focus {
 }
 #synapp .pane-content .subpane {
   border-bottom: var(--base-fg-color) 1px solid;
-  padding-bottom: 0.3em;
-  padding-left: 0.2rem 0.2rem 0.2rem 0.2rem;
+  padding: 0.2rem 0.2rem 0.3rem 0.2rem;
   border-style: solid;
-  margin: 0.2rem;
+  margin: 0.2rem 0.2rem 0.2rem 0.2em;
   display: block;
   border-width: 1px;
   border-radius: 8px;
   position: relative;
 }
+#synapp .pane-content .subpane.vert  {
+  padding-left: 2em;
+}
+#synapp .pane-content .subpane.squeeze  {
+  display: inline-block;
+}
 
-#synapp .pane-content .subpane h2.vert {
+#synapp .pane-content .subpane.vert > h2,
+#synapp .pane-content .subpane.vert > h3,
+#synapp .pane-content .subpane.vert > h4 {
   display: block;
   position: absolute;
+  margin-left: 0;
 
-  -webkit-transform-origin: 1em 0.5em;
-  -moz-transform-origin:    1em 0.5em;
-  -ms-transform-origin:     1em 0.5em;
-  -o-transform-origin:      1em 0.5em;
-  transform-origin:      1em 0.5em;
+  -webkit-transform-origin: 0.0em 0.0em;
+  -moz-transform-origin:    0.0em 0.0em;
+  -ms-transform-origin:     0.0em 0.0em;
+  -o-transform-origin:      0.0em 0.0em;
+  transform-origin:         0.0em 0.0em;
 
   -webkit-transform: rotate(90deg);
   -moz-transform:    rotate(90deg);
   -ms-transform:     rotate(90deg);
   -o-transform:      rotate(90deg);
-  transform:      rotate(90deg);
+  transform:         rotate(90deg);
 }
 
-#synapp .pane-content .subpane h2.vert + * {
-  margin-left: 2em;
-}
 
-#synapp .pane-content .subpane .param-control h3,
-#synapp .pane-content .subpane .param-control h4 {
+#synapp .pane-content .subpane .param-control > h3,
+#synapp .pane-content .subpane .param-control > h4 {
   position: absolute;
   padding: 0;
   z-index: -1;
@@ -156,10 +161,12 @@ a, a:hover, a:active, a:focus {
 }
 #synapp .pane-content .subpane .param-control {
   position: relative;
-  z-index: -1;
+  z-index: 1;
 }
-
-
+#synapp .pane-content .subpane .param-control select {
+  height: 1.4em;
+  font-size: 90%;
+}
 #video-io {
   position: absolute;
   left: 0;

@@ -26,22 +26,22 @@ const GenericAudioParam = ({
       perturbedValue={actualSignalValue}
       perturb={actualSignalValue}
       className=''
-      width={256}
-      height={96}
+      width={220}
+      height={60}
       biasFill='brown'
       trackFill='gray'
       scaleArrowFill='blue'
       scaleBackingFill='black'
       perturbArrowFill='rgba(0,0,255,0.8)'
       biasThumbFill='black'
-      tickColor='orange'
+      tickColor='red'
       biasBackingFill='white'
       binderColor='orange'
       transform=''
       actualColor='orange'
-      onBiasDoubleClick={()=>null}
+      onBiasDoubleClick={()=>onBiasChange(0.0)}
       onBiasChange={onBiasChange}
-      onScaleDoubleClick={()=>null}
+      onScaleDoubleClick={()=>onScaleChange(0.0)}
       onScaleChange={onScaleChange}
     />
     <ComboSignalSelect

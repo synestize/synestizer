@@ -17,7 +17,8 @@ const ArchimedeanSliderSVG = ({
     scaleBackingFill='black',
     perturbArrowFill='rgba(0,0,255,0.8)',
     biasThumbFill='black',
-    tickColor='orange',
+    tickColor='red',
+    scaleTickColor='red',
     biasBackingFill='white',
     binderColor='orange',
     transform='',
@@ -100,6 +101,7 @@ const ArchimedeanSliderSVG = ({
       scaleArrowFill={scaleArrowFill}
       scaleBackingFill={scaleBackingFill}
       perturbArrowFill={perturbArrowFill}
+      tickColor={scaleTickColor}
       transform={`translate(${scaleLeft},${0})`} />
     <line
       x1={biasThumbX}

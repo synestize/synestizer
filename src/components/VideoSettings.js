@@ -3,7 +3,7 @@ import SubPane from './SubPane'
 import VideoSourceSelect from '../containers/VideoSourceSelect'
 
 const VideoSettings = () => (
-  <SubPane title="Video" name="video">
+  <SubPane title="Video" name="video" className='squeeze'>
     <VideoSourceSelect disabled={false} title="Video In" name="videosource" />
   </SubPane>
 )

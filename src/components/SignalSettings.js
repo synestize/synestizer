@@ -3,7 +3,7 @@ import SubPane from './SubPane'
 import GenericSignalMax from '../containers/GenericSignalMax'
 
 const SignalSettings = () => (
-  <SubPane title="Signal" name="signal">
+  <SubPane title="Signal" className="signal squeeze">
     Number of buses: <GenericSignalMax />
   </SubPane>
 )

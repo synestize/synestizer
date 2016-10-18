@@ -4,7 +4,7 @@ import MidiSourceSection from '../containers/MidiSourceSection'
 import MidiSinkSection from '../containers/MidiSinkSection'
 
 const MidiSettings = () => (
-  <SubPane title="" name="midi">
+  <SubPane title="" className="midi squeeze">
     <MidiSourceSection />
     <MidiSinkSection />
   </SubPane>
