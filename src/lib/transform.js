@@ -4,7 +4,7 @@
  * transformed into musical units
  */
 
-// if our values are mostly 7 bits, e.g. MIDI,
+// if our values are  7 bits, e.g. MIDI,
 // this is a good scale factor
 const sevenBitSafe = 127.5/128
 // If we are using 7 bits, we need to clip to a safe range

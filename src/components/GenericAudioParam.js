@@ -20,11 +20,6 @@ const GenericAudioParam = ({
     <h3 className="audio-sink-name">
       {label}
     </h3>
-    <ComboSignalSelect
-      className="any-signal-select"
-      onSignalChange={onSignalChange}
-      sinkControlKey={sinkControlKey}
-    />
     <ArchimedeanSlider
       bias={bias}
       scale={scale}
@@ -48,6 +43,11 @@ const GenericAudioParam = ({
       onBiasChange={onBiasChange}
       onScaleDoubleClick={()=>null}
       onScaleChange={onScaleChange}
+    />
+    <ComboSignalSelect
+      className="any-signal-select"
+      onSignalChange={onSignalChange}
+      sinkControlKey={sinkControlKey}
     />
   </div>)
 };

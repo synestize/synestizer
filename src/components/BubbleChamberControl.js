@@ -12,8 +12,8 @@ const BubbleChamberControl = ({
     voice3mute,
     voice4mute,
   }) => {
-  return (<div className="audiocontrolset">
-    <h3>Bubble Chamber</h3>
+  return (<div className="subpane">
+    <h2 className='vert'>Bubble Chamber</h2>
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0001' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0002' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0003' />

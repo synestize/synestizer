@@ -199,7 +199,6 @@ export default function init(store, signalio, audio) {
     step
   ).start('1m');
 
-
   let voice2gainNode = new Tone.Gain(voice2gainLevel, 'db')
   let voice2delayNode = new Tone.FeedbackDelay("8n", 0.0);
   voice2delayNode.connect(voice2gainNode)

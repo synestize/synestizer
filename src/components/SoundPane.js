@@ -5,8 +5,8 @@ import React, { Component, PropTypes, Children } from 'react';
 
 const SoundPane = ({}) => (
   <Pane paneId="audio-pane" >
-    <AudioMasterControls />
     <ActiveBubbleChamberControl />
+    <AudioMasterControls />
   </Pane>)
 
 export default SoundPane;

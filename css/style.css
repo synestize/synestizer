@@ -113,10 +113,53 @@ a, a:hover, a:active, a:focus {
   padding-right: 1em;
   display: inline-block;
 }
-#synapp .subpane {
+#synapp .pane-content .subpane {
   border-bottom: var(--base-fg-color) 1px solid;
   padding-bottom: 0.3em;
+  padding-left: 0.2rem 0.2rem 0.2rem 0.2rem;
+  border-style: solid;
+  margin: 0.2rem;
+  display: block;
+  border-width: 1px;
+  border-radius: 8px;
+  position: relative;
 }
+
+#synapp .pane-content .subpane h2.vert {
+  display: block;
+  position: absolute;
+
+  -webkit-transform-origin: 1em 0.5em;
+  -moz-transform-origin:    1em 0.5em;
+  -ms-transform-origin:     1em 0.5em;
+  -o-transform-origin:      1em 0.5em;
+  transform-origin:      1em 0.5em;
+
+  -webkit-transform: rotate(90deg);
+  -moz-transform:    rotate(90deg);
+  -ms-transform:     rotate(90deg);
+  -o-transform:      rotate(90deg);
+  transform:      rotate(90deg);
+}
+
+#synapp .pane-content .subpane h2.vert + * {
+  margin-left: 2em;
+}
+
+#synapp .pane-content .subpane .param-control h3,
+#synapp .pane-content .subpane .param-control h4 {
+  position: absolute;
+  padding: 0;
+  z-index: -1;
+  font-weight: bold;
+  opacity: 0.7;
+}
+#synapp .pane-content .subpane .param-control {
+  position: relative;
+  z-index: -1;
+}
+
+
 #video-io {
   position: absolute;
   left: 0;
@@ -204,41 +247,12 @@ a, a:hover, a:active, a:focus {
   position: absolute;
   z-index: 1;
 }
-#synapp .mappingmatrix .mapping {
-  width: 4.5rem;
-  vertical-align: middle;
-  padding: 0 0.25rem 0 0.25rem;
-  background-color: rgba(0,0,0,0.5);
-  opacity: 1.0;
-  cursor: pointer;
+#synapp .mappingmatrix td {
+  padding: 0.2rem;
 }
-#synapp .mappingmatrix .mapping.inactive {
-  opacity: 0.3;
-}
-#synapp .mappingmatrix .mapping:hover {
-  opacity: 1.0;
-}
-#synapp .mappingmatrix .mapping.plus {
-  background-color: rgba(0,0,0,0.5);
-}
-#synapp .mappingmatrix .mapping.minus {
-  background-color: rgba(130,0,0,0.5);
-}
+
 #synapp input[disabled], #synapp input.inactive {
   opacity: 0.5;
-}
-#synapp .mappingmatrix .mapping input.param {
-  display: inline-block;
-  cursor: pointer;
-  width: 3.8rem;
-  height: 1.5rem;
-  margin: 0;
-  padding: 0;
-  vertical-align: middle;
-}
-#synapp .mappingmatrix .mapping i.fa {
-  width: 0.5rem;
-  display: inline-block;
 }
 #synapp input[type="number"],
 #synapp input[type="number"]:focus {
@@ -260,45 +274,12 @@ a, a:hover, a:active, a:focus {
     cursor: pointer;
 }
 
-#synapp .audiocontrolset {
-  border-style: solid;
-  padding: 0.2rem;
-  margin: 0.2rem;
-  display: block;
-  border-width: 1px;
-  border-radius: 8px;
-}
-
 #synapp input[type=number]::-webkit-inner-spin-button,
 #synapp input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-#synapp .marked-slider-wrap {
-  position: relative;
-  height: 1em;
 
-}
-#synapp .marked-slider-wrap .slider {
-    position: absolute;
-    width: 100%;
-    height: 1em;
-    z-index: 3;
-}
-#synapp .marked-slider-wrap .zero-mark {
-  position: absolute;
-  width: 50%;
-  border-right: black 2px solid;
-  height: 1em;
-  z-index: 2;
-}
-#synapp .marked-slider-wrap .shadow-slider {
-    position: absolute;
-    width: 100%;
-    height: 1em;
-    z-index: 1;
-    color: black;
-}
 #synapp .button {
     border-style: solid;
     padding: 0.2rem;
