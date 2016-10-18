@@ -3,7 +3,6 @@ import IOPane from './IOPane'
 import WelcomePane from './WelcomePane'
 import PerformancePane from './PerformancePane'
 import SoundPane from './SoundPane'
-import { VERSION } from '../settings'
 
 const CurrentPane = ({visiblePane}) => {
   switch (visiblePane) {

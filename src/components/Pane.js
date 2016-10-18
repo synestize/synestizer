@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import BrandingBox from './BrandingBox'
-import { VERSION } from '../settings'
 
 const Pane = ({paneId, children}) => (
   <section className={'pane-wrapper ' + paneId} id={paneId}>

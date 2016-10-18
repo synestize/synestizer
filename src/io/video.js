@@ -10,8 +10,6 @@ import 'rxjs/add/operator/pluck';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/share';
 
-import {SIGNAL_PERIOD_MS, UI_PERIOD_MS } from '../settings'
-
 import  {
   addSourceSignal,
   removeSourceSignal,

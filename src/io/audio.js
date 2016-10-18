@@ -20,14 +20,8 @@ import  {
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
-import {
-  SIGNAL_PERIOD_MS,
-  UI_PERIOD_MS,
-  SIGNAL_PERIOD,
-  UI_PERIOD,
-  SIGNAL_RATE,
-  UI_RATE,
-} from '../settings'
+
+let SIGNAL_RATE = 1.0/(SIGNAL_PERIOD_MS/1000)
 
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;

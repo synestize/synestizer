@@ -1,4 +1,3 @@
-import { VERSION } from '../settings'
 
 const BrandingBox = () => (<div className='branding-box'>
   <div className='branding-info'>

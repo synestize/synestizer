@@ -7,9 +7,10 @@ config.plugins.push(new webpack.DefinePlugin({
   PRODUCTION: JSON.stringify(false),
   "process.env": {
     NODE_ENV: JSON.stringify("development")
-  }
+  },
+  VERSION: JSON.stringify("Violet"),
+  SIGNAL_PERIOD_MS: JSON.stringify(1000),
+  UI_PERIOD_MS: JSON.stringify(1000),
 }))
-
-delete(config.devtool)
 
 module.exports = config

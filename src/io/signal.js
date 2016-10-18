@@ -15,7 +15,6 @@ import {
 } from '../actions/signal'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
-import {SIGNAL_PERIOD_MS, UI_PERIOD_MS } from '../settings'
 
 /*
 internal state handles high-speed source updates and periodic sink updates and UI updates
