@@ -11,15 +11,20 @@ const ArchimedeanSliderSVG = ({
     className='',
     width=256,
     height=96,
+    label='',
+    labelOpacity=0.5,
+    labelColor='black',
+    labelHeight=0.5,
     biasFill='brown', // move this to CSS?
-    trackFill='gray',
+    trackColor='gray',
     scaleArrowFill='blue',
     scaleBackingFill='black',
     perturbArrowFill='rgba(0,0,255,0.8)',
     biasThumbFill='black',
     tickColor='red',
     scaleTickColor='red',
-    biasBackingFill='white',
+    biasBackingFill='black',
+    biasOpacity=0.5,
     binderColor='orange',
     transform='',
     actualColor='orange',
@@ -48,6 +53,19 @@ const ArchimedeanSliderSVG = ({
   const scaleMidX = scaleLeft + scaleWidth/2;
   const scaleMidY = scaleHeight/2;
 
+  let labelElem;
+  if (label.length>0) {
+    labelElem = <text
+      x='0'
+      y={height}
+      fontSize={biasHeight*labelHeight}
+      fontWeight='bold'
+      color='labelColor'
+    >
+    {label}
+  </text>
+  }
+
   let c = (<g transform={transform}>
     <GestureableSVG
         width={width}
@@ -57,7 +75,7 @@ const ArchimedeanSliderSVG = ({
         value={bias}
       >
       <style>
-          { `.track { fill:${trackFill} };
+          { `.track { fill:${trackColor} };
           .biasThumb { fill:${biasThumbFill} ;
             cursor: move;}
           };` }
@@ -68,12 +86,15 @@ const ArchimedeanSliderSVG = ({
         width={width}
         height={biasHeight}
         fill={biasBackingFill}
+        opacity={biasOpacity}
       />
       <rect
         x={trackLeft}
         y={trackMidY-trackHeight/2}
         width={trackLen}
-        height={trackHeight} />
+        height={trackHeight}
+        color={trackColor}
+      />
       <line
         x1={midX}
         x2={midX}
@@ -81,7 +102,8 @@ const ArchimedeanSliderSVG = ({
         y2={height}
         stroke={tickColor}
         fill='transparent'
-        strokeWidth='2'/>
+        strokeWidth='2'
+      />
       <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
       <line
         x1={biasThumbX}
@@ -91,6 +113,7 @@ const ArchimedeanSliderSVG = ({
         stroke={actualColor}
         fill='transparent'
         strokeWidth={trackHeight} />
+      {labelElem}
     </GestureableSVG>
     <ScaleSliderSVG scale={scale}
       perturb={perturb}
@@ -119,6 +142,7 @@ const ArchimedeanSliderSVG = ({
 ArchimedeanSliderSVG.propTypes = {
   bias: PropTypes.number,
   scale: PropTypes.number,
+  label: PropTypes.string,
   perturbedValue: PropTypes.number,
   perturb: PropTypes.number,
   onBiasChange: PropTypes.func,

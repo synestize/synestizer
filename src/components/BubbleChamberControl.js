@@ -13,14 +13,12 @@ const BubbleChamberControl = ({
     voice3mute,
     voice4mute,
   }) => {
-  return (<SubPane className='vert'>
-    <h2>Bubble Chamber</h2>
+  return (<SubPane className='vert' title='Bubble Chamber'>
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0001' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0002' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0003' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0004' />
-    <SubPane className='vert'>
-      <h3>Voice 1</h3>
+    <SubPane className='vert' title='Voice 1'>
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1density' />
@@ -30,8 +28,7 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1gain' />
       <MuteButton mute={voice1mute} onClick={onChangeVoice1Mute} />
     </SubPane>
-    <SubPane className='vert'>
-      <h3>Voice 2</h3>
+    <SubPane className='vert' title='Voice 2'>
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2density' />

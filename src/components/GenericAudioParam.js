@@ -17,9 +17,6 @@ const GenericAudioParam = ({
   onSignalChange}) => {
 
   return (<div className={"param-control " + sinkControlKey} >
-    <h3 className="audio-sink-name">
-      {label}
-    </h3>
     <ArchimedeanSlider
       bias={bias}
       scale={scale}
@@ -28,8 +25,9 @@ const GenericAudioParam = ({
       className=''
       width={220}
       height={60}
+      label={label}
       biasFill='brown'
-      trackFill='gray'
+      trackColor='gray'
       scaleArrowFill='blue'
       scaleBackingFill='black'
       perturbArrowFill='rgba(0,0,255,0.8)'
