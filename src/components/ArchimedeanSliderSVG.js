@@ -60,7 +60,7 @@ const ArchimedeanSliderSVG = ({
       y={height}
       fontSize={biasHeight*labelHeight}
       fontWeight='bold'
-      color='labelColor'
+      color={labelColor}
     >
     {label}
   </text>

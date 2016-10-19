@@ -3,38 +3,68 @@ import {bipolPerc} from '../lib/transform'
 import GestureableSVG from './GestureableSVG'
 
 const ScaleSliderSVG = ({
-  scale=0.5,
-  perturb=undefined,
+  scale=0.0,
+  perturb=0.0,
   className='',
   width=80,
   height=32,
   onChange,
   onDoubleClick,
-  scaleArrowFill='blue',
+  scaleArrowFill='rgba(0,0,255,0.8)',
   scaleBackingFill='black',
-  perturbArrowFill='rgba(0,0,255,0.8)',
+  perturbArrowFill='rgba(0,255,255,0.6)',
   tickColor='red',
-  transform=''
+  transform='',
+  label1='',
+  label2='',
+  labelColor='rgba(200,200,200,1)',
 }) => {
   const midX = width/2;
   const midY = height/2;
   const left = midX - scale * midX;
   const right = midX + scale * midX;
-  let arrow = <polygon
+  let label1Elem;
+  let label2Elem;
+  if (label1.length>0) {
+    label1Elem = <text
+      key='label1'
+      x='0'
+      y={height*0.5}
+      fontSize={height*0.5}
+      fontWeight='bold'
+      color={labelColor}
+      fill={labelColor}
+    >
+    {label1}
+  </text>
+  }
+  if (label2.length>0) {
+    label2Elem = <text
+      key='label2'
+      x='0'
+      y={height}
+      fontSize={height*0.5}
+      fontWeight='bold'
+      color={labelColor}
+      fill={labelColor}
+    >
+    {label2}
+  </text>
+  }
+
+  let arrow ;
+  arrow = <polygon
     points={`${left} 0, ${right} ${midY}, ${left} ${height}`}
     style={{fill:scaleArrowFill}}
   />
   let shadowArrow;
-  const shadowing = (typeof(perturb)==='number');
-  if (shadowing) {
-    let shadowLeft = midX;
-    let shadowRight = midX + scale * perturb * midX;
+  let shadowLeft = midX;
+  let shadowRight = midX + perturb * midX;
 
-    shadowArrow = <polygon
-      points={`${shadowLeft} 0, ${shadowRight} ${midY}, ${shadowLeft} ${height}`}
-      style={{fill:perturbArrowFill}}
-    />
-  }
+  shadowArrow = <polygon
+    points={`${shadowLeft} 0, ${shadowRight} ${midY}, ${shadowLeft} ${height}`}
+    style={{fill:perturbArrowFill}}
+  />
   return (<GestureableSVG
       width={width}
       height={height}
@@ -64,12 +94,13 @@ const ScaleSliderSVG = ({
       fill='transparent'
       strokeWidth='2'
     />
+    {label1Elem}
+    {label2Elem}
     </GestureableSVG>
   )
 };
 
 ScaleSliderSVG.propTypes = {
-  bias: PropTypes.number,
   scale: PropTypes.number,
   value: PropTypes.number,
   perturb: PropTypes.number,
@@ -78,6 +109,7 @@ ScaleSliderSVG.propTypes = {
   scaleBackingFill: PropTypes.string,
   className: PropTypes.string,
   transform: PropTypes.string,
+  label: PropTypes.string,
 }
 
 export default ScaleSliderSVG

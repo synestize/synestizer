@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react'
-import {bipolPerc} from '../lib/transform'
+import ScaleSlider from './ScaleSlider'
 
-const PatchMappingHeaderCell = ({val, scope, name, signalKey}) => {
-  let divStyle = {
-    width: bipolPerc(val || 0.0)+"%"
-  };
+const PatchMappingHeaderCell = ({val, scope, name1, name2, signalKey, ...rest}) => {
   return (<th scope={scope || "column"} data-signal={signalKey}>
-    <div className="shadow-state-bar" style={divStyle} />
-    <span className='signalname'>{name}</span>
+    <ScaleSlider
+      perturb={val}
+      scale={0}
+      label1={name1}
+      label2={name2}
+      {...rest} />
   </th>);
 };
 
@@ -15,7 +16,8 @@ const PatchMappingHeaderCell = ({val, scope, name, signalKey}) => {
 PatchMappingHeaderCell.propTypes = {
   val: PropTypes.number.isRequired,
   scope: PropTypes.oneOf(["row", "column"]),
-  name: PropTypes.string.isRequired,
+  name1: PropTypes.string.isRequired,
+  name2: PropTypes.string.isRequired,
   signalKey: PropTypes.string.isRequired,
 }
 

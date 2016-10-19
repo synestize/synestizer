@@ -240,19 +240,6 @@ a, a:hover, a:active, a:focus {
 }
 #synapp .mappingmatrix th {
   font-weight: normal;
-  position: relative; /* so that child shadow-state-bar elements can be absolutely positioned */
-}
-#synapp .mappingmatrix th span {
-    position: relative;
-    z-index: 2;
-}
-#synapp .mappingmatrix th .shadow-state-bar {
-  height: 100%;
-  bottom: 0;
-  background-color: palegreen;
-  opacity: 1;
-  position: absolute;
-  z-index: 1;
 }
 #synapp .mappingmatrix td {
   padding: 0.2rem;

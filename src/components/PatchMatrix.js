@@ -12,7 +12,9 @@ const PatchMatrix = ({
     sourceSignalValues,
     sinkSignalMeta,
     sinkSignalValues,
-    sourceSinkScale
+    sourceSinkScale,
+    cellHeight=25,
+    cellWidth=80
   }) => {
   let bodyRows = [];
   let sourceKeys = Array.from(Object.keys(sourceSignalMeta)).sort();
@@ -24,24 +26,32 @@ const PatchMatrix = ({
     header.push(<PatchMappingHeaderCell
       key={"sink-" + sinkKey}
       signalKey={"sink-" + sinkKey}
-      name={sinkSignalMeta[sinkKey].owner + "/" + sinkSignalMeta[sinkKey].name}
+      name1={sinkSignalMeta[sinkKey].owner}
+      name2={sinkSignalMeta[sinkKey].name}
       scope="column"
-      val={sinkSignalValues[sinkKey] || 0.0} />);
+      val={sinkSignalValues[sinkKey] || 0.0}
+      width={cellWidth}
+      height={cellHeight}
+    />);
   };
   for (var sourceKey of sourceKeys) {
     let cells = [<PatchMappingHeaderCell
       key={"source-" + sourceKey}
       signalKey={"source-" + sourceKey}
-      name={sourceSignalMeta[sourceKey].owner + "/" + sourceSignalMeta[sourceKey].name}
+      name1={sourceSignalMeta[sourceKey].owner}
+      name2={sourceSignalMeta[sourceKey].name}
       scope="row"
-      val={sourceSignalValues[sourceKey] || 0.0} />];
+      val={sourceSignalValues[sourceKey] || 0.0}
+      width={cellWidth}
+      height={cellHeight}
+    />];
     for (var sinkKey of sinkKeys) {
       cells.push(<td className="mapping" key={"sink-" + sinkKey}>
         <ActivePatchMappingControl
           sourceKey={sourceKey}
           sinkKey={sinkKey}
-          width={80}
-          height={32}
+          width={cellWidth}
+          height={cellHeight}
         />
       </td>)
     };
