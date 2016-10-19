@@ -48,9 +48,6 @@ class GestureableSVG extends Component{
       onMouseUp={this.handleMouseUp}
       onMouseMove={this.handleMouseMove}
       onDoubleClick={this.handleDoubleClick}
-      // onTouchStart={this.handleTouchStart}
-      // onTouchEnd={this.handleTouchEnd}
-      // onTouchMove={this.handleTouchMove}
     >
       {this.props.children}
       </g>)
