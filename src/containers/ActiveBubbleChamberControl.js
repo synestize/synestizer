@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
     voice1mute: state.audio.bubbleChamber.voice1mute,
     voice2mute: state.audio.bubbleChamber.voice2mute,
     voice3mute: state.audio.bubbleChamber.voice3mute,
-    voice4mute: state.audio.bubbleChamber.voice4mute,
+    bassmute: state.audio.bubbleChamber.bassmute,
   }
 };
 
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onChangeVoice3Mute: (val) => {
       dispatch(toggleBubbleChamberVoice3Mute())
     },
-    onChangeVoice4Mute: (val) => {
+    onChangeBassMute: (val) => {
       dispatch(toggleBubbleChamberVoice4Mute())
     },
   }

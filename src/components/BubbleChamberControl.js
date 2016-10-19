@@ -7,11 +7,11 @@ const BubbleChamberControl = ({
     onChangeVoice1Mute,
     onChangeVoice2Mute,
     onChangeVoice3Mute,
-    onChangeVoice4Mute,
+    onChangeBassMute,
     voice1mute,
     voice2mute,
     voice3mute,
-    voice4mute,
+    bassmute,
   }) => {
   return (<SubPane className='vert' title='Bubble Chamber'>
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0001' />
@@ -38,6 +38,17 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2gain' />
       <MuteButton mute={voice2mute} onClick={onChangeVoice2Mute} />
     </SubPane>
+    <SubPane className='vert' title='Bass'>
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassbottom' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|basspitch' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassdetune' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|basscutoff' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassgate' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassdecay' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassrate' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassgain' />
+      <MuteButton mute={bassmute} onClick={onChangeBassMute} />
+    </SubPane>
   </SubPane>)
 }
 
@@ -45,11 +56,11 @@ BubbleChamberControl.propTypes = {
   onChangeVoice1Mute: PropTypes.func.isRequired,
   onChangeVoice2Mute: PropTypes.func.isRequired,
   onChangeVoice3Mute: PropTypes.func.isRequired,
-  onChangeVoice4Mute: PropTypes.func.isRequired,
+  onChangeBassMute: PropTypes.func.isRequired,
   voice1mute: PropTypes.bool,
   voice2mute: PropTypes.bool,
   voice3mute: PropTypes.bool,
-  voice4mute: PropTypes.bool,
+  bassmute: PropTypes.bool,
 }
 
 export default BubbleChamberControl

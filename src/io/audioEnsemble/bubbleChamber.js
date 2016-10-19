@@ -55,12 +55,12 @@ export default function init(store, signalio, audio) {
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice1rate',
-    label: "Rate 1",
+    label: "Rate",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice1density',
-    label: "Density 1",
+    label: "Density",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -90,17 +90,17 @@ export default function init(store, signalio, audio) {
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice2rate',
-    label: "Rate 1",
+    label: "Rate",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice2density',
-    label: "Density 1",
+    label: "Density",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice2scramble',
-    label: "scramble",
+    label: "Scramble",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -115,6 +115,52 @@ export default function init(store, signalio, audio) {
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice2gain',
+    label: "Gain",
+    ensemble: "Bubble Chamber",
+  }));
+
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassbottom',
+    label: "Octave",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|basspitch',
+    label: "Pitch",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassdetune',
+    label: "Detune",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|basscutoff',
+    label: "Cutoff",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassdistort',
+    label: "Distort",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassrate',
+    label: "Rate",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassgate',
+    label: "Gate",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassdecay',
+    label: "Decay",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassgain',
     label: "Gain",
     ensemble: "Bubble Chamber",
   }));
@@ -146,7 +192,7 @@ export default function init(store, signalio, audio) {
   let voice2mute = false;
 
   let voice3mute = false;
-  let voice4mute = false;
+  let bassmute = false;
 
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
@@ -255,9 +301,9 @@ export default function init(store, signalio, audio) {
     voice3mute = val;
   });
   toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice4mute'
+    'audio', 'bubbleChamber', 'bassmute'
   ).subscribe((val)=>{
-    voice4mute = val;
+    bassmute = val;
   });
 
 
