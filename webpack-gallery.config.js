@@ -4,14 +4,16 @@ var OfflinePlugin = require('offline-plugin');
 
 var config = require("./webpack-base.config.js");
 config.plugins.push(new webpack.DefinePlugin({
-  PRODUCTION: JSON.stringify(false),
+  PRODUCTION: JSON.stringify(true),
   GALLERY: JSON.stringify(true),
   "process.env": {
-    NODE_ENV: JSON.stringify("development")
+    NODE_ENV: JSON.stringify("production")
   },
   VERSION: JSON.stringify("Violet"),
-  SIGNAL_PERIOD_MS: JSON.stringify(1000),
-  UI_PERIOD_MS: JSON.stringify(1000),
+  SIGNAL_PERIOD_MS: JSON.stringify(40),
+  UI_PERIOD_MS: JSON.stringify(100),
 }))
+
+delete(config.devtool)
 
 module.exports = config

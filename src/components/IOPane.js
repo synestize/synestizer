@@ -8,16 +8,28 @@ import ActivePatchMatrix from '../containers/ActivePatchMatrix'
 
 import React, { Component, PropTypes, Children } from 'react';
 
-const IOPane = ({}) => {return (
-  <Pane paneId="io-pane"  >
-    <VideoSettings />
-    <AudioSettings />
-    <SignalSettings />
-    <MidiSettings />
-    <ActivePatchMatrix />
-    <AppSettings />
+const IOPane = ({}) => {
+  let permittedSettingPanes = [];
+  if (!GALLERY) {
+    permittedSettingPanes.push(...[
+      <VideoSettings key='VideoSettings' />,
+      <AudioSettings key='AudioSettings'/>,
+      <SignalSettings key='SignalSettings'/>,
+      <MidiSettings key='MidiSettings'/>,
+    ])
+  }
+  permittedSettingPanes.push(<ActivePatchMatrix key='ActivePatchMatrix'/>)
+  if (!GALLERY) {
+    permittedSettingPanes.push(
+      <AppSettings key='AppSettings'/>
+    )
+  }
+  return (
+  <Pane paneId="io-pane">
+    {permittedSettingPanes}
   </Pane>
-)}
+  )
+}
 
 
 IOPane.propTypes = {}

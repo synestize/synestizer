@@ -15,10 +15,14 @@
     "build": "webpack --config webpack.config.js",
     "preproductionbuild": "npm run clean",
     "productionbuild": "webpack --production --optimize-minimize --config webpack-production.config.js",
+    "pregallerybuild": "npm run clean",
+    "gallerybuild": "webpack --production --optimize-minimize --config webpack-gallery.config.js",
     "prepublish": "npm run productionbuild",
     "publish": "NODE_ENV=production rsync -av --progress --delete css fonts js sound index.html listentocolors:violet_listentocolors_net",
-    "preserve": "npm run build",
-    "serve": "static"
+    "preserve": "npm run productionbuild",
+    "serve": "static",
+    "pregalleryserve": "npm run gallerybuild",
+    "galleryserve": "static"
   },
   "repository": {
     "type": "git",

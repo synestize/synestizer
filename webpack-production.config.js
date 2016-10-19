@@ -5,6 +5,7 @@ var OfflinePlugin = require('offline-plugin');
 var config = require("./webpack-base.config.js");
 config.plugins.push(new webpack.DefinePlugin({
   PRODUCTION: JSON.stringify(true),
+  GALLERY: JSON.stringify(false),
   "process.env": {
     NODE_ENV: JSON.stringify("production")
   },
