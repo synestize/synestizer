@@ -29,10 +29,11 @@ This should build a version of the app suitable for you to take on stage, at
 ### Curators
 
 Gallery mode disables sensitive controls for the general public.
+A reasonable approximation to a gallery installation thingy can be got from, e.g. OSX:
 
-  npm install
-  npm run galleryserve
-  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html
+      npm install
+      npm run galleryserve
+      /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html
 
 
 ### Developers
