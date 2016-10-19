@@ -5,6 +5,7 @@ That's 3 different libraries with coincidentally similar names. Sorry.
 
 Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of Javascript.
 
+
 ## ES6
 
 Module support in ES6 looks different than the older standards.
@@ -25,16 +26,8 @@ Not technically a "library", but a "set of things to know"
 * To have a stable API to access audio and video we use webrtc-adapter.
 * [Audio synthesis](Audio_synthesis.md)
 * SVG - see the [SVG HOWTO](SVG_HOWTO.md).
-
-Icons are provided through [fontawesome](http://fontawesome.io/icons/)
-
-
-See Also
-
-[styling sliders](http://www.quirksmode.org/blog/archives/2015/11/styling_and_scr.html)
-
-[more styling sliders](https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/)
-
+* For the gallery: [kiosk mode](http://www.jamie-white.com/code/launch-chrome-in-kiosk-mode-with-url-tested-on-mac-chrome-43-0-2357-124/) is natively supported by chrome, but you should disable sensitive controls by doing a gallery build, ``npm run gallerybuild``
+* Icons are provided through [fontawesome](http://fontawesome.io/icons/)
 
 ## React
 

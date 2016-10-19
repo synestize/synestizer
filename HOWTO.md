@@ -26,6 +26,15 @@ Open up the terminal on your platform and run the following two commands:
 This should build a version of the app suitable for you to take on stage, at
 [http://localhost:8080/](http://localhost:8080/).
 
+### Curators
+
+Gallery mode disables sensitive controls for the general public.
+
+  npm install
+  npm run galleryserve
+  /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html
+
+
 ### Developers
 
 If you are not *performing* but *developing*, we recommend  different commands:
