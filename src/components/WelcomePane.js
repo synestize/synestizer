@@ -9,7 +9,9 @@ const WelcomePane = ({}) => (
       <p>
         Please enable your webcam in the browser and activate your loudspeakers.<br />
         This app requires an updated version of <a href="https://www.google.com/chrome/">chrome</a>.<br />
-        <a href="https://synestize.github.io/synestizer/">More info.</a>
+        <a href="https://synestize.gitbooks.io/synestizer/content/">
+          Documentation.
+        </a>
       </p>
       <p>
         If you like this project you can donate to it:

@@ -19,6 +19,7 @@ const BubbleChamberControl = ({
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0003' />
     <SpecificAudioParam sinkControlKey='bubbleChamber|pitch__0004' />
     <SubPane className='vert' title='Voice 1'>
+      <MuteButton mute={voice1mute} onClick={onChangeVoice1Mute} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1density' />
@@ -26,9 +27,9 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1delayTime' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1gain' />
-      <MuteButton mute={voice1mute} onClick={onChangeVoice1Mute} />
     </SubPane>
     <SubPane className='vert' title='Voice 2'>
+      <MuteButton mute={voice2mute} onClick={onChangeVoice2Mute} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2density' />
@@ -36,9 +37,9 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2delayTime' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2gain' />
-      <MuteButton mute={voice2mute} onClick={onChangeVoice2Mute} />
     </SubPane>
     <SubPane className='vert' title='Bass'>
+      <MuteButton mute={bassmute} onClick={onChangeBassMute} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassbottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|basspitch' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdetune' />
@@ -47,7 +48,6 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdecay' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassrate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassgain' />
-      <MuteButton mute={bassmute} onClick={onChangeBassMute} />
     </SubPane>
   </SubPane>)
 }
