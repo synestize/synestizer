@@ -52,11 +52,15 @@ Ranked in descending order of viability:
 
 ## Machine vision libraries
 
-* tangible.js tracks a bunch of useful libraries such as [machine vision in js](http://tangiblejs.com/libraries/computer-vision)
+Top pics, maybe useful
+
 * [tracking.js](http://trackingjs.com/) does cool stuff already
 * so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
+
+Suspected non-useful or abandoned
+
 * [js-objectdetect](https://github.com/mtschirs/js-objectdetect/) also looks decent and fast
-* [opencvjs](https://github.com/blittle/opencvjs) looks abandoned
+* [opencvjs](https://github.com/blittle/opencvjs) partial transcompile/port of OpenCV
 * [blob detection](http://blog.acipo.com/blob-detection-js/)
 * [segmentation engine](http://vision.akshaybhat.com/)
 * [graphcut](http://www.jscuts.com/graphcuts/)
