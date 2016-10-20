@@ -392,7 +392,7 @@ export default function init(store, signalio, audio) {
     scramble,
     timeMul
   ) {
-    let idx = (voice1idx + 17) * scramble % 3;
+    let idx = (voice1idx + 17) * scramble % 4;
     return {
       dur: Tone.Time(step).mult(timeMul).eval(),
       note: wrap(bottomNote, bottomNote+12, basePitch + pitchIntervals[idx]),
