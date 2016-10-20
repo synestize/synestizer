@@ -192,7 +192,12 @@ export default function init(store, signalio, audio) {
   let voice2mute = false;
 
   let voice3mute = false;
-  let bassmute = false;
+
+  let bassIdx = 0;
+  let bassBottom = 0.0;
+  let bassCounter = 0;
+  let bassGainLevel = 0;
+  let bassMute = false;
 
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
