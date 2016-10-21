@@ -54,7 +54,7 @@ Users and artists are welcome to experiment with, and developers, to modify, thi
 Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://danmackinlay.name/), the mathemagician in the team, are committedly contributing a great deal to the code of the project.
 Support has also been provided by the [Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University](http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/), coordinated by Prof. Karin Bijsterveld.
 [Prof. Peter Kiefer](http://www.musik.uni-mainz.de/741_DEU_HTML.php) from the Johannes Gutenberg University in Mainz
-and [Prof. Florian Dombois](http://www.floriandombois.net/) and [Prof. German Toro Perez](http://www.toro-perez.com/) from the [ZHdK] (https://www.zhdk.ch/) that are supporting the project. Also you can find our lectures/performances [here](https://www.zhdk.ch/?vorlesungsverzeichnis&semester_id=140409&cc_page_id=1802&course_id=165301)
+and [Prof. Florian Dombois](http://www.floriandombois.net/) and [Prof. German Toro Perez](http://www.toro-perez.com/) from the (ZHdK)[ https://www.zhdk.ch/] that are supporting the project. Also you can find our lectures/performances [here](https://www.zhdk.ch/?vorlesungsverzeichnis&semester_id=140409&cc_page_id=1802&course_id=165301).
 
 Want to join us?
 See [github](https://github.com/synestize/synestizer) for the source code.
