@@ -308,7 +308,7 @@ export default function init(store, signalio, audio) {
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'bassmute'
   ).subscribe((val)=>{
-    bassmute = val;
+    bassMute = val;
   });
 
 

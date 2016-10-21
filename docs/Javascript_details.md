@@ -127,8 +127,10 @@ npm install --save-dev --upgrade \
   babel-plugin-transform-object-rest-spread \
   babel-preset-es2015 \
   babel-preset-react \
+  babel-preset-stage-0 \
   localforage \
   node-static \
+  offline-plugin \
   react \
   react-dom \
   react-redux \
