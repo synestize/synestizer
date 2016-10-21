@@ -92,7 +92,7 @@ const ScaleSliderSVG = ({
       y2={height}
       stroke={tickColor}
       fill='transparent'
-      strokeWidth='2'
+      strokeWidth='1'
     />
     {label1Elem}
     {label2Elem}

@@ -24,7 +24,7 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1density' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1scramble' />
-      <SpecificAudioParam sinkControlKey='bubbleChamber|voice1delayTime' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|voice1delayScale' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1gain' />
     </SubPane>
@@ -34,7 +34,7 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2density' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2scramble' />
-      <SpecificAudioParam sinkControlKey='bubbleChamber|voice2delayTime' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|voice2delayScale' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2gain' />
     </SubPane>

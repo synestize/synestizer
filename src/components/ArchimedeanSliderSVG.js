@@ -104,7 +104,7 @@ const ArchimedeanSliderSVG = ({
         y2={height}
         stroke={tickColor}
         fill='transparent'
-        strokeWidth='2'
+        strokeWidth='1'
       />
       {/* thumb */}
       {/* <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} /> */}
@@ -132,7 +132,7 @@ const ArchimedeanSliderSVG = ({
       x2={scaleMidX}
       y1={trackMidY}
       y2={scaleMidY}
-      stroke={binderColor}
+      stroke={perturbArrowFill}
       fill='transparent'
       strokeWidth='2'/>
   </g>)
