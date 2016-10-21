@@ -39,9 +39,6 @@ Maybe just to pimp a daily situation or create an acoustic ambiance for a room.
 
 A challenge for the synestizer-project is to generate ad-hoc compositions that are fitting to the situation you are or better said your camera is in, and on top surprise you again and again.
 
-## Features
-
-The screen is divided into 4 sections. The left column is a visual readout of the camera measuring the Red, Green and Blue values in real-time. The background-colour is the representation and intensity of the average colour I=1/3*(R+G+B)  and the middle frame obviously displays what the camera captures. The right frame is the Audio section which enables the user to change the volume-mixture and the sound characteristics. 
 
 ## Who develops the synestizer?
 
