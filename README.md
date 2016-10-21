@@ -1,4 +1,3 @@
-
 ![Synestizer logo](https://synestize.github.io/synestizer/media/synestizer_logo_50x50.png)
 
 
@@ -16,10 +15,10 @@ A webapp to listen to the data flow of the camera-imagery.
 
 ## What is a Synestizer?
 
-The word Synestizer is a blend of the word synthesizer (electric signals converted into sounds) and synaesthesia (sensation together). The synestizer is an attempt to sonify the live imagery of a (web-)camera by making color-values audible in different ways.
-The idea behind the synestizer is to let visual and audio-input interact to tickle the synapse between your ears and eyes.
-In many ways visualizers (including screensavers) do this by transforming sound in to animated or generated graphics.
-The synestizer tries to do the opposite, as it translates Red, Green and Blue values to sound.
+The word Synestizer is a portmanteau of *synthesizer* ) and *synaesthesia*. Synestizer sonifies live camera imagery, tickling the synapses between your ears and eyes.
+
+Music visualisers and screensavers already translate sound into graphics.
+But synestizer does the opposite, translating Red, Green and Blue values to sound.
 For this effect, or let’s say „sense“, there are new methods and techniques explored, developed and spread online.
 That's why it is time to open the digital window and listen through it.
 
@@ -51,15 +50,25 @@ His interest in interpreting colours, patterns, materials and most recently also
 Now the group is growing and there are new people interested in the project, and we have opened up the code to invite even more to join us.
 Users and artists are welcome to experiment with, and developers, to modify, this thing.
 
-Now [Christoph Stähli](http://www.stahlnow.com) (programmer of Noisetracks and more) and [Dan MacKinlay](http://danmackinlay.name/), the mathemagician in the team, are committedly contributing a great deal to the code of the project.
-Support has also been provided by the [Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University](http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/), coordinated by Prof. Karin Bijsterveld.
-[Prof. Peter Kiefer](http://www.musik.uni-mainz.de/741_DEU_HTML.php) from the Johannes Gutenberg University in Mainz
-and [Prof. Florian Dombois](http://www.floriandombois.net/) and [Prof. German Toro Perez](http://www.toro-perez.com/) from the (ZHdK)[ https://www.zhdk.ch/] that are supporting the project. Also you can find our lectures/performances [here](https://www.zhdk.ch/?vorlesungsverzeichnis&semester_id=140409&cc_page_id=1802&course_id=165301).
+Synestizer is currently maintained by
+
+* [Dan MacKinlay](https://danmackinlay.name/)
+* [Christoph Stähli](http://www.stahlnow.com) 
+* [Kaspar könig](https://kasparkoenig.com)
+* 
+
+Support has been provided by
+
+* [Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University](http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/), coordinated by Prof. Karin Bijsterveld.
+* [Prof. Peter Kiefer](http://www.musik.uni-mainz.de/741_DEU_HTML.php) from the Johannes Gutenberg University in Mainz
+* [Prof. Florian Dombois](http://www.floriandombois.net/) and [Prof. German Toro Perez](http://www.toro-perez.com/) from the [ZHdK]( https://www.zhdk.ch/) 
+
+You can find our lectures/performances [here](https://www.zhdk.ch/?vorlesungsverzeichnis&semester_id=140409&cc_page_id=1802&course_id=165301).
 
 Want to join us?
 See [github](https://github.com/synestize/synestizer) for the source code.
 
-Ideas or interest in participation? Just write us an email at synestizer@gmail.com
+Ideas or interest in participation? Just write us an email at [synestizer@gmail.com](mailto:synestizer@gmail.com)
 
 
 ## Privacy
