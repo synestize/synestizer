@@ -33,7 +33,7 @@ A reasonable approximation to a gallery installation thingy can be got from, e.g
 
       npm install
       npm run galleryserve
-      /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html
+      /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html --host-rules="MAP * localhost:8080"
 
 
 ### Developers
