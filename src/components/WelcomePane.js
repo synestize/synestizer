@@ -1,18 +1,56 @@
 import React, { Component, PropTypes, Children } from 'react';
 import Pane from './Pane';
 
-const WelcomePane = ({}) => (
-    <Pane paneId="welcome" >
-      <h2>
-        Welcome to Synestizer.
-      </h2>
+const WelcomePane = ({}) => {
+  let blurb;
+  if (GALLERY) {
+    blurb = (<section>
+      <p>
+        Synestizer is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
+        We are watching you, and singing about it.
+      </p>
+      <p>Synestizer is maintained by</p>
+      <ul>
+      <li>Dan MacKinlay</li>
+      <li>Christoph Stähli</li>
+      <li>Kaspar König</li>
+      </ul>
+      <p>Support has been provided by</p>
+      <ul>
+      <li>Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University, Coordinated by Prof. Karin Bijsterveld.</li>
+      <li>Prof. Peter Kiefer from the Johannes Gutenberg University in Mainz</li>
+      <li>Prof. Florian Dombois and Prof. German Toro Perez from the  Zürcher Hochshule der Künste</li>
+      </ul>
+    </section>)
+  } else {
+    blurb=(<section>
       <p>
         Please enable your webcam in the browser and activate your loudspeakers.<br />
         This app requires an updated version of <a href="https://www.google.com/chrome/">chrome</a>.<br />
+      </p>
+      <p>
         <a href="https://synestize.gitbooks.io/synestizer/content/">
           Documentation.
         </a>
       </p>
+      <p>
+        Synestizer is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
+        We are watching you, and singing about it.
+      </p>
+      <p>Synestizer is maintained by</p>
+      <ul>
+        <li><a href="https://danmackinlay.name/" target="_blank">Dan MacKinlay</a></li>
+        <li><a href="http://www.stahlnow.com" target="_blank">Christoph Stähli</a> </li>
+        <li><a href="https://kasparkoenig.com" target="_blank">Kaspar könig</a></li>
+      </ul>
+      <p>Support has been provided by</p>
+      <ul>
+        <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/" target="_blank">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
+        <li><a href="http://www.musik.uni-mainz.de/741_DEU_HTML.php" target="_blank">Prof. Peter Kiefer</a> from the Johannes Gutenberg University in Mainz</li>
+        <li><a href="http://www.floriandombois.net/" target="_blank">Prof. Florian Dombois</a> and <a href="http://www.toro-perez.com/" target="_blank">Prof. German Toro Perez</a> from the <a href="https://www.zhdk.ch/" target="_blank">ZHdK</a> </li>
+      </ul>
+      <p>You can find our lectures/performances <a href="https://www.zhdk.ch/?vorlesungsverzeichnis&amp;semester_id=140409&amp;cc_page_id=1802&amp;course_id=165301" target="_blank">here</a>.</p>
+
       <p>
         If you like this project you can donate to it:
       </p>
@@ -24,6 +62,9 @@ const WelcomePane = ({}) => (
         <img alt="" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1" />
       </form>
       <p>
+        Don't like it? <a href="https://github.com/synestize/synestizer" target="_blank">Change it.</a>
+      </p>
+      <p>
         &copy; 2016 by <a href="https://www.kasparkoenig.com/">kaspar</a>,&nbsp;
          <a href="https://danmackinlay.name">dan</a> &amp;&nbsp;
          <a href="http://www.stahlnow.com">stahl</a>.
@@ -33,7 +74,15 @@ const WelcomePane = ({}) => (
           GNU General Public License, version 2.0 or later.
         </a>.
       </p>
-    </Pane>
-)
+    </section>)
+  }
+  return (<Pane paneId="welcome">
+    <h2>
+      Welcome to Synestizer.
+    </h2>
+    {blurb}
+  </Pane>)
+}
+
 
 export default WelcomePane
