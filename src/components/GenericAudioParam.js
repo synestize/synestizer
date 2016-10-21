@@ -15,13 +15,11 @@ const GenericAudioParam = ({
   onBiasChange,
   onScaleChange,
   onSignalChange}) => {
-
   return (<div className={"param-control " + sinkControlKey} >
     <ArchimedeanSlider
       bias={bias}
       scale={scale}
       perturbedValue={actualSignalValue}
-      perturb={actualSignalValue}
       className=''
       width={220}
       height={60}

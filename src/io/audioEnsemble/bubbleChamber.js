@@ -197,7 +197,7 @@ export default function init(store, signalio, audio) {
   let bassBottom = 0.0;
   let bassCounter = 0;
   let bassGainLevel = 0;
-  let bassMute = false;
+  let bassmute = false;
 
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
@@ -308,7 +308,7 @@ export default function init(store, signalio, audio) {
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'bassmute'
   ).subscribe((val)=>{
-    bassMute = val;
+    bassmute = val;
   });
 
 

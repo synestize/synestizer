@@ -45,8 +45,9 @@ const ArchimedeanSliderSVG = ({
   const trackLen = trackRight - trackLeft;
   const trackMidY = biasTop + biasHeight/2;
   const biasThumbX = midX + trackLen /2 * bias;
-  const valueThumbX = midX + trackLen /2 * perturbedValue;
-
+  const perturbedValueThumbX = midX + trackLen /2 * perturbedValue;
+  const perturbArrowTop = biasMid - thumbSize;
+  const perturbArrowBottom = biasMid + thumbSize;
   const scaleHeight = height - biasHeight;
   const scaleWidth = width/2;
   const scaleLeft = (width - scaleWidth) * (1 + bias) / 2;
@@ -95,6 +96,7 @@ const ArchimedeanSliderSVG = ({
         height={trackHeight}
         color={trackColor}
       />
+      {/* zero mark line */}
       <line
         x1={midX}
         x2={midX}
@@ -104,15 +106,13 @@ const ArchimedeanSliderSVG = ({
         fill='transparent'
         strokeWidth='2'
       />
-      <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} />
-      <line
-        x1={biasThumbX}
-        x2={valueThumbX}
-        y1={trackMidY}
-        y2={trackMidY}
-        stroke={actualColor}
-        fill='transparent'
-        strokeWidth={trackHeight} />
+      {/* thumb */}
+      {/* <circle cx={biasThumbX} cy={trackMidY} r={thumbSize} /> */}
+      {/* perturbation */}
+      <polygon
+        points={`${biasThumbX} ${perturbArrowTop}, ${perturbedValueThumbX} ${trackMidY}, ${biasThumbX} ${perturbArrowBottom}`}
+        fill={perturbArrowFill}
+      />
       {labelElem}
     </GestureableSVG>
     <ScaleSliderSVG scale={scale}
@@ -126,6 +126,7 @@ const ArchimedeanSliderSVG = ({
       perturbArrowFill={perturbArrowFill}
       tickColor={scaleTickColor}
       transform={`translate(${scaleLeft},${0})`} />
+    {/* binder line */}
     <line
       x1={biasThumbX}
       x2={scaleMidX}
