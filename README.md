@@ -49,10 +49,9 @@ Users and artists are welcome to experiment with, and developers, to modify, thi
 
 Synestizer is currently maintained by
 
-* [Dan MacKinlay](https://danmackinlay.name/)
+* [Dan MacKinlay](https://danmackinlay.name/) (UNSW)
 * [Christoph Stähli](http://www.stahlnow.com) 
-* [Kaspar könig](https://kasparkoenig.com)
-* 
+* [Kaspar König](https://kasparkoenig.com) (ZHdK)
 
 Support has been provided by
 
