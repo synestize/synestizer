@@ -4,7 +4,7 @@ import GestureableSVG from './GestureableSVG'
 
 const ScaleSliderSVG = ({
   scale=0.0,
-  perturb=0.0,
+  perturbation=0.0,
   className='',
   width=80,
   height=32,
@@ -59,7 +59,7 @@ const ScaleSliderSVG = ({
   />
   let shadowArrow;
   let shadowLeft = midX;
-  let shadowRight = midX + perturb * midX;
+  let shadowRight = midX + perturbation * midX;
 
   shadowArrow = <polygon
     points={`${shadowLeft} 0, ${shadowRight} ${midY}, ${shadowLeft} ${height}`}
@@ -83,8 +83,8 @@ const ScaleSliderSVG = ({
       height={height}
       className='backing'
     />
-    {arrow}
     {shadowArrow}
+    {arrow}
     <line
       x1={midX}
       x2={midX}
@@ -103,7 +103,7 @@ const ScaleSliderSVG = ({
 ScaleSliderSVG.propTypes = {
   scale: PropTypes.number,
   value: PropTypes.number,
-  perturb: PropTypes.number,
+  perturbation: PropTypes.number,
   onChange: PropTypes.func,
   scaleArrowFill: PropTypes.string,
   scaleBackingFill: PropTypes.string,

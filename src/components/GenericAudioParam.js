@@ -19,7 +19,8 @@ const GenericAudioParam = ({
     <ArchimedeanSlider
       bias={bias}
       scale={scale}
-      perturbedValue={actualSignalValue}
+      perturbedValue={actualSinkControlValue}
+      perturbation={actualSignalValue}
       className=''
       width={220}
       height={60}
@@ -28,7 +29,6 @@ const GenericAudioParam = ({
       trackColor='gray'
       scaleArrowFill='blue'
       scaleBackingFill='black'
-      perturbArrowFill='rgba(0,0,255,0.8)'
       biasThumbFill='black'
       tickColor='red'
       biasBackingFill='white'

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes, Children } from 'react';
-import {bipolPerc} from '../lib/transform'
+import {bipolPerc, saturate, desaturate, perturb} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 import GestureableSVG from './GestureableSVG'
 
@@ -7,7 +7,7 @@ const ArchimedeanSliderSVG = ({
     bias=0,
     scale=0,
     perturbedValue=0,
-    perturb=0,
+    perturbation=0,
     className='',
     width=256,
     height=96,
@@ -19,7 +19,7 @@ const ArchimedeanSliderSVG = ({
     trackColor='gray',
     scaleArrowFill='blue',
     scaleBackingFill='black',
-    perturbArrowFill='rgba(0,0,255,0.8)',
+    perturbArrowFill='rgba(0,255,255,0.6)',
     biasThumbFill='black',
     tickColor='red',
     scaleTickColor='red',
@@ -44,15 +44,21 @@ const ArchimedeanSliderSVG = ({
   const trackRight = width - trackLeft;
   const trackLen = trackRight - trackLeft;
   const trackMidY = biasTop + biasHeight/2;
+
   const biasThumbX = midX + trackLen /2 * bias;
-  const perturbedValueThumbX = midX + trackLen /2 * perturbedValue;
+  const perturbedValueThumbX = midX + trackLen * perturbedValue/2;
+  const leftmostPerturbation = midX + trackLen * perturb([bias, scale])/2;
+  const rightmostPerturbation = midX + trackLen * perturb([bias, -scale])/2;
+
   const perturbArrowTop = biasMid - thumbSize;
   const perturbArrowBottom = biasMid + thumbSize;
-  const scaleHeight = height - biasHeight;
-  const scaleWidth = width/2;
-  const scaleLeft = (width - scaleWidth) * (1 + bias) / 2;
-  const scaleMidX = scaleLeft + scaleWidth/2;
-  const scaleMidY = scaleHeight/2;
+
+  const scaleSliderHeight = height - biasHeight;
+  const scaleSliderWidth = width/2;
+  const scaleSliderLeft = (width - scaleSliderWidth) * (1 + bias) / 2;
+  const scaleSliderRight = scaleSliderLeft + scaleSliderWidth;
+  const scaleSliderMidX = (scaleSliderLeft + scaleSliderRight)/2;
+  const scaleSliderMidY = scaleSliderHeight/2;
 
   let labelElem;
   if (label.length>0) {
@@ -103,7 +109,6 @@ const ArchimedeanSliderSVG = ({
         y1={biasTop}
         y2={height}
         stroke={tickColor}
-        fill='transparent'
         strokeWidth='1'
       />
       {/* thumb */}
@@ -116,25 +121,30 @@ const ArchimedeanSliderSVG = ({
       {labelElem}
     </GestureableSVG>
     <ScaleSliderSVG scale={scale}
-      perturb={perturb}
-      width={scaleWidth}
-      height={scaleHeight}
+      perturbation={perturbation}
+      width={scaleSliderWidth}
+      height={scaleSliderHeight}
       onChange={onScaleChange}
       onDoubleClick={onScaleDoubleClick}
       scaleArrowFill={scaleArrowFill}
       scaleBackingFill={scaleBackingFill}
       perturbArrowFill={perturbArrowFill}
       tickColor={scaleTickColor}
-      transform={`translate(${scaleLeft},${0})`} />
+      transform={`translate(${scaleSliderLeft},${0})`} />
     {/* binder line */}
-    <line
+    {/* <line
       x1={biasThumbX}
-      x2={scaleMidX}
+      x2={scaleSliderMidX}
       y1={trackMidY}
-      y2={scaleMidY}
+      y2={scaleSliderMidY}
       stroke={perturbArrowFill}
       fill='transparent'
-      strokeWidth='2'/>
+      strokeWidth='2'/> */}
+    <polygon
+      points={`${leftmostPerturbation} ${trackMidY}, ${scaleSliderMidX} ${scaleSliderMidY}, ${rightmostPerturbation} ${trackMidY}`}
+      fill='none' stroke={scaleArrowFill} strokeWidth='2'
+    />
+
   </g>)
   return c
 };
@@ -145,7 +155,7 @@ ArchimedeanSliderSVG.propTypes = {
   scale: PropTypes.number,
   label: PropTypes.string,
   perturbedValue: PropTypes.number,
-  perturb: PropTypes.number,
+  perturbation: PropTypes.number,
   onBiasChange: PropTypes.func,
   onScaleChange: PropTypes.func,
   className: PropTypes.string,
