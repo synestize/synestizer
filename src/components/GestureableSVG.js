@@ -1,6 +1,9 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/sampleTime';
 
 class GestureableSVG extends Component{
   constructor(props) {
@@ -12,9 +15,11 @@ class GestureableSVG extends Component{
   }
   handleMouseDown = (e) => {
     this.inGesture = true;
+    this.rawGestureSubscription = Observable.fromEvent(
+      document, 'mousemove'
+    ).sampleTime(UI_PERIOD_MS).subscribe(this.handleMouseMove);
     // Hack bypasses react and also SVG's limitations about mouse behaviour
     document.addEventListener('mouseup', this.handleMouseUp, false);
-    document.addEventListener('mousemove', this.handleMouseMove, false);
     this.gestureStartX = e.clientX;
     this.gestureStartY = e.clientY;
     this.gestureStartVal = this.props.value;
@@ -22,6 +27,7 @@ class GestureableSVG extends Component{
   handleMouseUp = (e) => {
     this.inGesture = false;
     document.removeEventListener('mouseup', this.handleMouseUp, false);
+    this.rawGestureSubscription.unsubscribe()
     document.removeEventListener('mousemove', this.handleMouseMove, false);
   }
   handleMouseMove = (e) => {
