@@ -6,8 +6,8 @@ const WelcomePane = ({}) => {
   if (GALLERY) {
     blurb = (<section>
       <p>
-        Synestizer is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
-        We are watching you, and singing about it.
+        Synestizer/Listentocolors is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
+        Color-movements detected by the webcam are transmuted into sonic feedback.
       </p>
       <p>Synestizer is maintained by</p>
       <ul>
@@ -17,39 +17,49 @@ const WelcomePane = ({}) => {
       </ul>
       <p>Support has been provided by</p>
       <ul>
-      <li>Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University, Coordinated by Prof. Karin Bijsterveld.</li>
       <li>Prof. Peter Kiefer from the Johannes Gutenberg University in Mainz</li>
+      <li>Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University, Coordinated by Prof. Karin Bijsterveld.</li>
       <li>Prof. Florian Dombois and Prof. German Toro Perez from the  Zürcher Hochshule der Künste</li>
       </ul>
     </section>)
   } else {
     blurb=(<section>
       <p>
-        Please enable your webcam in the browser and activate your loudspeakers.<br />
+        Please enable your webcam when prompted in the browser and activate your loudspeakers and/or headphones.<br />
         This app requires an updated version of <a href="https://www.google.com/chrome/">chrome</a>.<br />
       </p>
       <p>
-        <a href="https://synestize.gitbooks.io/synestizer/content/">
-          Documentation.
-        </a>
+        Synestizer/<a href="http://listentocolors.net">listentocolors</a> is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
+        Color-movements detected by the webcam are transmuted into sonic feedback.
       </p>
-      <p>
-        Synestizer is an open-ended experiment in synesthetic interaction with the ambient data emitted by your browser.
-        We are watching you, and singing about it.
-      </p>
-      <p>Synestizer is maintained by</p>
       <ul>
-        <li><a href="https://danmackinlay.name/" target="_blank">Dan MacKinlay</a></li>
-        <li><a href="http://www.stahlnow.com" target="_blank">Christoph Stähli</a> </li>
-        <li><a href="https://kasparkoenig.com" target="_blank">Kaspar könig</a></li>
+        <li><a href="https://synestize.gitbooks.io/synestizer/content/">
+          Documentation
+        </a></li>
+        <li><a href="https://www.zhdk.ch/?vorlesungsverzeichnis&amp;semester_id=140409&amp;cc_page_id=1802&amp;course_id=165301">
+          Lectures
+        </a></li>
+        <li><a href="http://beso.listentocolors.net">
+          Performances
+        </a></li>
+        <li><a href="http://news.listentocolors.net/">
+          News
+        </a></li>
+      </ul>
+      <p>This project is maintained by</p>
+      <ul>
+        <li><a href="https://danmackinlay.name/">Dan MacKinlay</a></li>
+        <li><a href="http://www.stahlnow.com">Christoph Stähli</a> </li>
+        <li><a href="https://kasparkoenig.com">Kaspar könig</a></li>
       </ul>
       <p>Support has been provided by</p>
       <ul>
-        <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/" target="_blank">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
-        <li><a href="http://www.musik.uni-mainz.de/741_DEU_HTML.php" target="_blank">Prof. Peter Kiefer</a> from the Johannes Gutenberg University in Mainz</li>
-        <li><a href="http://www.floriandombois.net/" target="_blank">Prof. Florian Dombois</a> and <a href="http://www.toro-perez.com/" target="_blank">Prof. German Toro Perez</a> from the <a href="https://www.zhdk.ch/" target="_blank">ZHdK</a> </li>
+        <li><a href="http://www.musik.uni-mainz.de/741_DEU_HTML.php">Prof. Peter Kiefer</a>
+        from the Johannes Gutenberg University in Mainz
+        </li>
+        <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
+        <li><a href="http://www.floriandombois.net/">Prof. Florian Dombois</a> and <a href="http://www.toro-perez.com/">Prof. German Toro Perez</a> from the <a href="https://www.zhdk.ch/">ZHdK</a> </li>
       </ul>
-      <p>You can find our lectures/performances <a href="https://www.zhdk.ch/?vorlesungsverzeichnis&amp;semester_id=140409&amp;cc_page_id=1802&amp;course_id=165301" target="_blank">here</a>.</p>
 
       <p>
         If you like this project you can donate to it:
@@ -62,7 +72,7 @@ const WelcomePane = ({}) => {
         <img alt="" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1" />
       </form>
       <p>
-        Don't like it? <a href="https://github.com/synestize/synestizer" target="_blank">Change it.</a>
+        Don't like it? <a href="https://github.com/synestize/synestizer">Change it.</a>
       </p>
       <p>
         &copy; 2016 by <a href="https://www.kasparkoenig.com/">kaspar</a>,&nbsp;

@@ -1,7 +1,8 @@
 :root {
-  --base-bg-color: rgba(110,80,120,0.6);
+  --base-bg-color: rgba(110,80,120,1);
+  --base-dark-bg-color: rgba(110,80,120,0.8);
   --translucent-bg-color: rgba(110,80,120,0.2);
-  --base-fg-color: rgba(160,150,160,1);
+  --base-fg-color: rgba(190,180,180,1);
   --base-fg-color-highlight: rgba(200,150,200,1);
 }
 html, body {
@@ -42,7 +43,7 @@ a, a:hover, a:active, a:focus {
   display: flex;
   padding: 0;
   margin:0;
-  background-color: var(--base-bg-color);
+  background-color: var(--base-dark-bg-color);
 
 }
 #synapp nav.tabnav ul.tabs li {
@@ -63,7 +64,7 @@ a, a:hover, a:active, a:focus {
 #synapp nav.tabnav ul.tabs li a.active {
   font-weight: bold;
   color: var(--base-fg-color-highlight);
-  background-color: var(--base-bg-color);
+  background-color: var(--base-dark-bg-color);
 }
 #synapp .pane-wrapper {
   flex: 1 1 auto;
@@ -74,7 +75,7 @@ a, a:hover, a:active, a:focus {
   position: relative;
 }
 #synapp .pane-wrapper.welcome {
-  background-color: var(--base-bg-color);
+  background-color: var(--base-dark-bg-color);
 }
 #synapp .pane-wrapper.performance-pane {
   background-color: rgba(255,255,255,0);
