@@ -71,7 +71,7 @@ a, a:hover, a:active, a:focus {
   overflow-y: auto;
   min-height: 0px;
   padding: 1ex 1em;
-  background-color: var(--translucent-bg-color);
+  background-color: rgba(0,0,0,0);
   position: relative;
 }
 #synapp .pane-wrapper.welcome {
