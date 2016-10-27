@@ -16,6 +16,7 @@ import {
   SET_MASTER_MUTE,
   TOGGLE_MASTER_MUTE,
   SET_MASTER_TEMPO,
+  ADD_SAMPLE,
 } from '../actions/audio'
 import {
   REMOVE_GENERIC_SINK_SIGNAL,

@@ -5,10 +5,15 @@ import {
   TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE,
   TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE,
   TOGGLE_BUBBLE_CHAMBER_BASS_MUTE,
+  SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE,
+  SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE,
+  SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE,
+  ADD_SAMPLE
 } from '../../actions/audio'
 
 
-export function voice1mute(state=true, {type, payload}) {
+
+function voice1mute(state=true, {type, payload}) {
   switch (type) {
     case TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE:
       return !state
@@ -16,6 +21,20 @@ export function voice1mute(state=true, {type, payload}) {
       return state
   }
 }
+function voice1sample(state=0, {type, payload}) {
+  switch (type) {
+    case SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE:
+      return payload
+    default:
+      return state
+  }
+}
+
+const voice1 = combineReducers({
+  mute: voice1mute,
+  sample: voice1sample
+})
+
 export function voice2mute(state=true, {type, payload}) {
   switch (type) {
     case TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE:
@@ -24,6 +43,11 @@ export function voice2mute(state=true, {type, payload}) {
       return state
   }
 }
+
+const voice2 = combineReducers({
+  mute: voice2mute
+})
+
 export function voice3mute(state=true, {type, payload}) {
   switch (type) {
     case TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE:
@@ -32,6 +56,11 @@ export function voice3mute(state=true, {type, payload}) {
       return state
   }
 }
+
+const voice3 = combineReducers({
+  mute: voice3mute
+})
+
 export function bassmute(state=true, {type, payload}) {
   switch (type) {
     case TOGGLE_BUBBLE_CHAMBER_BASS_MUTE:
@@ -41,11 +70,15 @@ export function bassmute(state=true, {type, payload}) {
   }
 }
 
+const bass = combineReducers({
+  mute: bassmute
+})
+
 const bubbleChamber = combineReducers({
-  voice1mute,
-  voice2mute,
-  voice3mute,
-  bassmute,
+  voice1,
+  voice2,
+  voice3,
+  bass,
 })
 
 export default bubbleChamber
