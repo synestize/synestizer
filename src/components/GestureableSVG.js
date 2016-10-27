@@ -15,6 +15,7 @@ class GestureableSVG extends Component{
   }
   handleMouseDown = (e) => {
     this.inGesture = true;
+    // console.debug('mouseisDOWN', e, UI_PERIOD_MS)
     this.rawGestureSubscription = Observable.fromEvent(
       document, 'mousemove'
     ).sampleTime(UI_PERIOD_MS).subscribe(this.handleMouseMove);
@@ -31,6 +32,7 @@ class GestureableSVG extends Component{
     document.removeEventListener('mousemove', this.handleMouseMove, false);
   }
   handleMouseMove = (e) => {
+    // console.debug('mouseisDOWN', e.clientX,this.gestureStartX, this.props.width, UI_PERIOD_MS)
     if (this.inGesture) {
       e.stopPropagation()
       e.preventDefault()

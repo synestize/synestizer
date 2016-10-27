@@ -159,13 +159,11 @@ export default function init(store, signalio) {
     Object.assign(audioInfrastructure, {
       context,
     });
-    // Try to make the tempo changes better by starting at a high tempo
+    // Work around occasional scheduler bug by starting at a high tempo
     Tone.Transport.bpm.value = 1100
     Tone.Transport.start('+1');
     Tone.Transport.scheduleOnce(() => {
-      Tone.Transport.bpm.value = 1100
-    }, '+3')
-    Tone.Transport.scheduleOnce(() => {
+      // console.debug('pickles',  store.getState().audio.master);
       Tone.Transport.bpm.value = store.getState().audio.master.tempo || 100
     }, '+5')
     ensembles.bubbleChamber = bubbleChamber_(
