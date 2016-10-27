@@ -52,6 +52,7 @@ Ranked in descending order of viability:
 
 ## Machine vision libraries
 
+## Machine vision libraries
 Top pics, maybe useful
 
 * [tracking.js](http://trackingjs.com/) does cool stuff already
@@ -67,7 +68,6 @@ Suspected non-useful or abandoned
 
 ## WebGL optimisation
 
-* notes about webgl support - e.g.
 * FFT options for mobile.
 
     * [webgl fft paper](http://www.wuhao.co/uploads/2/6/0/1/26012804/paper_final.pdf)
