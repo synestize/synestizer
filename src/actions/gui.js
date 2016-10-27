@@ -9,9 +9,7 @@ export const resetToNothing = () => {
   return { type: RESET_TO_NOTHING, payload: undefined }
 }
 export const resetToDefault = () => {
-  // Thunk middleware knows how to handle functions.
-  // It passes the dispatch method as an argument to the function,
-  // thus making it able to dispatch actions itself.
+  // Thunk middleware to allow adaptive reset
   return function(dispatch, getState) {
     // We need to know what signals are available
     // to know what the defaults should be

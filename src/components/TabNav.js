@@ -18,11 +18,11 @@ const TabNav = () => {
         Sound
       </SelectTabLink>
     </li>
-    {/* <li>
+    <li>
       <SelectTabLink paneId="performance">
         Performance
       </SelectTabLink>
-    </li> */}
+    </li>
   </ul></nav>)
 }
 export default TabNav;

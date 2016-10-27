@@ -10,8 +10,8 @@ const CurrentPane = ({visiblePane}) => {
       return <IOPane />
     case 'welcome':
       return <WelcomePane />
-    //case 'performance':
-    //  return <PerformancePane />
+    case 'performance':
+     return <PerformancePane />
     case 'sound':
     default:
       return <SoundPane />
