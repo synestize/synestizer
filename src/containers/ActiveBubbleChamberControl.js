@@ -10,10 +10,10 @@ import {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    voice1mute: state.audio.bubbleChamber.voice1mute,
-    voice2mute: state.audio.bubbleChamber.voice2mute,
-    voice3mute: state.audio.bubbleChamber.voice3mute,
-    bassmute: state.audio.bubbleChamber.bassmute,
+    voice1mute: state.audio.bubbleChamber.voice1.mute,
+    voice2mute: state.audio.bubbleChamber.voice2.mute,
+    voice3mute: state.audio.bubbleChamber.voice3.mute,
+    bassmute: state.audio.bubbleChamber.bass.mute,
   }
 };
 

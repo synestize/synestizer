@@ -220,7 +220,7 @@ export default function init(store, signalio, audio) {
   voice1synth.connect(voice1delayNode);
 
   toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice1mute'
+    'audio', 'bubbleChamber', 'voice1', 'mute'
   ).subscribe((val)=>{
     voice1mute = val;
   });
@@ -270,7 +270,7 @@ export default function init(store, signalio, audio) {
   voice2synth.connect(voice2delayNode);
 
   toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice2mute'
+    'audio', 'bubbleChamber', 'voice2', 'mute'
   ).subscribe((val)=>{
     voice2mute = val;
   });
@@ -301,12 +301,12 @@ export default function init(store, signalio, audio) {
   ).start('1m');
 
   toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice3mute'
+    'audio', 'bubbleChamber', 'voice3', 'mute'
   ).subscribe((val)=>{
     voice3mute = val;
   });
   toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'bassmute'
+    'audio', 'bubbleChamber', 'bass', 'mute'
   ).subscribe((val)=>{
     bassmute = val;
   });

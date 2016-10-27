@@ -148,7 +148,7 @@ export function gain(state=-10, {type, payload}) {
   }
 }
 
-export function mute(state=true, {type, payload}) {
+export function mute(state=false, {type, payload}) {
   switch (type) {
     case SET_MASTER_MUTE:
       return payload
