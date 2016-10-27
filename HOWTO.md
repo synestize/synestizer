@@ -10,7 +10,7 @@ Currently there are two different versions and hence two different links:
 * [indigo](https://github.com/synestize/synestizer/archive/indigo.zip), an old version, online at [indigo.listentocolors.net](https://indigo.listentocolors.net)
 * [violet](https://github.com/synestize/synestizer/archive/violet.zip), a recent rewrite, online at  [violet.listentocolors.net](https://violet.listentocolors.net)
 
-(Advanced users and coders who might want to change the software should use ```git```, if you know what that means.)
+(Advanced users and coders who might want to change the software should use ```git```.)
 
 Now you need to run a [node.js](https://nodejs.org/), which pre-processes the javascript and also provides a web server to access the app.
 
