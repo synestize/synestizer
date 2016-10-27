@@ -1,5 +1,9 @@
 # Audio Synthesis
 
+# recording
+
+[lamejs](https://github.com/zhuker/lamejs) will encode audio.
+
 ## Sequencing
 
 * [motor.js](https://github.com/willurmston/motor.js) is a step sequencer library
