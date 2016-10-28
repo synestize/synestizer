@@ -21,4 +21,4 @@ Summary: if you want this app to run at normal speed, simply run this tab *in it
 
 Chrome gives a permissions error when I use the synestizer camera or audio!
 
-Try to reset privacy exceptions for [camera](chrome://settings/contentExceptions#media-stream-camera) or (microphone)[chrome://settings/contentExceptions#media-stream-mic] as per [google's instructions](https://support.google.com/chrome/answer/2693767?hl=en)
+Try to reset privacy exceptions for [camera](chrome://settings/contentExceptions#media-stream-camera) or [microphone](chrome://settings/contentExceptions#media-stream-mic) as per [google's instructions](https://support.google.com/chrome/answer/2693767?hl=en)
