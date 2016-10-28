@@ -5,10 +5,13 @@
 Want to run your own copy of synestizer? No problem!
 The [sourcecode is on github](https://synestize.github.io/synestizer/).
 Download and unzip that code.
-Currently there are two different versions and hence two different links:
 
-* [indigo](https://github.com/synestize/synestizer/archive/indigo.zip), an old version, online at [indigo.listentocolors.net](https://indigo.listentocolors.net)
-* [violet](https://github.com/synestize/synestizer/archive/violet.zip), a recent rewrite, online at  [violet.listentocolors.net](https://violet.listentocolors.net)
+All currently recognized version at at [the github releases page](https://github.com/synestize/synestizer/releases)
+
+You might be interested in, for example,
+
+* [violet](https://github.com/synestize/synestizer/archive/0.3.0.zip), a recent edition, online at [violet.listentocolors.net](https://violet.listentocolors.net)
+* [indigo](https://github.com/synestize/synestizer/archive/0.2.0.zip), an old version, online at [indigo.listentocolors.net](https://indigo.listentocolors.net)
 
 (Advanced users and coders who might want
 to change the software should use ```git```.)
