@@ -21,6 +21,7 @@ const WelcomePane = ({}) => {
       <li>Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University, Coordinated by Prof. Karin Bijsterveld.</li>
       <li>Prof. Florian Dombois and Prof. German Toro Perez from the  Zürcher Hochshule der Künste</li>
       </ul>
+      <p>Synestizer {EDITION} edition. v{VERSION}. </p>
     </section>)
   } else {
     blurb=(<section>
@@ -75,6 +76,7 @@ const WelcomePane = ({}) => {
         Don't like it? <a href="https://github.com/synestize/synestizer">Change it.</a>
       </p>
       <p>
+        Synestizer {EDITION} edition. v{VERSION} is
         &copy; 2016 by <a href="https://www.kasparkoenig.com/">kaspar</a>,&nbsp;
          <a href="https://danmackinlay.name">dan</a> &amp;&nbsp;
          <a href="http://www.stahlnow.com">stahl</a>.

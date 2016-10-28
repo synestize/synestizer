@@ -95,14 +95,19 @@ a, a:hover, a:active, a:focus {
 #synapp .branding-box .branding-info {
   position: absolute;
   right: 2em;
-  bottom: 3em;
+  bottom: 4em;
 }
 #synapp .branding-box .branding-info h1 {
   text-transform: uppercase;
+  margin:0;
 }
-#synapp .branding-box .branding-info h1 .version{
+#synapp .branding-box .branding-info h1 .edition{
   font-size: 80%;
   font-variant: italic;
+  display: block;
+}
+#synapp .branding-box .branding-info .version{
+  font-size: 80%;
   display: block;
 }
 #synapp .pane-content label {
