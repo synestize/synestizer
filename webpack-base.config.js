@@ -47,5 +47,9 @@ module.exports = {
     modulesDirectories: [path.join(__dirname, 'src'), 'node_modules']
   },
   plugins: [
+    new webpack.DefinePlugin({
+      EDITION: JSON.stringify("Blue"),
+      VERSION: JSON.stringify("0.4.0beta0"),
+    })
   ]
 };

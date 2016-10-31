@@ -9,8 +9,6 @@ config.plugins.push(new webpack.DefinePlugin({
   "process.env": {
     NODE_ENV: JSON.stringify("production")
   },
-  EDITION: JSON.stringify("Blue"),
-  VERSION: JSON.stringify("0.4.0beta0"),
   SIGNAL_PERIOD_MS: JSON.stringify(40),
   UI_PERIOD_MS: JSON.stringify(100),
 }))
