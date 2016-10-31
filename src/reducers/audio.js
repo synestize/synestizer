@@ -27,6 +27,7 @@ import {
 
 import bubbleChamber from './audio/bubbleChamber'
 
+
 export function sourceDevice(state="default", {type, payload}) {
   switch (type) {
     case SET_AUDIO_SOURCE_DEVICE:
@@ -139,6 +140,21 @@ export function _sinkControl(
   return next
 }
 
+export function sampleBank(state={}, {type, payload}) {
+  switch (type) {
+    case ADD_SAMPLE:
+      state = {...state}
+      state[payload.key] = {
+        name: payload.name,
+        root: payload.root,
+        path: payload.path,
+      }
+      return state
+    default:
+      return state
+  }
+}
+
 export function gain(state=-10, {type, payload}) {
   switch (type) {
     case SET_MASTER_GAIN:
@@ -180,7 +196,8 @@ const audio = combineReducers({
    sinkDevice,
    sinkControls,
    master,
-   bubbleChamber
+   bubbleChamber,
+   sampleBank
 })
 
 export default audio

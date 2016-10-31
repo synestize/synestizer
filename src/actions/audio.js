@@ -111,3 +111,6 @@ export function toggleBubbleChamberVoice3Mute() {
 export function toggleBubbleChamberVoice4Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_BASS_MUTE, payload: null}
 }
+export function addSample(meta) {
+  return { type: ADD_SAMPLE, payload: meta }
+}

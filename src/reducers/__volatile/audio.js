@@ -6,7 +6,8 @@ import {
   SET_VALID_AUDIO_SINK_DEVICE,
   SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
   SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
-  SET_AUDIO_READY
+  SET_AUDIO_READY,
+  ADD_SAMPLE,
 } from '../../actions/audio'
 
 export function sources(state=new Map(), {type, payload}) {
@@ -68,7 +69,18 @@ export function sinkActualValues(state={}, {type, payload}) {
   }
 }
 
-
+export function sampleBank(state={}, {type, payload}) {
+  switch (type) {
+    case ADD_SAMPLE:
+      state = {...state}
+      state[payload.key] = {
+        buffer: payload.buffer,
+      }
+      return state
+    default:
+      return state
+  }
+}
 //Now put all these together.
 export default combineReducers({
   sources,
@@ -76,5 +88,6 @@ export default combineReducers({
   sinks,
   validSink,
   audioReady,
-  sinkActualValues
+  sinkActualValues,
+  sampleBank
 })

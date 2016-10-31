@@ -17,6 +17,7 @@ import  {
   setAllAudioSinkDevices,
   setAllAudioSinkControlActualValues,
   setAudioReady,
+  addSample
 } from '../actions/audio'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
@@ -146,12 +147,22 @@ export default function init(store, signalio) {
     context = new window.AudioContext();
     window.audioContext = context;
     Tone.setContext(context)
+
+    store.dispatch(addSample({
+      key: 'angklung',
+      name: 'Angklung',
+      root: 'c4',
+      url: './sound/angklung_c4.mp3',
+      buffer: ''
+    }));
+
     let masterCompressor = new Tone.Compressor({
       "threshold" : -6,
       "ratio" : 2,
       "attack" : 0.5,
       "release" : 0.1
     });
+
     //route everything through
     //compressor before going to the speakers
     let meter = new Tone.Meter("level");
