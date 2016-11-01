@@ -1,3 +1,12 @@
+
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+
+if ('serviceWorker' in navigator) {
+  const registration = runtime.register();
+  console.debug('sw', registration)
+}
+
+
 // Main entry point everything
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'

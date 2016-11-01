@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -7,8 +8,8 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    publicPath: 'js/',
-    path: path.join(__dirname, 'js'),
+    publicPath: '',
+    path: path.join(__dirname, ''),
     filename: 'bundle.js'
   },
   devtool: 'eval',
@@ -47,6 +48,10 @@ module.exports = {
     modulesDirectories: [path.join(__dirname, 'src'), 'node_modules']
   },
   plugins: [
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
+      publicPath: ''
+    }),
     new webpack.DefinePlugin({
       EDITION: JSON.stringify("Blue"),
       VERSION: JSON.stringify("0.4.0beta0"),
