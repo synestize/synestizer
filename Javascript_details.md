@@ -138,6 +138,7 @@ npm install --save-dev --upgrade \
   redux-persist \
   redux-thunk \
   rxjs \
+  serviceworker-webpack-plugin \
   source-map-loader \
   tone \
   webpack \
