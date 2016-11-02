@@ -20,6 +20,11 @@ import { midiBipol, bipolMidi } from '../lib/transform'
 import { midiInStreamName, midiOutStreamName } from '../io/midi/util'
 
 export default function init(store, signalio) {
+  if (!navigator.requestMIDIAccess) {
+    return {
+      playNote: ()=>null
+    }
+  }
   let rawMidiInSubscription = null;
   let rawMidiOutSubscription = null;
   let midiinfo = null;
@@ -83,6 +88,19 @@ export default function init(store, signalio) {
       bipolMidi(scaled)
     ];
     sinkDevice.send(midibytes);
+  };
+
+  function playNote({pitch=60, vel=80, chan=0, dur=100, time=0}) {
+    // Flakey Midi Emission
+    // We should actually dedupe using a master per-channel notebag.
+    // Otherwise we will get stuck notes.
+    sinkDevice.send(
+      [0x90 + chan, pitch, vel],
+      time );
+    sinkDevice.send(
+      [0x80 + chan, pitch, 0],
+      Math.max(window.performance.now(), time) + dur
+    );
   };
 
   //set up midi system
@@ -198,6 +216,6 @@ export default function init(store, signalio) {
   );
 
   return {
-    playNote: () => null
+    playNote: playNote
   }
 };

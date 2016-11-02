@@ -28,7 +28,8 @@ import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
 import bubbleChamber_ from './audioEnsemble/bubbleChamber'
 
-export default function init(store, signalio) {
+export default function init(store, signalio, midiio) {
+  console.debug('PELFELFELF', midiio)
   //hardware business
   let devinfo;
   let sourceDevices = new Map(); //id -> device
@@ -178,7 +179,7 @@ export default function init(store, signalio) {
       Tone.Transport.bpm.value = store.getState().audio.master.tempo || 100
     }, '+5')
     ensembles.bubbleChamber = bubbleChamber_(
-      store, signalio, audioInfrastructure
+      store, signalio, audioInfrastructure, midiio
     )
   };
 

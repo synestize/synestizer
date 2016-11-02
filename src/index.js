@@ -94,7 +94,7 @@ getStoredState(persistConf, (err, restoredState) => {
     signalio = signalio_(store);
     videoio = videoio_(store, signalio, document.getElementById('video-io'));
     midiio = midiio_(store, signalio);
-    audioio = audioio_(store, signalio);
+    audioio = audioio_(store, signalio, midiio);
     store.dispatch(resetToDefault())
   } else {
     console.warn("restoring", restoredState);
@@ -103,7 +103,7 @@ getStoredState(persistConf, (err, restoredState) => {
     signalio = signalio_(store);
     videoio = videoio_(store, signalio, document.getElementById('video-io'));
     midiio = midiio_(store, signalio);
-    audioio = audioio_(store, signalio);
+    audioio = audioio_(store, signalio, midiio);
     if (
       (restoredState===undefined) ||
       (Object.keys(restoredState).length === 0)

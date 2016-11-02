@@ -27,7 +27,7 @@ import {
 
 import Tone from 'tone/build/Tone.js'
 
-export default function init(store, signalio, audio) {
+export default function init(store, signalio, audio, midiio) {
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|pitch__0001',
     label: "Root",
@@ -226,11 +226,17 @@ export default function init(store, signalio, audio) {
   });
 
   const playVoice1Note = (time, value) => {
+    midiio.playNote({
+      pitch: value.note,
+      chan: 0,
+      dur: value.dur,
+      time: time
+    })
     voice1synth.triggerAttackRelease(
       value.note - voice1centerPitch,
       time,
       value.dur,
-      );
+    );
   }
 
   let voice1loop = new Tone.Loop(
@@ -277,6 +283,12 @@ export default function init(store, signalio, audio) {
 
 
   const playVoice2Note = (time, value) => {
+    midiio.playNote({
+      pitch: value.note,
+      chan: 1,
+      dur: value.dur,
+      time: time
+    })
     voice2synth.triggerAttackRelease(
       value.note - voice2centerPitch,
       time,
