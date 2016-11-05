@@ -180,6 +180,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice1scramble = 0;
   let voice1gainLevel = 0;
   let voice1mute = false;
+  let voice1sampleKey = 'panflute';
 
   let voice2idx = 0;
   let voice2bottom = 0.0;
@@ -202,12 +203,12 @@ export default function init(store, signalio, audio, midiio) {
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
   let voice1delayNode = new Tone.FeedbackDelay("8n", 0.0);
+  let voice1centerPitch;
   voice1delayNode.connect(voice1gainNode)
   voice1gainNode.toMaster();
   voice1delayNode.wet.rampTo(0.5, '4n');
   voice1delayNode.feedback.rampTo(0.5, '4n');
   let voice1synth  = new Tone.Sampler({
-    "url" : "./sound/panflute_c4.mp3",
     "volume" : -10,
     "envelope" : {
       "attack" : 0.02,
@@ -216,7 +217,16 @@ export default function init(store, signalio, audio, midiio) {
       "release" : 0.9,
     }
   });
-  let voice1centerPitch = Tone.Frequency("C4").toMidi();
+  toObservable(store).pluck(
+    'audio', 'bubbleChamber', 'voice1', 'sample'
+  ).subscribe((val)=>{
+    console.debug('voice1sampleKey', val);
+    voice1sampleKey = val || 'panflute';
+    voice1synth.player.buffer = audio.buffers.get(voice1sampleKey);
+    voice1centerPitch = Tone.Frequency(
+      audio.bufferMeta[voice1sampleKey].root
+    ).toMidi();
+  });
   voice1synth.connect(voice1delayNode);
 
   toObservable(store).pluck(

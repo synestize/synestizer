@@ -29,7 +29,6 @@ window.Tone = Tone;
 import bubbleChamber_ from './audioEnsemble/bubbleChamber'
 
 export default function init(store, signalio, midiio) {
-  console.debug('PELFELFELF', midiio)
   //hardware business
   let devinfo;
   let sourceDevices = new Map(); //id -> device
@@ -43,6 +42,8 @@ export default function init(store, signalio, midiio) {
   let validSink = false;
   let audioReady = false;
   let storeStream = toObservable(store).share();
+  let buffers;
+  let bufferMeta={};
 
   let actualControlValueStream = new BehaviorSubject(
     store.getState().audio.sinkControlBias
@@ -51,7 +52,8 @@ export default function init(store, signalio, midiio) {
   let actualControlValues = actualControlValueStream.share()
   const audioInfrastructure = {
     actualControlValues,
-    ensembles
+    ensembles,
+    bufferMeta
   }
   // set up audio system
   deviceSubject.subscribe(
@@ -147,15 +149,88 @@ export default function init(store, signalio, midiio) {
     sinkDevice = sinkDev;
     context = new window.AudioContext();
     window.audioContext = context;
-    Tone.setContext(context)
+    Tone.setContext(context);
+    Object.assign(audioInfrastructure, {
+      context,
+    });
 
     store.dispatch(addSample({
       key: 'angklung',
       name: 'Angklung',
-      root: 'c4',
-      url: './sound/angklung_c4.mp3',
-      buffer: ''
     }));
+    bufferMeta.angklung = {
+      root: 'c4'
+    }
+    store.dispatch(addSample({
+      key: 'panflute',
+      name: 'Pan Flute',
+    }));
+    bufferMeta.panflute = {
+      root: 'c4'
+    }
+    store.dispatch(addSample({
+      key: 'vibraphone',
+      name: 'Vibraphone',
+    }));
+    bufferMeta.vibraphone = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'piano',
+      name: 'Piano',
+    }));
+    bufferMeta.piano = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'user_1',
+      name: 'Alphonse',
+    }));
+    bufferMeta.user_1 = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'user_2',
+      name: 'Beata',
+    }));
+    bufferMeta.user_2 = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'user_3',
+      name: 'Christoph',
+    }));
+    bufferMeta.user_3 = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'user_4',
+      name: 'Dahlia',
+    }));
+    bufferMeta.user_4 = {
+      root: 'c3',
+    };
+
+    buffers = new Tone.Buffers({
+      'angklung': './sound/angklung_c4.mp3',
+      'panflute': './sound/panflute_c4.mp3',
+      'vibraphone': './sound/vibraphone_c3.mp3',
+      'piano': './sound/piano_c3.mp3',
+      'user_1': './sound/silence.mp3',
+      'user_2': './sound/silence.mp3',
+      'user_3': './sound/silence.mp3',
+      'user_4': './sound/silence.mp3',
+    }, () => {
+      // The callback for when all buffers are loaded
+      // This is a terrible init procedure, since it defers building the controls uneccessarily.
+      // An Observable would be better.
+      Object.assign(audioInfrastructure, {
+        buffers,
+      });
+      ensembles.bubbleChamber = bubbleChamber_(
+        store, signalio, audioInfrastructure, midiio
+      )
+    });
 
     let masterCompressor = new Tone.Compressor({
       "threshold" : -6,
@@ -168,9 +243,6 @@ export default function init(store, signalio, midiio) {
     //compressor before going to the speakers
     let meter = new Tone.Meter("level");
     Tone.Master.chain(masterCompressor, meter);
-    Object.assign(audioInfrastructure, {
-      context,
-    });
     // Work around occasional scheduler bug by starting at a high tempo
     Tone.Transport.bpm.value = 1100
     Tone.Transport.start('+1');
@@ -178,9 +250,6 @@ export default function init(store, signalio, midiio) {
       // console.debug('pickles',  store.getState().audio.master);
       Tone.Transport.bpm.value = store.getState().audio.master.tempo || 100
     }, '+5')
-    ensembles.bubbleChamber = bubbleChamber_(
-      store, signalio, audioInfrastructure, midiio
-    )
   };
 
   Observable.combineLatest(

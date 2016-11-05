@@ -21,7 +21,7 @@ function voice1mute(state=false, {type, payload}) {
       return state
   }
 }
-function voice1sample(state=0, {type, payload}) {
+function voice1sample(state='panflute', {type, payload}) {
   switch (type) {
     case SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE:
       return payload
