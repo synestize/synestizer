@@ -181,6 +181,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice1gainLevel = 0;
   let voice1mute = false;
   let voice1sampleKey = 'panflute';
+  let voice1centerPitch = 60;
 
   let voice2idx = 0;
   let voice2bottom = 0.0;
@@ -191,6 +192,8 @@ export default function init(store, signalio, audio, midiio) {
   let voice2scramble = 0;
   let voice2gainLevel = 0;
   let voice2mute = false;
+  let voice2sampleKey = 'vibraphone';
+  let voice2centerPitch = 60;
 
   let voice3mute = false;
 
@@ -203,12 +206,13 @@ export default function init(store, signalio, audio, midiio) {
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
   let voice1delayNode = new Tone.FeedbackDelay("8n", 0.0);
-  let voice1centerPitch;
+
   voice1delayNode.connect(voice1gainNode)
   voice1gainNode.toMaster();
   voice1delayNode.wet.rampTo(0.5, '4n');
   voice1delayNode.feedback.rampTo(0.5, '4n');
   let voice1synth  = new Tone.Sampler({
+    'url': audio.buffers.get(voice1sampleKey),
     "volume" : -10,
     "envelope" : {
       "attack" : 0.02,
@@ -217,11 +221,12 @@ export default function init(store, signalio, audio, midiio) {
       "release" : 0.9,
     }
   });
+
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'voice1', 'sample'
   ).subscribe((val)=>{
-    console.debug('voice1sampleKey', val);
-    voice1sampleKey = val || 'panflute';
+    voice1sampleKey = val || voice1sampleKey;
+    // console.debug('voice1sampleKey', voice1sampleKey, val);
     voice1synth.player.buffer = audio.buffers.get(voice1sampleKey);
     voice1centerPitch = Tone.Frequency(
       audio.bufferMeta[voice1sampleKey].root
@@ -272,8 +277,9 @@ export default function init(store, signalio, audio, midiio) {
   voice2gainNode.toMaster();
   voice2delayNode.wet.rampTo(0.5, '4n');
   voice2delayNode.feedback.rampTo(0.5, '4n');
+  voice2delayNode.feedback.rampTo(0.5, '4n');
   let voice2synth  = new Tone.Sampler({
-    "url" : "./sound/vibraphone_c3.mp3",
+    'url': audio.buffers.get(voice2sampleKey),
     "volume" : -10,
     "envelope" : {
       "attack" : 0.02,
@@ -282,7 +288,16 @@ export default function init(store, signalio, audio, midiio) {
       "release" : 0.9,
     }
   });
-  let voice2centerPitch = Tone.Frequency("C3").toMidi();
+  toObservable(store).pluck(
+    'audio', 'bubbleChamber', 'voice2', 'sample'
+  ).subscribe((val)=>{
+    voice2sampleKey = val || voice2sampleKey;
+    // console.debug('voice2sampleKey', voice2sampleKey, val);
+    voice2synth.player.buffer = audio.buffers.get(voice2sampleKey);
+    voice2centerPitch = Tone.Frequency(
+      audio.bufferMeta[voice2sampleKey].root
+    ).toMidi();
+  });
   voice2synth.connect(voice2delayNode);
 
   toObservable(store).pluck(

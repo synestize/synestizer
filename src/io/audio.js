@@ -224,12 +224,17 @@ export default function init(store, signalio, midiio) {
       // The callback for when all buffers are loaded
       // This is a terrible init procedure, since it defers building the controls uneccessarily.
       // An Observable would be better.
+      // Also, it seems to get called *twice*,/
+      // once actually before the buffers load.
       Object.assign(audioInfrastructure, {
         buffers,
       });
-      ensembles.bubbleChamber = bubbleChamber_(
-        store, signalio, audioInfrastructure, midiio
-      )
+      // console.debug('buffers loaded', buffers.loaded, buffers);
+      if (buffers.loaded) {
+        ensembles.bubbleChamber = bubbleChamber_(
+          store, signalio, audioInfrastructure, midiio
+        )
+      }
     });
 
     let masterCompressor = new Tone.Compressor({
