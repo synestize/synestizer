@@ -183,29 +183,29 @@ export default function init(store, signalio, midiio) {
       root: 'c3',
     };
     store.dispatch(addSample({
-      key: 'user_1',
-      name: 'Alphonse',
+      key: '_user_1',
+      name: '_User:1',
     }));
     bufferMeta.user_1 = {
       root: 'c3',
     };
     store.dispatch(addSample({
-      key: 'user_2',
-      name: 'Beata',
+      key: '_user_2',
+      name: '_User:2',
     }));
     bufferMeta.user_2 = {
       root: 'c3',
     };
     store.dispatch(addSample({
-      key: 'user_3',
-      name: 'Christoph',
+      key: '_user_3',
+      name: '_User:3',
     }));
     bufferMeta.user_3 = {
       root: 'c3',
     };
     store.dispatch(addSample({
-      key: 'user_4',
-      name: 'Dahlia',
+      key: '_user_4',
+      name: '_User:4',
     }));
     bufferMeta.user_4 = {
       root: 'c3',
@@ -224,7 +224,7 @@ export default function init(store, signalio, midiio) {
       // The callback for when all buffers are loaded
       // This is a terrible init procedure, since it defers building the controls uneccessarily.
       // An Observable would be better.
-      // Also, it seems to get called *twice*,/
+      // Also, it seems to get called *twice*,
       // once actually before the buffers load.
       Object.assign(audioInfrastructure, {
         buffers,

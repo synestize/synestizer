@@ -34,8 +34,6 @@ export const SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE = 'SET_BUBBLE_CHAMBER_VOICE_3_SAM
 export const ADD_SAMPLE = 'ADD_SAMPLE'
 
 
-
-
 /*
  * action creators
  */
@@ -99,6 +97,9 @@ export function setMasterMute(val) {
 export function toggleMasterMute() {
   return { type: TOGGLE_MASTER_MUTE, payload: null}
 }
+export function addSample(meta) {
+  return { type: ADD_SAMPLE, payload: meta }
+}
 export function toggleBubbleChamberVoice1Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: null}
 }
@@ -111,6 +112,12 @@ export function toggleBubbleChamberVoice3Mute() {
 export function toggleBubbleChamberVoice4Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_BASS_MUTE, payload: null}
 }
-export function addSample(meta) {
-  return { type: ADD_SAMPLE, payload: meta }
+export function setVoice1Sample() {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE, payload: null}
+}
+export function setVoice2Sample() {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE, payload: null}
+}
+export function setVoice3Sample() {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE, payload: null}
 }

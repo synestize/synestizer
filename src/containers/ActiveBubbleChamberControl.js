@@ -6,6 +6,9 @@ import {
   toggleBubbleChamberVoice2Mute,
   toggleBubbleChamberVoice3Mute,
   toggleBubbleChamberVoice4Mute,
+  setVoice1Sample,
+  setVoice2Sample,
+  setVoice3Sample,
 } from '../actions/audio';
 
 const mapStateToProps = (state, ownProps) => {
@@ -14,6 +17,9 @@ const mapStateToProps = (state, ownProps) => {
     voice2mute: state.audio.bubbleChamber.voice2.mute,
     voice3mute: state.audio.bubbleChamber.voice3.mute,
     bassmute: state.audio.bubbleChamber.bass.mute,
+    voice1sample: state.audio.bubbleChamber.voice1.sample,
+    voice2sample: state.audio.bubbleChamber.voice2.sample,
+    voice3sample: state.audio.bubbleChamber.voice3.sample,
   }
 };
 
@@ -30,6 +36,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     onChangeBassMute: (val) => {
       dispatch(toggleBubbleChamberVoice4Mute())
+    },
+    onChangeVoice1Sample: (val) => {
+      dispatch(setVoice1Sample())
+    },
+    onChangeVoice2Sample: (val) => {
+      dispatch(setVoice2Sample())
+    },
+    onChangeVoice3Sample: (val) => {
+      dispatch(setVoice3Sample())
     },
   }
 };
