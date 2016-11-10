@@ -94,7 +94,7 @@ export default function init(store, signalio) {
     // Flakey Midi Emission
     // We should actually dedupe using a master per-channel notebag.
     // Otherwise we will get stuck notes.
-    if (sinkDevice === null) return
+    if (sinkDevice === null) return;
 
     sinkDevice.send(
       [0x90 + chan, pitch, vel],
@@ -116,19 +116,24 @@ export default function init(store, signalio) {
     for (let [key, val] of midiinfo.inputs.entries()){
       sourceNames.set(key, val.name)
     };
+    let sourceDevice = state.midi.sourceDevice || midiinfo.inputs.keys()[0];
     store.dispatch(setAllMidiSourceDevices(sourceNames));
+
     for (let [key, val] of midiinfo.outputs.entries()){
       sinkNames.set(key, val.name)
     };
-    store.dispatch(setAllMidiSinkDevices(sinkNames));
-    if (sourceNames.has(state.midi.sourceDevice)) {
-      store.dispatch(setMidiSourceDevice(state.midi.sourceDevice));
+    let sinkDevice = state.midi.sinkDevice || midiinfo.outputs.keys()[1];
+    store.dispatch(setAllMidiSinkDevices(sinkNames))
+
+    store.dispatch(setMidiSourceDevice(sourceDevice));
+    if (sourceNames.has(sourceDevice)) {
       store.dispatch(setValidMidiSourceDevice(true));
     } else {
       store.dispatch(setValidMidiSourceDevice(false));
     }
-    if (sinkNames.has(state.midi.sinkDevice)) {
-      store.dispatch(setMidiSinkDevice(state.midi.sinkDevice));
+
+    store.dispatch(setMidiSinkDevice(sinkDevice));
+    if (sinkNames.has(sinkDevice)) {
       store.dispatch(setValidMidiSinkDevice(true));
     } else {
       store.dispatch(setValidMidiSinkDevice(false));
@@ -150,7 +155,7 @@ export default function init(store, signalio) {
   }
   function plugMidiOut() {
     const key = store.getState().midi.sinkDevice;
-    if (midiinfo !==null) {
+    if (midiinfo !== null) {
       sinkDevice = midiinfo.outputs.get(key);
       if (rawMidiOutSubscription !== null) {
         rawMidiOutSubscription.unsubscribe()
@@ -165,9 +170,10 @@ export default function init(store, signalio) {
     ).distinctUntilChanged().subscribe(plugMidiIn)
   storeStream.pluck(
       '__volatile', 'midi', 'validSource'
-    ).distinctUntilChanged().subscribe(
-      (validity)=> {validSource = validity; plugMidiIn()}
-    )
+    ).distinctUntilChanged().subscribe((validity)=> {
+      validSource = validity;
+      plugMidiIn()
+    })
   storeStream.pluck(
       'midi', 'sourceChannel'
     ).distinctUntilChanged().subscribe(
@@ -186,12 +192,16 @@ export default function init(store, signalio) {
   plugMidiOut()
   storeStream.pluck(
       'midi', 'sinkDevice'
-    ).distinctUntilChanged().subscribe(plugMidiOut);
+    ).distinctUntilChanged().subscribe((key) => {
+      console.debug('sinkDevice', key)
+      plugMidiOut()
+    });
   storeStream.pluck(
       '__volatile', 'midi', 'validSink'
-    ).distinctUntilChanged().subscribe(
-      (validity)=> {validSink = validity; plugMidiOut()}
-    )
+    ).distinctUntilChanged().subscribe((validity)=> {
+      validSink = validity;
+      plugMidiOut()
+    });
   storeStream.pluck(
       'midi', 'sinkChannel'
     ).distinctUntilChanged().subscribe(
