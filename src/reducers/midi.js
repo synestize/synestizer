@@ -17,7 +17,7 @@ import {
 export function sourceDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SOURCE_DEVICE:
-      return payload
+      return payload !== undefined ? payload : state
     default:
       return state
   }
@@ -71,13 +71,13 @@ export function sourceCCMap(state={}, {type, payload}) {
 export function sinkDevice(state="", {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_DEVICE:
-      return payload
+      return payload !== undefined ? payload : state
     default:
       return state
   }
 }
 
-export function sinkChannel(state=0, {type, payload}) {
+export function sinkChannel(state=1, {type, payload}) {
   switch (type) {
     case SET_MIDI_SINK_CHANNEL:
       return parseInt(payload)

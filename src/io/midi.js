@@ -122,7 +122,7 @@ export default function init(store, signalio) {
     for (let [key, val] of midiinfo.outputs.entries()){
       sinkNames.set(key, val.name)
     };
-    let sinkDevice = state.midi.sinkDevice || midiinfo.outputs.keys()[1];
+    let sinkDevice = state.midi.sinkDevice || midiinfo.outputs.keys()[0];
     store.dispatch(setAllMidiSinkDevices(sinkNames))
 
     store.dispatch(setMidiSourceDevice(sourceDevice));
