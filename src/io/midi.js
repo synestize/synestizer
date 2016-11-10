@@ -77,11 +77,11 @@ export default function init(store, signalio) {
   };
 
   function emitMidiOutCC(cc, scaled) {
-    let unmuted = ((sinkSoloCC === null) || (sinkSoloCC===cc)) &&
-      (sinkDevice !== null);
-    if (!unmuted) {return}
-    //turns [["midi",16,0.5]
-    //into [177,16,64]
+    if (sinkDevice === null) return
+    if ((sinkSoloCC !== null) && (sinkSoloCC !== cc)) return
+
+    // turns [["midi",16,0.5]
+    // into [177,16,64]
     let midibytes = [
       176 + sourceChannel,
       cc,
@@ -94,6 +94,8 @@ export default function init(store, signalio) {
     // Flakey Midi Emission
     // We should actually dedupe using a master per-channel notebag.
     // Otherwise we will get stuck notes.
+    if (sinkDevice === null) return
+
     sinkDevice.send(
       [0x90 + chan, pitch, vel],
       time );
