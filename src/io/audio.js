@@ -186,28 +186,28 @@ export default function init(store, signalio, midiio) {
       key: '_user_1',
       name: '_User:1',
     }));
-    bufferMeta.user_1 = {
+    bufferMeta._user_1 = {
       root: 'c3',
     };
     store.dispatch(addSample({
       key: '_user_2',
       name: '_User:2',
     }));
-    bufferMeta.user_2 = {
+    bufferMeta._user_2 = {
       root: 'c3',
     };
     store.dispatch(addSample({
       key: '_user_3',
       name: '_User:3',
     }));
-    bufferMeta.user_3 = {
+    bufferMeta._user_3 = {
       root: 'c3',
     };
     store.dispatch(addSample({
       key: '_user_4',
       name: '_User:4',
     }));
-    bufferMeta.user_4 = {
+    bufferMeta._user_4 = {
       root: 'c3',
     };
 
@@ -216,10 +216,10 @@ export default function init(store, signalio, midiio) {
       'panflute': './sound/panflute_c4.mp3',
       'vibraphone': './sound/vibraphone_c3.mp3',
       'piano': './sound/piano_c3.mp3',
-      'user_1': './sound/silence.mp3',
-      'user_2': './sound/silence.mp3',
-      'user_3': './sound/silence.mp3',
-      'user_4': './sound/silence.mp3',
+      '_user_1': './sound/silence.mp3',
+      '_user_2': './sound/silence.mp3',
+      '_user_3': './sound/silence.mp3',
+      '_user_4': './sound/silence.mp3',
     }, () => {
       // The callback for when all buffers are loaded
       // This is a terrible init procedure, since it defers building the controls uneccessarily.
