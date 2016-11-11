@@ -1,11 +1,18 @@
-
+import TouchEmulator from 'touch-emulator';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+
+if (!PRODUCTION) {
+  console.debug('faking mouse events')
+  TouchEmulator();
+} else {
+  console.debug('hard reload party')
+
+}
 
 if ('serviceWorker' in navigator) {
   const registration = runtime.register();
   console.debug('sw', registration)
 }
-
 
 // Main entry point everything
 import React, { PropTypes } from 'react'

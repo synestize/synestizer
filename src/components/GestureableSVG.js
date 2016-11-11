@@ -68,6 +68,7 @@ class GestureableSVG extends Component{
       transform={transform}
       onMouseDown={this.handleMouseDown}
       onDoubleClick={this.handleDoubleClick}
+      onTouchStart={(e)=>{console.debug('touched',e)}}
     >
       {this.props.children}
       </g>)
