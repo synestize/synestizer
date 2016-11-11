@@ -22,17 +22,17 @@ import { midiInStreamName, midiOutStreamName } from '../io/midi/util'
 export default function init(store, signalio) {
   if (!navigator.requestMIDIAccess) {
     return {
-      playNote: ()=>null
+      playNote: ()=>undefined
     }
   }
-  let rawMidiInSubscription = null;
-  let rawMidiOutSubscription = null;
-  let midiinfo = null;
+  let rawMidiInSubscription = undefined;
+  let rawMidiOutSubscription = undefined;
+  let midiinfo = undefined;
   //hardware business
   let sourceChannel;
   let sourceCCs;
   let sourceCCMap = {};
-  let sinkDevice = null;
+  let sinkDevice = undefined;
   let sinkChannel;
   let sinkCCs;
   let sinkCCMap = {};
@@ -77,8 +77,8 @@ export default function init(store, signalio) {
   };
 
   function emitMidiOutCC(cc, scaled) {
-    if (sinkDevice === null) return
-    if ((sinkSoloCC !== null) && (sinkSoloCC !== cc)) return
+    if (sinkDevice === undefined) return
+    if ((sinkSoloCC > 0) && (sinkSoloCC !== cc)) return
 
     // turns [["midi",16,0.5]
     // into [177,16,64]
@@ -94,7 +94,7 @@ export default function init(store, signalio) {
     // Flakey Midi Emission
     // We should actually dedupe using a master per-channel notebag.
     // Otherwise we will get stuck notes.
-    if (sinkDevice === null) return;
+    if (sinkDevice === undefined) return;
 
     sinkDevice.send(
       [0x90 + chan, pitch, vel],
@@ -143,9 +143,9 @@ export default function init(store, signalio) {
   // Now that the MIDI system is set up, plug this app in to it.
   function plugMidiIn() {
     const key = store.getState().midi.sourceDevice;
-    if (midiinfo !== null) {
+    if (midiinfo !== undefined) {
       let dev = midiinfo.inputs.get(key);
-      if (rawMidiInSubscription !== null) {
+      if (rawMidiInSubscription !== undefined) {
         rawMidiInSubscription.unsubscribe()
       };
       rawMidiInSubscription = Observable.fromEvent(
@@ -155,9 +155,9 @@ export default function init(store, signalio) {
   }
   function plugMidiOut() {
     const key = store.getState().midi.sinkDevice;
-    if (midiinfo !== null) {
+    if (midiinfo !== undefined) {
       sinkDevice = midiinfo.outputs.get(key);
-      if (rawMidiOutSubscription !== null) {
+      if (rawMidiOutSubscription !== undefined) {
         rawMidiOutSubscription.unsubscribe()
       };
       rawMidiOutSubscription = signalio.sinkStateSubject.subscribe(handleSink)

@@ -27,7 +27,7 @@ const Select = ({
 }
 
 Select.propTypes = {
-  currentOpt: PropTypes.string,
+  currentOpt: PropTypes.string.isRequired,
   className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   optDict: PropTypes.object.isRequired,

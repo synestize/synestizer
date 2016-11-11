@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Select from '../components/Select.js'
 
 const mapStateToProps = (state, {
+    withNull=false,
     currentOpt,
     onChange}) => {
     const optDict = {}
@@ -15,6 +16,7 @@ const mapStateToProps = (state, {
     optDict,
     currentOpt,
     onChange,
+    withNull,
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {

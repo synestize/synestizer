@@ -131,7 +131,7 @@ export function _sinkControl(
     case REMOVE_GENERIC_SINK_SIGNAL:
       next = {...state};
       if (next.signal === payload) {
-        next.signal = null
+        next.signal = undefined
       }
       return next
     default:

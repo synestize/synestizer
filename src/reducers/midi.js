@@ -121,11 +121,11 @@ export function sinkCCMap(state={}, {type, payload}) {
   return newState
 }
 
-export function sinkSoloCC(state=null, {type, payload}) {
+export function sinkSoloCC(state=-1, {type, payload}) {
   switch (type) {
     case TOGGLE_SOLO_MIDI_SINK_CC:
       let newsolo = parseInt(payload);
-      return (newsolo===state) ? null : newsolo;
+      return (newsolo===state) ? -1 : newsolo;
     default:
       return state
   }

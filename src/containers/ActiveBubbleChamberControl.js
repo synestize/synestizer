@@ -38,13 +38,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(toggleBubbleChamberVoice4Mute())
     },
     onChangeVoice1Sample: (val) => {
-      dispatch(setVoice1Sample())
+      dispatch(setVoice1Sample(val))
     },
     onChangeVoice2Sample: (val) => {
-      dispatch(setVoice2Sample())
+      dispatch(setVoice2Sample(val))
     },
     onChangeVoice3Sample: (val) => {
-      dispatch(setVoice3Sample())
+      dispatch(setVoice3Sample(val))
     },
   }
 };

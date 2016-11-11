@@ -95,29 +95,29 @@ export function setMasterMute(val) {
   return { type: SET_MASTER_MUTE, payload: val}
 }
 export function toggleMasterMute() {
-  return { type: TOGGLE_MASTER_MUTE, payload: null}
+  return { type: TOGGLE_MASTER_MUTE, payload: undefined}
 }
 export function addSample(meta) {
   return { type: ADD_SAMPLE, payload: meta }
 }
 export function toggleBubbleChamberVoice1Mute() {
-  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: null}
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: undefined}
 }
 export function toggleBubbleChamberVoice2Mute() {
-  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE, payload: null}
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_2_MUTE, payload: undefined}
 }
 export function toggleBubbleChamberVoice3Mute() {
-  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE, payload: null}
+  return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_3_MUTE, payload: undefined}
 }
 export function toggleBubbleChamberVoice4Mute() {
-  return { type: TOGGLE_BUBBLE_CHAMBER_BASS_MUTE, payload: null}
+  return { type: TOGGLE_BUBBLE_CHAMBER_BASS_MUTE, payload: undefined}
 }
-export function setVoice1Sample() {
-  return { type: SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE, payload: null}
+export function setVoice1Sample(val) {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE, payload: val}
 }
-export function setVoice2Sample() {
-  return { type: SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE, payload: null}
+export function setVoice2Sample(val) {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE, payload: val}
 }
-export function setVoice3Sample() {
-  return { type: SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE, payload: null}
+export function setVoice3Sample(val) {
+  return { type: SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE, payload: val}
 }

@@ -224,7 +224,7 @@ export default function init(store, signalio, audio, midiio) {
 
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'voice1', 'sample'
-  ).subscribe((val)=>{
+  ).distinctUntilChanged().subscribe((val)=>{
     voice1sampleKey = val || voice1sampleKey;
     // console.debug('voice1sampleKey', voice1sampleKey, val);
     voice1synth.player.buffer = audio.buffers.get(voice1sampleKey);

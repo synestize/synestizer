@@ -24,7 +24,7 @@ function voice1mute(state=false, {type, payload}) {
 function voice1sample(state='panflute', {type, payload}) {
   switch (type) {
     case SET_BUBBLE_CHAMBER_VOICE_1_SAMPLE:
-      return payload
+      return payload===undefined ? state: payload ;
     default:
       return state
   }
@@ -32,7 +32,7 @@ function voice1sample(state='panflute', {type, payload}) {
 
 const voice1 = combineReducers({
   mute: voice1mute,
-  sample: voice1sample
+  sample: voice1sample,
 })
 
 export function voice2mute(state=false, {type, payload}) {
@@ -44,8 +44,17 @@ export function voice2mute(state=false, {type, payload}) {
   }
 }
 
+function voice2sample(state='angklung', {type, payload}) {
+  switch (type) {
+    case SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE:
+      return payload
+    default:
+      return state
+  }
+}
 const voice2 = combineReducers({
-  mute: voice2mute
+  mute: voice2mute,
+  sample: voice2sample,
 })
 
 export function voice3mute(state=false, {type, payload}) {

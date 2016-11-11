@@ -9,7 +9,7 @@ export const mapAsObj = (map) => {
     //already a plain object
     return map
   }
-  const obj = Object.create(null);
+  const obj = Object.create(undefined);
   for (const [k,v] of map) {
       obj[k] = v;
   }
