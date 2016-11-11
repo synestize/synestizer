@@ -1,6 +1,6 @@
 {
   "name": "synestizer",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Listen to colours",
   "main": "js-src/main.js",
   "directories": {
