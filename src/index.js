@@ -4,9 +4,6 @@ import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 if (!PRODUCTION) {
   console.debug('faking mouse events')
   TouchEmulator();
-} else {
-  console.debug('hard reload party')
-
 }
 
 if ('serviceWorker' in navigator) {
