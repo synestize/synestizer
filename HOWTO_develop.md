@@ -1,19 +1,41 @@
 
 # How to develop synestizer
-First, you need to run your own copy of synestizer.
-the best way to do this is offline mode:
 
-## Editing Synestizer
-### Edit the documentation
+
+## Edit the documentation
 If all you want to do is update the documentation, you don't even need offline mode.
 
 The online documentation is at [synestize.gitbooks.io/synestizer](https://synestize.gitbooks.io/synestizer/content/).
 Source code for the documentation lives [on github](https://github.com/synestize/synestize.github.io), and may be [edited using gitbook](https://www.gitbook.com/book/synestize/synestizer/edit).
 
-### Edit the code ("Offline mode")
-If you have the app in offline mode, you can do this.
+## Edit the code ("Development server mode")
+
+If you have the app in development server mode mode, you can do this.
 All the javascript files in the ```src/``` folder are for editing.
 Any changes you make will update the offline version automatically.
+
+First, you need to run your own copy of synestizer.
+the best way to do this is using the development server
+
+If you are not *performing* but *developing*, we recommend  different commands:
+
+      npm install
+      npm run dev
+
+This should build a live-updating development server
+for you to view in the browser.
+Now you can make changes to the code and see them instantly updated in the browser.
+However, this is
+
+1. more demanding of CPU and can occasionally crash
+2. much slower to respond to input (so that developers can see what is happening)
+
+In this case, the app will still be at  [http://localhost:8080/](http://localhost:8080/),
+In addition, you can visit [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) to find an interactive debugging system installed.
+
+Note that you may need to bypass the offline cache to see your changes reliably.
+
+![](https://synestize.github.io/synestizer/media/bypass_service_worker.png)
 
 ## Advanced information
 ### Handy tools
