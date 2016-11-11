@@ -184,6 +184,14 @@ We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the docu
     * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
 
 
+## Touch handling
+
+* [Mozilla touch wrangling](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events)
+* [touch dnd](https://mobiforge.com/design-development/touch-friendly-drag-and-drop)
+* [apple adding touch to canvas](https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html)
+* [what a touch backend looks like for react](https://github.com/yahoo/react-dnd-touch-backend/blob/master/src/Touch.js)
+* [stackoverflow answer](http://stackoverflow.com/a/20927899/11730)
+
 ## Alternative build tools
 
 ### building app
