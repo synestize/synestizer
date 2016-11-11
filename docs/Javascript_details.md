@@ -148,6 +148,13 @@ npm install --save-dev --upgrade \
   worker-loader
 ```
 
+## caching using servicesworkers
+
+See
+[progressive webapps with webpack](http://michalzalecki.com/progressive-web-apps-with-webpack/)
+and the
+[serviceworker-webpack-plugin documentation](https://github.com/oliviertassinari/serviceworker-webpack-plugin).
+
 ## Rx.js
 
 We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the documentation is way better.
