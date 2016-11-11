@@ -47,15 +47,9 @@ A reasonable approximation to a gallery installation thingy can be got from, e.g
 
 ### Developers
 
-If you are not *performing* but *developing*, we recommend  different commands:
+If you are not *performing* but *developing*, we recommend  different commands.
 
-      npm install
-      npm run dev
-
-This should build a live-updating development version of the app for you to view in the browser. Now you can make changes to the code and see them instantly updated in the browser. However, this is a little more demanding of CPU and can occasionally crash, so it's not recommended for stage performance.
-
-In this case, the app will still be at  [http://localhost:8080/](http://localhost:8080/),
-In addition, you can visit [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/) to find an interactive debugging system installed.
+See [HOW TO DEVELOP](HOWTO_develop.md)
 
 ## Setting up the patching matrix
 
