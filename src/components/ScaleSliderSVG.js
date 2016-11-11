@@ -32,6 +32,7 @@ const ScaleSliderSVG = ({
       y={height*0.5}
       fontSize={height*0.5}
       fontWeight='bold'
+      fontVariant='small-caps'
       color={labelColor}
       fill={labelColor}
     >

@@ -68,6 +68,7 @@ const ArchimedeanSliderSVG = ({
       fontSize={biasHeight*labelHeight}
       fontWeight='bold'
       color={labelColor}
+      fontVariant='small-caps'
     >
     {label}
   </text>
