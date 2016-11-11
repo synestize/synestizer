@@ -16,3 +16,9 @@ Summary: if you want this app to run at normal speed, simply run this tab *in it
 (We tried to fix this with [HackTimer](https://github.com/turuslan/HackTimer#npm) but it doesn't work.)
 
 [Firefox might fix this problem? Let us know!](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout#Timeouts_in_inactive_tabs_clamped_to_>1000ms)
+
+## Weird permissions error
+
+Chrome gives a permissions error when I use the synestizer camera or audio!
+
+Try to reset privacy exceptions for [camera](chrome://settings/contentExceptions#media-stream-camera) or [microphone](chrome://settings/contentExceptions#media-stream-mic) as per [google's instructions](https://support.google.com/chrome/answer/2693767?hl=en)
