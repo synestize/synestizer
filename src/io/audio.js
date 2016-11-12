@@ -183,6 +183,41 @@ export default function init(store, signalio, midiio) {
       root: 'c3',
     };
     store.dispatch(addSample({
+      key: 'vox1',
+      name: 'Vox 1',
+    }));
+    bufferMeta.vox1 = {
+      root: 'c3',
+    };
+    store.dispatch(addSample({
+      key: 'vox2',
+      name: 'Vox 2',
+    }));
+    bufferMeta.vox2 = {
+      root: 'c4',
+    };
+    store.dispatch(addSample({
+      key: 'vox3',
+      name: 'Vox 3',
+    }));
+    bufferMeta.vox3 = {
+      root: 'a#3',
+    };
+    store.dispatch(addSample({
+      key: 'vox4',
+      name: 'Vox 4',
+    }));
+    bufferMeta.vox4 = {
+      root: 'a#4',
+    };
+    store.dispatch(addSample({
+      key: 'goblet',
+      name: 'Goblet',
+    }));
+    bufferMeta.goblet = {
+      root: 'g3',
+    };
+    store.dispatch(addSample({
       key: '_user_1',
       name: '_User:1',
     }));
@@ -216,6 +251,11 @@ export default function init(store, signalio, midiio) {
       'panflute': './sound/panflute_c4.mp3',
       'vibraphone': './sound/vibraphone_c3.mp3',
       'piano': './sound/piano_c3.mp3',
+      'vox1': './sound/voice_c3.mp3',
+      'vox2': './sound/voice_c4.mp3',
+      'vox3': './sound/voice_as3.mp3',
+      'vox4': './sound/voice_as4.mp3',
+      'goblet': './sound/goblet_g3.mp3',
       '_user_1': './sound/silence.mp3',
       '_user_2': './sound/silence.mp3',
       '_user_3': './sound/silence.mp3',
