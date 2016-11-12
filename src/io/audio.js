@@ -26,7 +26,7 @@ let SIGNAL_RATE = 1.0/(SIGNAL_PERIOD_MS/1000)
 
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
-import bubbleChamber_ from './audioEnsemble/bubbleChamber'
+import bubbleChamber_ from './audio/bubbleChamber'
 
 export default function init(store, signalio, midiio) {
   //hardware business
