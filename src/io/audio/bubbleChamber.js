@@ -104,6 +104,11 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|voice2pan',
+    label: "Pan",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice2scramble',
     label: "Scramble",
     ensemble: "Bubble Chamber",
@@ -199,6 +204,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice2mute = false;
   let voice2sampleKey = 'vibraphone';
   let voice2centerPitch = 60;
+  let voice2density = 1.0;
 
   let voice3mute = false;
 
@@ -274,8 +280,10 @@ export default function init(store, signalio, audio, midiio) {
           voice1bottom,
           pitchIntervals,
           voice1scramble,
-          voice1timeMul);
-        playVoice1Note(time, note)
+          voice1timeMul,
+          voice1density);
+        // console.debug('note', note)
+        if (note) playVoice1Note(time, note)
       }
     },
     step
@@ -283,8 +291,14 @@ export default function init(store, signalio, audio, midiio) {
 
   let voice2gainNode = new Tone.Gain(voice2gainLevel, 'db')
   let voice2delayNode = new Tone.FeedbackDelay("8n", 0.0);
-  voice2delayNode.connect(voice2gainNode)
-  voice2gainNode.toMaster();
+  let voice2meterNode = new Tone.Meter("level");
+  let voice2pannerNode = new Tone.Panner(0);
+  let voice2panSignal = new Tone.Signal(0);
+  voice2panSignal.connect(voice2pannerNode.pan)
+
+  voice2delayNode.connect(voice2pannerNode)
+  voice2pannerNode.connect(voice2gainNode)
+  voice2gainNode.connect(voice2meterNode).toMaster();
   voice2delayNode.wet.rampTo(0.5, '4n');
   voice2delayNode.feedback.rampTo(0.5, '4n');
   let voice2synth  = new Tone.Sampler({
@@ -297,9 +311,10 @@ export default function init(store, signalio, audio, midiio) {
       "release" : 0.9,
     }
   });
+
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'voice2', 'sample'
-  ).subscribe((val)=>{
+  ).distinctUntilChanged().subscribe((val)=>{
     voice2sampleKey = val || voice2sampleKey;
     // console.debug('voice2sampleKey', voice2sampleKey, val);
     voice2synth.player.buffer = audio.buffers.get(voice2sampleKey);
@@ -315,7 +330,6 @@ export default function init(store, signalio, audio, midiio) {
     voice2mute = val;
   });
 
-
   const playVoice2Note = (time, value) => {
     midiio.playNote({
       pitch: value.note,
@@ -327,20 +341,23 @@ export default function init(store, signalio, audio, midiio) {
       value.note - voice2centerPitch,
       time,
       value.dur,
-      );
+    );
   }
 
   let voice2loop = new Tone.Loop(
     (time) => {
       voice2idx = (voice2idx + 1) % 64;
+
       if (voice2idx % voice2timeMul === 0 && !voice2mute) {
         let note = nextNote(
           voice2idx/voice2timeMul,
           voice2bottom,
           pitchIntervals,
           voice2scramble,
-          voice2timeMul);
-        playVoice2Note(time, note)
+          voice2timeMul,
+          voice2density);
+        // console.debug('note', note)
+        if (note) playVoice2Note(time, note)
       }
     },
     step
@@ -371,7 +388,6 @@ export default function init(store, signalio, audio, midiio) {
     voice1timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice1rate || 0.0);
-
     voice1delayScale = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice1delayScale || 0.0);
@@ -398,15 +414,10 @@ export default function init(store, signalio, audio, midiio) {
       1)
     voice1delayNode.delayTime.rampTo(voice1actualDelTime, '4n');
 
-    voice2timeMul = bipolLin(
-      0.1, 1.0,
-      sig.voice2density || 0.0);
-
     voice2bottom = bipolInt(40, 70, sig.voice2bottom || 0.0);
     voice2timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice2rate || 0.0);
-
     voice2delayScale = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice2delayScale || 0.0);
@@ -415,33 +426,45 @@ export default function init(store, signalio, audio, midiio) {
       sig.voice2smear || 0.0);
     voice2delayNode.wet.rampTo(voice2smear, '4n');
     voice2delayNode.feedback.rampTo(1-voice2smear, '4n');
+    voice2panSignal.rampTo(sig.voice2pan || 0.0, '1n');
     voice2scramble = bipolInt(
       1, 7,
       sig.voice2scramble || 0.0) * 2 + 1;
+    voice2density = bipolLin(
+      0, 1,
+      sig.voice2density || 0.0);
     voice2gainLevel = bipolLin(
       -30.0, 0.0,
       sig.voice2gain || 0.0);
     voice2gainNode.gain.rampTo(voice2gainLevel, 0.1)
     let voice2actualDelTime = Math.min(
       Tone.Time('16n').mult(
-        voice2delayScale
-      ).eval(),
+      voice2delayScale)
+      .eval(),
       1)
     voice2delayNode.delayTime.rampTo(voice2actualDelTime, '4n');
 
   });
 
   function nextNote(
-    voice1idx,
+    voiceidx,
     bottomNote,
     pitchIntervals,
     scramble,
-    timeMul
+    timeMul,
+    density=1.0
   ) {
-    let idx = (voice1idx + 17) * scramble % 4;
-    return {
-      dur: Tone.Time(step).mult(timeMul).eval(),
-      note: wrap(bottomNote, bottomNote+12, basePitch + pitchIntervals[idx]),
+    let denseVal = ((voiceidx + 23) * (11+scramble) % 17)/17+ 1/34;
+    // console.debug('denseVal', density, denseVal);
+    if (denseVal<=density) {
+      let pitchIdx = (voiceidx + 17) * scramble % 4;
+      return {
+        dur: Tone.Time(step).mult(timeMul).eval(),
+        note: wrap(bottomNote, bottomNote+12,
+          basePitch + pitchIntervals[pitchIdx]),
+      }
+    } else {
+      return false
     }
   }
 
