@@ -64,6 +64,11 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|voice1pan',
+    label: "Pan",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|voice1scramble',
     label: "scramble",
     ensemble: "Bubble Chamber",
@@ -170,7 +175,6 @@ export default function init(store, signalio, audio, midiio) {
 
   let step = "16n";
 
-
   let voice1idx = 0;
   let voice1bottom = 0.0;
   let voice1counter = 0;
@@ -182,6 +186,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice1mute = false;
   let voice1sampleKey = 'panflute';
   let voice1centerPitch = 60;
+  let voice1density = 1.0;
 
   let voice2idx = 0;
   let voice2bottom = 0.0;
@@ -206,9 +211,14 @@ export default function init(store, signalio, audio, midiio) {
 
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
   let voice1delayNode = new Tone.FeedbackDelay("8n", 0.0);
+  let voice1meterNode = new Tone.Meter("level");
+  let voice1pannerNode = new Tone.Panner(0);
+  let voice1panSignal = new Tone.Signal(0);
+  voice1panSignal.connect(voice1pannerNode.pan)
 
-  voice1delayNode.connect(voice1gainNode)
-  voice1gainNode.toMaster();
+  voice1delayNode.connect(voice1pannerNode)
+  voice1pannerNode.connect(voice1gainNode)
+  voice1gainNode.connect(voice1meterNode).toMaster();
   voice1delayNode.wet.rampTo(0.5, '4n');
   voice1delayNode.feedback.rampTo(0.5, '4n');
   let voice1synth  = new Tone.Sampler({
@@ -276,7 +286,6 @@ export default function init(store, signalio, audio, midiio) {
   voice2delayNode.connect(voice2gainNode)
   voice2gainNode.toMaster();
   voice2delayNode.wet.rampTo(0.5, '4n');
-  voice2delayNode.feedback.rampTo(0.5, '4n');
   voice2delayNode.feedback.rampTo(0.5, '4n');
   let voice2synth  = new Tone.Sampler({
     'url': audio.buffers.get(voice2sampleKey),
@@ -358,10 +367,6 @@ export default function init(store, signalio, audio, midiio) {
     pitchIntervals[2] = bipolInt(6, 10, sig.pitch__0003 || 0.0);
     pitchIntervals[3] = bipolInt(9, 13, sig.pitch__0004 || 0.0);
 
-    voice1timeMul = bipolLin(
-      0.1, 1.0,
-      sig.voice1density || 0.0);
-
     voice1bottom = bipolInt(40, 70, sig.voice1bottom || 0.0);
     voice1timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
@@ -375,9 +380,13 @@ export default function init(store, signalio, audio, midiio) {
       sig.voice1smear || 0.0);
     voice1delayNode.wet.rampTo(voice1smear, '4n');
     voice1delayNode.feedback.rampTo(1-voice1smear, '4n');
+    voice1panSignal.rampTo(sig.voice1pan || 0.0, '1n');
     voice1scramble = bipolInt(
       1, 7,
       sig.voice1scramble || 0.0) * 2 + 1;
+    voice1density = bipolLin(
+      0, 1,
+      sig.voice1density || 0.0);
     voice1gainLevel = bipolLin(
       -30.0, 0.0,
       sig.voice1gain || 0.0);

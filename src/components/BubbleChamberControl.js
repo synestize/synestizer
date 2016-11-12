@@ -31,6 +31,7 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1density' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|voice1pan' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1scramble' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1delayScale' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice1smear' />
@@ -38,7 +39,7 @@ const BubbleChamberControl = ({
     </SubPane>
     <SubPane className='vert' title='Voice 2'>
       <MuteButton mute={voice2mute} onClick={onChangeVoice2Mute} />
-      <BufferSelect currentOpt={voice2sample} onChange={(val) => {console.debug('v2s0', val); onChangeVoice2Sample(val)}} />
+      <BufferSelect currentOpt={voice2sample} onChange={onChangeVoice2Sample} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2bottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2rate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2density' />
