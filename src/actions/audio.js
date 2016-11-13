@@ -32,7 +32,8 @@ export const SET_BUBBLE_CHAMBER_VOICE_2_SAMPLE = 'SET_BUBBLE_CHAMBER_VOICE_2_SAM
 export const SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE = 'SET_BUBBLE_CHAMBER_VOICE_3_SAMPLE'
 
 export const ADD_SAMPLE = 'ADD_SAMPLE'
-
+export const RECORD_BUFFER = 'RECORD_BUFFER'
+export const RECORD = 'RECORD'
 
 /*
  * action creators
@@ -100,6 +101,16 @@ export function toggleMasterMute() {
 export function addSample(meta) {
   return { type: ADD_SAMPLE, payload: meta }
 }
+export function record(val=true) {
+  return { type: RECORD, payload: val}
+}
+export function setRecordBuffer(val) {
+  return { type: RECORD_BUFFER, payload: val}
+}
+
+/*
+ * bubblechamber-specific
+ */
 export function toggleBubbleChamberVoice1Mute() {
   return { type: TOGGLE_BUBBLE_CHAMBER_VOICE_1_MUTE, payload: undefined}
 }

@@ -7,6 +7,8 @@ import {
   SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
   SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
   SET_AUDIO_READY,
+  RECORD_BUFFER,
+  RECORD
 } from '../../actions/audio'
 
 export function sources(state=new Map(), {type, payload}) {
@@ -67,6 +69,28 @@ export function sinkActualValues(state={}, {type, payload}) {
       return state
   }
 }
+
+function recording(state=false, {type, payload}) {
+  switch (type) {
+    case RECORD:
+      return payload
+    default:
+      return state
+  }
+}
+
+function recordBuffer(state='_user_1', {type, payload}) {
+  switch (type) {
+    case RECORD_BUFFER:
+      return payload
+    default:
+      return state
+  }
+}
+const record = combineReducers({
+  recording,
+  recordBuffer,
+})
 
 //Now put all these together.
 export default combineReducers({
