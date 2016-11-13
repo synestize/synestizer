@@ -171,7 +171,7 @@ export default function init(store, signalio, audio, midiio) {
   }));
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|bassattack',
-    label: "Gate",
+    label: "Attack",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -533,7 +533,7 @@ export default function init(store, signalio, audio, midiio) {
       -30.0, 0.0,
       sig.bassgain || 0.0);
     bassgainNode.gain.rampTo(bassgainLevel, 0.1)
-    basssynthNode.portamento =  bipolLin(
+    basssynth.portamento =  bipolLin(
       0, 1.0,
       sig.bassslide|| 0.0);
 
