@@ -140,7 +140,7 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bassdetune',
+    key: 'bubbleChamber|bassspread',
     label: "Detune",
     ensemble: "Bubble Chamber",
   }));
@@ -170,7 +170,7 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bassgate',
+    key: 'bubbleChamber|bassattack',
     label: "Gate",
     ensemble: "Bubble Chamber",
   }));
@@ -377,11 +377,71 @@ export default function init(store, signalio, audio, midiio) {
 
   let voice3mute = false;
 
-  let bassIdx = 0;
-  let bassBottom = 0.0;
-  let bassIdX = 0;
-  let bassGainLevel = 0;
+  let bassidx = 0;
+  let bassbottom = 40;
+  let basspitchidx = 0;
+  let basscounter = 0;
+  let basstimeMul = 4;
+  let bassgainLevel = -10;
   let bassmute = false;
+  let bassdensity = 1.0;
+  let bassspread = 0.0;
+  let basscutoff = 1000;
+  let bassdistort = 0;
+  let basswidth = 0.5;
+  let bassslide = 0;
+  let bassattack = 0.05;
+  let bassdecay = 0.15;
+  let bassrelease = 0.5;
+  let bassscramble = 5;
+
+  let bassgainNode = new Tone.Gain(bassgainLevel, 'db');
+  let bassFreqNode = new Tone.Signal(100);
+  let bassmeterNode = new Tone.Meter("level");
+  bassgainNode.connect(bassmeterNode).toMaster();
+  let basssynth  = new Tone.MonoSynth({
+    oscillator: {
+      'type': 'pulse',
+    },
+    envelope : {
+      "attack" : 0.02,
+      "decay" : 0.1,
+      "sustain" : 0.5,
+      "release" : 0.9,
+    }
+  });
+
+  basssynth.connect(bassgainNode);
+
+  toObservable(store).pluck(
+    'audio', 'bubbleChamber', 'bass', 'mute'
+  ).subscribe((val)=>{
+    bassmute = val;
+  });
+
+
+  let bassloop = new Tone.Loop(
+    (time) => {
+      let onset = false;
+      bassidx = (bassidx + 1) % 64;
+      if (bassidx % basstimeMul === 0) {
+        if (!bassmute) {
+          let denseVal = ((bassidx + 23) * (11+bassscramble) % 17)/17 + 1/34;
+          onset = denseVal<=bassdensity
+          console.debug('bassdenseVal', bassdensity, denseVal, onset, bassscramble);
+        }
+
+        if (onset) {
+          let pitch = wrap(bassbottom, bassbottom+12,
+              basePitch + pitchIntervals[basspitchidx]);
+          basssynth.triggerAttack(pitch, time)
+        } else {
+          basssynth.triggerRelease(time)
+        }
+      }
+    },
+    step
+  ).start('1m');
 
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'bass', 'mute'
@@ -458,6 +518,24 @@ export default function init(store, signalio, audio, midiio) {
       .eval(),
       1)
     voice2delayNode.delayTime.rampTo(voice2actualDelTime, '4n');
+
+    bassbottom = bipolInt(20, 50, sig.bassbottom || 0.0);
+    basspitchidx =  bipolInt(
+      0, 3,
+      sig.basspitch|| 0.0);
+    basstimeMul = bipolLookup(
+      [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
+      sig.bassrate || 0.0);
+    bassdensity = bipolLin(
+      0, 1,
+      sig.bassdensity || 0.0);
+    bassgainLevel = bipolLin(
+      -30.0, 0.0,
+      sig.bassgain || 0.0);
+    bassgainNode.gain.rampTo(bassgainLevel, 0.1)
+    basssynthNode.portamento =  bipolLin(
+      0, 1.0,
+      sig.bassslide|| 0.0);
 
   });
 

@@ -52,12 +52,12 @@ const BubbleChamberControl = ({
       <MuteButton mute={bassmute} onClick={onChangeBassMute} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassbottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|basspitch' />
-      <SpecificAudioParam sinkControlKey='bubbleChamber|bassdetune' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassspread' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|basscutoff' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdistort' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassovertones' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassslide' />
-      <SpecificAudioParam sinkControlKey='bubbleChamber|bassgate' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassattack' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdecay' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdensity' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassrate' />
