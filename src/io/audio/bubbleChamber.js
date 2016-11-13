@@ -208,28 +208,6 @@ export default function init(store, signalio, audio, midiio) {
   let voice1centerPitch = 60;
   let voice1density = 1.0;
 
-  let voice2idx = 0;
-  let voice2bottom = 0.0;
-  let voice2counter = 0;
-  let voice2timeMul = 4;
-  let voice2delayScale = 0;
-  let voice2smear = 0;
-  let voice2scramble = 0;
-  let voice2gainLevel = 0;
-  let voice2mute = false;
-  let voice2sampleKey = 'vibraphone';
-  let voice2centerPitch = 60;
-  let voice2density = 1.0;
-
-  let voice3mute = false;
-
-  let bassIdx = 0;
-  let bassBottom = 0.0;
-  let bassCounter = 0;
-  let bassGainLevel = 0;
-  let bassmute = false;
-
-
   let voice1gainNode = new Tone.Gain(voice1gainLevel, 'db')
   let voice1delayNode = new Tone.FeedbackDelay("8n", 0.0);
   let voice1meterNode = new Tone.Meter("level");
@@ -303,6 +281,19 @@ export default function init(store, signalio, audio, midiio) {
     },
     step
   ).start('1m');
+
+  let voice2idx = 0;
+  let voice2bottom = 0.0;
+  let voice2counter = 0;
+  let voice2timeMul = 4;
+  let voice2delayScale = 0;
+  let voice2smear = 0;
+  let voice2scramble = 0;
+  let voice2gainLevel = 0;
+  let voice2mute = false;
+  let voice2sampleKey = 'vibraphone';
+  let voice2centerPitch = 60;
+  let voice2density = 1.0;
 
   let voice2gainNode = new Tone.Gain(voice2gainLevel, 'db')
   let voice2delayNode = new Tone.FeedbackDelay("8n", 0.0);
@@ -383,6 +374,15 @@ export default function init(store, signalio, audio, midiio) {
   ).subscribe((val)=>{
     voice3mute = val;
   });
+
+  let voice3mute = false;
+
+  let bassIdx = 0;
+  let bassBottom = 0.0;
+  let bassIdX = 0;
+  let bassGainLevel = 0;
+  let bassmute = false;
+
   toObservable(store).pluck(
     'audio', 'bubbleChamber', 'bass', 'mute'
   ).subscribe((val)=>{
