@@ -155,6 +155,16 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassovertones',
+    label: "Overtones",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassslide',
+    label: "Slide",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|bassrate',
     label: "Rate",
     ensemble: "Bubble Chamber",
@@ -167,6 +177,11 @@ export default function init(store, signalio, audio, midiio) {
   store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|bassdecay',
     label: "Decay",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassdensity',
+    label: "Density",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({

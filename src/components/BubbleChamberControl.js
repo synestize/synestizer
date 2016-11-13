@@ -48,17 +48,21 @@ const BubbleChamberControl = ({
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2smear' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|voice2gain' />
     </SubPane>
-    { /* <SubPane className='vert' title='Bass'>
+    <SubPane className='vert' title='Bass'>
       <MuteButton mute={bassmute} onClick={onChangeBassMute} />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassbottom' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|basspitch' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdetune' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|basscutoff' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassdistort' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassovertones' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassslide' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassgate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassdecay' />
+      <SpecificAudioParam sinkControlKey='bubbleChamber|bassdensity' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassrate' />
       <SpecificAudioParam sinkControlKey='bubbleChamber|bassgain' />
-    </SubPane> */}
+    </SubPane>
   </SubPane>)
 }
 
