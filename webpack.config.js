@@ -8,8 +8,8 @@ config.plugins.push(new webpack.DefinePlugin({
   "process.env": {
     NODE_ENV: JSON.stringify("development")
   },
-  SIGNAL_PERIOD_MS: JSON.stringify(1000),
-  UI_PERIOD_MS: JSON.stringify(1000),
+  SIGNAL_PERIOD_MS: JSON.stringify(100),
+  UI_PERIOD_MS: JSON.stringify(100),
 }))
 
 module.exports = config

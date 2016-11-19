@@ -69,8 +69,8 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|voice1scramble',
-    label: "scramble",
+    key: 'bubbleChamber|voice1pattern',
+    label: "Pattern",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -109,8 +109,8 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|voice2scramble',
-    label: "Scramble",
+    key: 'bubbleChamber|voice2pattern',
+    label: "Pattern",
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
@@ -140,6 +140,16 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|bassdensity',
+    label: "Density",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
+    key: 'bubbleChamber|basspattern',
+    label: "Pattern",
+    ensemble: "Bubble Chamber",
+  }));
+  store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|bassspread',
     label: "Detune",
     ensemble: "Bubble Chamber",
@@ -155,7 +165,7 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bassovertones',
+    key: 'bubbleChamber|bassovertone',
     label: "Overtones",
     ensemble: "Bubble Chamber",
   }));
@@ -180,11 +190,6 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bassdensity',
-    label: "Density",
-    ensemble: "Bubble Chamber",
-  }));
-  store.dispatch(addAudioSinkControl({
     key: 'bubbleChamber|bassgain',
     label: "Gain",
     ensemble: "Bubble Chamber",
@@ -201,7 +206,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice1timeMul = 4;
   let voice1delayScale = 0;
   let voice1smear = 0;
-  let voice1scramble = 0;
+  let voice1pattern = 0;
   let voice1gainLevel = 0;
   let voice1mute = false;
   let voice1sampleKey = 'panflute';
@@ -272,7 +277,7 @@ export default function init(store, signalio, audio, midiio) {
           voice1idx/voice1timeMul,
           voice1bottom,
           pitchIntervals,
-          voice1scramble,
+          voice1pattern,
           voice1timeMul,
           voice1density);
         // console.debug('note', note)
@@ -288,7 +293,7 @@ export default function init(store, signalio, audio, midiio) {
   let voice2timeMul = 4;
   let voice2delayScale = 0;
   let voice2smear = 0;
-  let voice2scramble = 0;
+  let voice2pattern = 0;
   let voice2gainLevel = 0;
   let voice2mute = false;
   let voice2sampleKey = 'vibraphone';
@@ -359,7 +364,7 @@ export default function init(store, signalio, audio, midiio) {
           voice2idx/voice2timeMul,
           voice2bottom,
           pitchIntervals,
-          voice2scramble,
+          voice2pattern,
           voice2timeMul,
           voice2density);
         // console.debug('note', note)
@@ -386,22 +391,28 @@ export default function init(store, signalio, audio, midiio) {
   let bassmute = false;
   let bassdensity = 1.0;
   let bassspread = 0.0;
-  let basscutoff = 1000;
   let bassdistort = 0;
+  let bassovertone = 0
   let basswidth = 0.5;
-  let bassslide = 0;
   let bassattack = 0.05;
   let bassdecay = 0.15;
   let bassrelease = 0.5;
-  let bassscramble = 5;
-
+  let basspattern = 5;  //controls patters of triggers
+  let basspitch = 50;
+  let basscutoffHeadroom = 2;
   let bassgainNode = new Tone.Gain(bassgainLevel, 'db');
   let bassFreqNode = new Tone.Signal(100);
   let bassmeterNode = new Tone.Meter("level");
+  let basson = false;
+
   bassgainNode.connect(bassmeterNode).toMaster();
   let basssynth  = new Tone.MonoSynth({
     oscillator: {
       'type': 'pulse',
+    },
+    filterEnvelope : {
+      Q: 3,
+      sustain: 1,
     },
     envelope : {
       "attack" : 0.02,
@@ -422,22 +433,25 @@ export default function init(store, signalio, audio, midiio) {
 
   let bassloop = new Tone.Loop(
     (time) => {
-      let onset = false;
       bassidx = (bassidx + 1) % 64;
       if (bassidx % basstimeMul === 0) {
+        // this might get weird if we run TOO early triggering
+        let nextbasson = false;
         if (!bassmute) {
-          let denseVal = ((bassidx + 23) * (11+bassscramble) % 17)/17 + 1/34;
-          onset = denseVal<=bassdensity
-          console.debug('bassdenseVal', bassdensity, denseVal, onset, bassscramble);
+          let denseVal = ((bassidx + 23) * (11+basspattern) % 17)/17 + 1/34;
+          nextbasson = denseVal<=bassdensity;
+          // console.debug('bassdenseVal', bassdensity, denseVal, basson, nextbasson, basstimeMul, basspattern);
         }
 
-        if (onset) {
-          let pitch = wrap(bassbottom, bassbottom+12,
-              basePitch + pitchIntervals[basspitchidx]);
-          basssynth.triggerAttack(pitch, time)
-        } else {
+        if (nextbasson && !basson) {
+          basssynth.triggerAttack(basspitch, time)
+          // console.debug('bassonset', basspitch);
+
+        } else if (!nextbasson) {
           basssynth.triggerRelease(time)
+          // console.debug('bassoffset', basspitch);
         }
+        basson = nextbasson
       }
     },
     step
@@ -472,9 +486,9 @@ export default function init(store, signalio, audio, midiio) {
     voice1delayNode.wet.rampTo(voice1smear, '4n');
     voice1delayNode.feedback.rampTo(1-voice1smear, '4n');
     voice1panSignal.rampTo(sig.voice1pan || 0.0, '1n');
-    voice1scramble = bipolInt(
+    voice1pattern = bipolInt(
       1, 7,
-      sig.voice1scramble || 0.0) * 2 + 1;
+      sig.voice1pattern || 0.0) * 2 + 1;
     voice1density = bipolLin(
       0, 1,
       sig.voice1density || 0.0);
@@ -502,9 +516,9 @@ export default function init(store, signalio, audio, midiio) {
     voice2delayNode.wet.rampTo(voice2smear, '4n');
     voice2delayNode.feedback.rampTo(1-voice2smear, '4n');
     voice2panSignal.rampTo(sig.voice2pan || 0.0, '1n');
-    voice2scramble = bipolInt(
+    voice2pattern = bipolInt(
       1, 7,
-      sig.voice2scramble || 0.0) * 2 + 1;
+      sig.voice2pattern || 0.0) * 2 + 1;
     voice2density = bipolLin(
       0, 1,
       sig.voice2density || 0.0);
@@ -523,6 +537,44 @@ export default function init(store, signalio, audio, midiio) {
     basspitchidx =  bipolInt(
       0, 3,
       sig.basspitch|| 0.0);
+    basspitch = wrap(bassbottom, bassbottom+12,
+      basePitch + pitchIntervals[basspitchidx]);
+    basssynth.setNote(basspitch);
+    basssynth.filterEnvelope.baseFrequency = basspitch;
+    basssynth.portamento =  bipolLin(
+      0, 1.0,
+      sig.bassslide|| 0.0);
+    bassspread = sig.bassspread;
+    basscutoffHeadroom = bipolLin(
+      0.0, 1,
+      sig.basscutoff || 0.0);
+    basssynth.filterEnvelope.sustain = basscutoffHeadroom;
+    bassdistort = bipolLin(
+      0.01, 0.5,
+      sig.bassdistort || 0.0);
+    basssynth.oscillator.width.rampTo(bassdistort, '8n');
+    bassovertone = bipolEquiOctave(
+      0.001, 0.1,
+      sig.bassovertone || 0.0);
+    bassattack = bipolEquiOctave(
+      0.001, 0.1,
+      sig.bassattack || 0.0);
+    bassrelease = bipolEquiOctave(
+      0.01, 1.0,
+      sig.bassrelease || 0.0);
+    bassdecay = Math.exp((
+      Math.log(bassattack) + Math.log(bassrelease)
+    )/2.0);
+    basssynth.envelope.attack = bassattack;
+    basssynth.envelope.decay = bassdecay;
+    basssynth.envelope.release = bassrelease;
+    basssynth.filterEnvelope.attack = bassattack;
+    basssynth.filterEnvelope.decay = bassdecay;
+    basssynth.filterEnvelope.release = bassrelease;
+
+    bassgainLevel = bipolLin(
+      -30.0, 0.0,
+      sig.bassgain || 0.0);
     basstimeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.bassrate || 0.0);
@@ -533,9 +585,6 @@ export default function init(store, signalio, audio, midiio) {
       -30.0, 0.0,
       sig.bassgain || 0.0);
     bassgainNode.gain.rampTo(bassgainLevel, 0.1)
-    basssynth.portamento =  bipolLin(
-      0, 1.0,
-      sig.bassslide|| 0.0);
 
   });
 
