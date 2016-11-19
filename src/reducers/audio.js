@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { genericSinkSignalName } from '../io/signal/util'
+import { pad4 } from '../lib/string'
 
 import {
   SET_AUDIO_SOURCE_DEVICE,
@@ -71,7 +72,7 @@ export function sinkControls(state={}, {type, payload}) {
     case REMOVE_GENERIC_SINK_SIGNAL:
       let {key, val} = payload;
       if (key===undefined) {
-        console.warn('arsebastard!', state, {type, payload})
+        console.warn('Unknown signal key', state, {type, payload})
       }
       next = {...state}
       next[key] = _sinkControl(next[key], {type, payload})
@@ -103,15 +104,18 @@ export function sinkControls(state={}, {type, payload}) {
 
 //Individual controls are edited here
 export function _sinkControl(
-    state={
-      scale: 0.5,
-      bias: 0.0,
-      signal: 'generic-0000'
-    },
+    state,
     {type, payload}
   ) {
   let next;
   let {key, val} = payload;
+  if (state===undefined) {
+    state = {
+      scale: 0.5,
+      bias: 0.0,
+    }
+    state.signal = 'video-moment-' + pad4(Math.floor(Math.random()*15))
+  }
   switch (type) {
     case ADD_AUDIO_SINK_CONTROL:
       next = {...state, ...payload}
