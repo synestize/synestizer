@@ -70,7 +70,7 @@ const voice3 = combineReducers({
   mute: voice3mute
 })
 
-export function bassmute(state=false, {type, payload}) {
+export function bassmute(state=true, {type, payload}) {
   switch (type) {
     case TOGGLE_BUBBLE_CHAMBER_BASS_MUTE:
       return !state
