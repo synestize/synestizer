@@ -15,9 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 };
 
-const ResetButton = connect(
+const RandomizeButton = connect(
   mapStateToProps,
   mapDispatchToProps
 )( Button );
 
-export default ResetButton;
+export default RandomizeButton;

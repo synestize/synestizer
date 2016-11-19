@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import SubPane from './SubPane'
-import ResetButton from '../containers/ResetButton'
+import RandomizeButton from '../containers/RandomizeButton'
 import NukeButton from '../containers/NukeButton'
 
 const AppSettings = () => (
   <SubPane title="Synestizer" className="app squeeze">
-    <ResetButton />
+    <RandomizeButton />
     <NukeButton />
   </SubPane>
 )

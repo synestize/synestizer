@@ -25,7 +25,7 @@ import {
   REMOVE_MIDI_SINK_CC,
 } from '../actions/midi'
 import {
-  RESET_TO_DEFAULT
+  RANDOMIZE
 } from '../actions/gui'
 import { genericSinkSignalName } from '../io/signal/util'
 
@@ -231,7 +231,7 @@ export function sourceSinkScale(state={}, {type, payload}) {
         }
         return state
       }
-    case RESET_TO_DEFAULT:
+    case RANDOMIZE:
       {
         let sourceKeys = Object.keys(payload.signal.sourceSignalMeta).sort();
         let sinkKeys = Object.keys(payload.signal.sinkSignalMeta).sort();

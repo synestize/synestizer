@@ -23,7 +23,7 @@ import {
   REMOVE_GENERIC_SINK_SIGNAL,
 } from '../actions/signal'
 import {
-  RESET_TO_DEFAULT
+  RANDOMIZE
 } from '../actions/gui'
 
 import bubbleChamber from './audio/bubbleChamber'
@@ -77,30 +77,29 @@ export function sinkControls(state={}, {type, payload}) {
       next = {...state}
       next[key] = _sinkControl(next[key], {type, payload})
       return next
-    case RESET_TO_DEFAULT:
-      {
-        let signalKeys = Object.keys(
-          payload.signal.comboSignalMeta
-        ).sort();
-        let audioSinkControlKeys = Object.keys(
-          payload.audio.sinkControls
-        ).sort();
-        state = {...state}
-        let i = 0;
-        for (let controlKey of audioSinkControlKeys){
-          let signalKey = signalKeys[i];
-          let control = {...(state[controlKey] || {})}
-          control.signal = signalKey;
-          control.scale = 0.5 * Math.pow((-1),i)
-          i = (i + 1) % (signalKeys.length)
-          state[controlKey] = control
-        }
-        return state
+    case RANDOMIZE:
+      for (let controlKey in state) {
+        state[controlKey] = randomSinkControl(state[controlKey])
       }
     default:
       return state
   }
 }
+
+function randomSinkControl(state={
+    scale: 0.0,
+    bias: 0.0,
+  }) {
+  state.signal = 'video-moment-' + pad4(Math.floor(Math.random()*15))
+  if (Math.random()>0.5) {
+    state.scale = Math.random()-0.5
+  }
+  if (Math.random()>0.5) {
+    state.bias = Math.random()-0.5
+  }
+  return state
+}
+
 
 //Individual controls are edited here
 export function _sinkControl(
@@ -109,13 +108,7 @@ export function _sinkControl(
   ) {
   let next;
   let {key, val} = payload;
-  if (state===undefined) {
-    state = {
-      scale: 0.5,
-      bias: 0.0,
-    }
-    state.signal = 'video-moment-' + pad4(Math.floor(Math.random()*15))
-  }
+  if (state===undefined) state = randomSinkControl();
   switch (type) {
     case ADD_AUDIO_SINK_CONTROL:
       next = {...state, ...payload}

@@ -1,6 +1,6 @@
  export const SET_VISIBLE_PANE = 'SET_VISIBLE_PANE'
  export const RESET_TO_NOTHING = 'RESET_TO_NOTHING'
- export const RESET_TO_DEFAULT = 'RESET_TO_DEFAULT'
+ export const RANDOMIZE = 'RANDOMIZE'
 
 export const setVisiblePane = (tab) => {
   return { type: SET_VISIBLE_PANE, payload: tab }
@@ -15,7 +15,7 @@ export const resetToDefault = () => {
     // to know what the defaults should be
     let state = getState()
     return dispatch({
-      type: RESET_TO_DEFAULT,
+      type: RANDOMIZE,
       payload: {
         signal: state.signal,
         audio: state.audio
