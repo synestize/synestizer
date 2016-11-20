@@ -148,7 +148,7 @@ npm install --save-dev --upgrade \
   worker-loader
 ```
 
-## caching using servicesworkers
+## caching using serviceworkers
 
 See
 [progressive webapps with webpack](http://michalzalecki.com/progressive-web-apps-with-webpack/)
@@ -174,14 +174,6 @@ We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the docu
 
     * [percussion](https://github.com/grisendo/Percussion)
     * [rxvision](http://jaredforsyth.com/rxvision/) - I can't work out how this one works or how to use it, and the documentation doesn't explain basic stuff like how to install it, so I'm ignoring it for now.
-
-* Transducers (a library of stream processors)
-
-    * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
-
-    * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
-    * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
-    * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
 
 
 ## Alternative build tools
