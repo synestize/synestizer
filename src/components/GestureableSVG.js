@@ -7,6 +7,7 @@ import 'rxjs/add/observable/race';
 import 'rxjs/add/operator/sampleTime';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
 
 /*
 TODO: handle touchcancel and mouseout
@@ -28,16 +29,12 @@ class GestureableSVG extends Component{
     let startX = e.clientX;
     let startY = e.clientY;
     let startVal = this.props.value || 0.0;
-    let mouseupObs = Observable.race(
-      Observable.fromEvent(
-        document, 'mouseup'),
-      Observable.fromEvent(
-        document, 'mouseout')
-      ).take(1);
+    // console.debug('mousedown', e, this);
+
     let mouseMoveObs = Observable.fromEvent(
       document, 'mousemove'
     ).takeUntil(
-      mouseupObs
+      Observable.fromEvent(document, 'mouseup').take(1)
     ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
       // console.debug('mousemove', e, this);
       e.stopPropagation()
