@@ -7,6 +7,10 @@ import 'rxjs/add/operator/sampleTime';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/take';
 
+/*
+TODO: handle touchcancel and mouseout
+*/
+
 class GestureableSVG extends Component{
   constructor(props) {
     super(props);
@@ -40,8 +44,33 @@ class GestureableSVG extends Component{
     });
   }
   handleTouchStart = (e) => {
-    console.debug('touched', e)
+    console.debug('touched', e.targetTouches[0]);
+    // subtlety: there can be MANY touchstarts per thingy
+    let touchId = e.targetTouches[0].identifier;
+    let startX = e.clientX;
+    let startY = e.clientY;
+    let startVal = this.props.value || 0.0;
+    let touchupObs = Observable.fromEvent(
+      document, 'touchup').take(1);
+    let touchMoveObs = Observable.fromEvent(
+      document, 'touchmove'
+    ).takeUntil(
+      touchupObs
+    ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
+      console.debug('touchmove', e, this);
+      // e.stopPropagation()
+      // e.preventDefault()
+      this.handleMove({
+        currX: e.clientX,
+        currY: e.clientY,
+        startVal: startVal,
+        startX: startX,
+        startY: startY
+      })
+    });
+
   }
+
   componentWillUnmount = () => {
     // Am not sure how to handle cleanup any more.
     // Maybe RxJs does this automatically?
