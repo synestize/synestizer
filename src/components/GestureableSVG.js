@@ -3,6 +3,7 @@ import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/race';
 import 'rxjs/add/operator/sampleTime';
 import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/take';
@@ -17,6 +18,9 @@ class GestureableSVG extends Component{
   }
   handleMove = ({currX, currY, startVal, startX, startY}) => {
     let delta = 2.0 * (currX-startX) / this.props.width
+    // console.debug('move', {
+    //   currX, currY, startVal, startX, startY, delta
+    // })
     this.props.onChange(
       Math.max(-1, Math.min(1, startVal + delta)));
   }
@@ -24,14 +28,18 @@ class GestureableSVG extends Component{
     let startX = e.clientX;
     let startY = e.clientY;
     let startVal = this.props.value || 0.0;
-    let mouseupObs = Observable.fromEvent(
-      document, 'mouseup').take(1);
+    let mouseupObs = Observable.race(
+      Observable.fromEvent(
+        document, 'mouseup'),
+      Observable.fromEvent(
+        document, 'mouseout')
+      ).take(1);
     let mouseMoveObs = Observable.fromEvent(
       document, 'mousemove'
     ).takeUntil(
       mouseupObs
     ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
-      console.debug('mousemove', e, this);
+      // console.debug('mousemove', e, this);
       e.stopPropagation()
       e.preventDefault()
       this.handleMove({
@@ -44,25 +52,44 @@ class GestureableSVG extends Component{
     });
   }
   handleTouchStart = (e) => {
-    console.debug('touched', e.targetTouches[0]);
+    // console.debug('touched', e.targetTouches[0]);
     // subtlety: there can be MANY touchstarts per thingy
-    let touchId = e.targetTouches[0].identifier;
-    let startX = e.clientX;
-    let startY = e.clientY;
+    let touch = e.targetTouches[0];
+    let touchId = touch.identifier;
+    let startX = touch.clientX;
+    let startY = touch.clientY;
     let startVal = this.props.value || 0.0;
-    let touchupObs = Observable.fromEvent(
-      document, 'touchup').take(1);
+
+    let thisTouchOnly = (e) => {
+      for (let touch of e.changedTouches) {
+        // console.debug('t0', touch)
+        if (touch.identifier === touchId) {
+          // console.debug('t1', touch)
+          e.myTouch = touch
+          return e
+        }
+      }
+    }
+    let existing = (e) => e !== undefined;
+
+    let touchupObs = Observable.race(
+      Observable.fromEvent(
+        document, 'touchup').map(thisTouchOnly).filter(existing),
+      Observable.fromEvent(
+        document, 'touchcancel').map(thisTouchOnly).filter(existing),
+    ).take(1);
+
     let touchMoveObs = Observable.fromEvent(
       document, 'touchmove'
-    ).takeUntil(
+    ).map(thisTouchOnly).filter(existing).takeUntil(
       touchupObs
     ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
-      console.debug('touchmove', e, this);
-      // e.stopPropagation()
-      // e.preventDefault()
+      // console.debug('touchmove', e, this);
+      e.stopPropagation()
+      e.preventDefault()
       this.handleMove({
-        currX: e.clientX,
-        currY: e.clientY,
+        currX: e.myTouch.clientX,
+        currY: e.myTouch.clientY,
         startVal: startVal,
         startX: startX,
         startY: startY
