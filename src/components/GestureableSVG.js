@@ -4,45 +4,49 @@ import ScaleSliderSVG from './ScaleSliderSVG'
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/sampleTime';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/take';
 
 class GestureableSVG extends Component{
   constructor(props) {
     super(props);
-    this.inGesture = false;
-    this.gestureStartX = 0;
-    this.gestureStartY = 0;
-    this.gestureStartVal = props.value || 0.0
+  }
+  handleMove = ({currX, currY, startVal, startX, startY}) => {
+    let delta = 2.0 * (currX-startX) / this.props.width
+    this.props.onChange(
+      Math.max(-1, Math.min(1, startVal + delta)));
   }
   handleMouseDown = (e) => {
-    this.inGesture = true;
-    // console.debug('mouseisDOWN', e, UI_PERIOD_MS)
-    this.rawGestureSubscription = Observable.fromEvent(
+    let startX = e.clientX;
+    let startY = e.clientY;
+    let startVal = this.props.value || 0.0;
+    let mouseupObs = Observable.fromEvent(
+      document, 'mouseup').take(1);
+    let mouseMoveObs = Observable.fromEvent(
       document, 'mousemove'
-    ).sampleTime(UI_PERIOD_MS).subscribe(this.handleMouseMove);
-    // Hack bypasses react and also SVG's limitations about mouse behaviour
-    document.addEventListener('mouseup', this.handleMouseUp, false);
-    this.gestureStartX = e.clientX;
-    this.gestureStartY = e.clientY;
-    this.gestureStartVal = this.props.value;
-  }
-  handleMouseUp = (e) => {
-    this.inGesture = false;
-    document.removeEventListener('mouseup', this.handleMouseUp, false);
-    this.rawGestureSubscription.unsubscribe()
-    document.removeEventListener('mousemove', this.handleMouseMove, false);
-  }
-  handleMouseMove = (e) => {
-    // console.debug('mouseisDOWN', e.clientX,this.gestureStartX, this.props.width, UI_PERIOD_MS)
-    if (this.inGesture) {
+    ).takeUntil(
+      mouseupObs
+    ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
+      console.debug('mousemove', e, this);
       e.stopPropagation()
       e.preventDefault()
-      let delta = 2.0 * (e.clientX-this.gestureStartX) / this.props.width
-      this.props.onChange(
-        Math.max(-1, Math.min(1, this.gestureStartVal + delta)));
-    }
+      this.handleMove({
+        currX: e.clientX,
+        currY: e.clientY,
+        startVal: startVal,
+        startX: startX,
+        startY: startY
+      })
+    });
+  }
+  handleTouchStart = (e) => {
+    console.debug('touched', e)
   }
   componentWillUnmount = () => {
-    document.removeEventListener('mouseup', this.handleMouseUp, false);
+    // Am not sure how to handle cleanup any more.
+    // Maybe RxJs does this automatically?
+    // document.removeEventListener('mouseup', this.handleMouseUp, false);
+    // document.removeEventListener('touchend', this.handleTouchStart, false);
   }
   handleDoubleClick = (e) => {
     this.props.onDoubleClick();
@@ -55,20 +59,11 @@ class GestureableSVG extends Component{
       transform='',
     } = this.props;
 
-    /* events NOT managed through React
-    * onMouseMove={this.handleMouseMove}
-    * onTouchStart={this.handleTouchStart}
-    * onTouchEnd={this.handleTouchEnd}
-    * onTouchMove={this.handleTouchMove}
-    *  onMouseUp={this.handleMouseUp}
-    */
-
-
     let c = (<g
       transform={transform}
       onMouseDown={this.handleMouseDown}
       onDoubleClick={this.handleDoubleClick}
-      onTouchStart={(e)=>{console.debug('touched',e)}}
+      onTouchStart={this.handleTouchStart}
     >
       {this.props.children}
       </g>)
