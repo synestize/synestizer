@@ -1,4 +1,3 @@
-export const SAVE = 'SAVE'
 export const LOAD = 'LOAD'
 export const RESET_TO_NOTHING = 'RESET_TO_NOTHING'
 export const RANDOMIZE = 'RANDOMIZE'
@@ -21,9 +20,6 @@ export const resetToDefault = () => {
       }
     })
   }
-}
-export const save = (file) => {
-  return { type: SAVE, payload: file }
 }
 export const load = (file) => {
   return { type: SAVE, payload: file }

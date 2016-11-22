@@ -10,7 +10,6 @@ import audio from './reducers/audio'
 import {
   RESET_TO_NOTHING,
   RESET_TO_DEFAULT,
-  SAVE,
   LOAD
 } from './actions/app'
 
@@ -27,9 +26,6 @@ export default function (state={}, action) {
   switch (action.type) {
     case RESET_TO_NOTHING:
       return partialReducer(undefined, action)
-    case SAVE:
-      // Hmmmm
-      return partialReducer(state, action)
     case LOAD:
       // Don't know how to do this yet
       return partialReducer(state, action)
