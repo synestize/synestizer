@@ -6,9 +6,13 @@ import __volatile from './reducers/__volatile'
 import gui from './reducers/gui'
 import signal from './reducers/signal'
 import audio from './reducers/audio'
+
 import {
-  RESET_TO_NOTHING
-} from './actions/gui'
+  RESET_TO_NOTHING,
+  RESET_TO_DEFAULT,
+  SAVE,
+  LOAD
+} from './actions/app'
 
 const partialReducer = combineReducers({
   video,
