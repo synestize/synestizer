@@ -1,17 +1,16 @@
 import { connect } from 'react-redux';
-import { resetToNothing } from '../actions/gui';
-import Button from '../components/Button';
+import { save } from '../actions/app';
+import FileWidget from '../components/FileWidget';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    text: 'NUKE'
+    text: 'Save'
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onClick: () => {
-      dispatch(resetToNothing())
-      window.location.reload()
+    onChange: (f) => {
+      dispatch(save(f))
     }
   }
 };
@@ -19,6 +18,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const SaveWidget = connect(
   mapStateToProps,
   mapDispatchToProps
-)( Button );
+)( FileWidget );
 
 export default SaveWidget;

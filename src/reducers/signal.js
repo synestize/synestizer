@@ -26,7 +26,7 @@ import {
 } from '../actions/midi'
 import {
   RANDOMIZE
-} from '../actions/gui'
+} from '../actions/app'
 import { genericSinkSignalName } from '../io/signal/util'
 
 

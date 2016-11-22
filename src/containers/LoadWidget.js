@@ -4,13 +4,13 @@ import FileWidget from '../components/FileWidget';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    text: 'NUKE'
+    text: 'Load'
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: () => {
-      dispatch(load())
+    onChange: (f) => {
+      dispatch(load(f))
     }
   }
 };

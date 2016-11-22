@@ -24,7 +24,7 @@ import {
 } from '../actions/signal'
 import {
   RANDOMIZE
-} from '../actions/gui'
+} from '../actions/app'
 
 import bubbleChamber from './audio/bubbleChamber'
 

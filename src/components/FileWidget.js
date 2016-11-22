@@ -4,8 +4,10 @@ const FileWidget = ({ text, onChange}) => (
   <form>
     <h4>{text}</h4>
     <input onChange={(e)=>{
-      console.debug(e.files)
-      onChange()
+      console.debug(e.target.files)
+      if (e.target.files.length===1) {
+        onChange(e.target.files[0])
+      }
     }} type='file'></input>
   </form>
 )

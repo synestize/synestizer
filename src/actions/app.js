@@ -1,6 +1,7 @@
 export const SAVE = 'SAVE'
 export const LOAD = 'LOAD'
 export const RESET_TO_NOTHING = 'RESET_TO_NOTHING'
+export const RANDOMIZE = 'RANDOMIZE'
 export const RESET_TO_DEFAULT = 'RESET_TO_DEFAULT'
 
 export const resetToNothing = () => {

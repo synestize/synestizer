@@ -27,6 +27,12 @@ export default function (state={}, action) {
   switch (action.type) {
     case RESET_TO_NOTHING:
       return partialReducer(undefined, action)
+    case SAVE:
+      // Hmmmm
+      return partialReducer(state, action)
+    case LOAD:
+      // Don't know how to do this yet
+      return partialReducer(state, action)
     default:
       return partialReducer(state, action)
   }
