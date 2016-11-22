@@ -165,7 +165,7 @@ export default function init(store, signalio, audio, midiio) {
     ensemble: "Bubble Chamber",
   }));
   store.dispatch(addAudioSinkControl({
-    key: 'bubbleChamber|bassovertone',
+    key: 'bubbleChamber|bassovertones',
     label: "Overtones",
     ensemble: "Bubble Chamber",
   }));
@@ -392,7 +392,7 @@ export default function init(store, signalio, audio, midiio) {
   let bassdensity = 1.0;
   let bassspread = 0.0;
   let bassdistort = 0;
-  let bassovertone = 0
+  let bassovertones = 0
   let basswidth = 0.5;
   let bassattack = 0.05;
   let bassdecay = 0.15;
@@ -553,9 +553,9 @@ export default function init(store, signalio, audio, midiio) {
       0.01, 0.5,
       sig.bassdistort || 0.0);
     basssynth.oscillator.width.rampTo(bassdistort, '8n');
-    bassovertone = bipolEquiOctave(
+    bassovertones = bipolEquiOctave(
       0.001, 0.1,
-      sig.bassovertone || 0.0);
+      sig.bassovertones || 0.0);
     bassattack = bipolEquiOctave(
       0.001, 0.1,
       sig.bassattack || 0.0);
