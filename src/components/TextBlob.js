@@ -7,7 +7,7 @@ const TextBlob = ({content, onChange, title}) => {
   }
   return <form>
     {header}
-    <textarea value={content} onChange={onChange} />
+    <textarea value={content} onChange={(e)=>onChange(e.target.value)} />
   </form>
 }
 

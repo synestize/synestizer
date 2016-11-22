@@ -27,8 +27,10 @@ export default function (state={}, action) {
     case RESET_TO_NOTHING:
       return partialReducer(undefined, action)
     case LOAD:
-      // Don't know how to do this yet
-      return partialReducer(state, action)
+      console.debug('LOAD0', action.payload)
+      let newState = {...state, ...JSON.parse(action.payload)};
+      console.debug('LOAD1', newState)
+      return newState;
     default:
       return partialReducer(state, action)
   }

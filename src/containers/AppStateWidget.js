@@ -6,14 +6,14 @@ const mapStateToProps = (state, ownProps) => {
   let persistentState = {...state}
   delete persistentState.__volatile
   return {
-    title: 'SAVE ME',
+    title: 'Save',
     content: JSON.stringify(persistentState)
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onChange: (json) => {
-      dispatch(load(json))
+    onChange: (serialized) => {
+      dispatch(load(serialized))
     }
   }
 };

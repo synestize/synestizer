@@ -21,6 +21,6 @@ export const resetToDefault = () => {
     })
   }
 }
-export const load = (file) => {
-  return { type: SAVE, payload: file }
+export const load = (serialized) => {
+  return { type: LOAD, payload: serialized }
 }
