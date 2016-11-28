@@ -9,19 +9,23 @@ const RecordWidget = ({
     recordSlot,
     onChangeSlot
   }) => {
-  return (<div className="record-widget" >
-    <Icon name="circle" onClick={onRecord} />
+  return (<div className="generic-audio-widget record-widget" >
+    <Icon
+      name="circle"
+      onClick={()=>onRecord(!isRecording)}
+      className={(isRecording ? 'recording' : '') + ' record-button'}/>
     <Select
       optDict={recordSlots}
       currentOpt={recordSlot}
       onChange={onChangeSlot}
+      withNull={false}
     />
   </div>)
 };
 
 RecordWidget.propTypes = {
-  recordSlots: PropTypes.object,
-  recordSlot: PropTypes.string.required,
+  recordSlots: PropTypes.object.isRequired,
+  recordSlot: PropTypes.string.isRequired,
   onRecord: PropTypes.func.isRequired,
   onChangeSlot: PropTypes.func.isRequired,
   isRecording: PropTypes.bool.isRequired,

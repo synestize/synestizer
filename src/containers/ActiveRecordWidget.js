@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { record, recordBuffer } from '../actions/audio';
+import { record, setRecordBuffer } from '../actions/audio';
 import RecordWidget from '../components/RecordWidget';
 
 const mapStateToProps = (state, ownProps) => {
@@ -11,16 +11,15 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-    recordSlots,
+    recordSlots: recordSlots,
     recordSlot: state.__volatile.audio.record.recordBuffer,
-    recording: state.__volatile.audio.record.record,
-    withNull: false,
+    isRecording: state.__volatile.audio.record.recording,
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onChangeSlot: (val) => {
-      dispatch(recordBuffer(val))
+      dispatch(setRecordBuffer(val))
     },
     onRecord: () => dispatch(record(true)),
   }

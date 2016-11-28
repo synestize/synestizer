@@ -15,7 +15,7 @@ const AudioGainFader = ({
   units="db",
 }) => {
 
-  return (<div className={"unmapped-param-control audio-master-gain"} >
+  return (<div className={"generic-audio-widget audio-master-gain"} >
     <LabeledSlider
       uniqueKey={label+"unmappedcontrolthing"}
       className="unmapped-control"

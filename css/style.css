@@ -189,7 +189,23 @@ a, a:hover, a:active, a:focus {
 #synapp .pane-content h2 {
   display: inline-block;
 }
-
+#synapp .generic-audio-widget {
+    display: inline-block;
+    height: 2em;
+}
+#synapp .generic-audio-widget {
+    display: inline-block;
+    height: 2em;
+}
+#synapp .record-widget .record-button {
+    font-size: 2em;
+    padding: 0.5em;
+    display: inline-block;
+    color: rgba(255,0,0,0.5);
+}
+#synapp .record-widget .record-button.recording {
+    color: red;
+}
 #synapp .param-control {
   width: 16rem;
   vertical-align: center;

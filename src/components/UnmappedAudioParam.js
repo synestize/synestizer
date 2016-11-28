@@ -12,7 +12,7 @@ const UnmappedAudioParam = ({
   units="db",
 }) => {
 
-  return (<div className={"unmapped-param-control"} >
+  return (<div className={"generic-audio-widget"} >
     <LabeledSlider
       uniqueKey={label+"unmappedcontrolthing"}
       className="unmapped-control"
