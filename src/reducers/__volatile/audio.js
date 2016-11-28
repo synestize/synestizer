@@ -99,5 +99,6 @@ export default combineReducers({
   sinks,
   validSink,
   audioReady,
-  sinkActualValues
+  sinkActualValues,
+  record
 })

@@ -1,11 +1,12 @@
-import * as transform from '../lib/transform'
 import MasterAudioGain from '../containers/MasterAudioGain'
 import ActiveAudioMasterTempo from '../containers/ActiveAudioMasterTempo'
+import ActiveRecordWidget from '../containers/ActiveRecordWidget'
 
 const AudioMasterControls = function(props) {
   return (<div className="subpane">
     <MasterAudioGain />
     <ActiveAudioMasterTempo />
+    <ActiveRecordWidget />
   </div>)
 };
 
