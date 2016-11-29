@@ -27,6 +27,7 @@ let SIGNAL_RATE = 1.0/(SIGNAL_PERIOD_MS/1000)
 import Tone from 'tone/build/Tone.js'
 window.Tone = Tone;
 import bubbleChamber_ from './audio/bubbleChamber'
+import recordBuffer_ from './audio/recordBuffer'
 
 export default function init(store, signalio, midiio) {
   //hardware business
@@ -272,6 +273,9 @@ export default function init(store, signalio, midiio) {
       // console.debug('buffers loaded', buffers.loaded, buffers);
       if (buffers.loaded) {
         ensembles.bubbleChamber = bubbleChamber_(
+          store, signalio, audioInfrastructure, midiio
+        )
+        ensembles.recordBuffer = recordBuffer_(
           store, signalio, audioInfrastructure, midiio
         )
       }
