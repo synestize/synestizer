@@ -473,7 +473,7 @@ export default function init(store, signalio, audio, midiio) {
     pitchIntervals[2] = bipolInt(6, 10, sig.pitch__0003 || 0.0);
     pitchIntervals[3] = bipolInt(9, 13, sig.pitch__0004 || 0.0);
 
-    voice1bottom = bipolInt(40, 70, sig.voice1bottom || 0.0);
+    voice1bottom = bipolInt(28, 70, sig.voice1bottom || 0.0);
     voice1timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice1rate || 0.0);
@@ -503,7 +503,7 @@ export default function init(store, signalio, audio, midiio) {
       1)
     voice1delayNode.delayTime.rampTo(voice1actualDelTime, '4n');
 
-    voice2bottom = bipolInt(40, 70, sig.voice2bottom || 0.0);
+    voice2bottom = bipolInt(28, 70, sig.voice2bottom || 0.0);
     voice2timeMul = bipolLookup(
       [16, 12, 10, 8, 6, 5, 4, 3, 2, 1],
       sig.voice2rate || 0.0);
@@ -533,7 +533,7 @@ export default function init(store, signalio, audio, midiio) {
       1)
     voice2delayNode.delayTime.rampTo(voice2actualDelTime, '4n');
 
-    bassbottom = bipolInt(20, 50, sig.bassbottom || 0.0);
+    bassbottom = bipolInt(16, 58, sig.bassbottom || 0.0);
     basspitchidx =  bipolInt(
       0, 3,
       sig.basspitch|| 0.0);
