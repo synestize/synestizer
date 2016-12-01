@@ -163,6 +163,55 @@ export default function init(store, signalio, midiio) {
       root: 'c4'
     }
     store.dispatch(addSample({
+      key: 'woodenspoon',
+      name: 'Wooden Spoon',
+    }));
+    bufferMeta.woodenspoon = {
+      root: 'c4'
+    }
+    store.dispatch(addSample({
+      key: 'kayageum',
+      name: 'Kayageum',
+    }));
+    bufferMeta.kayageum = {
+      root: 'b4'
+    }
+    store.dispatch(addSample({
+      key: 'synthtom',
+      name: 'Synth Tom',
+    }));
+    bufferMeta.synthtom = {
+      root: 'c1'
+    }
+    store.dispatch(addSample({
+      key: 'jentreng',
+      name: 'Jentreng',
+    }));
+    bufferMeta.jentreng = {
+      root: 'e3'
+    }
+    store.dispatch(addSample({
+      key: 'tarawangsa',
+      name: 'Tarawangsa',
+    }));
+    bufferMeta.tarawangsa = {
+      root: 'c4'
+    }
+    store.dispatch(addSample({
+      key: 'gendong',
+      name: 'Gendong',
+    }));
+    bufferMeta.gendong = {
+      root: 'c3'
+    }
+    store.dispatch(addSample({
+      key: 'tabla',
+      name: 'Tabla Na',
+    }));
+    bufferMeta.tabla = {
+      root: 'd3'
+    }
+    store.dispatch(addSample({
       key: 'panflute',
       name: 'Pan Flute',
     }));
@@ -212,6 +261,14 @@ export default function init(store, signalio, midiio) {
       root: 'a#4',
     };
     store.dispatch(addSample({
+      key: 'vox5',
+      name: 'Vox 5',
+    }));
+    bufferMeta.vox5 = {
+      root: 'f2'
+    }
+
+    store.dispatch(addSample({
       key: 'goblet',
       name: 'Goblet',
     }));
@@ -249,6 +306,12 @@ export default function init(store, signalio, midiio) {
 
     buffers = new Tone.Buffers({
       'angklung': './sound/angklung_c4.mp3',
+      'woodenspoon': './sound/woodenspoon_c4.mp3',
+      'kayageum': './sound/kayageum_b4.mp3',
+      'jentreng': './sound/jentreng_e3.mp3',
+      'tarawangsa': './sound/tarawangsa_c4.mp3',
+      'gendong': './sound/gendong_tap_c3.mp3',
+      'tabla': './sound/tabla_na_d3.mp3',
       'panflute': './sound/panflute_c4.mp3',
       'vibraphone': './sound/vibraphone_c3.mp3',
       'piano': './sound/piano_c3.mp3',
@@ -256,7 +319,9 @@ export default function init(store, signalio, midiio) {
       'vox2': './sound/voice_c4.mp3',
       'vox3': './sound/voice_as3.mp3',
       'vox4': './sound/voice_as4.mp3',
+      'vox5': './sound/monk_f2.mp3',
       'goblet': './sound/goblet_g3.mp3',
+      'synthtom': './sound/synthtom_c1.mp3',
       '_user_1': './sound/silence.mp3',
       '_user_2': './sound/silence.mp3',
       '_user_3': './sound/silence.mp3',
