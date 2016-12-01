@@ -207,10 +207,10 @@ a, a:hover, a:active, a:focus {
     color: red;
 }
 #synapp .param-control {
-  width: 16rem;
+  width: 230px;
   vertical-align: center;
   display: inline-block;
-  padding: 0.5rem;
+  padding: 0.2rem;
 }
 #synapp .param-control.mastergain {
   width: 21rem;
