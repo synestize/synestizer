@@ -266,8 +266,7 @@ export default function init(store, signalio, midiio) {
     }));
     bufferMeta.vox5 = {
       root: 'f2'
-    }
-
+    };
     store.dispatch(addSample({
       key: 'goblet',
       name: 'Goblet',

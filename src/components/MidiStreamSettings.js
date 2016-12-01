@@ -24,7 +24,9 @@ const MidiStreamSettings = ( {
   <DeviceSelect
     onChange={onDeviceChange}
     currentDevice={currentDevice}
-    deviceMap={deviceMap} name="" />
+    deviceMap={deviceMap} name=""
+    withNull={true}
+  />
   <IntSelect
     currentNum={currentChannel}
     onChange={onChannelChange}

@@ -110,7 +110,7 @@ export default function init(store, signalio) {
     let sourceNames = new Map();
     let sinkNames = new Map();
     let state = store.getState();
-
+    // console.debug('updateMidiIO', newmidiinfo);
     midiinfo = newmidiinfo;
 
     for (let [key, val] of midiinfo.inputs.entries()){
@@ -126,18 +126,10 @@ export default function init(store, signalio) {
     store.dispatch(setAllMidiSinkDevices(sinkNames))
 
     store.dispatch(setMidiSourceDevice(sourceDevice));
-    if (sourceNames.has(sourceDevice)) {
-      store.dispatch(setValidMidiSourceDevice(true));
-    } else {
-      store.dispatch(setValidMidiSourceDevice(false));
-    }
+    store.dispatch(setValidMidiSourceDevice(false));
 
     store.dispatch(setMidiSinkDevice(sinkDevice));
-    if (sinkNames.has(sinkDevice)) {
-      store.dispatch(setValidMidiSinkDevice(true));
-    } else {
-      store.dispatch(setValidMidiSinkDevice(false));
-    }
+    store.dispatch(setValidMidiSinkDevice(false));
   };
 
   // Now that the MIDI system is set up, plug this app in to it.
@@ -145,25 +137,34 @@ export default function init(store, signalio) {
     const key = store.getState().midi.sourceDevice;
     if (midiinfo !== undefined) {
       let dev = midiinfo.inputs.get(key);
+      // console.debug('plugMidiIn', key, typeof key, dev, typeof dev)
       if (rawMidiInSubscription !== undefined) {
         rawMidiInSubscription.unsubscribe()
       };
-      rawMidiInSubscription = Observable.fromEvent(
-        dev, 'midimessage'
-      ).subscribe(handleMidiInMessage);
+      if (dev !== undefined ) {
+        rawMidiInSubscription = Observable.fromEvent(
+          dev, 'midimessage'
+        ).subscribe(handleMidiInMessage);
+        store.dispatch(setValidMidiSourceDevice(true));
+      }
     }
   }
   function plugMidiOut() {
     const key = store.getState().midi.sinkDevice;
+    // console.debug('plugMidiOut', key)
     if (midiinfo !== undefined) {
+      // console.debug('plugMidiOut2', key, midiinfo.outputs.get(key))
       sinkDevice = midiinfo.outputs.get(key);
       if (rawMidiOutSubscription !== undefined) {
         rawMidiOutSubscription.unsubscribe()
       };
       rawMidiOutSubscription = signalio.sinkStateSubject.subscribe(handleSink)
+      store.dispatch(setValidMidiSinkDevice(sinkDevice !== undefined));
+    } else {
+      store.dispatch(setValidMidiSinkDevice(false));
     }
   }
-  //Now actually use this infrastructure
+  // Now, actually use this infrastructure
   plugMidiIn()
   storeStream.pluck(
       'midi', 'sourceDevice'
@@ -193,7 +194,7 @@ export default function init(store, signalio) {
   storeStream.pluck(
       'midi', 'sinkDevice'
     ).distinctUntilChanged().subscribe((key) => {
-      console.debug('sinkDevice', key)
+      // console.debug('sinkDevice', key)
       plugMidiOut()
     });
   storeStream.pluck(
@@ -223,7 +224,11 @@ export default function init(store, signalio) {
 
   Observable.fromPromise(
     navigator.requestMIDIAccess()
-  ).subscribe(updateMidiIO,
+  ).subscribe((midiinfo) => {
+    updateMidiIO(midiinfo)
+    plugMidiOut()
+    plugMidiIn()
+  },
     (err) => console.debug(err.stack)
   );
 

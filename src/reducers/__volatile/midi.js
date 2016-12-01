@@ -15,10 +15,10 @@ export function sources(state=new Map(), action) {
   }
 }
 
-export function validSource(state=false, action) {
-  switch (action.type) {
+export function validSource(state=false, {type, payload}) {
+  switch (type) {
     case SET_VALID_MIDI_SOURCE_DEVICE:
-      return action.payload
+      return payload
     default:
       return state
   }

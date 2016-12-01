@@ -5,7 +5,8 @@ const DeviceSelect = ({
     currentDevice,
     onChange,
     deviceMap,
-    valid=true}
+    valid=true,
+    withNull=true}
   ) => {
   const optNodes = [];
   for (let [key, name] of deviceMap) {
@@ -17,7 +18,7 @@ const DeviceSelect = ({
         className="deviceselect"
         disabled={disabled}
         value={currentDevice}
-        onChange={(ev)=>onChange(ev.target.value) } >
+        onChange={(ev)=>onChange(ev.target.value)}>
       {optNodes}
     </select>
   </div>)
