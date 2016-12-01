@@ -12,10 +12,10 @@ const IOPane = ({}) => {
   let permittedSettingPanes = [];
   if (!GALLERY) {
     permittedSettingPanes.push(...[
-      <VideoSettings key='VideoSettings' />,
-      <AudioSettings key='AudioSettings'/>,
-      <SignalSettings key='SignalSettings'/>,
+      // <VideoSettings key='VideoSettings' />,
+      // <AudioSettings key='AudioSettings'/>,
       <MidiSettings key='MidiSettings'/>,
+      <SignalSettings key='SignalSettings'/>,
     ])
   }
   permittedSettingPanes.push(<ActivePatchMatrix key='ActivePatchMatrix'/>)
