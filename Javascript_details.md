@@ -116,6 +116,7 @@ but we use webpack here.
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress). This is our current solution
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
 * [Why can't anyone write a simple webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
+* [legacy code must be shimmed](https://github.com/webpack/docs/wiki/shimming-modules)
 * If you want to update dependencies, the command looks like this:
 
 ```
