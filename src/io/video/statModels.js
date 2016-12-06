@@ -1,4 +1,5 @@
-import *  as transform from '../../lib/transform'
+import * as transform from '../../lib/transform'
+import ColorTracker from 'tracking'
 
 export function RandomFilter({
     PIXELDIM=64,
