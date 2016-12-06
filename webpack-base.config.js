@@ -53,8 +53,8 @@ module.exports = {
       publicPath: ''
     }),
     new webpack.DefinePlugin({
-      EDITION: JSON.stringify("Blue"),
-      VERSION: JSON.stringify("0.4.0beta0"),
+      EDITION: JSON.stringify("Green"),
+      VERSION: JSON.stringify("0.5.0beta0"),
     })
   ]
 };

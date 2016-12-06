@@ -1,9 +1,9 @@
 :root {
-  --base-bg-color: rgba(80,80,120,1);
-  --base-dark-bg-color: rgba(60,60,120,0.8);
-  --translucent-bg-color: rgba(60,60,120,0.2);
-  --base-fg-color: rgba(190,180,180,1);
-  --base-fg-color-highlight: rgba(180,180,200,1);
+  --base-bg-color: rgba(80,130,80,1);
+  --base-dark-bg-color: rgba(30,190,80,0.4);
+  --translucent-bg-color: rgba(30,190,80,0.2);
+  --base-fg-color: rgba(10,220,120,1);
+  --base-fg-color-highlight: rgba(20,255,40,1);
 }
 html, body {
   height: 100%;
