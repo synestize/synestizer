@@ -51,8 +51,6 @@ Ranked in descending order of viability:
 * random variables can be simulated very easily using the [probability distributions library](https://github.com/Mattasher/probability-distributions)
 
 ## Machine vision libraries
-
-## Machine vision libraries
 Top pics, maybe useful
 
 * [tracking.js](http://trackingjs.com/) does cool stuff already
