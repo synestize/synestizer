@@ -1,10 +1,6 @@
 
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-
-if ('serviceWorker' in navigator) {
-  const registration = runtime.register();
-  console.debug('sw', registration)
-}
+import Perf from 'react-addons-perf' // ES6
 
 
 // Main entry point everything
@@ -37,7 +33,12 @@ import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
+if ('serviceWorker' in navigator) {
+  const registration = runtime.register();
+  console.debug('sw', registration)
+}
 
+window.Perf = Perf
 /*
 We divide Synestizer into two part:
 
