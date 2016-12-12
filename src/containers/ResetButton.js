@@ -4,20 +4,20 @@ import Button from '../components/Button';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    text: 'randomize'
+    text: 'reset'
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch(resetToDefault())
+      dispatch(loadFromUrl('/presets/default.json'))
     }
   }
 };
 
-const RandomizeButton = connect(
+const ResetButton = connect(
   mapStateToProps,
   mapDispatchToProps
 )( Button );
 
-export default RandomizeButton;
+export default ResetButton;
