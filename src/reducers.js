@@ -9,7 +9,6 @@ import audio from './reducers/audio'
 
 import {
   RESET_TO_NOTHING,
-  RESET_TO_DEFAULT,
   LOAD
 } from './actions/app'
 
@@ -27,9 +26,10 @@ export default function (state={}, action) {
     case RESET_TO_NOTHING:
       return partialReducer(undefined, action)
     case LOAD:
-      console.debug('LOAD0', action.payload)
-      let newState = {...state, ...JSON.parse(action.payload)};
-      console.debug('LOAD1', newState)
+      // console.debug('LOAD0', action.payload)
+      let updates = JSON.parse(action.payload) || {};
+      let newState = {...state, ...updates};
+      // console.debug('LOAD1', newState)
       return newState;
     default:
       return partialReducer(state, action)

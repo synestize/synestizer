@@ -12,7 +12,7 @@ import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import { resetToNothing, resetToDefault } from './actions/app'
+import { resetToNothing, resetToDefault, loadFromUrl } from './actions/app'
 import rootReducer from './reducers'
 import App from './containers/App'
 import videoio_ from 'io/video'
@@ -86,30 +86,29 @@ if (!PRODUCTION) {
 }
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
-  if (getq("purge")) {
-    store = createStore(rootReducer, undefined, enhancers)
-    persistor = createPersistor(store, persistConf)
+  let purge = getq("purge");
+  let load = getq("load");
+  store = createStore(rootReducer, undefined, enhancers)
+  persistor = createPersistor(store, persistConf)
+  if (purge) {
     persistor.purgeAll();
     console.warn("purging all local data", store.getState());
-    signalio = signalio_(store);
-    videoio = videoio_(store, signalio, document.getElementById('video-io'));
-    midiio = midiio_(store, signalio);
-    audioio = audioio_(store, signalio, midiio);
+  }
+  signalio = signalio_(store);
+  videoio = videoio_(store, signalio, document.getElementById('video-io'));
+  midiio = midiio_(store, signalio);
+  audioio = audioio_(store, signalio, midiio);
+  if (load) {
+    console.warn("loading preset", load);
+    store.dispatch(loadFromUrl(load))
+  }
+  if (
+    (restoredState===undefined) ||
+    (Object.keys(restoredState).length === 0) ||
+    purge
+  ) {
     store.dispatch(resetToDefault())
-  } else {
-    console.warn("restoring", restoredState);
-    store = createStore(rootReducer, restoredState, enhancers);
-    persistor = createPersistor(store, persistConf)
-    signalio = signalio_(store);
-    videoio = videoio_(store, signalio, document.getElementById('video-io'));
-    midiio = midiio_(store, signalio);
-    audioio = audioio_(store, signalio, midiio);
-    if (
-      (restoredState===undefined) ||
-      (Object.keys(restoredState).length === 0)
-    ) {
-      store.dispatch(resetToDefault())
-    }
+    store.dispatch(loadFromUrl('/presets/default.json'))
   }
   if ( window !== undefined) {
     window.store = store;
