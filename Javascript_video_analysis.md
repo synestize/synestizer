@@ -51,10 +51,14 @@ Ranked in descending order of viability:
 * random variables can be simulated very easily using the [probability distributions library](https://github.com/Mattasher/probability-distributions)
 
 ## Machine vision libraries
-Top pics, maybe useful
 
-* [tracking.js](http://trackingjs.com/) does cool stuff already
-* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
+### Top picks, maybe useful
+
+* [keras-js](https://github.com/transcranial/keras-js) runs CNNs in the browsers
+  * [convenets-keras](https://github.com/heuritech/convnets-keras)
+  * [vgg 16-keras](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+* old-school handcrafted features with [tracking.js](http://trackingjs.com/) does cool stuff already
+* same with [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 
 Suspected non-useful or abandoned
 
