@@ -1,0 +1,551 @@
+{
+  "audio": {
+    "bubbleChamber": {
+      "bass": {
+        "mute": false
+      },
+      "voice1": {
+        "mute": false,
+        "sample": "synthtom"
+      },
+      "voice2": {
+        "mute": false,
+        "sample": "synthtom"
+      },
+      "voice3": {
+        "mute": false
+      }
+    },
+    "master": {
+      "gain": 4,
+      "mute": false,
+      "tempo": 428
+    },
+    "sampleBank": {
+      "_user_1": {
+        "name": "_User:1"
+      },
+      "_user_2": {
+        "name": "_User:2"
+      },
+      "_user_3": {
+        "name": "_User:3"
+      },
+      "_user_4": {
+        "name": "_User:4"
+      },
+      "angklung": {
+        "name": "Angklung"
+      },
+      "gendong": {
+        "name": "Gendong"
+      },
+      "goblet": {
+        "name": "Goblet"
+      },
+      "jentreng": {
+        "name": "Jentreng"
+      },
+      "kayageum": {
+        "name": "Kayageum"
+      },
+      "panflute": {
+        "name": "Pan Flute"
+      },
+      "piano": {
+        "name": "Piano"
+      },
+      "synthtom": {
+        "name": "Synth Tom"
+      },
+      "tabla": {
+        "name": "Tabla Na"
+      },
+      "tarawangsa": {
+        "name": "Tarawangsa"
+      },
+      "vibraphone": {
+        "name": "Vibraphone"
+      },
+      "vox1": {
+        "name": "Vox 1"
+      },
+      "vox2": {
+        "name": "Vox 2"
+      },
+      "vox3": {
+        "name": "Vox 3"
+      },
+      "vox4": {
+        "name": "Vox 4"
+      },
+      "vox5": {
+        "name": "Vox 5"
+      },
+      "woodenspoon": {
+        "name": "Wooden Spoon"
+      }
+    },
+    "sinkControls": {
+      "bubbleChamber|bassattack": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassattack",
+        "label": "Attack",
+        "scale": -0.19549461648524225,
+        "signal": "video-moment-0000"
+      },
+      "bubbleChamber|bassbottom": {
+        "bias": -0.13636363636363638,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassbottom",
+        "label": "Octave",
+        "scale": -0.9090909090909091,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|basscutoff": {
+        "bias": -0.6727272727272728,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basscutoff",
+        "label": "Cutoff",
+        "scale": -1,
+        "signal": "video-moment-0014"
+      },
+      "bubbleChamber|bassdecay": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdecay",
+        "label": "Decay",
+        "scale": -0.6579373322603248,
+        "signal": "video-moment-0009"
+      },
+      "bubbleChamber|bassdensity": {
+        "bias": -0.8090909090909092,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdensity",
+        "label": "Density",
+        "scale": -1,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|bassdistort": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdistort",
+        "label": "Distort",
+        "scale": 0,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|bassgain": {
+        "bias": -1,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassgain",
+        "label": "Gain",
+        "scale": 0.5636363636363636,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|bassovertones": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassovertones",
+        "label": "Overtones",
+        "scale": -0.6363636363636364,
+        "signal": "video-moment-0010"
+      },
+      "bubbleChamber|basspattern": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basspattern",
+        "label": "Pattern",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|basspitch": {
+        "bias": -0.009090909090909094,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basspitch",
+        "label": "Pitch",
+        "scale": 0.45454545454545453,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|bassrate": {
+        "bias": 0.24263179494187437,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassrate",
+        "label": "Rate",
+        "scale": 0,
+        "signal": "video-moment-0003"
+      },
+      "bubbleChamber|bassslide": {
+        "bias": -0.21199667772012742,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassslide",
+        "label": "Slide",
+        "scale": 0,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|bassspread": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassspread",
+        "label": "Detune",
+        "scale": 0,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|pitch__0001": {
+        "bias": 0.6873915821244145,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0001",
+        "label": "Root",
+        "scale": 1,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|pitch__0002": {
+        "bias": -0.44545454545454544,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0002",
+        "label": "II",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|pitch__0003": {
+        "bias": 0.02694524481180921,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0003",
+        "label": "III",
+        "scale": 0.6545454545454545,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|pitch__0004": {
+        "bias": 0.0030328274739563343,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0004",
+        "label": "IV",
+        "scale": -0.4727272727272727,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1bottom": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1bottom",
+        "label": "Octave",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1delayScale": {
+        "bias": -0.23849462846708436,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1delayScale",
+        "label": "Delay",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1density": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1density",
+        "label": "Density",
+        "scale": 0,
+        "signal": "video-moment-0003"
+      },
+      "bubbleChamber|voice1gain": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1gain",
+        "label": "Gain",
+        "scale": 0,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|voice1pan": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1pan",
+        "label": "Pan",
+        "scale": 0,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1pattern": {
+        "bias": 0.17938204595207652,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1pattern",
+        "label": "Pattern",
+        "scale": 0,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1rate": {
+        "bias": -0.44436721515403144,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1rate",
+        "label": "Rate",
+        "scale": 0.9764738632972436,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|voice1smear": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1smear",
+        "label": "Smear",
+        "scale": -0.19557901600681737,
+        "signal": "video-moment-0009"
+      },
+      "bubbleChamber|voice2bottom": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2bottom",
+        "label": "Octave",
+        "scale": 0.9636363636363636,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|voice2delayScale": {
+        "bias": 0.4922908459148345,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2delayScale",
+        "label": "Delay",
+        "scale": 0.16223352808869484,
+        "signal": "video-moment-0005"
+      },
+      "bubbleChamber|voice2density": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2density",
+        "label": "Density",
+        "scale": 0.21657031050628595,
+        "signal": "video-moment-0013"
+      },
+      "bubbleChamber|voice2gain": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2gain",
+        "label": "Gain",
+        "scale": 0,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|voice2pan": {
+        "bias": -0.4117364323930559,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2pan",
+        "label": "Pan",
+        "scale": 0.41253635109682607,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|voice2pattern": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2pattern",
+        "label": "Pattern",
+        "scale": 0.35064399523536105,
+        "signal": "video-moment-0010"
+      },
+      "bubbleChamber|voice2rate": {
+        "bias": -0.21671377049849005,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2rate",
+        "label": "Rate",
+        "scale": -1,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|voice2smear": {
+        "bias": 0.08394206614088962,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2smear",
+        "label": "Smear",
+        "scale": -0.4340827153699365,
+        "signal": "video-moment-0002"
+      }
+    },
+    "sinkDevice": "default",
+    "sourceDevice": "default"
+  },
+  "gui": {
+    "visiblePane": "io"
+  },
+  "midi": {
+    "sinkCCMap": {
+    },
+    "sinkCCs": [
+    ],
+    "sinkChannel": 1,
+    "sinkDevice": "",
+    "sinkSoloCC": -1,
+    "sourceCCMap": {
+    },
+    "sourceCCs": [
+    ],
+    "sourceChannel": 0,
+    "sourceDevice": ""
+  },
+  "signal": {
+    "comboSignalMeta": {
+      "generic-0000": {
+        "name": "α",
+        "owner": "Signal"
+      },
+      "video-moment-0001": {
+        "key": "video-moment-0001",
+        "name": "Bright",
+        "owner": "Video"
+      },
+      "video-moment-0002": {
+        "key": "video-moment-0002",
+        "name": "Blue",
+        "owner": "Video"
+      },
+      "video-moment-0003": {
+        "key": "video-moment-0003",
+        "name": "Red",
+        "owner": "Video"
+      },
+      "video-moment-0004": {
+        "key": "video-moment-0004",
+        "name": "Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0005": {
+        "key": "video-moment-0005",
+        "name": "Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0006": {
+        "key": "video-moment-0006",
+        "name": "Red²",
+        "owner": "Video"
+      },
+      "video-moment-0007": {
+        "key": "video-moment-0007",
+        "name": "Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0008": {
+        "key": "video-moment-0008",
+        "name": "Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0009": {
+        "key": "video-moment-0009",
+        "name": "Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0010": {
+        "key": "video-moment-0010",
+        "name": "Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0011": {
+        "key": "video-moment-0011",
+        "name": "Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0012": {
+        "key": "video-moment-0012",
+        "name": "Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0013": {
+        "key": "video-moment-0013",
+        "name": "Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0014": {
+        "key": "video-moment-0014",
+        "name": "Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0015": {
+        "key": "video-moment-0015",
+        "name": "Up⌑Red",
+        "owner": "Video"
+      }
+    },
+    "genericSinkSignals": {
+      "generic-0000": "α"
+    },
+    "nGenericSinkSignals": 1,
+    "sinkSignalMeta": {
+      "generic-0000": {
+        "name": "α",
+        "owner": "Signal"
+      }
+    },
+    "sourceSignalMeta": {
+      "video-moment-0001": {
+        "key": "video-moment-0001",
+        "name": "Bright",
+        "owner": "Video"
+      },
+      "video-moment-0002": {
+        "key": "video-moment-0002",
+        "name": "Blue",
+        "owner": "Video"
+      },
+      "video-moment-0003": {
+        "key": "video-moment-0003",
+        "name": "Red",
+        "owner": "Video"
+      },
+      "video-moment-0004": {
+        "key": "video-moment-0004",
+        "name": "Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0005": {
+        "key": "video-moment-0005",
+        "name": "Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0006": {
+        "key": "video-moment-0006",
+        "name": "Red²",
+        "owner": "Video"
+      },
+      "video-moment-0007": {
+        "key": "video-moment-0007",
+        "name": "Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0008": {
+        "key": "video-moment-0008",
+        "name": "Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0009": {
+        "key": "video-moment-0009",
+        "name": "Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0010": {
+        "key": "video-moment-0010",
+        "name": "Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0011": {
+        "key": "video-moment-0011",
+        "name": "Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0012": {
+        "key": "video-moment-0012",
+        "name": "Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0013": {
+        "key": "video-moment-0013",
+        "name": "Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0014": {
+        "key": "video-moment-0014",
+        "name": "Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0015": {
+        "key": "video-moment-0015",
+        "name": "Up⌑Red",
+        "owner": "Video"
+      }
+    },
+    "sourceSinkScale": {
+    }
+  },
+  "video": {
+    "source": "2448df0ab88020474438645ed7c089465bfc9682266123f81b17c1d1eebee045"
+  }
+}
