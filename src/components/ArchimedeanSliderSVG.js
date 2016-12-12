@@ -33,32 +33,40 @@ const ArchimedeanSliderSVG = ({
     onScaleChange,
     onScaleDoubleClick
   }) => {
-  const biasHeight = 2* height/4;
+  const biasHeight = Math.round(2 * height/4);
   const biasTop = height-biasHeight;
-  const biasMid = (biasHeight + height)/2;
-  const midX = width/2;
+  const biasMid = Math.round((biasHeight + height)/2);
+  const midX = Math.round(width/2);
 
-  const thumbSize = biasHeight/4;
-  const trackHeight = biasHeight/5;
+  const thumbSize = Math.round(biasHeight/4);
+  const trackHeight = Math.round(biasHeight/5);
   const trackLeft = thumbSize;
   const trackRight = width - trackLeft;
   const trackLen = trackRight - trackLeft;
-  const trackMidY = biasTop + biasHeight/2;
+  const trackMidY = Math.round(biasTop + biasHeight/2);
 
-  const biasThumbX = midX + trackLen /2 * bias;
-  const perturbedValueThumbX = midX + trackLen * perturbedValue/2;
-  const leftmostPerturbation = midX + trackLen * perturb([bias, scale])/2;
-  const rightmostPerturbation = midX + trackLen * perturb([bias, -scale])/2;
+  const biasThumbX = Math.round(midX + trackLen / 2 * bias);
+  const perturbedValueThumbX = Math.round(midX + trackLen * perturbedValue/2);
+  const leftmostPerturbation = Math.round(
+    midX + trackLen * perturb([bias, scale])/2
+  );
+  const rightmostPerturbation = Math.round(
+    midX + trackLen * perturb([bias, -scale])/2
+  );
 
   const perturbArrowTop = biasMid - thumbSize;
   const perturbArrowBottom = biasMid + thumbSize;
 
   const scaleSliderHeight = height - biasHeight;
-  const scaleSliderWidth = width/2;
-  const scaleSliderLeft = (width - scaleSliderWidth) * (1 + bias) / 2;
+  const scaleSliderWidth = Math.round(width/2);
+  const scaleSliderLeft = Math.round(
+    (width - scaleSliderWidth) * (1 + bias) / 2
+  );
   const scaleSliderRight = scaleSliderLeft + scaleSliderWidth;
-  const scaleSliderMidX = (scaleSliderLeft + scaleSliderRight)/2;
-  const scaleSliderMidY = scaleSliderHeight/2;
+  const scaleSliderMidX = Math.round(
+    (scaleSliderLeft + scaleSliderRight)/2
+  );
+  const scaleSliderMidY = Math.round(scaleSliderHeight/2);
 
   let labelElem;
   if (label.length>0) {
