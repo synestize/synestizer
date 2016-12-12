@@ -11,18 +11,18 @@ import React, { Component, PropTypes, Children } from 'react';
 const IOPane = ({}) => {
   let permittedSettingPanes = [];
   if (!GALLERY) {
+    permittedSettingPanes.push(
+      <AppSettings key='AppSettings'/>
+    )
+  }
+  permittedSettingPanes.push(<ActivePatchMatrix key='ActivePatchMatrix'/>)
+  if (!GALLERY) {
     permittedSettingPanes.push(...[
       // <VideoSettings key='VideoSettings' />,
       // <AudioSettings key='AudioSettings'/>,
       <MidiSettings key='MidiSettings'/>,
       <SignalSettings key='SignalSettings'/>,
     ])
-  }
-  permittedSettingPanes.push(<ActivePatchMatrix key='ActivePatchMatrix'/>)
-  if (!GALLERY) {
-    permittedSettingPanes.push(
-      <AppSettings key='AppSettings'/>
-    )
   }
   return (
   <Pane paneId="io-pane">

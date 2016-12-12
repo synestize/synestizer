@@ -6,8 +6,9 @@ const mapStateToProps = (state, ownProps) => {
   let persistentState = {...state}
   delete persistentState.__volatile
   return {
-    title: 'Save',
-    content: JSON.stringify(persistentState)
+    title: 'DNA',
+    content: JSON.stringify(persistentState),
+    className: 'dna',
   }
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
