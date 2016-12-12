@@ -19,9 +19,6 @@ import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
 import audioio_ from 'io/audio'
 import signalio_ from 'io/signal'
-import * as tracking from 'imports?this=>window!tracking'
-window.tg = tracking
-
 import {
   getStoredState,
   autoRehydrate,
