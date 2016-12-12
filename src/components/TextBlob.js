@@ -1,11 +1,11 @@
 import { PropTypes } from 'react'
 
-const TextBlob = ({content, onChange, title}) => {
+const TextBlob = ({content='', onChange, title, className=''}) => {
   let header;
   if (title) {
-    header = <h4>{title}</h4>
+    header = <h4 className='textblobtitle'>{title}</h4>
   }
-  return <form>
+  return <form className={'textblob ' + className}>
     {header}
     <textarea value={content} onChange={(e)=>onChange(e.target.value)} />
   </form>
@@ -13,8 +13,9 @@ const TextBlob = ({content, onChange, title}) => {
 
 TextBlob.propTypes = {
   onChange: PropTypes.func.isRequired,
-  content: PropTypes.string.isRequired,
-  content: PropTypes.string
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default TextBlob;

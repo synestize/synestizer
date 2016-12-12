@@ -5,7 +5,7 @@ import NukeButton from '../containers/NukeButton'
 import AppStateWidget from '../containers/AppStateWidget'
 
 const AppSettings = () => (
-  <SubPane title="Synestizer" className="app squeeze">
+  <SubPane title="Master Settings" className="app squeeze">
     <RandomizeButton />
     <NukeButton />
     <AppStateWidget />
