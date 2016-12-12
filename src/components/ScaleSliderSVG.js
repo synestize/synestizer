@@ -19,10 +19,10 @@ const ScaleSliderSVG = ({
   label2='',
   labelColor='rgba(200,200,200,1)',
 }) => {
-  const midX = width/2;
-  const midY = height/2;
-  const left = midX - scale * midX;
-  const right = midX + scale * midX;
+  const midX = Math.round(width/2);
+  const midY = Math.round(height/2);
+  const left = Math.round(midX - scale * midX);
+  const right = Math.round(midX + scale * midX);
   let label1Elem;
   let label2Elem;
   if (label1.length>0) {
@@ -60,7 +60,7 @@ const ScaleSliderSVG = ({
   />
   let shadowArrow;
   let shadowLeft = midX;
-  let shadowRight = midX + perturbation * midX;
+  let shadowRight = Math.round(midX + perturbation * midX);
 
   shadowArrow = <polygon
     points={`${shadowLeft} 0, ${shadowRight} ${midY}, ${shadowLeft} ${height}`}
