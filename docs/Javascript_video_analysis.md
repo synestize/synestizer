@@ -52,11 +52,13 @@ Ranked in descending order of viability:
 
 ## Machine vision libraries
 
-## Machine vision libraries
-Top pics, maybe useful
+### Top picks, maybe useful
 
-* [tracking.js](http://trackingjs.com/) does cool stuff already
-* so does [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
+* [keras-js](https://github.com/transcranial/keras-js) runs CNNs in the browsers
+  * [convenets-keras](https://github.com/heuritech/convnets-keras)
+  * [vgg 16-keras](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+* old-school handcrafted features with [tracking.js](http://trackingjs.com/) does cool stuff already
+* same with [jsfeat](https://inspirit.github.io/jsfeat/) including some by EPFL and an entire linear algebra library
 
 Suspected non-useful or abandoned
 

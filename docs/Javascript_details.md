@@ -116,6 +116,7 @@ but we use webpack here.
   * there is an alternative competitor [escompress](https://github.com/escompress/escompress), which [integrates to Babel es6](https://github.com/escompress/babel-preset-escompress). This is our current solution
   * I recommend using just one plugin, [https://www.npmjs.com/package/babel-plugin-transform-dead-code-elimination], which somewhat reduced the JS size (but not as well as uglifyjs!)
 * [Why can't anyone write a simple webpack tutorial?](https://medium.com/@dtothefp/why-can-t-anyone-write-a-simple-webpack-tutorial-d0b075db35ed#.7z9z6io83)
+* [legacy code must be shimmed](https://github.com/webpack/docs/wiki/shimming-modules)
 * If you want to update dependencies, the command looks like this:
 
 ```
@@ -148,7 +149,7 @@ npm install --save-dev --upgrade \
   worker-loader
 ```
 
-## caching using servicesworkers
+## caching using serviceworkers
 
 See
 [progressive webapps with webpack](http://michalzalecki.com/progressive-web-apps-with-webpack/)
@@ -175,14 +176,14 @@ We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the docu
     * [percussion](https://github.com/grisendo/Percussion)
     * [rxvision](http://jaredforsyth.com/rxvision/) - I can't work out how this one works or how to use it, and the documentation doesn't explain basic stuff like how to install it, so I'm ignoring it for now.
 
-* Transducers (a library of stream processors)
 
-    * [intro](http://jlongster.com/Transducers.js--A-JavaScript-Library-for-Transformation-of-Data) to [Transducers.js](https://github.com/cognitect-labs/transducers-js)
+## Touch handling
 
-    * [extra intro](http://phuu.net/2014/08/31/csp-and-transducers.html)
-    * [intro to pipelines](http://simplectic.com/blog/2014/transducers-explained-pipelines/)
-    * [so much intro wow](http://simplectic.com/blog/2014/transducers-explained-1/)
-
+* [Mozilla touch wrangling](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events)
+* [touch dnd](https://mobiforge.com/design-development/touch-friendly-drag-and-drop)
+* [apple adding touch to canvas](https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html)
+* [what a touch backend looks like for react](https://github.com/yahoo/react-dnd-touch-backend/blob/master/src/Touch.js)
+* [stackoverflow answer](http://stackoverflow.com/a/20927899/11730)
 
 ## Touch handling
 
