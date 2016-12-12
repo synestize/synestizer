@@ -24,16 +24,22 @@ export const randomize = () => {
 export const load = (serialized) => {
   return { type: LOAD, payload: serialized }
 }
-export const loadFromUrl = (url) => {
+export const loadFromUrl = (url, refresh=true) => {
   // dispatch URL loader here
   return (dispatch) => {
     return fetch(url).then(
       resp => {
         if (resp.ok) {
           resp.text().then(
-            serialized => dispatch(
-              load(serialized)
-            )
+            serialized => {
+              dispatch(
+                load(serialized)
+              )
+              console.debug('refreshin you', refresh)
+              if (refresh) {
+                window.location.search=""
+              }
+            }
           )
         } else {
           console.error('network request failed', resp);
