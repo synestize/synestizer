@@ -1,6 +1,6 @@
 :root {
   --base-bg-color: rgba(80,80,120,1);
-  --base-dark-bg-color: rgba(60,60,120,0.8);
+  --base-dark-bg-color: rgba(40,60,120,0.8);
   --translucent-bg-color: rgba(60,60,120,0.2);
   --base-fg-color: rgba(190,180,180,1);
   --base-fg-color-highlight: rgba(180,180,200,1);
