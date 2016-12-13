@@ -17,6 +17,8 @@
     "productionbuild": "NODE_ENV=production webpack --production --optimize-minimize --config webpack-production.config.js",
     "pregallerybuild": "npm run clean",
     "gallerybuild": "webpack --production --optimize-minimize --config webpack-gallery.config.js",
+    "pregallerypublish": "npm run gallerybuild",
+    "gallerypublish": "rsync -av --progress --delete favicon.ico css fonts sound index.html bundle.js sw.js *.worker.js listentocolors:gallery_listentocolors_net",
     "prepublish": "npm run productionbuild",
     "publish": "rsync -av --progress --delete favicon.ico css fonts sound index.html bundle.js sw.js *.worker.js listentocolors:blue_listentocolors_net",
     "preserve": "npm run productionbuild",
