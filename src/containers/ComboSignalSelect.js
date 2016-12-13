@@ -22,14 +22,12 @@ const getComboSignalOptDict = createSelector(
 )
 
 const mapStateToProps = (state, {sinkControlKey, onSignalChange}) => {
-  const signalMeta = state.signal.comboSignalMeta
-  const optDict = {}
-
+  // console.debug('combosignalselect', getComboSignalOptDict(state))
   return {
     optDict: getComboSignalOptDict(state),
     currentOpt: (state.audio.sinkControls[sinkControlKey] || {}).signal,
     // NB this is a dispatcher - should move it
-    onChange: (key) => onSignalChange(key)
+    onChange: onSignalChange
   }
 };
 const mapDispatchToProps = (dispatch, {sinkControlKey, onSignalChange}) => {
