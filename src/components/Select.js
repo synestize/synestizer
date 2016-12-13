@@ -17,6 +17,9 @@ const Select = ({
     let nu = <option value={key} key={key}>{optDict[key]}</option> ;
     optNodes.push(nu);
   }
+  if (!withNull && currentOpt===undefined) {
+    currentOpt = Object.keys(optDict)[0]
+  }
   return (<select
       className={className}
       disabled={disabled}
@@ -27,7 +30,7 @@ const Select = ({
 }
 
 Select.propTypes = {
-  currentOpt: PropTypes.string.isRequired,
+  currentOpt: PropTypes.string,
   className: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   optDict: PropTypes.object.isRequired,
