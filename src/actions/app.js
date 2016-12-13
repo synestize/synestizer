@@ -1,5 +1,4 @@
 export const LOAD = 'LOAD'
-export const LOAD_FROM_URL = 'LOAD_FROM_URL'
 export const RESET_TO_NOTHING = 'RESET_TO_NOTHING'
 export const RANDOMIZE = 'RANDOMIZE'
 
