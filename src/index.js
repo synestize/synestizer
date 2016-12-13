@@ -89,7 +89,11 @@ getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   let purge = getq("purge");
   let load = getq("load");
-  store = createStore(rootReducer, undefined, enhancers)
+  if (purge) {
+    restoredState = undefined;
+  }
+  store = createStore(rootReducer, restoredState, enhancers)
+
   persistor = createPersistor(store, persistConf)
   if (purge) {
     persistor.purgeAll();
