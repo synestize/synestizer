@@ -140,6 +140,7 @@ npm install --save-dev --upgrade \
   redux-logger \
   redux-persist \
   redux-thunk \
+  reselect \
   rxjs \
   serviceworker-webpack-plugin \
   source-map-loader \
