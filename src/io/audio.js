@@ -274,6 +274,34 @@ export default function init(store, signalio, midiio) {
     bufferMeta.goblet = {
       root: 'g3',
     };
+    bufferMeta.blippo = {
+      root: 'c4',
+    };
+    store.dispatch(addSample({
+      key: 'blippo',
+      name: 'Blippo Plong',
+    }));
+    bufferMeta.drip = {
+      root: 'e5',
+    };
+    store.dispatch(addSample({
+      key: 'drip',
+      name: 'Drip',
+    }));
+    bufferMeta.dripdrop = {
+      root: 'c5',
+    };
+    store.dispatch(addSample({
+      key: 'dripdrop',
+      name: 'Drip Drop',
+    }));
+    bufferMeta.flexotone = {
+      root: 'b5',
+    };
+    store.dispatch(addSample({
+      key: 'flexotone',
+      name: 'Flexotone',
+    }));
     /*
     store.dispatch(addSample({
       key: '_user_1',
@@ -322,6 +350,10 @@ export default function init(store, signalio, midiio) {
       'vox5': './sound/monk_f2.mp3',
       'goblet': './sound/goblet_g3.mp3',
       'synthtom': './sound/synthtom_c1.mp3',
+      'blippo': './sound/blippo_c4.mp3',
+      'drip': './sound/drip_e5.mp3',
+      'dripdrop': './sound/dripdrop_c5.mp3',
+      'flexotone': './sound/flexotone_b5.mp3',
       /*
       '_user_1': './sound/silence.mp3',
       '_user_2': './sound/silence.mp3',
