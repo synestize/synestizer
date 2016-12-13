@@ -36,7 +36,15 @@ export const loadFromUrl = (url, refresh=true) => {
               )
               console.debug('refreshin you', refresh)
               if (refresh) {
-                window.location.search=""
+                // update address without reloading, or the state may not
+                // get serialized fast enough.
+                history.replaceState(
+                  'home',
+                  '',
+                  window.location.origin +
+                    window.location.pathname +
+                    window.location.hash
+                  );
               }
             }
           )

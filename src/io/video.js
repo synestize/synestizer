@@ -89,8 +89,8 @@ export default function init(store, signalio, videoDom) {
     // using a try..catch
     // TODO: check that this is still true
     try {
-      //slice a square section out of the video
-      //looks a bit sqished on my laptop, but whatever.
+      // slice a square section out of the video
+      // looks a bit squished on my laptop, but whatever.
       gfxCtx.drawImage(
           videoElem,
           xoffset, yoffset, xoffset+vsize, yoffset+vsize,
