@@ -8,7 +8,7 @@ import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import { resetToNothing, resetToDefault, loadFromUrl } from './actions/app'
+import { resetToNothing, loadFromUrl } from './actions/app'
 import rootReducer from './reducers'
 import App from './containers/App'
 import videoio_ from 'io/video'
@@ -108,7 +108,7 @@ getStoredState(persistConf, (err, restoredState) => {
     (Object.keys(restoredState).length === 0) ||
     purge
   ) {
-    store.dispatch(resetToDefault())
+    store.dispatch(resetToNothing())
     store.dispatch(loadFromUrl('/presets/default.json'))
   }
   if ( window !== undefined) {
