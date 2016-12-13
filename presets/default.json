@@ -6,7 +6,7 @@
       },
       "voice1": {
         "mute": false,
-        "sample": "synthtom"
+        "sample": "goblet"
       },
       "voice2": {
         "mute": false,
@@ -19,7 +19,7 @@
     "master": {
       "gain": 4,
       "mute": false,
-      "tempo": 428
+      "tempo": 533
     },
     "sampleBank": {
       "_user_1": {
@@ -93,10 +93,10 @@
         "key": "bubbleChamber|bassattack",
         "label": "Attack",
         "scale": -0.19549461648524225,
-        "signal": "video-moment-0000"
+        "signal": "video-moment-0010"
       },
       "bubbleChamber|bassbottom": {
-        "bias": -0.13636363636363638,
+        "bias": -0.3090909090909091,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|bassbottom",
         "label": "Octave",
@@ -104,7 +104,7 @@
         "signal": "video-moment-0002"
       },
       "bubbleChamber|basscutoff": {
-        "bias": -0.6727272727272728,
+        "bias": -0.5181818181818182,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|basscutoff",
         "label": "Cutoff",
@@ -120,19 +120,19 @@
         "signal": "video-moment-0009"
       },
       "bubbleChamber|bassdensity": {
-        "bias": -0.8090909090909092,
+        "bias": -1,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|bassdensity",
         "label": "Density",
         "scale": -1,
-        "signal": "video-moment-0002"
+        "signal": "video-moment-0001"
       },
       "bubbleChamber|bassdistort": {
-        "bias": 0,
+        "bias": -1,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|bassdistort",
         "label": "Distort",
-        "scale": 0,
+        "scale": 0.4545454545454546,
         "signal": "video-moment-0008"
       },
       "bubbleChamber|bassgain": {
@@ -141,7 +141,7 @@
         "key": "bubbleChamber|bassgain",
         "label": "Gain",
         "scale": 0.5636363636363636,
-        "signal": "video-moment-0008"
+        "signal": "video-moment-0009"
       },
       "bubbleChamber|bassovertones": {
         "bias": 0,
@@ -160,15 +160,15 @@
         "signal": "video-moment-0004"
       },
       "bubbleChamber|basspitch": {
-        "bias": -0.009090909090909094,
+        "bias": -0.2090909090909091,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|basspitch",
         "label": "Pitch",
         "scale": 0.45454545454545453,
-        "signal": "video-moment-0008"
+        "signal": "video-moment-0004"
       },
       "bubbleChamber|bassrate": {
-        "bias": 0.24263179494187437,
+        "bias": -0.9028227505126711,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|bassrate",
         "label": "Rate",
@@ -184,11 +184,11 @@
         "signal": "video-moment-0001"
       },
       "bubbleChamber|bassspread": {
-        "bias": 0,
+        "bias": 0.21818181818181817,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|bassspread",
         "label": "Detune",
-        "scale": 0,
+        "scale": -0.5636363636363636,
         "signal": "video-moment-0002"
       },
       "bubbleChamber|pitch__0001": {
@@ -196,7 +196,7 @@
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|pitch__0001",
         "label": "Root",
-        "scale": 1,
+        "scale": 0.9272727272727272,
         "signal": "video-moment-0001"
       },
       "bubbleChamber|pitch__0002": {
@@ -224,11 +224,11 @@
         "signal": "video-moment-0004"
       },
       "bubbleChamber|voice1bottom": {
-        "bias": 0,
+        "bias": -0.5181818181818182,
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|voice1bottom",
         "label": "Octave",
-        "scale": 1,
+        "scale": 0.6,
         "signal": "video-moment-0004"
       },
       "bubbleChamber|voice1delayScale": {
@@ -253,7 +253,7 @@
         "key": "bubbleChamber|voice1gain",
         "label": "Gain",
         "scale": 0,
-        "signal": "video-moment-0002"
+        "signal": "video-moment-0007"
       },
       "bubbleChamber|voice1pan": {
         "bias": 0,
@@ -284,7 +284,7 @@
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|voice1smear",
         "label": "Smear",
-        "scale": -0.19557901600681737,
+        "scale": 0.25896643853863716,
         "signal": "video-moment-0009"
       },
       "bubbleChamber|voice2bottom": {
@@ -348,8 +348,13 @@
         "ensemble": "Bubble Chamber",
         "key": "bubbleChamber|voice2smear",
         "label": "Smear",
-        "scale": -0.4340827153699365,
+        "scale": -1,
         "signal": "video-moment-0002"
+      },
+      "undefined": {
+        "bias": 0.4112700723001237,
+        "scale": 0,
+        "signal": "video-moment-0004"
       }
     },
     "sinkDevice": "default",
@@ -360,15 +365,55 @@
   },
   "midi": {
     "sinkCCMap": {
+      "midi-out-cc-0001": 1,
+      "midi-out-cc-0002": 2,
+      "midi-out-cc-0003": 3,
+      "midi-out-cc-0004": 4,
+      "midi-out-cc-0005": 5,
+      "midi-out-cc-0006": 6,
+      "midi-out-cc-0007": 7,
+      "midi-out-cc-0008": 8,
+      "midi-out-cc-0009": 9,
+      "midi-out-cc-0010": 10,
+      "midi-out-cc-0011": 11,
+      "midi-out-cc-0012": 12,
+      "midi-out-cc-0013": 13,
+      "midi-out-cc-0014": 14,
+      "midi-out-cc-0015": 15
     },
     "sinkCCs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
     ],
     "sinkChannel": 1,
     "sinkDevice": "",
     "sinkSoloCC": -1,
     "sourceCCMap": {
+      "midi-in-cc-0001": 1,
+      "midi-in-cc-0002": 2,
+      "midi-in-cc-0003": 3,
+      "midi-in-cc-0004": 4,
+      "midi-in-cc-0005": 5
     },
     "sourceCCs": [
+      1,
+      2,
+      3,
+      4,
+      5
     ],
     "sourceChannel": 0,
     "sourceDevice": ""
@@ -378,6 +423,102 @@
       "generic-0000": {
         "name": "α",
         "owner": "Signal"
+      },
+      "generic-0001": {
+        "name": "β",
+        "owner": "Signal"
+      },
+      "generic-0002": {
+        "name": "γ",
+        "owner": "Signal"
+      },
+      "generic-0003": {
+        "name": "δ",
+        "owner": "Signal"
+      },
+      "generic-0004": {
+        "name": "ε",
+        "owner": "Signal"
+      },
+      "midi-in-cc-0001": {
+        "name": "In CC 1",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0002": {
+        "name": "In CC 2",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0003": {
+        "name": "In CC 3",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0004": {
+        "name": "In CC 4",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0005": {
+        "name": "In CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0001": {
+        "name": "Out CC 1",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0002": {
+        "name": "Out CC 2",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0003": {
+        "name": "Out CC 3",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0004": {
+        "name": "Out CC 4",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0005": {
+        "name": "Out CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0006": {
+        "name": "Out CC 6",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0007": {
+        "name": "Out CC 7",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0008": {
+        "name": "Out CC 8",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0009": {
+        "name": "Out CC 9",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0010": {
+        "name": "Out CC 10",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0011": {
+        "name": "Out CC 11",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0012": {
+        "name": "Out CC 12",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0013": {
+        "name": "Out CC 13",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0014": {
+        "name": "Out CC 14",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0015": {
+        "name": "Out CC 15",
+        "owner": "MIDI"
       },
       "video-moment-0001": {
         "key": "video-moment-0001",
@@ -456,16 +597,116 @@
       }
     },
     "genericSinkSignals": {
-      "generic-0000": "α"
+      "generic-0000": "α",
+      "generic-0001": "β",
+      "generic-0002": "γ",
+      "generic-0003": "δ",
+      "generic-0004": "ε"
     },
-    "nGenericSinkSignals": 1,
+    "nGenericSinkSignals": 5,
     "sinkSignalMeta": {
       "generic-0000": {
         "name": "α",
         "owner": "Signal"
+      },
+      "generic-0001": {
+        "name": "β",
+        "owner": "Signal"
+      },
+      "generic-0002": {
+        "name": "γ",
+        "owner": "Signal"
+      },
+      "generic-0003": {
+        "name": "δ",
+        "owner": "Signal"
+      },
+      "generic-0004": {
+        "name": "ε",
+        "owner": "Signal"
+      },
+      "midi-out-cc-0001": {
+        "name": "Out CC 1",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0002": {
+        "name": "Out CC 2",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0003": {
+        "name": "Out CC 3",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0004": {
+        "name": "Out CC 4",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0005": {
+        "name": "Out CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0006": {
+        "name": "Out CC 6",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0007": {
+        "name": "Out CC 7",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0008": {
+        "name": "Out CC 8",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0009": {
+        "name": "Out CC 9",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0010": {
+        "name": "Out CC 10",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0011": {
+        "name": "Out CC 11",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0012": {
+        "name": "Out CC 12",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0013": {
+        "name": "Out CC 13",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0014": {
+        "name": "Out CC 14",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0015": {
+        "name": "Out CC 15",
+        "owner": "MIDI"
       }
     },
     "sourceSignalMeta": {
+      "midi-in-cc-0001": {
+        "name": "In CC 1",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0002": {
+        "name": "In CC 2",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0003": {
+        "name": "In CC 3",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0004": {
+        "name": "In CC 4",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0005": {
+        "name": "In CC 5",
+        "owner": "MIDI"
+      },
       "video-moment-0001": {
         "key": "video-moment-0001",
         "name": "Bright",
@@ -543,6 +784,26 @@
       }
     },
     "sourceSinkScale": {
+      "midi-in-cc-0001/generic-0000": 1,
+      "midi-in-cc-0002/generic-0001": 1,
+      "midi-in-cc-0003/generic-0002": 0.35,
+      "midi-in-cc-0004/generic-0003": 1,
+      "midi-in-cc-0005/generic-0004": 1,
+      "video-moment-0001/midi-out-cc-0001": 0.325,
+      "video-moment-0002/midi-out-cc-0002": -0.575,
+      "video-moment-0003/midi-out-cc-0003": 0.375,
+      "video-moment-0004/midi-out-cc-0004": -1,
+      "video-moment-0005/midi-out-cc-0005": 0.85,
+      "video-moment-0006/midi-out-cc-0006": 1,
+      "video-moment-0007/midi-out-cc-0007": 0.725,
+      "video-moment-0008/midi-out-cc-0008": 0.725,
+      "video-moment-0009/midi-out-cc-0009": -1,
+      "video-moment-0010/midi-out-cc-0010": 1,
+      "video-moment-0011/midi-out-cc-0011": 0.55,
+      "video-moment-0012/midi-out-cc-0012": 1,
+      "video-moment-0013/midi-out-cc-0013": 0.625,
+      "video-moment-0014/midi-out-cc-0014": 1,
+      "video-moment-0015/midi-out-cc-0015": -1
     }
   },
   "video": {
