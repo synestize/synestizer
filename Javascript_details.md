@@ -146,6 +146,7 @@ npm install --save-dev --upgrade \
   source-map-loader \
   tone \
   webpack \
+  webpack-dev-server \
   webrtc-adapter \
   worker-loader
 ```
