@@ -274,6 +274,7 @@ export default function init(store, signalio, midiio) {
     bufferMeta.goblet = {
       root: 'g3',
     };
+    /*
     store.dispatch(addSample({
       key: '_user_1',
       name: '_User:1',
@@ -302,7 +303,7 @@ export default function init(store, signalio, midiio) {
     bufferMeta._user_4 = {
       root: 'c3',
     };
-
+    */
     buffers = new Tone.Buffers({
       'angklung': './sound/angklung_c4.mp3',
       'woodenspoon': './sound/woodenspoon_c4.mp3',
@@ -321,10 +322,12 @@ export default function init(store, signalio, midiio) {
       'vox5': './sound/monk_f2.mp3',
       'goblet': './sound/goblet_g3.mp3',
       'synthtom': './sound/synthtom_c1.mp3',
+      /*
       '_user_1': './sound/silence.mp3',
       '_user_2': './sound/silence.mp3',
       '_user_3': './sound/silence.mp3',
       '_user_4': './sound/silence.mp3',
+      */
     }, () => {
       // The callback for when all buffers are loaded
       // This is a terrible init procedure, since it defers building the controls uneccessarily.

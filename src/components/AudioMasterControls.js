@@ -6,7 +6,7 @@ const AudioMasterControls = function(props) {
   return (<div className="subpane">
     <MasterAudioGain />
     <ActiveAudioMasterTempo />
-    <ActiveRecordWidget />
+    {/* <ActiveRecordWidget /> */}
   </div>)
 };
 
