@@ -8,6 +8,7 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  font-size: 0.4cm
 }
 body {
   font-family: 'Roboto Condensed', sans-serif;
