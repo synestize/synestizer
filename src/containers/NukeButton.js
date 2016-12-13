@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { resetToNothing } from '../actions/gui';
+import { resetToNothing } from '../actions/app';
 import Button from '../components/Button';
 
 const mapStateToProps = (state, ownProps) => {
