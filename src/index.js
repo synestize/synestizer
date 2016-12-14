@@ -37,8 +37,9 @@ if ('serviceWorker' in navigator) {
   const registration = runtime.register();
   console.debug('sw', registration)
 }
-
-window.Perf = Perf
+if (!PRODUCTION) {
+  window.Perf = Perf
+}
 /*
 We divide Synestizer into two part:
 
@@ -115,7 +116,7 @@ getStoredState(persistConf, (err, restoredState) => {
     store.dispatch(resetToNothing())
     store.dispatch(loadFromUrl('/presets/default.json'))
   }
-  if ( window !== undefined) {
+  if (!PRODUCTION) {
     window.store = store;
     window.persistor = persistor;
     window.React = React;
