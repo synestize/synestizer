@@ -49,7 +49,7 @@ export function Moment({PIXELDIM=64}) {
     // TODO: check that all variances are correctly normalised
     // Occasionally they seem to be outside of [0,1]
     const PIXELCOUNT=PIXELDIM*PIXELDIM;
-    let nDims=45;
+    let nDims=60;
     // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
     // This is very confusing.
     let Y=0, S=1, V=2;
@@ -62,7 +62,7 @@ export function Moment({PIXELDIM=64}) {
     const cookedMoments = new Float32Array(15);
     const prevCookedMoments = new Float32Array(15);
     const ysvij = new Float32Array(5);
-    const cookedDeltaMoments = new Float32Array(45);
+    const cookedDeltaMoments = new Float32Array(60);
     let lastTime = performance.now()
     let thisTime = performance.now()
 
@@ -193,6 +193,11 @@ export function Moment({PIXELDIM=64}) {
             cookedDeltaMoments[i+30] = 2 * Math.pow(
                 cookedDeltaMoments[i+15], 2
             ) - 1;
+            cookedDeltaMoments[i+45] = transform.saturate(
+              cookedDeltaMoments[i+45] +
+              cookedMoments[i] * deltaTimeS * 0.125
+            )
+
         }
 
         // Reset for next iteration
@@ -251,6 +256,21 @@ export function Moment({PIXELDIM=64}) {
         'video-moment-0035',
         'video-moment-0039',
         'video-moment-0036',
+        'video-moment-0046',
+        'video-moment-0047',
+        'video-moment-0048',
+        'video-moment-0055',
+        'video-moment-0056',
+        'video-moment-0057',
+        'video-moment-0058',
+        'video-moment-0059',
+        'video-moment-0060',
+        'video-moment-0049',
+        'video-moment-0052',
+        'video-moment-0053',
+        'video-moment-0050',
+        'video-moment-0054',
+        'video-moment-0051',
       ],
       // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
       // This is very confusing.
@@ -300,6 +320,21 @@ export function Moment({PIXELDIM=64}) {
         '(∆Blue²)²',
         '(∆Blue⌑Red)²',
         '(∆Red²)²',
+        '∫Bright',
+        '∫Blue',
+        '∫Red',
+        '∫Right⌑Bright',
+        '∫Right⌑Blue',
+        '∫Right⌑Red',
+        '∫Up⌑Bright',
+        '∫Up⌑Blue',
+        '∫Up⌑Red',
+        '∫Bright²',
+        '∫Bright⌑Blue',
+        '∫Bright⌑Red',
+        '∫Blue²',
+        '∫Blue⌑Red',
+        '∫Red²',
       ]
     }
 };
