@@ -49,48 +49,27 @@ export default function init(store, signalio, videoDom) {
   const PIXELDIM=64;
 
   function doVideoPlumbing(key) {
-    let constraint = {video: true};
+    source = sources.get(key);
     canvasElem.width = PIXELDIM;
     canvasElem.height = PIXELDIM;
-    if (sources.has(key)) {
-      console.debug('found video source', sources.get(key))
-      constraint.video = { deviceId: key }
-    }
+
     Observable.fromPromise(
       navigator.mediaDevices.getUserMedia(
-        constraint
+        { video: { deviceId: key }}
       )
     ).subscribe(function(mediaStream) {
       window.videoMediaStream = mediaStream;
 
       if (currentMediaStream!==undefined) {
         // var stop = () => video.srcObject && video.srcObject.getTracks().forEach(t => t.stop());
-        videoElem.srcObject && video.srcObject.getTracks().forEach(
-          t => t.stop()
-        );
+        videoElem.srcObject && video.srcObject.getTracks().forEach(t => t.stop());
       }
       currentMediaStream = mediaStream;
-      // This is AFAICT the simplest way to recover the deviceId:
-      console.debug('mediaStream', mediaStream)
-      let videoTracks = mediaStream.getVideoTracks();
-      if (videoTracks.length) {
-        let videoTrack = videoTracks[0];
-        let constraints = videoTrack.getConstraints();
-        console.debug('video constraint returned', constraints)
-        if (constraints.advanced && constraints.advanced.length) {
-          key = constraints.advanced[0].deviceId.exact
-        } else {
-          key = undefined
-        }
-        console.debug('video key returned', key)
-        videoElem.src = window.URL.createObjectURL(mediaStream);
-        Observable.fromEvent(
-          videoElem, "loadedmetadata").subscribe(pumpPixels);
-        videoElem.play();
-        store.dispatch(setCurrentVideoSource(key));
-      } else {
-        console.debug('nonsense video track returned in', mediaStream)
-      }
+      //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
+      videoElem.src = window.URL.createObjectURL(mediaStream);
+      Observable.fromEvent(
+        videoElem, "loadedmetadata").subscribe(pumpPixels);
+      videoElem.play();
     });
   }
 
@@ -148,7 +127,6 @@ export default function init(store, signalio, videoDom) {
     /*
     updates lists of available devices.
     */
-    console.debug('returned various media devices', mediadevices)
     let sourceNames = new Map();
     Observable.from(mediadevices).filter(
       (dev) => ( dev.kind==="videoinput" )
@@ -159,7 +137,7 @@ export default function init(store, signalio, videoDom) {
     store.dispatch(setAllVideoSources(sourceNames));
     //If there is a device, select it.
     if (sourceNames.size >= 1) {
-      doVideoPlumbing()
+      store.dispatch(setCurrentVideoSource(sourceNames.keys().next().value));
     }
   };
 
