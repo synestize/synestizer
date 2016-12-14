@@ -19,7 +19,7 @@ import {
 export function source(state="", {type, payload}) {
   switch (type) {
     case SET_CURRENT_VIDEO_SOURCE:
-      return payload
+      return payload || state
     default:
       return state
   }
