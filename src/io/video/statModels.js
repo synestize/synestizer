@@ -42,33 +42,6 @@ export function RandomFilter({
     }
 };
 
-export function AvgColor({PIXELDIM=64}) {
-    //1/8 sub-sampled average color
-    const PIXELCOUNT=PIXELDIM*PIXELDIM;
-    const out = new Float32Array(3);
-    let R=0, G=1, B=2;
-    function calc(pixels) {
-        out[R] = 0;
-        out[G] = 0;
-        out[B] = 0;
-
-        for (let i = 0; i < PIXELCOUNT; i+=8) {
-            out[R] += pixels[i * 4 + R]/255;
-            out[G] += pixels[i * 4 + G]/255;
-            out[B] += pixels[i * 4 + B]/255;
-        }
-
-        out[R] = transform.linBipol(0, PIXELCOUNT, out[R]);
-        out[G] = transform.linBipol(0, PIXELCOUNT, out[G]);
-        out[B] = transform.linBipol(0, PIXELCOUNT, out[B]);
-        return out;
-    }
-    return {
-      fn: calc,
-      keys: ['video-red', 'video-green', 'video-blue'],
-      names: ['Red', 'Green', 'Blue']
-    }
-};
 export function Moment({PIXELDIM=64}) {
     // Gives us moment estimates by the plugin method
     // right now, 1st and 2nd central moments
