@@ -101,7 +101,7 @@ export default function init(store, signalio) {
       time );
     sinkDevice.send(
       [0x80 + chan, pitch, 0],
-      Math.max(window.performance.now(), time) + dur
+      Math.max(performance.now(), time) + dur
     );
   };
 
