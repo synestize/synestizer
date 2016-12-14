@@ -47,12 +47,12 @@ export default function init(store, signalio, videoDom) {
   const PIXELDIM=64;
 
   function doVideoPlumbing(key) {
-    source = sources.get(key);
+    // NB device key is now ignored it was too much trouble.
     canvasElem.width = PIXELDIM;
     canvasElem.height = PIXELDIM;
 
     Observable.fromPromise(
-      navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
+      navigator.mediaDevices.getUserMedia({video:true})
     ).subscribe(function(mediaStream) {
       //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
       Observable.fromEvent(
