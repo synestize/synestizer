@@ -1,6 +1,6 @@
 {
-  "name": "synestizer",
-  "version": "0.4.1",
+  "name": "synestizer_lite",
+  "version": "0.0.1alpha0",
   "description": "Listen to colours",
   "main": "src/index.js",
   "directories": {
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/synestize/synestizer.git"
+    "url": "github.com/synestize/synestizer_lite.git"
   },
   "author": "Dan MacKinlay, Christoph Stähli, Kaspar König",
   "license": "GPL-3.0",
@@ -48,7 +48,6 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-runtime": "^6.9.0",
     "file-loader": "^0.9.0",
-    "localforage": "^1.4.3",
     "node-static": "^0.7.9",
     "react": "^15.4.1",
     "react-addons-perf": "^15.4.1",
@@ -65,9 +64,9 @@
     "serviceworker-webpack-plugin": "^0.1.7",
     "source-map-loader": "^0.1.5",
     "tone": "git+https://github.com/Tonejs/Tone.js.git",
+    "tracking": "^1.1.3",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",
-    "webrtc-adapter": "^1.4.0",
-    "worker-loader": "^0.7.1"
+    "webrtc-adapter": "^1.4.0"
   }
 }

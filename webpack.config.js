@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-
 var config = require("./webpack-base.config.js");
+
 config.plugins.push(new webpack.DefinePlugin({
   PRODUCTION: JSON.stringify(false),
   GALLERY: JSON.stringify(false),

@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -21,7 +20,6 @@ module.exports = {
         loader: 'source-map-loader'
       }
     ],
-    noParse: /node_modules\/localforage\/dist\/localforage.js/,
     loaders: [{
       test: /\.jsx?$/,
       exclude: /(node_modules)/,
@@ -30,7 +28,7 @@ module.exports = {
         cacheDirectory: '/tmp',
         "presets": [
           "es2015",
-          "react",
+          // "react",
           "stage-0",
           // "escompress"
         ],
@@ -48,13 +46,9 @@ module.exports = {
     modulesDirectories: [path.join(__dirname, 'src'), 'node_modules']
   },
   plugins: [
-    new ServiceWorkerWebpackPlugin({
-      entry: path.join(__dirname, 'src/sw.js'),
-      publicPath: ''
-    }),
     new webpack.DefinePlugin({
-      EDITION: JSON.stringify("Blue"),
-      VERSION: JSON.stringify("0.4.1"),
+      EDITION: JSON.stringify("lite"),
+      VERSION: JSON.stringify("0.0.1alpha0"),
     })
   ]
 };
