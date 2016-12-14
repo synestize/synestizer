@@ -39,8 +39,6 @@ export default function init(store, signalio, videoDom) {
   let signalNames;
   let signalNameFromKey;
 
-  let currentMediaStream;
-
   //worker thread business
   const videoworker =  Videoworker_();
   window.videoworker = videoworker;
@@ -54,21 +52,12 @@ export default function init(store, signalio, videoDom) {
     canvasElem.height = PIXELDIM;
 
     Observable.fromPromise(
-      navigator.mediaDevices.getUserMedia(
-        { video: { deviceId: key }}
-      )
+      navigator.mediaDevices.getUserMedia({deviceId:key, video:true})
     ).subscribe(function(mediaStream) {
-      window.videoMediaStream = mediaStream;
-
-      if (currentMediaStream!==undefined) {
-        // var stop = () => video.srcObject && video.srcObject.getTracks().forEach(t => t.stop());
-        videoElem.srcObject && video.srcObject.getTracks().forEach(t => t.stop());
-      }
-      currentMediaStream = mediaStream;
       //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
-      videoElem.src = window.URL.createObjectURL(mediaStream);
       Observable.fromEvent(
         videoElem, "loadedmetadata").subscribe(pumpPixels);
+      videoElem.src = window.URL.createObjectURL(mediaStream);
       videoElem.play();
     });
   }
@@ -115,12 +104,10 @@ export default function init(store, signalio, videoDom) {
     }
   }
   function pumpPixels() {
-    if (pixelPump===undefined) {
-      pixelPump = Observable.interval(SIGNAL_PERIOD_MS);
-      pixelPump.subscribe(() => {
-        statsInbox.next({type:"pixels", payload: grabPixels()})
-      });
-    }
+    pixelPump = Observable.interval(SIGNAL_PERIOD_MS);
+    pixelPump.subscribe(() => {
+      statsInbox.next({type:"pixels", payload: grabPixels()})
+    });
   }
 
   function updateVideoIO(mediadevices) {
@@ -234,10 +221,10 @@ export default function init(store, signalio, videoDom) {
     (err) => console.debug(err.stack)
   );
   const storeStream = toObservable(store);
-  storeStream.pluck('video', 'source').distinctUntilChanged().subscribe(
+  storeStream.pluck('source').distinctUntilChanged().subscribe(
     (key) => {
-      console.log("vidkey", key);
       doVideoPlumbing(key);
+      console.log("vidkey", key);
     }
   )
 };
