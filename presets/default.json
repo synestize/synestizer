@@ -361,7 +361,7 @@
     "sourceDevice": "default"
   },
   "gui": {
-    "visiblePane": "io"
+    "visiblePane": "performance"
   },
   "midi": {
     "sinkCCMap": {
