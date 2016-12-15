@@ -195,7 +195,7 @@ export function Moment({PIXELDIM=64}) {
             ) - 1;
             cookedDeltaMoments[i+45] = transform.saturate(
               cookedDeltaMoments[i+45] +
-              cookedMoments[i] * deltaTimeS * 0.125
+              cookedMoments[i] * deltaTimeS * 0.0625
             )
 
         }
