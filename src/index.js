@@ -119,8 +119,9 @@ getStoredState(persistConf, (err, restoredState) => {
   if (!PRODUCTION) {
     window.store = store;
     window.persistor = persistor;
-    window.React = React;
   }
+  // Mysteriously required for Settings Pane to work.
+  window.React = React;
   appRoot = render(
     <Provider store={store}>
       <App />
