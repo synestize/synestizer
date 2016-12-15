@@ -1,0 +1,1231 @@
+{
+  "audio": {
+    "bubbleChamber": {
+      "bass": {
+        "mute": true
+      },
+      "voice1": {
+        "mute": true,
+        "sample": "goblet"
+      },
+      "voice2": {
+        "mute": true,
+        "sample": "synthtom"
+      },
+      "voice3": {
+        "mute": false
+      }
+    },
+    "master": {
+      "gain": 4,
+      "mute": true,
+      "tempo": 533
+    },
+    "sampleBank": {
+      "_user_1": {
+        "name": "_User:1"
+      },
+      "_user_2": {
+        "name": "_User:2"
+      },
+      "_user_3": {
+        "name": "_User:3"
+      },
+      "_user_4": {
+        "name": "_User:4"
+      },
+      "angklung": {
+        "name": "Angklung"
+      },
+      "blippo": {
+        "name": "Blippo Plong"
+      },
+      "drip": {
+        "name": "Drip"
+      },
+      "dripdrop": {
+        "name": "Drip Drop"
+      },
+      "flexotone": {
+        "name": "Flexotone"
+      },
+      "gendong": {
+        "name": "Gendong"
+      },
+      "goblet": {
+        "name": "Goblet"
+      },
+      "jentreng": {
+        "name": "Jentreng"
+      },
+      "kayageum": {
+        "name": "Kayageum"
+      },
+      "panflute": {
+        "name": "Pan Flute"
+      },
+      "piano": {
+        "name": "Piano"
+      },
+      "synthtom": {
+        "name": "Synth Tom"
+      },
+      "tabla": {
+        "name": "Tabla Na"
+      },
+      "tarawangsa": {
+        "name": "Tarawangsa"
+      },
+      "vibraphone": {
+        "name": "Vibraphone"
+      },
+      "vox1": {
+        "name": "Vox 1"
+      },
+      "vox2": {
+        "name": "Vox 2"
+      },
+      "vox3": {
+        "name": "Vox 3"
+      },
+      "vox4": {
+        "name": "Vox 4"
+      },
+      "vox5": {
+        "name": "Vox 5"
+      },
+      "woodenspoon": {
+        "name": "Wooden Spoon"
+      }
+    },
+    "sinkControls": {
+      "bubbleChamber|bassattack": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassattack",
+        "label": "Attack",
+        "scale": -0.19549461648524225,
+        "signal": "video-moment-0010"
+      },
+      "bubbleChamber|bassbottom": {
+        "bias": -0.3090909090909091,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassbottom",
+        "label": "Octave",
+        "scale": -0.9090909090909091,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|basscutoff": {
+        "bias": -0.5181818181818182,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basscutoff",
+        "label": "Cutoff",
+        "scale": -1,
+        "signal": "video-moment-0014"
+      },
+      "bubbleChamber|bassdecay": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdecay",
+        "label": "Decay",
+        "scale": -0.6579373322603248,
+        "signal": "video-moment-0009"
+      },
+      "bubbleChamber|bassdensity": {
+        "bias": -1,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdensity",
+        "label": "Density",
+        "scale": -1,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|bassdistort": {
+        "bias": -1,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassdistort",
+        "label": "Distort",
+        "scale": 0.4545454545454546,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|bassgain": {
+        "bias": -1,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassgain",
+        "label": "Gain",
+        "scale": 0.5636363636363636,
+        "signal": "video-moment-0009"
+      },
+      "bubbleChamber|bassovertones": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassovertones",
+        "label": "Overtones",
+        "scale": -0.6363636363636364,
+        "signal": "video-moment-0010"
+      },
+      "bubbleChamber|basspattern": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basspattern",
+        "label": "Pattern",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|basspitch": {
+        "bias": -0.2090909090909091,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|basspitch",
+        "label": "Pitch",
+        "scale": 0.45454545454545453,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|bassrate": {
+        "bias": -0.9028227505126711,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassrate",
+        "label": "Rate",
+        "scale": 0,
+        "signal": "video-moment-0003"
+      },
+      "bubbleChamber|bassslide": {
+        "bias": -0.21199667772012742,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassslide",
+        "label": "Slide",
+        "scale": 0,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|bassspread": {
+        "bias": 0.21818181818181817,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|bassspread",
+        "label": "Detune",
+        "scale": -0.5636363636363636,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|pitch__0001": {
+        "bias": 0.6873915821244145,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0001",
+        "label": "Root",
+        "scale": 0.9272727272727272,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|pitch__0002": {
+        "bias": -0.44545454545454544,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0002",
+        "label": "II",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|pitch__0003": {
+        "bias": 0.02694524481180921,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0003",
+        "label": "III",
+        "scale": 0.6545454545454545,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|pitch__0004": {
+        "bias": 0.0030328274739563343,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|pitch__0004",
+        "label": "IV",
+        "scale": -0.4727272727272727,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1bottom": {
+        "bias": -0.5181818181818182,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1bottom",
+        "label": "Octave",
+        "scale": 0.6,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1delayScale": {
+        "bias": -0.23849462846708436,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1delayScale",
+        "label": "Delay",
+        "scale": 1,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1density": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1density",
+        "label": "Density",
+        "scale": 0,
+        "signal": "video-moment-0003"
+      },
+      "bubbleChamber|voice1gain": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1gain",
+        "label": "Gain",
+        "scale": 0,
+        "signal": "video-moment-0007"
+      },
+      "bubbleChamber|voice1pan": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1pan",
+        "label": "Pan",
+        "scale": 0,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1pattern": {
+        "bias": 0.17938204595207652,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1pattern",
+        "label": "Pattern",
+        "scale": 0,
+        "signal": "video-moment-0004"
+      },
+      "bubbleChamber|voice1rate": {
+        "bias": -0.44436721515403144,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1rate",
+        "label": "Rate",
+        "scale": 0.9764738632972436,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|voice1smear": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice1smear",
+        "label": "Smear",
+        "scale": 0.25896643853863716,
+        "signal": "video-moment-0009"
+      },
+      "bubbleChamber|voice2bottom": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2bottom",
+        "label": "Octave",
+        "scale": 0.9636363636363636,
+        "signal": "video-moment-0001"
+      },
+      "bubbleChamber|voice2delayScale": {
+        "bias": 0.4922908459148345,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2delayScale",
+        "label": "Delay",
+        "scale": 0.16223352808869484,
+        "signal": "video-moment-0005"
+      },
+      "bubbleChamber|voice2density": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2density",
+        "label": "Density",
+        "scale": 0.21657031050628595,
+        "signal": "video-moment-0013"
+      },
+      "bubbleChamber|voice2gain": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2gain",
+        "label": "Gain",
+        "scale": 0,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|voice2pan": {
+        "bias": -0.4117364323930559,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2pan",
+        "label": "Pan",
+        "scale": 0.41253635109682607,
+        "signal": "video-moment-0008"
+      },
+      "bubbleChamber|voice2pattern": {
+        "bias": 0,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2pattern",
+        "label": "Pattern",
+        "scale": 0.35064399523536105,
+        "signal": "video-moment-0010"
+      },
+      "bubbleChamber|voice2rate": {
+        "bias": -0.21671377049849005,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2rate",
+        "label": "Rate",
+        "scale": -1,
+        "signal": "video-moment-0002"
+      },
+      "bubbleChamber|voice2smear": {
+        "bias": 0.08394206614088962,
+        "ensemble": "Bubble Chamber",
+        "key": "bubbleChamber|voice2smear",
+        "label": "Smear",
+        "scale": -1,
+        "signal": "video-moment-0002"
+      },
+      "undefined": {
+        "bias": 0.4112700723001237,
+        "scale": 0,
+        "signal": "video-moment-0004"
+      }
+    },
+    "sinkDevice": "default",
+    "sourceDevice": "default"
+  },
+  "gui": {
+    "visiblePane": "io"
+  },
+  "midi": {
+    "sinkCCMap": {
+      "midi-out-cc-0001": 1,
+      "midi-out-cc-0002": 2,
+      "midi-out-cc-0003": 3,
+      "midi-out-cc-0004": 4,
+      "midi-out-cc-0005": 5,
+      "midi-out-cc-0006": 6,
+      "midi-out-cc-0007": 7,
+      "midi-out-cc-0008": 8,
+      "midi-out-cc-0009": 9,
+      "midi-out-cc-0010": 10,
+      "midi-out-cc-0011": 11,
+      "midi-out-cc-0012": 12,
+      "midi-out-cc-0013": 13,
+      "midi-out-cc-0014": 14,
+      "midi-out-cc-0015": 15
+    },
+    "sinkCCs": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "sinkChannel": 8,
+    "sinkDevice": "",
+    "sinkSoloCC": -1,
+    "sourceCCMap": {
+      "midi-in-cc-0001": 1,
+      "midi-in-cc-0002": 2,
+      "midi-in-cc-0003": 3,
+      "midi-in-cc-0004": 4,
+      "midi-in-cc-0005": 5
+    },
+    "sourceCCs": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "sourceChannel": 0,
+    "sourceDevice": ""
+  },
+  "signal": {
+    "comboSignalMeta": {
+      "midi-in-cc-0001": {
+        "name": "In CC 1",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0002": {
+        "name": "In CC 2",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0003": {
+        "name": "In CC 3",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0004": {
+        "name": "In CC 4",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0005": {
+        "name": "In CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0001": {
+        "name": "Out CC 1",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0002": {
+        "name": "Out CC 2",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0003": {
+        "name": "Out CC 3",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0004": {
+        "name": "Out CC 4",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0005": {
+        "name": "Out CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0006": {
+        "name": "Out CC 6",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0007": {
+        "name": "Out CC 7",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0008": {
+        "name": "Out CC 8",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0009": {
+        "name": "Out CC 9",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0010": {
+        "name": "Out CC 10",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0011": {
+        "name": "Out CC 11",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0012": {
+        "name": "Out CC 12",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0013": {
+        "name": "Out CC 13",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0014": {
+        "name": "Out CC 14",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0015": {
+        "name": "Out CC 15",
+        "owner": "MIDI"
+      },
+      "video-moment-0001": {
+        "key": "video-moment-0001",
+        "name": "Bright",
+        "owner": "Video"
+      },
+      "video-moment-0002": {
+        "key": "video-moment-0002",
+        "name": "Blue",
+        "owner": "Video"
+      },
+      "video-moment-0003": {
+        "key": "video-moment-0003",
+        "name": "Red",
+        "owner": "Video"
+      },
+      "video-moment-0004": {
+        "key": "video-moment-0004",
+        "name": "Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0005": {
+        "key": "video-moment-0005",
+        "name": "Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0006": {
+        "key": "video-moment-0006",
+        "name": "Red²",
+        "owner": "Video"
+      },
+      "video-moment-0007": {
+        "key": "video-moment-0007",
+        "name": "Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0008": {
+        "key": "video-moment-0008",
+        "name": "Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0009": {
+        "key": "video-moment-0009",
+        "name": "Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0010": {
+        "key": "video-moment-0010",
+        "name": "Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0011": {
+        "key": "video-moment-0011",
+        "name": "Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0012": {
+        "key": "video-moment-0012",
+        "name": "Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0013": {
+        "key": "video-moment-0013",
+        "name": "Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0014": {
+        "key": "video-moment-0014",
+        "name": "Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0015": {
+        "key": "video-moment-0015",
+        "name": "Up⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0016": {
+        "key": "video-moment-0016",
+        "name": "∆Bright",
+        "owner": "Video"
+      },
+      "video-moment-0017": {
+        "key": "video-moment-0017",
+        "name": "∆Blue",
+        "owner": "Video"
+      },
+      "video-moment-0018": {
+        "key": "video-moment-0018",
+        "name": "∆Red",
+        "owner": "Video"
+      },
+      "video-moment-0019": {
+        "key": "video-moment-0019",
+        "name": "∆Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0020": {
+        "key": "video-moment-0020",
+        "name": "∆Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0021": {
+        "key": "video-moment-0021",
+        "name": "∆Red²",
+        "owner": "Video"
+      },
+      "video-moment-0022": {
+        "key": "video-moment-0022",
+        "name": "∆Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0023": {
+        "key": "video-moment-0023",
+        "name": "∆Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0024": {
+        "key": "video-moment-0024",
+        "name": "∆Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0025": {
+        "key": "video-moment-0025",
+        "name": "∆Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0026": {
+        "key": "video-moment-0026",
+        "name": "∆Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0027": {
+        "key": "video-moment-0027",
+        "name": "∆Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0028": {
+        "key": "video-moment-0028",
+        "name": "∆Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0029": {
+        "key": "video-moment-0029",
+        "name": "∆Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0030": {
+        "key": "video-moment-0030",
+        "name": "∆Up⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0031": {
+        "key": "video-moment-0031",
+        "name": "(∆Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0032": {
+        "key": "video-moment-0032",
+        "name": "(∆Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0033": {
+        "key": "video-moment-0033",
+        "name": "(∆Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0034": {
+        "key": "video-moment-0034",
+        "name": "(∆Bright²)²",
+        "owner": "Video"
+      },
+      "video-moment-0035": {
+        "key": "video-moment-0035",
+        "name": "(∆Blue²)²",
+        "owner": "Video"
+      },
+      "video-moment-0036": {
+        "key": "video-moment-0036",
+        "name": "(∆Red²)²",
+        "owner": "Video"
+      },
+      "video-moment-0037": {
+        "key": "video-moment-0037",
+        "name": "(∆Bright⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0038": {
+        "key": "video-moment-0038",
+        "name": "(∆Bright⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0039": {
+        "key": "video-moment-0039",
+        "name": "(∆Blue⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0040": {
+        "key": "video-moment-0040",
+        "name": "(∆Right⌑Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0041": {
+        "key": "video-moment-0041",
+        "name": "(∆Right⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0042": {
+        "key": "video-moment-0042",
+        "name": "(∆Right⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0043": {
+        "key": "video-moment-0043",
+        "name": "(∆Up⌑Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0044": {
+        "key": "video-moment-0044",
+        "name": "(∆Up⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0045": {
+        "key": "video-moment-0045",
+        "name": "(∆Up⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0046": {
+        "key": "video-moment-0046",
+        "name": "∫Bright",
+        "owner": "Video"
+      },
+      "video-moment-0047": {
+        "key": "video-moment-0047",
+        "name": "∫Blue",
+        "owner": "Video"
+      },
+      "video-moment-0048": {
+        "key": "video-moment-0048",
+        "name": "∫Red",
+        "owner": "Video"
+      },
+      "video-moment-0049": {
+        "key": "video-moment-0049",
+        "name": "∫Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0050": {
+        "key": "video-moment-0050",
+        "name": "∫Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0051": {
+        "key": "video-moment-0051",
+        "name": "∫Red²",
+        "owner": "Video"
+      },
+      "video-moment-0052": {
+        "key": "video-moment-0052",
+        "name": "∫Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0053": {
+        "key": "video-moment-0053",
+        "name": "∫Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0054": {
+        "key": "video-moment-0054",
+        "name": "∫Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0055": {
+        "key": "video-moment-0055",
+        "name": "∫Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0056": {
+        "key": "video-moment-0056",
+        "name": "∫Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0057": {
+        "key": "video-moment-0057",
+        "name": "∫Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0058": {
+        "key": "video-moment-0058",
+        "name": "∫Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0059": {
+        "key": "video-moment-0059",
+        "name": "∫Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0060": {
+        "key": "video-moment-0060",
+        "name": "∫Up⌑Red",
+        "owner": "Video"
+      }
+    },
+    "genericSinkSignals": {
+    },
+    "nGenericSinkSignals": 0,
+    "sinkSignalMeta": {
+      "midi-out-cc-0001": {
+        "name": "Out CC 1",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0002": {
+        "name": "Out CC 2",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0003": {
+        "name": "Out CC 3",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0004": {
+        "name": "Out CC 4",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0005": {
+        "name": "Out CC 5",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0006": {
+        "name": "Out CC 6",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0007": {
+        "name": "Out CC 7",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0008": {
+        "name": "Out CC 8",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0009": {
+        "name": "Out CC 9",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0010": {
+        "name": "Out CC 10",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0011": {
+        "name": "Out CC 11",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0012": {
+        "name": "Out CC 12",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0013": {
+        "name": "Out CC 13",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0014": {
+        "name": "Out CC 14",
+        "owner": "MIDI"
+      },
+      "midi-out-cc-0015": {
+        "name": "Out CC 15",
+        "owner": "MIDI"
+      }
+    },
+    "sourceSignalMeta": {
+      "midi-in-cc-0001": {
+        "name": "In CC 1",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0002": {
+        "name": "In CC 2",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0003": {
+        "name": "In CC 3",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0004": {
+        "name": "In CC 4",
+        "owner": "MIDI"
+      },
+      "midi-in-cc-0005": {
+        "name": "In CC 5",
+        "owner": "MIDI"
+      },
+      "video-moment-0001": {
+        "key": "video-moment-0001",
+        "name": "Bright",
+        "owner": "Video"
+      },
+      "video-moment-0002": {
+        "key": "video-moment-0002",
+        "name": "Blue",
+        "owner": "Video"
+      },
+      "video-moment-0003": {
+        "key": "video-moment-0003",
+        "name": "Red",
+        "owner": "Video"
+      },
+      "video-moment-0004": {
+        "key": "video-moment-0004",
+        "name": "Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0005": {
+        "key": "video-moment-0005",
+        "name": "Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0006": {
+        "key": "video-moment-0006",
+        "name": "Red²",
+        "owner": "Video"
+      },
+      "video-moment-0007": {
+        "key": "video-moment-0007",
+        "name": "Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0008": {
+        "key": "video-moment-0008",
+        "name": "Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0009": {
+        "key": "video-moment-0009",
+        "name": "Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0010": {
+        "key": "video-moment-0010",
+        "name": "Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0011": {
+        "key": "video-moment-0011",
+        "name": "Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0012": {
+        "key": "video-moment-0012",
+        "name": "Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0013": {
+        "key": "video-moment-0013",
+        "name": "Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0014": {
+        "key": "video-moment-0014",
+        "name": "Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0015": {
+        "key": "video-moment-0015",
+        "name": "Up⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0016": {
+        "key": "video-moment-0016",
+        "name": "∆Bright",
+        "owner": "Video"
+      },
+      "video-moment-0017": {
+        "key": "video-moment-0017",
+        "name": "∆Blue",
+        "owner": "Video"
+      },
+      "video-moment-0018": {
+        "key": "video-moment-0018",
+        "name": "∆Red",
+        "owner": "Video"
+      },
+      "video-moment-0019": {
+        "key": "video-moment-0019",
+        "name": "∆Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0020": {
+        "key": "video-moment-0020",
+        "name": "∆Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0021": {
+        "key": "video-moment-0021",
+        "name": "∆Red²",
+        "owner": "Video"
+      },
+      "video-moment-0022": {
+        "key": "video-moment-0022",
+        "name": "∆Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0023": {
+        "key": "video-moment-0023",
+        "name": "∆Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0024": {
+        "key": "video-moment-0024",
+        "name": "∆Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0025": {
+        "key": "video-moment-0025",
+        "name": "∆Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0026": {
+        "key": "video-moment-0026",
+        "name": "∆Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0027": {
+        "key": "video-moment-0027",
+        "name": "∆Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0028": {
+        "key": "video-moment-0028",
+        "name": "∆Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0029": {
+        "key": "video-moment-0029",
+        "name": "∆Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0030": {
+        "key": "video-moment-0030",
+        "name": "∆Up⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0031": {
+        "key": "video-moment-0031",
+        "name": "(∆Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0032": {
+        "key": "video-moment-0032",
+        "name": "(∆Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0033": {
+        "key": "video-moment-0033",
+        "name": "(∆Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0034": {
+        "key": "video-moment-0034",
+        "name": "(∆Bright²)²",
+        "owner": "Video"
+      },
+      "video-moment-0035": {
+        "key": "video-moment-0035",
+        "name": "(∆Blue²)²",
+        "owner": "Video"
+      },
+      "video-moment-0036": {
+        "key": "video-moment-0036",
+        "name": "(∆Red²)²",
+        "owner": "Video"
+      },
+      "video-moment-0037": {
+        "key": "video-moment-0037",
+        "name": "(∆Bright⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0038": {
+        "key": "video-moment-0038",
+        "name": "(∆Bright⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0039": {
+        "key": "video-moment-0039",
+        "name": "(∆Blue⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0040": {
+        "key": "video-moment-0040",
+        "name": "(∆Right⌑Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0041": {
+        "key": "video-moment-0041",
+        "name": "(∆Right⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0042": {
+        "key": "video-moment-0042",
+        "name": "(∆Right⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0043": {
+        "key": "video-moment-0043",
+        "name": "(∆Up⌑Bright)²",
+        "owner": "Video"
+      },
+      "video-moment-0044": {
+        "key": "video-moment-0044",
+        "name": "(∆Up⌑Blue)²",
+        "owner": "Video"
+      },
+      "video-moment-0045": {
+        "key": "video-moment-0045",
+        "name": "(∆Up⌑Red)²",
+        "owner": "Video"
+      },
+      "video-moment-0046": {
+        "key": "video-moment-0046",
+        "name": "∫Bright",
+        "owner": "Video"
+      },
+      "video-moment-0047": {
+        "key": "video-moment-0047",
+        "name": "∫Blue",
+        "owner": "Video"
+      },
+      "video-moment-0048": {
+        "key": "video-moment-0048",
+        "name": "∫Red",
+        "owner": "Video"
+      },
+      "video-moment-0049": {
+        "key": "video-moment-0049",
+        "name": "∫Bright²",
+        "owner": "Video"
+      },
+      "video-moment-0050": {
+        "key": "video-moment-0050",
+        "name": "∫Blue²",
+        "owner": "Video"
+      },
+      "video-moment-0051": {
+        "key": "video-moment-0051",
+        "name": "∫Red²",
+        "owner": "Video"
+      },
+      "video-moment-0052": {
+        "key": "video-moment-0052",
+        "name": "∫Bright⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0053": {
+        "key": "video-moment-0053",
+        "name": "∫Bright⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0054": {
+        "key": "video-moment-0054",
+        "name": "∫Blue⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0055": {
+        "key": "video-moment-0055",
+        "name": "∫Right⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0056": {
+        "key": "video-moment-0056",
+        "name": "∫Right⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0057": {
+        "key": "video-moment-0057",
+        "name": "∫Right⌑Red",
+        "owner": "Video"
+      },
+      "video-moment-0058": {
+        "key": "video-moment-0058",
+        "name": "∫Up⌑Bright",
+        "owner": "Video"
+      },
+      "video-moment-0059": {
+        "key": "video-moment-0059",
+        "name": "∫Up⌑Blue",
+        "owner": "Video"
+      },
+      "video-moment-0060": {
+        "key": "video-moment-0060",
+        "name": "∫Up⌑Red",
+        "owner": "Video"
+      }
+    },
+    "sourceSinkScale": {
+      "video-moment-0007/midi-out-cc-0001": 0.925,
+      "video-moment-0008/midi-out-cc-0002": 0.825,
+      "video-moment-0009/midi-out-cc-0003": 0.775,
+      "video-moment-0010/midi-out-cc-0004": 0.6,
+      "video-moment-0011/midi-out-cc-0005": 0.6,
+      "video-moment-0012/midi-out-cc-0006": 0.75,
+      "video-moment-0013/midi-out-cc-0007": 0.625,
+      "video-moment-0014/midi-out-cc-0008": 0.575,
+      "video-moment-0015/midi-out-cc-0009": 0.7,
+      "video-moment-0016/midi-out-cc-0010": 0.675,
+      "video-moment-0037/midi-out-cc-0001": 0.575,
+      "video-moment-0038/midi-out-cc-0002": 0.575,
+      "video-moment-0039/midi-out-cc-0003": 0.725,
+      "video-moment-0040/midi-out-cc-0004": 0.6,
+      "video-moment-0041/midi-out-cc-0005": 0.525,
+      "video-moment-0042/midi-out-cc-0006": 0.575,
+      "video-moment-0043/midi-out-cc-0007": 0.675,
+      "video-moment-0044/midi-out-cc-0008": 0.65,
+      "video-moment-0045/midi-out-cc-0009": 0.625,
+      "video-moment-0046/midi-out-cc-0010": 0.55,
+      "video-moment-0047/midi-out-cc-0011": 0.725,
+      "video-moment-0048/midi-out-cc-0012": 0.65
+    }
+  },
+  "video": {
+    "source": "4bc77214476720d25a47168dfc4580341f04aebd707a196687ee3fc638d238f0"
+  }
+}
