@@ -1,3 +1,4 @@
+import React, { Component, PropTypes } from 'react'
 
 const BrandingBox = () => (<div className='branding-box'>
   <div className='branding-info'>
