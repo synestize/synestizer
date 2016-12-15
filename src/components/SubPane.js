@@ -1,4 +1,3 @@
-"use strict";
 import React, { Component, PropTypes } from 'react'
 
 const SubPane = ({title, children, className=''}) => {

@@ -1,4 +1,4 @@
-import { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 const TextBlob = ({content='', onChange, title, className=''}) => {
   let header;
