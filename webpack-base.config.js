@@ -50,7 +50,10 @@ module.exports = {
   plugins: [
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'src/sw.js'),
-      publicPath: ''
+      publicPath: '',
+      assets: [
+        
+      ]
     }),
     new webpack.DefinePlugin({
       EDITION: JSON.stringify("Blue"),
