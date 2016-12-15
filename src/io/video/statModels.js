@@ -186,7 +186,7 @@ export function Moment({PIXELDIM=64}) {
         for (let i = 0; i < 15; i++) {
             cookedDeltaMoments[i] = cookedMoments[i];
             cookedDeltaMoments[i+15] = transform.clip1(
-              0.25 * (
+              0.125 * (
                 cookedMoments[i] - prevCookedMoments[i]
               ) / deltaTimeS
             );
@@ -195,7 +195,7 @@ export function Moment({PIXELDIM=64}) {
             ) - 1;
             cookedDeltaMoments[i+45] = transform.saturate(
               cookedDeltaMoments[i+45] +
-              cookedMoments[i] * deltaTimeS * 0.0625
+              cookedMoments[i] * deltaTimeS * 0.125
             )
 
         }
