@@ -255,17 +255,21 @@ export default function init(store, signalio, audio, midiio) {
   });
 
   const playVoice1Note = (time, value) => {
-    midiio.playNote({
-      pitch: value.note,
-      chan: 0,
-      dur: value.dur,
-      time: time
-    })
-    voice1synth.triggerAttackRelease(
-      value.note - voice1centerPitch,
-      time,
-      value.dur,
-    );
+    try {
+      midiio.playNote({
+        pitch: value.note,
+        chan: 0,
+        dur: value.dur,
+        time: time
+      })
+      voice1synth.triggerAttackRelease(
+        value.note - voice1centerPitch,
+        time,
+        value.dur,
+      );
+    } catch (e) {
+      console.warn(e)
+    }
   }
 
   let voice1loop = new Tone.Loop(
@@ -342,17 +346,22 @@ export default function init(store, signalio, audio, midiio) {
   });
 
   const playVoice2Note = (time, value) => {
-    midiio.playNote({
-      pitch: value.note,
-      chan: 1,
-      dur: value.dur,
-      time: time
-    })
-    voice2synth.triggerAttackRelease(
-      value.note - voice2centerPitch,
-      time,
-      value.dur,
-    );
+    try {
+      midiio.playNote({
+        pitch: value.note,
+        chan: 1,
+        dur: value.dur,
+        time: time
+      })
+      voice2synth.triggerAttackRelease(
+        value.note - voice2centerPitch,
+        time,
+        value.dur,
+      );
+    } catch (e) {
+      console.warn(e)
+    }
+
   }
 
   let voice2loop = new Tone.Loop(
@@ -442,16 +451,20 @@ export default function init(store, signalio, audio, midiio) {
           nextbasson = denseVal<=bassdensity;
           // console.debug('bassdenseVal', bassdensity, denseVal, basson, nextbasson, basstimeMul, basspattern);
         }
+        try {
+          if (nextbasson && !basson) {
+            basssynth.triggerAttack(basspitch, time)
+            // console.debug('bassonset', basspitch);
 
-        if (nextbasson && !basson) {
-          basssynth.triggerAttack(basspitch, time)
-          // console.debug('bassonset', basspitch);
-
-        } else if (!nextbasson) {
-          basssynth.triggerRelease(time)
-          // console.debug('bassoffset', basspitch);
+          } else if (!nextbasson) {
+            basssynth.triggerRelease(time)
+            // console.debug('bassoffset', basspitch);
+          }
+          basson = nextbasson
+        } catch (e) {
+          console.warn(e)
         }
-        basson = nextbasson
+
       }
     },
     step
