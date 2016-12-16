@@ -20,7 +20,7 @@
     "pregallerypublish": "npm run gallerybuild",
     "gallerypublish": "rsync -av --progress --delete favicon.ico css fonts sound index.html bundle.js sw.js *.worker.js presets listentocolors:gallery_listentocolors_net",
     "prepublish": "npm run productionbuild",
-    "publish": "rsync -av --progress --delete favicon.ico css fonts sound index.html bundle.js sw.js *.worker.js presets listentocolors:blue_listentocolors_net",
+    "publish": "rsync -av --progress --delete favicon.ico css fonts sound index.html bundle.js sw.js *.worker.js presets listentocolors:cyan_listentocolors_net",
     "preserve": "npm run productionbuild",
     "serve": "static",
     "pregalleryserve": "npm run gallerybuild",
