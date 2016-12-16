@@ -49,7 +49,7 @@ export function Moment({PIXELDIM=64}) {
     // TODO: check that all variances are correctly normalised
     // Occasionally they seem to be outside of [0,1]
     const PIXELCOUNT=PIXELDIM*PIXELDIM;
-    let nDims=60;
+    let nDims=15;
     // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
     // This is very confusing.
     let Y=0, S=1, V=2;
@@ -57,17 +57,13 @@ export function Moment({PIXELDIM=64}) {
     let JY=6, JS=7, JV=8;
     let YY=9, YS=10, YV=11, SS=12, SV=13, VV=14;
 
-    const rawSums = new Float32Array(15);
-    const centralMoments = new Float32Array(15);
-    const cookedMoments = new Float32Array(15);
-    const prevCookedMoments = new Float32Array(15);
+    const rawSums = new Float32Array(nDims);
+    const centralMoments = new Float32Array(nDims);
+    const cookedMoments = new Float32Array(nDims);
     const ysvij = new Float32Array(5);
-    const cookedDeltaMoments = new Float32Array(60);
-    let lastTime = performance.now()
-    let thisTime = performance.now()
 
     function calc(pixels) {
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < nDims; i++) {
             rawSums[i]=0.0;
         }
         for (let j = 0; j < PIXELDIM; j++) {
@@ -181,31 +177,7 @@ export function Moment({PIXELDIM=64}) {
         cookedMoments[JV] = transform.clip1(
           centralMoments[JV]/Math.max(0.0001, Math.sqrt(
             0.08333333333*centralMoments[VV])));
-        thisTime = performance.now()
-        let deltaTimeS = (thisTime - lastTime)/1000;
-        for (let i = 0; i < 15; i++) {
-            cookedDeltaMoments[i] = cookedMoments[i];
-            cookedDeltaMoments[i+15] = transform.clip1(
-              0.125 * (
-                cookedMoments[i] - prevCookedMoments[i]
-              ) / deltaTimeS
-            );
-            cookedDeltaMoments[i+30] = 2 * Math.pow(
-                cookedDeltaMoments[i+15], 2
-            ) - 1;
-            cookedDeltaMoments[i+45] = transform.saturate(
-              cookedDeltaMoments[i+45] +
-              cookedMoments[i] * deltaTimeS * 0.125
-            )
-
-        }
-
-        // Reset for next iteration
-        lastTime = thisTime;
-        for (let i = 0; i < 15; i++) {
-            prevCookedMoments[i] = cookedMoments[i];
-        }
-        return cookedDeltaMoments;
+        return cookedMoments;
     };
 
     return {
@@ -226,51 +198,6 @@ export function Moment({PIXELDIM=64}) {
         'video-moment-0005',
         'video-moment-0009',
         'video-moment-0006',
-        'video-moment-0016',
-        'video-moment-0017',
-        'video-moment-0018',
-        'video-moment-0025',
-        'video-moment-0026',
-        'video-moment-0027',
-        'video-moment-0028',
-        'video-moment-0029',
-        'video-moment-0030',
-        'video-moment-0019',
-        'video-moment-0022',
-        'video-moment-0023',
-        'video-moment-0020',
-        'video-moment-0024',
-        'video-moment-0021',
-        'video-moment-0031',
-        'video-moment-0032',
-        'video-moment-0033',
-        'video-moment-0040',
-        'video-moment-0041',
-        'video-moment-0042',
-        'video-moment-0043',
-        'video-moment-0044',
-        'video-moment-0045',
-        'video-moment-0034',
-        'video-moment-0037',
-        'video-moment-0038',
-        'video-moment-0035',
-        'video-moment-0039',
-        'video-moment-0036',
-        'video-moment-0046',
-        'video-moment-0047',
-        'video-moment-0048',
-        'video-moment-0055',
-        'video-moment-0056',
-        'video-moment-0057',
-        'video-moment-0058',
-        'video-moment-0059',
-        'video-moment-0060',
-        'video-moment-0049',
-        'video-moment-0052',
-        'video-moment-0053',
-        'video-moment-0050',
-        'video-moment-0054',
-        'video-moment-0051',
       ],
       // I call the YCbCr mapped version "YSV", the spatial coords "IJ"
       // This is very confusing.
@@ -290,51 +217,6 @@ export function Moment({PIXELDIM=64}) {
         'Blue²',
         'Blue⌑Red',
         'Red²',
-        '∆Bright',
-        '∆Blue',
-        '∆Red',
-        '∆Right⌑Bright',
-        '∆Right⌑Blue',
-        '∆Right⌑Red',
-        '∆Up⌑Bright',
-        '∆Up⌑Blue',
-        '∆Up⌑Red',
-        '∆Bright²',
-        '∆Bright⌑Blue',
-        '∆Bright⌑Red',
-        '∆Blue²',
-        '∆Blue⌑Red',
-        '∆Red²',
-        '(∆Bright)²',
-        '(∆Blue)²',
-        '(∆Red)²',
-        '(∆Right⌑Bright)²',
-        '(∆Right⌑Blue)²',
-        '(∆Right⌑Red)²',
-        '(∆Up⌑Bright)²',
-        '(∆Up⌑Blue)²',
-        '(∆Up⌑Red)²',
-        '(∆Bright²)²',
-        '(∆Bright⌑Blue)²',
-        '(∆Bright⌑Red)²',
-        '(∆Blue²)²',
-        '(∆Blue⌑Red)²',
-        '(∆Red²)²',
-        '∫Bright',
-        '∫Blue',
-        '∫Red',
-        '∫Right⌑Bright',
-        '∫Right⌑Blue',
-        '∫Right⌑Red',
-        '∫Up⌑Bright',
-        '∫Up⌑Blue',
-        '∫Up⌑Red',
-        '∫Bright²',
-        '∫Bright⌑Blue',
-        '∫Bright⌑Red',
-        '∫Blue²',
-        '∫Blue⌑Red',
-        '∫Red²',
       ]
     }
 };
