@@ -25,9 +25,8 @@ import { deviceSubject } from '../lib/av'
 let SIGNAL_RATE = 1.0/(SIGNAL_PERIOD_MS/1000)
 
 import Tone from 'tone/build/Tone.js'
-if (!PRODUCTION) {
-  window.Tone = Tone;
-}
+
+window.Tone = Tone;
 
 import bubbleChamber_ from './audio/bubbleChamber'
 import recordBuffer_ from './audio/recordBuffer'
@@ -139,9 +138,12 @@ export default function init(store, signalio, midiio) {
 
   function doAudioSinkDevicePlumbing() {
     const sinkDevKey = store.getState().audio.sinkDevice;
-    Observable.fromPromise(
-      navigator.mediaDevices.getUserMedia({deviceId:sinkDevKey, audio: true})
-    ).subscribe(initAudioContext);
+    navigator.mediaDevices.getUserMedia(
+      {deviceId:sinkDevKey, audio: true}
+    ).then(
+      initAudioContext,
+      doAudioSinkDevicePlumbing
+    );
   }
   //Create a context with master out volume
   //Don't yet understand how this will work for the microphone etc
