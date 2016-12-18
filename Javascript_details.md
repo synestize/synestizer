@@ -19,9 +19,25 @@ Module support in ES6 looks different than the older standards.
 
 If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
 
-## HTML5 Multimedia
+## Android special tips
 
-Not technically a "library", but a "set of things to know"
+Android does not like expensive re-renders on timers; instead they must be done in worker threads or in response to user input.
+
+* [Remote debugging](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/)
+* [Measure Performance with the RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
+* [you can access the accelerometer)[http://macbury.ninja/2014/8/read-accelerometer-data-in-your-webapp-using-html5]
+
+## Optimizing
+
+* [Moving Atom To React](http://blog.atom.io/2014/07/02/moving-atom-to-react.html), including seeing GPU usage and the `translate3d` rick for shunting to the GPU
+* [Scrolling Performance](https://www.html5rocks.com/en/tutorials/speed/scrolling/)
+* [deboucing for good animation performance](https://www.html5rocks.com/en/tutorials/speed/animations/)
+* [Jank Busting for Better Rendering Performance](https://www.html5rocks.com/en/tutorials/speed/rendering/)
+* [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
+* [Webpack optimisation 1](https://github.com/webpack/docs/wiki/optimization)
+* [Webpack optimisation 2](https://webpack.github.io/docs/optimization.html)
+
+## HTML5 Multimedia
 
 * To have a stable API to access audio and video we use webrtc-adapter.
 * [Audio synthesis](Audio_synthesis.md)
@@ -43,12 +59,6 @@ How do i communicate across branches of Components?
 [Methods?](https://facebook.github.io/react/tips/expose-component-functions.html)
 
 But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
-
-### Optimizing
-
-* [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
-* [Webpack optimisation 1](https://github.com/webpack/docs/wiki/optimization)
-* [Webpack optimisation 2](https://webpack.github.io/docs/optimization.html)
 
 ### If i want easy graphing
 * for people using react.js, [Victory](https://formidable.com/open-source/victory/)
@@ -177,36 +187,3 @@ We use Rx.js 5.0, because even though it is less common that Rx.js 4.0, the docu
 
     * [percussion](https://github.com/grisendo/Percussion)
     * [rxvision](http://jaredforsyth.com/rxvision/) - I can't work out how this one works or how to use it, and the documentation doesn't explain basic stuff like how to install it, so I'm ignoring it for now.
-
-
-## Touch handling
-
-* [Mozilla touch wrangling](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events)
-* [touch dnd](https://mobiforge.com/design-development/touch-friendly-drag-and-drop)
-* [apple adding touch to canvas](https://developer.apple.com/library/content/documentation/AudioVideo/Conceptual/HTML-canvas-guide/AddingMouseandTouchControlstoCanvas/AddingMouseandTouchControlstoCanvas.html)
-* [what a touch backend looks like for react](https://github.com/yahoo/react-dnd-touch-backend/blob/master/src/Touch.js)
-* [stackoverflow answer](http://stackoverflow.com/a/20927899/11730)
-
-## Alternative build tools
-
-### building app
-
-Is webpack alone enough?
-We might want to use a more complete one later, if necessary.
-
-Let's avoid it for now.
-
-Build tools:
-
-* [gulp](http://gulpjs.com/) ---
-  here's how to [deploy to github using gulp-gh-pages](https://www.npmjs.com/package/gulp-git-pages/)
-* [grunt](http://gruntjs.com/) ---
-  here's how to
-  [deploy to github using grunt-build-control](https://blog.5apps.com/2014/05/29/deploying-static-apps-with-grunt-build-control-on-5apps-deploy.html)
-
-complete workflow tools:
-
-* [yeoman](http://yeoman.io/) - there is, e.g. [a workflow for polymer](https://github.com/yeoman/generator-polymer)
-* [lineman](http://linemanjs.com/)
-* [metalsmith](http://www.metalsmith.io/)
-* [roll your own with grunt](http://www.codebelt.com/javascript/single-page-javascript-application-workflow/)
