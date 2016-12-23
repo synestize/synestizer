@@ -51,6 +51,15 @@ If you are not *performing* but *developing*, we recommend  different commands.
 
 See [HOW TO DEVELOP](HOWTO_develop.md)
 
+### Special notes for Android users
+
+You might have trouble switching cameras in Android tablets. This is because of an incompatibility between the `window.mediaDevices.getUserMedia` Promise-based API, and the no-autoplay gesture-required-for-media-playback setting of Chrome.
+If this sounds exciting to you, you can [read the argument which has been raging for about 4 years](https://bugs.chromium.org/p/chromium/issues/detail?id=178297).
+
+There will be no fix any time soon, but you might be able to avoid the problem if you try
+the workaround suggested there - disabling the setting. However, in our tests, this removes the error, but does not fix the video switching.
+The setting can be found at [chrome://flags/#disable-gesture-requirement-for-media-playback](chrome://flags/#disable-gesture-requirement-for-media-playback)
+
 ## Setting up the patching matrix
 
 TBD
