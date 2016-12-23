@@ -20,6 +20,7 @@ const WelcomePane = ({}) => {
       <li>Prof. Peter Kiefer from the Johannes Gutenberg University in Mainz</li>
       <li>Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University, Coordinated by Prof. Karin Bijsterveld.</li>
       <li>Prof. Florian Dombois and Prof. German Toro Perez from the  Zürcher Hochshule der Künste</li>
+      <li>the „stichting de 4 koningen“</li>
       </ul>
       <p>Synestizer {EDITION} edition. v{VERSION}. </p>
     </section>)
@@ -60,6 +61,7 @@ const WelcomePane = ({}) => {
         </li>
         <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
         <li><a href="http://www.floriandombois.net/">Prof. Florian Dombois</a> and <a href="http://www.toro-perez.com/">Prof. German Toro Perez</a> from the <a href="https://www.zhdk.ch/">ZHdK</a> </li>
+        <li>the „stichting de 4 koningen“</li>
       </ul>
 
       <p>
