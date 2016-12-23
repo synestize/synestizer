@@ -25,7 +25,9 @@ Android does not like expensive re-renders on timers; instead they must be done 
 
 * [Remote debugging](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/)
 * [Measure Performance with the RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
-* [you can access the accelerometer)[http://macbury.ninja/2014/8/read-accelerometer-data-in-your-webapp-using-html5]
+* [you can access the accelerometer](http://macbury.ninja/2014/8/read-accelerometer-data-in-your-webapp-using-html5)
+* Chrome has draconion policies for scheduling on slower computers and tablets  - see [expensive task blocking scheduling logic](https://bugs.chromium.org/p/chromium/issues/detail?id=574343#c40), leading to lots of violation warnings if you use the scheduler. Google's policy is that you need to do react updates in a webworker or in "micro partial updates" broken across several `requestAnimationFrame` updates  - see [Optimize JavaScript Execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)
+* This can possibly be improved easily by using FRP - [e.g.](https://www.mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/)
 
 ## Optimizing
 
