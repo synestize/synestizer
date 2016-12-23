@@ -61,7 +61,7 @@ const WelcomePane = ({}) => {
         </li>
         <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
         <li><a href="http://www.floriandombois.net/">Prof. Florian Dombois</a> and <a href="http://www.toro-perez.com/">Prof. German Toro Perez</a> from the <a href="https://www.zhdk.ch/">ZHdK</a> </li>
-        <li>the „stichting de 4 koningen“</li>
+        <li>the „<a href="http://kultkat.com/">stichting de 4 koningen</a>“</li>
       </ul>
 
       <p>
