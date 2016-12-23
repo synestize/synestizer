@@ -5,7 +5,6 @@ That's 3 different libraries with coincidentally similar names. Sorry.
 
 Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of Javascript.
 
-
 ## ES6
 
 Module support in ES6 looks different than the older standards.
@@ -24,13 +23,12 @@ If we want to use Object, remember, ``Object.keys(thing).length`` will get the s
 Android does not like expensive re-renders on timers; instead they must be done in worker threads or in response to user input.
 
 * [Remote debugging](https://developers.google.com/web/tools/chrome-devtools/remote-debugging/)
-* [Measure Performance with the RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
 * [you can access the accelerometer](http://macbury.ninja/2014/8/read-accelerometer-data-in-your-webapp-using-html5)
-* Chrome has draconion policies for scheduling on slower computers and tablets  - see [expensive task blocking scheduling logic](https://bugs.chromium.org/p/chromium/issues/detail?id=574343#c40), leading to lots of violation warnings if you use the scheduler. Google's policy is that you need to do react updates in a webworker or in "micro partial updates" broken across several `requestAnimationFrame` updates  - see [Optimize JavaScript Execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)
-* This can possibly be improved easily by using FRP - [e.g.](https://www.mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/)
 
 ## Optimizing
 
+* [Measure Performance with the RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
+* Chrome has draconion policies for scheduling on slower computers and tablets  - see [expensive task blocking scheduling logic](https://bugs.chromium.org/p/chromium/issues/detail?id=574343#c40), leading to lots of violation warnings if you use the scheduler. Google's policy is that you need to do react updates in a webworker or in "micro partial updates" broken across several `requestAnimationFrame` updates  - see [Optimize JavaScript Execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)
 * [Moving Atom To React](http://blog.atom.io/2014/07/02/moving-atom-to-react.html), including seeing GPU usage and the `translate3d` rick for shunting to the GPU
 * [Scrolling Performance](https://www.html5rocks.com/en/tutorials/speed/scrolling/)
 * [deboucing for good animation performance](https://www.html5rocks.com/en/tutorials/speed/animations/)
@@ -38,6 +36,7 @@ Android does not like expensive re-renders on timers; instead they must be done 
 * [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 * [Webpack optimisation 1](https://github.com/webpack/docs/wiki/optimization)
 * [Webpack optimisation 2](https://webpack.github.io/docs/optimization.html)
+* This can possibly be improved easily by using FRP - [e.g.](https://www.mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/)
 
 ## HTML5 Multimedia
 
@@ -63,19 +62,16 @@ How do i communicate across branches of Components?
 But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
 
 ### If i want easy graphing
+
 * for people using react.js, [Victory](https://formidable.com/open-source/victory/)
 
 ### Alternatives
 
-* [Preact](https://preactjs.com/) is smaller than React. Does it work for us?
+* [Preact](https://preactjs.com/) is smaller than React. Does it work for us? Is it faster?
 
 ## Redux
 
 We use Redux to organise the app state.
-
-Could also use Rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
-It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
-However I will start that way because otherwise it's too complicated
 
 ### Introductions to Redux
 
@@ -96,6 +92,12 @@ We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage
 
 The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
 redux-storage supports [many backends](https://www.npmjs.com/browse/keyword/redux-storage-engine).
+
+### Alternatives to Redux
+
+Could also use Rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
+It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
+However I will start that way because otherwise it's too complicated
 
 ## Building
 
