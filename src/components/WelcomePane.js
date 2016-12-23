@@ -56,7 +56,7 @@ const WelcomePane = ({}) => {
       </ul>
       <p>Support has been provided by</p>
       <ul>
-        <li><a href="http://www.musik.uni-mainz.de/741_DEU_HTML.php">Prof. Peter Kiefer</a>
+        <li><a href="http://www.musik.uni-mainz.de/741_DEU_HTML.php">Prof. Peter Kiefer</a>, 
         from the Johannes Gutenberg University in Mainz
         </li>
         <li><a href="http://exhibition.sonicskills.org/exhibition/booth2/the-synestizer/">Sonic Sonic Skills research project at the Faculty of Arts and Social Sciences of Maastricht University</a>, coordinated by Prof. Karin Bijsterveld.</li>
