@@ -5,7 +5,6 @@ That's 3 different libraries with coincidentally similar names. Sorry.
 
 Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of Javascript.
 
-
 ## ES6
 
 Module support in ES6 looks different than the older standards.
@@ -63,19 +62,16 @@ How do i communicate across branches of Components?
 But I think  I can avoid this by separating DOM streams and React components as two separates types of App both of which talk to the Redux store.
 
 ### If i want easy graphing
+
 * for people using react.js, [Victory](https://formidable.com/open-source/victory/)
 
 ### Alternatives
 
-* [Preact](https://preactjs.com/) is smaller than React. Does it work for us?
+* [Preact](https://preactjs.com/) is smaller than React. Does it work for us? Is it faster?
 
 ## Redux
 
 We use Redux to organise the app state.
-
-Could also use Rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
-It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
-However I will start that way because otherwise it's too complicated
 
 ### Introductions to Redux
 
@@ -96,6 +92,12 @@ We could instead use [redux-storage](https://www.npmjs.com/package/redux-storage
 
 The storage engine is [localForage](https://github.com/mozilla/localForage) but we could use cookies or localStorage.
 redux-storage supports [many backends](https://www.npmjs.com/browse/keyword/redux-storage-engine).
+
+### Alternatives to Redux
+
+Could also use Rx with a redux pattern [A](https://github.com/jas-chen/rx-redux), [B](https://github.com/jas-chen/redux-core), or [C](https://github.com/acdlite/redux-rx).
+It's recommended to [not even bother with redux in that case](http://redux.js.org/docs/introduction/PriorArt.html#rx).
+However I will start that way because otherwise it's too complicated
 
 ## Building
 
