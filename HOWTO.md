@@ -8,7 +8,9 @@ The instructions are different, depending...
 
 ### Users
 
-
+1. get online
+2. go to [https://listentocolors.net](https://listentocolors.net)
+3. go offline if you want. The site should have already installed itself as an offline app, and will work even if you disconnect the internet or restart your computer.
 
 ### Curators
 
@@ -35,7 +37,7 @@ First test basic mode.
 Open up the terminal on your platform and run the following two commands:
 
 ```
-  npm install
+npm install
   npm run serve
 ```
 
@@ -46,7 +48,7 @@ Gallery mode disables sensitive controls for the general public, and prevents th
 A reasonable approximation to to this can be got on OSX by running the Chrome browser locked down:
 
 ```
-  npm install
+npm install
   npm run galleryserve
   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --kiosk --app=http://localhost:8080/index.html --host-rules="MAP * localhost:8080"
 ```
