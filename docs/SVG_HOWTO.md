@@ -1,4 +1,4 @@
-# JS /HTML5 Style and libraries
+# JS/HTML5 style and graphics
 
 * General SVG info
 
