@@ -1,9 +1,9 @@
-# JS /HTML5 Style and libraries
+# JS/HTML5 Style and libraries
 
 This app is set up as a React/Redux/Rx application.
 That's 3 different libraries with coincidentally similar names. Sorry.
 
-Javascript is in Ecmascript 2015 application, a.k.a. ES6, the latest version of Javascript.
+Javascript is Ecmascript 2015, a.k.a. ES6, the latest version of Javascript.
 
 ## ES6
 
@@ -13,10 +13,6 @@ Module support in ES6 looks different than the older standards.
 * [Axel Rauschmayer explains](http://exploringjs.com/es6/ch_modules.html)
 * [Jason Orendorff explains](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
 * [module importing can be a complicated standards battle](http://www.jbrantly.com/es6-modules-with-typescript-and-webpack/)
-
-### Tips
-
-If we want to use Object, remember, ``Object.keys(thing).length`` will get the size of ``thing``.
 
 ## Android special tips
 
