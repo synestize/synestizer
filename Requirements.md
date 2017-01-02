@@ -6,7 +6,7 @@
 
 * Webcam
 
-* and either
+* and, so that you can actually do something with it, either
 
   * A MIDI-controllable audio application, or
   * An audio output device
