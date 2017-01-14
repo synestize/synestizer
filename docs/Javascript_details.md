@@ -25,9 +25,9 @@ Android does not like expensive re-renders on timers; instead they must be done 
 
 * [Measure Performance with the RAIL Model](https://developers.google.com/web/fundamentals/performance/rail)
 * Chrome has draconion policies for scheduling on slower computers and tablets  - see [expensive task blocking scheduling logic](https://bugs.chromium.org/p/chromium/issues/detail?id=574343#c40), leading to lots of violation warnings if you use the scheduler. Google's policy is that you need to do react updates in a webworker or in "micro partial updates" broken across several `requestAnimationFrame` updates  - see [Optimize JavaScript Execution](https://developers.google.com/web/fundamentals/performance/rendering/optimize-javascript-execution)
-* [Moving Atom To React](http://blog.atom.io/2014/07/02/moving-atom-to-react.html), including seeing GPU usage and the `translate3d` rick for shunting to the GPU
+* [Moving Atom To React](http://blog.atom.io/2014/07/02/moving-atom-to-react.html), including seeing GPU usage and the `translate3d` trick for shunting to the GPU
 * [Scrolling Performance](https://www.html5rocks.com/en/tutorials/speed/scrolling/)
-* [deboucing for good animation performance](https://www.html5rocks.com/en/tutorials/speed/animations/)
+* [debouncing for good animation performance](https://www.html5rocks.com/en/tutorials/speed/animations/)
 * [Jank Busting for Better Rendering Performance](https://www.html5rocks.com/en/tutorials/speed/rendering/)
 * [9 things every React.js beginner should know](https://camjackson.net/post/9-things-every-reactjs-beginner-should-know)
 * [Webpack optimisation 1](https://github.com/webpack/docs/wiki/optimization)
