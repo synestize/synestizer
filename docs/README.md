@@ -13,7 +13,7 @@
 This document explains the idea and function of the synestizer project at [synestizer.com](http://synestizer.com) and [listentocolors.net](https://listentocolors.net).  
 A webapp to listen to the data flow of the camera-imagery.
 
-## What is a Synestizer?
+## What is a Synestizer? and what is listen to colors?
 
 The word Synestizer is a portmanteau of _synthesizer_  and _synaesthesia_. Synestizer sonifies live camera imagery, tickling the synapses between your ears and eyes.
 
@@ -21,6 +21,8 @@ Music visualisers and screensavers already translate sound into graphics.
 Synestizer does the opposite, translating Red, Green and Blue values to sound.  
 For this effect, or let’s say „sense“, there are new methods and techniques explored, developed and spread online.  
 That's why it is time to open the digital window and listen through it.
+
+listen to colors (https://listentocolors.net) is the second prototype that came online in 2015 and is based on new sets of analysis and sound synthesis and has more midi-connectability
 
 ## Why?
 
