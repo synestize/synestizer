@@ -72,7 +72,8 @@ The option of saving preferences or performances online at [synestizer.com](http
 
 We _do_ use Google Analytics to set cookies to analyse the origin of viewers of the web-page. This information is not associated with user-name or any other usage information.
 
-Listen to colors (LTC) – this document is a description on the functionality of the website www.listentocolors.net  
+## Listen to colors (LTC) 
+– this document is a description on the functionality of the website www.listentocolors.net  
 (documentation update 21th of may 2017)
 
 LTC is part of the synestizer-project which is an artistic research about the relationship between sound synthesis and synaesthesia (chromesthesia). It models a technical relationship  between  webcam – live imagery in the (Y Cb Cr color model)  and provokes customized related sound and midi-output.  
@@ -81,10 +82,9 @@ introduction:
 This documentation describes in the first part merely a manual on how to use the  LTC-website for different types of  in- and output. The input consist in either build-in or external webcam, midi -(bus) input. The output consists in sound synthesis and midi note and control values. 
 In the second part of the documentation  a motivation for the project is described as well as an outlook for the future development of webapp-based vision and sound tools.
 
-Team:
 Kaspar König, Initiator, conceptdesign and project-lead
 Dan MacKinlay, coding, online-development and technical lead.
-Olivia Jackson, Programming and development
+
 
 Christoph Stähli:  coding of the www.synestizer.com project
 
@@ -97,11 +97,13 @@ The Chrome browser of Google strives to be the most advanced browser for the tim
 If everything is correct, you can see the webcam image and hear a sound related to that. 
 /see FAQ if not.
 
+# Performance
 The sound-synthesis is based on default settings which you can obviously set in the sound- and settingstab on top of the screen. However you land on the “performance” tab which you can return to anytime. Also the settings you change have an effect in this window. The Performance window is meant to be the window which you use when you want to have the least visual distraction of sliders and menus, e.g. when you want to use the LTC for a performance.  
 
  The About tab links you to the affiliated institutes and people that help to realize this experimental webapp.
 
-SETTINGS-TAB
+# SETTINGS-TAB
+
 By opening the settings-tab in the upper bar, the website opens the parameter-settings for the algorithm. These Settings change values in the algorithm and are connected to the webcam input , the midi input and the midi output. 
 In the left side of the page you encounter small green triangles that move. These is a registration of the input values of the specific visual values that are computed. These values are for instance Video Brightness, the change of the red values or the correlation between Red and blue and values that reflect the change of red-values towards up and down or left to right.
 The last set of values are especially sensitive to movement in front of the camera.
@@ -121,9 +123,9 @@ In the lowest part of this tab, you can add or remove midi channels. In the drop
 
 With the amount of Signals you choose, you can create the amount of composite Signals- columns to be edited. This output-values symbolized again by the green triangles in the upper-part are then used in the sound-settings-tab. 
 
-SOUND-TAB
+# SOUND-TAB
 
-In the upper corner you find the Master Gain and the Tempo slider that need no more explaining. Also the Mute button mutes all instruments to 0 dB. The tempo generates the amount of impulses into the so called bubble chamber. 
+In the upper left corner you find the Master Gain and the Tempo slider. Also the Mute button mutes all instruments to 0 dB. The tempo generates the amount of impulses into the so called bubble chamber. 
 
 The bubble chamber calculates the Midi-note (not midi CC) out depending on the settings you make it depending on. For instance the Signal Alfa can be an “impuls-maker” for the bubble chamber. 
  3 “instruments” are related to the  bubble chamber as Voice 1, Voice 2 and Bass. Voice 1 and 2 are sample-based instruments. The samples are in the dropdown menu directly next to the mute button and in a future one can upload or sample the sample straight into this instrument. (user 1-4) 
@@ -131,19 +133,19 @@ The bubble chamber calculates the Midi-note (not midi CC) out depending on the s
 The instrument-effects (delay, density, pattern, etc) can be all individually selected to perform like the input-value you set. The immediate value from the webcam can be chosen or the composite Signal can be selected.  The range of the input can also be turned around by flipping the triangle in the other direction. Also the “sensitivity” or range of the values can be moved in moved in the slider. 
 
 
-Other webcam input
+# Other webcam input
 
 if you use an external usb-webcam you can actually change the input with the camera symbol in the adress-bar of the browser. A refresh is needed so the website can switch to the new input-camera. If you have other inputs like a usb-microscope this works in the same way.
 Also a wifi-webcam works if installed properly.
 
-Midi input
+# Midi input
 
 midi input can be routed by the midi settings in your computer. To let it appear in the browser you need to have the same IAC-driver-bus activated. 
 
-Midi Output
+# Midi Output
 the midi output is relayed through the same IAC-driver bus you choose as output bus. This works for most soundapplications straight away. 
 
-Multiple Tabs
+# Multiple Tabs
 to get a chorus of more then 1 LTC operational you can just open a new window in the browser and go again to the LTC website.
 
 Connecting LTC to Synestizer.com
@@ -152,3 +154,4 @@ upper right corner the dropdown menu which is labeled  midi controller
 
 Edited by Kaspar König 
 synestizer@gmail.com
+
