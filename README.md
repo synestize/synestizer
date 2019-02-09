@@ -23,7 +23,6 @@ Designer / Creator / Uploader:
 Description:
 	By "acclivity" : Another silver plated goblet pinged loudly with a finger nail. Time stretched by 1.5 percent to tune it to G. Sony ECM-MS957, MZ-N10, iRiver
 
-
 kayageum_b4.mp3 is a derivative work
 
 File:
