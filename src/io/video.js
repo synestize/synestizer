@@ -57,7 +57,7 @@ export default function init(store, signalio, videoDom) {
       //we can play the video now, but we need to get video metadata before the dimensions work etc, so we start from the onloaded event.
       Observable.fromEvent(
         videoElem, "loadedmetadata").subscribe(pumpPixels);
-      videoElem.src = window.URL.createObjectURL(mediaStream);
+      videoElem.srcObject = mediaStream;
       videoElem.play();
     });
   }
