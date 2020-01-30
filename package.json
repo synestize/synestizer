@@ -65,7 +65,7 @@
     "serviceworker-webpack-plugin": "0.1.7",
     "source-map-loader": "0.1.5",
     "tone": "git+https://github.com/Tonejs/Tone.js.git",
-    "webpack": "1.14.0",
+    "webpack": "^4.41.5",
     "webpack-dev-server": "1.16.2",
     "webrtc-adapter": "1.4.0",
     "worker-loader": "0.7.1"
