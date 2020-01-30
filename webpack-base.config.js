@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var ServiceWorkerWebpackPlugin = require( 'serviceworker-webpack-plugin');
+var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 module.exports = {
   entry: [
