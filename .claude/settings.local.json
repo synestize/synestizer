@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pnpm install:*)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(pkill:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }

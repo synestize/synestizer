@@ -17,10 +17,10 @@ export function useWebcam() {
       );
 
       // Handle messages from worker
-      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number }>) => {
-        const { brightness } = event.data;
-        // Direct bridge to audio service - bypasses React state
-        audioService.update(brightness);
+      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number; red: number; blue: number }>) => {
+        // The entire data object is passed directly to the audio service.
+        // This maintains the performance architecture: no React state is involved here.
+        audioService.update(event.data);
       };
 
       workerRef.current.onerror = (error) => {
