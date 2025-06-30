@@ -40,13 +40,29 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+.claude/
+  settings.local.json
 plans/
+  start_over_2.md
+  start_over_3.md
   start_over.md
 public/
   vite.svg
 src/
   assets/
     react.svg
+  components/
+    Controls.tsx
+    Header.tsx
+    VideoFeed.tsx
+  hooks/
+    useWebcam.ts
+  services/
+    audioService.ts
+  store/
+    useAppStore.ts
+  workers/
+    featureExtractor.worker.ts
   App.css
   App.tsx
   index.css
@@ -67,6 +83,600 @@ vite.config.ts
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path="src/hooks/useWebcam.ts">
+import { useEffect, useRef, useState } from 'react';
+import { audioService } from '../services/audioService';
+
+export function useWebcam() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const workerRef = useRef<Worker | null>(null);
+  const [isWebcamActive, setIsWebcamActive] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Initialize worker
+  useEffect(() => {
+    try {
+      workerRef.current = new Worker(
+        new URL('../workers/featureExtractor.worker.ts', import.meta.url),
+        { type: 'module' }
+      );
+
+      // Handle messages from worker
+      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number }>) => {
+        const { brightness } = event.data;
+        // Direct bridge to audio service - bypasses React state
+        audioService.update(brightness);
+      };
+
+      workerRef.current.onerror = (error) => {
+        console.error('Worker error:', error);
+        setError('Video processing worker failed');
+      };
+    } catch (err) {
+      console.error('Failed to create worker:', err);
+      setError('Failed to initialize video processing');
+    }
+
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate();
+      }
+    };
+  }, []);
+
+  const startWebcam = async () => {
+    try {
+      setError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { width: 640, height: 480 } 
+      });
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        setIsWebcamActive(true);
+        startProcessing();
+      }
+    } catch (err) {
+      console.error('Failed to access webcam:', err);
+      setError('Failed to access webcam. Please check permissions.');
+    }
+  };
+
+  const stopWebcam = () => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    setIsWebcamActive(false);
+    stopProcessing();
+  };
+
+  const startProcessing = () => {
+    if (!videoRef.current || !canvasRef.current || !workerRef.current) return;
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) return;
+
+    // Set canvas size to match video
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+
+    let lastProcessTime = 0;
+    const processInterval = 1000 / 15; // Throttle to 15 FPS
+
+    const processFrame = () => {
+      if (!isWebcamActive || !video.videoWidth) {
+        requestAnimationFrame(processFrame);
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastProcessTime >= processInterval) {
+        // Draw video frame to canvas
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Get image data and send to worker
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        workerRef.current?.postMessage(imageData);
+        
+        lastProcessTime = now;
+      }
+
+      if (isWebcamActive) {
+        requestAnimationFrame(processFrame);
+      }
+    };
+
+    // Start processing when video is ready
+    video.addEventListener('loadedmetadata', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      processFrame();
+    });
+
+    if (video.readyState >= 2) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      processFrame();
+    }
+  };
+
+  const stopProcessing = () => {
+    // Processing will stop when isWebcamActive becomes false
+  };
+
+  return {
+    videoRef,
+    canvasRef, // Hidden canvas for processing
+    isWebcamActive,
+    error,
+    startWebcam,
+    stopWebcam,
+  };
+}
+</file>
+
+<file path="src/workers/featureExtractor.worker.ts">
+self.onmessage = (event: MessageEvent<ImageData>) => {
+  const imageData = event.data;
+  const data = imageData.data;
+  let brightness = 0;
+
+  // Calculate average brightness (simple grayscale approximation)
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    brightness += (r + g + b) / 3;
+  }
+
+  const avgBrightness = brightness / (data.length / 4);
+
+  // Post the result back to the main thread
+  self.postMessage({ brightness: avgBrightness / 255 }); // Normalize to 0-1
+};
+</file>
+
+<file path=".claude/settings.local.json">
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm dev:*)"
+    ],
+    "deny": []
+  }
+}
+</file>
+
+<file path="plans/start_over_2.md">
+This document outlines the first three major phases of development for **Synestizer Indigo**. It includes project initialization, UI component creation, and state management integration.
+
+---
+
+### **Project Work Plan: Synestizer Indigo MVP**
+
+**Objective:** To provide a complete, step-by-step guide for an AI coding assistant to build the foundational layers of the Synestizer Indigo application.
+
+---
+
+### **Phase 1: Project Scaffolding and Configuration**
+
+**Goal:** Initialize the project, install all dependencies, configure the build tools and CSS framework, and establish the core directory structure.
+
+**Action 1: Execute Initial Setup Commands**
+Run the following shell commands in order from your workspace directory.
+
+I apologize for the error. I cannot execute shell commands. I will provide the instructions in a non-executable format for you to pass to your AI assistant.
+
+You are absolutely right. The previous approach was piecemeal and inefficient. A more comprehensive set of instructions is needed.
+
+Here is a revised, multi-phase work plan designed to be executed by your AI assistant. It covers project initialization, UI creation, and state management.
+
+---
+
+### **Project Work Plan: Synestizer Indigo MVP**
+
+**Objective:** To provide a complete, step-by-step guide for an AI coding assistant to build the foundational layers of the Synestizer Indigo application.
+
+---
+
+### **Phase 1: Project Scaffolding and Configuration**
+
+**Goal:** Initialize the project, install all dependencies, configure the build tools and CSS framework, and establish the core directory structure.
+
+**Step 1.1: Execute Initial Setup Commands**
+Run the following shell commands in order from your workspace directory.
+
+```bash
+# 1. Create the Vite project
+pnpm create vite synestizer_indigo --template react-ts
+
+# 2. Navigate into the new project directory
+cd synestizer_indigo
+
+# 3. Install all necessary production and development dependencies
+pnpm install zustand tone
+pnpm install -D tailwindcss postcss autoprefixer
+
+# 4. Initialize Tailwind CSS configuration files
+pnpm exec tailwindcss init -p
+
+# 5. Create the project's directory structure
+mkdir -p src/components src/hooks src/services src/store src/workers
+```
+
+**Step 1.2: Create the Project README**
+Create a new file named `README.md` in the project root (`synestizer_indigo/README.md`) and populate it with the following content:
+
+```markdown
+# Synestizer Indigo
+
+Synestizer Indigo is a web-based application that creates sound from live video input, creating a synesthetic experience for the user. This project is a modern, green-field rewrite of an older application, built with a focus on performance, maintainability, and a better developer experience.
+
+## MVP Feature Set
+
+The goal for the Minimum Viable Product (MVP) is to deliver the core synesthesia experience with minimal complexity.
+
+1.  **Video Capture:** Display a live video stream from the user's webcam.
+2.  **Basic Feature Extraction:** Analyze the video in real-time to extract a single, simple feature: the overall brightness of the video frame.
+3.  **Simple Synthesizer:** Generate a basic synthesized tone.
+4.  **Direct Mapping:** Modulate a parameter of the synthesizer (e.g., its frequency) based on the extracted brightness value.
+5.  **Core Controls:** A simple UI with a button to start and stop the audio-visual experience.
+
+## Technology Stack
+
+*   **Build Tool:** Vite
+*   **Frontend Framework:** React (with Hooks)
+*   **Language:** TypeScript
+*   **Styling:** Tailwind CSS
+*   **State Management:** Zustand
+*   **Audio Synthesis:** Tone.js
+*   **Video Processing:** Offloaded to a Web Worker to ensure a non-blocking UI.
+*   **Package Manager:** pnpm
+```
+
+**Step 1.3: Configure Tailwind CSS**
+Replace the entire content of `tailwind.config.js` with the following to configure content paths:
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+**Step 1.4: Add Tailwind CSS Directives**
+Replace the entire content of `src/index.css` with the following to include Tailwind's base styles:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+---
+
+### **Phase 2: Building the Static UI Shell**
+
+**Goal:** Create and assemble the core React components for the application's user interface. At the end of this phase, the UI will be visible but not yet interactive.
+
+**Step 2.1: Create the Header Component**
+Create a new file at `src/components/Header.tsx` with the following content:
+
+```typescript
+export function Header() {
+  return (
+    <header className="bg-gray-900 text-white p-4 border-b border-gray-700">
+      <h1 className="text-2xl font-bold">Synestizer Indigo</h1>
+    </header>
+  );
+}
+```
+
+**Step 2.2: Create the Video Feed Component**
+Create a new file at `src/components/VideoFeed.tsx`. This will contain the video element.
+
+```typescript
+export function VideoFeed() {
+  return (
+    <div className="bg-black aspect-video w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
+      <video className="w-full h-full object-cover" autoPlay playsInline muted />
+      {/* The video element is muted by default to prevent audio feedback. Sound will be generated by Tone.js. */}
+    </div>
+  );
+}
+```
+
+**Step 2.3: Create the Controls Component**
+Create a new file at `src/components/Controls.tsx`. This will hold the main start/stop button.
+
+```typescript
+export function Controls() {
+  return (
+    <div className="mt-4">
+      <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-lg">
+        Start
+      </button>
+    </div>
+  );
+}
+```
+
+**Step 2.4: Assemble the UI in the Main App Component**
+Replace the entire content of `src/App.tsx` to import and render the new components, creating the main application layout.
+
+```typescript
+import { Header } from './components/Header';
+import { VideoFeed } from './components/VideoFeed';
+import { Controls } from './components/Controls';
+
+function App() {
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed />
+        <Controls />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### **Phase 3: State Management and Service Integration**
+
+**Goal:** Introduce a state management solution (Zustand) and an audio service to make the UI interactive.
+
+**Step 3.1: Create the Zustand Store**
+Create a new file at `src/store/useAppStore.ts`. This store will manage the application's central state.
+
+```typescript
+import { create } from 'zustand';
+
+interface AppState {
+  isAudioRunning: boolean;
+  startAudio: () => void;
+  stopAudio: () => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  startAudio: () => set({ isAudioRunning: true }),
+  stopAudio: () => set({ isAudioRunning: false }),
+}));
+```
+
+**Step 3.2: Create the Audio Service**
+Create a new file at `src/services/audioService.ts`. This service will encapsulate all audio-related logic. For now, it will simply log to the console.
+
+```typescript
+import * as Tone from 'tone';
+
+class AudioService {
+  private isStarted = false;
+
+  public async start() {
+    if (this.isStarted) return;
+    // Tone.start() must be called after a user interaction
+    await Tone.start();
+    console.log("AudioContext started");
+    this.isStarted = true;
+    console.log("Audio service started");
+  }
+
+  public stop() {
+    if (!this.isStarted) return;
+    console.log("Audio service stopped");
+    // In the future, this will stop the synthesizer
+  }
+}
+
+export const audioService = new AudioService();
+```
+
+**Step 3.3: Connect the Store to the Audio Service**
+Modify `src/store/useAppStore.ts` to call the `audioService` when its actions are triggered.
+
+```typescript
+import { create } from 'zustand';
+import { audioService } from '../services/audioService';
+
+interface AppState {
+  isAudioRunning: boolean;
+  startAudio: () => void;
+  stopAudio: () => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  startAudio: () => {
+    audioService.start();
+    set({ isAudioRunning: true });
+  },
+  stopAudio: () => {
+    audioService.stop();
+    set({ isAudioRunning: false });
+  },
+}));
+```
+
+**Step 3.4: Make the Controls Component Interactive**
+Finally, update `src/components/Controls.tsx` to use the Zustand store, making the button dynamic and functional.
+
+```typescript
+import { useAppStore } from '../store/useAppStore';
+
+export function Controls() {
+  const { isAudioRunning, startAudio, stopAudio } = useAppStore();
+
+  const handleToggleAudio = () => {
+    if (isAudioRunning) {
+      stopAudio();
+    } else {
+      startAudio();
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      <button
+        onClick={handleToggleAudio}
+        className={`font-bold py-2 px-6 rounded text-lg transition-colors ${
+          isAudioRunning
+            ? 'bg-red-600 hover:bg-red-700'
+            : 'bg-green-600 hover:bg-green-700'
+        } text-white`}
+      >
+        {isAudioRunning ? 'Stop' : 'Start'}
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+This completes the first three phases. After executing all steps, you will have a running React application with a defined UI and state management. The "Start" button will now toggle the application's state and log messages from the audio service to the developer console. The next major phase would be to implement the webcam video capture.
+</file>
+
+<file path="plans/start_over_3.md">
+### **Core Performance Strategies**
+
+1.  **Isolate Processing in a Web Worker:** This is the most important step, which we already planned for. The worker will handle the frame-by-frame video analysis. Its key benefit is that this intense computation happens on a separate thread, so even if it's processing 30-60 frames per second, it will **never block the main UI thread**. This prevents the entire app from freezing.
+
+2.  **Throttle UI-Bound State Updates:** The worker can calculate brightness 60 times per second, but the user interface does not need to see or react to every single one of these changes. We will **throttle** the messages sent from the worker to the main thread. Instead of sending 60 updates per second, we might send only 10-15. This is frequent enough to feel responsive but avoids overwhelming the React state system.
+
+3.  **Separate Control State from Data State:** This is a critical architectural decision.
+    *   **Control State:** Things the user clicks on, like `isAudioRunning`. This state changes infrequently and belongs in a global store like **Zustand**.
+    *   **Data State:** High-frequency values like `brightness`. **We will intentionally keep this out of Zustand.** Putting rapidly changing values in a global store is a common mistake that causes excessive re-renders throughout the entire application.
+
+4.  **Use a Non-React "Bridge" for High-Frequency Actions:** The throttled `brightness` value doesn't need to be stored in React state at all if its only job is to control the synthesizer. It can be passed directly from the worker message listener to our `audioService`. This completely bypasses the React render cycle for the most frequent updates, leading to maximum performance. The data only enters React state if a UI component *truly* needs to display it (e.g., a debug meter), and even then, it will be the throttled value.
+
+5.  **Leverage `React.memo` for Components:** For any component that *does* need to display data derived from the video stream, we will wrap it in `React.memo`. This prevents it from re-rendering if its props haven't changed, insulating it from parent component renders.
+
+### **Updated Work Plan for the AI Assistant**
+
+To implement this, we need to add these principles to our documentation and adjust our future implementation phases.
+
+**Action 1: Update the `README.md`**
+
+Append the following section to the `README.md` file to document these critical design decisions.
+
+```markdown
+## Performance Architecture
+
+To avoid UI stuttering and performance degradation from high-frequency video analysis, this application adheres to the following principles:
+
+1.  **Processing Off-Thread:** All intensive video frame analysis is performed in a dedicated Web Worker to prevent blocking the main UI thread.
+
+2.  **State Decoupling:** We strictly separate two types of state:
+    *   **Control State:** Low-frequency user interactions (e.g., Start/Stop button). Managed in Zustand for global access.
+    *   **Data State:** High-frequency data from video analysis (e.g., brightness). This is intentionally **kept out of Zustand** to prevent application-wide re-renders.
+
+3.  **Update Throttling:** The data sent from the Web Worker to the main thread is throttled to a rate that ensures UI responsiveness without overwhelming the event loop (e.g., 15 updates per second).
+
+4.  **Direct Service Communication:** High-frequency data is passed directly from the worker message handler to the relevant services (like the `audioService`) where possible, completely bypassing the React render cycle. Data is only stored in a React component's local state if it is necessary for rendering a UI element.
+```
+
+**Action 2: Plan for a "Data Flow Bridge"**
+
+We will introduce a new phase to the work plan that deals explicitly with setting up this performant data flow. This will come after the UI and basic services are in place.
+
+---
+
+### **Phase 4: High-Performance Data Flow Implementation**
+
+**Goal:** Implement the video processing worker, establish throttled communication, and connect the data stream directly to the `audioService`, bypassing the React render cycle.
+
+**Step 4.1: Create the Feature Extractor Worker**
+Create a new file at `src/workers/featureExtractor.worker.ts`. This worker's job is to receive a frame and calculate its average brightness.
+
+```typescript
+// src/workers/featureExtractor.worker.ts
+
+self.onmessage = (event: MessageEvent<ImageData>) => {
+  const imageData = event.data;
+  const data = imageData.data;
+  let brightness = 0;
+
+  // Calculate average brightness (simple grayscale approximation)
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    brightness += (r + g + b) / 3;
+  }
+
+  const avgBrightness = brightness / (data.length / 4);
+
+  // Post the result back to the main thread
+  self.postMessage({ brightness: avgBrightness / 255 }); // Normalize to 0-1
+};
+```
+
+**Step 4.2: Update the Audio Service to Handle Data**
+Modify `src/services/audioService.ts` to include a synthesizer and a method to update it based on the incoming data.
+
+```typescript
+// src/services/audioService.ts
+import * as Tone from 'tone';
+
+class AudioService {
+  private isStarted = false;
+  private synth: Tone.Synth | null = null;
+
+  public async start() {
+    if (this.isStarted) return;
+    await Tone.start();
+    this.synth = new Tone.Synth().toDestination();
+    this.synth.triggerAttack("C4");
+    console.log("Audio service started with synth.");
+    this.isStarted = true;
+  }
+
+  public stop() {
+    if (!this.isStarted || !this.synth) return;
+    this.synth.triggerRelease();
+    this.synth = null;
+    this.isStarted = false;
+    console.log("Audio service stopped.");
+  }
+
+  // This method will be called directly with high-frequency data
+  public update(brightness: number) {
+    if (!this.isStarted || !this.synth) return;
+    // Map brightness (0-1) to a musical frequency range (e.g., 200Hz to 800Hz)
+    const frequency = brightness * 600 + 200;
+    this.synth.setNote(frequency);
+  }
+}
+
+export const audioService = new AudioService();
+```
+
+**Step 4.3: Create the Webcam Hook and Bridge**
+The final piece is a custom hook that manages the webcam, the worker, and acts as the **bridge** between them and the audio service. Create a new file at `src/hooks/useWebcam.ts`.
+
+*This plan defers the full implementation of this complex hook but defines its role and how it will solve the performance problem.* By planning for this architecture now, we ensure the AI assistant builds the right foundation.
+</file>
 
 <file path="plans/start_over.md">
 ### Guiding Principles & Conventions
@@ -163,6 +773,117 @@ This structure separates concerns and will scale well as the project grows.
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
 </file>
 
+<file path="src/components/Controls.tsx">
+import { useAppStore } from '../store/useAppStore';
+
+export function Controls() {
+  const { isAudioRunning, startAudio, stopAudio } = useAppStore();
+
+  const handleToggleAudio = () => {
+    if (isAudioRunning) {
+      stopAudio();
+    } else {
+      startAudio();
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      <button
+        onClick={handleToggleAudio}
+        className={`font-bold py-2 px-6 rounded text-lg transition-colors ${
+          isAudioRunning
+            ? 'bg-red-600 hover:bg-red-700'
+            : 'bg-green-600 hover:bg-green-700'
+        } text-white`}
+      >
+        {isAudioRunning ? 'Stop' : 'Start'}
+      </button>
+    </div>
+  );
+}
+</file>
+
+<file path="src/components/Header.tsx">
+export function Header() {
+  return (
+    <header className="bg-gray-900 text-white p-4 border-b border-gray-700">
+      <h1 className="text-2xl font-bold">Synestizer Indigo</h1>
+    </header>
+  );
+}
+</file>
+
+<file path="src/components/VideoFeed.tsx">
+export function VideoFeed() {
+  return (
+    <div className="bg-black aspect-video w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
+      <video className="w-full h-full object-cover" autoPlay playsInline muted />
+      {/* The video element is muted by default to prevent audio feedback. Sound will be generated by Tone.js. */}
+    </div>
+  );
+}
+</file>
+
+<file path="src/services/audioService.ts">
+import * as Tone from 'tone';
+
+class AudioService {
+  private isStarted = false;
+  private synth: Tone.Synth | null = null;
+
+  public async start() {
+    if (this.isStarted) return;
+    await Tone.start();
+    this.synth = new Tone.Synth().toDestination();
+    this.synth.triggerAttack("C4");
+    console.log("Audio service started with synth.");
+    this.isStarted = true;
+  }
+
+  public stop() {
+    if (!this.isStarted || !this.synth) return;
+    this.synth.triggerRelease();
+    this.synth = null;
+    this.isStarted = false;
+    console.log("Audio service stopped.");
+  }
+
+  // This method will be called directly with high-frequency data
+  public update(brightness: number) {
+    if (!this.isStarted || !this.synth) return;
+    // Map brightness (0-1) to a musical frequency range (e.g., 200Hz to 800Hz)
+    const frequency = brightness * 600 + 200;
+    this.synth.setNote(frequency);
+  }
+}
+
+export const audioService = new AudioService();
+</file>
+
+<file path="src/store/useAppStore.ts">
+import { create } from 'zustand';
+import { audioService } from '../services/audioService';
+
+interface AppState {
+  isAudioRunning: boolean;
+  startAudio: () => void;
+  stopAudio: () => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  startAudio: () => {
+    audioService.start();
+    set({ isAudioRunning: true });
+  },
+  stopAudio: () => {
+    audioService.stop();
+    set({ isAudioRunning: false });
+  },
+}));
+</file>
+
 <file path="src/App.css">
 #root {
   max-width: 1280px;
@@ -206,44 +927,6 @@ This structure separates concerns and will scale well as the project grows.
 .read-the-docs {
   color: #888;
 }
-</file>
-
-<file path="src/App.tsx">
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
 </file>
 
 <file path="src/index.css">
@@ -293,15 +976,6 @@ export default tseslint.config([
     },
   },
 ])
-</file>
-
-<file path="postcss.config.js">
-export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
 </file>
 
 <file path="tailwind.config.js">
@@ -396,6 +1070,26 @@ export default defineConfig({
 })
 </file>
 
+<file path="src/App.tsx">
+import { Header } from './components/Header';
+import { VideoFeed } from './components/VideoFeed';
+import { Controls } from './components/Controls';
+
+function App() {
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed />
+        <Controls />
+      </main>
+    </div>
+  );
+}
+
+export default App;
+</file>
+
 <file path=".gitignore">
 # Logs
 logs
@@ -439,76 +1133,54 @@ dist-ssr
 </html>
 </file>
 
+<file path="postcss.config.js">
+export default {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+}
+</file>
+
 <file path="README.md">
-# React + TypeScript + Vite
+# Synestizer Indigo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Synestizer Indigo is a web-based application that creates sound from live video input, creating a synesthetic experience for the user. This project is a modern, green-field rewrite of an older application, built with a focus on performance, maintainability, and a better developer experience.
 
-Currently, two official plugins are available:
+## MVP Feature Set
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The goal for the Minimum Viable Product (MVP) is to deliver the core synesthesia experience with minimal complexity.
 
-## Expanding the ESLint configuration
+1.  **Video Capture:** Display a live video stream from the user's webcam.
+2.  **Basic Feature Extraction:** Analyze the video in real-time to extract a single, simple feature: the overall brightness of the video frame.
+3.  **Simple Synthesizer:** Generate a basic synthesized tone.
+4.  **Direct Mapping:** Modulate a parameter of the synthesizer (e.g., its frequency) based on the extracted brightness value.
+5.  **Core Controls:** A simple UI with a button to start and stop the audio-visual experience.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technology Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+*   **Build Tool:** Vite
+*   **Frontend Framework:** React (with Hooks)
+*   **Language:** TypeScript
+*   **Styling:** Tailwind CSS
+*   **State Management:** Zustand
+*   **Audio Synthesis:** Tone.js
+*   **Video Processing:** Offloaded to a Web Worker to ensure a non-blocking UI.
+*   **Package Manager:** pnpm
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Performance Architecture
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+To avoid UI stuttering and performance degradation from high-frequency video analysis, this application adheres to the following principles:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Processing Off-Thread:** All intensive video frame analysis is performed in a dedicated Web Worker to prevent blocking the main UI thread.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **State Decoupling:** We strictly separate two types of state:
+    *   **Control State:** Low-frequency user interactions (e.g., Start/Stop button). Managed in Zustand for global access.
+    *   **Data State:** High-frequency data from video analysis (e.g., brightness). This is intentionally **kept out of Zustand** to prevent application-wide re-renders.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3.  **Update Throttling:** The data sent from the Web Worker to the main thread is throttled to a rate that ensures UI responsiveness without overwhelming the event loop (e.g., 15 updates per second).
+
+4.  **Direct Service Communication:** High-frequency data is passed directly from the worker message handler to the relevant services (like the `audioService`) where possible, completely bypassing the React render cycle. Data is only stored in a React component's local state if it is necessary for rendering a UI element.
 </file>
 
 <file path="package.json">
@@ -535,6 +1207,7 @@ export default tseslint.config([
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
