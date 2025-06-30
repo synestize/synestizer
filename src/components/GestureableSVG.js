@@ -1,13 +1,8 @@
 import React, { Component, PropTypes, Children } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/race';
-import 'rxjs/add/operator/sampleTime';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/do';
+import { Observable, fromEvent, race } from 'rxjs';
+import { sampleTime, takeUntil, take, tap, map, filter } from 'rxjs/operators';
 
 /*
 TODO: handle touchcancel and mouseout
@@ -31,11 +26,14 @@ class GestureableSVG extends Component{
     let startVal = this.props.value || 0.0;
     // console.debug('mousedown', e, this);
 
-    let mouseMoveObs = Observable.fromEvent(
+    let mouseMoveObs = fromEvent(
       document, 'mousemove'
-    ).takeUntil(
-      Observable.fromEvent(document, 'mouseup').take(1)
-    ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
+    ).pipe(
+      takeUntil(
+        fromEvent(document, 'mouseup').pipe(take(1))
+      ),
+      sampleTime(UI_PERIOD_MS)
+    ).subscribe((e)=>{
       // console.debug('mousemove', e, this);
       e.stopPropagation()
       e.preventDefault()
@@ -69,18 +67,21 @@ class GestureableSVG extends Component{
     }
     let existing = (e) => e !== undefined;
 
-    let touchupObs = Observable.race(
-      Observable.fromEvent(
-        document, 'touchup').map(thisTouchOnly).filter(existing),
-      Observable.fromEvent(
-        document, 'touchcancel').map(thisTouchOnly).filter(existing),
-    ).take(1);
+    let touchupObs = race(
+      fromEvent(
+        document, 'touchup').pipe(map(thisTouchOnly), filter(existing)),
+      fromEvent(
+        document, 'touchcancel').pipe(map(thisTouchOnly), filter(existing)),
+    ).pipe(take(1));
 
-    let touchMoveObs = Observable.fromEvent(
+    let touchMoveObs = fromEvent(
       document, 'touchmove'
-    ).map(thisTouchOnly).filter(existing).takeUntil(
-      touchupObs
-    ).sampleTime(UI_PERIOD_MS).subscribe((e)=>{
+    ).pipe(
+      map(thisTouchOnly),
+      filter(existing),
+      takeUntil(touchupObs),
+      sampleTime(UI_PERIOD_MS)
+    ).subscribe((e)=>{
       // console.debug('touchmove', e, this);
       e.stopPropagation()
       e.preventDefault()

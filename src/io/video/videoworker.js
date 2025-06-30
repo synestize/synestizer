@@ -1,20 +1,21 @@
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/fromEvent';
+import { Observable, Subject, fromEvent } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 import * as statModels from './statModels'
 const liveStatistics = {};
 let busyFlag = false;
 
-const inbox = Observable.fromEvent(self, "message").map((e) => e.data);
+const inbox = fromEvent(self, "message").pipe(
+  map((e) => e.data)
+);
 const outbox = new Subject();
 
 outbox.subscribe((msg)=>{
   self.postMessage(msg)
 });
 
-inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
+inbox.pipe(
+  filter((x)=>(x.type==="settings"))
+).subscribe(function({type, payload}) {
   // console.debug("settings", type, payload);
   /*
   Theoretically we can initialise stats with different params
@@ -42,7 +43,9 @@ inbox.filter((x)=>(x.type==="settings")).subscribe(function({type, payload}) {
   })
 });
 
-inbox.filter((x)=>(x.type==="pixels")).subscribe(function({type, payload}) {
+inbox.pipe(
+  filter((x)=>(x.type==="pixels"))
+).subscribe(function({type, payload}) {
   // console.debug("workerpixels", type, payload);
   if (!busyFlag) {
     busyFlag = true;

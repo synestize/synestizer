@@ -1,8 +1,3 @@
-Excellent. Breaking this down into staged, self-contained work lists is the perfect approach for an AI coding assistant. Each stage will have a clear goal, a set of instructions, and a verification step.
-
-Here are the work lists. Provide them to your AI assistant one stage at a time.
-
----
 
 ### **General Instructions for the AI Assistant**
 

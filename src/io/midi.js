@@ -1,12 +1,5 @@
-import {Subject} from 'rxjs/Subject'
-import {Observable} from 'rxjs/Observable'
-import {Observer} from 'rxjs/Observer'
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/fromPromise';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/operator/pluck';
-import 'rxjs/add/operator/share';
+import { Subject, Observable, fromEvent, from } from 'rxjs';
+import { distinctUntilChanged, pluck, share } from 'rxjs/operators';
 import  {
   setValidMidiSourceDevice,
   setMidiSourceDevice,
@@ -142,7 +135,7 @@ export default function init(store, signalio) {
         rawMidiInSubscription.unsubscribe()
       };
       if (dev !== undefined ) {
-        rawMidiInSubscription = Observable.fromEvent(
+        rawMidiInSubscription = fromEvent(
           dev, 'midimessage'
         ).subscribe(handleMidiInMessage);
         store.dispatch(setValidMidiSourceDevice(true));
@@ -166,63 +159,74 @@ export default function init(store, signalio) {
   }
   // Now, actually use this infrastructure
   plugMidiIn()
-  storeStream.pluck(
-      'midi', 'sourceDevice'
-    ).distinctUntilChanged().subscribe(plugMidiIn)
-  storeStream.pluck(
-      '__volatile', 'midi', 'validSource'
-    ).distinctUntilChanged().subscribe((validity)=> {
-      validSource = validity;
-      plugMidiIn()
-    })
-  storeStream.pluck(
-      'midi', 'sourceChannel'
-    ).distinctUntilChanged().subscribe(
-      (x) => sourceChannel = x
+  storeStream.pipe(
+    pluck('midi', 'sourceDevice'),
+    distinctUntilChanged()
+  ).subscribe(plugMidiIn)
+  storeStream.pipe(
+    pluck('__volatile', 'midi', 'validSource'),
+    distinctUntilChanged()
+  ).subscribe((validity)=> {
+    validSource = validity;
+    plugMidiIn()
+  })
+  storeStream.pipe(
+    pluck('midi', 'sourceChannel'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sourceChannel = x
   )
-  storeStream.pluck(
-      'midi', 'sourceCCs'
-    ).distinctUntilChanged().subscribe(
-      (x) => sourceCCs = x
+  storeStream.pipe(
+    pluck('midi', 'sourceCCs'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sourceCCs = x
   )
-  storeStream.pluck(
-      'midi', 'sourceCCMap'
-    ).distinctUntilChanged().subscribe(
-      (x) => sourceCCMap = (x || {})
+  storeStream.pipe(
+    pluck('midi', 'sourceCCMap'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sourceCCMap = (x || {})
   )
   plugMidiOut()
-  storeStream.pluck(
-      'midi', 'sinkDevice'
-    ).distinctUntilChanged().subscribe((key) => {
-      // console.debug('sinkDevice', key)
-      plugMidiOut()
-    });
-  storeStream.pluck(
-      '__volatile', 'midi', 'validSink'
-    ).distinctUntilChanged().subscribe((validity)=> {
-      validSink = validity;
-      plugMidiOut()
-    });
-  storeStream.pluck(
-      'midi', 'sinkChannel'
-    ).distinctUntilChanged().subscribe(
-      (x) => sinkChannel = x
+  storeStream.pipe(
+    pluck('midi', 'sinkDevice'),
+    distinctUntilChanged()
+  ).subscribe((key) => {
+    // console.debug('sinkDevice', key)
+    plugMidiOut()
+  });
+  storeStream.pipe(
+    pluck('__volatile', 'midi', 'validSink'),
+    distinctUntilChanged()
+  ).subscribe((validity)=> {
+    validSink = validity;
+    plugMidiOut()
+  });
+  storeStream.pipe(
+    pluck('midi', 'sinkChannel'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sinkChannel = x
   )
-  storeStream.pluck(
-      'midi', 'sinkCCs'
-    ).distinctUntilChanged().subscribe(
-      (x) => sinkCCs = x
+  storeStream.pipe(
+    pluck('midi', 'sinkCCs'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sinkCCs = x
   )
-  storeStream.pluck(
-      'midi', 'sinkCCMap'
-    ).distinctUntilChanged().subscribe(
-      (x) => sinkCCMap = (x || {})
+  storeStream.pipe(
+    pluck('midi', 'sinkCCMap'),
+    distinctUntilChanged()
+  ).subscribe(
+    (x) => sinkCCMap = (x || {})
   )
-  storeStream.pluck(
-      'midi', 'sinkSoloCC'
-    ).distinctUntilChanged().subscribe((x)=>sinkSoloCC=x);
+  storeStream.pipe(
+    pluck('midi', 'sinkSoloCC'),
+    distinctUntilChanged()
+  ).subscribe((x)=>sinkSoloCC=x);
 
-  Observable.fromPromise(
+  from(
     navigator.requestMIDIAccess()
   ).subscribe((midiinfo) => {
     updateMidiIO(midiinfo)

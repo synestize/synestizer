@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx webpack:*)",
+      "Bash(npm install)",
+      "Bash(rm:*)",
+      "Bash(./node_modules/.bin/webpack:*)",
+      "Bash(node_modules/.bin/webpack:*)",
+      "Bash(find:*)",
+      "Bash(node:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm install:*)",
+      "Bash(./node_modules/webpack-cli/bin/cli.js serve:*)"
+    ],
+    "deny": []
+  }
+}

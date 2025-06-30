@@ -1,7 +1,4 @@
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/pluck';
-import 'rxjs/add/operator/share';
+import { distinctUntilChanged, map, pluck, share } from 'rxjs/operators';
 
 import { toObservable } from '../../lib/rx_redux'
 
@@ -25,7 +22,7 @@ import {
   subSignal
 } from '../../lib/signalMangle'
 
-import Tone from 'tone/build/Tone.js'
+import * as Tone from 'tone'
 
 export default function init(store, signalio, audio, midiio) {
   store.dispatch(addAudioSinkControl({
@@ -236,9 +233,10 @@ export default function init(store, signalio, audio, midiio) {
     }
   });
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice1', 'sample'
-  ).distinctUntilChanged().subscribe((val)=>{
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'voice1', 'sample'),
+    distinctUntilChanged()
+  ).subscribe((val)=>{
     voice1sampleKey = val || voice1sampleKey;
     // console.debug('voice1sampleKey', voice1sampleKey, val);
     voice1synth.player.buffer = audio.buffers.get(voice1sampleKey);
@@ -248,8 +246,8 @@ export default function init(store, signalio, audio, midiio) {
   });
   voice1synth.connect(voice1delayNode);
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice1', 'mute'
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'voice1', 'mute')
   ).subscribe((val)=>{
     voice1mute = val;
   });
@@ -327,9 +325,10 @@ export default function init(store, signalio, audio, midiio) {
     }
   });
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice2', 'sample'
-  ).distinctUntilChanged().subscribe((val)=>{
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'voice2', 'sample'),
+    distinctUntilChanged()
+  ).subscribe((val)=>{
     voice2sampleKey = val || voice2sampleKey;
     // console.debug('voice2sampleKey', voice2sampleKey, val);
     voice2synth.player.buffer = audio.buffers.get(voice2sampleKey);
@@ -339,8 +338,8 @@ export default function init(store, signalio, audio, midiio) {
   });
   voice2synth.connect(voice2delayNode);
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice2', 'mute'
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'voice2', 'mute')
   ).subscribe((val)=>{
     voice2mute = val;
   });
@@ -383,8 +382,8 @@ export default function init(store, signalio, audio, midiio) {
     step
   ).start('1m');
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'voice3', 'mute'
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'voice3', 'mute')
   ).subscribe((val)=>{
     voice3mute = val;
   });
@@ -433,8 +432,8 @@ export default function init(store, signalio, audio, midiio) {
 
   basssynth.connect(bassgainNode);
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'bass', 'mute'
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'bass', 'mute')
   ).subscribe((val)=>{
     bassmute = val;
   });
@@ -470,16 +469,17 @@ export default function init(store, signalio, audio, midiio) {
     step
   ).start('1m');
 
-  toObservable(store).pluck(
-    'audio', 'bubbleChamber', 'bass', 'mute'
+  toObservable(store).pipe(
+    pluck('audio', 'bubbleChamber', 'bass', 'mute')
   ).subscribe((val)=>{
     bassmute = val;
   });
 
 
-  let subSig = audio.actualControlValues.map(
-    subSignal('bubbleChamber|')
-  ).share();
+  let subSig = audio.actualControlValues.pipe(
+    map(subSignal('bubbleChamber|')),
+    share()
+  );
   subSig.subscribe((sig) => {
     basePitch = bipolInt(0, 11, sig.pitch__0001  || 0.0);
     pitchIntervals[1] = bipolInt(2, 6, sig.pitch__0002 || 0.0);

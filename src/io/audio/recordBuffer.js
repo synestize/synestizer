@@ -1,6 +1,4 @@
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/pluck';
+import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 import { toObservable } from '../../lib/rx_redux'
 import  {
   setRecordBuffer,
@@ -11,15 +9,16 @@ import {
   wrap
 } from '../../lib/math'
 
-import Tone from 'tone/build/Tone.js'
+import * as Tone from 'tone'
 
 export default function init(store, signalio, audio, midi) {
   let initState = store.getState();
   let recordBuffer = initState.__volatile.audio.record.recordBuffer;
   let isRecording = initState.__volatile.audio.record.recording;
-  toObservable(store).pluck(
-    '__volatile', 'audio', 'record', 'recording',
-  ).distinctUntilChanged().subscribe((val)=>{
+  toObservable(store).pipe(
+    pluck('__volatile', 'audio', 'record', 'recording'),
+    distinctUntilChanged()
+  ).subscribe((val)=>{
     isRecording = val;
     if (val) {
       // Do actual recording here
@@ -27,9 +26,10 @@ export default function init(store, signalio, audio, midi) {
       
     }
   });
-  toObservable(store).pluck(
-    '__volatile', 'audio', 'record', 'recordBuffer',
-  ).distinctUntilChanged().subscribe((val)=>{
+  toObservable(store).pipe(
+    pluck('__volatile', 'audio', 'record', 'recordBuffer'),
+    distinctUntilChanged()
+  ).subscribe((val)=>{
     recordBuffer = val
   });
   return {

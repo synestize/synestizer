@@ -1,15 +1,21 @@
 
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import Perf from 'react-addons-perf' // ES6
+// Serviceworker and Perf removed for modern build
 
 
 // Main entry point everything
-import React, { PropTypes } from 'react'
-import { render } from 'react-dom'
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers } from 'redux'
 import { resetToNothing, loadFromUrl } from './actions/app'
-import rootReducer from './reducers'
+import { RESET_TO_NOTHING, LOAD } from './actions/app'
+import guiReducer from './features/gui/guiSlice'
+import video from './reducers/video'
+import midi from './reducers/midi'
+import __volatile from './reducers/__volatile'
+import signal from './reducers/signal'
+import audio from './reducers/audio'
 import App from './containers/App'
 import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
@@ -31,15 +37,9 @@ import localForage from "localforage"
 
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 
-if ('serviceWorker' in navigator) {
-  const registration = runtime.register();
-  console.debug('sw', registration)
-}
-if (!PRODUCTION) {
-  window.Perf = Perf
-}
+// ServiceWorker and Perf removed for modern build
 /*
 We divide Synestizer into two part:
 
@@ -64,6 +64,32 @@ const persistConf = {
 }
 
 const loggerMiddleware = createLogger()
+
+// Create root reducer that combines modern GUI slice with legacy reducers
+const createRootReducer = () => {
+  const modernReducer = combineReducers({
+    video,
+    midi,
+    audio, 
+    signal,
+    gui: guiReducer,
+    __volatile
+  });
+  
+  // Wrapper to handle RESET_TO_NOTHING and LOAD actions
+  return (state = {}, action) => {
+    switch (action.type) {
+      case RESET_TO_NOTHING:
+        return modernReducer(undefined, action);
+      case LOAD:
+        let updates = JSON.parse(action.payload) || {};
+        let newState = {...state, ...updates};
+        return newState;
+      default:
+        return modernReducer(state, action);
+    }
+  };
+};
 
 let store;
 let persistor;
@@ -93,7 +119,11 @@ getStoredState(persistConf, (err, restoredState) => {
   if (purge) {
     restoredState = undefined;
   }
-  store = createStore(rootReducer, restoredState, enhancers)
+  store = configureStore({
+    reducer: createRootReducer(),
+    preloadedState: restoredState,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+  })
 
   persistor = createPersistor(store, persistConf)
   if (purge) {
@@ -122,10 +152,11 @@ getStoredState(persistConf, (err, restoredState) => {
   }
   // Mysteriously required for Settings Pane to work.
   window.React = React;
-  appRoot = render(
+  const container = document.getElementById('synapp');
+  const root = createRoot(container);
+  appRoot = root.render(
     <Provider store={store}>
       <App />
-    </Provider>,
-    document.getElementById('synapp')
+    </Provider>
   );
 })
