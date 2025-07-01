@@ -45,6 +45,9 @@ The content is organized as follows:
 plans/
   start_over_2.md
   start_over_3.md
+  start_over_4.md
+  start_over_5.md
+  start_over_6.md
   start_over.md
 public/
   vite.svg
@@ -53,7 +56,9 @@ src/
     react.svg
   components/
     Controls.tsx
+    ErrorBoundary.tsx
     Header.tsx
+    MappingMatrix.tsx
     VideoFeed.tsx
   hooks/
     useWebcam.ts
@@ -84,174 +89,353 @@ vite.config.ts
 <files>
 This section contains the contents of the repository's files.
 
-<file path="src/hooks/useWebcam.ts">
-import { useEffect, useRef, useState } from 'react';
+<file path="plans/start_over_6.md">
+### Worksheet for Next Steps: The Mapping Matrix
+
+**Objective:** To replace the simple 1-to-1 dropdown mapping with a powerful, many-to-many matrix system. This will allow any signal to influence any parameter with a user-defined **scale** (how much influence) and **bias** (a static offset). This is the true core of the original application's creative potential.
+
+---
+
+#### **Phase 7: Evolving the State for Advanced Mapping**
+
+**Goal:** Update our state management to store a `scale` and `bias` for every possible signal-parameter intersection, not just a single selection.
+
+**Action 7.1: Restructure the `useAppStore.ts` State**
+We will change the `mappings` state from a simple record to a nested object structure: `{[parameter]: {[signal]: {scale: number, bias: number}}}`.
+
+```typescript
+// src/store/useAppStore.ts
+import { create } from 'zustand';
 import { audioService } from '../services/audioService';
 
-export function useWebcam() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const workerRef = useRef<Worker | null>(null);
-  const [isWebcamActive, setIsWebcamActive] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export type SignalName = 'brightness' | 'red' | 'blue';
+export type ParameterName = 'frequency' | 'filterCutoff';
 
-  // Initialize worker
-  useEffect(() => {
-    try {
-      workerRef.current = new Worker(
-        new URL('../workers/featureExtractor.worker.ts', import.meta.url),
-        { type: 'module' }
-      );
-
-      // Handle messages from worker
-      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number }>) => {
-        const { brightness } = event.data;
-        // Direct bridge to audio service - bypasses React state
-        audioService.update(brightness);
-      };
-
-      workerRef.current.onerror = (error) => {
-        console.error('Worker error:', error);
-        setError('Video processing worker failed');
-      };
-    } catch (err) {
-      console.error('Failed to create worker:', err);
-      setError('Failed to initialize video processing');
-    }
-
-    return () => {
-      if (workerRef.current) {
-        workerRef.current.terminate();
-      }
-    };
-  }, []);
-
-  const startWebcam = async () => {
-    try {
-      setError(null);
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { width: 640, height: 480 } 
-      });
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setIsWebcamActive(true);
-        startProcessing();
-      }
-    } catch (err) {
-      console.error('Failed to access webcam:', err);
-      setError('Failed to access webcam. Please check permissions.');
-    }
-  };
-
-  const stopWebcam = () => {
-    if (videoRef.current?.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
-      videoRef.current.srcObject = null;
-    }
-    setIsWebcamActive(false);
-    stopProcessing();
-  };
-
-  const startProcessing = () => {
-    if (!videoRef.current || !canvasRef.current || !workerRef.current) return;
-
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-    if (!ctx) return;
-
-    // Set canvas size to match video
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-
-    let lastProcessTime = 0;
-    const processInterval = 1000 / 15; // Throttle to 15 FPS
-
-    const processFrame = () => {
-      if (!isWebcamActive || !video.videoWidth) {
-        requestAnimationFrame(processFrame);
-        return;
-      }
-
-      const now = Date.now();
-      if (now - lastProcessTime >= processInterval) {
-        // Draw video frame to canvas
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        // Get image data and send to worker
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        workerRef.current?.postMessage(imageData);
-        
-        lastProcessTime = now;
-      }
-
-      if (isWebcamActive) {
-        requestAnimationFrame(processFrame);
-      }
-    };
-
-    // Start processing when video is ready
-    video.addEventListener('loadedmetadata', () => {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      processFrame();
-    });
-
-    if (video.readyState >= 2) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      processFrame();
-    }
-  };
-
-  const stopProcessing = () => {
-    // Processing will stop when isWebcamActive becomes false
-  };
-
-  return {
-    videoRef,
-    canvasRef, // Hidden canvas for processing
-    isWebcamActive,
-    error,
-    startWebcam,
-    stopWebcam,
-  };
+// This is the new shape for a single mapping cell
+export interface MappingValue {
+  scale: number;
+  bias: number;
 }
+
+// The new state shape for all mappings
+type Mappings = Record<ParameterName, Partial<Record<SignalName, MappingValue>>>;
+
+interface AppState {
+  isAudioRunning: boolean;
+  mappings: Mappings;
+  startAudio: () => void;
+  stopAudio: () => void;
+  setMappingValue: (parameter: ParameterName, signal: SignalName, value: Partial<MappingValue>) => void;
+}
+
+// Helper to create a default, empty mapping object for a signal
+const createDefaultMapping = (): MappingValue => ({ scale: 0, bias: 0 });
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  // Default mapping on startup. Brightness controls pitch, Blue controls filter.
+  mappings: {
+    frequency: {
+      brightness: { scale: 1, bias: 0 },
+    },
+    filterCutoff: {
+      blue: { scale: 1, bias: 0 },
+    },
+  },
+  startAudio: () => {
+    audioService.start();
+    set({ isAudioRunning: true });
+  },
+  stopAudio: () => {
+    audioService.stop();
+    set({ isAudioRunning: false });
+  },
+  setMappingValue: (parameter, signal, value) => {
+    set((state) => {
+      const newMappings = { ...state.mappings };
+      // Ensure the nested objects exist before updating
+      if (!newMappings[parameter]) newMappings[parameter] = {};
+      const currentMapping = newMappings[parameter][signal] || createDefaultMapping();
+
+      newMappings[parameter][signal] = { ...currentMapping, ...value };
+
+      return { mappings: newMappings };
+    });
+  },
+}));
+```
+
+---
+
+#### **Phase 8: Implementing Many-to-Many Logic**
+
+**Goal:** Update the `audioService` to calculate the final value for each parameter by summing the contributions of all signals mapped to it.
+
+**Action 8.1: Rework the `audioService.update` Method**
+This is the most critical logic change. The method must now iterate through all possible signals for each parameter and apply their respective `scale` and `bias`.
+
+```typescript
+// src/services/audioService.ts
+import * as Tone from 'tone';
+import { useAppStore, SignalName } from '../store/useAppStore';
+
+// ... (keep the class and start/stop methods as they are) ...
+class AudioService {
+  // ... start, stop, synth, filter ...
+
+  public update(signals: Record<SignalName, number>) {
+    if (!this.isStarted || !this.synth || !this.filter) return;
+
+    const allMappings = useAppStore.getState().mappings;
+
+    // --- Calculate Frequency ---
+    const frequencyMappings = allMappings.frequency || {};
+    const totalFrequencyInfluence = Object.keys(frequencyMappings).reduce((acc, signal) => {
+      const mapping = frequencyMappings[signal as SignalName];
+      if (!mapping) return acc;
+
+      const signalValue = signals[signal as SignalName] || 0;
+      // Accumulate scaled signal values and biases
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
+
+    // Clamp the final influence to a -1 to 1 range before mapping to audio units
+    const clampedFrequency = Math.max(-1, Math.min(1, totalFrequencyInfluence));
+    const frequency = (clampedFrequency + 1) / 2 * 1200 + 200; // Map range 0-1 to 200-1400 Hz
+
+    // --- Calculate Filter Cutoff ---
+    const filterMappings = allMappings.filterCutoff || {};
+    const totalFilterInfluence = Object.keys(filterMappings).reduce((acc, signal) => {
+      const mapping = filterMappings[signal as SignalName];
+      if (!mapping) return acc;
+
+      const signalValue = signals[signal as SignalName] || 0;
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
+
+    const clampedFilter = Math.max(-1, Math.min(1, totalFilterInfluence));
+    const filterCutoff = (clampedFilter + 1) / 2 * 6000 + 400; // Map range 0-1 to 400-6400 Hz
+
+    // --- Apply to Synth ---
+    this.synth.setNote(frequency);
+    this.filter.frequency.rampTo(filterCutoff, 0.05);
+  }
+}
+
+export const audioService = new AudioService();
+```
+
+---
+
+#### **Phase 9: Building the Mapping Matrix UI**
+
+**Goal:** Replace the simple dropdown controls with a matrix UI that has sliders for `scale` and `bias` at each intersection.
+
+**Action 9.1: Create the `MappingMatrix.tsx` Component**
+This new component will be the main interface for sound design.
+
+```typescript
+// src/components/MappingMatrix.tsx
+import { useAppStore, ParameterName, SignalName, MappingValue } from '../store/useAppStore';
+
+const signals: SignalName[] = ['brightness', 'red', 'blue'];
+const parameters: ParameterName[] = ['frequency', 'filterCutoff'];
+
+// A single cell in our matrix
+function MappingCell({ parameter, signal }: { parameter: ParameterName; signal: SignalName }) {
+  const { mappings, setMappingValue } = useAppStore();
+  const mapping = mappings[parameter]?.[signal] || { scale: 0, bias: 0 };
+
+  const handleScaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { scale: parseFloat(e.target.value) });
+  };
+
+  const handleBiasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { bias: parseFloat(e.target.value) });
+  };
+
+  return (
+    <div className="bg-gray-800 p-2 rounded">
+      <div className="flex items-center justify-between text-xs">
+        <label htmlFor={`${parameter}-${signal}-scale`}>Scale</label>
+        <span className="font-mono">{mapping.scale.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-scale`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.scale}
+        onChange={handleScaleChange}
+        className="w-full h-1"
+      />
+      <div className="flex items-center justify-between text-xs mt-2">
+        <label htmlFor={`${parameter}-${signal}-bias`}>Bias</label>
+        <span className="font-mono">{mapping.bias.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-bias`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.bias}
+        onChange={handleBiasChange}
+        className="w-full h-1"
+      />
+    </div>
+  );
+}
+
+export function MappingMatrix() {
+  return (
+    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner w-full max-w-4xl">
+      <h3 className="text-lg font-semibold mb-3 text-center">Mapping Matrix</h3>
+      <div className="grid grid-cols-4 gap-2 text-center items-center">
+        <div /> {/* Empty corner */}
+        {signals.map(s => <div key={s} className="capitalize font-bold text-gray-300">{s}</div>)}
+
+        {parameters.map(p => (
+          <>
+            <div key={p} className="capitalize font-bold text-gray-300 text-right pr-2">
+              {p === 'frequency' ? 'Pitch' : 'Filter'}
+            </div>
+            {signals.map(s => <MappingCell key={`${p}-${s}`} parameter={p} signal={s} />)}
+          </>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+**Action 9.2: Update `App.tsx` to Use the New Matrix**
+Replace `<MappingControls />` with `<MappingMatrix />`.
+
+```typescript
+// src/App.tsx
+// ... (imports) ...
+import { MappingMatrix } from './components/MappingMatrix'; // Import the new component
+
+function App() {
+  // ... (hooks and useEffect remain the same) ...
+
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed videoRef={videoRef} />
+        <Controls />
+        <MappingMatrix /> {/* Replace the old controls with the new matrix */}
+        {error && <div className="mt-4 p-2 bg-red-800 text-white rounded">{error}</div>}
+      </main>
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+**Action 9.3: Remove the Old `MappingControls.tsx`**
+The file `src/components/MappingControls.tsx` is now obsolete and can be safely deleted.
+
+---
+
+### Testing and Validation Plan
+
+**Test Case 1: Complex Mapping**
+1.  Start the application.
+2.  In the matrix, find the cell where "Pitch" (frequency) intersects with "brightness". Set its `scale` slider to `1.0`.
+3.  Find the cell where "Pitch" intersects with "red". Set its `scale` slider to `0.5`.
+4.  Hold a very red object in front of the camera. The pitch should rise.
+5.  Now, while keeping the red object, shine a bright white light as well.
+6.  **Expected Result:** The pitch should rise *even higher* than it did with just the red object, confirming that the influences from brightness and red are being summed.
+
+**Test Case 2: Negative Scaling**
+1.  Reset the mapping from the previous test (or reload the page).
+2.  Map "Pitch" to "brightness" with a `scale` of `-1.0`.
+3.  **Expected Result:** As the view gets brighter, the pitch should now *decrease*. This confirms negative scaling works.
+
+**Test Case 3: Bias Control**
+1.  Set the `scale` for all mappings for "Pitch" to `0.0`.
+2.  Set the `bias` for the "Pitch" -> "brightness" cell to `0.5`.
+3.  **Expected Result:** The pitch should jump to a high, static value and *not* change when the video input changes. This confirms the bias is working independently.
 </file>
 
-<file path="src/workers/featureExtractor.worker.ts">
-self.onmessage = (event: MessageEvent<ImageData>) => {
-  const imageData = event.data;
-  const data = imageData.data;
-  let brightness = 0;
+<file path="src/components/MappingMatrix.tsx">
+import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
 
-  // Calculate average brightness (simple grayscale approximation)
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
-    brightness += (r + g + b) / 3;
-  }
+const signals: SignalName[] = ['brightness', 'red', 'blue'];
+const parameters: ParameterName[] = ['frequency', 'filterCutoff'];
 
-  const avgBrightness = brightness / (data.length / 4);
+// A single cell in our matrix
+function MappingCell({ parameter, signal }: { parameter: ParameterName; signal: SignalName }) {
+  const { mappings, setMappingValue } = useAppStore();
+  const mapping = mappings[parameter]?.[signal] || { scale: 0, bias: 0 };
 
-  // Post the result back to the main thread
-  self.postMessage({ brightness: avgBrightness / 255 }); // Normalize to 0-1
-};
-</file>
+  const handleScaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { scale: parseFloat(e.target.value) });
+  };
 
-<file path=".claude/settings.local.json">
-{
-  "permissions": {
-    "allow": [
-      "Bash(pnpm install:*)",
-      "Bash(pnpm dev:*)"
-    ],
-    "deny": []
-  }
+  const handleBiasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { bias: parseFloat(e.target.value) });
+  };
+
+  return (
+    <div className="bg-gray-800 p-2 rounded">
+      <div className="flex items-center justify-between text-xs">
+        <label htmlFor={`${parameter}-${signal}-scale`}>Scale</label>
+        <span className="font-mono">{mapping.scale.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-scale`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.scale}
+        onChange={handleScaleChange}
+        className="w-full h-1"
+      />
+      <div className="flex items-center justify-between text-xs mt-2">
+        <label htmlFor={`${parameter}-${signal}-bias`}>Bias</label>
+        <span className="font-mono">{mapping.bias.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-bias`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.bias}
+        onChange={handleBiasChange}
+        className="w-full h-1"
+      />
+    </div>
+  );
+}
+
+export function MappingMatrix() {
+  return (
+    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner w-full max-w-4xl">
+      <h3 className="text-lg font-semibold mb-3 text-center">Mapping Matrix</h3>
+      <div className="grid grid-cols-4 gap-2 text-center items-center">
+        <div /> {/* Empty corner */}
+        {signals.map(s => <div key={s} className="capitalize font-bold text-gray-300">{s}</div>)}
+
+        {parameters.map(p => (
+          <>
+            <div key={p} className="capitalize font-bold text-gray-300 text-right pr-2">
+              {p === 'frequency' ? 'Pitch' : 'Filter'}
+            </div>
+            {signals.map(s => <MappingCell key={`${p}-${s}`} parameter={p} signal={s} />)}
+          </>
+        ))}
+      </div>
+    </div>
+  );
 }
 </file>
 
@@ -678,6 +862,455 @@ The final piece is a custom hook that manages the webcam, the worker, and acts a
 *This plan defers the full implementation of this complex hook but defines its role and how it will solve the performance problem.* By planning for this architecture now, we ensure the AI assistant builds the right foundation.
 </file>
 
+<file path="plans/start_over_4.md">
+### Worksheet for Next Steps: UI Integration and Activation
+
+**Goal:** To connect the `useWebcam` hook to the React components, activate the full audio-visual experience, and provide clear feedback to the user.
+
+---
+
+#### **Phase 4: Hook Integration and UI Activation**
+
+**Action 4.1: Integrate the `useWebcam` Hook into the Main App**
+
+Modify `src/App.tsx`. We will call the hook here to manage the webcam lifecycle at the top level of the application.
+
+```typescript
+// src/App.tsx
+
+import { Header } from './components/Header';
+import { VideoFeed } from './components/VideoFeed';
+import { Controls } from './components/Controls';
+import { useWebcam } from './hooks/useWebcam';
+import { useAppStore } from './store/useAppStore';
+import { useEffect } from 'react';
+
+function App() {
+  const { videoRef, canvasRef, error, startWebcam, stopWebcam } = useWebcam();
+  const { isAudioRunning } = useAppStore();
+
+  useEffect(() => {
+    // This effect synchronizes the webcam with the global audio state
+    if (isAudioRunning) {
+      startWebcam();
+    } else {
+      stopWebcam();
+    }
+  }, [isAudioRunning, startWebcam, stopWebcam]);
+
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed videoRef={videoRef} />
+        <Controls />
+        {error && <div className="mt-4 p-2 bg-red-800 text-white rounded">{error}</div>}
+      </main>
+      {/* The canvas is required for processing but should not be visible to the user */}
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+**Action 4.2: Update the `VideoFeed` Component to Use the `videoRef`**
+
+Modify `src/components/VideoFeed.tsx` to accept the `videoRef` from its parent and attach it to the `<video>` element.
+
+```typescript
+// src/components/VideoFeed.tsx
+
+import { RefObject } from 'react';
+
+interface VideoFeedProps {
+  videoRef: RefObject<HTMLVideoElement>;
+}
+
+export function VideoFeed({ videoRef }: VideoFeedProps) {
+  return (
+    <div className="bg-black aspect-video w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover"
+        autoPlay
+        playsInline
+        muted
+      />
+      {/* The video element is muted by default to prevent audio feedback. Sound is generated by Tone.js. */}
+    </div>
+  );
+}
+```
+
+**Action 4.3: Clean up the `Controls` Component (No changes needed)**
+
+Reviewing the plan, the existing `Controls.tsx` and `useAppStore.ts` already do exactly what we need. The `Controls` component triggers `startAudio`/`stopAudio` in the store. The new `useEffect` hook we added in `App.tsx` now listens for that state change and calls `startWebcam`/`stopWebcam` accordingly. The orchestration is complete and correctly decoupled.
+
+---
+
+### Testing and Validation Plan
+
+After the AI assistant completes the actions above, perform the following manual tests to validate that the MVP is fully functional.
+
+**Test Case 1: Initial State**
+1.  Run the application (`pnpm dev`).
+2.  Open the app in your browser.
+3.  **Expected Result:** The UI displays the "Synestizer Indigo" header, a black box for the video feed, and a green "Start" button. The webcam light on your computer should be **off**.
+
+**Test Case 2: Successful Start and Operation**
+1.  Click the "Start" button.
+2.  The browser will likely ask for permission to use your camera. **Click "Allow"**.
+3.  **Expected Result:**
+    *   The "Start" button immediately changes to a red "Stop" button.
+    *   Your webcam video stream appears in the video feed area. The webcam light on your computer turns **on**.
+    *   You should hear a continuous synthesized sound.
+    *   Move your hand over your webcam, making the view darker and brighter. You should hear the **pitch of the sound change** in response. This confirms the entire pipeline (Video -> Canvas -> Worker -> AudioService) is working.
+
+**Test Case 3: Successful Stop**
+1.  While the application is running, click the "Stop" button.
+2.  **Expected Result:**
+    *   The video feed stops, likely showing the last frame or turning black.
+    *   The webcam light on your computer turns **off**.
+    *   The sound stops completely.
+    *   The button reverts to the green "Start" button.
+
+**Test Case 4: Error Handling (Webcam Permission Denied)**
+1.  Stop the application if it is running. You may need to reset camera permissions in your browser's site settings for this test.
+2.  Reload the page and click "Start".
+3.  When the browser asks for permission, **click "Block" or "Deny"**.
+4.  **Expected Result:**
+    *   An error message ("Failed to access webcam. Please check permissions.") should appear below the controls.
+    *   The video feed should remain black.
+    *   No sound should play.
+    *   The button should revert to "Start". The application should remain stable and not crash.
+</file>
+
+<file path="plans/start_over_5.md">
+Our MVP successfully established the core high-performance architecture. Now, we can build upon that foundation to re-introduce the expressiveness of the original, starting with the most impactful features.
+
+The most logical progression is:
+1.  **Extract More Signals:** Move beyond simple brightness to extract color information, creating a richer palette of data from the video stream.
+2.  **Introduce a Mapping System:** Create a flexible way for the user to connect these new signals to different sound parameters.
+3.  **Enhance the Synthesizer:** Add more parameters to the synthesizer (like a filter) to give the user more destinations (sinks) for their signals.
+
+Here is a new worksheet for your AI assistant to implement these features.
+
+---
+
+### **Worksheet for Next Steps: Signal Generation and Mapping**
+
+**Objective:** To evolve the MVP from a single-signal, single-parameter application into a multi-signal system with a user-configurable mapping UI and a more complex synthesizer.
+
+---
+
+### **Phase 5: Advanced Feature Extraction**
+
+**Goal:** Replicate the basic color analysis from `synestizer-blue`. The worker will be updated to calculate not just brightness, but also the average "redness" and "blueness" of the video frame.
+
+**Analysis of `synestizer-blue`:** The file `src/io/video/statModels.js` shows that the old app performed an RGB-to-YCbCr conversion to separate brightness (Luma, or 'Y') from color information (Chroma, or 'Cb' and 'Cr'). We will implement a simplified version of this.
+
+**Action 5.1: Enhance the `featureExtractor.worker.ts`**
+Modify the worker to calculate and return three values: brightness, red, and blue.
+
+```typescript
+// src/workers/featureExtractor.worker.ts
+
+self.onmessage = (event: MessageEvent<ImageData>) => {
+  const imageData = event.data;
+  const data = imageData.data;
+  let totalBrightness = 0;
+  let totalRed = 0;
+  let totalBlue = 0;
+  const pixelCount = data.length / 4;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+
+    // RGB to Brightness (Luma) and simplified Chroma
+    totalBrightness += (r * 0.299 + g * 0.587 + b * 0.114);
+    totalRed += Math.max(0, r - (g + b) / 2); // Measures redness vs the average of green/blue
+    totalBlue += Math.max(0, b - (r + g) / 2); // Measures blueness vs the average of red/green
+  }
+
+  // Normalize all values to a 0-1 range
+  const avgBrightness = (totalBrightness / pixelCount) / 255;
+  const avgRed = (totalRed / pixelCount) / 128; // Heuristic normalization
+  const avgBlue = (totalBlue / pixelCount) / 128; // Heuristic normalization
+
+  // Post the result object back to the main thread
+  self.postMessage({
+    brightness: avgBrightness,
+    red: avgRed,
+    blue: avgBlue
+  });
+};
+```
+
+**Action 5.2: Update the `useWebcam` Hook's Bridge**
+Modify the `onmessage` handler in `src/hooks/useWebcam.ts` to accept the new data object and pass it directly to the `audioService`.
+
+```typescript
+// src/hooks/useWebcam.ts
+
+// ... inside the useWebcam hook ...
+
+      // Handle messages from worker
+      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number; red: number; blue: number }>) => {
+        // The entire data object is passed directly to the audio service.
+        // This maintains the performance architecture: no React state is involved here.
+        audioService.update(event.data);
+      };
+
+// ... rest of the hook
+```
+
+**Action 5.3: Update the `audioService` to Accept the New Data Structure**
+Modify `src/services/audioService.ts` so its `update` method can receive the new object. For now, it will still only use the brightness value, but this prepares it for the next phase.
+
+```typescript
+// src/services/audioService.ts
+
+// ... inside the AudioService class ...
+
+  // This method will be called directly with high-frequency data
+  public update(signals: { brightness: number; red: number; blue: number }) {
+    if (!this.isStarted || !this.synth) return;
+
+    // For now, we only use brightness. The others are ignored but available.
+    const { brightness } = signals;
+
+    // Map brightness (0-1) to a musical frequency range (e.g., 200Hz to 800Hz)
+    const frequency = brightness * 600 + 200;
+    this.synth.setNote(frequency);
+  }
+
+// ... rest of the class
+```
+
+---
+
+### **Phase 6: UI for Signal Mapping & Enhanced Synthesizer**
+
+**Goal:** Create a simple UI that allows the user to map the new `brightness`, `red`, and `blue` signals to different parameters of an enhanced synthesizer.
+
+**Action 6.1: Enhance the Synthesizer in `audioService.ts`**
+Add a `Tone.Filter` to the synthesizer chain. This gives us a new controllable parameter: `filter.frequency`.
+
+```typescript
+// src/services/audioService.ts
+import * as Tone from 'tone';
+import { useAppStore } from '../store/useAppStore'; // We need access to the store for mappings
+
+class AudioService {
+  private isStarted = false;
+  private synth: Tone.Synth | null = null;
+  private filter: Tone.Filter | null = null; // Add a filter
+
+  public async start() {
+    if (this.isStarted) return;
+    await Tone.start();
+
+    this.synth = new Tone.Synth();
+    this.filter = new Tone.Filter(1000, "lowpass").toDestination(); // Initialize filter
+    this.synth.connect(this.filter); // Connect synth through the filter
+
+    this.synth.triggerAttack("C4");
+    console.log("Audio service started with synth and filter.");
+    this.isStarted = true;
+  }
+
+  public stop() {
+    if (!this.isStarted || !this.synth) return;
+    this.synth.triggerRelease();
+    this.synth = null;
+    this.filter = null;
+    this.isStarted = false;
+    console.log("Audio service stopped.");
+  }
+
+  public update(signals: { brightness: number; red: number; blue: number }) {
+    if (!this.isStarted || !this.synth || !this.filter) return;
+
+    // Get the current mapping configuration from the Zustand store
+    const mappings = useAppStore.getState().mappings;
+
+    // Map parameters based on the user's chosen configuration
+    const frequencySignalValue = signals[mappings.frequency];
+    const filterCutoffSignalValue = signals[mappings.filterCutoff];
+
+    const frequency = frequencySignalValue * 600 + 200; // Map signal to pitch
+    const filterCutoff = filterCutoffSignalValue * 4000 + 400; // Map signal to filter cutoff
+
+    this.synth.setNote(frequency);
+    this.filter.frequency.rampTo(filterCutoff, 0.05); // Ramp to the new cutoff
+  }
+}
+
+export const audioService = new AudioService();
+```
+
+**Action 6.2: Update the Application State in `useAppStore.ts`**
+Add the `mappings` configuration to our Zustand store.
+
+```typescript
+// src/store/useAppStore.ts
+import { create } from 'zustand';
+import { audioService } from '../services/audioService';
+
+// Define the types for our signals and parameters
+export type SignalName = 'brightness' | 'red' | 'blue';
+export type ParameterName = 'frequency' | 'filterCutoff';
+
+interface AppState {
+  isAudioRunning: boolean;
+  mappings: Record<ParameterName, SignalName>;
+  startAudio: () => void;
+  stopAudio: () => void;
+  setMapping: (parameter: ParameterName, signal: SignalName) => void;
+}
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  // Default mapping on startup
+  mappings: {
+    frequency: 'brightness',
+    filterCutoff: 'blue',
+  },
+  startAudio: () => {
+    audioService.start();
+    set({ isAudioRunning: true });
+  },
+  stopAudio: () => {
+    audioService.stop();
+    set({ isAudioRunning: false });
+  },
+  setMapping: (parameter, signal) => {
+    set((state) => ({
+      mappings: {
+        ...state.mappings,
+        [parameter]: signal,
+      },
+    }));
+  },
+}));
+```
+
+**Action 6.3: Create the Mapping UI Component**
+Create a new file at `src/components/MappingControls.tsx`. This component will render dropdowns for the user to configure the signal mappings.
+
+```typescript
+// src/components/MappingControls.tsx
+import { useAppStore, ParameterName, SignalName } from '../store/useAppStore';
+
+const signals: SignalName[] = ['brightness', 'red', 'blue'];
+const parameters: ParameterName[] = ['frequency', 'filterCutoff'];
+
+export function MappingControls() {
+  const { mappings, setMapping } = useAppStore();
+
+  return (
+    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner">
+      <h3 className="text-lg font-semibold mb-2 text-center">Signal Mappings</h3>
+      <div className="grid grid-cols-2 gap-4">
+        {parameters.map((param) => (
+          <div key={param} className="flex flex-col items-center">
+            <label htmlFor={param} className="capitalize text-sm mb-1 text-gray-300">
+              {param === 'frequency' ? 'Pitch' : 'Filter'}
+            </label>
+            <select
+              id={param}
+              value={mappings[param]}
+              onChange={(e) => setMapping(param, e.target.value as SignalName)}
+              className="bg-gray-800 border border-gray-600 rounded px-2 py-1"
+            >
+              {signals.map((signal) => (
+                <option key={signal} value={signal} className="capitalize">
+                  {signal}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+**Action 6.4: Integrate the New Component into `App.tsx`**
+Add the `<MappingControls />` component to the main application UI.
+
+```typescript
+// src/App.tsx
+
+import { Header } from './components/Header';
+import { VideoFeed } from './components/VideoFeed';
+import { Controls } from './components/Controls';
+import { useWebcam } from './hooks/useWebcam';
+import { useAppStore } from './store/useAppStore';
+import { useEffect } from 'react';
+import { MappingControls } from './components/MappingControls'; // Import the new component
+
+function App() {
+  const { videoRef, canvasRef, error, startWebcam, stopWebcam } = useWebcam();
+  const { isAudioRunning } = useAppStore();
+
+  useEffect(() => {
+    if (isAudioRunning) {
+      startWebcam();
+    } else {
+      stopWebcam();
+    }
+  }, [isAudioRunning, startWebcam, stopWebcam]);
+
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed videoRef={videoRef} />
+        <Controls />
+        <MappingControls /> {/* Add the mapping controls to the UI */}
+        {error && <div className="mt-4 p-2 bg-red-800 text-white rounded">{error}</div>}
+      </main>
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Testing and Validation Plan
+
+After the AI assistant completes these actions, perform the following tests:
+
+**Test Case 1: UI and Default State**
+1.  Run the application.
+2.  **Expected Result:** You should see the new "Signal Mappings" panel. The "Pitch" dropdown should have "brightness" selected, and the "Filter" dropdown should have "blue" selected, as per our defaults.
+
+**Test Case 2: End-to-End Functionality Test**
+1.  Start the application.
+2.  Hold a bright white object (like a phone screen) in front of the camera.
+3.  **Expected Result:** The pitch of the sound should increase.
+4.  Now, hold a distinctly blue object in front of the camera.
+5.  **Expected Result:** The sound should change in timbre, becoming brighter or duller as the filter cutoff frequency changes. The pitch should not be significantly affected.
+
+**Test Case 3: Re-mapping Test**
+1.  In the "Signal Mappings" UI, change the "Pitch" dropdown to "red" and the "Filter" dropdown to "brightness".
+2.  Hold a distinctly red object in front of the camera.
+3.  **Expected Result:** The **pitch** of the sound should now change.
+4.  Now, hold the bright white object in front of the camera again.
+5.  **Expected Result:** The **timbre** of the sound (the filter) should now change. The pitch should not be significantly affected.
+
+Passing these tests will confirm that the new signals are being generated correctly and that the user-configurable mapping system is successfully controlling the enhanced synthesizer.
+</file>
+
 <file path="plans/start_over.md">
 ### Guiding Principles & Conventions
 
@@ -804,6 +1437,62 @@ export function Controls() {
 }
 </file>
 
+<file path="src/components/ErrorBoundary.tsx">
+import { Component, type ErrorInfo, type ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  public state: State = {
+    hasError: false
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-800 text-white flex items-center justify-center p-4">
+          <div className="bg-red-900 border border-red-700 rounded-lg p-6 max-w-lg">
+            <h2 className="text-xl font-bold mb-4">Application Error</h2>
+            <p className="mb-4">Something went wrong. Please check the console for details.</p>
+            {this.state.error && (
+              <details className="bg-red-800 p-3 rounded text-sm">
+                <summary className="cursor-pointer font-semibold">Error Details</summary>
+                <pre className="mt-2 whitespace-pre-wrap">{this.state.error.toString()}</pre>
+              </details>
+            )}
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+</file>
+
 <file path="src/components/Header.tsx">
 export function Header() {
   return (
@@ -812,76 +1501,6 @@ export function Header() {
     </header>
   );
 }
-</file>
-
-<file path="src/components/VideoFeed.tsx">
-export function VideoFeed() {
-  return (
-    <div className="bg-black aspect-video w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
-      <video className="w-full h-full object-cover" autoPlay playsInline muted />
-      {/* The video element is muted by default to prevent audio feedback. Sound will be generated by Tone.js. */}
-    </div>
-  );
-}
-</file>
-
-<file path="src/services/audioService.ts">
-import * as Tone from 'tone';
-
-class AudioService {
-  private isStarted = false;
-  private synth: Tone.Synth | null = null;
-
-  public async start() {
-    if (this.isStarted) return;
-    await Tone.start();
-    this.synth = new Tone.Synth().toDestination();
-    this.synth.triggerAttack("C4");
-    console.log("Audio service started with synth.");
-    this.isStarted = true;
-  }
-
-  public stop() {
-    if (!this.isStarted || !this.synth) return;
-    this.synth.triggerRelease();
-    this.synth = null;
-    this.isStarted = false;
-    console.log("Audio service stopped.");
-  }
-
-  // This method will be called directly with high-frequency data
-  public update(brightness: number) {
-    if (!this.isStarted || !this.synth) return;
-    // Map brightness (0-1) to a musical frequency range (e.g., 200Hz to 800Hz)
-    const frequency = brightness * 600 + 200;
-    this.synth.setNote(frequency);
-  }
-}
-
-export const audioService = new AudioService();
-</file>
-
-<file path="src/store/useAppStore.ts">
-import { create } from 'zustand';
-import { audioService } from '../services/audioService';
-
-interface AppState {
-  isAudioRunning: boolean;
-  startAudio: () => void;
-  stopAudio: () => void;
-}
-
-export const useAppStore = create<AppState>((set) => ({
-  isAudioRunning: false,
-  startAudio: () => {
-    audioService.start();
-    set({ isAudioRunning: true });
-  },
-  stopAudio: () => {
-    audioService.stop();
-    set({ isAudioRunning: false });
-  },
-}));
 </file>
 
 <file path="src/App.css">
@@ -933,19 +1552,6 @@ export const useAppStore = create<AppState>((set) => ({
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-</file>
-
-<file path="src/main.tsx">
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
 </file>
 
 <file path="src/vite-env.d.ts">
@@ -1070,24 +1676,292 @@ export default defineConfig({
 })
 </file>
 
-<file path="src/App.tsx">
-import { Header } from './components/Header';
-import { VideoFeed } from './components/VideoFeed';
-import { Controls } from './components/Controls';
+<file path=".claude/settings.local.json">
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pkill:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run:*)"
+    ],
+    "deny": []
+  }
+}
+</file>
 
-function App() {
+<file path="src/components/VideoFeed.tsx">
+import { type RefObject } from 'react';
+
+interface VideoFeedProps {
+  videoRef: RefObject<HTMLVideoElement | null>;
+}
+
+export function VideoFeed({ videoRef }: VideoFeedProps) {
   return (
-    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow flex flex-col items-center justify-center p-4">
-        <VideoFeed />
-        <Controls />
-      </main>
+    <div className="bg-black aspect-video w-full max-w-4xl rounded-lg shadow-lg overflow-hidden">
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover"
+        autoPlay
+        playsInline
+        muted
+      />
+      {/* The video element is muted by default to prevent audio feedback. Sound is generated by Tone.js. */}
     </div>
   );
 }
+</file>
 
-export default App;
+<file path="src/hooks/useWebcam.ts">
+import { useEffect, useRef, useState } from 'react';
+import { audioService } from '../services/audioService';
+
+export function useWebcam() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const workerRef = useRef<Worker | null>(null);
+  const [isWebcamActive, setIsWebcamActive] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Initialize worker
+  useEffect(() => {
+    try {
+      workerRef.current = new Worker(
+        new URL('../workers/featureExtractor.worker.ts', import.meta.url),
+        { type: 'module' }
+      );
+
+      // Handle messages from worker
+      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number; red: number; blue: number }>) => {
+        // The entire data object is passed directly to the audio service.
+        // This maintains the performance architecture: no React state is involved here.
+        audioService.update(event.data);
+      };
+
+      workerRef.current.onerror = (error) => {
+        console.error('Worker error:', error);
+        setError('Video processing worker failed');
+      };
+    } catch (err) {
+      console.error('Failed to create worker:', err);
+      setError('Failed to initialize video processing');
+    }
+
+    return () => {
+      if (workerRef.current) {
+        workerRef.current.terminate();
+      }
+    };
+  }, []);
+
+  const startWebcam = async () => {
+    try {
+      setError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { width: 640, height: 480 } 
+      });
+      
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        setIsWebcamActive(true);
+        startProcessing();
+      }
+    } catch (err) {
+      console.error('Failed to access webcam:', err);
+      setError('Failed to access webcam. Please check permissions.');
+    }
+  };
+
+  const stopWebcam = () => {
+    if (videoRef.current?.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      videoRef.current.srcObject = null;
+    }
+    setIsWebcamActive(false);
+    stopProcessing();
+  };
+
+  const startProcessing = () => {
+    if (!videoRef.current || !canvasRef.current || !workerRef.current) return;
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) return;
+
+    // Set canvas size to match video
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+
+    let lastProcessTime = 0;
+    const processInterval = 1000 / 15; // Throttle to 15 FPS
+
+    const processFrame = () => {
+      if (!isWebcamActive || !video.videoWidth) {
+        requestAnimationFrame(processFrame);
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastProcessTime >= processInterval) {
+        // Draw video frame to canvas
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // Get image data and send to worker
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        workerRef.current?.postMessage(imageData);
+        
+        lastProcessTime = now;
+      }
+
+      if (isWebcamActive) {
+        requestAnimationFrame(processFrame);
+      }
+    };
+
+    // Start processing when video is ready
+    video.addEventListener('loadedmetadata', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      processFrame();
+    });
+
+    if (video.readyState >= 2) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      processFrame();
+    }
+  };
+
+  const stopProcessing = () => {
+    // Processing will stop when isWebcamActive becomes false
+  };
+
+  return {
+    videoRef,
+    canvasRef, // Hidden canvas for processing
+    isWebcamActive,
+    error,
+    startWebcam,
+    stopWebcam,
+  };
+}
+</file>
+
+<file path="src/store/useAppStore.ts">
+import { create } from 'zustand';
+import { audioService } from '../services/audioService';
+
+export type SignalName = 'brightness' | 'red' | 'blue';
+export type ParameterName = 'frequency' | 'filterCutoff';
+
+// This is the new shape for a single mapping cell
+export interface MappingValue {
+  scale: number;
+  bias: number;
+}
+
+// The new state shape for all mappings
+type Mappings = Record<ParameterName, Partial<Record<SignalName, MappingValue>>>;
+
+interface AppState {
+  isAudioRunning: boolean;
+  mappings: Mappings;
+  startAudio: () => void;
+  stopAudio: () => void;
+  setMappingValue: (parameter: ParameterName, signal: SignalName, value: Partial<MappingValue>) => void;
+}
+
+// Helper to create a default, empty mapping object for a signal
+const createDefaultMapping = (): MappingValue => ({ scale: 0, bias: 0 });
+
+export const useAppStore = create<AppState>((set) => ({
+  isAudioRunning: false,
+  // Default mapping on startup. Brightness controls pitch, Blue controls filter.
+  mappings: {
+    frequency: {
+      brightness: { scale: 1, bias: 0 },
+    },
+    filterCutoff: {
+      blue: { scale: 1, bias: 0 },
+    },
+  },
+  startAudio: () => {
+    audioService.start();
+    set({ isAudioRunning: true });
+  },
+  stopAudio: () => {
+    audioService.stop();
+    set({ isAudioRunning: false });
+  },
+  setMappingValue: (parameter, signal, value) => {
+    set((state) => {
+      const newMappings = { ...state.mappings };
+      // Ensure the nested objects exist before updating
+      if (!newMappings[parameter]) newMappings[parameter] = {};
+      const currentMapping = newMappings[parameter][signal] || createDefaultMapping();
+
+      newMappings[parameter][signal] = { ...currentMapping, ...value };
+
+      return { mappings: newMappings };
+    });
+  },
+}));
+</file>
+
+<file path="src/workers/featureExtractor.worker.ts">
+self.onmessage = (event: MessageEvent<ImageData>) => {
+  const imageData = event.data;
+  const data = imageData.data;
+  let totalBrightness = 0;
+  let totalRed = 0;
+  let totalBlue = 0;
+  const pixelCount = data.length / 4;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+
+    // RGB to Brightness (Luma) and simplified Chroma
+    totalBrightness += (r * 0.299 + g * 0.587 + b * 0.114);
+    totalRed += Math.max(0, r - (g + b) / 2); // Measures redness vs the average of green/blue
+    totalBlue += Math.max(0, b - (r + g) / 2); // Measures blueness vs the average of red/green
+  }
+
+  // Normalize all values to a 0-1 range
+  const avgBrightness = (totalBrightness / pixelCount) / 255;
+  const avgRed = (totalRed / pixelCount) / 128; // Heuristic normalization
+  const avgBlue = (totalBlue / pixelCount) / 128; // Heuristic normalization
+
+  // Post the result object back to the main thread
+  self.postMessage({
+    brightness: avgBrightness,
+    red: avgRed,
+    blue: avgBlue
+  });
+};
+</file>
+
+<file path="src/main.tsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+import ErrorBoundary from './components/ErrorBoundary.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  </StrictMode>,
+)
 </file>
 
 <file path=".gitignore">
@@ -1142,6 +2016,119 @@ export default {
 }
 </file>
 
+<file path="src/services/audioService.ts">
+import * as Tone from 'tone';
+import { useAppStore, type SignalName } from '../store/useAppStore';
+
+class AudioService {
+  private isStarted = false;
+  private synth: Tone.Synth | null = null;
+  private filter: Tone.Filter | null = null; // Add a filter
+
+  public async start() {
+    if (this.isStarted) return;
+    await Tone.start();
+
+    this.synth = new Tone.Synth();
+    this.filter = new Tone.Filter(1000, "lowpass").toDestination(); // Initialize filter
+    this.synth.connect(this.filter); // Connect synth through the filter
+
+    this.synth.triggerAttack("C4");
+    console.log("Audio service started with synth and filter.");
+    this.isStarted = true;
+  }
+
+  public stop() {
+    if (!this.isStarted || !this.synth) return;
+    this.synth.triggerRelease();
+    this.synth = null;
+    this.filter = null;
+    this.isStarted = false;
+    console.log("Audio service stopped.");
+  }
+
+  public update(signals: Record<SignalName, number>) {
+    if (!this.isStarted || !this.synth || !this.filter) return;
+
+    const allMappings = useAppStore.getState().mappings;
+
+    // --- Calculate Frequency ---
+    const frequencyMappings = allMappings.frequency || {};
+    const totalFrequencyInfluence = Object.keys(frequencyMappings).reduce((acc, signal) => {
+      const mapping = frequencyMappings[signal as SignalName];
+      if (!mapping) return acc;
+
+      const signalValue = signals[signal as SignalName] || 0;
+      // Accumulate scaled signal values and biases
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
+
+    // Clamp the final influence to a -1 to 1 range before mapping to audio units
+    const clampedFrequency = Math.max(-1, Math.min(1, totalFrequencyInfluence));
+    const frequency = (clampedFrequency + 1) / 2 * 1200 + 200; // Map range 0-1 to 200-1400 Hz
+
+    // --- Calculate Filter Cutoff ---
+    const filterMappings = allMappings.filterCutoff || {};
+    const totalFilterInfluence = Object.keys(filterMappings).reduce((acc, signal) => {
+      const mapping = filterMappings[signal as SignalName];
+      if (!mapping) return acc;
+
+      const signalValue = signals[signal as SignalName] || 0;
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
+
+    const clampedFilter = Math.max(-1, Math.min(1, totalFilterInfluence));
+    const filterCutoff = (clampedFilter + 1) / 2 * 6000 + 400; // Map range 0-1 to 400-6400 Hz
+
+    // --- Apply to Synth ---
+    this.synth.setNote(frequency);
+    this.filter.frequency.rampTo(filterCutoff, 0.05);
+  }
+}
+
+export const audioService = new AudioService();
+</file>
+
+<file path="src/App.tsx">
+import { Header } from './components/Header';
+import { VideoFeed } from './components/VideoFeed';
+import { Controls } from './components/Controls';
+import { useWebcam } from './hooks/useWebcam';
+import { useAppStore } from './store/useAppStore';
+import { useEffect } from 'react';
+import { MappingMatrix } from './components/MappingMatrix';
+
+function App() {
+  const { videoRef, canvasRef, error, startWebcam, stopWebcam } = useWebcam();
+  const { isAudioRunning } = useAppStore();
+
+  useEffect(() => {
+    // This effect synchronizes the webcam with the global audio state
+    if (isAudioRunning) {
+      startWebcam();
+    } else {
+      stopWebcam();
+    }
+  }, [isAudioRunning, startWebcam, stopWebcam]);
+
+  return (
+    <div className="bg-gray-800 text-white min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow flex flex-col items-center justify-center p-4">
+        <VideoFeed videoRef={videoRef} />
+        <Controls />
+        <MappingMatrix />
+        {error && <div className="mt-4 p-2 bg-red-800 text-white rounded">{error}</div>}
+      </main>
+      {/* The canvas is required for processing but should not be visible to the user */}
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </div>
+  );
+}
+
+export default App;
+</file>
+
 <file path="README.md">
 # Synestizer Indigo
 
@@ -1181,6 +2168,44 @@ To avoid UI stuttering and performance degradation from high-frequency video ana
 3.  **Update Throttling:** The data sent from the Web Worker to the main thread is throttled to a rate that ensures UI responsiveness without overwhelming the event loop (e.g., 15 updates per second).
 
 4.  **Direct Service Communication:** High-frequency data is passed directly from the worker message handler to the relevant services (like the `audioService`) where possible, completely bypassing the React render cycle. Data is only stored in a React component's local state if it is necessary for rendering a UI element.
+
+## Development Best Practices & Error Prevention
+
+This project implements several strategies to prevent silent failures and improve development experience:
+
+### Error Handling
+- **Error Boundary:** React error boundary component (`ErrorBoundary.tsx`) catches JavaScript runtime errors and displays helpful error messages instead of blank white pages
+- **Graceful Degradation:** Components fail safely with clear error states rather than breaking the entire application
+
+### TypeScript Best Practices
+- **Type Safety:** All imports/exports are properly typed to catch compilation errors early
+- **Local Type Definitions:** When module resolution issues occur, types are defined locally to avoid runtime import failures
+- **Strict Compilation:** Use `npx tsc --noEmit` to check for TypeScript errors before runtime
+
+### Development Workflow
+1. **Always Check Console:** Monitor browser DevTools Console for errors after any changes
+2. **Pre-commit Validation:** Run TypeScript compilation checks before deploying changes
+3. **Module Resolution:** Be careful with TypeScript type exports - prefer local type definitions when imports fail
+4. **Network Tab Monitoring:** Check DevTools Network tab for failed module loads
+
+### Common Pitfalls & Solutions
+- **Blank White Page:** Usually indicates a JavaScript error - check console immediately
+- **Module Import Errors:** TypeScript type imports can fail at runtime - define types locally as fallback
+- **Silent Audio Failures:** Audio context requires user interaction - always call `Tone.start()` after user action
+- **Worker Loading Issues:** Ensure Web Worker files are accessible via URL constructor with proper module type
+
+### Debugging Steps
+1. Open browser DevTools Console
+2. Look for red error messages
+3. Check Network tab for 404s or failed loads
+4. Verify TypeScript compilation with `npx tsc --noEmit`
+5. Test in multiple browsers if issues persist
+
+### Future Improvements
+- Consider adding ESLint with strict rules for additional compile-time checking
+- Implement automated testing to catch regressions
+- Add performance monitoring for Web Worker communication
+- Consider adding runtime type checking for critical data flows
 </file>
 
 <file path="package.json">

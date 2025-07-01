@@ -1,7 +1,7 @@
-import { RefObject } from 'react';
+import { type RefObject } from 'react';
 
 interface VideoFeedProps {
-  videoRef: RefObject<HTMLVideoElement>;
+  videoRef: RefObject<HTMLVideoElement | null>;
 }
 
 export function VideoFeed({ videoRef }: VideoFeedProps) {

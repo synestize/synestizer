@@ -1,0 +1,72 @@
+import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
+
+const signals: SignalName[] = ['brightness', 'red', 'blue'];
+const parameters: ParameterName[] = ['frequency', 'filterCutoff'];
+
+// A single cell in our matrix
+function MappingCell({ parameter, signal }: { parameter: ParameterName; signal: SignalName }) {
+  const { mappings, setMappingValue } = useAppStore();
+  const mapping = mappings[parameter]?.[signal] || { scale: 0, bias: 0 };
+
+  const handleScaleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { scale: parseFloat(e.target.value) });
+  };
+
+  const handleBiasChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMappingValue(parameter, signal, { bias: parseFloat(e.target.value) });
+  };
+
+  return (
+    <div className="bg-gray-800 p-2 rounded">
+      <div className="flex items-center justify-between text-xs">
+        <label htmlFor={`${parameter}-${signal}-scale`}>Scale</label>
+        <span className="font-mono">{mapping.scale.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-scale`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.scale}
+        onChange={handleScaleChange}
+        className="w-full h-1"
+      />
+      <div className="flex items-center justify-between text-xs mt-2">
+        <label htmlFor={`${parameter}-${signal}-bias`}>Bias</label>
+        <span className="font-mono">{mapping.bias.toFixed(2)}</span>
+      </div>
+      <input
+        type="range"
+        id={`${parameter}-${signal}-bias`}
+        min="-1"
+        max="1"
+        step="0.05"
+        value={mapping.bias}
+        onChange={handleBiasChange}
+        className="w-full h-1"
+      />
+    </div>
+  );
+}
+
+export function MappingMatrix() {
+  return (
+    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner w-full max-w-4xl">
+      <h3 className="text-lg font-semibold mb-3 text-center">Mapping Matrix</h3>
+      <div className="grid grid-cols-4 gap-2 text-center items-center">
+        <div /> {/* Empty corner */}
+        {signals.map(s => <div key={s} className="capitalize font-bold text-gray-300">{s}</div>)}
+
+        {parameters.map(p => (
+          <>
+            <div key={p} className="capitalize font-bold text-gray-300 text-right pr-2">
+              {p === 'frequency' ? 'Pitch' : 'Filter'}
+            </div>
+            {signals.map(s => <MappingCell key={`${p}-${s}`} parameter={p} signal={s} />)}
+          </>
+        ))}
+      </div>
+    </div>
+  );
+}

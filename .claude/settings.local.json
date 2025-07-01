@@ -4,7 +4,9 @@
       "Bash(pnpm install:*)",
       "Bash(pnpm dev:*)",
       "Bash(pkill:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run:*)"
     ],
     "deny": []
   }

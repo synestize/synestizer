@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { useAppStore } from '../store/useAppStore'; // We need access to the store for mappings
+import { useAppStore, type SignalName } from '../store/useAppStore';
 
 class AudioService {
   private isStarted = false;
@@ -28,21 +28,42 @@ class AudioService {
     console.log("Audio service stopped.");
   }
 
-  public update(signals: { brightness: number; red: number; blue: number }) {
+  public update(signals: Record<SignalName, number>) {
     if (!this.isStarted || !this.synth || !this.filter) return;
 
-    // Get the current mapping configuration from the Zustand store
-    const mappings = useAppStore.getState().mappings;
+    const allMappings = useAppStore.getState().mappings;
 
-    // Map parameters based on the user's chosen configuration
-    const frequencySignalValue = signals[mappings.frequency];
-    const filterCutoffSignalValue = signals[mappings.filterCutoff];
+    // --- Calculate Frequency ---
+    const frequencyMappings = allMappings.frequency || {};
+    const totalFrequencyInfluence = Object.keys(frequencyMappings).reduce((acc, signal) => {
+      const mapping = frequencyMappings[signal as SignalName];
+      if (!mapping) return acc;
 
-    const frequency = frequencySignalValue * 600 + 200; // Map signal to pitch
-    const filterCutoff = filterCutoffSignalValue * 4000 + 400; // Map signal to filter cutoff
+      const signalValue = signals[signal as SignalName] || 0;
+      // Accumulate scaled signal values and biases
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
 
+    // Clamp the final influence to a -1 to 1 range before mapping to audio units
+    const clampedFrequency = Math.max(-1, Math.min(1, totalFrequencyInfluence));
+    const frequency = (clampedFrequency + 1) / 2 * 1200 + 200; // Map range 0-1 to 200-1400 Hz
+
+    // --- Calculate Filter Cutoff ---
+    const filterMappings = allMappings.filterCutoff || {};
+    const totalFilterInfluence = Object.keys(filterMappings).reduce((acc, signal) => {
+      const mapping = filterMappings[signal as SignalName];
+      if (!mapping) return acc;
+
+      const signalValue = signals[signal as SignalName] || 0;
+      return acc + (signalValue * mapping.scale) + mapping.bias;
+    }, 0);
+
+    const clampedFilter = Math.max(-1, Math.min(1, totalFilterInfluence));
+    const filterCutoff = (clampedFilter + 1) / 2 * 6000 + 400; // Map range 0-1 to 400-6400 Hz
+
+    // --- Apply to Synth ---
     this.synth.setNote(frequency);
-    this.filter.frequency.rampTo(filterCutoff, 0.05); // Ramp to the new cutoff
+    this.filter.frequency.rampTo(filterCutoff, 0.05);
   }
 }
 

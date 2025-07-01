@@ -4,7 +4,7 @@ import { Controls } from './components/Controls';
 import { useWebcam } from './hooks/useWebcam';
 import { useAppStore } from './store/useAppStore';
 import { useEffect } from 'react';
-import { MappingControls } from './components/MappingControls'; // Import the new component
+import { MappingMatrix } from './components/MappingMatrix';
 
 function App() {
   const { videoRef, canvasRef, error, startWebcam, stopWebcam } = useWebcam();
@@ -25,7 +25,7 @@ function App() {
       <main className="flex-grow flex flex-col items-center justify-center p-4">
         <VideoFeed videoRef={videoRef} />
         <Controls />
-        <MappingControls /> {/* Add the mapping controls to the UI */}
+        <MappingMatrix />
         {error && <div className="mt-4 p-2 bg-red-800 text-white rounded">{error}</div>}
       </main>
       {/* The canvas is required for processing but should not be visible to the user */}
