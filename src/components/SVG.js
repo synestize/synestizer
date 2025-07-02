@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 
 const SVG = ({
@@ -17,10 +17,5 @@ const SVG = ({
   )
 };
 
-SVG.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-  children: PropTypes.node.isRequired
-}
 
 export default SVG

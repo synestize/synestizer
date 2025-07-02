@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 export const MuteButton = ({mute, onClick}) => (
   <span
@@ -7,9 +7,5 @@ export const MuteButton = ({mute, onClick}) => (
       mute
   </span>
 )
-MuteButton.propTypes = {
-  mute: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-}
 
 export default MuteButton;

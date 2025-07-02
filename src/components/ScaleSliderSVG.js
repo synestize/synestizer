@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 import GestureableSVG from './GestureableSVG'
 
@@ -101,16 +101,5 @@ const ScaleSliderSVG = ({
   )
 };
 
-ScaleSliderSVG.propTypes = {
-  scale: PropTypes.number,
-  value: PropTypes.number,
-  perturbation: PropTypes.number,
-  onChange: PropTypes.func,
-  scaleArrowFill: PropTypes.string,
-  scaleBackingFill: PropTypes.string,
-  className: PropTypes.string,
-  transform: PropTypes.string,
-  label: PropTypes.string,
-}
 
 export default ScaleSliderSVG

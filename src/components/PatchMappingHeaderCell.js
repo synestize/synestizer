@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import ScaleSlider from './ScaleSlider'
 
 const PatchMappingHeaderCell = ({val, scope, name1, name2, signalKey, ...rest}) => {
@@ -13,12 +13,5 @@ const PatchMappingHeaderCell = ({val, scope, name1, name2, signalKey, ...rest}) 
 };
 
 
-PatchMappingHeaderCell.propTypes = {
-  val: PropTypes.number.isRequired,
-  scope: PropTypes.oneOf(["row", "column"]),
-  name1: PropTypes.string.isRequired,
-  name2: PropTypes.string.isRequired,
-  signalKey: PropTypes.string.isRequired,
-}
 
 export default PatchMappingHeaderCell;

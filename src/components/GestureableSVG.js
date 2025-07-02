@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 import { Observable, fromEvent, race } from 'rxjs';
@@ -125,11 +125,5 @@ class GestureableSVG extends Component{
   };
 }
 
-GestureableSVG.propTypes = {
-  value: PropTypes.number,
-  onChange: PropTypes.func,
-  onDoubleClick: PropTypes.func,
-  transform: PropTypes.string,
-}
 
 export default GestureableSVG;

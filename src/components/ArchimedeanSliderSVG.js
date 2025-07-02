@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc, saturate, desaturate, perturb} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 import GestureableSVG from './GestureableSVG'
@@ -159,16 +159,5 @@ const ArchimedeanSliderSVG = ({
 };
 
 
-ArchimedeanSliderSVG.propTypes = {
-  bias: PropTypes.number,
-  scale: PropTypes.number,
-  label: PropTypes.string,
-  perturbedValue: PropTypes.number,
-  perturbation: PropTypes.number,
-  onBiasChange: PropTypes.func,
-  onScaleChange: PropTypes.func,
-  className: PropTypes.string,
-  transform: PropTypes.string,
-}
 
 export default ArchimedeanSliderSVG;

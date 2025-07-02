@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 import LabeledSlider from '../components/LabeledSlider'
 
@@ -31,14 +31,5 @@ const UnmappedAudioParam = ({
   </div>)
 };
 
-UnmappedAudioParam.propTypes = {
-  value: PropTypes.number.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  units: PropTypes.string,
-}
 
 export default UnmappedAudioParam

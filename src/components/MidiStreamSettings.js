@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import SubPane from './SubPane'
 import DeviceSelect from '../components/DeviceSelect'
 import IntSelect from '../components/IntSelect'
@@ -39,20 +39,5 @@ const MidiStreamSettings = ( {
     unknownadder={ccunknownadder} />
 </section>)}
 
-MidiStreamSettings.propTypes = {
-  title: PropTypes.string.isRequired,
-  ccset: PropTypes.array.isRequired,
-  solocc: PropTypes.number,
-  currentChannel: PropTypes.number.isRequired,
-  deviceMap: PropTypes.instanceOf(Map).isRequired,
-  valid: PropTypes.bool,
-  currentDevice: PropTypes.string,
-  ccadder: PropTypes.func.isRequired,
-  ccunknownadder: PropTypes.func.isRequired,
-  ccremover: PropTypes.func.isRequired,
-  ccsolotoggler: PropTypes.func,
-  onChannelChange: PropTypes.func.isRequired,
-  onDeviceChange: PropTypes.func.isRequired,
-}
 
 export default MidiStreamSettings;

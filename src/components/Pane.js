@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import BrandingBox from './BrandingBox'
 
 const Pane = ({paneId, children}) => (
@@ -9,9 +9,5 @@ const Pane = ({paneId, children}) => (
     </div>
   </section>
 )
-Pane.propTypes = {
-  paneId: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-}
 
 export default Pane;

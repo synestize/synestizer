@@ -1,17 +1,18 @@
 'use strict';
-import { connect } from 'react-redux';
-import PaneSet from '../components/PaneSet';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import TabNav from '../components/TabNav';
+import CurrentPane from '../components/CurrentPane';
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    visiblePane: state.gui.visiblePane,
-  }
+const App = () => {
+  const visiblePane = useSelector(state => state.gui.visiblePane);
+  
+  return (
+    <div>
+      <TabNav />
+      <CurrentPane visiblePane={visiblePane} />
+    </div>
+  );
 };
-
-const App = connect(
-  mapStateToProps //,
-  //mapDispatchToProps,
-  // undefined //mergeprops
-)( PaneSet );
 
 export default App;

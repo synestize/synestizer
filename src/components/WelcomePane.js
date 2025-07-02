@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import Pane from './Pane';
 
 const WelcomePane = ({}) => {

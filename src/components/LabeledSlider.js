@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const LabeledSlider = ({
     uniqueKey,
@@ -28,16 +28,5 @@ const LabeledSlider = ({
   )
 }
 
-LabeledSlider.propTypes = {
-  value: PropTypes.number.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  className: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
-  uniqueKey: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
-}
 
 export default LabeledSlider;

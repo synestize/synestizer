@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import SubPane from './SubPane'
-import GenericSignalMax from '../containers/GenericSignalMax'
+import GenericSignalMax from '../features/signal/components/GenericSignalMax'
 
 const SignalSettings = () => (
   <SubPane title="Signal" className="signal squeeze">

@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import SubPane from './SubPane'
-import AudioSourceDeviceSelect from '../containers/AudioSourceDeviceSelect'
-import AudioSinkDeviceSelect from '../containers/AudioSinkDeviceSelect'
+import AudioSourceDeviceSelect from '../features/audio/components/AudioSourceDeviceSelect'
+import AudioSinkDeviceSelect from '../features/audio/components/AudioSinkDeviceSelect'
 
 const AudioSettings = () => (
   <SubPane title="Audio" className="audio squeeze">

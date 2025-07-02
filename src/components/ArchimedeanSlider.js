@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 import SVG from './SVG'
 import ArchimedeanSliderSVG from './ArchimedeanSliderSVG'
@@ -13,9 +13,5 @@ const ArchimedeanSlider = (props) => {
   )
 };
 
-ArchimedeanSlider.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-}
 
 export default ArchimedeanSlider

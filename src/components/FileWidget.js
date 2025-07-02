@@ -1,4 +1,4 @@
-import { PropTypes } from 'react'
+import React from 'react'
 
 const FileWidget = ({ text, onChange}) => (
   <form>
@@ -12,9 +12,5 @@ const FileWidget = ({ text, onChange}) => (
   </form>
 )
 
-FileWidget.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired
-}
 
 export default FileWidget;

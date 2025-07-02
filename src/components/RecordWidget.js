@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import Icon from '../components/Icon'
 import Select from '../components/Select'
 
@@ -23,12 +23,5 @@ const RecordWidget = ({
   </div>)
 };
 
-RecordWidget.propTypes = {
-  recordSlots: PropTypes.object.isRequired,
-  recordSlot: PropTypes.string.isRequired,
-  onRecord: PropTypes.func.isRequired,
-  onChangeSlot: PropTypes.func.isRequired,
-  isRecording: PropTypes.bool.isRequired,
-}
 
 export default RecordWidget

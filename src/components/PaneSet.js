@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import TabNav from './TabNav'
 import CurrentPane from './CurrentPane'
 
@@ -9,8 +9,5 @@ const PaneSet = ({visiblePane}) => {
   </div>)
 }
 
-PaneSet.propTypes = {
-  visiblePane: PropTypes.string.isRequired,
-}
 
 export default PaneSet;

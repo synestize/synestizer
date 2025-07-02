@@ -1,8 +1,8 @@
-import React, { Component, PropTypes, Children } from 'react';
-import SpecificAudioParam from '../containers/SpecificAudioParam'
+import React from 'react';
+import SpecificAudioParam from '../features/audio/components/SpecificAudioParam'
 import MuteButton from '../components/MuteButton'
 import SubPane from '../components/SubPane'
-import BufferSelect from '../containers/BufferSelect'
+import BufferSelect from '../features/audio/components/BufferSelect'
 
 const BubbleChamberControl = ({
     onChangeVoice1Mute,
@@ -68,15 +68,5 @@ const BubbleChamberControl = ({
   </SubPane>)
 }
 
-BubbleChamberControl.propTypes = {
-  onChangeVoice1Mute: PropTypes.func.isRequired,
-  onChangeVoice2Mute: PropTypes.func.isRequired,
-  onChangeVoice3Mute: PropTypes.func.isRequired,
-  onChangeBassMute: PropTypes.func.isRequired,
-  voice1mute: PropTypes.bool,
-  voice2mute: PropTypes.bool,
-  voice3mute: PropTypes.bool,
-  bassmute: PropTypes.bool,
-}
 
 export default BubbleChamberControl

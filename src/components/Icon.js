@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 const Icon = ({
     name,
@@ -9,10 +9,5 @@ const Icon = ({
     onClick={onClick}></i>
 )
 
-Icon.propTypes = {
-  onClick: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  className: PropTypes.string
-}
 
 export default Icon;

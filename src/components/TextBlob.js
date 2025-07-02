@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 const TextBlob = ({content='', onChange, title, className=''}) => {
   let header;
@@ -11,11 +11,5 @@ const TextBlob = ({content='', onChange, title, className=''}) => {
   </form>
 }
 
-TextBlob.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string,
-  className: PropTypes.string
-}
 
 export default TextBlob;

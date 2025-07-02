@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const IntSelect = ({
     currentNum=0,
@@ -28,13 +28,5 @@ const IntSelect = ({
   </select>)
 }
 
-IntSelect.propTypes = {
-  currentNum: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
-  unavailable: PropTypes.array,
-  disabled: PropTypes.bool,
-  maxNum: PropTypes.number,
-  minNum: PropTypes.number,
-}
 
 export default IntSelect

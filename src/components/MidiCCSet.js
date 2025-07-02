@@ -1,6 +1,6 @@
-import React, { Component, PropTypes, Children } from 'react';
-import ActiveMidiCCControl from '../containers/ActiveMidiCCControl'
-import ActiveMidiCCAdd from '../containers/ActiveMidiCCAdd'
+import React from 'react';
+import ActiveMidiCCControl from '../features/midi/components/ActiveMidiCCControl'
+import ActiveMidiCCAdd from '../features/midi/components/ActiveMidiCCAdd'
 
 const MidiCCSet = ({
     ccset,
@@ -27,13 +27,5 @@ const MidiCCSet = ({
   </div>)
 }
 
-MidiCCSet.propTypes = {
-  ccset: PropTypes.array.isRequired,
-  adder: PropTypes.func.isRequired,
-  remover: PropTypes.func.isRequired,
-  unknownadder: PropTypes.func.isRequired,
-  solotoggler: PropTypes.func,
-  solocc: PropTypes.number
-}
 
 export default MidiCCSet

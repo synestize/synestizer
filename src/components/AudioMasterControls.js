@@ -1,7 +1,7 @@
-import MasterAudioGain from '../containers/MasterAudioGain'
-import ActiveAudioMasterTempo from '../containers/ActiveAudioMasterTempo'
-import ActiveRecordWidget from '../containers/ActiveRecordWidget'
-import React, { Component, PropTypes } from 'react'
+import MasterAudioGain from '../features/audio/components/MasterAudioGain'
+import ActiveAudioMasterTempo from '../features/audio/components/ActiveAudioMasterTempo'
+import ActiveRecordWidget from '../features/audio/components/ActiveRecordWidget'
+import React from 'react'
 
 const AudioMasterControls = function(props) {
   return (<div className="subpane">

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import {bipolPerc} from '../lib/transform'
 import LabeledSlider from '../components/LabeledSlider'
 import MuteButton from '../components/MuteButton'
@@ -35,16 +35,5 @@ const AudioGainFader = ({
   </div>)
 };
 
-AudioGainFader.propTypes = {
-  gain: PropTypes.number.isRequired,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  step: PropTypes.number,
-  label: PropTypes.string.isRequired,
-  onChangeGain: PropTypes.func.isRequired,
-  onChangeMute: PropTypes.func.isRequired,
-  mute: PropTypes.bool.isRequired,
-  units: PropTypes.string,
-}
 
 export default AudioGainFader

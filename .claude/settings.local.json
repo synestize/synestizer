@@ -16,7 +16,15 @@
       "Bash(rg:*)",
       "mcp__ide__getDiagnostics",
       "Bash(npm run dev:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(for file in CurrentPane.js DeviceSelect.js FileWidget.js GenericAudioParam.js GestureableSVG.js)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(head:*)",
+      "Bash(done)",
+      "Bash(for file in LabeledSlider.js MidiCCControl.js MidiCCSet.js MidiSettings.js)",
+      "Bash(do echo \"=== Processing $file ===\")",
+      "Bash(echo)",
+      "Bash(for file in ScaleSliderSVG.js Select.js SubPane.js SVG.js TextBlob.js UnmappedAudioParam.js)"
     ],
     "deny": []
   }

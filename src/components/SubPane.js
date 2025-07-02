@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
 const SubPane = ({title, children, className=''}) => {
   let titleBlock = "";
@@ -11,11 +11,6 @@ const SubPane = ({title, children, className=''}) => {
       {children}
     </section>
   )
-}
-SubPane.propTypes = {
-  className: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
 }
 
 export default SubPane;

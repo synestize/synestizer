@@ -1,5 +1,5 @@
 import Pane from './Pane';
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const PerformancePane = ({}) => (
   <Pane paneId="performance-pane" >

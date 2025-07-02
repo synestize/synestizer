@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const DeviceSelect = ({
     disabled=false,
@@ -24,12 +24,5 @@ const DeviceSelect = ({
   </div>)
 }
 
-DeviceSelect.propTypes = {
-  currentDevice: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  deviceMap: PropTypes.instanceOf(Map).isRequired,
-  valid: PropTypes.bool,
-  disabled: PropTypes.bool
-}
 
 export default DeviceSelect

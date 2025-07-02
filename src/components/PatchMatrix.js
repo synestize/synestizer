@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import ActivePatchMappingControl from '../containers/ActivePatchMappingControl'
+import React from 'react'
+import ActivePatchMappingControl from '../features/signal/components/ActivePatchMappingControl'
 import PatchMappingHeaderCell from './PatchMappingHeaderCell'
 
 /*
@@ -67,12 +67,5 @@ const PatchMatrix = ({
     </tbody>
   </table>)
 };
-PatchMatrix.propTypes = {
-  sourceSignalMeta: PropTypes.object.isRequired,
-  sourceSignalValues: PropTypes.object.isRequired,
-  sinkSignalMeta: PropTypes.object.isRequired,
-  sinkSignalValues: PropTypes.object.isRequired,
-  sourceSinkScale: PropTypes.object.isRequired
-}
 
 export default PatchMatrix;

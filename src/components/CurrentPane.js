@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import IOPane from './IOPane'
 import WelcomePane from './WelcomePane'
 import PerformancePane from './PerformancePane'
@@ -18,10 +18,5 @@ const CurrentPane = ({visiblePane}) => {
   }
 }
 
-CurrentPane.propTypes = {
-  visiblePane: PropTypes.oneOf([
-    'io', 'welcome', 'performance', 'sound'
-  ])
-}
 
 export default CurrentPane;

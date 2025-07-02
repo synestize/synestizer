@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 import { union, difference, intersection } from '../lib/collections'
 import IntSelect from './IntSelect'
 import Icon from './Icon'
@@ -34,13 +34,5 @@ const MidiCCControl = ({
   </div>)
 }
 
-MidiCCControl.propTypes = {
-  currentNum: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  ccset: PropTypes.array.isRequired,
-  onSolo: PropTypes.func,
-  solo: PropTypes.bool
-}
 
 export default MidiCCControl

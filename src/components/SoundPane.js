@@ -1,7 +1,7 @@
 import Pane from './Pane';
-import ActiveBubbleChamberControl from '../containers/ActiveBubbleChamberControl';
+import ActiveBubbleChamberControl from '../features/audio/components/ActiveBubbleChamberControl';
 import AudioMasterControls from '../components/AudioMasterControls';
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const SoundPane = ({}) => (
   <Pane paneId="audio-pane" >

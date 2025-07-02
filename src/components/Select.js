@@ -1,4 +1,4 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React from 'react';
 
 const Select = ({
     disabled=false,
@@ -29,12 +29,5 @@ const Select = ({
   </select>)
 }
 
-Select.propTypes = {
-  currentOpt: PropTypes.string,
-  className: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  optDict: PropTypes.object.isRequired,
-  disabled: PropTypes.bool
-}
 
 export default Select
