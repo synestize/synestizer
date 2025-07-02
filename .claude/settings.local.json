@@ -24,7 +24,9 @@
       "Bash(for file in LabeledSlider.js MidiCCControl.js MidiCCSet.js MidiSettings.js)",
       "Bash(do echo \"=== Processing $file ===\")",
       "Bash(echo)",
-      "Bash(for file in ScaleSliderSVG.js Select.js SubPane.js SVG.js TextBlob.js UnmappedAudioParam.js)"
+      "Bash(for file in ScaleSliderSVG.js Select.js SubPane.js SVG.js TextBlob.js UnmappedAudioParam.js)",
+      "Bash(pkill:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

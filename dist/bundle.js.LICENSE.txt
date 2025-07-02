@@ -5,11 +5,6 @@
     (c) 2013-2016 Mozilla, Apache License 2.0
 */
 
-/*!
- * deep-diff.
- * Licensed under the MIT License.
- */
-
 /**
  * @license React
  * react-dom.production.min.js

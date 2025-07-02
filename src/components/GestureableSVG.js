@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {bipolPerc} from '../lib/transform'
 import ScaleSliderSVG from './ScaleSliderSVG'
 import { Observable, fromEvent, race } from 'rxjs';
@@ -7,6 +7,8 @@ import { sampleTime, takeUntil, take, tap, map, filter } from 'rxjs/operators';
 /*
 TODO: handle touchcancel and mouseout
 */
+
+const UI_PERIOD_MS = 16; // ~60fps for smooth gesture handling
 
 class GestureableSVG extends Component{
   constructor(props) {

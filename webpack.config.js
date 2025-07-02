@@ -34,6 +34,12 @@ module.exports = (env, argv) => {
     resolve: {
       modules: [path.resolve(__dirname, 'src'), 'node_modules'],
       extensions: ['.js', '.jsx'],
+      fallback: {
+        "process": path.resolve(__dirname, 'src/polyfills/process.js'),
+        "util": false,
+        "fs": false,
+        "path": false,
+      },
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -46,6 +52,12 @@ module.exports = (env, argv) => {
         VERSION: JSON.stringify('0.5.0-modern'),
         SIGNAL_PERIOD_MS: JSON.stringify(40),
         UI_PERIOD_MS: JSON.stringify(100),
+      }),
+      // Polyfill for legacy redux-persist
+      new webpack.DefinePlugin({
+        global: 'globalThis',
+        'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
+        'process.browser': JSON.stringify(true),
       }),
     ],
     devServer: {

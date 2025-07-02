@@ -1,6 +1,8 @@
 
 // Serviceworker and Perf removed for modern build
 
+// Load process polyfill first for legacy redux-persist
+import './polyfills/process.js';
 
 // Main entry point everything
 import React from 'react'
@@ -17,6 +19,7 @@ import audioReducer from './features/audio/audioSlice'
 import signalReducer from './features/signal/signalSlice'
 import __volatile from './reducers/__volatile'
 import App from './containers/App'
+import ErrorBoundary from './components/ErrorBoundary'
 import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
 import audioio_ from 'io/audio'
@@ -37,7 +40,7 @@ import localForage from "localforage"
 
 import { getq, arrayAsSet, setAsArray, objAsMap, mapAsObj } from 'lib/browser'
 import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
+// import * as reduxLogger from 'redux-logger' // Disabled for now due to version compatibility
 
 // ServiceWorker and Perf removed for modern build
 /*
@@ -63,7 +66,8 @@ const persistConf = {
   storage: localForage
 }
 
-const loggerMiddleware = createLogger()
+// const loggerMiddleware = reduxLogger.createLogger ? reduxLogger.createLogger() : reduxLogger
+const loggerMiddleware = null // Disabled for now
 
 // Create root reducer that combines modern GUI slice with legacy reducers
 const createRootReducer = () => {
@@ -99,19 +103,6 @@ let videoio;
 let midiio;
 let signalio;
 let audioio;
-let enhancers;
-
-if (!PRODUCTION) {
-// if (false) {
-  enhancers = applyMiddleware(
-    thunkMiddleware//, // lets us dispatch() functions
-    //loggerMiddleware // logs actions
-  )
-} else {
-  enhancers = applyMiddleware(
-    thunkMiddleware // lets us dispatch() functions
-  )
-}
 getStoredState(persistConf, (err, restoredState) => {
   //For development we support purging all data
   let purge = getq("purge");
@@ -122,7 +113,15 @@ getStoredState(persistConf, (err, restoredState) => {
   store = configureStore({
     reducer: createRootReducer(),
     preloadedState: restoredState,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+    middleware: (getDefaultMiddleware) => 
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        },
+      }).concat(
+        thunkMiddleware,
+        ...(PRODUCTION || !loggerMiddleware ? [] : [loggerMiddleware])
+      ),
   })
 
   persistor = createPersistor(store, persistConf)
@@ -155,8 +154,10 @@ getStoredState(persistConf, (err, restoredState) => {
   const container = document.getElementById('synapp');
   const root = createRoot(container);
   appRoot = root.render(
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ErrorBoundary>
   );
 })
