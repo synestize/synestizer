@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import { useAppStore, type SignalName, type ParameterName } from '../store/useAppStore';
+import { midiService } from './midiService'; // Import the MIDI service
 
 class AudioService {
   private isStarted = false;
@@ -84,6 +85,24 @@ class AudioService {
     this.filter1.frequency.rampTo(v1Filter, 0.05);
     this.synth2.frequency.rampTo(v2Freq, 0.05);
     this.filter2.frequency.rampTo(v2Filter, 0.05);
+
+    // --- NEW: Calculate and send MIDI Influences ---
+    const midiCC1_influence = this.calculateTotalInfluence('midi_cc_1', signals, allMappings);
+    const midiCC2_influence = this.calculateTotalInfluence('midi_cc_2', signals, allMappings);
+    const midiCC3_influence = this.calculateTotalInfluence('midi_cc_3', signals, allMappings);
+    const midiCC4_influence = this.calculateTotalInfluence('midi_cc_4', signals, allMappings);
+
+    // Map influence (-1 to 1) to MIDI value (0 to 127)
+    const midiValue1 = Math.round(((midiCC1_influence + 1) / 2) * 127);
+    const midiValue2 = Math.round(((midiCC2_influence + 1) / 2) * 127);
+    const midiValue3 = Math.round(((midiCC3_influence + 1) / 2) * 127);
+    const midiValue4 = Math.round(((midiCC4_influence + 1) / 2) * 127);
+
+    // Delegate sending to the midiService
+    midiService.sendCC(1, midiValue1);
+    midiService.sendCC(2, midiValue2);
+    midiService.sendCC(3, midiValue3);
+    midiService.sendCC(4, midiValue4);
   }
 }
 

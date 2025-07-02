@@ -9,20 +9,23 @@ const signals: SignalName[] = [
   'brightness_variance_delta', 'chroma_blue_variance_delta', 'chroma_red_variance_delta',
   'x_brightness_delta', 'y_brightness_delta', 'brightness_blue_corr_delta'
 ];
-// Expand the list of parameters to include both voices
+// Expand the parameters list
 const parameters: ParameterName[] = [
-  'voice1_frequency',
-  'voice1_filterCutoff',
-  'voice2_frequency',
-  'voice2_filterCutoff'
+  'voice1_frequency', 'voice1_filterCutoff',
+  'voice2_frequency', 'voice2_filterCutoff',
+  'midi_cc_1', 'midi_cc_2', 'midi_cc_3', 'midi_cc_4'
 ];
 
-// Map internal parameter names to user-friendly labels
+// Expand the labels map
 const parameterLabels: Record<ParameterName, string> = {
   voice1_frequency: 'Voice 1 Pitch',
   voice1_filterCutoff: 'Voice 1 Filter',
   voice2_frequency: 'Voice 2 Pitch',
   voice2_filterCutoff: 'Voice 2 Filter',
+  midi_cc_1: 'MIDI CC 1',
+  midi_cc_2: 'MIDI CC 2',
+  midi_cc_3: 'MIDI CC 3',
+  midi_cc_4: 'MIDI CC 4',
 };
 
 // A single cell in our matrix
