@@ -33,33 +33,37 @@ class AudioService {
 
     const allMappings = useAppStore.getState().mappings;
 
-    // --- Calculate Frequency ---
-    const frequencyMappings = allMappings.frequency || {};
-    const totalFrequencyInfluence = Object.keys(frequencyMappings).reduce((acc, signal) => {
-      const mapping = frequencyMappings[signal as SignalName];
-      if (!mapping) return acc;
+    // --- Correctly Calculate Final Parameter Values ---
+    const calculateTotalInfluence = (parameter: 'frequency' | 'filterCutoff'): number => {
+      const paramMappings = allMappings[parameter] || {};
 
-      const signalValue = signals[signal as SignalName] || 0;
-      // Accumulate scaled signal values and biases
-      return acc + (signalValue * mapping.scale) + mapping.bias;
-    }, 0);
+      let totalScaledInfluence = 0;
+      let totalBias = 0;
 
-    // Clamp the final influence to a -1 to 1 range before mapping to audio units
-    const clampedFrequency = Math.max(-1, Math.min(1, totalFrequencyInfluence));
-    const frequency = (clampedFrequency + 1) / 2 * 1200 + 200; // Map range 0-1 to 200-1400 Hz
+      for (const signalName in paramMappings) {
+        const mapping = paramMappings[signalName as SignalName];
+        if (!mapping) continue;
 
-    // --- Calculate Filter Cutoff ---
-    const filterMappings = allMappings.filterCutoff || {};
-    const totalFilterInfluence = Object.keys(filterMappings).reduce((acc, signal) => {
-      const mapping = filterMappings[signal as SignalName];
-      if (!mapping) return acc;
+        const signalValue = signals[signalName as SignalName] || 0;
 
-      const signalValue = signals[signal as SignalName] || 0;
-      return acc + (signalValue * mapping.scale) + mapping.bias;
-    }, 0);
+        // Sum scaled signals and biases separately
+        totalScaledInfluence += signalValue * mapping.scale;
+        totalBias += mapping.bias;
+      }
 
-    const clampedFilter = Math.max(-1, Math.min(1, totalFilterInfluence));
-    const filterCutoff = (clampedFilter + 1) / 2 * 6000 + 400; // Map range 0-1 to 400-6400 Hz
+      // Combine and then saturate using tanh for a smooth, non-clipping result
+      return Math.tanh(totalScaledInfluence + totalBias);
+    };
+
+    const frequencyInfluence = calculateTotalInfluence('frequency');
+    const filterInfluence = calculateTotalInfluence('filterCutoff');
+
+    // Map the saturated influence (-1 to 1) to the desired audio range (0 to 1)
+    const frequencyValue = (frequencyInfluence + 1) / 2; // to [0, 1] range
+    const filterValue = (filterInfluence + 1) / 2;     // to [0, 1] range
+
+    const frequency = frequencyValue * 1200 + 200;   // Map to 200-1400 Hz
+    const filterCutoff = filterValue * 6000 + 400; // Map to 400-6400 Hz
 
     // --- Apply to Synth ---
     this.synth.setNote(frequency);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
 
 const signals: SignalName[] = ['brightness', 'red', 'blue'];
