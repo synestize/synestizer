@@ -1,6 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidAudioSource, setAudioSourceDevice, setAllAudioSources } from '../actions/audio'
+import { setAudioSourceDevice } from '../features/audio/audioSlice'
 import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {

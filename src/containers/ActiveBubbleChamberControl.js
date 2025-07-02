@@ -5,11 +5,11 @@ import {
   toggleBubbleChamberVoice1Mute,
   toggleBubbleChamberVoice2Mute,
   toggleBubbleChamberVoice3Mute,
-  toggleBubbleChamberVoice4Mute,
-  setVoice1Sample,
-  setVoice2Sample,
-  setVoice3Sample,
-} from '../actions/audio';
+  toggleBubbleChamberBassMute,
+  setBubbleChamberVoice1Sample,
+  setBubbleChamberVoice2Sample,
+  setBubbleChamberVoice3Sample,
+} from '../features/audio/audioSlice';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -35,16 +35,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(toggleBubbleChamberVoice3Mute())
     },
     onChangeBassMute: (val) => {
-      dispatch(toggleBubbleChamberVoice4Mute())
+      dispatch(toggleBubbleChamberBassMute())
     },
     onChangeVoice1Sample: (val) => {
-      dispatch(setVoice1Sample(val))
+      dispatch(setBubbleChamberVoice1Sample(val))
     },
     onChangeVoice2Sample: (val) => {
-      dispatch(setVoice2Sample(val))
+      dispatch(setBubbleChamberVoice2Sample(val))
     },
     onChangeVoice3Sample: (val) => {
-      dispatch(setVoice3Sample(val))
+      dispatch(setBubbleChamberVoice3Sample(val))
     },
   }
 };

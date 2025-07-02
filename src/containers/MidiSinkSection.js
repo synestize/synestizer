@@ -1,15 +1,13 @@
 'use strict';
 import { connect } from 'react-redux';
 import {
-  setValidMidiSinkDevice,
   setMidiSinkDevice,
-  setAllMidiSinkDevices,
   setMidiSinkChannel,
   removeMidiSinkCC,
   addMidiSinkCC,
-  soloMidiSinkCC,
+  toggleSoloMidiSinkCC,
   addUnknownMidiSinkCC
-} from '../actions/midi'
+} from '../features/midi/midiSlice'
 import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {
@@ -22,7 +20,7 @@ const mapStateToProps = (state, ownProps) => {
     ccadder: addMidiSinkCC,
     ccremover: removeMidiSinkCC,
     ccunknownadder: addUnknownMidiSinkCC,
-    ccsolotoggler: soloMidiSinkCC,
+    ccsolotoggler: toggleSoloMidiSinkCC,
     solocc: state.midi.sinkSoloCC,
     title: 'Midi Out',
   }

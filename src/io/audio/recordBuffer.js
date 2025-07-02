@@ -1,9 +1,10 @@
 import { distinctUntilChanged, map, pluck } from 'rxjs/operators';
 import { toObservable } from '../../lib/rx_redux'
-import  {
-  setRecordBuffer,
-  record,
-} from '../../actions/audio'
+// RECORD functionality temporarily disabled - actions need to be added to audioSlice
+// import  {
+//   setRecordBuffer,
+//   record,
+// } from '../../actions/audio'
 import {
   mod,
   wrap

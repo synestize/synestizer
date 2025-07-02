@@ -4,14 +4,14 @@ import { distinctUntilChanged, filter, pluck, share } from 'rxjs/operators';
 import  {
   addSourceSignal,
   removeSourceSignal,
-} from '../actions/signal'
+} from '../features/signal/signalSlice'
 
 import {deviceSubject} from '../lib/av'
 import Videoworker_ from 'worker-loader!./video/videoworker'
 import {
   setValidVideoSource,
   setCurrentVideoSource,
-  setAllVideoSources } from '../actions/video'
+  setAllVideoSources } from '../features/video/videoSlice'
 import { toObservable } from '../lib/rx_redux'
 import { clip1 } from '../lib/transform'
 

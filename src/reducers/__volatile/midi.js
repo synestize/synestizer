@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux'
 import {
-  SET_ALL_MIDI_SOURCE_DEVICES,
-  SET_VALID_MIDI_SOURCE_DEVICE,
-  SET_ALL_MIDI_SINK_DEVICES,
-  SET_VALID_MIDI_SINK_DEVICE,
-} from '../../actions/midi'
+  setAllMidiSourceDevices,
+  setValidMidiSourceDevice,
+  setAllMidiSinkDevices,
+  setValidMidiSinkDevice
+} from '../../features/midi/midiSlice'
 
 export function sources(state=new Map(), action) {
   switch (action.type) {
-    case SET_ALL_MIDI_SOURCE_DEVICES:
+    case setAllMidiSourceDevices.type:
       return action.payload
     default:
       return state
@@ -17,7 +17,7 @@ export function sources(state=new Map(), action) {
 
 export function validSource(state=false, {type, payload}) {
   switch (type) {
-    case SET_VALID_MIDI_SOURCE_DEVICE:
+    case setValidMidiSourceDevice.type:
       return payload
     default:
       return state
@@ -26,7 +26,7 @@ export function validSource(state=false, {type, payload}) {
 
 export function sinks(state=new Map(), action) {
   switch (action.type) {
-    case SET_ALL_MIDI_SINK_DEVICES:
+    case setAllMidiSinkDevices.type:
       return action.payload
     default:
       return state
@@ -35,7 +35,7 @@ export function sinks(state=new Map(), action) {
 
 export function validSink(state=false, action) {
   switch (action.type) {
-    case SET_VALID_MIDI_SINK_DEVICE:
+    case setValidMidiSinkDevice.type:
       return action.payload
     default:
       return state

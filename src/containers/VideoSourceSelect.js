@@ -1,6 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidVideoSource, setCurrentVideoSource, setAllVideoSources } from '../actions/video'
+import { setCurrentVideoSource } from '../features/video/videoSlice'
 import DeviceSelect from '../components/DeviceSelect.js'
 
 const mapStateToProps = (state, ownProps) => {

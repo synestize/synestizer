@@ -12,7 +12,11 @@
       "Bash(node:*)",
       "Bash(npm uninstall:*)",
       "Bash(npm install:*)",
-      "Bash(./node_modules/webpack-cli/bin/cli.js serve:*)"
+      "Bash(./node_modules/webpack-cli/bin/cli.js serve:*)",
+      "Bash(rg:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)"
     ],
     "deny": []
   }

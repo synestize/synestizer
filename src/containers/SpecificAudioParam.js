@@ -4,7 +4,7 @@ import {
   setAudioSinkControlBias,
   setAudioSinkControlScale,
   setAudioSinkControlSignal
-} from '../actions/audio';
+} from '../features/audio/audioSlice';
 
 const mapStateToProps = (state, {sinkControlKey}) => {
   let signalKey = (

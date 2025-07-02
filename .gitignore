@@ -6,3 +6,5 @@ node_modules
 /*.worker.js
 /sw.js
 !src/
+
+repomix-output.xml

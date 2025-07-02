@@ -4,7 +4,7 @@ import { toObservable } from '../../lib/rx_redux'
 
 import  {
   addAudioSinkControl,
-} from '../../actions/audio'
+} from '../../features/audio/audioSlice'
 
 import {
   bipolLin,

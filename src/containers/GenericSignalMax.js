@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {
   setMaxNGenericSinkSignals
-} from '../actions/signal'
+} from '../features/signal/signalSlice'
 import IntSelect from '../components/IntSelect'
 
 const mapStateToProps = (state, ownProps) => {

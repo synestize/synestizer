@@ -1,19 +1,16 @@
 import { combineReducers } from 'redux'
 import {
-  SET_ALL_AUDIO_SOURCE_DEVICES,
-  SET_VALID_AUDIO_SOURCE_DEVICE,
-  SET_ALL_AUDIO_SINK_DEVICES,
-  SET_VALID_AUDIO_SINK_DEVICE,
-  SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE,
-  SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES,
-  SET_AUDIO_READY,
-  RECORD_BUFFER,
-  RECORD
-} from '../../actions/audio'
+  setAllAudioSourceDevices,
+  setValidAudioSourceDevice,
+  setAllAudioSinkDevices,
+  setValidAudioSinkDevice,
+  setAllAudioSinkControlActualValues,
+  setAudioReady
+} from '../../features/audio/audioSlice'
 
 export function sources(state=new Map(), {type, payload}) {
   switch (type) {
-    case SET_ALL_AUDIO_SOURCE_DEVICES:
+    case setAllAudioSourceDevices.type:
       return payload
     default:
       return state
@@ -22,7 +19,7 @@ export function sources(state=new Map(), {type, payload}) {
 
 export function validSource(state=false, {type, payload}) {
   switch (type) {
-    case SET_VALID_AUDIO_SOURCE_DEVICE:
+    case setValidAudioSourceDevice.type:
       return payload
     default:
       return state
@@ -31,7 +28,7 @@ export function validSource(state=false, {type, payload}) {
 
 export function sinks(state=new Map(), {type, payload}) {
   switch (type) {
-    case SET_ALL_AUDIO_SINK_DEVICES:
+    case setAllAudioSinkDevices.type:
       return payload
     default:
       return state
@@ -40,7 +37,7 @@ export function sinks(state=new Map(), {type, payload}) {
 
 export function validSink(state=false, {type, payload}) {
   switch (type) {
-    case SET_VALID_AUDIO_SINK_DEVICE:
+    case setValidAudioSinkDevice.type:
       return payload
     default:
       return state
@@ -49,7 +46,7 @@ export function validSink(state=false, {type, payload}) {
 
 export function audioReady(state=false, {type, payload}) {
   switch (type) {
-    case SET_AUDIO_READY:
+    case setAudioReady.type:
       return payload
     default:
       return state
@@ -59,38 +56,14 @@ export function audioReady(state=false, {type, payload}) {
 export function sinkActualValues(state={}, {type, payload}) {
   let next;
   switch (type) {
-    case SET_AUDIO_SINK_CONTROL_ACTUAL_VALUE:
-      next = {...state};
-      next[payload[key]] = payload[val]
-      return next
-    case SET_ALL_AUDIO_SINK_CONTROL_ACTUAL_VALUES:
+    case setAllAudioSinkControlActualValues.type:
       return {...state, ...payload}
     default:
       return state
   }
 }
 
-function recording(state=false, {type, payload}) {
-  switch (type) {
-    case RECORD:
-      return payload
-    default:
-      return state
-  }
-}
-
-function recordBuffer(state='_user_1', {type, payload}) {
-  switch (type) {
-    case RECORD_BUFFER:
-      return payload
-    default:
-      return state
-  }
-}
-const record = combineReducers({
-  recording,
-  recordBuffer,
-})
+// RECORD functionality removed - would need to be added to audioSlice if needed
 
 //Now put all these together.
 export default combineReducers({
@@ -100,5 +73,4 @@ export default combineReducers({
   validSink,
   audioReady,
   sinkActualValues,
-  record
 })

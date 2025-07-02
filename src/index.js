@@ -11,11 +11,11 @@ import { combineReducers } from 'redux'
 import { resetToNothing, loadFromUrl } from './actions/app'
 import { RESET_TO_NOTHING, LOAD } from './actions/app'
 import guiReducer from './features/gui/guiSlice'
-import video from './reducers/video'
-import midi from './reducers/midi'
+import videoReducer from './features/video/videoSlice'
+import midiReducer from './features/midi/midiSlice'
+import audioReducer from './features/audio/audioSlice'
+import signalReducer from './features/signal/signalSlice'
 import __volatile from './reducers/__volatile'
-import signal from './reducers/signal'
-import audio from './reducers/audio'
 import App from './containers/App'
 import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
@@ -68,10 +68,10 @@ const loggerMiddleware = createLogger()
 // Create root reducer that combines modern GUI slice with legacy reducers
 const createRootReducer = () => {
   const modernReducer = combineReducers({
-    video,
-    midi,
-    audio, 
-    signal,
+    video: videoReducer,
+    midi: midiReducer,
+    audio: audioReducer, 
+    signal: signalReducer,
     gui: guiReducer,
     __volatile
   });

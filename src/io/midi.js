@@ -7,7 +7,7 @@ import  {
   setValidMidiSinkDevice,
   setMidiSinkDevice,
   setAllMidiSinkDevices
-} from '../actions/midi'
+} from '../features/midi/midiSlice'
 import { toObservable } from '../lib/rx_redux'
 import { midiBipol, bipolMidi } from '../lib/transform'
 import { midiInStreamName, midiOutStreamName } from '../io/midi/util'

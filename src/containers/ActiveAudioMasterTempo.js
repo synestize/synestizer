@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import UnmappedAudioParam from '../components/UnmappedAudioParam.js'
 import {
   setMasterTempo,
-} from '../actions/audio';
+} from '../features/audio/audioSlice';
 
 const mapStateToProps = (state, ownProps) => {
   return {

@@ -12,7 +12,7 @@ import  {
   setAllAudioSinkControlActualValues,
   setAudioReady,
   addSample
-} from '../actions/audio'
+} from '../features/audio/audioSlice'
 import { toObservable } from '../lib/rx_redux'
 import { deviceSubject } from '../lib/av'
 

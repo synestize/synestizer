@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
 
 import {
-  SET_ALL_VIDEO_SOURCES,
-  SET_VALID_VIDEO_SOURCE
-} from '../../actions/video'
+  setAllVideoSources,
+  setValidVideoSource
+} from '../../features/video/videoSlice'
 
 export function sources(state=new Map(), action) {
   switch (action.type) {
-    case SET_ALL_VIDEO_SOURCES:
+    case setAllVideoSources.type:
       return action.payload
     default:
       return state
@@ -16,7 +16,7 @@ export function sources(state=new Map(), action) {
 
 export function validSource(state=false, action) {
   switch (action.type) {
-    case SET_VALID_VIDEO_SOURCE:
+    case setValidVideoSource.type:
       return action.payload
     default:
       return state

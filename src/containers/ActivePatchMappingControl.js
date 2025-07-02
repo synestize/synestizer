@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {
   setSourceSinkScale,
   setSinkBias,
-} from '../actions/signal'
+} from '../features/signal/signalSlice'
 import ScaleSlider from '../components/ScaleSlider'
 
 

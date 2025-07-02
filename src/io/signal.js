@@ -7,7 +7,7 @@ import {
   setAllSinkSignalValues,
   addGenericSinkSignal,
   removeGenericSinkSignal,
-} from '../actions/signal'
+} from '../features/signal/signalSlice'
 import { toObservable } from '../lib/rx_redux'
 import React from 'react'
 

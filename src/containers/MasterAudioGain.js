@@ -3,7 +3,7 @@ import AudioGainFader from '../components/AudioGainFader.js'
 import {
   setMasterGain,
   toggleMasterMute,
-} from '../actions/audio';
+} from '../features/audio/audioSlice';
 
 const mapStateToProps = (state, ownProps) => {
   return {

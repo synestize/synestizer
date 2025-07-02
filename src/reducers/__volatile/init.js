@@ -1,6 +1,6 @@
 import {
   RESET_TO_NOTHING,
-} from '../../actions/gui'
+} from '../../actions/app'
 
 export default function(state=true, action) {
   switch (action.type) {

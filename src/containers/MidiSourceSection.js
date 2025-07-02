@@ -1,6 +1,6 @@
 'use strict';
 import { connect } from 'react-redux';
-import { setValidMidiSourceDevice, setMidiSourceDevice, setAllMidiSourceDevices, setMidiSourceChannel, removeMidiSourceCC, addMidiSourceCC, addUnknownMidiSourceCC } from '../actions/midi'
+import { setMidiSourceDevice, setMidiSourceChannel, removeMidiSourceCC, addMidiSourceCC, addUnknownMidiSourceCC } from '../features/midi/midiSlice'
 import MidiStreamSettings from '../components/MidiStreamSettings.js'
 
 const mapStateToProps = (state, ownProps) => {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Link from '../components/Link';
-import { setVisiblePane } from '../actions/gui';
+import { setVisiblePane } from '../features/gui/guiSlice';
 
 const mapStateToProps = (state, ownProps) => {
   return {
