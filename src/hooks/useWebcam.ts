@@ -17,12 +17,9 @@ export function useWebcam() {
       );
 
       // Handle messages from worker
-      workerRef.current.onmessage = (event: MessageEvent<{
-        brightness: number; red: number; blue: number;
-        brightness_delta: number; red_delta: number; blue_delta: number;
-        brightness_power: number; red_power: number; blue_power: number;
-      }>) => {
-        // The core logic doesn't change, it just passes the larger object through.
+      workerRef.current.onmessage = (event: MessageEvent<Record<string, number>>) => {
+        // The core logic doesn't change, it just passes the object through.
+        // Using Record<string, number> to handle the dynamic signal object from the advanced worker
         audioService.update(event.data);
       };
 

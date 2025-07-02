@@ -1,11 +1,13 @@
 import React from 'react';
 import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
 
-// Expand this array to include all new signals
 const signals: SignalName[] = [
-  'brightness', 'red', 'blue',
-  'brightness_delta', 'red_delta', 'blue_delta',
-  'brightness_power', 'red_power', 'blue_power'
+  'brightness', 'chroma_blue', 'chroma_red',
+  'brightness_variance', 'chroma_blue_variance', 'chroma_red_variance',
+  'x_brightness', 'y_brightness', 'brightness_blue_corr',
+  'brightness_delta', 'chroma_blue_delta', 'chroma_red_delta',
+  'brightness_variance_delta', 'chroma_blue_variance_delta', 'chroma_red_variance_delta',
+  'x_brightness_delta', 'y_brightness_delta', 'brightness_blue_corr_delta'
 ];
 // Expand the list of parameters to include both voices
 const parameters: ParameterName[] = [
@@ -72,20 +74,24 @@ function MappingCell({ parameter, signal }: { parameter: ParameterName; signal: 
 
 export function MappingMatrix() {
   return (
-    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner w-full max-w-6xl">
+    <div className="mt-6 p-4 bg-gray-700 rounded-lg shadow-inner w-full max-w-7xl overflow-x-auto">
       <h3 className="text-lg font-semibold mb-3 text-center">Mapping Matrix</h3>
-      {/* Update grid columns to accommodate the new signals */}
-      <div className="grid grid-cols-10 gap-2 text-center items-center">
+      <div
+        className="grid gap-2 text-center items-center"
+        style={{ gridTemplateColumns: `auto repeat(${signals.length}, 1fr)` }}
+      >
         <div /> {/* Empty corner */}
         {signals.map(s => (
-          <div key={s} className="text-xs font-bold text-gray-300 transform -rotate-45 whitespace-nowrap">
-            {s.replace('_', ' ')}
+          <div key={s} className="h-24 flex items-end justify-center">
+            <span className="text-xs font-bold text-gray-300 transform -rotate-65 whitespace-nowrap origin-bottom-left">
+              {s.replace(/_/g, ' ')}
+            </span>
           </div>
         ))}
 
         {parameters.map(p => (
           <React.Fragment key={p}>
-            <div className="capitalize font-bold text-gray-300 text-right pr-2">
+            <div className="capitalize font-bold text-gray-300 text-right pr-2 whitespace-nowrap">
               {parameterLabels[p]}
             </div>
             {signals.map(s => <MappingCell key={`${p}-${s}`} parameter={p} signal={s} />)}

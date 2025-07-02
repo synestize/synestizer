@@ -1,10 +1,14 @@
 import { create } from 'zustand';
 import { audioService } from '../services/audioService';
 
+// This is our new, much richer, set of signals
 export type SignalName =
-  | 'brightness' | 'red' | 'blue'
-  | 'brightness_delta' | 'red_delta' | 'blue_delta'
-  | 'brightness_power' | 'red_power' | 'blue_power';
+  | 'brightness' | 'chroma_blue' | 'chroma_red'
+  | 'brightness_variance' | 'chroma_blue_variance' | 'chroma_red_variance'
+  | 'x_brightness' | 'y_brightness' | 'brightness_blue_corr'
+  | 'brightness_delta' | 'chroma_blue_delta' | 'chroma_red_delta'
+  | 'brightness_variance_delta' | 'chroma_blue_variance_delta' | 'chroma_red_variance_delta'
+  | 'x_brightness_delta' | 'y_brightness_delta' | 'brightness_blue_corr_delta';
 export type ParameterName =
   | 'voice1_frequency'
   | 'voice1_filterCutoff'
@@ -33,12 +37,12 @@ const createDefaultMapping = (): MappingValue => ({ scale: 0, bias: 0 });
 
 export const useAppStore = create<AppState>((set) => ({
   isAudioRunning: false,
-  // Update default mappings to control both voices distinctly
+  // Updated default mappings to showcase new signal capabilities
   mappings: {
     voice1_frequency: { brightness: { scale: 1, bias: 0 } },
-    voice1_filterCutoff: { red: { scale: 1, bias: 0 } },
-    voice2_frequency: { blue: { scale: 1, bias: 0 } },
-    voice2_filterCutoff: { brightness: { scale: -1, bias: 0 } }, // Invert for variety
+    voice1_filterCutoff: { brightness_variance: { scale: 1, bias: 0 } },
+    voice2_frequency: { x_brightness: { scale: 1, bias: 0 } }, // Pan L-R to change pitch
+    voice2_filterCutoff: { brightness_delta: { scale: 1, bias: 0 } }, // Movement opens filter
   },
   startAudio: () => {
     audioService.start();
