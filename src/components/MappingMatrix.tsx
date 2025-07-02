@@ -2,7 +2,21 @@ import React from 'react';
 import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
 
 const signals: SignalName[] = ['brightness', 'red', 'blue'];
-const parameters: ParameterName[] = ['frequency', 'filterCutoff'];
+// Expand the list of parameters to include both voices
+const parameters: ParameterName[] = [
+  'voice1_frequency',
+  'voice1_filterCutoff',
+  'voice2_frequency',
+  'voice2_filterCutoff'
+];
+
+// Map internal parameter names to user-friendly labels
+const parameterLabels: Record<ParameterName, string> = {
+  voice1_frequency: 'Voice 1 Pitch',
+  voice1_filterCutoff: 'Voice 1 Filter',
+  voice2_frequency: 'Voice 2 Pitch',
+  voice2_filterCutoff: 'Voice 2 Filter',
+};
 
 // A single cell in our matrix
 function MappingCell({ parameter, signal }: { parameter: ParameterName; signal: SignalName }) {
@@ -62,7 +76,8 @@ export function MappingMatrix() {
         {parameters.map(p => (
           <>
             <div key={p} className="capitalize font-bold text-gray-300 text-right pr-2">
-              {p === 'frequency' ? 'Pitch' : 'Filter'}
+              {/* Use the label map for display */}
+              {parameterLabels[p]}
             </div>
             {signals.map(s => <MappingCell key={`${p}-${s}`} parameter={p} signal={s} />)}
           </>

@@ -1,8 +1,13 @@
 import { create } from 'zustand';
 import { audioService } from '../services/audioService';
 
+// Add new parameters for voice2
 export type SignalName = 'brightness' | 'red' | 'blue';
-export type ParameterName = 'frequency' | 'filterCutoff';
+export type ParameterName =
+  | 'voice1_frequency'
+  | 'voice1_filterCutoff'
+  | 'voice2_frequency'
+  | 'voice2_filterCutoff';
 
 // This is the new shape for a single mapping cell
 export interface MappingValue {
@@ -26,14 +31,12 @@ const createDefaultMapping = (): MappingValue => ({ scale: 0, bias: 0 });
 
 export const useAppStore = create<AppState>((set) => ({
   isAudioRunning: false,
-  // Default mapping on startup. Brightness controls pitch, Blue controls filter.
+  // Update default mappings to control both voices distinctly
   mappings: {
-    frequency: {
-      brightness: { scale: 1, bias: 0 },
-    },
-    filterCutoff: {
-      blue: { scale: 1, bias: 0 },
-    },
+    voice1_frequency: { brightness: { scale: 1, bias: 0 } },
+    voice1_filterCutoff: { red: { scale: 1, bias: 0 } },
+    voice2_frequency: { blue: { scale: 1, bias: 0 } },
+    voice2_filterCutoff: { brightness: { scale: -1, bias: 0 } }, // Invert for variety
   },
   startAudio: () => {
     audioService.start();
