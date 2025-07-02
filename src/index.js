@@ -24,13 +24,9 @@ import videoio_ from 'io/video'
 import midiio_ from 'io/midi'
 import audioio_ from 'io/audio'
 import signalio_ from 'io/signal'
-import {
-  getStoredState,
-  autoRehydrate,
-  createPersistor,
-  persistStore,
-  createTransform
-} from 'redux-persist'
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { PersistGate } from 'redux-persist/integration/react';
 
 /*
  Localforage imports weirdly:
@@ -59,11 +55,10 @@ I will name that state with a double underscore prefix
   __videoobject: CONFUSINGID,
 }
 */
-const persistConf = {
-  blacklist: ['__volatile'],
-  transforms: [],
-  debounce: 10,
-  storage: localForage
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['__volatile']
 }
 
 // const loggerMiddleware = reduxLogger.createLogger ? reduxLogger.createLogger() : reduxLogger
@@ -98,21 +93,21 @@ const createRootReducer = () => {
 let store;
 let persistor;
 
+// Create persisted reducer
+const persistedReducer = persistReducer(persistConfig, createRootReducer());
+
 let appRoot;
 let videoio;
 let midiio;
 let signalio;
 let audioio;
-getStoredState(persistConf, (err, restoredState) => {
-  //For development we support purging all data
-  let purge = getq("purge");
-  let load = getq("load");
-  if (purge) {
-    restoredState = undefined;
-  }
-  store = configureStore({
-    reducer: createRootReducer(),
-    preloadedState: restoredState,
+
+// For development we support purging all data
+let purge = getq("purge");
+let load = getq("load");
+
+store = configureStore({
+  reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => 
       getDefaultMiddleware({
         serializableCheck: {
@@ -122,42 +117,45 @@ getStoredState(persistConf, (err, restoredState) => {
         thunkMiddleware,
         ...(PRODUCTION || !loggerMiddleware ? [] : [loggerMiddleware])
       ),
-  })
-
-  persistor = createPersistor(store, persistConf)
-  if (purge) {
-    persistor.purgeAll();
-    console.warn("purging all local data", store.getState());
-  }
-  signalio = signalio_(store);
-  videoio = videoio_(store, signalio, document.getElementById('video-io'));
-  midiio = midiio_(store, signalio);
-  audioio = audioio_(store, signalio, midiio);
-  if (load) {
-    console.warn("loading preset", load);
-    store.dispatch(loadFromUrl(load))
-  }
-  if (
-    (restoredState===undefined) ||
-    (Object.keys(restoredState).length === 0) ||
-    purge
-  ) {
-    store.dispatch(resetToNothing())
-    store.dispatch(loadFromUrl('/presets/default.json'))
-  }
-  if (!PRODUCTION) {
-    window.store = store;
-    window.persistor = persistor;
-  }
-  // Mysteriously required for Settings Pane to work.
-  window.React = React;
-  const container = document.getElementById('synapp');
-  const root = createRoot(container);
-  appRoot = root.render(
-    <ErrorBoundary>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ErrorBoundary>
-  );
 })
+
+persistor = persistStore(store);
+if (purge) {
+  persistor.purge();
+  console.warn("purging all local data", store.getState());
+}
+
+signalio = signalio_(store);
+videoio = videoio_(store, signalio, document.getElementById('video-io'));
+midiio = midiio_(store, signalio);
+audioio = audioio_(store, signalio, midiio);
+
+if (load) {
+  console.warn("loading preset", load);
+  store.dispatch(loadFromUrl(load))
+}
+
+// Load default preset if starting fresh or purging
+if (purge || (!load && localStorage.getItem('persist:root') === null)) {
+  store.dispatch(resetToNothing())
+  store.dispatch(loadFromUrl('/presets/default.json'))
+}
+
+if (!PRODUCTION) {
+  window.store = store;
+  window.persistor = persistor;
+}
+
+// Mysteriously required for Settings Pane to work.
+window.React = React;
+const container = document.getElementById('synapp');
+const root = createRoot(container);
+appRoot = root.render(
+  <ErrorBoundary>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  </ErrorBoundary>
+);

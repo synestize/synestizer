@@ -1,6 +1,6 @@
 {
   "name": "synestizer",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "Listen to colours",
   "main": "src/index.js",
   "directories": {
@@ -36,7 +36,7 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.1",
     "redux-logger": "2.7.4",
-    "redux-persist": "3.5.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
     "rxjs": "^7.8.0",

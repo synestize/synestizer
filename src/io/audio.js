@@ -399,6 +399,7 @@ export default function init(store, signalio, midiio) {
     Tone.Master.chain(masterCompressor, meter);
     // Work around occasional scheduler bug by starting at a high tempo
     Tone.Transport.bpm.value = 1100
+    // Ensure context is started before transport (this is now handled by the Start button)
     Tone.Transport.start('+1');
     Tone.Transport.scheduleOnce(() => {
       // console.debug('pickles',  store.getState().audio.master);
