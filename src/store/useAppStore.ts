@@ -1,8 +1,10 @@
 import { create } from 'zustand';
 import { audioService } from '../services/audioService';
 
-// Add new parameters for voice2
-export type SignalName = 'brightness' | 'red' | 'blue';
+export type SignalName =
+  | 'brightness' | 'red' | 'blue'
+  | 'brightness_delta' | 'red_delta' | 'blue_delta'
+  | 'brightness_power' | 'red_power' | 'blue_power';
 export type ParameterName =
   | 'voice1_frequency'
   | 'voice1_filterCutoff'

@@ -17,9 +17,12 @@ export function useWebcam() {
       );
 
       // Handle messages from worker
-      workerRef.current.onmessage = (event: MessageEvent<{ brightness: number; red: number; blue: number }>) => {
-        // The entire data object is passed directly to the audio service.
-        // This maintains the performance architecture: no React state is involved here.
+      workerRef.current.onmessage = (event: MessageEvent<{
+        brightness: number; red: number; blue: number;
+        brightness_delta: number; red_delta: number; blue_delta: number;
+        brightness_power: number; red_power: number; blue_power: number;
+      }>) => {
+        // The core logic doesn't change, it just passes the larger object through.
         audioService.update(event.data);
       };
 

@@ -1,3 +1,7 @@
+// State to be stored within the worker's scope
+let lastSignals = { brightness: 0, red: 0, blue: 0 };
+let lastProcessTime = 0;
+
 self.onmessage = (event: MessageEvent<ImageData>) => {
   const imageData = event.data;
   const data = imageData.data;
@@ -10,22 +14,44 @@ self.onmessage = (event: MessageEvent<ImageData>) => {
     const r = data[i];
     const g = data[i + 1];
     const b = data[i + 2];
-
-    // RGB to Brightness (Luma) and simplified Chroma
     totalBrightness += (r * 0.299 + g * 0.587 + b * 0.114);
-    totalRed += Math.max(0, r - (g + b) / 2); // Measures redness vs the average of green/blue
-    totalBlue += Math.max(0, b - (r + g) / 2); // Measures blueness vs the average of red/green
+    totalRed += Math.max(0, r - (g + b) / 2);
+    totalBlue += Math.max(0, b - (r + g) / 2);
   }
 
-  // Normalize all values to a 0-1 range
-  const avgBrightness = (totalBrightness / pixelCount) / 255;
-  const avgRed = (totalRed / pixelCount) / 128; // Heuristic normalization
-  const avgBlue = (totalBlue / pixelCount) / 128; // Heuristic normalization
+  // --- 1. Calculate current raw signals ---
+  const currentSignals = {
+    brightness: (totalBrightness / pixelCount) / 255,
+    red: (totalRed / pixelCount) / 128,
+    blue: (totalBlue / pixelCount) / 128,
+  };
 
-  // Post the result object back to the main thread
+  // --- 2. Calculate delta (derivative) signals ---
+  const now = Date.now();
+  const deltaTime = (now - lastProcessTime) / 1000.0; // time in seconds
+  lastProcessTime = now;
+
+  // Calculate change and normalize by time. The factor of 5 is a sensitivity boost.
+  const deltaSignals = {
+    brightness_delta: Math.max(0, (currentSignals.brightness - lastSignals.brightness) / deltaTime) * 5,
+    red_delta: Math.max(0, (currentSignals.red - lastSignals.red) / deltaTime) * 5,
+    blue_delta: Math.max(0, (currentSignals.blue - lastSignals.blue) / deltaTime) * 5,
+  };
+
+  // --- 3. Calculate power signals ---
+  const powerSignals = {
+    brightness_power: currentSignals.brightness ** 2,
+    red_power: currentSignals.red ** 2,
+    blue_power: currentSignals.blue ** 2,
+  };
+
+  // --- 4. Update state for next frame ---
+  lastSignals = currentSignals;
+
+  // --- 5. Post all signals back to the main thread ---
   self.postMessage({
-    brightness: avgBrightness,
-    red: avgRed,
-    blue: avgBlue
+    ...currentSignals,
+    ...deltaSignals,
+    ...powerSignals,
   });
 };
