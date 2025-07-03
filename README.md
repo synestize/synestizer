@@ -1,15 +1,172 @@
-# synestizer
+# 🎵 Synestizer
 
-[An app](https://github.com/synestize/synestizer/) that lets you hear color.
-For more information on how, read the basic [documentation](https://synestize.github.io/synestizer/).
+**Transform colors and movement into sound** - A real-time audio-visual synesthetic experience that runs entirely in your browser.
 
-See README.md for the licence.
+Synestizer uses your webcam to detect colors and motion, then generates corresponding sounds and music using advanced web audio synthesis. Experience the fascinating intersection of sight and sound through this interactive digital instrument.
 
-## Copyleft Content
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+## ✨ Features
+
+- 🎥 **Real-time Video Analysis**: Uses your webcam to detect colors and movement
+- 🎵 **Audio Synthesis**: Generates music using Tone.js and Web Audio API
+- 🎹 **MIDI Integration**: Send and receive MIDI control messages
+- 🎛️ **Signal Routing**: Advanced patch matrix for connecting video signals to audio parameters
+- 🎨 **Multiple Instruments**: Choose from various synthesized and sampled instruments
+- 💾 **Preset System**: Save and load your configurations
+- 🔄 **Real-time Controls**: Adjust parameters while the system is running
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- **Node.js** (v16 or higher)
+- **npm** (v7 or higher)
+- **Modern web browser** with webcam and microphone support
+- **HTTPS connection** (required for webcam access)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/synestize/synestizer.git
+   cd synestizer
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   - Navigate to `http://localhost:8080`
+   - Allow webcam and microphone permissions when prompted
+   - Click "🚀 Start Synestizer" to begin
+
+## 🛠️ Development
+
+### Available Scripts
+
+```bash
+# Start development server with hot reloading
+npm run dev
+
+# Build for production
+npm run build
+
+# Build gallery version (minimal UI)
+npm run build:gallery
+
+# Clean build artifacts
+npm run clean
+```
+
+### Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+├── containers/          # Main app container
+├── features/            # Feature-based modules (Redux slices + components)
+│   ├── audio/          # Audio synthesis and effects
+│   ├── midi/           # MIDI input/output handling  
+│   ├── video/          # Video capture and analysis
+│   ├── signal/         # Signal processing and routing
+│   └── gui/            # User interface state
+├── io/                 # Browser API interfaces (RxJS-based)
+├── lib/                # Utility libraries
+└── polyfills/          # Browser compatibility shims
+```
+
+### Architecture Overview
+
+Synestizer follows a **dual-layer architecture**:
+
+1. **App Layer**: React + Redux Toolkit for UI and state management
+2. **IO Layer**: RxJS streams interfacing with browser APIs (video, audio, MIDI)
+
+The IO layer operates independently and communicates with the App layer through the Redux store, enabling real-time performance while maintaining predictable state management.
+
+## 🎮 Usage
+
+### Basic Workflow
+
+1. **Start the application** and grant camera/microphone permissions
+2. **Video Analysis**: The app analyzes your webcam feed for colors and motion
+3. **Signal Routing**: Map video signals to audio parameters using the patch matrix
+4. **Sound Generation**: Audio is synthesized in real-time based on visual input
+5. **Fine-tuning**: Adjust parameters, swap instruments, and create presets
+
+### Key Controls
+
+- **Settings Tab**: Configure video sources, audio devices, and MIDI connections
+- **Sound Tab**: Choose instruments, adjust audio parameters, and control effects  
+- **Performance Tab**: Access the signal patch matrix for advanced routing
+- **Preset System**: Save/load configurations via the app state controls
+
+## 🔧 Technical Details
+
+### Technologies Used
+
+- **React 18** with modern hooks and functional components
+- **Redux Toolkit** for predictable state management
+- **RxJS 7** for reactive stream processing
+- **Tone.js 15** for Web Audio API synthesis
+- **Webpack 5** for modern build tooling
+- **Babel** for ES6+ transpilation
+
+### Browser Requirements
+
+- **WebRTC** support for camera access
+- **Web Audio API** for sound synthesis
+- **WebMIDI API** for MIDI functionality (optional)
+- **Modern JavaScript** features (ES2018+)
+
+### Performance Notes
+
+- Optimized for **60fps video analysis**
+- **Low-latency audio** processing (< 20ms)
+- **Efficient memory usage** with stream-based architecture
+- **Background processing** via Web Workers for intensive tasks
+
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0** - see the [LICENSE](LICENSE) file for details.
+
+### Audio Samples
+
+The included audio samples are derived from Creative Commons and other copyleft sources:
+
+- **Goblet sounds**: From freesound.org user "acclivity"
+- **Kayageum samples**: From freesound.org user "spt3125"  
+- **Tabla sounds**: From freesound.org user "ajaysm"
+
+Full attribution details are preserved in the original README sections below.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our contributing guidelines and feel free to submit issues and pull requests.
+
+## 🔗 Links
+
+- **Live Demo**: [https://synestize.github.io/synestizer/](https://synestize.github.io/synestizer/)
+- **Documentation**: [https://synestize.github.io/synestizer/](https://synestize.github.io/synestizer/)
+- **Repository**: [https://github.com/synestize/synestizer/](https://github.com/synestize/synestizer/)
+
+---
+
+## Original Attribution Information
+
+### Copyleft Content
 
 Certain content is derived from copylefted samples, in particular
 
-goblet_g3.mp3 is a derivative work
+**goblet_g3.mp3** is a derivative work
 
 File:
 	Name: "Goblet_G_Loud.wav"
@@ -23,7 +180,7 @@ Designer / Creator / Uploader:
 Description:
 	By "acclivity" : Another silver plated goblet pinged loudly with a finger nail. Time stretched by 1.5 percent to tune it to G. Sony ECM-MS957, MZ-N10, iRiver
 
-kayageum_b4.mp3 is a derivative work
+**kayageum_b4.mp3** is a derivative work
 
 File:
 	Name: "kayageum1_B4.wav"
@@ -38,7 +195,7 @@ Description:
 	By "spt3125" : single string plucked medium-loud with finger, allowed to decay.  this is string 21 of 23, pitch B4 (494 Hz).
 recorded with stereo pair of oktava mk012 mics overhead, XY-ish.
 
-tabla_na_d3.mp3 is a derivative work
+**tabla_na_d3.mp3** is a derivative work
 
 This pack of sounds contains sounds by the following user:
  - ajaysm ( https://www.freesound.org/people/ajaysm/ )

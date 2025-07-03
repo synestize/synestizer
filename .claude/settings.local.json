@@ -26,7 +26,8 @@
       "Bash(echo)",
       "Bash(for file in ScaleSliderSVG.js Select.js SubPane.js SVG.js TextBlob.js UnmappedAudioParam.js)",
       "Bash(pkill:*)",
-      "Bash(true)"
+      "Bash(true)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
