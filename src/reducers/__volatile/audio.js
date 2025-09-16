@@ -8,7 +8,7 @@ import {
   setAudioReady
 } from '../../features/audio/audioSlice'
 
-export function sources(state=new Map(), {type, payload}) {
+export function sources(state={}, {type, payload}) {
   switch (type) {
     case setAllAudioSourceDevices.type:
       return payload
@@ -26,7 +26,7 @@ export function validSource(state=false, {type, payload}) {
   }
 }
 
-export function sinks(state=new Map(), {type, payload}) {
+export function sinks(state={}, {type, payload}) {
   switch (type) {
     case setAllAudioSinkDevices.type:
       return payload

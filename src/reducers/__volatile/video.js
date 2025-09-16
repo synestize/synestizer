@@ -5,7 +5,7 @@ import {
   setValidVideoSource
 } from '../../features/video/videoSlice'
 
-export function sources(state=new Map(), action) {
+export function sources(state={}, action) {
   switch (action.type) {
     case setAllVideoSources.type:
       return action.payload

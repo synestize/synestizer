@@ -109,14 +109,14 @@ export default function init(store, signalio) {
     for (let [key, val] of midiinfo.inputs.entries()){
       sourceNames.set(key, val.name)
     };
-    let sourceDevice = state.midi.sourceDevice || midiinfo.inputs.keys()[0];
-    store.dispatch(setAllMidiSourceDevices(sourceNames));
+    let sourceDevice = state.midi.sourceDevice || Array.from(midiinfo.inputs.keys())[0];
+    store.dispatch(setAllMidiSourceDevices(Object.fromEntries(sourceNames)));
 
     for (let [key, val] of midiinfo.outputs.entries()){
       sinkNames.set(key, val.name)
     };
-    let sinkDevice = state.midi.sinkDevice || midiinfo.outputs.keys()[0];
-    store.dispatch(setAllMidiSinkDevices(sinkNames))
+    let sinkDevice = state.midi.sinkDevice || Array.from(midiinfo.outputs.keys())[0];
+    store.dispatch(setAllMidiSinkDevices(Object.fromEntries(sinkNames)))
 
     store.dispatch(setMidiSourceDevice(sourceDevice));
     store.dispatch(setValidMidiSourceDevice(false));

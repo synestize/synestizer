@@ -112,10 +112,10 @@ export default function init(store, signalio, videoDom) {
       sources.set(dev.deviceId, dev);
       sourceNames.set(dev.deviceId, dev.label);
     });
-    store.dispatch(setAllVideoSources(sourceNames));
+    store.dispatch(setAllVideoSources(Object.fromEntries(sourceNames)));
     //If there is a device, select it.
     if (sourceNames.size >= 1) {
-      store.dispatch(setCurrentVideoSource(sourceNames.keys().next().value));
+      store.dispatch(setCurrentVideoSource(Array.from(sourceNames.keys())[0]));
     }
   };
 

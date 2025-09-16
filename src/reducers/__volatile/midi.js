@@ -6,7 +6,7 @@ import {
   setValidMidiSinkDevice
 } from '../../features/midi/midiSlice'
 
-export function sources(state=new Map(), action) {
+export function sources(state={}, action) {
   switch (action.type) {
     case setAllMidiSourceDevices.type:
       return action.payload
@@ -24,7 +24,7 @@ export function validSource(state=false, {type, payload}) {
   }
 }
 
-export function sinks(state=new Map(), action) {
+export function sinks(state={}, action) {
   switch (action.type) {
     case setAllMidiSinkDevices.type:
       return action.payload

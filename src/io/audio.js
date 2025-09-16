@@ -77,8 +77,8 @@ export default function init(store, signalio, midiio) {
       };
       i++;
     }
-    store.dispatch(setAllAudioSourceDevices(sourceNames));
-    store.dispatch(setAllAudioSinkDevices(sinkNames));
+    store.dispatch(setAllAudioSourceDevices(Object.fromEntries(sourceNames)));
+    store.dispatch(setAllAudioSinkDevices(Object.fromEntries(sinkNames)));
   };
 
   combineLatest([
@@ -93,7 +93,7 @@ export default function init(store, signalio, midiio) {
   ]).subscribe(
     ([allSources, sourceDev])=> {
       store.dispatch(
-        setValidAudioSourceDevice(allSources.has(sourceDev))
+        setValidAudioSourceDevice(Object.prototype.hasOwnProperty.call(allSources, sourceDev))
       );
     }
   )
@@ -109,7 +109,7 @@ export default function init(store, signalio, midiio) {
   ]).subscribe(
     ([allSinks, sinkDev])=> {
       store.dispatch(
-        setValidAudioSinkDevice(allSinks.has(sinkDev))
+        setValidAudioSinkDevice(Object.prototype.hasOwnProperty.call(allSinks, sinkDev))
       );
     }
   )

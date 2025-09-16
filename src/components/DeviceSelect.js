@@ -9,7 +9,7 @@ const DeviceSelect = ({
     withNull=true}
   ) => {
   const optNodes = [];
-  for (let [key, name] of deviceMap) {
+  for (let [key, name] of Object.entries(deviceMap)) {
     let nu = <option value={key} key={key}>{name}</option> ;
     optNodes.push(nu);
   }
