@@ -13,14 +13,16 @@
 import { AudioBinder } from "./audio/binder.ts";
 import { enumerateOutputDevices, setOutputDevice } from "./audio/device.ts";
 import { AudioEngine } from "./audio/engine.ts";
+import { playablePreset } from "./preset/defaults.ts";
 import { SignalBus } from "./signal/bus.ts";
 import { compileGraph } from "./signal/graph.ts";
 import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
+import { LiveUI } from "./ui/live-ui.ts";
 import { type CameraResult, startCamera } from "./video/camera.ts";
 import { VideoSourceDriver } from "./video/source-driver.ts";
 
-const store = new ConfigStore();
+const store = new ConfigStore(playablePreset());
 const bus = new SignalBus();
 const scheduler = new Scheduler(bus);
 
@@ -69,24 +71,8 @@ startBtn.addEventListener("click", async () => {
   audioBinder = new AudioBinder(store, bus, scheduler, audioEngine);
   audioBinder.start();
   scheduler.start();
-
-  // Add a basic voice and one default sink mapping for sanity
-  store.update((p) => {
-    if (p.voices.length === 0) {
-      p.voices.push({ id: "v1", kind: "basic", params: {} });
-    }
-    if (!p.sinks.some((s) => s.id === "v1.gain")) {
-      p.sinks.push(
-        { id: "v1.freq", kind: "audio.freq", label: "Freq", signal: null, bias: 0, scale: 0 },
-        { id: "v1.gain", kind: "audio.gain", label: "Gain", signal: null, bias: -0.4, scale: 0.5 },
-        { id: "v1.detune", kind: "audio.detune", label: "Detune", signal: null, bias: 0, scale: 0 },
-      );
-    }
-    // Recompile after sinks settle (a moment later via subscribe)
-  });
-
   scheduler.setGraph(compileGraph(store.snapshot(), bus));
-
+  liveUI.refresh();
   await populateOutputDevices();
   startBtn.textContent = "Audio running";
 });
@@ -114,22 +100,44 @@ async function populateOutputDevices(): Promise<void> {
 
 // ─── Camera ──────────────────────────────────────────────────────────────────
 
+const previewMount = document.getElementById("camera-preview-mount") as HTMLElement;
+
 cameraBtn.addEventListener("click", async () => {
   if (videoDriver !== null) return;
   cameraBtn.disabled = true;
   cameraStatus.textContent = "requesting...";
   try {
     camera = await startCamera();
+    // Show the live camera feed so user can confirm frames are flowing.
+    // The videoEl was play()'d while detached; some browsers pause it on
+    // re-attach, so force play after appending. Errors here are non-fatal —
+    // the worker pump uses the same element regardless.
+    previewMount.replaceChildren(camera.videoEl);
+    camera.videoEl.play().catch((e) => console.warn("[main] preview play failed", e));
     videoDriver = new VideoSourceDriver(bus);
     videoDriver.start(camera);
     cameraStatus.textContent = "running";
     // Recompile so any matrix entries referencing video sources resolve
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
+    liveUI.refresh();
   } catch (err) {
     cameraStatus.textContent = `failed: ${(err as Error).message}`;
     cameraBtn.disabled = false;
   }
 });
+
+// ─── Live UI panels (meters + matrix sliders) ────────────────────────────────
+
+const liveUI = new LiveUI({
+  store,
+  bus,
+  scheduler,
+  genericContainer: document.getElementById("generic-meters") as HTMLElement,
+  sourceContainer: document.getElementById("source-meters") as HTMLElement,
+  sinkContainer: document.getElementById("sink-meters") as HTMLElement,
+  matrixContainer: document.getElementById("matrix-rows") as HTMLElement,
+});
+liveUI.start();
 
 // Diagnostic: log on first frame
 let logged = false;

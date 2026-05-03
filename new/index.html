@@ -28,9 +28,30 @@
       <section id="video-controls">
         <button id="camera-btn" type="button">Start camera</button>
         <span id="camera-status"></span>
+        <div id="camera-preview-mount"></div>
       </section>
+      <section id="live-panel">
+        <h2>Live signal meters</h2>
+        <p class="hint">Read directly from <code>SignalBus</code> on rAF; never touches <code>ConfigStore</code>.</p>
+
+        <h3>Generics α … θ</h3>
+        <div id="generic-meters" class="meter-row"></div>
+
+        <h3>Active sources (driving the matrix)</h3>
+        <div id="source-meters"></div>
+
+        <h3>Sink outputs</h3>
+        <div id="sink-meters"></div>
+      </section>
+
+      <section id="matrix-panel">
+        <h2>Patch matrix</h2>
+        <p class="hint">Edit a scale; <code>ConfigStore</code> recompiles the graph.</p>
+        <div id="matrix-rows"></div>
+      </section>
+
       <section id="stage-status">
-        <p>Stage 4 smoke test build. See <code>REBUILD_PLAN.md</code> for roadmap.</p>
+        <p>See <code>REBUILD_PLAN.md</code> for roadmap. Stage 5 (Web Components, full SVG matrix) is the next big jump.</p>
       </section>
     </main>
     <script type="module" src="/src/main.ts"></script>
