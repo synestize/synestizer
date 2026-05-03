@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Synestizer</title>
+    <link rel="stylesheet" href="/src/ui/style.css" />
+  </head>
+  <body>
+    <main id="app">
+      <h1>Synestizer</h1>
+      <p>Hear color. Live camera input → audio synthesis.</p>
+      <section id="audio-controls">
+        <button id="start-btn" type="button">Start audio</button>
+        <label>
+          Output device
+          <select id="output-device-sel"></select>
+        </label>
+        <label>
+          Master gain (dB)
+          <input id="master-gain" type="range" min="-60" max="6" step="0.5" value="-12" />
+          <span id="master-gain-val">-12 dB</span>
+        </label>
+        <label>
+          <input id="master-mute" type="checkbox" /> Mute
+        </label>
+      </section>
+      <section id="video-controls">
+        <button id="camera-btn" type="button">Start camera</button>
+        <span id="camera-status"></span>
+      </section>
+      <section id="stage-status">
+        <p>Stage 4 smoke test build. See <code>REBUILD_PLAN.md</code> for roadmap.</p>
+      </section>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

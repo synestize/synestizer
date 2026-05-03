@@ -1,0 +1,44 @@
+:root {
+  --bg: #111;
+  --fg: #eee;
+  --accent: #3af;
+  font-family: system-ui, -apple-system, sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent);
+  color: #000;
+  border: 0;
+  padding: 0.5em 1em;
+  font: inherit;
+  border-radius: 4px;
+}
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+label {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+select,
+input[type="range"] {
+  margin-left: 0.5rem;
+}
