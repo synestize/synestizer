@@ -79,7 +79,7 @@ export default function init(store, signalio, midiio) {
       }
       else if (dev.kind==='audiooutput') {
         sinkNames.set(dev.deviceId, label)
-        sourceDevices.set(dev.deviceId, dev)
+        sinkDevices.set(dev.deviceId, dev)
       };
       i++;
     }
@@ -138,22 +138,42 @@ export default function init(store, signalio, midiio) {
 
   function doAudioSinkDevicePlumbing() {
     const sinkDevKey = store.getState().audio.sinkDevice;
-    navigator.mediaDevices.getUserMedia(
-      {deviceId:sinkDevKey, audio: true}
-    ).then(
-      initAudioContext,
-      doAudioSinkDevicePlumbing
-    );
+    initAudioContext(sinkDevKey);
   }
-  //Create a context with master out volume
-  //Don't yet understand how this will work for the microphone etc
-  function initAudioContext(sinkDev){
+  // Create the AudioContext and route to the user-selected output device.
+  // The previous implementation called getUserMedia({deviceId, audio:true}) — a
+  // microphone API misused for output selection. Chrome let it through (and the
+  // mic permission served as a gesture gate); Firefox rejected it, leaving the
+  // context uninitialised. AudioContext.setSinkId is the spec-correct path for
+  // output selection but is Chromium-only as of 2026; on Firefox we silently
+  // fall back to the default sink rather than redirecting via an <audio>
+  // element + MediaStreamDestination, which can wait for the rebuild.
+  function initAudioContext(sinkDevKey){
     if (context!==undefined) {
       //Tone.dispose()
       context.close()
     }
-    sinkDevice = sinkDev;
+    sinkDevice = sinkDevKey;
     context = new window.AudioContext();
+    if (
+      sinkDevKey && sinkDevKey !== 'default'
+      && typeof context.setSinkId === 'function'
+    ) {
+      context.setSinkId(sinkDevKey).catch((err) => {
+        console.warn('AudioContext.setSinkId failed; using default sink:', err);
+      });
+    }
+    if (context.state === 'suspended') {
+      const resume = () => {
+        context.resume();
+        window.removeEventListener('click', resume, true);
+        window.removeEventListener('keydown', resume, true);
+        window.removeEventListener('touchstart', resume, true);
+      };
+      window.addEventListener('click', resume, true);
+      window.addEventListener('keydown', resume, true);
+      window.addEventListener('touchstart', resume, true);
+    }
     window.audioContext = context;
     Tone.setContext(context);
     Object.assign(audioInfrastructure, {
