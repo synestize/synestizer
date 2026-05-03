@@ -5,6 +5,8 @@ For more information on how, read the basic [documentation](https://synestize.gi
 
 See README.md for the licence.
 
+> **A staged rewrite is planned** — see [REBUILD_PLAN.md](REBUILD_PLAN.md). The current code in `src/` is reference, not foundation. AI assistants picking up this work should also read [AGENTS.md](AGENTS.md).
+
 ## Copyleft Content
 
 Certain content is derived from copylefted samples, in particular
