@@ -6,6 +6,40 @@ Synestizer uses your webcam to detect colors and motion, then generates correspo
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+---
+
+## ⚠️ The codebase is being rewritten
+
+Active development now happens in [`new/`](./new) — a TypeScript + Vite + Web Components rewrite of the 2016-era React/Redux/Webpack app at the repo root. See [REBUILD_PLAN.md](./REBUILD_PLAN.md) for the staged rewrite plan and [AGENTS.md](./AGENTS.md) for orientation.
+
+The original tree at the root (`src/`, `webpack.config.js`, `package.json`) still exists for reference and is what the **Legacy app** section below describes. New features go in `new/` only.
+
+### Run the new app (Vite dev server)
+
+```bash
+cd new
+npm install        # one-time
+npx vite           # dev server on http://localhost:5173/
+```
+
+Then open `http://localhost:5173/`, click **Start audio** (browser autoplay policy), then **Start camera**. You should hear a continuous tone whose loudness, pitch, and detune track what the camera sees.
+
+### Verify, build, lint (run from `new/`)
+
+```bash
+npx tsc --noEmit          # typecheck (strict)
+npx vitest run            # unit tests
+npx vite build            # production build → new/dist/
+npx vite preview          # serve the prod build locally
+npx biome check --write src   # lint + format with autofix
+```
+
+Browser requirements: a recent Chrome or Firefox served from `localhost` or HTTPS (camera and `setSinkId` need a secure context). Don't open `new/dist/index.html` via `file://` — those APIs won't work.
+
+---
+
+> Everything below describes the **legacy** React + Redux + Webpack app at the repo root. It still runs (the live demo at https://synestize.github.io/synestizer/ is built from it), but is no longer where features land. For the current dev workflow, use the section above.
+
 ## ✨ Features
 
 - 🎥 **Real-time Video Analysis**: Uses your webcam to detect colors and movement
