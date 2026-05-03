@@ -20,7 +20,9 @@ import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
 import "./ui/components/syn-meter.ts";
 import "./ui/components/syn-patch-matrix.ts";
+import "./ui/components/syn-sinks-panel.ts";
 import type { SynPatchMatrix } from "./ui/components/syn-patch-matrix.ts";
+import type { SynSinksPanel } from "./ui/components/syn-sinks-panel.ts";
 import { LiveUI } from "./ui/live-ui.ts";
 import { type CameraResult, startCamera } from "./video/camera.ts";
 import { VideoSourceDriver } from "./video/source-driver.ts";
@@ -76,6 +78,7 @@ startBtn.addEventListener("click", async () => {
   scheduler.start();
   scheduler.setGraph(compileGraph(store.snapshot(), bus));
   liveUI.refresh();
+  sinksPanel.refresh();
   await populateOutputDevices();
   startBtn.textContent = "Audio running";
 });
@@ -124,6 +127,7 @@ cameraBtn.addEventListener("click", async () => {
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
     liveUI.refresh();
     patchMatrix.refreshSourceSlots();
+    sinksPanel.refresh();
   } catch (err) {
     cameraStatus.textContent = `failed: ${(err as Error).message}`;
     cameraBtn.disabled = false;
@@ -151,6 +155,15 @@ patchMatrix.configure({
   bus,
   onScaleChange: () => {
     // Recompile the graph so the change takes effect on the next tick.
+    scheduler.setGraph(compileGraph(store.snapshot(), bus));
+  },
+});
+
+const sinksPanel = document.getElementById("sinks-panel") as SynSinksPanel;
+sinksPanel.configure({
+  store,
+  bus,
+  onChange: () => {
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
   },
 });
