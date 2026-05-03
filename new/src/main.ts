@@ -20,9 +20,13 @@ import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
 import "./ui/components/syn-meter.ts";
 import "./ui/components/syn-patch-matrix.ts";
+import "./ui/components/syn-preset-widget.ts";
 import "./ui/components/syn-sinks-panel.ts";
+import "./ui/components/syn-source-picker.ts";
 import type { SynPatchMatrix } from "./ui/components/syn-patch-matrix.ts";
+import type { SynPresetWidget } from "./ui/components/syn-preset-widget.ts";
 import type { SynSinksPanel } from "./ui/components/syn-sinks-panel.ts";
+import type { SynSourcePicker } from "./ui/components/syn-source-picker.ts";
 import { LiveUI } from "./ui/live-ui.ts";
 import { type CameraResult, startCamera } from "./video/camera.ts";
 import { VideoSourceDriver } from "./video/source-driver.ts";
@@ -128,6 +132,7 @@ cameraBtn.addEventListener("click", async () => {
     liveUI.refresh();
     patchMatrix.refreshSourceSlots();
     sinksPanel.refresh();
+    sourcePicker.refresh();
   } catch (err) {
     cameraStatus.textContent = `failed: ${(err as Error).message}`;
     cameraBtn.disabled = false;
@@ -166,6 +171,23 @@ sinksPanel.configure({
   onChange: () => {
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
   },
+});
+
+const sourcePicker = document.getElementById("source-picker") as SynSourcePicker;
+sourcePicker.configure({
+  store,
+  bus,
+  onAdd: () => {
+    scheduler.setGraph(compileGraph(store.snapshot(), bus));
+  },
+});
+
+const presetWidget = document.getElementById("preset-widget") as SynPresetWidget;
+presetWidget.configure({ store });
+
+// Loading a preset can change voices/sinks/matrix; recompile + refresh meters.
+store.subscribe("**", () => {
+  scheduler.setGraph(compileGraph(store.snapshot(), bus));
 });
 
 // Diagnostic: log on first frame

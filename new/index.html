@@ -10,6 +10,12 @@
     <main id="app">
       <h1>Synestizer</h1>
       <p>Hear color. Live camera input → audio synthesis.</p>
+      <section id="preset-section">
+        <h2>Preset</h2>
+        <p class="hint">Autosaves to <code>localStorage</code> on every edit. Download to share or back up.</p>
+        <syn-preset-widget id="preset-widget"></syn-preset-widget>
+      </section>
+
       <section id="audio-controls">
         <button id="start-btn" type="button">Start audio</button>
         <label>
@@ -48,6 +54,12 @@
         <h2>Patch matrix</h2>
         <p class="hint">SVG <code>&lt;syn-scale-slider&gt;</code> Web Components. Drag a cell up/down to set its scale; double-click to reset to zero. Live perturbation indicator (cyan triangle) shows the cell's contribution to its generic.</p>
         <syn-patch-matrix id="patch-matrix"></syn-patch-matrix>
+      </section>
+
+      <section id="source-picker-section">
+        <h2>Add a routing</h2>
+        <p class="hint">Pick a source + a generic and append a row to the matrix. Drag the cell up/down in the matrix above to set its scale.</p>
+        <syn-source-picker id="source-picker"></syn-source-picker>
       </section>
 
       <section id="sinks-panel-section">

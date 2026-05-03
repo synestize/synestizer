@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit*)",
+      "Bash(./node_modules/.bin/tsc --noEmit*)",
+      "Bash(node_modules/.bin/tsc --noEmit*)",
+      "Bash(npx vitest run*)",
+      "Bash(./node_modules/.bin/vitest run*)",
+      "Bash(npx biome check src)",
+      "Bash(./node_modules/.bin/biome check src)"
+    ]
+  }
+}
