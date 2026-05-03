@@ -1,0 +1,52 @@
+name: Build and deploy rewrite-branch preview
+
+on:
+  push:
+    branches:
+      - ultraviolet
+      # add further rewrite-stage branches here as they're cut
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Stage static assets alongside bundle
+        # webpack only emits the JS bundle + index.html into dist/. The
+        # rest of the app (css/, fonts/, sound/, presets/, favicon.ico)
+        # lives in public/ and is served by the dev server at runtime.
+        # For a static deploy we have to merge them ourselves.
+        run: cp -R public/. dist/
+
+      - name: Compute destination subdirectory
+        id: dest
+        run: echo "dir=${GITHUB_REF_NAME//\//-}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to synestize.github.io
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: synestize/synestize.github.io
+          publish_branch: master
+          publish_dir: ./dist
+          destination_dir: ${{ steps.dest.outputs.dir }}
+          keep_files: true
+          commit_message: "Deploy ${{ github.repository }}@${{ github.sha }} -> ${{ steps.dest.outputs.dir }}/"
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com

@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'bundle.js',
-      publicPath: '/',
+      publicPath: 'auto',
     },
     devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
     module: {
