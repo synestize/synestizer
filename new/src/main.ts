@@ -18,6 +18,9 @@ import { SignalBus } from "./signal/bus.ts";
 import { compileGraph } from "./signal/graph.ts";
 import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
+import "./ui/components/syn-meter.ts";
+import "./ui/components/syn-patch-matrix.ts";
+import type { SynPatchMatrix } from "./ui/components/syn-patch-matrix.ts";
 import { LiveUI } from "./ui/live-ui.ts";
 import { type CameraResult, startCamera } from "./video/camera.ts";
 import { VideoSourceDriver } from "./video/source-driver.ts";
@@ -120,6 +123,7 @@ cameraBtn.addEventListener("click", async () => {
     // Recompile so any matrix entries referencing video sources resolve
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
     liveUI.refresh();
+    patchMatrix.refreshSourceSlots();
   } catch (err) {
     cameraStatus.textContent = `failed: ${(err as Error).message}`;
     cameraBtn.disabled = false;
@@ -138,6 +142,18 @@ const liveUI = new LiveUI({
   matrixContainer: document.getElementById("matrix-rows") as HTMLElement,
 });
 liveUI.start();
+
+// ─── Stage 5 UI: <syn-patch-matrix> ──────────────────────────────────────────
+
+const patchMatrix = document.getElementById("patch-matrix") as SynPatchMatrix;
+patchMatrix.configure({
+  store,
+  bus,
+  onScaleChange: () => {
+    // Recompile the graph so the change takes effect on the next tick.
+    scheduler.setGraph(compileGraph(store.snapshot(), bus));
+  },
+});
 
 // Diagnostic: log on first frame
 let logged = false;
