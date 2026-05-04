@@ -35,6 +35,8 @@
  *   - setPerturbation(v)    — the per-cell perturbation magnitude (signed)
  */
 
+import { copula } from "../../signal/copula.ts";
+import { clip1 } from "../../signal/transform.ts";
 import { defineOnce, SynElement } from "./base.ts";
 
 const SCALE_FILL = "rgba(60, 130, 255, 0.85)";
@@ -260,12 +262,14 @@ export class SynArchimedeanSlider extends SynElement {
       this.#label.textContent = "";
     }
 
-    // Envelope: from bias-perturbed extremes through scale-slider centre
+    // Envelope: from bias-perturbed extremes through scale-slider centre.
+    // The extremes assume |signal| = 1 in either direction — visualises the
+    // maximum modulation depth boundary regardless of current signal value.
     const leftmostPerturb = Math.round(
-      this.#midX + (this.#trackLen * copulaPair(this.#bias, this.#scale)) / 2,
+      this.#midX + (this.#trackLen * copula([this.#bias, this.#scale])) / 2,
     );
     const rightmostPerturb = Math.round(
-      this.#midX + (this.#trackLen * copulaPair(this.#bias, -this.#scale)) / 2,
+      this.#midX + (this.#trackLen * copula([this.#bias, -this.#scale])) / 2,
     );
     const scaleSliderMidXAbs = scaleSliderLeft + ssMidX;
     this.#envelope.setAttribute(
@@ -364,22 +368,6 @@ export class SynArchimedeanSlider extends SynElement {
     this.dispatchEvent(new CustomEvent(kind, { detail: { value } }));
     this.dispatchEvent(new CustomEvent("change", { detail: { kind, value } }));
   }
-}
-
-function clip1(v: number): number {
-  return v < -1 ? -1 : v > 1 ? 1 : v;
-}
-
-// Quick copula approximation for envelope geometry — full transform.ts copula
-// is fine but we want this to stay zero-dep. Identical math.
-const SEVEN_BIT_SAFE = 127.5 / 128;
-function copulaPair(a: number, b: number): number {
-  const ad = clipinf(Math.atanh(a * SEVEN_BIT_SAFE) / SEVEN_BIT_SAFE);
-  const bd = clipinf(Math.atanh(b * SEVEN_BIT_SAFE) / SEVEN_BIT_SAFE);
-  return Math.tanh((ad + bd) / SEVEN_BIT_SAFE) * SEVEN_BIT_SAFE;
-}
-function clipinf(v: number): number {
-  return v < -3.13 ? -3.13 : v > 3.13 ? 3.13 : v;
 }
 
 defineOnce("syn-archimedean-slider", SynArchimedeanSlider);

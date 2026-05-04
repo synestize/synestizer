@@ -43,12 +43,15 @@ export class SynSourcePicker extends SynElement {
     this.defineTemplate(`
       <style>
         :host { display: block; font-family: system-ui, sans-serif; color: #ddd; }
-        .row { display: grid; grid-template-columns: auto 1fr auto auto auto; gap: 0.5rem; align-items: center; }
+        .row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+        .row + .row { margin-top: 0.4rem; }
+        .row .spacer { flex: 1; }
+        .row .sources { flex: 1; min-width: 16em; }
+        .row .search { flex: 1; }
         input, select, button { font: inherit; padding: 4px 6px; }
         input, select {
           background: #1a1a1a; color: #ccc; border: 1px solid #333;
         }
-        select { min-width: 18em; }
         button { cursor: pointer; background: var(--accent, #3af); color: #000; border: 0; border-radius: 3px; }
         .status { color: #888; font-size: 0.8rem; margin-top: 0.4rem; min-height: 1em; }
       </style>
@@ -59,16 +62,13 @@ export class SynSourcePicker extends SynElement {
         <select class="generic"></select>
         <button class="add" type="button">Add to matrix</button>
       </div>
-      <div class="row" style="margin-top: 0.4rem;">
+      <div class="row">
         <label>Filter</label>
         <input class="search" type="text" placeholder="filter sources by id or name…" />
-        <span></span><span></span><span></span>
       </div>
-      <div class="row" style="margin-top: 0.6rem;">
-        <span></span>
-        <span></span>
-        <span></span>
-        <button class="randomize" type="button" title="Perturb every existing matrix scale by ±0.5 (deterministic with each press)">🎲 Randomize scales</button>
+      <div class="row">
+        <span class="spacer"></span>
+        <button class="randomize" type="button" title="Perturb every existing matrix scale by ±0.5">🎲 Randomize scales</button>
         <button class="clear" type="button" title="Remove every entry from the matrix">⌫ Clear matrix</button>
       </div>
       <div class="status"></div>

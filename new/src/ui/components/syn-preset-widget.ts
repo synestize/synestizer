@@ -11,6 +11,7 @@
  * URL preset loading + bundled presets come later (Stage 6 part 2).
  */
 
+import { playablePreset } from "../../preset/defaults.ts";
 import type { Preset } from "../../preset/schema.ts";
 import type { ConfigStore } from "../../store/config-store.ts";
 import { defineOnce, SynElement } from "./base.ts";
@@ -19,7 +20,6 @@ const STORAGE_KEY = "synestizer.preset";
 const AUTOSAVE_DEBOUNCE_MS = 500;
 
 const BUNDLED_PRESETS: Array<{ id: string; label: string; url: string }> = [
-  { id: "playable", label: "Playable (default routing)", url: "/presets/playable.json" },
   { id: "wild", label: "Wild (10 routings, deep modulation)", url: "/presets/wild.json" },
   { id: "empty", label: "Empty (one unmodulated voice)", url: "/presets/empty.json" },
 ];
@@ -30,6 +30,7 @@ export class SynPresetWidget extends SynElement {
   #downloadBtn!: HTMLButtonElement;
   #uploadInput!: HTMLInputElement;
   #restoreBtn!: HTMLButtonElement;
+  #resetBtn!: HTMLButtonElement;
   #bundledSelect!: HTMLSelectElement;
   #loadBundledBtn!: HTMLButtonElement;
   #status!: HTMLElement;
@@ -56,6 +57,7 @@ export class SynPresetWidget extends SynElement {
           <input type="file" accept="application/json,.json" />
         </label>
         <button class="restore" type="button">↺ Restore last session</button>
+        <button class="reset" type="button" title="Reset to the built-in playable preset">⌂ Reset to default</button>
       </div>
       <div class="row" style="margin-top: 0.5rem;">
         <select class="bundled"></select>
@@ -66,6 +68,7 @@ export class SynPresetWidget extends SynElement {
     this.#downloadBtn = this.root.querySelector(".download") as HTMLButtonElement;
     this.#uploadInput = this.root.querySelector("input[type=file]") as HTMLInputElement;
     this.#restoreBtn = this.root.querySelector(".restore") as HTMLButtonElement;
+    this.#resetBtn = this.root.querySelector(".reset") as HTMLButtonElement;
     this.#bundledSelect = this.root.querySelector(".bundled") as HTMLSelectElement;
     this.#loadBundledBtn = this.root.querySelector(".load-bundled") as HTMLButtonElement;
     this.#status = this.root.querySelector(".status") as HTMLElement;
@@ -80,6 +83,7 @@ export class SynPresetWidget extends SynElement {
     this.#downloadBtn.addEventListener("click", () => this.#download());
     this.#uploadInput.addEventListener("change", () => this.#upload());
     this.#restoreBtn.addEventListener("click", () => this.#restore());
+    this.#resetBtn.addEventListener("click", () => this.#resetToDefault());
     this.#loadBundledBtn.addEventListener("click", () => this.#loadBundled());
   }
 
@@ -163,6 +167,13 @@ export class SynPresetWidget extends SynElement {
     } catch (err) {
       this.#setStatus(`Restore failed: ${(err as Error).message}`);
     }
+  }
+
+  #resetToDefault(): void {
+    if (!this.#store) return;
+    if (!confirm("Discard the current preset and reset to the built-in default?")) return;
+    this.#store.load(playablePreset());
+    this.#setStatus("Reset to playable default.");
   }
 
   async #loadBundled(): Promise<void> {

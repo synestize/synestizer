@@ -18,7 +18,6 @@ import { SignalBus } from "./signal/bus.ts";
 import { compileGraph } from "./signal/graph.ts";
 import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
-import "./ui/components/syn-meter.ts";
 import "./ui/components/syn-patch-matrix.ts";
 import "./ui/components/syn-preset-widget.ts";
 import "./ui/components/syn-sinks-panel.ts";

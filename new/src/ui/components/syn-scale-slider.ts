@@ -25,6 +25,7 @@
  * (`<syn-patch-matrix>`) handles store updates. Keeps the cell reusable.
  */
 
+import { clip1 } from "../../signal/transform.ts";
 import { defineOnce, SynElement } from "./base.ts";
 
 const SCALE_FILL = "rgba(60, 130, 255, 0.85)";
@@ -190,10 +191,6 @@ export class SynScaleSlider extends SynElement {
     this.dispatchEvent(new CustomEvent("change", { detail: { value: 0 } }));
     this.dispatchEvent(new CustomEvent("input", { detail: { value: 0 } }));
   };
-}
-
-function clip1(v: number): number {
-  return v < -1 ? -1 : v > 1 ? 1 : v;
 }
 
 defineOnce("syn-scale-slider", SynScaleSlider);

@@ -46,6 +46,7 @@ interface CellRef {
   source: string;
   generic: number;
   sourceSlot: number; // for rAF perturbation lookup; -1 if not yet registered
+  scale: number; // cached so the rAF loop doesn't parse the SVG attr each frame
 }
 
 export class SynPatchMatrix extends SynElement {
@@ -191,19 +192,23 @@ export class SynPatchMatrix extends SynElement {
         slider.setAttribute("width", "60");
         slider.setAttribute("height", "24");
         const entry = matrix.find((m) => m.source === source && m.generic === g);
-        slider.setAttribute("scale", String(entry?.scale ?? 0));
-        slider.addEventListener("change", (e) => {
-          const value = (e as CustomEvent<{ value: number }>).detail.value;
-          this.#writeScale(source, g, value);
-        });
-        td.append(slider);
-        tr.append(td);
-        this.#cells.push({
+        const initialScale = entry?.scale ?? 0;
+        slider.setAttribute("scale", String(initialScale));
+        const cell: CellRef = {
           el: slider,
           source,
           generic: g,
           sourceSlot: bus.sourceSlot(source) ?? -1,
+          scale: initialScale,
+        };
+        slider.addEventListener("change", (e) => {
+          const value = (e as CustomEvent<{ value: number }>).detail.value;
+          cell.scale = value;
+          this.#writeScale(source, g, value);
         });
+        td.append(slider);
+        tr.append(td);
+        this.#cells.push(cell);
       }
       tbody.append(tr);
     }
@@ -222,11 +227,10 @@ export class SynPatchMatrix extends SynElement {
         continue;
       }
       const src = sources[c.sourceSlot]!;
-      // desaturate(src) inlined; use the cell's own scale attribute as truth
-      const scaleAttr = Number(c.el.getAttribute("scale") ?? 0);
+      // desaturate(src) inlined to avoid function-call overhead in the hot loop
       const desat = Math.atanh(src * s) / s;
       const desatClipped = desat < -3.13 ? -3.13 : desat > 3.13 ? 3.13 : desat;
-      const contribution = scaleAttr * desatClipped;
+      const contribution = c.scale * desatClipped;
       const clipped = contribution < -1 ? -1 : contribution > 1 ? 1 : contribution;
       c.el.setPerturbation(clipped);
     }
