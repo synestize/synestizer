@@ -76,6 +76,20 @@ export class SynPatchMatrix extends SynElement {
         thead th { color: #aaa; font-weight: bold; }
         thead th.generic { font-size: 0.95rem; }
         tbody tr:nth-child(odd) { background: rgba(255, 255, 255, 0.025); }
+        button.remove-row {
+          background: transparent;
+          color: #888;
+          border: 1px solid #333;
+          width: 1.4em;
+          height: 1.4em;
+          padding: 0;
+          margin-right: 0.25em;
+          font: inherit;
+          cursor: pointer;
+          border-radius: 50%;
+          line-height: 1;
+        }
+        button.remove-row:hover { color: #f55; border-color: #f55; }
       </style>
       <table>
         <thead><tr></tr></thead>
@@ -161,7 +175,14 @@ export class SynPatchMatrix extends SynElement {
       const labelCell = document.createElement("td");
       labelCell.className = "source-label";
       labelCell.title = source;
-      labelCell.textContent = labelFor(source);
+      // Remove-row × button + label text
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-row";
+      removeBtn.textContent = "×";
+      removeBtn.title = `Remove all routings from ${labelFor(source)}`;
+      removeBtn.addEventListener("click", () => this.#removeSource(source));
+      labelCell.append(removeBtn, document.createTextNode(" " + labelFor(source)));
       tr.append(labelCell);
 
       for (let g = 0; g < GENERIC_COUNT; g++) {
@@ -212,6 +233,14 @@ export class SynPatchMatrix extends SynElement {
   }
 
   // ─── Store write ──────────────────────────────────────────────────────────
+
+  #removeSource(source: string): void {
+    if (!this.#store) return;
+    this.#store.update((p) => {
+      p.matrix = p.matrix.filter((m) => m.source !== source);
+    });
+    this.#onScaleChange?.(source, -1, 0);
+  }
 
   #writeScale(source: string, generic: number, scale: number): void {
     if (!this.#store) return;

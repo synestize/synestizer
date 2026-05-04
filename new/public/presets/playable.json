@@ -1,0 +1,17 @@
+{
+  "$schema": "synestizer/v1",
+  "master": { "gainDb": -12, "muted": false, "tempoBpm": 120 },
+  "matrix": [
+    { "source": "video.Y", "generic": 0, "scale": 0.9 },
+    { "source": "video.V", "generic": 0, "scale": 0.3 },
+    { "source": "video.S", "generic": 1, "scale": 0.8 },
+    { "source": "video.dY", "generic": 2, "scale": 0.7 }
+  ],
+  "sinks": [
+    { "id": "v1.gain", "kind": "audio.gain", "label": "Gain", "signal": "generic.0", "bias": -0.2, "scale": 0.7 },
+    { "id": "v1.freq", "kind": "audio.freq", "label": "Freq", "signal": "generic.1", "bias": -0.3, "scale": 0.7 },
+    { "id": "v1.detune", "kind": "audio.detune", "label": "Detune", "signal": "generic.2", "bias": 0, "scale": 0.5 }
+  ],
+  "voices": [{ "id": "v1", "kind": "basic", "params": {} }],
+  "devices": {}
+}

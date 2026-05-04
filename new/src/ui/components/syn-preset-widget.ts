@@ -18,12 +18,20 @@ import { defineOnce, SynElement } from "./base.ts";
 const STORAGE_KEY = "synestizer.preset";
 const AUTOSAVE_DEBOUNCE_MS = 500;
 
+const BUNDLED_PRESETS: Array<{ id: string; label: string; url: string }> = [
+  { id: "playable", label: "Playable (default routing)", url: "/presets/playable.json" },
+  { id: "wild", label: "Wild (10 routings, deep modulation)", url: "/presets/wild.json" },
+  { id: "empty", label: "Empty (one unmodulated voice)", url: "/presets/empty.json" },
+];
+
 export class SynPresetWidget extends SynElement {
   #store: ConfigStore | null = null;
 
   #downloadBtn!: HTMLButtonElement;
   #uploadInput!: HTMLInputElement;
   #restoreBtn!: HTMLButtonElement;
+  #bundledSelect!: HTMLSelectElement;
+  #loadBundledBtn!: HTMLButtonElement;
   #status!: HTMLElement;
   #autosaveTimer = 0;
 
@@ -49,16 +57,30 @@ export class SynPresetWidget extends SynElement {
         </label>
         <button class="restore" type="button">↺ Restore last session</button>
       </div>
+      <div class="row" style="margin-top: 0.5rem;">
+        <select class="bundled"></select>
+        <button class="load-bundled" type="button">Load bundled preset</button>
+      </div>
       <div class="status"></div>
     `);
     this.#downloadBtn = this.root.querySelector(".download") as HTMLButtonElement;
     this.#uploadInput = this.root.querySelector("input[type=file]") as HTMLInputElement;
     this.#restoreBtn = this.root.querySelector(".restore") as HTMLButtonElement;
+    this.#bundledSelect = this.root.querySelector(".bundled") as HTMLSelectElement;
+    this.#loadBundledBtn = this.root.querySelector(".load-bundled") as HTMLButtonElement;
     this.#status = this.root.querySelector(".status") as HTMLElement;
+
+    for (const p of BUNDLED_PRESETS) {
+      const opt = document.createElement("option");
+      opt.value = p.url;
+      opt.textContent = p.label;
+      this.#bundledSelect.append(opt);
+    }
 
     this.#downloadBtn.addEventListener("click", () => this.#download());
     this.#uploadInput.addEventListener("change", () => this.#upload());
     this.#restoreBtn.addEventListener("click", () => this.#restore());
+    this.#loadBundledBtn.addEventListener("click", () => this.#loadBundled());
   }
 
   configure(deps: { store: ConfigStore }): void {
@@ -140,6 +162,21 @@ export class SynPresetWidget extends SynElement {
       this.#setStatus("Restored from last session.");
     } catch (err) {
       this.#setStatus(`Restore failed: ${(err as Error).message}`);
+    }
+  }
+
+  async #loadBundled(): Promise<void> {
+    if (!this.#store) return;
+    const url = this.#bundledSelect.value;
+    if (!url) return;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = await res.json();
+      this.#store.load(raw as Preset);
+      this.#setStatus(`Loaded bundled preset from ${url}`);
+    } catch (err) {
+      this.#setStatus(`Bundled load failed: ${(err as Error).message}`);
     }
   }
 

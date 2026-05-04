@@ -1,0 +1,12 @@
+{
+  "$schema": "synestizer/v1",
+  "master": { "gainDb": -12, "muted": false, "tempoBpm": 120 },
+  "matrix": [],
+  "sinks": [
+    { "id": "v1.gain", "kind": "audio.gain", "label": "Gain", "signal": null, "bias": -0.4, "scale": 0.5 },
+    { "id": "v1.freq", "kind": "audio.freq", "label": "Freq", "signal": null, "bias": 0, "scale": 0 },
+    { "id": "v1.detune", "kind": "audio.detune", "label": "Detune", "signal": null, "bias": 0, "scale": 0 }
+  ],
+  "voices": [{ "id": "v1", "kind": "basic", "params": {} }],
+  "devices": {}
+}

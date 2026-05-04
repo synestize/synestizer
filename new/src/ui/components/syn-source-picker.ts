@@ -34,6 +34,8 @@ export class SynSourcePicker extends SynElement {
   #sourceSelect!: HTMLSelectElement;
   #genericSelect!: HTMLSelectElement;
   #addBtn!: HTMLButtonElement;
+  #randomizeBtn!: HTMLButtonElement;
+  #clearBtn!: HTMLButtonElement;
   #status!: HTMLElement;
 
   constructor() {
@@ -62,12 +64,21 @@ export class SynSourcePicker extends SynElement {
         <input class="search" type="text" placeholder="filter sources by id or name…" />
         <span></span><span></span><span></span>
       </div>
+      <div class="row" style="margin-top: 0.6rem;">
+        <span></span>
+        <span></span>
+        <span></span>
+        <button class="randomize" type="button" title="Perturb every existing matrix scale by ±0.5 (deterministic with each press)">🎲 Randomize scales</button>
+        <button class="clear" type="button" title="Remove every entry from the matrix">⌫ Clear matrix</button>
+      </div>
       <div class="status"></div>
     `);
     this.#sourceSelect = this.root.querySelector(".sources") as HTMLSelectElement;
     this.#genericSelect = this.root.querySelector(".generic") as HTMLSelectElement;
     this.#searchInput = this.root.querySelector(".search") as HTMLInputElement;
     this.#addBtn = this.root.querySelector(".add") as HTMLButtonElement;
+    this.#randomizeBtn = this.root.querySelector(".randomize") as HTMLButtonElement;
+    this.#clearBtn = this.root.querySelector(".clear") as HTMLButtonElement;
     this.#status = this.root.querySelector(".status") as HTMLElement;
 
     for (let g = 0; g < GENERIC_COUNT; g++) {
@@ -79,6 +90,8 @@ export class SynSourcePicker extends SynElement {
 
     this.#searchInput.addEventListener("input", () => this.#rebuildSourceOptions());
     this.#addBtn.addEventListener("click", () => this.#onAddClick());
+    this.#randomizeBtn.addEventListener("click", () => this.#onRandomizeClick());
+    this.#clearBtn.addEventListener("click", () => this.#onClearClick());
   }
 
   configure(deps: { store: ConfigStore; bus: SignalBus; onAdd?: () => void }): void {
@@ -140,6 +153,35 @@ export class SynSourcePicker extends SynElement {
       }
     });
     this.#status.textContent = `Added ${labelFor(source)} → ${GENERIC_LABELS[generic]}. Drag the cell in the matrix to set its scale.`;
+    this.#onAdd?.();
+  }
+
+  #onRandomizeClick(): void {
+    if (!this.#store) return;
+    let n = 0;
+    this.#store.update((p) => {
+      n = p.matrix.length;
+      for (const e of p.matrix) {
+        // Random walk: existing scale + ±0.5 perturbation, clipped.
+        const delta = (Math.random() - 0.5) * 1.0;
+        const v = e.scale + delta;
+        e.scale = v < -1 ? -1 : v > 1 ? 1 : v;
+      }
+    });
+    this.#status.textContent =
+      n === 0
+        ? "Matrix is empty — add a routing first."
+        : `Randomized ${n} scale${n === 1 ? "" : "s"}.`;
+    this.#onAdd?.();
+  }
+
+  #onClearClick(): void {
+    if (!this.#store) return;
+    if (!confirm("Remove every entry from the matrix?")) return;
+    this.#store.update((p) => {
+      p.matrix = [];
+    });
+    this.#status.textContent = "Matrix cleared.";
     this.#onAdd?.();
   }
 }
