@@ -36,23 +36,9 @@
         <span id="camera-status"></span>
         <div id="camera-preview-mount"></div>
       </section>
-      <section id="live-panel">
-        <h2>Live signal meters</h2>
-        <p class="hint">Read directly from <code>SignalBus</code> on rAF; never touches <code>ConfigStore</code>.</p>
-
-        <h3>Generics α … θ</h3>
-        <div id="generic-meters" class="meter-row"></div>
-
-        <h3>Active sources (driving the matrix)</h3>
-        <div id="source-meters"></div>
-
-        <h3>Sink outputs</h3>
-        <div id="sink-meters"></div>
-      </section>
-
       <section id="matrix-panel">
         <h2>Patch matrix</h2>
-        <p class="hint">SVG <code>&lt;syn-scale-slider&gt;</code> Web Components. Drag a cell up/down to set its scale; double-click to reset to zero. Live perturbation indicator (cyan triangle) shows the cell's contribution to its generic.</p>
+        <p class="hint">Drag a cell up/down to set its scale; double-click to reset to zero. Cyan triangle inside each cell is the live perturbation contribution. Bars in the column headers (α…θ) show the combined generic value; bars next to each row label show the source's raw value.</p>
         <syn-patch-matrix id="patch-matrix"></syn-patch-matrix>
       </section>
 
@@ -64,18 +50,12 @@
 
       <section id="sinks-panel-section">
         <h2>Sinks</h2>
-        <p class="hint">SVG <code>&lt;syn-archimedean-slider&gt;</code> Web Components. Top half drags scale, bottom half drags bias; double-click resets the half you click on. Cyan envelope shows perturbation extremes; cyan thumb arrow shows the actually-applied sink value.</p>
+        <p class="hint">Top half drags scale, bottom half drags bias; double-click resets the half you click on. Cyan envelope shows the perturbation extremes; cyan thumb arrow shows the actually-applied sink value.</p>
         <syn-sinks-panel id="sinks-panel"></syn-sinks-panel>
       </section>
 
-      <section id="legacy-matrix-panel">
-        <h2>Legacy matrix sliders (canary)</h2>
-        <p class="hint">Plain DOM range inputs — kept as the architectural canary that proved the two-tier separation. Will be removed once the full matrix UI is feature-complete.</p>
-        <div id="matrix-rows"></div>
-      </section>
-
       <section id="stage-status">
-        <p>Stage 5 + Stage 6 partial: SVG <code>&lt;syn-scale-slider&gt;</code>, <code>&lt;syn-archimedean-slider&gt;</code>, <code>&lt;syn-patch-matrix&gt;</code>, <code>&lt;syn-sinks-panel&gt;</code>, <code>&lt;syn-source-picker&gt;</code>, <code>&lt;syn-preset-widget&gt;</code>. See <code>REBUILD_PLAN.md</code> for roadmap.</p>
+        <p>See <code>REBUILD_PLAN.md</code> for roadmap.</p>
       </section>
     </main>
     <script type="module" src="/src/main.ts"></script>

@@ -1,13 +1,15 @@
 /**
- * Synestizer entry point.
+ * Synestizer entry point — wires engines to UI Web Components.
  *
- * Stage 4 smoke-test scaffolding:
- *   - ConfigStore + SignalBus + Scheduler boot empty.
- *   - "Start audio" button creates AudioEngine + AudioBinder, instantiates a basic voice.
- *   - "Start camera" button starts the video pipeline, registering 60 video sources.
- *   - Master gain/mute slider edits ConfigStore.master.
- *
- * Real UI (matrix, sliders, web components) lands in Stage 5.
+ * Boot order:
+ *   - ConfigStore loads playablePreset() (or last localStorage autosave when
+ *     the user clicks "Restore last session" on the preset widget).
+ *   - SignalBus + 100Hz Scheduler started.
+ *   - "Start audio" button creates AudioEngine + AudioBinder, instantiates
+ *     voices declared in the preset (BasicVoice for v1).
+ *   - "Start camera" registers 60 video.* sources via VideoSourceDriver.
+ *   - Each panel's refresh()/refreshSourceSlots() is called after slot
+ *     registration so meters and selectors pick up the new ids.
  */
 
 import { AudioBinder } from "./audio/binder.ts";
@@ -26,7 +28,6 @@ import type { SynPatchMatrix } from "./ui/components/syn-patch-matrix.ts";
 import type { SynPresetWidget } from "./ui/components/syn-preset-widget.ts";
 import type { SynSinksPanel } from "./ui/components/syn-sinks-panel.ts";
 import type { SynSourcePicker } from "./ui/components/syn-source-picker.ts";
-import { LiveUI } from "./ui/live-ui.ts";
 import { type CameraResult, startCamera } from "./video/camera.ts";
 import { VideoSourceDriver } from "./video/source-driver.ts";
 
@@ -80,7 +81,6 @@ startBtn.addEventListener("click", async () => {
   audioBinder.start();
   scheduler.start();
   scheduler.setGraph(compileGraph(store.snapshot(), bus));
-  liveUI.refresh();
   sinksPanel.refresh();
   await populateOutputDevices();
   startBtn.textContent = "Audio running";
@@ -128,7 +128,6 @@ cameraBtn.addEventListener("click", async () => {
     cameraStatus.textContent = "running";
     // Recompile so any matrix entries referencing video sources resolve
     scheduler.setGraph(compileGraph(store.snapshot(), bus));
-    liveUI.refresh();
     patchMatrix.refreshSourceSlots();
     sinksPanel.refresh();
     sourcePicker.refresh();
@@ -138,20 +137,7 @@ cameraBtn.addEventListener("click", async () => {
   }
 });
 
-// ─── Live UI panels (meters + matrix sliders) ────────────────────────────────
-
-const liveUI = new LiveUI({
-  store,
-  bus,
-  scheduler,
-  genericContainer: document.getElementById("generic-meters") as HTMLElement,
-  sourceContainer: document.getElementById("source-meters") as HTMLElement,
-  sinkContainer: document.getElementById("sink-meters") as HTMLElement,
-  matrixContainer: document.getElementById("matrix-rows") as HTMLElement,
-});
-liveUI.start();
-
-// ─── Stage 5 UI: <syn-patch-matrix> ──────────────────────────────────────────
+// ─── UI panels ───────────────────────────────────────────────────────────────
 
 const patchMatrix = document.getElementById("patch-matrix") as SynPatchMatrix;
 patchMatrix.configure({

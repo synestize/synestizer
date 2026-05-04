@@ -31,6 +31,8 @@ import { MOMENT_KEYS, MOMENT_NAMES } from "../../video/sources.ts";
 import { defineOnce, SynElement } from "./base.ts";
 import "./syn-scale-slider.ts";
 import type { SynScaleSlider } from "./syn-scale-slider.ts";
+import "./syn-signal-header.ts";
+import type { SynSignalHeader } from "./syn-signal-header.ts";
 
 // Source id → friendly name. Falls back to id for unknowns (MIDI, etc.).
 const SOURCE_LABELS = new Map<string, string>();
@@ -49,6 +51,17 @@ interface CellRef {
   scale: number; // cached so the rAF loop doesn't parse the SVG attr each frame
 }
 
+interface RowHeaderRef {
+  el: SynSignalHeader;
+  source: string;
+  sourceSlot: number;
+}
+
+interface ColHeaderRef {
+  el: SynSignalHeader;
+  genericSlot: number;
+}
+
 export class SynPatchMatrix extends SynElement {
   #store: ConfigStore | null = null;
   #bus: SignalBus | null = null;
@@ -57,6 +70,8 @@ export class SynPatchMatrix extends SynElement {
   #onScaleChange: ((source: string, generic: number, scale: number) => void) | null = null;
 
   #cells: CellRef[] = [];
+  #rowHeaders: RowHeaderRef[] = [];
+  #colHeaders: ColHeaderRef[] = [];
   #table!: HTMLTableElement;
   #suppressRebuild = false;
 
@@ -74,23 +89,7 @@ export class SynPatchMatrix extends SynElement {
           white-space: nowrap;
           color: #ccc;
         }
-        thead th { color: #aaa; font-weight: bold; }
-        thead th.generic { font-size: 0.95rem; }
         tbody tr:nth-child(odd) { background: rgba(255, 255, 255, 0.025); }
-        button.remove-row {
-          background: transparent;
-          color: #888;
-          border: 1px solid #333;
-          width: 1.4em;
-          height: 1.4em;
-          padding: 0;
-          margin-right: 0.25em;
-          font: inherit;
-          cursor: pointer;
-          border-radius: 50%;
-          line-height: 1;
-        }
-        button.remove-row:hover { color: #f55; border-color: #f55; }
       </style>
       <table>
         <thead><tr></tr></thead>
@@ -135,6 +134,9 @@ export class SynPatchMatrix extends SynElement {
       const slot = bus.sourceSlot(c.source);
       c.sourceSlot = slot ?? -1;
     }
+    for (const r of this.#rowHeaders) {
+      r.sourceSlot = bus.sourceSlot(r.source) ?? -1;
+    }
   }
 
   // ─── Build ────────────────────────────────────────────────────────────────
@@ -154,37 +156,40 @@ export class SynPatchMatrix extends SynElement {
       }
     }
 
-    // Header
+    // Header row: empty corner + 8 generic column headers
     const thead = this.#table.querySelector("thead tr") as HTMLTableRowElement;
     thead.replaceChildren();
-    thead.append(document.createElement("th")); // empty corner over labels
-    for (const label of GENERIC_LABELS) {
+    thead.append(document.createElement("th"));
+    this.#colHeaders = [];
+    for (let g = 0; g < GENERIC_COUNT; g++) {
       const th = document.createElement("th");
-      th.className = "generic";
-      th.textContent = label;
+      const header = document.createElement("syn-signal-header") as SynSignalHeader;
+      header.setAttribute("orientation", "column");
+      header.setAttribute("label", GENERIC_LABELS[g] as string);
+      th.append(header);
       thead.append(th);
+      this.#colHeaders.push({ el: header, genericSlot: g });
     }
 
     // Body
     const tbody = this.#table.querySelector("tbody") as HTMLTableSectionElement;
     tbody.replaceChildren();
     this.#cells = [];
+    this.#rowHeaders = [];
 
     const bus = this.#bus;
     for (const source of sources) {
       const tr = document.createElement("tr");
       const labelCell = document.createElement("td");
       labelCell.className = "source-label";
-      labelCell.title = source;
-      // Remove-row × button + label text
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "remove-row";
-      removeBtn.textContent = "×";
-      removeBtn.title = `Remove all routings from ${labelFor(source)}`;
-      removeBtn.addEventListener("click", () => this.#removeSource(source));
-      labelCell.append(removeBtn, document.createTextNode(" " + labelFor(source)));
+      const header = document.createElement("syn-signal-header") as SynSignalHeader;
+      header.setAttribute("label", labelFor(source));
+      header.setAttribute("title-text", source);
+      header.setAttribute("removable", "");
+      header.addEventListener("remove", () => this.#removeSource(source));
+      labelCell.append(header);
       tr.append(labelCell);
+      this.#rowHeaders.push({ el: header, source, sourceSlot: bus.sourceSlot(source) ?? -1 });
 
       for (let g = 0; g < GENERIC_COUNT; g++) {
         const td = document.createElement("td");
@@ -219,7 +224,10 @@ export class SynPatchMatrix extends SynElement {
   #paintPerturbations(): void {
     if (!this.#bus) return;
     const sources = this.#bus.rawSources();
+    const generics = this.#bus.rawGenerics();
     const s = sevenBitSafe;
+
+    // Cells: per-cell perturbation = scale × desaturate(source), clipped
     for (let i = 0; i < this.#cells.length; i++) {
       const c = this.#cells[i]!;
       if (c.sourceSlot < 0) {
@@ -227,12 +235,23 @@ export class SynPatchMatrix extends SynElement {
         continue;
       }
       const src = sources[c.sourceSlot]!;
-      // desaturate(src) inlined to avoid function-call overhead in the hot loop
       const desat = Math.atanh(src * s) / s;
       const desatClipped = desat < -3.13 ? -3.13 : desat > 3.13 ? 3.13 : desat;
       const contribution = c.scale * desatClipped;
       const clipped = contribution < -1 ? -1 : contribution > 1 ? 1 : contribution;
       c.el.setPerturbation(clipped);
+    }
+
+    // Row headers: raw source value (the input driving each row)
+    for (let i = 0; i < this.#rowHeaders.length; i++) {
+      const r = this.#rowHeaders[i]!;
+      r.el.setValue(r.sourceSlot < 0 ? 0 : sources[r.sourceSlot]!);
+    }
+
+    // Column headers: the generic's combined output (post-stage-1)
+    for (let i = 0; i < this.#colHeaders.length; i++) {
+      const h = this.#colHeaders[i]!;
+      h.el.setValue(generics[h.genericSlot] ?? 0);
     }
   }
 
