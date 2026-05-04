@@ -52,6 +52,12 @@
         <syn-source-picker id="source-picker"></syn-source-picker>
       </section>
 
+      <section id="midi-sink-adder-section">
+        <h2>Add a MIDI output</h2>
+        <p class="hint">Send a sink's signal as outbound MIDI CC. Pick a connected output port + channel + CC number, then assign a combo-bus signal in the sinks panel below. Throttled per integer change so the wire isn't flooded.</p>
+        <syn-midi-sink-adder id="midi-sink-adder"></syn-midi-sink-adder>
+      </section>
+
       <section id="sinks-panel-section">
         <h2>Sinks</h2>
         <p class="hint">Top half drags scale, bottom half drags bias; double-click resets the half you click on. Cyan envelope shows the perturbation extremes; cyan thumb arrow shows the actually-applied sink value.</p>

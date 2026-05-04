@@ -16,16 +16,19 @@ import { AudioBinder } from "./audio/binder.ts";
 import { enumerateOutputDevices, setOutputDevice } from "./audio/device.ts";
 import { AudioEngine } from "./audio/engine.ts";
 import { MidiEngine } from "./midi/engine.ts";
+import { MidiSinkDriver } from "./midi/sink-driver.ts";
 import { MidiSourceDriver } from "./midi/source-driver.ts";
 import { playablePreset } from "./preset/defaults.ts";
 import { SignalBus } from "./signal/bus.ts";
 import { compileGraph } from "./signal/graph.ts";
 import { Scheduler } from "./signal/scheduler.ts";
 import { ConfigStore } from "./store/config-store.ts";
+import "./ui/components/syn-midi-sink-adder.ts";
 import "./ui/components/syn-patch-matrix.ts";
 import "./ui/components/syn-preset-widget.ts";
 import "./ui/components/syn-sinks-panel.ts";
 import "./ui/components/syn-source-picker.ts";
+import type { SynMidiSinkAdder } from "./ui/components/syn-midi-sink-adder.ts";
 import type { SynPatchMatrix } from "./ui/components/syn-patch-matrix.ts";
 import type { SynPresetWidget } from "./ui/components/syn-preset-widget.ts";
 import type { SynSinksPanel } from "./ui/components/syn-sinks-panel.ts";
@@ -43,6 +46,7 @@ let videoDriver: VideoSourceDriver | null = null;
 let camera: CameraResult | null = null;
 let midiEngine: MidiEngine | null = null;
 let midiDriver: MidiSourceDriver | null = null;
+let midiSinkDriver: MidiSinkDriver | null = null;
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
 
@@ -176,6 +180,8 @@ sourcePicker.configure({
 const presetWidget = document.getElementById("preset-widget") as SynPresetWidget;
 presetWidget.configure({ store });
 
+const midiSinkAdder = document.getElementById("midi-sink-adder") as SynMidiSinkAdder;
+
 // Loading a preset can change voices/sinks/matrix; recompile + refresh meters.
 store.subscribe("**", () => {
   scheduler.setGraph(compileGraph(store.snapshot(), bus));
@@ -205,12 +211,20 @@ midiBtn.addEventListener("click", async () => {
     await midiEngine.start();
     midiDriver = new MidiSourceDriver(bus, midiEngine);
     midiDriver.start();
+    midiSinkDriver = new MidiSinkDriver(store, bus, midiEngine, () => {
+      // A new midi.cc sink registered → recompile so its slot wiring lands.
+      scheduler.setGraph(compileGraph(store.snapshot(), bus));
+      sinksPanel.refresh();
+    });
+    midiSinkDriver.start();
+    midiSinkAdder.configure({ store, engine: midiEngine });
     const renderStatus = () => {
       const ins = midiEngine?.inputs() ?? [];
       const outs = midiEngine?.outputs() ?? [];
       const inLabels = ins.map((p) => p.name ?? p.id).join(", ") || "—";
       const outLabels = outs.map((p) => p.name ?? p.id).join(", ") || "—";
       midiStatus.textContent = `in: ${inLabels} · out: ${outLabels} · twiddle a CC to register it as a source`;
+      midiSinkAdder.refresh();
     };
     midiEngine.setOnPortChange(renderStatus);
     renderStatus();
@@ -219,6 +233,7 @@ midiBtn.addEventListener("click", async () => {
     midiBtn.disabled = false;
     midiEngine = null;
     midiDriver = null;
+    midiSinkDriver = null;
   }
 });
 
