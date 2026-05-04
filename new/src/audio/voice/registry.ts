@@ -4,7 +4,13 @@
  * A voice:
  *   - On construction, registers its parameter sinks with the SignalBus.
  *   - On each signal tick, reads sink slots from SignalBus and pokes Tone params.
- *   - Exposes start()/stop() for manual trigger (Stage 3) and dispose().
+ *   - Exposes dispose() for cleanup.
+ *
+ * Optional async hook: a voice that needs setup *before* construction
+ * (most commonly: AudioWorklet module loading) can expose a static
+ * `prepareModule(context)`. The AudioBinder awaits all such hooks once,
+ * memoised per context, before instantiating any voice of that kind.
+ * See NoiseVoice for the canonical pattern.
  */
 
 import type { VoiceKind } from "../../preset/schema.ts";
@@ -19,17 +25,24 @@ export interface VoiceInstance {
   dispose(): void;
 }
 
-export type VoiceConstructor = new (
+export type VoiceConstructor = (new (
   id: string,
   params: Record<string, unknown>,
   bus: SignalBus,
   engine: AudioEngine,
-) => VoiceInstance;
+) => VoiceInstance) & {
+  /** Optional async setup. AudioBinder awaits before first instantiation. */
+  prepareModule?: (context: BaseAudioContext) => Promise<void>;
+};
 
 const registry = new Map<VoiceKind, VoiceConstructor>();
 
 export function registerVoiceKind(kind: VoiceKind, ctor: VoiceConstructor): void {
   registry.set(kind, ctor);
+}
+
+export function getVoiceConstructor(kind: VoiceKind): VoiceConstructor | undefined {
+  return registry.get(kind);
 }
 
 export function createVoice(

@@ -16,8 +16,13 @@
   "sinks": [
     { "id": "v1.gain", "kind": "audio.gain", "label": "Gain", "signal": "generic.0", "bias": -0.1, "scale": 0.85 },
     { "id": "v1.freq", "kind": "audio.freq", "label": "Freq", "signal": "generic.1", "bias": -0.2, "scale": 0.95 },
-    { "id": "v1.detune", "kind": "audio.detune", "label": "Detune", "signal": "generic.2", "bias": 0, "scale": 0.95 }
+    { "id": "v1.detune", "kind": "audio.detune", "label": "Detune", "signal": "generic.2", "bias": 0, "scale": 0.95 },
+    { "id": "n1.level", "kind": "audio.param", "label": "Noise level", "signal": "generic.3", "bias": -0.6, "scale": 0.5 },
+    { "id": "n1.gain", "kind": "audio.gain", "label": "Noise gain", "signal": "generic.5", "bias": -0.4, "scale": 0.4 }
   ],
-  "voices": [{ "id": "v1", "kind": "basic", "params": {} }],
+  "voices": [
+    { "id": "v1", "kind": "basic", "params": {} },
+    { "id": "n1", "kind": "noise", "params": {} }
+  ],
   "devices": {}
 }

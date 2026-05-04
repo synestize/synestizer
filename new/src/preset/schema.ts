@@ -37,7 +37,7 @@ export type SinkKind = (typeof SINK_KINDS)[number];
 
 // ─── Voice kinds ─────────────────────────────────────────────────────────────
 
-export const VOICE_KINDS = ["basic", "bubbleChamber"] as const;
+export const VOICE_KINDS = ["basic", "noise", "bubbleChamber"] as const;
 
 export type VoiceKind = (typeof VOICE_KINDS)[number];
 
