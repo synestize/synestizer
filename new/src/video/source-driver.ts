@@ -9,7 +9,7 @@
 
 import type { SignalBus } from "../signal/bus.ts";
 import type { CameraResult } from "./camera.ts";
-import { MOMENT_COUNT, MOMENT_KEYS } from "./sources.ts";
+import { MOMENT_COUNT, MOMENT_KEYS, MOMENT_NAMES } from "./sources.ts";
 
 const PIXEL_DIM = 64;
 
@@ -40,10 +40,13 @@ export class VideoSourceDriver {
 
   constructor(bus: SignalBus) {
     this.#bus = bus;
-    // Register all 60 source slots up front
+    // Register all 60 source slots up front, with friendly labels.
     this.#sourceSlots = new Int32Array(MOMENT_COUNT);
     for (let i = 0; i < MOMENT_COUNT; i++) {
-      this.#sourceSlots[i] = bus.registerSource(MOMENT_KEYS[i] as string);
+      this.#sourceSlots[i] = bus.registerSource(
+        MOMENT_KEYS[i] as string,
+        MOMENT_NAMES[i] ?? (MOMENT_KEYS[i] as string),
+      );
     }
   }
 

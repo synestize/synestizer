@@ -34,8 +34,10 @@ export class SignalBus {
   readonly #sinkIdToSlot = new Map<string, number>();
   readonly #sourceIds: string[] = [];
   readonly #sinkIds: string[] = [];
+  readonly #sourceLabels = new Map<string, string>();
 
   readonly #frameCallbacks = new Set<() => void>();
+  readonly #sourceListeners = new Set<(id: string) => void>();
 
   constructor() {
     this.#sources = new Float32Array(INITIAL_CAPACITY);
@@ -46,14 +48,39 @@ export class SignalBus {
 
   // ─── Registration ─────────────────────────────────────────────────────────
 
-  registerSource(id: string): number {
+  /**
+   * Register a source slot. Idempotent — second registration returns the
+   * same slot. Optional human-readable label, used by the UI source picker
+   * and matrix; falls back to `id` if absent.
+   */
+  registerSource(id: string, label?: string): number {
     const existing = this.#sourceIdToSlot.get(id);
-    if (existing !== undefined) return existing;
+    if (existing !== undefined) {
+      // Allow late label upgrade — keeps "we got CC traffic before we knew
+      // the port name" out of the way.
+      if (label !== undefined) this.#sourceLabels.set(id, label);
+      return existing;
+    }
     const slot = this.#sourceCount++;
     if (this.#sources.length <= slot) this.#growSources(slot + 1);
     this.#sourceIdToSlot.set(id, slot);
     this.#sourceIds[slot] = id;
+    if (label !== undefined) this.#sourceLabels.set(id, label);
+    for (const cb of this.#sourceListeners) cb(id);
     return slot;
+  }
+
+  /** Friendly label, or undefined if none was registered. */
+  sourceLabel(id: string): string | undefined {
+    return this.#sourceLabels.get(id);
+  }
+
+  /** Notified once per newly-registered source id. UI picker hooks this. */
+  onSourceRegistered(cb: (id: string) => void): () => void {
+    this.#sourceListeners.add(cb);
+    return () => {
+      this.#sourceListeners.delete(cb);
+    };
   }
 
   registerSink(id: string): number {

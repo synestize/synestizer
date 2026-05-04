@@ -14,15 +14,10 @@
 import { GENERIC_COUNT, GENERIC_LABELS } from "../../preset/schema.ts";
 import type { SignalBus } from "../../signal/bus.ts";
 import type { ConfigStore } from "../../store/config-store.ts";
-import { MOMENT_KEYS, MOMENT_NAMES } from "../../video/sources.ts";
 import { defineOnce, SynElement } from "./base.ts";
 
-const SOURCE_LABELS = new Map<string, string>();
-for (let i = 0; i < MOMENT_KEYS.length; i++) {
-  SOURCE_LABELS.set(MOMENT_KEYS[i] as string, MOMENT_NAMES[i] ?? (MOMENT_KEYS[i] as string));
-}
-function labelFor(id: string): string {
-  return SOURCE_LABELS.get(id) ?? id;
+function labelFor(bus: SignalBus | null, id: string): string {
+  return bus?.sourceLabel(id) ?? id;
 }
 
 export class SynSourcePicker extends SynElement {
@@ -118,7 +113,7 @@ export class SynSourcePicker extends SynElement {
     for (let i = 0; i < this.#bus.sourceCount; i++) {
       const id = this.#bus.sourceId(i);
       if (!id) continue;
-      const label = labelFor(id);
+      const label = labelFor(this.#bus, id);
       if (filter && !id.toLowerCase().includes(filter) && !label.toLowerCase().includes(filter))
         continue;
       const opt = document.createElement("option");
@@ -152,7 +147,7 @@ export class SynSourcePicker extends SynElement {
         });
       }
     });
-    this.#status.textContent = `Added ${labelFor(source)} → ${GENERIC_LABELS[generic]}. Drag the cell in the matrix to set its scale.`;
+    this.#status.textContent = `Added ${labelFor(this.#bus, source)} → ${GENERIC_LABELS[generic]}. Drag the cell in the matrix to set its scale.`;
     this.#onAdd?.();
   }
 

@@ -27,20 +27,14 @@ import { GENERIC_COUNT, GENERIC_LABELS } from "../../preset/schema.ts";
 import type { SignalBus } from "../../signal/bus.ts";
 import { sevenBitSafe } from "../../signal/transform.ts";
 import type { ConfigStore } from "../../store/config-store.ts";
-import { MOMENT_KEYS, MOMENT_NAMES } from "../../video/sources.ts";
 import { defineOnce, SynElement } from "./base.ts";
 import "./syn-scale-slider.ts";
 import type { SynScaleSlider } from "./syn-scale-slider.ts";
 import "./syn-signal-header.ts";
 import type { SynSignalHeader } from "./syn-signal-header.ts";
 
-// Source id → friendly name. Falls back to id for unknowns (MIDI, etc.).
-const SOURCE_LABELS = new Map<string, string>();
-for (let i = 0; i < MOMENT_KEYS.length; i++) {
-  SOURCE_LABELS.set(MOMENT_KEYS[i] as string, MOMENT_NAMES[i] ?? (MOMENT_KEYS[i] as string));
-}
-function labelFor(sourceId: string): string {
-  return SOURCE_LABELS.get(sourceId) ?? sourceId;
+function labelFor(bus: SignalBus | null, id: string): string {
+  return bus?.sourceLabel(id) ?? id;
 }
 
 interface CellRef {
@@ -183,7 +177,7 @@ export class SynPatchMatrix extends SynElement {
       const labelCell = document.createElement("td");
       labelCell.className = "source-label";
       const header = document.createElement("syn-signal-header") as SynSignalHeader;
-      header.setAttribute("label", labelFor(source));
+      header.setAttribute("label", labelFor(this.#bus, source));
       header.setAttribute("title-text", source);
       header.setAttribute("removable", "");
       header.addEventListener("remove", () => this.#removeSource(source));

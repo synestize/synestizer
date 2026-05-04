@@ -15,6 +15,8 @@
 import { AudioBinder } from "./audio/binder.ts";
 import { enumerateOutputDevices, setOutputDevice } from "./audio/device.ts";
 import { AudioEngine } from "./audio/engine.ts";
+import { MidiEngine } from "./midi/engine.ts";
+import { MidiSourceDriver } from "./midi/source-driver.ts";
 import { playablePreset } from "./preset/defaults.ts";
 import { SignalBus } from "./signal/bus.ts";
 import { compileGraph } from "./signal/graph.ts";
@@ -39,6 +41,8 @@ let audioEngine: AudioEngine | null = null;
 let audioBinder: AudioBinder | null = null;
 let videoDriver: VideoSourceDriver | null = null;
 let camera: CameraResult | null = null;
+let midiEngine: MidiEngine | null = null;
+let midiDriver: MidiSourceDriver | null = null;
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
 
@@ -49,6 +53,8 @@ const masterGainVal = document.getElementById("master-gain-val") as HTMLSpanElem
 const masterMute = document.getElementById("master-mute") as HTMLInputElement;
 const cameraBtn = document.getElementById("camera-btn") as HTMLButtonElement;
 const cameraStatus = document.getElementById("camera-status") as HTMLSpanElement;
+const midiBtn = document.getElementById("midi-btn") as HTMLButtonElement;
+const midiStatus = document.getElementById("midi-status") as HTMLSpanElement;
 
 // ─── Wire master gain/mute to ConfigStore ────────────────────────────────────
 
@@ -173,6 +179,47 @@ presetWidget.configure({ store });
 // Loading a preset can change voices/sinks/matrix; recompile + refresh meters.
 store.subscribe("**", () => {
   scheduler.setGraph(compileGraph(store.snapshot(), bus));
+});
+
+// New sources (MIDI CCs as the user touches them) → refresh picker dropdown
+// + recompile so any preset matrix entry referencing the source resolves.
+bus.onSourceRegistered(() => {
+  sourcePicker.refresh();
+  patchMatrix.refreshSourceSlots();
+  scheduler.setGraph(compileGraph(store.snapshot(), bus));
+});
+
+// ─── MIDI ────────────────────────────────────────────────────────────────────
+
+if (!MidiEngine.isSupported()) {
+  midiBtn.disabled = true;
+  midiStatus.textContent = "Web MIDI not supported in this browser";
+}
+
+midiBtn.addEventListener("click", async () => {
+  if (midiEngine !== null) return;
+  midiBtn.disabled = true;
+  midiStatus.textContent = "requesting…";
+  try {
+    midiEngine = new MidiEngine();
+    await midiEngine.start();
+    midiDriver = new MidiSourceDriver(bus, midiEngine);
+    midiDriver.start();
+    const renderStatus = () => {
+      const ins = midiEngine?.inputs() ?? [];
+      const outs = midiEngine?.outputs() ?? [];
+      const inLabels = ins.map((p) => p.name ?? p.id).join(", ") || "—";
+      const outLabels = outs.map((p) => p.name ?? p.id).join(", ") || "—";
+      midiStatus.textContent = `in: ${inLabels} · out: ${outLabels} · twiddle a CC to register it as a source`;
+    };
+    midiEngine.setOnPortChange(renderStatus);
+    renderStatus();
+  } catch (err) {
+    midiStatus.textContent = `failed: ${(err as Error).message}`;
+    midiBtn.disabled = false;
+    midiEngine = null;
+    midiDriver = null;
+  }
 });
 
 // Diagnostic: log on first frame
