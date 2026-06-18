@@ -1,76 +1,108 @@
-# Synestizer Indigo
+# Synestizer Indigo — Beta
 
-Synestizer Indigo is a web-based application that creates sound from live video input, creating a synesthetic experience for the user. This project is a modern, green-field rewrite of an older application, built with a focus on performance, maintainability, and a better developer experience.
+**Synestizer does the opposite of a music visualiser.**  
+Point your camera at anything — a painting, a sunset, a busy street — and it turns colour, brightness and motion into live music.
 
-## MVP Feature Set
+🔗 **Try it now → [synestizer.vercel.app](https://synestizer.vercel.app)**  
+*(Chrome or Edge required — Firefox does not yet support Web MIDI)*
 
-The goal for the Minimum Viable Product (MVP) is to deliver the core synesthesia experience with minimal complexity.
+---
 
-1.  **Video Capture:** Display a live video stream from the user's webcam.
-2.  **Basic Feature Extraction:** Analyze the video in real-time to extract a single, simple feature: the overall brightness of the video frame.
-3.  **Simple Synthesizer:** Generate a basic synthesized tone.
-4.  **Direct Mapping:** Modulate a parameter of the synthesizer (e.g., its frequency) based on the extracted brightness value.
-5.  **Core Controls:** A simple UI with a button to start and stop the audio-visual experience.
+## Quick start
 
-## Technology Stack
+1. Open the link above in **Chrome or Edge** on a laptop or desktop
+2. Allow camera access when the browser asks — your image stays on your device, nothing is uploaded
+3. Press **Start**
+4. You will hear a rhythm and melody generated from what the camera sees
+5. Move around, change the light, hold up coloured objects — the music follows
 
-*   **Build Tool:** Vite
-*   **Frontend Framework:** React (with Hooks)
-*   **Language:** TypeScript
-*   **Styling:** Tailwind CSS
-*   **State Management:** Zustand
-*   **Audio Synthesis:** Tone.js
-*   **Video Processing:** Offloaded to a Web Worker to ensure a non-blocking UI.
-*   **Package Manager:** pnpm
+---
 
-## Performance Architecture
+## What you are hearing
 
-To avoid UI stuttering and performance degradation from high-frequency video analysis, this application adheres to the following principles:
+| Voice | What drives it |
+|---|---|
+| **Melody** | Note pattern shifts with the blue/cool tones in the image |
+| **Bass** | Follows the melody at a lower octave, half the speed |
+| **Kick drum** | Density follows motion (camera movement = busier beat) |
+| **Snare** | Offset from the kick — shifts with red/warm tones |
+| **Hi-hat** | Dense pattern, reacts to movement |
+| **Sampler** | Load your own audio file or record 15 s from the mic |
 
-1.  **Processing Off-Thread:** All intensive video frame analysis is performed in a dedicated Web Worker to prevent blocking the main UI thread.
+The sequencer runs a **17-step probabilistic cycle** — because 17 is prime, the pattern never exactly repeats, and shifts gradually as the camera signals change.
 
-2.  **State Decoupling:** We strictly separate two types of state:
-    *   **Control State:** Low-frequency user interactions (e.g., Start/Stop button). Managed in Zustand for global access.
-    *   **Data State:** High-frequency data from video analysis (e.g., brightness). This is intentionally **kept out of Zustand** to prevent application-wide re-renders.
+---
 
-3.  **Update Throttling:** The data sent from the Web Worker to the main thread is throttled to a rate that ensures UI responsiveness without overwhelming the event loop (e.g., 15 updates per second).
+## Controls
 
-4.  **Direct Service Communication:** High-frequency data is passed directly from the worker message handler to the relevant services (like the `audioService`) where possible, completely bypassing the React render cycle. Data is only stored in a React component's local state if it is necessary for rendering a UI element.
+### Sound tab
+- **Tempo** — set the base BPM (40–160)
+- **BPM Response** — how strongly camera motion changes the tempo (1 = very reactive, 30 = stable)
+- **Voice Mix** — four vertical faders for Melody, Bass, Drums and Sampler
+- **Step Grid** — live display showing which steps fire for each voice
 
-## Development Best Practices & Error Prevention
+### Signal Channels panel (≋ button, top right)
+Seven live thumbnails showing what the camera is extracting:
+Luminance · Chroma Blue · Chroma Red · H. Profile · V. Profile · Luma↔Blue · Motion
 
-This project implements several strategies to prevent silent failures and improve development experience:
+### Settings → Signal Routing
+A matrix that connects any of the **18 camera signals** to any sound parameter.  
+Each cell has two controls:
+- **Scale** (green bar) — how much the signal amplifies the parameter; negative = inverted
+- **Bias** (amber marker) — shifts the output up or down regardless of the camera
 
-### Error Handling
-- **Error Boundary:** React error boundary component (`ErrorBoundary.tsx`) catches JavaScript runtime errors and displays helpful error messages instead of blank white pages
-- **Graceful Degradation:** Components fail safely with clear error states rather than breaking the entire application
+Good starting point: leave the defaults and just play with the BPM and Voice Mix first.
 
-### TypeScript Best Practices
-- **Type Safety:** All imports/exports are properly typed to catch compilation errors early
-- **Local Type Definitions:** When module resolution issues occur, types are defined locally to avoid runtime import failures
-- **Strict Compilation:** Use `npx tsc --noEmit` to check for TypeScript errors before runtime
+---
 
-### Development Workflow
-1. **Always Check Console:** Monitor browser DevTools Console for errors after any changes
-2. **Pre-commit Validation:** Run TypeScript compilation checks before deploying changes
-3. **Module Resolution:** Be careful with TypeScript type exports - prefer local type definitions when imports fail
-4. **Network Tab Monitoring:** Check DevTools Network tab for failed module loads
+## Browser requirements
 
-### Common Pitfalls & Solutions
-- **Blank White Page:** Usually indicates a JavaScript error - check console immediately
-- **Module Import Errors:** TypeScript type imports can fail at runtime - define types locally as fallback
-- **Silent Audio Failures:** Audio context requires user interaction - always call `Tone.start()` after user action
-- **Worker Loading Issues:** Ensure Web Worker files are accessible via URL constructor with proper module type
+| Feature | Chrome | Edge | Firefox | Safari |
+|---|---|---|---|---|
+| Camera + audio | ✅ | ✅ | ✅ | ✅ |
+| Web MIDI | ✅ | ✅ | ❌ | ❌ |
 
-### Debugging Steps
-1. Open browser DevTools Console
-2. Look for red error messages
-3. Check Network tab for 404s or failed loads
-4. Verify TypeScript compilation with `npx tsc --noEmit`
-5. Test in multiple browsers if issues persist
+MIDI output (to external synths) works in Chrome and Edge only. Everything else works in any modern browser.
 
-### Future Improvements
-- Consider adding ESLint with strict rules for additional compile-time checking
-- Implement automated testing to catch regressions
-- Add performance monitoring for Web Worker communication
-- Consider adding runtime type checking for critical data flows
+---
+
+## Beta feedback
+
+This is an early beta — things may break.  
+Please report issues or ideas at **[github.com/synestize/synestizer/issues](https://github.com/synestize/synestizer/issues)**  
+or email **synestizer@gmail.com**
+
+Things we know are rough right now:
+- Signal Routing matrix is powerful but complex — a simpler UI is planned
+- Mobile support is partial (no MIDI, camera orientation may vary)
+- Sampler files larger than 30 MB will be rejected
+
+---
+
+## Privacy
+
+The camera feed is analysed entirely inside your browser using a Web Worker.  
+**No image, audio, or personal data is ever transmitted.**
+
+---
+
+## Credits
+
+**Kaspar König** — concept, sound design, project lead *(Zurich University of the Arts / ZHdK)*  
+**Dan MacKinlay** — coding, technical architecture *(UNSW Sydney)*  
+**Christoph Stähli** — development
+
+Institutional support: ZHdK · UNSW Sydney · Maastricht University (Sonic Skills) · Johannes Gutenberg University Mainz
+
+---
+
+## Previous versions
+
+| Version | URL |
+|---|---|
+| listentocolors.net (2015) | [listentocolors.net](https://www.listentocolors.net) |
+| Blue (stable) | [synestize.github.io/blue](https://synestize.github.io/blue/) |
+| Original prototype | [synestizer.com](http://www.synestizer.com) |
+| All source code | [github.com/synestize](https://github.com/synestize) |
+
+Open source under the GPL licence.
