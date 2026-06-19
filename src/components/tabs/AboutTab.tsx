@@ -90,9 +90,9 @@ export function AboutTab() {
 
       <Section title="Credits">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <Credit name="Kaspar König"     role="Concept, sound design, project lead" org="Zurich University of the Arts (ZHdK)" />
-          <Credit name="Dan MacKinlay"   role="Coding, technical architecture"       org="UNSW Sydney" />
-          <Credit name="Christoph Stähli" role="Development" />
+          <Credit name="Kaspar König"     role="Concept, sound design, project lead — Indigo vibe-coded with Claude (Anthropic)" org="Zurich University of the Arts (ZHdK)" />
+          <Credit name="Dan MacKinlay"   role="Coding, technical architecture (earlier versions)"  org="UNSW Sydney" />
+          <Credit name="Christoph Stähli" role="Development (earlier versions)" />
         </div>
         <div style={{ marginTop: 16, paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.08)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)' }}>
           <p style={{ fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>Institutional support</p>

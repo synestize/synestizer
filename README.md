@@ -89,8 +89,10 @@ The camera feed is analysed entirely inside your browser using a Web Worker.
 ## Credits
 
 **Kaspar König** — concept, sound design, project lead *(Zurich University of the Arts / ZHdK)*  
-**Dan MacKinlay** — coding, technical architecture *(UNSW Sydney)*  
-**Christoph Stähli** — development
+Indigo version vibe-coded with [Claude](https://claude.ai) (Anthropic)
+
+**Dan MacKinlay** — coding, technical architecture *(UNSW Sydney, earlier versions)*  
+**Christoph Stähli** — development *(earlier versions)*
 
 Institutional support: ZHdK · UNSW Sydney · Maastricht University (Sonic Skills) · Johannes Gutenberg University Mainz
 
