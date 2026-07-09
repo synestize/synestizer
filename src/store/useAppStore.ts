@@ -61,10 +61,10 @@ export const useAppStore = create<AppState>((set) => ({
     melody_fm_index:       { brightness_variance: { scale: 1.2, bias: -0.2 } },
     // FM harmonicity: chroma_blue shifts the harmonic ratio (cool tones = higher ratio)
     melody_fm_harmonicity: { chroma_blue:         { scale: 0.6, bias:  0.0 } },
-    // Drum density follows motion (camera movement = busier drums)
-    bubble_v2_density: { brightness_delta:  { scale: 0.8, bias: 0.35 } },
-    // Drum pattern follows chroma_red (red hues shift the beat)
-    bubble_v2_pattern: { chroma_red:        { scale: 0.8, bias: 0.0 } },
+    // Drum density: motion + spatial variance — varies even in static scene
+    bubble_v2_density: { brightness_delta: { scale: 1.0, bias: 0.1 }, brightness_variance: { scale: 0.7, bias: 0.0 } },
+    // Drum pattern: blue variance + red — both shift pattern position in the 17-step cycle
+    bubble_v2_pattern: { chroma_blue_variance: { scale: 1.8, bias: 0.0 }, chroma_red: { scale: 0.5, bias: 0.0 } },
     // BPM: movement speeds things up slightly; bias keeps default near 95 BPM
     bubble_rate:       { brightness_delta:  { scale: 0.3, bias: -0.35 } },
     // Sampler

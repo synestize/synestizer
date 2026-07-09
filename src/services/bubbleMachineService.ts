@@ -54,11 +54,12 @@ class BubbleMachineService {
   private melodyPattern = 5;
   private drumDensity   = 0.55;
   private drumPattern   = 3;
+  private drumPattern2  = 7; // secondary pattern — snare/hat shifted differently
 
   // ── Gains (dB) ──
-  private melodyGainDb = -10;
-  private bassGainDb   = -8;
-  private drumsGainDb  = -4;
+  private melodyGainDb = -4;
+  private bassGainDb   = -2;
+  private drumsGainDb  =  0;
 
   // Minimum BPM delta before a ramp fires (prevents AutomationTimeline bloat)
   private bpmThreshold = 1;
@@ -117,7 +118,7 @@ class BubbleMachineService {
       this.activeStep = step;
 
       if (this.enabled) {
-        const { intervals, rootNote, melodyDensity, melodyPattern, drumDensity, drumPattern } = this;
+        const { intervals, rootNote, melodyDensity, melodyPattern, drumDensity, drumPattern, drumPattern2 } = this;
 
         // ── Melody ──
         if (bubbleStep(step, melodyPattern, melodyDensity)) {
@@ -142,20 +143,20 @@ class BubbleMachineService {
           }
         }
 
-        // ── Kick (mult=4, creates ~4–5 hits per 17) ──
+        // ── Kick — uses drumPattern ──
         if (drumHit(step, 4, 0, drumPattern, drumDensity * 0.52)) {
           this.kick?.triggerAttackRelease('C1', '8n', time);
           this.lastHit.kick = true;
         }
 
-        // ── Snare (mult=4 offset=8, ~2–3 hits, offset from kick) ──
-        if (drumHit(step, 4, 8, drumPattern, drumDensity * 0.32)) {
+        // ── Snare — uses drumPattern2 (decoupled from kick) ──
+        if (drumHit(step, 4, 8, drumPattern2, drumDensity * 0.32)) {
           this.snare?.triggerAttackRelease('8n', time);
           this.lastHit.snare = true;
         }
 
-        // ── HiHat (mult=2, ~8 hits — every other step roughly) ──
-        if (drumHit(step, 2, 1, drumPattern, drumDensity * 0.68)) {
+        // ── HiHat — blends both patterns for maximum variety ──
+        if (drumHit(step, 2, 1, (drumPattern + drumPattern2) % 17, drumDensity * 0.68)) {
           this.hat?.triggerAttackRelease('16n', time);
           this.lastHit.hat = true;
         }
@@ -221,8 +222,10 @@ class BubbleMachineService {
     const pRaw = norm(inf('bubble_pattern'));
     this.melodyPattern = Math.max(1, Math.round(pRaw * 15)); // 1–16
 
-    this.drumDensity = norm(inf('bubble_v2_density'));
-    this.drumPattern = Math.round(norm(inf('bubble_v2_pattern')) * 16); // 0–16
+    this.drumDensity  = norm(inf('bubble_v2_density'));
+    this.drumPattern  = Math.round(norm(inf('bubble_v2_pattern')) * 16); // 0–16
+    // Secondary pattern derived from chroma_red_variance — shifts snare/hat independently
+    this.drumPattern2 = Math.round(norm(inf('bubble_v2_pattern') * -0.7 + inf('bubble_density') * 0.3) * 16);
 
     // Root note C3–B3 (48–59)
     this.rootNote = 48 + Math.round(norm(inf('bubble_root')) * 11);
