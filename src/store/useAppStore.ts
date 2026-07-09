@@ -18,6 +18,12 @@ export type ParameterName =
   | 'melody_fm_index' | 'melody_fm_harmonicity'
   // Bubble Machine — drums
   | 'bubble_v2_density' | 'bubble_v2_pattern'
+  // Per-channel FX — filters
+  | 'melody_filter_freq' | 'bass_filter_freq' | 'drums_filter_freq'
+  // Per-channel FX — reverb sends
+  | 'melody_reverb' | 'bass_reverb' | 'drums_reverb'
+  // Per-channel FX — delay sends
+  | 'melody_delay' | 'bass_delay' | 'drums_delay'
   // Sampler
   | 'sampler_rate' | 'sampler_volume'
   // MIDI CC
@@ -67,6 +73,14 @@ export const useAppStore = create<AppState>((set) => ({
     bubble_v2_pattern: { chroma_blue_variance: { scale: 1.8, bias: 0.0 }, chroma_red: { scale: 0.5, bias: 0.0 } },
     // BPM: movement speeds things up slightly; bias keeps default near 95 BPM
     bubble_rate:       { brightness_delta:  { scale: 0.3, bias: -0.35 } },
+    // Filters: brightness opens melody/bass; warm tones close drums
+    melody_filter_freq: { brightness: { scale: 1.2, bias:  0.2 } },
+    bass_filter_freq:   { brightness: { scale: 1.0, bias: -0.2 } },
+    drums_filter_freq:  { chroma_red: { scale: -0.8, bias: 0.8 } },
+    // Reverb sends: melody gets ambient reverb from scene variance
+    melody_reverb:      { brightness_variance: { scale: 0.8, bias: 0.4 } },
+    // Delay: blue/cool tones add echo to melody
+    melody_delay:       { chroma_blue: { scale: 0.7, bias: -0.1 } },
     // Sampler
     sampler_rate:      { x_brightness:      { scale: 0.5, bias: 0.0 } },
     sampler_volume:    { brightness:        { scale: 0.3, bias: 0.0 } },
