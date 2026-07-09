@@ -11,17 +11,19 @@ const signals: SignalName[] = [
 ];
 
 const parameterLabels: Record<ParameterName, string> = {
-  bubble_density:    'Melody Density',
-  bubble_pattern:    'Melody Pattern',
-  bubble_rate:       'Tempo (BPM)',
-  bubble_root:       'Root Note',
-  bubble_pitch_ii:   'Interval II',
-  bubble_pitch_iii:  'Interval III',
-  bubble_pitch_iv:   'Interval IV',
-  bubble_v2_density: 'Drum Density',
-  bubble_v2_pattern: 'Drum Pattern',
-  sampler_rate:      'Sampler Rate',
-  sampler_volume:    'Sampler Volume',
+  bubble_density:        'Melody Density',
+  bubble_pattern:        'Melody Pattern',
+  bubble_rate:           'Tempo (BPM)',
+  bubble_root:           'Root Note',
+  bubble_pitch_ii:       'Interval II',
+  bubble_pitch_iii:      'Interval III',
+  bubble_pitch_iv:       'Interval IV',
+  melody_fm_index:       'FM Depth',
+  melody_fm_harmonicity: 'FM Ratio',
+  bubble_v2_density:     'Drum Density',
+  bubble_v2_pattern:     'Drum Pattern',
+  sampler_rate:          'Sampler Rate',
+  sampler_volume:        'Sampler Volume',
   midi_cc_1: 'MIDI CC 1',
   midi_cc_2: 'MIDI CC 2',
   midi_cc_3: 'MIDI CC 3',
@@ -29,7 +31,7 @@ const parameterLabels: Record<ParameterName, string> = {
 };
 
 const groups: { label: string; color: string; params: ParameterName[] }[] = [
-  { label: 'Melody',  color: '#818cf8', params: ['bubble_density', 'bubble_pattern', 'bubble_rate'] },
+  { label: 'Melody',  color: '#818cf8', params: ['bubble_density', 'bubble_pattern', 'bubble_rate', 'melody_fm_index', 'melody_fm_harmonicity'] },
   { label: 'Pitch',   color: '#38bdf8', params: ['bubble_root', 'bubble_pitch_ii', 'bubble_pitch_iii', 'bubble_pitch_iv'] },
   { label: 'Drums',   color: '#f97316', params: ['bubble_v2_density', 'bubble_v2_pattern'] },
   { label: 'Sampler', color: '#facc15', params: ['sampler_rate', 'sampler_volume'] },

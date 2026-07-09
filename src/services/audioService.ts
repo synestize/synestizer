@@ -12,6 +12,7 @@ class AudioService {
   private samplerVol: Tone.Volume | null = null;
   private currentSampleUrl: string | null = null;
   private samplerGainDb = -6;
+  private samplerMuted  = false;
 
   public async start() {
     if (this.isStarted) return;
@@ -59,9 +60,17 @@ class AudioService {
     this.sampler?.stop();
   }
 
+  public setSamplerMuted(muted: boolean) {
+    this.samplerMuted = muted;
+    if (!this.samplerVol) return;
+    this.samplerVol.volume.value = muted ? -Infinity : (isFinite(this.samplerGainDb) ? this.samplerGainDb : -Infinity);
+  }
+
   public setSamplerGain(db: number) {
     this.samplerGainDb = db;
-    this.samplerVol?.volume.rampTo(db, 0.05);
+    if (!this.samplerVol || this.samplerMuted) return;
+    if (!isFinite(db)) { this.samplerVol.volume.value = -Infinity; return; }
+    this.samplerVol.volume.rampTo(db, 0.05);
   }
 
   public getSamplerGain() { return this.samplerGainDb; }
@@ -72,7 +81,7 @@ class AudioService {
     const inf = (p: ParameterName) => calculateTotalInfluence(p, signals, mappings);
 
     // ── Sampler ──
-    if (this.sampler?.loaded) {
+    if (this.sampler?.loaded && !this.samplerMuted && isFinite(this.samplerGainDb)) {
       this.sampler.playbackRate = norm(inf('sampler_rate')) * 1.5 + 0.5; // 0.5–2.0×
       const sampVolDb = norm(inf('sampler_volume')) * 24 - 18 + this.samplerGainDb;
       this.samplerVol?.volume.rampTo(sampVolDb, 0.05);

@@ -27,8 +27,8 @@ function drumHit(step: number, mult: number, offset: number, pattern: number, de
 class BubbleMachineService {
   private isStarted = false;
 
-  // ── Melody (triangle, warm) ──
-  private melody: Tone.Synth | null = null;
+  // ── Melody (FM synthesis) ──
+  private melody: Tone.FMSynth | null = null;
   private melodyFilter: Tone.Filter | null = null;
   private melodyVol: Tone.Volume | null = null;
 
@@ -76,11 +76,16 @@ class BubbleMachineService {
     this.reverb    = new Tone.Reverb({ decay: 1.8, wet: 0.28 }).connect(this.melodyVol);
     await this.reverb.ready;
 
-    // Melody: triangle → lowpass filter → reverb → vol → dest
-    this.melodyFilter = new Tone.Filter(2200, 'lowpass').connect(this.reverb);
-    this.melody = new Tone.Synth({
-      oscillator: { type: 'triangle' },
-      envelope: { attack: 0.01, decay: 0.18, sustain: 0.18, release: 1.2 },
+    // Melody: FMSynth → lowpass filter → reverb → vol → dest
+    // harmonicity 2 (modulator = octave above carrier), modulationIndex 5 (moderate FM depth)
+    this.melodyFilter = new Tone.Filter(3500, 'lowpass').connect(this.reverb);
+    this.melody = new Tone.FMSynth({
+      harmonicity: 2,
+      modulationIndex: 5,
+      oscillator:          { type: 'sine' },
+      envelope:            { attack: 0.02, decay: 0.25, sustain: 0.15, release: 1.5 },
+      modulation:          { type: 'sine' },
+      modulationEnvelope:  { attack: 0.01, decay: 0.3, sustain: 0.2, release: 0.8 },
     }).connect(this.melodyFilter);
 
     // Bass: sine → vol → dest (no reverb for tight low end)
@@ -185,11 +190,23 @@ class BubbleMachineService {
     this.isStarted = false;
   }
 
-  public setMelodyGain(db: number)    { this.melodyGainDb  = db; this.melodyVol?.volume.rampTo(db, 0.05); }
-  public setBassGain(db: number)      { this.bassGainDb    = db; this.bassVol?.volume.rampTo(db, 0.05); }
-  public setDrumsGain(db: number)     { this.drumsGainDb   = db; this.drumsVol?.volume.rampTo(db, 0.05); }
+  private applyVol(node: Tone.Volume | null, db: number) {
+    if (!node) return;
+    if (!isFinite(db)) { node.volume.value = -Infinity; } else { node.volume.rampTo(db, 0.05); }
+  }
+
+  public setMelodyGain(db: number)    { this.melodyGainDb = db; this.applyVol(this.melodyVol, db); }
+  public setBassGain(db: number)      { this.bassGainDb   = db; this.applyVol(this.bassVol, db); }
+  public setDrumsGain(db: number)     { this.drumsGainDb  = db; this.applyVol(this.drumsVol, db); }
   public setBPM(bpm: number)          { Tone.getTransport().bpm.rampTo(bpm, 0.2); }
-  public setBpmThreshold(val: number) { this.bpmThreshold  = val; }
+  public setBpmThreshold(val: number) { this.bpmThreshold = val; }
+
+  // Per-voice mute: silence/restore the individual synth before the mix chain
+  public setMelodyMuted(m: boolean) { if (this.melody)   this.melody.volume.value   = m ? -Infinity : 0; }
+  public setBassMuted(m: boolean)   { if (this.bassNote) this.bassNote.volume.value = m ? -Infinity : 0; }
+  public setKickMuted(m: boolean)   { if (this.kick)     this.kick.volume.value     = m ? -Infinity : 0; }
+  public setSnareMuted(m: boolean)  { if (this.snare)    this.snare.volume.value    = m ? -Infinity : 0; }
+  public setHatMuted(m: boolean)    { if (this.hat)      this.hat.volume.value      = m ? -Infinity : 0; }
 
   public getMixGains() {
     return { melody: this.melodyGainDb, bass: this.bassGainDb, drums: this.drumsGainDb };
@@ -215,6 +232,12 @@ class BubbleMachineService {
     const iii = 6  + Math.round(norm(inf('bubble_pitch_iii')) * 4); // 6–10
     const iv  = 9  + Math.round(norm(inf('bubble_pitch_iv'))  * 4); // 9–13
     this.intervals = [0, ii, iii, iv];
+
+    // FM synthesis — modulationIndex 0–30 (timbre brightness/complexity)
+    if (this.melody) {
+      this.melody.modulationIndex.value = norm(inf('melody_fm_index')) * 30;
+      this.melody.harmonicity.value     = 1 + norm(inf('melody_fm_harmonicity')) * 3; // 1–4
+    }
 
     // BPM: only fire a ramp when the signal moves more than bpmThreshold beats.
     const bpmRaw = norm(inf('bubble_rate'));

@@ -14,6 +14,8 @@ export type ParameterName =
   // Bubble Machine — melody & pitch
   | 'bubble_density' | 'bubble_pattern' | 'bubble_rate'
   | 'bubble_root' | 'bubble_pitch_ii' | 'bubble_pitch_iii' | 'bubble_pitch_iv'
+  // Melody FM synthesis
+  | 'melody_fm_index' | 'melody_fm_harmonicity'
   // Bubble Machine — drums
   | 'bubble_v2_density' | 'bubble_v2_pattern'
   // Sampler
@@ -55,6 +57,10 @@ export const useAppStore = create<AppState>((set) => ({
     bubble_pattern:    { chroma_blue:       { scale: 1.0, bias: 0.0 } },
     // Root note follows vertical centre of brightness
     bubble_root:       { y_brightness:      { scale: 0.6, bias: 0.0 } },
+    // FM index: brightness_variance drives harmonic complexity (more contrast = edgier tone)
+    melody_fm_index:       { brightness_variance: { scale: 1.2, bias: -0.2 } },
+    // FM harmonicity: chroma_blue shifts the harmonic ratio (cool tones = higher ratio)
+    melody_fm_harmonicity: { chroma_blue:         { scale: 0.6, bias:  0.0 } },
     // Drum density follows motion (camera movement = busier drums)
     bubble_v2_density: { brightness_delta:  { scale: 0.8, bias: 0.35 } },
     // Drum pattern follows chroma_red (red hues shift the beat)

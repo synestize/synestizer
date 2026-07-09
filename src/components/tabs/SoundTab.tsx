@@ -13,8 +13,13 @@ const C = {
   sampler: '#facc15',
 };
 
-const dbToLabel = (db: number) => `${db > 0 ? '+' : ''}${db} dB`;
+const SLIDER_MIN = -60;
+const SLIDER_MAX = 6;
+// Show "—" at bottom of slider (true silence), otherwise show dB value
+const dbToLabel = (v: number) => v <= SLIDER_MIN ? '—' : `${v > 0 ? '+' : ''}${v} dB`;
 const MAX_FILE_MB = 30;
+
+type VoiceMutes = { melody: boolean; bass: boolean; kick: boolean; snare: boolean; hat: boolean; sampler: boolean };
 
 export function SoundTab() {
   const mixInitial = bubbleMachineService.getMixGains();
@@ -27,9 +32,13 @@ export function SoundTab() {
   const [bpm, setBpm] = useState(95);
   const [bpmResponse, setBpmResponse] = useState(1);
   const [enabled, setEnabled] = useState(true);
+  const [muted, setMuted] = useState<VoiceMutes>({
+    melody: false, bass: false, kick: false, snare: false, hat: false, sampler: false,
+  });
 
-  const handleGain = (voice: keyof typeof gains, db: number) => {
-    setGains(g => ({ ...g, [voice]: db }));
+  const handleGain = (voice: keyof typeof gains, sliderVal: number) => {
+    setGains(g => ({ ...g, [voice]: sliderVal }));
+    const db = sliderVal <= SLIDER_MIN ? -Infinity : sliderVal;
     switch (voice) {
       case 'melody':  bubbleMachineService.setMelodyGain(db); break;
       case 'bass':    bubbleMachineService.setBassGain(db);   break;
@@ -37,6 +46,30 @@ export function SoundTab() {
       case 'sampler': audioService.setSamplerGain(db);        break;
     }
   };
+
+  const toggleMute = (voice: keyof VoiceMutes) => {
+    const next = !muted[voice];
+    switch (voice) {
+      case 'melody':  bubbleMachineService.setMelodyMuted(next); break;
+      case 'bass':    bubbleMachineService.setBassMuted(next);   break;
+      case 'kick':    bubbleMachineService.setKickMuted(next);   break;
+      case 'snare':   bubbleMachineService.setSnareMuted(next);  break;
+      case 'hat':     bubbleMachineService.setHatMuted(next);    break;
+      case 'sampler': audioService.setSamplerMuted(next);        break;
+    }
+    setMuted(prev => ({ ...prev, [voice]: next }));
+  };
+
+  // Drums fader label: mutes/unmutes kick+snare+hat together
+  const toggleDrumsMute = () => {
+    const anyActive = !muted.kick || !muted.snare || !muted.hat;
+    const next = anyActive;
+    bubbleMachineService.setKickMuted(next);
+    bubbleMachineService.setSnareMuted(next);
+    bubbleMachineService.setHatMuted(next);
+    setMuted(prev => ({ ...prev, kick: next, snare: next, hat: next }));
+  };
+  const drumsMuted = muted.kick && muted.snare && muted.hat;
 
   const handleBpm = (val: number) => {
     setBpm(val);
@@ -114,16 +147,16 @@ export function SoundTab() {
       </div>
 
       {/* ── Step grid ── */}
-      <StepGrid />
+      <StepGrid muted={muted} onMuteToggle={toggleMute} />
 
       {/* ── Voice volumes (vertical faders) ── */}
       <div className="glass-section">
-        <div className="glass-section-header">Voice Mix</div>
+        <div className="glass-section-header">Voice Mix — click label to mute</div>
         <div style={{ padding: '10px 16px', display: 'flex', justifyContent: 'space-around', gap: 6 }}>
-          <VerticalFader label="Melody"  color={C.melody}  value={gains.melody}  onChange={db => handleGain('melody', db)} />
-          <VerticalFader label="Bass"    color={C.bass}    value={gains.bass}    onChange={db => handleGain('bass', db)} />
-          <VerticalFader label="Drums"   color={C.kick}    value={gains.drums}   onChange={db => handleGain('drums', db)} />
-          <VerticalFader label="Sampler" color={C.sampler} value={gains.sampler} onChange={db => handleGain('sampler', db)} />
+          <VerticalFader label="Melody"  color={C.melody}  value={gains.melody}  onChange={db => handleGain('melody', db)}  muted={muted.melody}  onMuteToggle={() => toggleMute('melody')} />
+          <VerticalFader label="Bass"    color={C.bass}    value={gains.bass}    onChange={db => handleGain('bass', db)}    muted={muted.bass}    onMuteToggle={() => toggleMute('bass')} />
+          <VerticalFader label="Drums"   color={C.kick}    value={gains.drums}   onChange={db => handleGain('drums', db)}   muted={drumsMuted}    onMuteToggle={toggleDrumsMute} />
+          <VerticalFader label="Sampler" color={C.sampler} value={gains.sampler} onChange={db => handleGain('sampler', db)} muted={muted.sampler} onMuteToggle={() => toggleMute('sampler')} />
         </div>
       </div>
 
@@ -134,7 +167,7 @@ export function SoundTab() {
 }
 
 // ── 5-row step grid visualiser ──
-function StepGrid() {
+function StepGrid({ muted, onMuteToggle }: { muted: VoiceMutes; onMuteToggle: (v: keyof VoiceMutes) => void }) {
   const rowRefs = {
     melody: useRef<HTMLDivElement>(null),
     bass:   useRef<HTMLDivElement>(null),
@@ -183,32 +216,49 @@ function StepGrid() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const rowLabels: { key: keyof typeof rowRefs; label: string; color: string }[] = [
-    { key: 'melody', label: 'Melody', color: C.melody },
-    { key: 'bass',   label: 'Bass',   color: C.bass },
-    { key: 'kick',   label: 'Kick',   color: C.kick },
-    { key: 'snare',  label: 'Snare',  color: C.snare },
-    { key: 'hat',    label: 'Hat',    color: C.hat },
+  const rowLabels: { key: keyof typeof rowRefs; voiceKey: keyof VoiceMutes; label: string; color: string }[] = [
+    { key: 'melody', voiceKey: 'melody', label: 'Melody', color: C.melody },
+    { key: 'bass',   voiceKey: 'bass',   label: 'Bass',   color: C.bass },
+    { key: 'kick',   voiceKey: 'kick',   label: 'Kick',   color: C.kick },
+    { key: 'snare',  voiceKey: 'snare',  label: 'Snare',  color: C.snare },
+    { key: 'hat',    voiceKey: 'hat',    label: 'Hat',    color: C.hat },
   ];
 
   return (
     <div className="glass-section">
       <div className="glass-section-header">Step Grid</div>
       <div style={{ padding: '10px 16px', display: 'flex', flexDirection: 'column', gap: 5 }}>
-        {rowLabels.map(({ key, label, color }) => (
-          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{ fontSize: '0.58rem', color, width: 36, textAlign: 'right', fontWeight: 600, letterSpacing: '0.04em', flexShrink: 0 }}>
-              {label}
+        {rowLabels.map(({ key, voiceKey, label, color }) => {
+          const isMuted = muted[voiceKey];
+          return (
+            <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <button
+                onClick={() => onMuteToggle(voiceKey)}
+                title={isMuted ? `Unmute ${label}` : `Mute ${label}`}
+                style={{
+                  background: 'none', border: 'none', padding: '0 2px', cursor: 'pointer',
+                  fontSize: '0.58rem', fontWeight: 600, letterSpacing: '0.04em',
+                  width: 36, textAlign: 'right', flexShrink: 0,
+                  color: isMuted ? 'rgba(255,255,255,0.2)' : color,
+                  textDecoration: isMuted ? 'line-through' : 'none',
+                  transition: 'color 0.15s',
+                }}
+              >
+                {label}
+              </button>
+              <div
+                ref={rowRefs[key]}
+                style={{ flex: 1, display: 'flex', gap: 2, opacity: isMuted ? 0.18 : 1, transition: 'opacity 0.15s' }}
+              >
+                {Array.from({ length: 17 }, (_, i) => (
+                  <div key={i} style={{ flex: 1, height: 12, borderRadius: 2, background: 'rgba(255,255,255,0.05)', transition: 'background 0.05s' }} />
+                ))}
+              </div>
             </div>
-            <div ref={rowRefs[key]} style={{ flex: 1, display: 'flex', gap: 2 }}>
-              {Array.from({ length: 17 }, (_, i) => (
-                <div key={i} style={{ flex: 1, height: 12, borderRadius: 2, background: 'rgba(255,255,255,0.05)', transition: 'background 0.05s' }} />
-              ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
         <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.2)', marginTop: 4 }}>
-          17 steps — pattern cycles shift as camera signals change
+          17 steps — click label to mute / unmute
         </div>
       </div>
     </div>
@@ -292,33 +342,48 @@ function SamplerRow() {
 }
 
 // ── Vertical channel fader ──
-function VerticalFader({ label, color, value, onChange }: {
+function VerticalFader({ label, color, value, onChange, muted, onMuteToggle }: {
   label: string; color: string; value: number; onChange: (db: number) => void;
+  muted: boolean; onMuteToggle: () => void;
 }) {
+  const dim = muted ? 'rgba(255,255,255,0.2)' : color;
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
       background: 'rgba(255,255,255,0.03)', borderRadius: 8, padding: '8px 6px', flex: 1,
     }}>
-      <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color, minWidth: 36, textAlign: 'center' }}>
+      <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color: dim, minWidth: 36, textAlign: 'center', transition: 'color 0.15s' }}>
         {dbToLabel(value)}
       </span>
       <input
-        type="range" min="-40" max="6" step="1" value={value}
+        type="range" min={SLIDER_MIN} max={SLIDER_MAX} step="1" value={value}
         onChange={e => onChange(parseInt(e.target.value))}
         style={{
           writingMode: 'vertical-lr',
           direction: 'rtl',
           height: 120,
           width: 36,
-          accentColor: color,
+          accentColor: muted ? 'rgba(255,255,255,0.2)' : color,
           cursor: 'ns-resize',
           touchAction: 'none',
+          opacity: muted ? 0.4 : 1,
+          transition: 'opacity 0.15s',
         }}
       />
-      <span style={{ fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color }}>
+      {/* Label acts as mute button */}
+      <button
+        onClick={onMuteToggle}
+        title={muted ? `Unmute ${label}` : `Mute ${label}`}
+        style={{
+          background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px',
+          fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase',
+          color: dim,
+          textDecoration: muted ? 'line-through' : 'none',
+          transition: 'color 0.15s, text-decoration 0.15s',
+        }}
+      >
         {label}
-      </span>
+      </button>
     </div>
   );
 }
