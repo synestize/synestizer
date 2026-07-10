@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppStore, type ParameterName, type SignalName } from '../store/useAppStore';
+import { signalBus, type BusData } from '../hooks/useSignalBus';
+import { calculateTotalInfluence, norm } from '../services/influence';
 
 const signals: SignalName[] = [
   'brightness', 'chroma_blue', 'chroma_red',
@@ -104,7 +106,27 @@ function MappingCell({ parameter, signal, groupColor }: {
   );
 }
 
+// precompute param → group color for fast lookup in RAF
+const paramColor: Partial<Record<ParameterName, string>> = {};
+for (const g of groups) for (const p of g.params) paramColor[p] = g.color;
+
 export function MappingMatrix() {
+  const barRefs = useRef<Partial<Record<ParameterName, HTMLDivElement>>>({});
+
+  useEffect(() => {
+    const handle = (d: BusData) => {
+      const mappings = useAppStore.getState().mappings;
+      for (const p of Object.keys(barRefs.current) as ParameterName[]) {
+        const el = barRefs.current[p];
+        if (!el) continue;
+        const pct = norm(calculateTotalInfluence(p, d.signals, mappings)) * 100;
+        el.style.width = `${pct.toFixed(1)}%`;
+      }
+    };
+    signalBus.listeners.add(handle);
+    return () => { signalBus.listeners.delete(handle); };
+  }, []);
+
   return (
     <div style={{ width: '100%', overflowX: 'auto' }}>
       <div style={{ marginBottom: 8, fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', lineHeight: 1.5 }}>
@@ -143,6 +165,13 @@ export function MappingMatrix() {
                   )}
                   <div style={{ fontSize: '0.63rem', color: 'rgba(255,255,255,0.55)', whiteSpace: 'nowrap' }}>
                     {parameterLabels[p]}
+                  </div>
+                  {/* Live influence bar — updates via signalBus without React re-renders */}
+                  <div style={{ height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 2, marginTop: 3, overflow: 'hidden' }}>
+                    <div
+                      ref={el => { if (el) barRefs.current[p] = el; }}
+                      style={{ height: '100%', width: '0%', borderRadius: 2, background: group.color }}
+                    />
                   </div>
                 </div>
                 {signals.map(s => (

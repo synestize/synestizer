@@ -71,6 +71,15 @@ class BubbleMachineService {
 
   private bpmThreshold = 1;
 
+  // ── Manual FX floor (0–1) — camera adds on top via Signal Routing ──
+  public fxBase = {
+    melodyReverb: 0, melodyDelay: 0,
+    bassReverb:   0, bassDelay:   0,
+    drumsReverb:  0, drumsDelay:  0,
+  };
+  public setFxBase(key: keyof BubbleMachineService['fxBase'], val: number) { this.fxBase[key] = val; }
+  public getFxBase() { return { ...this.fxBase }; }
+
   public activeStep = 0;
   public lastHit = { melody: false, bass: false, kick: false, snare: false, hat: false };
   public enabled = true;
@@ -264,14 +273,16 @@ class BubbleMachineService {
     this.bassFilter?.frequency.rampTo(  logHz(80,   4000, norm(inf('bass_filter_freq'))), 0.08);
     this.drumsFilter?.frequency.rampTo( logHz(400, 16000, norm(inf('drums_filter_freq'))), 0.08);
 
-    // ── FX sends — raw tanh, clamped 0–1; zero when no mapping = no FX ──
+    // ── FX sends — manual floor + camera on top, capped at 1 ──
     const c = (v: number) => Math.max(0, Math.min(1, v));
-    this.melodyReverbSend?.gain.rampTo(c(inf('melody_reverb')), 0.05);
-    this.melodyDelaySend?.gain.rampTo( c(inf('melody_delay')),  0.05);
-    this.bassReverbSend?.gain.rampTo(  c(inf('bass_reverb')),   0.05);
-    this.bassDelaySend?.gain.rampTo(   c(inf('bass_delay')),    0.05);
-    this.drumsReverbSend?.gain.rampTo( c(inf('drums_reverb')),  0.05);
-    this.drumsDelaySend?.gain.rampTo(  c(inf('drums_delay')),   0.05);
+    const send = (base: number, cam: number) => Math.min(1, base + c(cam));
+    const { fxBase: b } = this;
+    this.melodyReverbSend?.gain.rampTo(send(b.melodyReverb, inf('melody_reverb')), 0.05);
+    this.melodyDelaySend?.gain.rampTo( send(b.melodyDelay,  inf('melody_delay')),  0.05);
+    this.bassReverbSend?.gain.rampTo(  send(b.bassReverb,   inf('bass_reverb')),   0.05);
+    this.bassDelaySend?.gain.rampTo(   send(b.bassDelay,    inf('bass_delay')),    0.05);
+    this.drumsReverbSend?.gain.rampTo( send(b.drumsReverb,  inf('drums_reverb')),  0.05);
+    this.drumsDelaySend?.gain.rampTo(  send(b.drumsDelay,   inf('drums_delay')),   0.05);
 
     // ── BPM ──
     const bpmRaw = norm(inf('bubble_rate'));

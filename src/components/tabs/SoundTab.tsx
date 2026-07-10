@@ -21,6 +21,8 @@ const MAX_FILE_MB = 30;
 
 type VoiceMutes = { melody: boolean; bass: boolean; kick: boolean; snare: boolean; hat: boolean; sampler: boolean };
 
+type FxBaseKey = keyof ReturnType<typeof bubbleMachineService.getFxBase>;
+
 export function SoundTab() {
   const mixInitial = bubbleMachineService.getMixGains();
   const [gains, setGains] = useState({
@@ -35,6 +37,12 @@ export function SoundTab() {
   const [muted, setMuted] = useState<VoiceMutes>({
     melody: false, bass: false, kick: false, snare: false, hat: false, sampler: false,
   });
+  const [fx, setFx] = useState(() => bubbleMachineService.getFxBase());
+
+  const handleFx = (key: FxBaseKey, val: number) => {
+    bubbleMachineService.setFxBase(key, val);
+    setFx(prev => ({ ...prev, [key]: val }));
+  };
 
   const handleGain = (voice: keyof typeof gains, sliderVal: number) => {
     setGains(g => ({ ...g, [voice]: sliderVal }));
@@ -157,6 +165,30 @@ export function SoundTab() {
           <VerticalFader label="Bass"    color={C.bass}    value={gains.bass}    onChange={db => handleGain('bass', db)}    muted={muted.bass}    onMuteToggle={() => toggleMute('bass')} />
           <VerticalFader label="Drums"   color={C.kick}    value={gains.drums}   onChange={db => handleGain('drums', db)}   muted={drumsMuted}    onMuteToggle={toggleDrumsMute} />
           <VerticalFader label="Sampler" color={C.sampler} value={gains.sampler} onChange={db => handleGain('sampler', db)} muted={muted.sampler} onMuteToggle={() => toggleMute('sampler')} />
+        </div>
+      </div>
+
+      {/* ── FX sends ── */}
+      <div className="glass-section">
+        <div className="glass-section-header" style={{ color: '#e879f9' }}>FX Sends — Reverb &amp; Delay</div>
+        <div style={{ padding: '10px 16px' }}>
+          <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', marginBottom: 10, lineHeight: 1.5 }}>
+            Manual send floor — camera signals add on top via Signal Routing.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '32px 1fr 1fr 1fr', gap: 4, alignItems: 'center' }}>
+            <div />
+            {(['Melody', 'Bass', 'Drums'] as const).map((lbl, i) => (
+              <div key={lbl} style={{ textAlign: 'center', fontSize: '0.58rem', fontWeight: 700, color: [C.melody, C.bass, C.kick][i] }}>{lbl}</div>
+            ))}
+            <div style={{ fontSize: '0.58rem', color: '#e879f9', fontWeight: 700 }}>Rev</div>
+            <FxSend value={fx.melodyReverb} color={C.melody} onChange={v => handleFx('melodyReverb', v)} />
+            <FxSend value={fx.bassReverb}   color={C.bass}   onChange={v => handleFx('bassReverb', v)} />
+            <FxSend value={fx.drumsReverb}  color={C.kick}   onChange={v => handleFx('drumsReverb', v)} />
+            <div style={{ fontSize: '0.58rem', color: '#e879f9', fontWeight: 700, marginTop: 4 }}>Dly</div>
+            <FxSend value={fx.melodyDelay}  color={C.melody} onChange={v => handleFx('melodyDelay', v)} />
+            <FxSend value={fx.bassDelay}    color={C.bass}   onChange={v => handleFx('bassDelay', v)} />
+            <FxSend value={fx.drumsDelay}   color={C.kick}   onChange={v => handleFx('drumsDelay', v)} />
+          </div>
         </div>
       </div>
 
@@ -384,6 +416,19 @@ function VerticalFader({ label, color, value, onChange, muted, onMuteToggle }: {
       >
         {label}
       </button>
+    </div>
+  );
+}
+
+function FxSend({ value, color, onChange }: { value: number; color: string; onChange: (v: number) => void }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color }}>{Math.round(value * 100)}%</span>
+      <input
+        type="range" min="0" max="1" step="0.01" value={value}
+        onChange={e => onChange(parseFloat(e.target.value))}
+        style={{ width: '100%', accentColor: color, touchAction: 'manipulation' }}
+      />
     </div>
   );
 }
